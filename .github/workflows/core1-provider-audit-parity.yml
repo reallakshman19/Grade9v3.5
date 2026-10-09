@@ -8,6 +8,7 @@ on:
     paths:
       - "tests/test_core_learning_adapter.py"
       - "tests/test_core_publication_boundary.py"
+      - "tests/test_web_blueprint_projection.py"
       - "Shared/tools/build_pages_site.py"
       - "public/js/topic-atlas.js"
       - "docs/js/topic-atlas.js"
@@ -50,7 +51,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Full Core provider and public/Pages custody tests
-        run: python -m unittest tests.test_core_learning_adapter tests.test_core_publication_boundary tests.test_pages_site -v
+        run: python -m unittest tests.test_core_learning_adapter tests.test_core_publication_boundary tests.test_pages_site tests.test_web_blueprint_projection -v
       - name: Verify generated Core public/standalone hosts
         run: python Shared/tools/build_core_learning_host.py --check
       - name: Verify GitHub Pages mirror byte freshness and links
