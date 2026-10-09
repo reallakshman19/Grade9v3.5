@@ -34,6 +34,18 @@ jobs:
     steps:
       - name: Checkout candidate exact head
         uses: actions/checkout@v4
+        with:
+          # The PR default is refs/pull/<n>/merge (a synthetic commit), not
+          # the candidate SHA. Pin the real head for exact-candidate evidence.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact candidate identity
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          actual="$(git rev-parse HEAD)"
+          printf 'EXPECTED_CANDIDATE_SHA=%s\nCHECKED_OUT_SHA=%s\n' "$EXPECTED_SHA" "$actual"
+          test "$actual" = "$EXPECTED_SHA"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
