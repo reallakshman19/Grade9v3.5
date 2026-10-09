@@ -107,13 +107,26 @@ class CorePublicDataBoundaryTests(unittest.TestCase):
                 "../../tools/run-builder/index.html",
             ),
         )
-        self.assertIn("corePayload?.publication_gate?.status === 'HOLD'", atlas)
+        self.assertIn("if (!hasVerifiedPublicCoreGrant(row, corePayload))", atlas)
+        self.assertIn("return false;", atlas)
         self.assertIn("Core publication held: NO_INDEPENDENT_CORE_PUBLICATION_GRANT", atlas)
         session = (repo / "public/motion-session/app.mjs").read_bytes()
         pages_session = (repo / "docs/motion-session/app.mjs").read_bytes()
         self.assertEqual(pages_session, session)
-        self.assertIn(b'coreData?.publication_gate?.status === "HOLD"', session)
+        self.assertIn(b'if (!hasVerifiedCoreSessionRelease(coreData))', session)
+        self.assertIn(b'function hasVerifiedCoreSessionRelease(_coreData)', session)
         self.assertIn(b'code: "NO_INDEPENDENT_CORE_PUBLICATION_GRANT"', session)
+
+    def test_legacy_no_gate_payload_cannot_reenable_public_chooser(self):
+        # The physical release-HOLD file protects new deployments, but old
+        # preview scripts may still be in browser caches. Browser entrypoints
+        # must not trust the absence of a publication_gate as permission.
+        host = (Path(__file__).resolve().parents[1] / "public/core-learning/index.html").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("const rows = [];", host)
+        self.assertIn("const availability = [];", host)
+        self.assertIn("Core learner publication data unverified: NO_INDEPENDENT_CORE_PUBLICATION_GRANT", host)
 
     def test_public_hold_is_committed_before_internal_preview_compilation_fails(self):
         data_path = self.public / "data.js"
