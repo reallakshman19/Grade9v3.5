@@ -95,12 +95,19 @@
     return { status: 'READY', code: null, message: null, row };
   }
 
+  function hasVerifiedPublicCoreGrant(_row, _payload) {
+    // No source-bound academic/Owner grant verifier exists for Core learner
+    // publication. Status flags or cached compiler projections cannot grant.
+    // A future positive path needs an independently reviewed receipt protocol.
+    return false;
+  }
+
   function resolveCoreDestinationsFor(row, corePayload) {
     const availability = ((row || {}).availability || {}).core || 'UNAVAILABLE';
     const refs = Array.isArray((row || {}).core_projection_refs) ? row.core_projection_refs : [];
     // A structurally READY Atlas mapping cannot override the separately
     // governed publication gate. Never link a withheld Core projection.
-    if (corePayload?.publication_gate?.status === 'HOLD') {
+    if (!hasVerifiedPublicCoreGrant(row, corePayload)) {
       return {
         status: 'HOLD',
         code: 'NO_INDEPENDENT_CORE_PUBLICATION_GRANT',
