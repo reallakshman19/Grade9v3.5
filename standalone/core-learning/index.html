@@ -117,8 +117,13 @@
     import { mountCoreLearningPage } from "../../public/js/core-learning/core-learning-host.mjs";
 
     const data = window.GRADE9V3_CORE;
-    const rows = (Array.isArray(data?.core_projections) ? data.core_projections : []).filter(row => row?.subject !== "TEST");
-    const availability = (Array.isArray(data?.bucket_availability) ? data.bucket_availability : []).filter(row => row?.subject !== "TEST");
+    // A successful compiler build, legacy cached data.js, and a status string
+    // are not academic publication grants. Until an independently reviewed
+    // source-bound positive grant verifier exists, the public host admits
+    // exactly zero Core projections, regardless of incoming preview bytes.
+    // Internal build()/preflight consumers use their separate compiler path.
+    const rows = [];
+    const availability = [];
     const learner = document.getElementById("learner");
     const select = document.getElementById("projection-select");
     const loadButton = document.getElementById("load-projection");
@@ -234,7 +239,7 @@
       if (data?.publication_gate?.status === "HOLD") {
         setStatus("Core learner publication held: " + (data.publication_gate.code || "NO_RELEASE_GRANT") + ". No public activities are available.");
       } else {
-        setStatus("No compiled Core learner projections are available in this generated data build." + reason);
+        setStatus("Core learner publication data unverified: NO_INDEPENDENT_CORE_PUBLICATION_GRANT. No public activities are available.");
       }
     } else {
       loadButton.addEventListener("click", () => mount(select.value));
