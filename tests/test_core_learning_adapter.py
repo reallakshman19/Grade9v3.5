@@ -464,14 +464,15 @@ class CoreLearningProductionAdapter(unittest.TestCase):
             .replace('content="REPOSITORY_ALTERNATE_HOST"', 'content="__PACKAGING_MODE__"')
         )
         self.assertEqual(normalized_public, normalized_standalone)
-        self.assertIn('const rows = (Array.isArray(data?.core_projections) ? data.core_projections : []).filter(row => row?.subject !== "TEST");', public)
+        self.assertIn("const rows = [];", public)
+        self.assertIn("const availability = [];", public)
         self.assertIn("mountCoreLearningPage", public)
         self.assertIn('data-site-root="../"', public)
         self.assertIn("Legacy iframe · migration only", public)
         self.assertIn("row?.projection?.delivery?.web", public)
         self.assertIn('locator.slice("public/".length)', public)
 
-    def test_learner_hosts_label_previews_and_hold_test_sandbox_at_ui_boundary(self):
+    def test_learner_hosts_label_previews_and_refuse_all_unverified_public_rows(self):
         # This protects the ordinary chooser/direct-link mount route, not the
         # underlying bytes of public/core-learning/data.js. Those bytes are
         # separately held by the build_public()/Pages emission boundary.
@@ -487,7 +488,7 @@ class CoreLearningProductionAdapter(unittest.TestCase):
                 relative,
             )
             self.assertIn(
-                '.filter(row => row?.subject !== "TEST")',
+                "const rows = [];",
                 html,
                 relative,
             )
