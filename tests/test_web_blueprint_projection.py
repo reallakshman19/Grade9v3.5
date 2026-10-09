@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import unittest
 from pathlib import Path
 
@@ -39,10 +38,11 @@ class WebBlueprintProjectionTests(unittest.TestCase):
         )
 
     def test_generated_projection_blueprint_is_invariant_across_subject_rows(self):
-        path = REPO / "public/core-learning/data.js"
-        text = path.read_text(encoding="utf-8")
-        marker = "window.GRADE9V3_CORE = "
-        payload = json.loads(text[text.index(marker) + len(marker):].strip().rstrip(";"))
+        # This is a compiler blueprint invariant across canonical subjects,
+        # not an academic/publication-eligibility test. The public file is
+        # intentionally empty while source-bound release grants are absent.
+        # Keep the multi-subject positive oracle on the full internal preview.
+        payload = build_core_learning_data.build()
         refs_by_core = {}
         subjects_by_core = {}
         for row in payload["core_projections"]:
