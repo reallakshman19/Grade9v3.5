@@ -90,11 +90,13 @@ blob ID is `ebc279414f6e91ccef9e6d8d1a90fe19c7b2c4f3`.
 Previously those assets were the same 2,497,022-byte preview blob.
 The developer-facing `docs/core-learning/index.html` deployment mirror
 has also been regenerated from the public host. The host template plus
-public/standalone/Pages HTML now show the preview limitation and, when
-`publication_gate.status=HOLD`, explicitly tell the learner there are no
-authorized public activities. The chooser and direct-link UI additionally
-exclude TEST rows as defense in depth; those UI filters alone would never
-satisfy data custody.
+public/standalone/Pages HTML show the preview limitation and a named
+publication HOLD. The public host now **always** admits zero Core rows
+regardless of incoming `data.js` content. This also guards against a legacy
+cached preview asset without a `publication_gate` field. It displays a
+specific unverified-data denial in that case. The physical data quarantine
+remains authoritative; JavaScript UI checks are defense in depth, not
+source custody or positive release approval.
 
 The Pages generator now checks `public/core-learning/data.js` against the
 source-authoritative `build_core_learning_data.rendered_file()` bytes
@@ -115,15 +117,19 @@ on full canonical source compilation.
 
 **Existing downstream consumers:** the public Core data asset is also read by
 Motion Session and multiple Topic Atlas pages. These were not entitled to
-consume internal previews after the HOLD. The ordinary Topic Atlas resolver
-now distinguishes `publication_gate.status=HOLD` from a missing compiled
-projection and explicitly labels Core navigation as withheld, without
-suppressing separately governed visual/portable routes. The Motion Session
-entrypoint fails before learner identity resolution with
-`NO_INDEPENDENT_CORE_PUBLICATION_GRANT`, using its existing unavailable
-panel and trace. Their public source files and GitHub Pages mirrors were
-updated consistently. Focused regression assertions pin those source/mirror
-invariants, **not** a successful real browser journey.
+consume internal previews after the HOLD. Topic Atlas and Motion
+Session now use **explicit default-deny predicates**, which return false
+until independently verified, source-bound positive release grants and
+a reviewer-approved verifier actually exist. Missing, legacy or forged
+machine status fields do not admit the Core route. Topic Atlas continues
+to show Core navigation as held, without changing separately governed
+visual/portable destinations. Motion Session fails before learner identity
+resolution with `NO_INDEPENDENT_CORE_PUBLICATION_GRANT`, using its existing
+unavailable panel and trace. Their public source files and Pages mirrors
+were updated consistently. Static regression assertions pin the source and
+mirror invariants; the new Chromium denial suite additionally simulates a
+legacy cached preview and checks the actual host/session response. This
+does **not** qualify a positive released learner journey.
 
 **Pages read-after-check protection:** The Pages generator separately checks
 the actual `core-learning/data.js` bytes at the point they enter the mirror,
@@ -165,13 +171,15 @@ change does not revoke or grant those rights.
   scope. These newly saved bytes do not prove that a deployed Pages URL
   has updated, that caches have expired, or that no other independent
   public site references old previews.
-- A deterministic-source and mirror-byte check is not an executing
-  Python test or Chromium journey. The owning workflow now requests the full
-  adapter suite, dedicated Pages custody tests, the existing Pages freshness
-  suite, generator host parity and a full Pages --check. GitHub Actions has
-  recently failed
-  all jobs with **zero executed steps**. Exact-head execution and browser
-  verification are mandatory.
+- A deterministic-source and mirror-byte check does not by itself
+  qualify a Chromium journey. The copied repository's executing Core1 fast
+  workflow previously passed the 41+ focused Python/Pages tests on an
+  earlier candidate. The current owning workflow requests those suites and
+  now separately runs pinned, exact-SHA Chromium **negative** tests on the
+  public and Pages sites, including the legacy cached-preview scenario.
+  New browser CI execution must be checked at the exact revised head; a
+  queued run is **NOT_RUN**, not PASS. Broad assurance/guardrail failures
+  remain separate blockers.
 
 ### Required release completion work (separate authorization)
 
@@ -185,5 +193,6 @@ using compiler renderability as qualification. Do not silently grant
 source custody, QRT 28-cell signoff, V3.1/Common CI, transfer or merge
 authority.
 
-**State: DRAFT / publication HOLD / Python+browser NOT_TESTED until steps
-actually execute.**
+**State: DRAFT / publication HOLD / previous exact-head focused Python
+and Pages PASS; revised-head Python/Chromium NOT_RUN until CI executes;
+positive learner-release, QRT and merge NOT_AUTHORIZED.**
