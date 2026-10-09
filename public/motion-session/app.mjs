@@ -490,12 +490,28 @@ function wireActions() {
   });
 }
 
+function hasVerifiedCoreSessionRelease(_coreData) {
+  // A machine status or compiler preview is not academic release authority.
+  // This must remain fail-closed until independent grant verification exists.
+  return false;
+}
+
 async function init() {
   const selection = diagnosticMode === "unknown-identity"
     ? { ...SESSION_CASE, rung: "__diagnostic_unknown_rung__" }
     : SESSION_CASE;
 
   try {
+    // No source-bound positive Core release grant verifier exists. In
+    // particular, legacy cached payloads without publication_gate cannot
+    // bypass the learner-session custody boundary.
+    if (!hasVerifiedCoreSessionRelease(coreData)) {
+      throw Object.assign(
+        new Error("Public Core learner sessions require independently authorized release grants."),
+        { code: "NO_INDEPENDENT_CORE_PUBLICATION_GRANT",
+          detail: "This Core activity is an internal compiler preview, not released learner content." },
+      );
+    }
     identity = resolveMotionSessionIdentity(webData, coreData, selection);
     recorder = createMotionSessionTraceRecorder({
       runId: runId(),
