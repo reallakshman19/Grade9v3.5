@@ -8,6 +8,7 @@ on:
     paths:
       - "tests/test_core_learning_adapter.py"
       - "tests/test_core_publication_boundary.py"
+      - "tests/core1_publication_hold_browser.mjs"
       - "tests/test_web_blueprint_projection.py"
       - "Shared/tools/build_pages_site.py"
       - "public/js/topic-atlas.js"
@@ -59,3 +60,31 @@ jobs:
       - name: Verify actual public Core data from release-safe generator
         run: python -c 'from pathlib import Path; from Shared.tools import build_core_learning_data as b; assert Path("public/core-learning/data.js").read_bytes() == b.rendered_file()["public/core-learning/data.js"]'
 
+  held-public-core-browser:
+    # Negative HTTP/Chromium proof of publication HOLD at both deployed roots.
+    # Deliberately does not replace positive Core1B/Core2B learner journeys.
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout candidate exact head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact candidate identity
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          actual="$(git rev-parse HEAD)"
+          echo "EXPECTED_CANDIDATE_SHA=$EXPECTED_SHA"
+          echo "CHECKED_OUT_SHA=$actual"
+          test "$actual" = "$EXPECTED_SHA"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install pinned Chromium browser dependencies
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Assert public and Pages held routes in real Chromium
+        run: node tests/core1_publication_hold_browser.mjs
