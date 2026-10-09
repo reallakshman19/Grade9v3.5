@@ -110,6 +110,51 @@ try {
       "Motion Session must preserve the named denial in its trace");
       assert.deepEqual(errors, [], `${surface} Motion Session JS errors: ${errors.join(" | ")}`);
       console.log(`${surface}/motion-session: HOLD before identity and interaction`);
+
+      // Simulate a legacy cached asset that still contains an internal Physics
+      // compiler preview and does not carry the new publication_gate. The
+      // browser must not interpret a formerly usable projection as released.
+      const stalePayload = {
+        generated_by: "Shared/tools/build_core_learning_data.py",
+        provider_status: "PRODUCTION_COMPILED_CANONICAL",
+        core_projections: [{
+          id: "physics:mic-phy-kin-2d-independent-components:core1b",
+          subject: "Physics",
+          source_ref: "MIC-PHY-KIN-2D-INDEPENDENT-COMPONENTS",
+          projection: { core: "CORE1B" },
+        }],
+        bucket_availability: [],
+      };
+      const staleScript = "window.GRADE9V3_CORE = " + JSON.stringify(stalePayload) + ";";
+      await page.route("**/core-learning/data.js", (route) => route.fulfill({
+        status: 200, contentType: "text/javascript", body: staleScript,
+      }));
+      await page.goto(
+        `${base}/${surface}/core-learning/index.html?projection=physics:mic-phy-kin-2d-independent-components:core1b`,
+        { waitUntil: "load" },
+      );
+      await page.waitForFunction(() => window.__coreLearningStaticHostReady === true, null, { timeout: 15000 });
+      const stale = await page.evaluate(() => ({
+        incomingRows: window.GRADE9V3_CORE?.core_projections?.length,
+        choices: document.getElementById("projection-select")?.options.length,
+        disabled: document.getElementById("projection-select")?.disabled,
+        status: document.getElementById("projection-status")?.textContent || "",
+      }));
+      assert.equal(stale.incomingRows, 1, "legacy fixture not actually injected");
+      assert.equal(stale.choices, 0, "legacy preview reappeared in the public chooser");
+      assert.equal(stale.disabled, true, "legacy preview unlocked public chooser");
+      assert.match(stale.status, /Core learner publication data unverified: NO_INDEPENDENT_CORE_PUBLICATION_GRANT/);
+
+      await page.goto(`${base}/${surface}/motion-session/index.html`, { waitUntil: "load" });
+      await page.waitForFunction(
+        () => document.querySelector("#session-unavailable [data-error-code]")?.textContent
+          === "NO_INDEPENDENT_CORE_PUBLICATION_GRANT", null, { timeout: 15000 },
+      );
+      assert.equal(await page.evaluate(() => window.__motionSessionReady), false);
+      assert.equal(await page.evaluate(() => window.__motionSessionIdentity), null);
+      assert.deepEqual(errors, [], `${surface} legacy-cache JS errors: ${errors.join(" | ")}`);
+      await page.unroute("**/core-learning/data.js");
+      console.log(`${surface}: legacy no-grant compiler-preview replay correctly withheld`);
     } finally {
       await context.close();
     }
