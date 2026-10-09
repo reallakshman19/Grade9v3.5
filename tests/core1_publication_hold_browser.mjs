@@ -153,8 +153,36 @@ try {
       assert.equal(await page.evaluate(() => window.__motionSessionReady), false);
       assert.equal(await page.evaluate(() => window.__motionSessionIdentity), null);
       assert.deepEqual(errors, [], `${surface} legacy-cache JS errors: ${errors.join(" | ")}`);
+      // Real Topic Atlas must also deny legacy Core deep links, while its
+      // separately governed visual and portable links remain available.
+      await page.goto(`${base}/${surface}/physics/motion-2d/atlas.html`, { waitUntil: "load" });
+      await page.waitForFunction(
+        () => Boolean(window.ATLAS?.__test?.resolveCoreDestinationsFor
+          && document.getElementById("card-R1")), null, { timeout: 15000 },
+      );
+      await page.evaluate(() => window.ATLAS.openRung("R1"));
+      await page.waitForFunction(
+        () => document.getElementById("card-R1")?.open === true, null, { timeout: 10000 },
+      );
+      const atlas = await page.evaluate(() => {
+        const card = document.getElementById("card-R1");
+        return {
+          incomingRows: window.GRADE9V3_CORE?.core_projections?.length,
+          holdVisible: card?.textContent?.includes(
+            "Core publication held: NO_INDEPENDENT_CORE_PUBLICATION_GRANT"),
+          coreLinks: card?.querySelectorAll('a[href*="core-learning"][href*="projection="]').length || 0,
+          visualLinks: card?.querySelectorAll('a[href*="shared-clock"]').length || 0,
+          portableLinks: card?.querySelectorAll('a[href*="portable-workbench"]').length || 0,
+        };
+      });
+      assert.equal(atlas.incomingRows, 1, "legacy preview did not reach Atlas");
+      assert.equal(atlas.holdVisible, true, "Atlas did not explain the Core HOLD");
+      assert.equal(atlas.coreLinks, 0, "cached compiler preview leaked into Atlas Core links");
+      assert.ok(atlas.visualLinks >= 1, "unrelated visual destinations were suppressed");
+      assert.ok(atlas.portableLinks >= 1, "unrelated portable destinations were suppressed");
+      assert.deepEqual(errors, [], `${surface} legacy-cache Atlas errors: ${errors.join(" | ")}`);
       await page.unroute("**/core-learning/data.js");
-      console.log(`${surface}: legacy no-grant compiler-preview replay correctly withheld`);
+      console.log(`${surface}: legacy Core preview withheld; Atlas visual and portable links retained`);
     } finally {
       await context.close();
     }
