@@ -2942,6 +2942,15 @@ q('[data-g9-concept-check]').forEach(c=>{
     return js.replace(print_original, print_checkpoint, 1)
 
 
+# Only the authored TEST/Core1A format gate withholds its construction on
+# screen. The learner print must contain the full concept lesson, including
+# all three authored SVG stages. Never apply this override to source Core2A.
+CONCEPT_FIRST_PRINT_CSS = (
+    '@media print{html[data-g9-role="CORE1A"] [data-g9-concept-target][hidden]'
+    '{display:block!important}}'
+)
+
+
 def _mode_href(href: str, mode: str) -> str:
     """Rebase public-root-relative links for the governed standalone publication path."""
     if mode == "SINGLE_FILE" and href.startswith("../../../"):
@@ -3142,7 +3151,7 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
             '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<meta name="g9-render" content="{RENDERER_VERSION} {digest}">'
             f'{_shared_head_assets(ctx, mode)}'
-            f'<title>{esc(ROLE_TITLE[role])} · {esc(m["title"])}</title><style>{CSS}{CORE1B_PRINT_CSS if role == "CORE1B" else ""}{COMPONENT_CSS}{learning_repair.CSS}{layout_css(ctx.blueprints)}</style></head>'
+            f'<title>{esc(ROLE_TITLE[role])} · {esc(m["title"])}</title><style>{CSS}{CORE1B_PRINT_CSS if role == "CORE1B" else ""}{CONCEPT_FIRST_PRINT_CSS if checkpoint_page else ""}{COMPONENT_CSS}{learning_repair.CSS}{layout_css(ctx.blueprints)}</style></head>'
             f'<body data-core="{role}" data-blueprint-ref="{esc(bp["id"])}@{esc(bp["version"])}">'
             f'{header}{crumbs}<noscript>Answers open after you attempt; this page needs JavaScript.</noscript>'
             f'<main><h1>{esc(m["title"])}: {esc(ROLE_TITLE[role])}</h1>'
