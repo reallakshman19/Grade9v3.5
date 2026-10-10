@@ -125,5 +125,45 @@ class ExternalReviewerIntegrityTests(unittest.TestCase):
         self.assertIn("NO_TRUSTED_ASSESSOR_WITNESS", p.stdout)
 
 
+    def test_malformed_metadata_types_are_redacted_and_rejected(self):
+        sentinel = "PRIVATE_LEARNER_RESPONSE_NEVER_LOG_THIS"
+        cases = [
+            ("item_content_sha256", {"raw_response": sentinel}, "E3B_HASH_FIELD_INVALID"),
+            ("repair_complete_utc", sentinel, "E3B_CHRONOLOGY_INVALID"),
+            ("new_item_hint_count", sentinel, "E3B_ASSISTANCE_OR_ANSWER_EXPOSURE"),
+            ("custody_scope", [sentinel], "E3B_EXTERNAL_CUSTODY_NOT_ESTABLISHED"),
+            ("math_review_status", {"claim": sentinel}, "E3B_SELF_AWARDED_REVIEW_UNAUTHORIZED"),
+        ]
+        for field, value, code in cases:
+            with self.subTest(field=field):
+                candidate = payload()
+                candidate[field] = value
+                report = gate.verify({"payload": candidate, "hmac_sha256": "f" * 64}, TEST_KEY)
+                self.assertIn(code, report["blocking_codes"])
+                self.assertFalse(report["mac_integrity_verified"])
+                self.assertFalse(report["credit_eligible"])
+                self.assertNotIn(sentinel, json.dumps(report))
+
+    def test_duplicate_private_envelope_keys_fail_closed_without_echo(self):
+        import tempfile
+        sentinel = "PRIVATE_STUDENT_ID_DO_NOT_LOG_THIS"
+        with tempfile.TemporaryDirectory(prefix="e3-assessor-neg-") as folder:
+            private = Path(folder) / "poisoned-private-envelope.json"
+            result_path = Path(folder) / "safe-result.json"
+            private.write_text(
+                '{"payload": {}, "payload": {"student": "' + sentinel
+                + '"}, "hmac_sha256": "' + "a" * 64 + '"}',
+                encoding="utf-8")
+            proc = subprocess.run(
+                [sys.executable, str(SCRIPT), "--private-envelope", str(private),
+                 "--output", str(result_path), "--require-external-integrity"],
+                cwd=ROOT, capture_output=True, text=True, check=False)
+            self.assertEqual(proc.returncode, 1)
+            report_text = result_path.read_text(encoding="utf-8")
+            self.assertNotIn(sentinel, proc.stdout + proc.stderr + report_text)
+            report = json.loads(report_text)
+            self.assertIn("E3B_PRIVATE_ENVELOPE_UNREADABLE", report["blocking_codes"])
+            self.assertFalse(report["credit_eligible"])
+
 if __name__ == "__main__":
     unittest.main()
