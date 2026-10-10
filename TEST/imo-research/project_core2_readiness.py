@@ -100,6 +100,37 @@ def evaluate(row: dict, item: dict | None, repo: Path) -> dict:
                    for obj in (acquisition, resource, question)):
             findings.append("EVIDENCE_RECORD_INVALID")
         else:
+            required_acquisition = {
+                "acquisition_id", "version", "subject", "bucket_id",
+                "resource_ref", "source_kind", "requested_locator",
+                "resolved_locator", "acquired_at", "media_type",
+                "byte_length", "sha256", "snapshot_ref",
+            }
+            required_components = {
+                "original_identifier", "stem", "subparts", "options",
+                "conditions", "figures", "captions", "hints", "answer_or_rubric",
+            }
+            proof = source_custody.proof_for(question) or {}
+            components = proof.get("components")
+            if (set(acquisition) != required_acquisition
+                or not isinstance(acquisition.get("acquisition_id"), str)
+                or not acquisition["acquisition_id"].strip()
+                or acquisition.get("source_kind") not in {"FILE", "URL"}
+                or not isinstance(acquisition.get("sha256"), str)
+                or not re.fullmatch(r"[0-9a-f]{64}", acquisition["sha256"])
+                or not isinstance(acquisition.get("byte_length"), int)
+                or acquisition["byte_length"] <= 0
+            ):
+                findings.append("ACQUISITION_METADATA_INVALID")
+            if (not isinstance(components, dict)
+                or set(components) != required_components
+                or any(value not in {"PRESERVED", "NOT_PRESENT_IN_SOURCE",
+                                     "EXTERNAL_REFERENCE_VERIFIED"}
+                       for value in components.values())
+                or not isinstance(proof.get("acquisition_ref"), str)
+                or not proof["acquisition_ref"]
+            ):
+                findings.append("CUSTODY_COMPONENT_COVERAGE_INVALID")
             if acquisition.get("requested_locator") != row["source_document_url"]:
                 findings.append("SOURCE_DOCUMENT_MISMATCH")
             if acquisition.get("resource_ref") != resource.get("id"):
@@ -113,7 +144,7 @@ def evaluate(row: dict, item: dict | None, repo: Path) -> dict:
                 verification = source_pipeline.verify_acquisition(acquisition, repo=repo)
                 if not verification["passed"]:
                     findings.append("RETAINED_BYTES_DIGEST_OR_SCHEMA_FAILED")
-            if resource.get("_collection") != "resources" or (
+            if resource.get("_collection") != "resources" or not resource.get("origin") or (
                 resource.get("snapshot_digest") != acquisition.get("sha256")
                 or resource.get("snapshot_ref") != snap
             ):
@@ -138,7 +169,8 @@ def evaluate(row: dict, item: dict | None, repo: Path) -> dict:
                 findings.append("FULL_ITEM_INSPECTION_NOT_RECORDED")
             records = {resource.get("id"): resource} if resource.get("id") else {}
             for figure in item["supporting_resources"]:
-                if isinstance(figure, dict) and isinstance(figure.get("id"), str):
+                if (isinstance(figure, dict) and isinstance(figure.get("id"), str)
+                    and figure["id"] and figure["id"] not in records):
                     records[figure["id"]] = figure
                 else:
                     findings.append("FIGURE_RESOURCE_RECORD_INVALID")
