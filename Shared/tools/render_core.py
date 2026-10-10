@@ -2923,6 +2923,13 @@ q('[data-g9-concept-check]').forEach(c=>{
     setProgress('guided_without_check','guided example open without checking the prediction.');
     feedback.textContent='Guided study opened. No prediction, explanation or independent mastery was verified.';
     openGuided()
+  });
+  // A staged teaching SVG is fitted to its visible interactive stage.
+  // Printing displays all authored stages, so recompute its viewBox for print
+  // and restore the interactive fit on return. This is TEST/Core1A only.
+  const printMode=window.matchMedia('print');
+  printMode.addEventListener('change',()=>{
+    q('figure[data-g9-figure]',article).forEach(fitFigure);
   })
 });
 """
