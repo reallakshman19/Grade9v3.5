@@ -28,6 +28,16 @@ NODE_OK = shutil.which("node") is not None
 
 def complete_fixture(tmp: Path) -> Path:
     pkg = json.loads((REPO / MATH).read_text(encoding="utf-8"))
+    # Build an in-memory TEST fixture: historic released labels do not satisfy
+    # today's library *source* schema and would prevent these adversarial
+    # visual/continuity tests from reaching the rendered quality gate at all.
+    # Never modify the committed owner package or invent reviewer approval.
+    for question in pkg["questions"]:
+        if question.get("status") == "PUBLISHED":
+            question["status"] = "CANDIDATE"
+        answer = question.get("answer") or {}
+        if answer.get("verification_status") == "VERIFIED_CANONICAL":
+            answer["verification_status"] = "CHECKED_BY_AUTHOR"
     rep = next(r for r in pkg["representations"] if r["id"] == "REP-MATH-NUMBER-LINE")
     rep["rendered_asset_refs"] = [SVG]
     rep["reveal_stages"] = [
