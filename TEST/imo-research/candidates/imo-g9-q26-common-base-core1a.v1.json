@@ -149,6 +149,27 @@
             "on_inconsistent": "Your factor choice and numerical values do not yet agree. Recompute both quantities; an arithmetic slip and a conceptual misunderstanding cannot be distinguished from this response alone.",
             "on_additive_route": "The additive relationship has been selected again. Compare both computations carefully. This is a repeated answer pattern, not proof of a lasting misconception.",
             "on_conflict": "Your computed values contradict the additive choice. Reconsider the exponent law and explain the conflict; no mastery judgment is made.",
+            "rule_check": {
+              "status": "LOCAL_SELECTED_RULE_NOT_INDEPENDENT_REASONING",
+              "prompt": "Which general rule justifies the numerical difference? This is a recognition check, not grading of your written explanation.",
+              "choices": [
+                {
+                  "value": "FACTOR_LAW",
+                  "label": "a^(n+1) = a^n × a because the extra exponent means one additional factor of a."
+                },
+                {
+                  "value": "ADD_BASE",
+                  "label": "a^(n+1) = a^n + a because the exponent increases by one."
+                },
+                {
+                  "value": "MULTIPLY_EXPONENT",
+                  "label": "a^(n+1) = a^n × (n+1) because the new exponent is one greater."
+                }
+              ],
+              "correct_value": "FACTOR_LAW",
+              "on_missing": "Choose an exponent-law explanation for your two calculations. Your own written words have not been graded.",
+              "on_wrong": "Your numerical calculations align, but the selected explanation does not justify them. Review how an extra factor enters the power."
+            },
             "on_aligned": "Both calculations match the exponent-law comparison. This is structured practice only; your written mathematical explanation remains ungraded."
           }
         }
