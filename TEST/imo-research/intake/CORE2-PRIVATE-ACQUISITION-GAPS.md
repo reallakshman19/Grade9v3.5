@@ -60,6 +60,36 @@ The four exact ephemeral byte hashes/sizes are now frozen as **historical compar
 
 The report never marks a question eligible or published merely because the historic hashes match. The version mismatch adds `REVIEW_SOURCE_DOCUMENT_VERSION_DRIFT` to the ten/four/etc affected item rows so the operator can prioritize exact-version checks. This source-version comparison is **read-only observation**, not a new rights or academic authority.
 
+## Q004 self-spot-check packet bound to a *real* retained PDF
+
+After (and only after) a PDF snapshot and receipt exist in an operator-controlled restricted workspace, generate a closed-schema **metadata-only** Q004 inspection packet:
+
+```sh
+python TEST/imo-research/q004_private_spotcheck.py template \
+  --private-dir /private/imo-g9-source-custody \
+  > /private/imo-g9-source-custody/q004.inspection.json
+```
+
+The template captures source ID, zero-based PDF item/key pages 0 and 1, printed position 4, previously visually sighted printed answer **B**, derived numeric table relation and excluded distractors, *current exact snapshot SHA/size* when a real receipt exists, and the historical PDF-version comparison. It contains **zero original source PDF text, options or figure pixels**.
+
+An authorized operator must open **that retained PDF** and compare all nine components themselves. The nine `source_components` entries start as `NOT_CHECKED`. For each component, record the appropriate *self-inspected disposition*, using exactly the defined statuses in `q004_private_spotcheck.py:FIELDS`; this includes checking the printed number, stem, options and order, conditions, tabular visual, source key and explicit absence of subparts/captions/hints when justified. Set `spotcheck_actor_role: SELF_SPOT_CHECK` and a real UTC timestamp such as `2026-10-10T04:59:00Z`. Never pre-fill confirmations from a rendered web observation alone or mark the reviewer independent. Do not add publisher wording, copied options or images to the packet.
+
+Verify the operator's private assessment:
+
+```sh
+python TEST/imo-research/q004_private_spotcheck.py verify \
+  --private-dir /private/imo-g9-source-custody \
+  --assessment /private/imo-g9-source-custody/q004.inspection.json
+```
+
+The tool revalidates the snapshot and acquisition receipt at verification time. It fails closed on missing or altered SHA/byte length, a changed original question/item page/key, wrong math, missing nine-component self-checks, source-version mismatch, forged rights/reviewer/admission data or assessment outside the private workspace. A hypothetical exact historical byte match plus **all nine** operator attestations may return `SELF_SPOT_CHECK_COMPLETE_NOT_CORE2_OR_RIGHTS_AUTHORIZED`; this is explicitly a **same-principal self-attestation, not independent source authenticity/correctness certification**. The source counter remains **68 HOLD**; legal rights and Owner Core2 acceptance remain external. Tests use **invented PDF bytes** and a mocked positive version-match branch; they never claim the original source was acquired.
+
+Research-only test command:
+
+```sh
+python -m unittest discover -s tests -p 'test_imo_core2_q004_spotcheck.py' -v
+```
+
 ## Required next acceptance work
 
 For each printed position: inspect the exact PDF item; preserve exact source number, stem, conditions, option order, captions, figures, source hints and source answer independently of author's mathematical computation; resolve the ten known discrepancy cases affecting eleven positions; record a rights disposition and authentic question-level proof via existing source-custody structures. Engineering **self-check and spot review** remain distinct from genuine source rights and Owner/Core/QRT publication decisions.
