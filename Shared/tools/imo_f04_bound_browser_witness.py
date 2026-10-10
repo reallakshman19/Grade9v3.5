@@ -105,7 +105,8 @@ def evaluate(
             problems.append("INDEPENDENT_CANONICAL_DIGEST_MISMATCH")
         if not authority_safe:
             problems.append("CANONICAL_AUTHORITY_UNSAFE")
-        if audit.get("blocking_findings") != [] or audit.get("render", {}).get("navigation_findings") != []:
+        if (audit.get("blocking_findings") != [] or not isinstance(render, dict)
+                or render.get("navigation_findings") != []):
             problems.append("CANONICAL_RENDER_BLOCKED")
     except (OSError, ValueError, UnicodeError):
         problems.append("CANONICAL_AUDIT_UNREADABLE")
