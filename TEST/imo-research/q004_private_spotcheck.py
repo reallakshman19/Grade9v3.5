@@ -12,6 +12,8 @@ import copy
 import json
 import re
 from datetime import datetime, timezone
+import os
+import stat
 from pathlib import Path
 
 from core2_source_acquisition_gaps import (
@@ -190,9 +192,18 @@ def _assessment_path(workspace: Path, path: Path) -> Path:
     require(path.is_absolute() and not path.is_symlink(),
             "assessment input must be an absolute non-symlink file")
     p = path.resolve(strict=False)
-    require(p.parent == workspace and p.is_file()
-            and p.name.endswith(".json"),
-            "assessment must be a JSON file inside the private workspace")
+    # A prepared two-page inspection bundle may keep its unchecked packet
+    # alongside private page renders. Do not permit arbitrary subdirectories.
+    private_bundle = workspace / "q004-private-review"
+    bundled = (p.parent == private_bundle
+               and p.name == "q004.inspection.json"
+               and private_bundle.is_dir()
+               and not private_bundle.is_symlink()
+               and private_bundle.stat().st_uid == os.getuid()
+               and stat.S_IMODE(private_bundle.stat().st_mode) == 0o700)
+    require(p.is_file() and ((p.parent == workspace and
+                             p.name.endswith(".json")) or bundled),
+            "assessment must be a permitted private Q004 JSON file")
     return p
 
 
