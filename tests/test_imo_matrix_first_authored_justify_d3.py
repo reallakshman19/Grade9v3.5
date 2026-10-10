@@ -9,6 +9,7 @@ import copy
 import json
 import re
 import unittest
+from html.parser import HTMLParser
 from pathlib import Path
 
 from Shared.tools import (
@@ -34,6 +35,34 @@ def snapshot():
     authored = load(ORIGINAL)["records"][0]
     question = next(q for q in pkg["questions"] if q["id"] == ID)
     return pkg, manifest, authored, question
+
+
+class PreAttemptVisibleText(HTMLParser):
+    """Browser-visible text excludes inert solution/rung templates and JS/CSS."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.hidden_depth = 0
+        self.script_depth = 0
+        self.visible = []
+        self.protected = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "template":
+            self.hidden_depth += 1
+        if tag in ("script", "style"):
+            self.script_depth += 1
+
+    def handle_endtag(self, tag):
+        if tag == "template":
+            self.hidden_depth -= 1
+        if tag in ("script", "style"):
+            self.script_depth -= 1
+
+    def handle_data(self, value):
+        if self.script_depth:
+            return
+        (self.protected if self.hidden_depth else self.visible).append(value)
 
 
 class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
@@ -291,6 +320,29 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertNotIn("SOF-IMO-G09-", html)
         self.assertIn("MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS",
                       pages["core1a.html"])
+
+    def test_actual_render_keeps_proof_and_final_verdict_in_inert_template(self):
+        _, _, _, q = snapshot()
+        pages, gaps, _, _, _ = render_core.build_report(
+            MANIFEST, "PAGES", held_to="REFERENCE")
+        self.assertEqual(gaps, [], gaps)
+        html = pages["core2a.html"]
+        check = PreAttemptVisibleText()
+        check.feed(html)
+        check.close()
+        visible = " ".join(check.visible)
+        protected = " ".join(check.protected)
+        # The learner sees the problem, may commit a free-response attempt,
+        # and then chooses to inspect the reasoned proof in an inert template.
+        self.assertIn(q["stem"], visible)
+        self.assertNotIn(q["answer"]["summary"], visible)
+        self.assertIn(q["answer"]["summary"], protected)
+        self.assertNotIn("gcd(2,3)=1", visible)
+        self.assertIn("gcd(2,3)=1", protected)
+        self.assertNotIn("Claim true: 6 divides", visible)
+        self.assertIn("data-g9-commit", html)
+        self.assertIn("data-requires-attempt", html)
+        self.assertIn('data-g9-payload-slot', html)
 
     def test_no_source_core2_or_learner_promotion_via_authored_render(self):
         pkg, manifest, _, q = snapshot()
