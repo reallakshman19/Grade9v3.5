@@ -53,11 +53,13 @@ def adapt(package: dict, manifest: dict, pilot: dict, practice: str, concept: st
         raise AdaptationError('unrecognised/mismatched candidate or protected gate: '
                               + ','.join(sorted(identity_errors - allowed)))
     qid, mic, step = before['question_id'], before['microtopic_id'], before['repair_step_id']
-    if not all(isinstance(k, str) and k for k in (qid, mic, step)):
-        raise AdaptationError('missing selected candidate identity')
+    if not all(isinstance(k, str) and re.fullmatch(r'[A-Za-z0-9_-]+', k) for k in (qid, mic, step)):
+        raise AdaptationError('missing or unsafe selected candidate identity')
 
     question_article = _html_article(practice, qid=qid, role='CORE2A')
     concept_article = _html_article(concept, qid=mic, role='CORE1A')
+    if 'data-g9-attempt-box' not in question_article or 'data-g9-commit' not in question_article:
+        raise AdaptationError('attempt submission controls are missing')
     repair_openings = re.findall(r'<a\b[^>]*\bdata-g9-repair-ref="' + re.escape(escape(step, quote=True))
                                  + r'"[^>]*>', question_article, re.S)
     if len(repair_openings) != 1:
@@ -90,6 +92,7 @@ def adapt(package: dict, manifest: dict, pilot: dict, practice: str, concept: st
         new_step = old_step
     else:
         new_step = old_step[:-1] + f' id="{escape(step, quote=True)}">'
+    new_step = new_step[:-1] + ' tabindex="-1">' if 'tabindex=' not in new_step else new_step
     new_concept_article = concept_article.replace(old_step, new_step, 1)
 
     # Add one precise, explicitly assisted return path. This is NOT an
@@ -106,6 +109,25 @@ def adapt(package: dict, manifest: dict, pilot: dict, practice: str, concept: st
         raise AdaptationError('candidate already contains held adapter marker')
     new_concept_article = new_concept_article[:-len('</article>')] + return_link + '</article>'
     concept = concept.replace(concept_article, new_concept_article, 1)
+    # Only focus after the existing concept-first gate has revealed its content.
+    # No form, grading, hint or hidden state is changed by this adapter.
+    focus_js = (
+      '<script data-g9-held-step-focus>'
+      '(()=>{const wanted="' + step + '";'
+      'if(location.hash!=="#"+wanted)return;'
+      'const el=document.getElementById(wanted);if(!el)return;'
+      'const gated=el.closest("[data-g9-concept-target]");'
+      'const focus=()=>{if(gated&&gated.hidden)return;'
+      'el.focus({preventScroll:true});el.scrollIntoView({block:"center"})};'
+      'if(!gated||!gated.hidden){requestAnimationFrame(focus);return}'
+      'const obs=new MutationObserver(()=>{if(!gated.hidden){obs.disconnect();'
+      'requestAnimationFrame(focus)}});'
+      'obs.observe(gated,{attributes:true,attributeFilter:["hidden"]})'
+      '})();</script>'
+    )
+    if 'data-g9-held-step-focus' in concept or concept.count('</body>') != 1:
+        raise AdaptationError('concept page does not have an unmodified closing body')
+    concept = concept.replace('</body>', focus_js + '</body>', 1)
     after = audit(package, manifest, pilot, practice, concept, package_ref=package_ref)
     if after['status'] != 'STRUCTURAL_CANDIDATE_HELD':
         raise AdaptationError('post-adaptation round-trip contract failed: '
