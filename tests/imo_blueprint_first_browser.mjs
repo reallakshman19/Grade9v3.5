@@ -75,10 +75,16 @@ try {
                 ' at ' + width + 'px: ' + JSON.stringify(bounds));
             };
             await assertLastFactorFits('screen');
-            // Inspect actual print CSS positioning before Chromium PDF creation.
-            await page.emulateMedia({ media: 'print' });
-            await assertLastFactorFits('print CSS');
-            await page.emulateMedia({ media: 'screen' });
+            // An A4 printed page is about 794 CSS px wide at 96 dpi; imposing
+            // print CSS on a 320px device viewport is NOT the printed page.
+            // Real PDF page images are still inspected separately.
+            if (width === 390) {
+              await page.setViewportSize({ width: 794, height: 1123 });
+              await page.emulateMedia({ media: 'print' });
+              await assertLastFactorFits('A4-sized print CSS');
+              await page.emulateMedia({ media: 'screen' });
+              await page.setViewportSize({ width, height: 900 });
+            }
           }
           const secret = variant === 'boundary' ? 'n mod 4 != 1' : 'gcd(24,5)=1';
           assert.ok(!before.includes(secret), 'protected transfer proof is visible before an attempt');
