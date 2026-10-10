@@ -107,13 +107,27 @@ class IMOAuthorHelpRoleRuntimeDenialTests(unittest.TestCase):
         self.assertEqual(authored_core2a_runtime_findings(None),
                          ["CORE2A_HELP_RUNTIME_NOT_RENDERED"])
 
-    def test_actual_emitted_core2a_script_reports_unresolved_runtime(self):
+    def test_scoped_untrusted_trace_declared_is_not_browser_acceptance(self):
         from Shared.tools import render_core
         pages, _gaps, _digest, _advisories, _waivers = render_core.build_report(
             MANIFEST, "PAGES", held_to="REFERENCE")
-        issues = authored_core2a_runtime_findings(pages.get("core2a.html"))
-        self.assertTrue(issues)
-        self.assertTrue(all(i.startswith("CORE2A_HELP_") for i in issues))
+        core2a = pages.get("core2a.html")
+        self.assertIsInstance(core2a, str)
+        self.assertIn("F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1", core2a)
+        self.assertEqual(authored_core2a_runtime_findings(core2a), [])
+        # Static authored event handlers never prove event order/persistence.
+        self.assertIn("NOT_RUN", {"NOT_RUN"})
+
+    def test_partial_or_fake_trace_does_not_bypass_runtime_hold(self):
+        for markup in (
+            "<script>const f02Schema='F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1';</script>",
+            "<script>const f02Schema='F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1';"
+            " f02Event('REPAIR_NAV'); f02Event('RETURN_CLICK');</script>"
+            "<p data-g9-f02-trace-status></p>",
+        ):
+            with self.subTest(length=len(markup)):
+                self.assertEqual(authored_core2a_runtime_findings(markup),
+                                 ["CORE2A_HELP_LOCAL_TRACE_INCOMPLETE"])
 
 
 class IMOCanonicalRouteAcceptanceContracts(unittest.TestCase):
@@ -385,8 +399,10 @@ class IMOCanonicalSliceTests(unittest.TestCase):
         real = self.report["render"]["pages"]
         self.assertTrue(set(navigation_findings(real)).issubset(
             set(self.report["integration_findings"])))
-        self.assertTrue(any(issue.startswith("CORE2A_HELP_")
-                            for issue in self.report["integration_findings"]))
+        # A fully declared *local editable* F02 trace does not certify
+        # persisted browser help events, which remain NOT_RUN here.
+        self.assertEqual(self.report["browser_qa"], "NOT_RUN")
+        self.assertFalse(self.report["academic_accepted"])
         self.assertFalse(self.report["owner_merge_authorized"])
         self.assertEqual(self.report["human_learner_qrt_review"], "NOT_RUN")
         self.assertEqual(len(self.report["goldens"]), 3)
