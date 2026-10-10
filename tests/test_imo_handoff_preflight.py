@@ -1,5 +1,10 @@
 """Synthetic local-only handoff tests: no acceptance, real student or SOF claim."""
 import copy
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
 import unittest
 from Shared.tools.imo_handoff_preflight import check
 
@@ -56,6 +61,35 @@ class Preflight(unittest.TestCase):
         wrong = check(p,m,s,package_ref='TEST/imo-research/candidates/swap.json')
         self.assertEqual(wrong['state'], 'INCONSISTENT_CANDIDATE_HOLD')
         self.assertIn('MANIFEST_PACKAGE_REF_MISMATCH', wrong['errors'])
+
+    def test_cli_accepts_only_manifest_bound_repo_package(self):
+        pkg, manifest, pilot = fixture()
+        script = Path(__file__).resolve().parents[1] / 'Shared/tools/imo_handoff_preflight.py'
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            p = root / manifest['package_refs'][0]
+            m = root / 'TEST/imo-research/candidates/manifest.json'
+            s = root / 'TEST/imo-research/intake/pilot.json'
+            for path, data in ((p,pkg), (m,manifest), (s,pilot)):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(json.dumps(data), encoding='utf-8')
+            command = [sys.executable, str(script), '--repo-root', str(root),
+                       '--package', str(p), '--manifest', str(m), '--pilot', str(s)]
+            passed = subprocess.run(command, capture_output=True, text=True, check=False)
+            self.assertEqual(passed.returncode, 0, passed.stderr)
+            self.assertEqual(json.loads(passed.stdout)['state'], 'CANDIDATE_HELD_WELL_FORMED')
+            alternate = p.with_name('swapped.json')
+            alternate.write_text(p.read_text(encoding='utf-8'), encoding='utf-8')
+            command[command.index('--package') + 1] = str(alternate)
+            wrong = subprocess.run(command, capture_output=True, text=True, check=False)
+            self.assertNotEqual(wrong.returncode, 0)
+            self.assertIn('MANIFEST_PACKAGE_REF_MISMATCH', json.loads(wrong.stdout)['errors'])
+            outside = root.parent / 'outside-package.json'
+            # Outside-tree traversal rejects before reporting a candidate success.
+            command[command.index('--package') + 1] = str(outside)
+            rejected = subprocess.run(command, capture_output=True, text=True, check=False)
+            self.assertNotEqual(rejected.returncode, 0)
+            self.assertEqual(json.loads(rejected.stdout)['state'], 'INCONSISTENT_CANDIDATE_HOLD')
 
     def test_all_mutations_remain_nonreleasing_and_inconsistent(self):
         cases = [
