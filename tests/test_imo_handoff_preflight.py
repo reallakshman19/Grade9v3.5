@@ -7,8 +7,17 @@ from Shared.tools.imo_handoff_preflight import check
 def fixture():
     package = {
         'subject': 'TEST', 'status': 'CANDIDATE',
+        'package_id': 'TEST-IMO-G9-CORE1A-COMMON-BASE-PILOT',
+        'extensions': {'grade9v3:qrt_admitted': False,
+                       'grade9v3:core2_source_custody_granted': False,
+                       'grade9v3:learner_published': False},
+        'capabilities': [{'id': 'CAP-TEST-IMO-G9-COMMON-EXPONENTIAL-QUANTITY',
+                          'status': 'CANDIDATE'}],
+        'teaching_routes': [{'status': 'CANDIDATE', 'cores': ['CORE1A'],
+                             'microtopic_refs': ['MIC-TEST-IMO-G9-COMMON-BASE-RELATION']}],
         'microtopics': [{'id': 'MIC-TEST-IMO-G9-COMMON-BASE-RELATION',
                          'primary_capability_ref': 'CAP-TEST-IMO-G9-COMMON-EXPONENTIAL-QUANTITY',
+                         'status': 'CANDIDATE',
                          'teaching_path': [{'id': 'TC-01'}, {'id': 'TC-02'}, {'id': 'TC-03'}]}],
         'questions': [{'id': 'Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01',
                        'origin': 'AUTHORED', 'status': 'CANDIDATE',
@@ -21,7 +30,11 @@ def fixture():
                 'selection': {'microtopics': ['MIC-TEST-IMO-G9-COMMON-BASE-RELATION'],
                               'core2': [], 'core2b': [],
                               'core2a': ['Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01']}}
-    pilot = {'scope': {'subtopic_id': 'NS-INDEX-LAWS', 'launch_authorized': False,
+    pilot = {'authored_teaching_candidate': {
+              'package_id': 'TEST-IMO-G9-CORE1A-COMMON-BASE-PILOT',
+              'microtopic_id': 'MIC-TEST-IMO-G9-COMMON-BASE-RELATION',
+              'capability_id': 'CAP-TEST-IMO-G9-COMMON-EXPONENTIAL-QUANTITY'},
+             'scope': {'subtopic_id': 'NS-INDEX-LAWS', 'launch_authorized': False,
                        'source_core2_admitted': 0, 'learner_products_released': 0},
              'routing': {'core1a_product_url': None, 'core2a_authored_product_url': None,
                          'core2_source_product_url': None}}
@@ -35,6 +48,14 @@ class Preflight(unittest.TestCase):
         self.assertEqual(out['repair_step_id'], 'TC-02')
         self.assertFalse(out['authorizes_learner_launch'])
         self.assertFalse(out['authorizes_academic_qrt_or_source'])
+
+    def test_explicit_package_file_identity(self):
+        p,m,s = fixture()
+        ok = check(p,m,s,package_ref=m['package_refs'][0])
+        self.assertEqual(ok['state'], 'CANDIDATE_HELD_WELL_FORMED')
+        wrong = check(p,m,s,package_ref='TEST/imo-research/candidates/swap.json')
+        self.assertEqual(wrong['state'], 'INCONSISTENT_CANDIDATE_HOLD')
+        self.assertIn('MANIFEST_PACKAGE_REF_MISMATCH', wrong['errors'])
 
     def test_all_mutations_remain_nonreleasing_and_inconsistent(self):
         cases = [
@@ -53,6 +74,15 @@ class Preflight(unittest.TestCase):
             ('duplicated_mic_id', lambda p,m,s: p['microtopics'].append(dict(p['microtopics'][0])), 'DUPLICATE_TEACHING_MICROTOPIC_ID'),
             ('duplicated_question_id', lambda p,m,s: p['questions'].append(dict(p['questions'][0])), 'DUPLICATE_AUTHORED_QUESTION_ID'),
             ('package_escape', lambda p,m,s: m.__setitem__('package_refs', ['../OTHER/package.json']), 'EXACT_ONE_PACKAGE_REF_REQUIRED'),
+            ('wrong_pilot_package', lambda p,m,s: s['authored_teaching_candidate'].__setitem__('package_id','FAKE'), 'PACKAGE_RESEARCH_IDENTITY_MISMATCH'),
+            ('wrong_pilot_microtopic', lambda p,m,s: s['authored_teaching_candidate'].__setitem__('microtopic_id','FAKE'), 'MICROTOPIC_RESEARCH_IDENTITY_MISMATCH'),
+            ('forged_qrt_acceptance', lambda p,m,s: p['extensions'].__setitem__('grade9v3:qrt_admitted',True), 'PACKAGE_PUBLICATION_MUST_REMAIN_HELD'),
+            ('release_custody_claim', lambda p,m,s: p['extensions'].__setitem__('grade9v3:core2_source_custody_granted',True), 'PACKAGE_PUBLICATION_MUST_REMAIN_HELD'),
+            ('published_flag', lambda p,m,s: p['extensions'].__setitem__('grade9v3:learner_published',True), 'PACKAGE_PUBLICATION_MUST_REMAIN_HELD'),
+            ('missing_capability', lambda p,m,s: p.__setitem__('capabilities',[]), 'CAPABILITY_RECORD_NOT_RESOLVED'),
+            ('missing_route', lambda p,m,s: p.__setitem__('teaching_routes',[]), 'CORE1A_TEACHING_ROUTE_NOT_RESOLVED'),
+            ('bad_microtopic_status', lambda p,m,s: p['microtopics'][0].__setitem__('status','RELEASED'), 'MICROTOPIC_NOT_CANDIDATE'),
+            ('changed_pilot_capability', lambda p,m,s: s['authored_teaching_candidate'].__setitem__('capability_id','FAKE'), 'CAPABILITY_RESEARCH_IDENTITY_MISMATCH'),
         ]
         for label, mutation, code in cases:
             with self.subTest(label=label):
