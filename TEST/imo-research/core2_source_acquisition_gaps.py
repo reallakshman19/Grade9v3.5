@@ -160,16 +160,30 @@ def receipt_status(doc: dict, workspace: Path | None) -> tuple[str, list[str]]:
         require(set(receipt) == required, "receipt fields invalid")
         require(receipt.get("subject") == "TEST"
                 and receipt.get("bucket_id") == BUCKET
-                and receipt.get("source_kind") == "URL"
+                and receipt.get("source_kind") in ("URL", "FILE")
                 and receipt.get("resource_ref") == doc["source_id"]
                 and receipt.get("requested_locator") == doc["requested_pdf_url"]
-                and _same_host(doc["requested_pdf_url"], receipt.get("resolved_locator") or "")
+                and (
+                    (receipt["source_kind"] == "URL"
+                     and _same_host(doc["requested_pdf_url"],
+                                    receipt.get("resolved_locator") or ""))
+                    or (receipt["source_kind"] == "FILE"
+                        and isinstance(receipt.get("resolved_locator"), str)
+                        and Path(receipt["resolved_locator"]).is_absolute()
+                        and Path(receipt["resolved_locator"]).suffix.lower() == ".pdf"
+                        and REPO.resolve() not in
+                        Path(receipt["resolved_locator"]).resolve(strict=False).parents)
+                )
                 and receipt.get("snapshot_ref") == str(snapshot),
                 "receipt/source identity mismatch")
         require(snapshot.open("rb").read(5) == b"%PDF-",
                 "snapshot does not contain PDF header")
         outcome = source_pipeline.verify_acquisition(receipt, repo=REPO)
         require(outcome.get("passed") is True, "retained bytes or digest invalid")
+        if receipt["source_kind"] == "FILE":
+            return "IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED", [
+                "LOCAL_FILE_SOURCE_ORIGIN_UNVERIFIED"
+            ]
         return "VERIFIED_RETAINED_BYTES_ONLY", []
     except (OSError, SourceGapError, ValueError, TypeError) as exc:
         # Public report deliberately doesn't print local file names or exception text.
@@ -222,7 +236,14 @@ def report(census: dict, handoff: dict, workspace: Path | None = None) -> dict:
         "authority": "RESEARCH_GAP_PROJECTION_NOT_SOURCE_ADMISSION",
         "document_count": 4,
         "verified_retained_document_count": sum(
-            x["receipt_status"] == "VERIFIED_RETAINED_BYTES_ONLY" for x in doc_rows),
+            x["receipt_status"] in {
+                "VERIFIED_RETAINED_BYTES_ONLY",
+                "IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED",
+            } for x in doc_rows),
+        "local_import_document_count": sum(
+            x["receipt_status"] ==
+            "IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED"
+            for x in doc_rows),
         "question_count": 68,
         "source_custody_hold": 68,
         "core2_eligible": 0, "core2_admitted": 0, "learner_published": 0,
@@ -241,7 +262,23 @@ def _write_exclusive(path: Path, payload: str) -> None:
         raise
 
 
-def acquire(doc: dict, workspace: Path) -> dict:
+def validate_local_source(path: Path, workspace: Path) -> Path:
+    """Allow a browser-downloaded local file; never claim it is publisher-authentic."""
+    require(path.is_absolute() and not path.is_symlink(),
+            "local source must be an absolute, non-symlink file")
+    source = path.resolve(strict=False)
+    require(source.is_file() and source.suffix.lower() == ".pdf",
+            "local source must exist and have a PDF file extension")
+    require(REPO.resolve() not in source.parents
+            and workspace.resolve() not in source.parents,
+            "local source cannot be repository content or the custody workspace")
+    require(source.stat().st_size <= 100 * 1024 * 1024,
+            "local source exceeds 100 MiB import limit")
+    return source
+
+
+def acquire(doc: dict, workspace: Path,
+            local_file: Path | None = None) -> dict:
     """One explicitly requested document; never overwrite a prior private receipt."""
     source_id = doc["source_id"]
     snapshot, receipt = artifact_paths(workspace, source_id)
