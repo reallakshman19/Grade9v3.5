@@ -102,9 +102,21 @@ class Core1ACandidateTests(unittest.TestCase):
         self.blocked(lambda x:x["microtopics"][0]["exit_task"]["answer"].update(
             reasoning=["It works for four integers."]))
 
-    def test_wrong_exit_oracle_reference_not_accepted(self):
-        self.blocked(lambda x:x["microtopics"][0]["exit_task"]["oracle"][
-            "verification"].update(validator_id="unknown"))
+    def test_unregistered_exit_validator_cannot_claim_verification(self):
+        self.blocked(lambda x:x["microtopics"][0]["exit_task"].update(
+            oracle={"verification": {
+                "validator_id": "TEST/imo-research/validate_core1a_candidate_package.py",
+                "bindings": {"domain": "positive_integer"}
+            }}))
+
+    def test_named_oracle_hold_must_not_disappear(self):
+        self.blocked(lambda x:x.update(known_issues=[]))
+
+    def test_named_oracle_hold_must_cover_the_microtopic(self):
+        self.blocked(lambda x:x["known_issues"][0].update(affected_refs=[]))
+
+    def test_oracle_hold_cannot_become_academic_approval(self):
+        self.blocked(lambda x:x["known_issues"][0].update(classification="ADVISORY"))
 
     def test_core2_cannot_be_in_route(self):
         self.blocked(lambda x:x["teaching_routes"][0].update(cores=["CORE1A","CORE2"]))
