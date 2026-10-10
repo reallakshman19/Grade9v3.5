@@ -45,6 +45,24 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn('data-g9-concept-target hidden', html)
         self.assertIn('This reflection checks neither the meaning nor accuracy', html)
 
+    def test_exact_tc02_fragment_is_unique_but_gated_until_guided_choice(self):
+        core1a = self.pages["core1a.html"]
+        core2a = self.pages["core2a.html"]
+        step = 'id="TC-02" tabindex="-1" data-g9-step="TC-02"'
+        self.assertEqual(core1a.count(step), 1, "exact authored step anchor must be unique")
+        self.assertLess(core1a.index('data-g9-concept-target hidden'), core1a.index(step),
+                        "deep-linked step must initially be inside the concealed construction")
+        self.assertIn('data-g9-repair-ref="TC-02"', core2a)
+        self.assertIn('data-g9-repair-target="TC-02" href="core1a.html#TC-02"', core2a)
+        self.assertNotIn('data-g9-repair-target="CU-TEST-IMO-G9-EXPONENTIAL-RELATION"',
+                         core2a)
+        self.assertIn("window.location.hash==='#TC-02'", core1a)
+        self.assertIn('The requested TC-02 repair step is behind this concept-first checkpoint',
+                      core1a)
+        self.assertIn("repair.focus();repair.scrollIntoView({block:'center'});", core1a)
+        self.assertIn("guide.focus();", core1a)
+        self.assertFalse(self.pkg["extensions"]["grade9v3:learner_published"])
+
     def test_format_only_and_print_materialisation(self):
         html = self.pages["core1a.html"]
         self.assertIn("choice!==c.dataset.g9ConceptCorrect", html)
