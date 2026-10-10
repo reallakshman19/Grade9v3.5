@@ -76,3 +76,48 @@ jobs:
           path: ${{ runner.temp }}/imo-f04-summary.json
           if-no-files-found: ignore
           retention-days: 7
+
+  learner-route-acceptance:
+    name: Learner route gate — precise TC-02 and authored Core2A return
+    needs: canonical-qrt-blueprint
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Download only sanitized evidence; no protected solution
+        uses: actions/download-artifact@v4
+        with:
+          name: imo-f04-canonical-safe-summary
+          path: ${{ runner.temp }}/imo-f04-route
+      - name: Enforce rendered learner-route acceptance independently of technical CI
+        run: |
+          python - "${{ runner.temp }}/imo-f04-route/imo-f04-summary.json" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          report = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+          assert report["schema"] == "agent3-imo-f04-canonical-vertical-slice/v1"
+          assert report["release_authorized"] is False
+          assert report["source_contract_status"] == "HOLD_NOT_ACCEPTED"
+          if report.get("render_status") != "REAL_CANONICAL_TEST_RENDER":
+              print("F04_ROUTE_BLOCKED: NO_VALID_CANONICAL_TEST_RENDER")
+              raise SystemExit(1)
+          issues = report.get("integration_findings")
+          if not isinstance(issues, list) or issues:
+              # Diagnostic identifiers are safe; never print protected W,
+              # free text, the question or the detailed local receipt.
+              safe_codes = {
+                  "CORE1A_STEP_FRAGMENT_NOT_ADDRESSABLE",
+                  "CORE2A_NOT_LINKED_TO_EXACT_REPAIR_STEP",
+                  "CORE1A_AUTHORED_CORE2A_RETURN_ABSENT",
+              }
+              if not isinstance(issues, list) or any(x not in safe_codes for x in issues):
+                  print("F04_ROUTE_BLOCKED: UNSAFE_OR_MISSING_ROUTE_DIAGNOSTIC")
+              else:
+                  print("F04_ROUTE_BLOCKED: " + ",".join(sorted(issues)))
+              raise SystemExit(1)
+          print("F04_ROUTE_STRUCTURE_OK; ACADEMIC_QRT_BROWSER_LEARNER_RELEASE_HOLD")
+          PY
