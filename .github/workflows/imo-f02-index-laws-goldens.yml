@@ -101,6 +101,7 @@ jobs:
                                 'Keep the multiplicative factor',
                                 'Solve, then return to the exponent'):
                       assert stage in txt, 'PRINT_MISSING_AUTHOR_SVG_STAGE: '+stage
+                  assert 'Stage 1 of 3' not in txt, 'PRINT_STALE_INTERACTIVE_STAGE_LABEL'
               else:
                   assert '4t' not in txt and 'u=3/2' not in txt, 'LEARNER_CORE2A_PDF_ANSWER_LEAK'
           print('TEST authored Core1A/Core2A governed PDF stages and answer boundary: PASS')
