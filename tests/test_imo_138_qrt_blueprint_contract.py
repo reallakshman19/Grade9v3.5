@@ -46,6 +46,10 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
         self.assertEqual(result["crux_move_ref"], "MOVE-IMO-R1-FACTOR")
         self.assertIn("4t", result["protected_W"])
         self.assertEqual(result["academic_status"], "HOLD_NOT_ACCEPTED")
+        self.assertEqual(result["source_hints"][2]["product_hint_purpose"], "CONNECT")
+        self.assertEqual(result["source_hints"][2]["qrt_semantic_verb"], "OPEN_THE_WAY")
+        self.assertNotEqual(result["source_hints"][2]["product_hint_purpose"],
+                            result["source_hints"][2]["qrt_semantic_verb"])
 
     def test_semantic_asks_do_not_collapse_into_mechanical_pass(self):
         result = self.audit()
@@ -108,8 +112,18 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
 
     def test_mutation_wrong_third_hint_purpose_is_rejected(self):
         pkg = copy.deepcopy(self.package)
-        pkg["questions"][0]["hint_ladder"][2]["purpose"] = "CONNECT"
-        self.assertIn("D3_H3_PURPOSE_EXPECTED_OPEN_THE_WAY", self.audit(package=pkg)["errors"])
+        pkg["questions"][0]["hint_ladder"][2]["purpose"] = "OPEN_THE_WAY"
+        self.assertIn("D3_H3_PURPOSE_EXPECTED_CONNECT", self.audit(package=pkg)["errors"])
+
+    def test_mutation_valid_but_wrong_third_product_purpose_is_rejected(self):
+        pkg = copy.deepcopy(self.package)
+        pkg["questions"][0]["hint_ladder"][2]["purpose"] = "ANSWER"
+        self.assertIn("D3_H3_PURPOSE_EXPECTED_CONNECT", self.audit(package=pkg)["errors"])
+
+    def test_mutation_qrt_h3_objective_is_independent_and_fail_closed(self):
+        matrix = copy.deepcopy(self.matrix)
+        matrix["review_asks"]["H3"]["verb"] = "ANSWER"
+        self.assertIn("QRT_H3_OBJECTIVE_EXPECTED_OPEN_THE_WAY", self.audit(matrix=matrix)["errors"])
 
     def test_mutation_answer_leaking_early_hint_is_rejected(self):
         pkg = copy.deepcopy(self.package)
