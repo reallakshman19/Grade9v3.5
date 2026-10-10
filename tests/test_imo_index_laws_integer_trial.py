@@ -113,7 +113,7 @@ class IntegerIndexLawsCore1ATrial(unittest.TestCase):
         for step in self.mic["teaching_path"]:
             self.assertGreater(len(step["action"]), 50)
             self.assertGreater(len(step["why_valid"]), 55)
-        self.assertIn("n a non-negative integer", self.mic["teaching_path"][0]["action"])
+        self.assertIn("non-negative integer n", self.mic["teaching_path"][0]["action"])
         self.assertIn("2n=4", self.mic["teaching_path"][3]["action"])
 
     def test_independent_exit_a_and_boundary_b_are_distinct_from_anchor(self):

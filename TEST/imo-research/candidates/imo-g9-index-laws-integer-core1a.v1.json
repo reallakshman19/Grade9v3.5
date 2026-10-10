@@ -102,7 +102,9 @@
         "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
       ],
       "evidence_refs": [],
-      "extensions": {},
+      "extensions": {
+        "grade9v3:integer_domain_protected_transfer": "A fresh two-part review-only exit tests exact integer power membership, contrasting an allowed integer solution with a positive t yielding only a fractional real exponent."
+      },
       "id": "MIC-TEST-IMO-G9-COMMON-BASE-RELATION-INTEGER",
       "title": "Match a shared integer power and check its allowed exponent",
       "bucket_id": "BUCKET-TEST-IMO-G9-COMMON-BASE-INTEGER",
@@ -207,9 +209,19 @@
           "subpart_answers": [],
           "verification_status": "CHECKED_BY_AUTHOR"
         },
-        "research_contribution": "A fresh two-part review-only exit tests exact integer power membership, contrasting an allowed integer solution with a positive t yielding only a fractional real exponent.",
-        "prerequisite_refs": [],
-        "lineage": []
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/candidates/validate_integer_index_laws_trial.py",
+            "bindings": {
+              "domain": "nonnegative_integer_with_real_contrast",
+              "anchor_solution": "n=2",
+              "exit_solution": "m=3",
+              "boundary_integer_solutions": "none",
+              "boundary_real_solution": "m=3/2",
+              "method": "exact_power_admissibility"
+            }
+          }
+        }
       },
       "research_contribution": "A wholly authored Core1A construction with five complete inferential steps, a named positive quantity, one factor law bridge, wrong-route diagnosis, positivity domain exception and independent fresh exit. The related original source Q26 component custody remains unresolved.",
       "prerequisite_refs": [],
