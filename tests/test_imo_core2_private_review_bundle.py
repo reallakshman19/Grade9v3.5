@@ -148,6 +148,16 @@ class PrivateQ004ReviewBundleTests(unittest.TestCase):
             self.run_with(renderer=broken)
         self.assertFalse((self.workspace / bundle.REVIEW_DIR).exists())
 
+    def test_source_mutation_during_render_rejected_and_partial_removed(self):
+        def mutate_source(pdf, page, output):
+            self.render_stub(pdf, page, output)
+            if page == bundle.KEY_PAGE:
+                original = self.snapshot.read_bytes()
+                self.snapshot.write_bytes(original.replace(b"INVENTED", b"REPLACED"))
+        with self.assertRaises(SourceGapError):
+            self.run_with(renderer=mutate_source)
+        self.assertFalse((self.workspace / bundle.REVIEW_DIR).exists())
+
     def test_rejects_world_readable_workspace(self):
         os.chmod(self.workspace, 0o755)
         with self.assertRaises(SourceGapError):
