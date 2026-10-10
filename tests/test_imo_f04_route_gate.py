@@ -72,6 +72,33 @@ class RouteGateTests(unittest.TestCase):
         self.assertIn("CORE2A_NOT_LINKED_TO_EXACT_REPAIR_STEP", reason)
         self.assertIn("CORE1A_AUTHORED_CORE2A_RETURN_ABSENT", reason)
 
+    def test_isolated_route_runner_checks_out_python_before_verdict(self):
+        """Each GitHub Actions job has a fresh workspace; artifact != code checkout."""
+        root = Path(__file__).resolve().parents[1]
+        workflow = (root / ".github/workflows/imo-f04-canonical-qrt-blueprint.yml").read_text(
+            encoding="utf-8")
+        anchor = "\n  learner-route-acceptance:\n"
+        self.assertEqual(workflow.count(anchor), 1,
+                         "route gate must be tested as its own isolated runner")
+        route = workflow.split(anchor, 1)[1]
+        checkout = route.index("      - name: Check out route-gate source\n"
+                               "        uses: actions/checkout@v4\n"
+                               "        with:\n"
+                               "          persist-credentials: false")
+        artifact = route.index("uses: actions/download-artifact@v4")
+        verdict = route.index("python -m Shared.tools.imo_f04_route_gate")
+        self.assertLess(checkout, artifact)
+        self.assertLess(artifact, verdict)
+        self.assertIn("needs: canonical-qrt-blueprint", route)
+        self.assertIn("if: always()", route)
+        self.assertIn("contents: read", route)
+        self.assertIn('name: imo-f04-canonical-safe-summary', route)
+        self.assertIn('--summary "${{ runner.temp }}/imo-f04-route/imo-f04-summary.json"', route)
+        # Changes to this gate or its own tests must not silently bypass CI.
+        watched = workflow.split("\njobs:\n", 1)[0]
+        self.assertIn('      - "Shared/tools/imo_f04_route_gate.py"', watched)
+        self.assertIn('      - "tests/test_imo_f04_route_gate.py"', watched)
+
     def test_invalid_json_is_safe_failure(self):
         with tempfile.TemporaryDirectory() as d:
             path = Path(d, "broken.json")
