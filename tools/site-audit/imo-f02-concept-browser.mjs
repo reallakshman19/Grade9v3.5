@@ -215,6 +215,85 @@ try {
       width + ': Core2A destination fragment does not identify the authored question article');
     assert(journeyErrors.length === 0, width + ': guided return JavaScript errors ' + journeyErrors.join('; '));
     await journey.close();
+    // Local-only, mutable chronology. This is NOT a verified assessment record.
+    // A file:// browser may refuse storage; in that case do not fabricate saved evidence.
+    const tracePage = await browser.newPage({viewport: {width, height: 900}});
+    const traceErrors = [];
+    tracePage.on('pageerror', e => traceErrors.push(String(e)));
+    await tracePage.goto(pathToFileURL(core2aHtml).href, {waitUntil:'load'});
+    const scopedQuestion = tracePage.locator('article[data-g9-role="CORE2A"][id="' + questionId + '"]');
+    const traceNote = tracePage.locator('[data-g9-f02-trace-status]');
+    assert(await traceNote.count() === 1, width + ': F02 source question missing local-only trace notice');
+    assert(await traceNote.getAttribute('data-g9-f02-trace-state') === 'NOT_RECORDED',
+      width + ': fresh isolated page incorrectly starts with credit/evidence');
+    const attemptField = scopedQuestion.locator('[data-g9-attempt-box] textarea[data-g9-attempt]');
+    assert(await attemptField.count() === 1, width + ': authored Core2A lacks its open response input');
+    if(await attemptField.count() === 1){
+      await attemptField.fill('Unscored trial reasoning: I will compare the two powers.');
+      await scopedQuestion.locator('[data-g9-commit]').first().click();
+      assert(['UNTRUSTED_LOCAL_ONLY','NOT_SAVED','INVALID_OR_UNAVAILABLE']
+        .includes(await traceNote.getAttribute('data-g9-f02-trace-state')),
+        width + ': local trace was mistaken for trusted assessment after submit');
+      const stored = await tracePage.evaluate(() => {
+        try{
+          const d=document.documentElement;
+          const key='g9-f02-trace:'+d.dataset.g9Product+':'+d.dataset.g9RenderDigest
+            +':Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
+          return localStorage.getItem(key);
+        }catch(_){return null}
+      });
+      if(stored){
+        const evidence = JSON.parse(stored);
+        assert(evidence.events.length >= 1 && evidence.events[0].kind === 'ATTEMPT_COMMIT'
+          && !JSON.stringify(evidence).includes('Unscored trial reasoning'),
+          width + ': attempt trace omitted event or retained free-response text');
+      }else{
+        assert(await traceNote.getAttribute('data-g9-f02-trace-state') !== 'UNTRUSTED_LOCAL_ONLY',
+          width + ': unavailable local storage was mislabeled as saved evidence');
+      }
+      // The clicked exact TC-02 repair is behind the attempt-dependent disclosure.
+      await scopedQuestion.evaluate(el => el.querySelectorAll('details').forEach(d => d.open=true));
+      const repairLink = scopedQuestion.locator('a[data-g9-repair-ref="TC-02"]');
+      assert(await repairLink.count() === 1,
+        width + ': selected authored Core2A has no exact repair link after attempt');
+      if(await repairLink.count() === 1){
+        await repairLink.click();
+        assert(new URL(tracePage.url()).pathname.endsWith('/core1a.html')
+          && new URL(tracePage.url()).hash === '#TC-02',
+          width + ': actual repair navigation lost exact step');
+        const routedGate = tracePage.locator('article[data-g9-role="CORE1A"]');
+        assert(await routedGate.getAttribute('data-g9-concept-aid-exposure') === null,
+          width + ': clicked repair URL bypassed learner gate');
+        await tracePage.locator('[data-g9-concept-review]').click();
+        assert(await routedGate.getAttribute('data-g9-concept-aid-exposure') === 'guided_study',
+          width + ': guided repair omitted session assisted marker');
+        const back = tracePage.locator('[data-g9-authored-core2a-return]');
+        await back.click();
+        assert(new URL(tracePage.url()).hash === '#' + questionId,
+          width + ': actual F02 local-trace journey failed to return to question');
+        const persisted = await tracePage.evaluate(() => {
+          try {
+            const d=document.documentElement;
+            const key='g9-f02-trace:'+d.dataset.g9Product+':'+d.dataset.g9RenderDigest
+              +':Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
+            return localStorage.getItem(key);
+          } catch (_) {return null}
+        });
+        if(persisted){
+          const sequence=JSON.parse(persisted);
+          assert(sequence.events.every((e,i)=>e.n===i+1)
+            && !JSON.stringify(sequence).includes('Unscored trial reasoning')
+            && sequence.assisted === true,
+            width + ': browser-local trace has invalid event order or content');
+        }else{
+          assert(await tracePage.locator('[data-g9-f02-trace-status]')
+            .getAttribute('data-g9-f02-trace-state') !== 'UNTRUSTED_LOCAL_ONLY',
+            width + ': round-trip without storage falsely reports preserved ledger');
+        }
+      }
+    }
+    assert(traceErrors.length === 0, width + ': local trace browser exceptions ' + traceErrors.join('; '));
+    await tracePage.close();
     if (width === 390) {
       const access = await browser.newPage({ viewport: {width:390,height:900}, reducedMotion:'reduce' });
       access.on('pageerror', e => result.failures.push('accessibility probe JS exception: '+String(e)));
