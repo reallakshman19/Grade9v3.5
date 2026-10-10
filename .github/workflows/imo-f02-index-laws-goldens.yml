@@ -8,6 +8,7 @@ on:
       - "tests/test_imo_327_*.py"
       - "tests/test_imo_138_core1a_concept_runtime.py"
       - "tests/test_imo_138_qrt_blueprint_contract.py"
+      - "tests/test_imo_138_e3_transfer_gate.py"
       - "Shared/tools/render_core.py"
       - "tools/site-audit/imo-f02-concept-browser.mjs"
       - "Shared/tools/imo_f04_browser_receipt_gate.py"
@@ -33,6 +34,28 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_imo_327_help_mode_separation.py' -v
       - name: Test emitted TEST Core1A lesson concept checkpoint
         run: python -m unittest discover -s tests -p 'test_imo_138_core1a_concept_runtime.py' -v
+      # E3 preflight is intentionally denial-only: engineering PASS != learner mastery.
+      - name: E3 unseen-transfer claim falsifiers (academic HOLD)
+        run: python -m unittest discover -s tests -p 'test_imo_138_e3_transfer_gate.py' -v
+      - name: Write E3 reviewer gaps without learner responses
+        run: |
+          python TEST/imo-research/candidates/imo_f02_e3_transfer_gate.py --output /tmp/imo-f02-e3-held-transfer.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('/tmp/imo-f02-e3-held-transfer.json').read_text())
+          assert not r['errors'] and not r['credit_eligible'] and not r['new_item_provisioned']
+          assert r['assessment_status']=='REVIEW_ONLY_HOLD_NOT_ACCEPTED'
+          assert len(r['requirements'])==5
+          print('E3_SOURCE_BOUNDS_OK; UNSEEN_UNAIDED_TRANSFER_NOT_PROVEN')
+          PY
+      - name: Preserve E3 held-only reviewer gap ledger
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f02-e3-transfer-gaps-held
+          path: /tmp/imo-f02-e3-held-transfer.json
+          if-no-files-found: error
+          retention-days: 7
       - name: Verify 3 SHA-locked QRT goldens and negative mutations
         run: python -m unittest discover -s tests -p 'test_imo_327_qrt_help_golden.py' -v
       - name: Matrix-first MODEL-D3 and role-blueprint contract falsifiers
