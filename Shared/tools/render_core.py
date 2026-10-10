@@ -2490,7 +2490,7 @@ def _repair(ctx: Ctx, ref: str | None, question_ref: str | None = None) -> str:
                     exact_return = bool(authored and authored["id"] == question_ref
                                         and _f02_exact_tc02_anchor(ctx, m, ref))
                     href = (f'core1a.html?g9-return={esc(question_ref)}'
-                            f'&g9-concept={esc(m["id"])}#{esc(target)}' if exact_return
+                            f'&amp;g9-concept={esc(m["id"])}#{esc(target)}' if exact_return
                             else f'core1a.html#{esc(target)}')
                     return (
                         f'<p><a data-g9-repair-ref="{esc(ref)}" data-g9-concept-ref="{esc(m["id"])}" '
