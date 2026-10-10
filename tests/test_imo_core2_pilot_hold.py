@@ -94,6 +94,15 @@ class Core2PilotHoldTests(unittest.TestCase):
         self.rejects(lambda p: p["observation"][
             "visual_component_sightings"].pop("captions"))
 
+    def test_visual_options_status_cannot_become_publisher_option_text(self):
+        self.rejects(lambda p: p["observation"][
+            "visual_component_sightings"].update(
+                options=["copied source choices"]))
+
+    def test_original_option_list_still_forbidden_outside_status_path(self):
+        self.rejects(lambda p: p["source"].update(
+            options=["copied question choices"]))
+
     def test_visual_component_upgraded_without_bytes_rejected(self):
         self.rejects(lambda p: p["observation"][
             "visual_component_sightings"].update(stem="VERIFIED_WITH_SOURCE_BYTES"))
