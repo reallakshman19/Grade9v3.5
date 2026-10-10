@@ -74,6 +74,26 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
         self.assertIn("FREE_TEXT_REASON_MATHEMATICAL_CORRECTNESS_NOT_GRADED", result["review_gates"])
         self.assertIn("RULE_WARRANT_RECOGNITION_NOT_INDEPENDENT_REASONING", result["review_gates"])
 
+    def test_p2_repair_points_to_shared_unit_not_unique_tc02_step(self):
+        result = self.audit()
+        binding = result["p2_repair_binding"]
+        self.assertEqual(binding["requested_step"], "TC-02")
+        self.assertEqual(binding["construction_unit"], "CU-TEST-IMO-G9-EXPONENTIAL-RELATION")
+        self.assertEqual(binding["construction_unit_steps"],
+                         ["TC-01", "TC-02", "TC-03", "TC-04", "TC-05"])
+        self.assertEqual(binding["render_link_target"],
+                         "core1a.html#CU-TEST-IMO-G9-EXPONENTIAL-RELATION")
+        self.assertEqual(binding["status"], "SHARED_CONSTRUCTION_UNIT_ANCHOR_NOT_EXACT_STEP")
+        p2 = next(a for a in result["semantic_review_asks"] if a["ask"] == "P2")
+        self.assertEqual(p2["status"], "SOURCE_SHARED_CONSTRUCTION_UNIT_NOT_EXACT_STEP")
+        self.assertEqual(result["academic_status"], "HOLD_NOT_ACCEPTED")
+
+    def test_mutation_repair_reference_loses_construction_owner(self):
+        pkg = copy.deepcopy(self.package)
+        pkg["microtopics"][0]["construction_units"][0]["step_refs"].remove("TC-02")
+        self.assertIn("P2_REPAIR_STEP_NOT_BOUND_TO_UNIQUE_CONSTRUCTION_UNIT",
+                      self.audit(package=pkg)["errors"])
+
     def test_actual_role_blueprints_have_required_slot_sources_not_acceptance(self):
         result = self.audit()
         names = {(x["role"], x["slot"]) for x in result["blueprint_required_slots"]}
