@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1] / "TEST" / "imo-research"
 sys.path.insert(0, str(ROOT))
 from validate_core2_pilot_hold import (  # noqa: E402
-    EVIDENCE, CENSUS, PilotHoldError, validate,
+    EVIDENCE, CENSUS, PilotHoldError, validate, no_copied_source_payload,
 )
 
 
@@ -110,6 +110,22 @@ class Core2PilotHoldTests(unittest.TestCase):
     def test_visual_stem_cannot_embed_publisher_stem_text(self):
         self.rejects(lambda p: p["observation"][
             "visual_component_sightings"].update(stem="Original question wording"))
+
+    def test_standalone_payload_guard_rejects_source_stem_in_status(self):
+        packet = copy.deepcopy(self.packet)
+        packet["observation"]["visual_component_sightings"]["stem"] = (
+            "Unlicensed original source wording"
+        )
+        with self.assertRaises(PilotHoldError):
+            no_copied_source_payload(packet)
+
+    def test_standalone_payload_guard_rejects_original_option_list(self):
+        packet = copy.deepcopy(self.packet)
+        packet["observation"]["visual_component_sightings"]["options"] = [
+            "A", "B", "C", "D"
+        ]
+        with self.assertRaises(PilotHoldError):
+            no_copied_source_payload(packet)
 
     def test_original_stem_payload_still_forbidden_outside_status_path(self):
         self.rejects(lambda p: p["source"].update(
