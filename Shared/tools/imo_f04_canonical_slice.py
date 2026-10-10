@@ -357,7 +357,26 @@ def main() -> int:
             parser.error("report output must be confined to the local build/ directory")
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(text, encoding="utf-8")
-    print(text)
+    # Never stream the QRT protected W, worked answer or help text into
+    # public CI logs. The detailed receipt stays in a local build/ file.
+    summary = {
+        "schema": report["schema"],
+        "state": report["state"],
+        "question_id": report["question_id"],
+        "qrt_cell": report["qrt"].get("template_id"),
+        "source_contract_status": report["f02_source_ledger"].get("academic_status"),
+        "blueprint_refs": {
+            role: binding.get("ref")
+            for role, binding in report["blueprints"].get("bindings", {}).items()
+        },
+        "render_status": report["render"].get("status"),
+        "quality_gate_verdict": report["quality_gate"].get("verdict"),
+        "blocking_findings": report["blocking_findings"],
+        "integration_findings": report["integration_findings"],
+        "release_authorized": False,
+        "detailed_receipt_written": bool(args.output),
+    }
+    print(json.dumps(summary, sort_keys=True))
     return 1 if report["state"] == "BLOCKED" else 0
 
 
