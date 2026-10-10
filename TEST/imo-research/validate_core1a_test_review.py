@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
@@ -28,7 +29,7 @@ DOCS = REPO / "docs/test/imo-grade9/core1a.html"
 MATH_PUB = REPO / "public/mathematics/imo-grade9/index.html"
 MATH_DOCS = REPO / "docs/mathematics/imo-grade9/index.html"
 MAIN_SHA = "a5d80f7f9ade751eacb05c75d688e0202f9acaf6"
-PKG_BLOB = "cbcfe1ffe69b7453a53ca3608f5b563b0f91776e"
+PKG_BLOB = "b7f3a91239922b49f98fdaf9920c3dee6210b138"
 SOURCE_BLOB = "4057e7642402915e9dacdb4b54fc7fbe9b42867f"
 CENSUS_BLOB = "800a2f693e1b46162a026375c5854ad4b8b05257"
 SAMPLE_BLOB = "95cdfc8dd277b1b9fcd78c05828b501361f1e763"
@@ -143,9 +144,16 @@ def validate_preview(
     page_text = read(preview)
     demand(page_text == read(mirror), "TEST public/docs pages diverge")
     demand(read(math_pub) == read(math_docs), "Mathematics site mirrors diverge")
-    demand('data-test-review-link="IMO-G9-CORE1A-CANDIDATE"' in read(math_pub)
-           and 'href="../../test/imo-grade9/core1a.html"' in read(math_pub),
-           "Mathematics topic browser loses clearly labeled TEST review link")
+    # A learner-facing Mathematics page may disclose a held review candidate,
+    # but may not link directly into the unapproved TEST sandbox.
+    math_index = read(math_pub)
+    demand('data-test-review-link="IMO-G9-CORE1A-CANDIDATE"' in math_index
+           and "not an accepted Core 1A lesson" in math_index
+           and "separate TEST sandbox" in math_index
+           and 'href="../number-systems/index-laws/index.html"' in math_index
+           and re.search(r"""href\\s*=\\s*["'][^"']*/test/""", math_index,
+                         flags=re.IGNORECASE) is None,
+           "Mathematics index must disclose the held research candidate without a direct TEST link")
 
     demand('data-g9-role="TEST"' in page_text
            and 'data-g9-test="sandbox-draft"' in page_text
