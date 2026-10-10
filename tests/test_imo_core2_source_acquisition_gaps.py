@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import copy
+import gc
 import hashlib
 import json
 import os
@@ -9,6 +10,7 @@ import stat
 import sys
 import tempfile
 import unittest
+import warnings
 from pathlib import Path
 from unittest import mock
 
@@ -433,6 +435,30 @@ class Core2SourceAcquisitionGapTests(unittest.TestCase):
                             in item["blocking_codes"]
                             for item in gaps["questions"]
                             if item["source_id"] == self.sample["source_id"]))
+
+    def test_private_pdf_acquisition_and_receipt_checks_close_file_handles(self):
+        """Every source header check must close its PDF descriptor immediately."""
+        local = Path(self.tmp.name) / "synthetic-only.pdf"
+        local.write_bytes(self.payload)
+        with warnings.catch_warnings(record=True) as observed:
+            warnings.simplefilter("always", ResourceWarning)
+            result = acquire(self.sample, self.workspace, local_file=local)
+            self.assertEqual(
+                result["status"],
+                "IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED",
+            )
+            self.assertEqual(
+                receipt_status(self.sample, self.workspace)[0],
+                "IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED",
+            )
+            gc.collect()
+        self.assertEqual(
+            [str(record.message) for record in observed
+             if issubclass(record.category, ResourceWarning)
+             and "unclosed file" in str(record.message)],
+            [],
+            "PDF header checks left source handles open",
+        )
 
     def test_browser_download_html_response_is_rejected_and_deleted(self):
         downloaded = Path(self.tmp.name) / "fake-browser-download.pdf"
