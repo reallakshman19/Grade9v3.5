@@ -6,6 +6,7 @@ actual blueprint registry, canonical package/manifest and page renderer.
 from __future__ import annotations
 
 import copy
+import importlib.util
 import json
 import re
 import tempfile
@@ -111,6 +112,10 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
             "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg"
         ])
 
+    @unittest.skipUnless(
+        importlib.util.find_spec("jsonschema") is not None,
+        "full shared renderer requires jsonschema; dedicated #164 CI installs it",
+    )
     def test_actual_shared_renderer_outputs_selected_roles_in_draft(self):
         pages, gaps, digest, advisories, waivers = render_core.build_report(
             MANIFEST, "PAGES", held_to="REFERENCE",
@@ -132,6 +137,10 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
         ), ["CORE2B"])
         self.assertTrue(all({"core", "record", "duty", "detail"} <= set(g) for g in gaps))
 
+    @unittest.skipUnless(
+        importlib.util.find_spec("jsonschema") is not None,
+        "full shared renderer requires jsonschema; dedicated #164 CI installs it",
+    )
     def test_cli_emits_actual_candidate_html_and_readback_receipt(self):
         with tempfile.TemporaryDirectory() as tmp:
             folder = Path(tmp)
@@ -152,6 +161,10 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
             self.assertNotIn("accepted", receipt)
             self.assertTrue((folder / "core2b.html").read_text().strip())
 
+    @unittest.skipUnless(
+        importlib.util.find_spec("jsonschema") is not None,
+        "full shared renderer requires jsonschema; dedicated #164 CI installs it",
+    )
     def test_invalid_source_selection_fails_closed_in_draft(self):
         modified = copy.deepcopy(self.manifest)
         modified["selection"]["core2"] = [QUESTION]
