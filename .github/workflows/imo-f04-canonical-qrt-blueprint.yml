@@ -88,6 +88,12 @@ jobs:
     permissions:
       contents: read
     steps:
+      # Separate jobs receive fresh runners. The sanitized summary artifact
+      # does not contain the Python module used by this read-only route gate.
+      - name: Check out route-gate source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Download only sanitized evidence; no protected solution
         uses: actions/download-artifact@v4
         with:
