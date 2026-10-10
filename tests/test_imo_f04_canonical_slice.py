@@ -18,6 +18,7 @@ from Shared.tools.imo_f04_canonical_slice import (
     BLUEPRINT_REFS, CELL, MANIFEST, MID, PACKAGE, QID, ROLES, STEP,
     held_candidate_findings, inspect_real_candidate, inspect_rendered,
     navigation_findings, question_by_id, RenderFacts,
+    authored_core2a_runtime_findings,
 )
 
 
@@ -71,6 +72,48 @@ class IMOCanonicalRenderDenialTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "UNRELATED_BUG"):
                 inspect_real_candidate()
 
+
+
+class IMOAuthorHelpRoleRuntimeDenialTests(unittest.TestCase):
+    """Inspect LIVE script text without crediting browser/academic evidence."""
+
+    BAD_GENERIC_CORE2_ONLY = (
+        "function markAssistance(a,kind){if(a.dataset.g9Role!=='CORE2'||!kind)return;}"
+        "function saveCore2State(a){if(a.dataset.g9Role!=='CORE2')return;}"
+        "function restoreCore2State(a,lock){if(a.dataset.g9Role!=='CORE2')return;}"
+    )
+
+    def test_core2_only_guards_deny_authored_help_accounting(self):
+        page = "<!doctype html><script>" + self.BAD_GENERIC_CORE2_ONLY + "</script>"
+        self.assertEqual(authored_core2a_runtime_findings(page), [
+            "CORE2A_HELP_ASSISTANCE_ROLE_EXCLUDED",
+            "CORE2A_HELP_PERSISTENCE_ROLE_EXCLUDED",
+            "CORE2A_HELP_RESTORE_ROLE_EXCLUDED",
+        ])
+
+    def test_text_or_script_without_runtime_cannot_fake_a_pass(self):
+        for page in (
+            "<html></html>",
+            '<article data-string="function markAssistance(a,kind)"></article>',
+            "<p>" + self.BAD_GENERIC_CORE2_ONLY + "</p>",
+            "<script>function other() { return true; }</script>",
+        ):
+            with self.subTest(length=len(page)):
+                self.assertEqual(authored_core2a_runtime_findings(page), [
+                    "CORE2A_HELP_RUNTIME_STATIC_UNVERIFIED",
+                ])
+
+    def test_missing_core2a_page_fails_closed(self):
+        self.assertEqual(authored_core2a_runtime_findings(None),
+                         ["CORE2A_HELP_RUNTIME_NOT_RENDERED"])
+
+    def test_actual_emitted_core2a_script_reports_unresolved_runtime(self):
+        from Shared.tools import render_core
+        pages, _gaps, _digest, _advisories, _waivers = render_core.build_report(
+            MANIFEST, "PAGES", held_to="REFERENCE")
+        issues = authored_core2a_runtime_findings(pages.get("core2a.html"))
+        self.assertTrue(issues)
+        self.assertTrue(all(i.startswith("CORE2A_HELP_") for i in issues))
 
 
 class IMOCanonicalRouteAcceptanceContracts(unittest.TestCase):
@@ -340,7 +383,10 @@ class IMOCanonicalSliceTests(unittest.TestCase):
 
     def test_navigation_is_reported_as_evidence_not_autofixed(self):
         real = self.report["render"]["pages"]
-        self.assertEqual(self.report["integration_findings"], navigation_findings(real))
+        self.assertTrue(set(navigation_findings(real)).issubset(
+            set(self.report["integration_findings"])))
+        self.assertTrue(any(issue.startswith("CORE2A_HELP_")
+                            for issue in self.report["integration_findings"]))
         self.assertFalse(self.report["owner_merge_authorized"])
         self.assertEqual(self.report["human_learner_qrt_review"], "NOT_RUN")
         self.assertEqual(len(self.report["goldens"]), 3)
