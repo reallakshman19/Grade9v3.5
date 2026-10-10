@@ -11,7 +11,12 @@ import unittest
 from Shared.tools.imo_held_roundtrip_adapter import adapt, AdaptationError
 from Shared.tools.imo_roundtrip_contract import audit
 from test_imo_roundtrip_contract import html_fixture, Q, M, T
-from test_imo_handoff_preflight import fixture
+from test_imo_handoff_preflight import fixture as _identity_fixture
+
+def fixture():
+    p, m, pilot = _identity_fixture()
+    m['product_id'] = 'imo-r1-q26-authored-qrt-core2a-core1a'
+    return p, m, pilot
 
 CU='CU-TEST-IMO-G9-EXPONENTIAL-RELATION'
 
@@ -21,7 +26,13 @@ def legacy_fixture():
     a=a.replace('href="core1a.html#TC-02"',f'href="core1a.html#{CU}"')
     b=b.replace(f'id="{T}" data-g9-step="{T}"',f'data-g9-step="{T}"')
     b=b.replace('data-g9-practice-link','data-g9-not-core2a-return')
-    return '<body>'+a+'</body>','<body>'+b+'</body>'
+    def document(role, article):
+        return ('<!doctype html><html lang="en" data-g9-shell data-g9-role="'+role+'" '
+                'data-g9-mode="PAGES" data-g9-product="imo-r1-q26-authored-qrt-core2a-core1a" '
+                'data-g9-render-digest="test-digest"><head><meta name="g9-render" '
+                'content="render_core/test"></head><body data-core="'+role+'">'
+                +article+'</body></html>')
+    return document('CORE2A',a),document('CORE1A',b)
 
 class HeldAdapter(unittest.TestCase):
     def test_legacy_roundtrip_is_adapted_but_never_published(self):
@@ -33,6 +44,8 @@ class HeldAdapter(unittest.TestCase):
         self.assertIn(f'data-g9-repair-target="{T}" href="core1a.html#{T}"',na)
         self.assertIn(f'data-g9-step="{T}" id="{T}" tabindex="-1"',nb)
         self.assertIn('data-g9-held-step-focus',nb)
+        self.assertIn('data-g9-held-adapter="true"',nb)
+        self.assertIn('noindex,nofollow',na)
         self.assertIn(f'href="core2a.html#{Q}"',nb)
         self.assertEqual(audit(*args,na,nb)['status'],'STRUCTURAL_CANDIDATE_HELD')
         for key in ['authorizes_learner_launch','authorizes_independent_credit','academic_qrt_approved',
@@ -44,6 +57,11 @@ class HeldAdapter(unittest.TestCase):
 
     def test_fail_closed_mutations(self):
         cases=[
+          ('missing_product',0,'data-g9-product="imo-r1-q26-authored-qrt-core2a-core1a"','data-g9-product="wrong"'),
+          ('wrong_role_shell',1,'data-core="CORE1A"','data-core="CORE2"'),
+          ('missing_digest',0,'data-g9-render-digest="test-digest"','data-g9-render-digest=""'),
+          ('missing_render_meta',0,'name="g9-render"','name="invalid"'),
+          ('double_html_role',0,'data-g9-role="CORE2A"','data-g9-role="CORE2A" data-g9-role="CORE1A"'),
           ('missing_commit',0,'data-g9-commit','data-g9-other'),
           ('missing_gate',0,'data-g9-payload-ref="CORE2A-'+Q+'-reasoning"','data-g9-payload-ref="OTHER"'),
           ('foreign_href',0,f'href="core1a.html#{CU}"','href="https://attacker.example/"'),
@@ -61,6 +79,15 @@ class HeldAdapter(unittest.TestCase):
                 pages[side]=pages[side].replace(old,new,1)
                 with self.assertRaises(AdaptationError):
                     adapt(*fixture(),pages[0],pages[1])
+
+    def test_html_fragments_and_wrong_manifest_product_rejected(self):
+        a,b=legacy_fixture()
+        with self.assertRaises(AdaptationError):
+            adapt(*fixture(),a.split('<body ',1)[1].split('>',1)[1].split('</body>')[0],b)
+        p,m,s=fixture()
+        m['product_id']='wrong-product'
+        with self.assertRaises(AdaptationError):
+            adapt(p,m,s,a,b)
 
     def test_role_identity_mutation_fails(self):
         p,m,s=fixture()
@@ -99,10 +126,22 @@ class HeldAdapter(unittest.TestCase):
             self.assertEqual(json.loads(proc.stdout)['authorizes_learner_launch'],False)
             self.assertTrue((root/'build/adapted/core2a.html').is_file())
             self.assertTrue((root/'build/adapted/core1a.html').is_file())
+            cmd[-1]=str(root/'unscoped/adapted')
+            proc=subprocess.run(cmd,capture_output=True,text=True)
+            self.assertNotEqual(proc.returncode,0)
+            self.assertFalse((root/'unscoped/adapted').exists())
             cmd[-1]=str(root/'public/adapted')
             proc=subprocess.run(cmd,capture_output=True,text=True)
             self.assertNotEqual(proc.returncode,0)
             self.assertFalse((root/'public/adapted').exists())
+            cmd[-1]=str(root/'build/production-input-test')
+            cmd[cmd.index('--core2a')+1]=str(root/'public/core2a.html')
+            (root/'public').mkdir(exist_ok=True)
+            (root/'public/core2a.html').write_text(a)
+            proc=subprocess.run(cmd,capture_output=True,text=True)
+            self.assertNotEqual(proc.returncode,0)
+            self.assertFalse((root/'build/production-input-test').exists())
+            cmd[cmd.index('--core2a')+1]=str(product/'core2a.html')
             cmd[-1]=str(product)
             proc=subprocess.run(cmd,capture_output=True,text=True)
             self.assertNotEqual(proc.returncode,0)
