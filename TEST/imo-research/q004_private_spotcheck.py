@@ -291,7 +291,7 @@ def verify_private_bundle(workspace: Path, assessment: Path) -> None:
                 "Q004 private image size invalid")
         with image.open("rb") as fp:
             data = fp.read()
-        require(data.startswith(b"\\x89PNG\\r\\n\\x1a\\n")
+        require(data.startswith(b"\x89PNG\r\n\x1a\n")
                 and hashlib.sha256(data).hexdigest() == item["image_sha256"],
                 "Q004 privately rendered page is no longer hash-bound")
 
