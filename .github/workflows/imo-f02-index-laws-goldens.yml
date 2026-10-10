@@ -9,6 +9,7 @@ on:
       - "tests/test_imo_138_core1a_concept_runtime.py"
       - "tests/test_imo_138_qrt_blueprint_contract.py"
       - "tests/test_imo_138_e3_transfer_gate.py"
+      - "tests/test_imo_138_e3_assessor_integrity.py"
       - "Shared/tools/render_core.py"
       - "tools/site-audit/imo-f02-concept-browser.mjs"
       - "Shared/tools/imo_f04_browser_receipt_gate.py"
@@ -54,6 +55,28 @@ jobs:
         with:
           name: imo-f02-e3-transfer-gaps-held
           path: /tmp/imo-f02-e3-held-transfer.json
+          if-no-files-found: error
+          retention-days: 7
+      # E3-B is synthetic metadata verification only: no private witness in CI.
+      - name: E3-B assessor digest integrity negative-control tests (academic HOLD)
+        run: python -m unittest discover -s tests -p 'test_imo_138_e3_assessor_integrity.py' -v
+      - name: Export safe unconfigured E3-B assessor HOLD
+        run: |
+          python TEST/imo-research/candidates/imo_f02_e3_assessor_integrity.py --output /tmp/imo-f02-e3-b-hold.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('/tmp/imo-f02-e3-b-hold.json').read_text())
+          assert r['integrity_status']=='EXTERNAL_INTEGRITY_NOT_ESTABLISHED'
+          assert not r['credit_eligible'] and not r['learner_release_authorized']
+          assert 'E3B_EXTERNAL_KEY_UNAVAILABLE' in r['blocking_codes']
+          print('E3B_ASSSESSOR_PROTOCOL_PRESENT; EXTERNAL_WITNESS_NOT_RUN')
+          PY
+      - name: Preserve safe E3-B no-witness HOLD ledger
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f02-e3-b-no-external-assessor-witness
+          path: /tmp/imo-f02-e3-b-hold.json
           if-no-files-found: error
           retention-days: 7
       - name: Verify 3 SHA-locked QRT goldens and negative mutations
