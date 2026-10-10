@@ -72,6 +72,7 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
         )
         self.assertIn("FRESH_UNASSISTED_POST_REPAIR_RETURN_NOT_ENFORCED", result["review_gates"])
         self.assertIn("FREE_TEXT_REASON_MATHEMATICAL_CORRECTNESS_NOT_GRADED", result["review_gates"])
+        self.assertIn("RULE_WARRANT_RECOGNITION_NOT_INDEPENDENT_REASONING", result["review_gates"])
 
     def test_actual_role_blueprints_have_required_slot_sources_not_acceptance(self):
         result = self.audit()
@@ -91,6 +92,32 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
         self.assertEqual((7 ** 3, 7 ** 2 + 7), (343, 56))
         self.assertNotEqual(7 ** 3, 7 ** 2 + 7)
         self.assertEqual(self.audit()["errors"], [])
+
+    def test_rule_warrant_is_structured_recognition_not_free_text_grade(self):
+        rule = self.package["microtopics"][0]["extensions"]["grade9v3:concept_checkpoint"]["diagnostic"]["rule_check"]
+        self.assertEqual(rule["status"], "LOCAL_SELECTED_RULE_NOT_INDEPENDENT_REASONING")
+        self.assertEqual(rule["correct_value"], "FACTOR_LAW")
+        self.assertEqual({x["value"] for x in rule["choices"]},
+                         {"FACTOR_LAW", "ADD_BASE", "MULTIPLY_EXPONENT"})
+        self.assertEqual(self.audit()["academic_status"], "HOLD_NOT_ACCEPTED")
+
+    def test_mutation_missing_authored_rule_warrant_is_rejected(self):
+        pkg = copy.deepcopy(self.package)
+        del pkg["microtopics"][0]["extensions"]["grade9v3:concept_checkpoint"]["diagnostic"]["rule_check"]
+        self.assertIn("NEUTRAL_RULE_WARRANT_MISSING_OR_FORGED",
+                      self.audit(package=pkg)["errors"])
+
+    def test_mutation_rule_warrant_false_correct_answer_is_rejected(self):
+        pkg = copy.deepcopy(self.package)
+        pkg["microtopics"][0]["extensions"]["grade9v3:concept_checkpoint"]["diagnostic"]["rule_check"]["correct_value"] = "ADD_BASE"
+        self.assertIn("NEUTRAL_RULE_WARRANT_MISSING_OR_FORGED",
+                      self.audit(package=pkg)["errors"])
+
+    def test_mutation_rule_warrant_protected_model_leak_is_rejected(self):
+        pkg = copy.deepcopy(self.package)
+        pkg["microtopics"][0]["extensions"]["grade9v3:concept_checkpoint"]["diagnostic"]["rule_check"]["choices"][0]["label"] += " Use t=4^(2u)."
+        self.assertIn("NEUTRAL_RULE_WARRANT_LEAKS_D3_PROTECTED_WORK",
+                      self.audit(package=pkg)["errors"])
 
     def test_mutation_neutral_diagnostic_missing_is_rejected(self):
         pkg = copy.deepcopy(self.package)

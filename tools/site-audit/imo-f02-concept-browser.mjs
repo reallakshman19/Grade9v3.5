@@ -72,6 +72,20 @@ try {
       width + ': single wrong numeric check was falsely declared a proven misconception');
     await page.locator('[data-g9-diagnostic-next]').fill('343');
     await submit.click();
+    assert(await targets.first().isHidden(), width + ': correct numerical answers alone bypassed the rule explanation');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'mechanism_check_missing',
+      width + ': missing mathematical explanation was not recorded');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_reasoning',
+      width + ': missing explanation did not hold the guided construction');
+    await page.locator('[data-g9-rule-option][value="ADD_BASE"]').check();
+    await submit.click();
+    assert(await targets.first().isHidden(), width + ': incorrect exponent-law explanation unlocked guided construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'mechanism_route_conflict',
+      width + ': correct arithmetic and false reasoning were misclassified as aligned');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': false mathematical explanation received formative completion');
+    await page.locator('[data-g9-rule-option][value="FACTOR_LAW"]').check();
+    await submit.click();
     assert(await targets.first().isVisible(), width + ': structured neutral check failed to reveal construction');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'aligned_structured_counterexample',
       width + ': valid structured check lacks an explicitly formative evidence marker');
@@ -79,6 +93,8 @@ try {
       width + ': wrong evidence state (must remain formative only)');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'guided_example_open',
       width + ': guided study progress not recorded');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-aid-exposure') === 'guided_study',
+      width + ': guided reveal did not record assistance exposure');
     assert((await page.locator('[data-g9-concept-feedback]').innerText()).includes('NOT been graded'),
       width + ': missing explicit warning that free text was not graded');
     const focused = await page.evaluate(() => document.activeElement?.tagName || '');
@@ -104,6 +120,10 @@ try {
       width + ': stale formative flag survived a later wrong index law');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_review',
       width + ': wrong resubmission not labelled needs review');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-aid-exposure') === 'guided_study',
+      width + ': re-submission improperly erased guided exposure');
+    assert((await page.locator('[data-g9-learning-progress]').innerText()).includes('later responses on this page are assisted'),
+      width + ': post-guidance progress did not disclose assisted status');
     await page.locator('[data-g9-concept-option][value="FACTOR"]').check();
     await page.locator('[data-g9-concept-reason]').fill('No');
     await submit.click();
@@ -155,6 +175,8 @@ try {
         '390 CSS 200%: focus not moved after keyboard reveal');
       await access.screenshot({path:path.join(out,'core1a-390-css-zoom-200.png'),fullPage:true});
       await access.reload();
+      assert(await access.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-aid-exposure') === null,
+        '390: page refresh retained transient guided-exposure state');
       assert(await access.locator('[data-g9-concept-target]').first().isHidden(),
         '390: refreshing a page must not retain fake learner progress');
       assert(await access.locator('[data-g9-learning-progress]').getAttribute('data-g9-progress') === 'not_started',

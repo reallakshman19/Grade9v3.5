@@ -161,8 +161,28 @@ def audit(
             "status": "SOURCE_PRESENT_SEMANTICS_REQUIRE_REVIEW",
         })
 
-    if question.get("repair_ref") not in [s.get("id") for s in microtopic.get("teaching_path", [])]:
+    repair_ref = question.get("repair_ref")
+    if repair_ref not in [s.get("id") for s in microtopic.get("teaching_path", [])]:
         errors.append("P2_REPAIR_REF_UNRESOLVED")
+    owning_units = [
+        unit for unit in microtopic.get("construction_units", [])
+        if repair_ref in (unit.get("step_refs") or [])
+    ]
+    if len(owning_units) != 1:
+        errors.append("P2_REPAIR_STEP_NOT_BOUND_TO_UNIQUE_CONSTRUCTION_UNIT")
+    unit = owning_units[0] if len(owning_units) == 1 else {}
+    unit_steps = unit.get("step_refs") or []
+    # The current renderer anchors to the construction-unit ID, not TC-02;
+    # one unit covers TC-01 through TC-05. This is not exact-step return.
+    repair_binding = {
+        "requested_step": repair_ref,
+        "construction_unit": unit.get("id"),
+        "construction_unit_steps": unit_steps,
+        "render_link_target": ("core1a.html#" + unit["id"]) if unit.get("id") else None,
+        "status": ("SHARED_CONSTRUCTION_UNIT_ANCHOR_NOT_EXACT_STEP"
+                   if len(unit_steps) > 1 else
+                   "UNIT_ANCHOR_RUNTIME_SEMANTICS_UNVERIFIED"),
+    }
     if not microtopic.get("exit_task", {}).get("prompt"):
         errors.append("CORE1A_FRESH_EXIT_ABSENT")
     concept = microtopic.get("extensions", {}).get("grade9v3:concept_checkpoint", {})
@@ -188,6 +208,28 @@ def audit(
         ))
         if any(_norm(token) in _norm(public_neutral) for token in forbidden):
             errors.append("NEUTRAL_COUNTEREXAMPLE_LEAKS_D3_PROTECTED_WORK")
+
+    # Neutral, authored recognition is evidence of a selected rule only;
+    # even the correct selection never validates arbitrary free-text reasoning.
+    rule_check = neutral.get("rule_check") or {}
+    rule_options = rule_check.get("choices") or []
+    if (rule_check.get("status") != "LOCAL_SELECTED_RULE_NOT_INDEPENDENT_REASONING"
+            or not isinstance(rule_options, list) or len(rule_options) != 3
+            or any(not isinstance(row, dict) or not isinstance(row.get("label"), str)
+                   or not row["label"].strip() for row in rule_options)
+            or {row.get("value") for row in rule_options}
+                 != {"FACTOR_LAW", "ADD_BASE", "MULTIPLY_EXPONENT"}
+            or rule_check.get("correct_value") != "FACTOR_LAW"
+            or not all(isinstance(rule_check.get(k), str) and rule_check[k].strip()
+                       for k in ("prompt", "on_missing", "on_wrong"))):
+        errors.append("NEUTRAL_RULE_WARRANT_MISSING_OR_FORGED")
+    else:
+        protected = golden_model.get("item_help", {}).get("must_not_reveal_before_attempt", [])
+        authored_rule_text = " ".join([rule_check["prompt"], rule_check["on_missing"],
+                                       rule_check["on_wrong"]]
+                                      + [row["label"] for row in rule_options])
+        if any(_norm(token) in _norm(authored_rule_text) for token in protected):
+            errors.append("NEUTRAL_RULE_WARRANT_LEAKS_D3_PROTECTED_WORK")
 
     # The three author goldens contain a design sequence, NOT accepted runtime evidence.
     golden_steps = [s.get("stage") for s in golden_model.get("core1a_repair", {}).get("sequence", [])]
@@ -221,7 +263,9 @@ def audit(
         if name == "M2":
             status = "STRUCTURED_RESPONSE_PATTERNS_COGNITIVE_CAUSE_UNVERIFIED"
         elif name == "P2":
-            status = "SOURCE_ROUTE_DECLARED_PRECISE_STEP_NOT_VERIFIED"
+            status = ("SOURCE_SHARED_CONSTRUCTION_UNIT_NOT_EXACT_STEP"
+                      if len(unit_steps) > 1 else
+                      "SOURCE_ROUTE_DECLARED_PRECISE_STEP_NOT_VERIFIED")
         elif name in ("S2", "S3"):
             status = "DIFFERENT_CORE1A_EXAMPLE_ITEM_SEMANTICS_UNVERIFIED"
         else:
@@ -237,6 +281,7 @@ def audit(
         "P2_PRECISE_TC02_LEARNER_ROUTE_NOT_VERIFIED",
         "FRESH_UNASSISTED_POST_REPAIR_RETURN_NOT_ENFORCED",
         "FREE_TEXT_REASON_MATHEMATICAL_CORRECTNESS_NOT_GRADED",
+        "RULE_WARRANT_RECOGNITION_NOT_INDEPENDENT_REASONING",
         "BLUEPRINT_RENDERED_CONTENT_AND_WAIVERS_NOT_INDEPENDENTLY_REVIEWED",
     ])
     repair_sequence = [
@@ -266,6 +311,7 @@ def audit(
         "golden_reference_cells": golden_cells,
         "rendered_coverage_cells": [resolution["template_id"]] if resolution else [],
         "source_hints": h_ledger,
+        "p2_repair_binding": repair_binding,
         "semantic_review_asks": asks,
         "core1a_repair_reference_alignment": repair_sequence,
         "blueprint_required_slots": slot_ledger,

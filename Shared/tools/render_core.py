@@ -1474,6 +1474,27 @@ def _draft_concept_checkpoint(ctx: Ctx, m: dict) -> str:
                 "neutral numerical counterexample must be authored and cannot grade mathematical mastery",
                 "CORE1A")
         return ""
+    # A selected rule is a falsifiable recognition check, not a grade for free text.
+    rule = diagnostic.get("rule_check") or {}
+    rule_choices = rule.get("choices") or []
+    if (rule.get("status") != "LOCAL_SELECTED_RULE_NOT_INDEPENDENT_REASONING"
+            or not isinstance(rule_choices, list) or len(rule_choices) != 3
+            or any(not isinstance(row, dict) or not isinstance(row.get("label"), str)
+                   or not row["label"].strip() for row in rule_choices)
+            or {row.get("value") for row in rule_choices}
+                  != {"FACTOR_LAW", "ADD_BASE", "MULTIPLY_EXPONENT"}
+            or rule.get("correct_value") != "FACTOR_LAW"
+            or not all(isinstance(rule.get(key), str) and rule[key].strip()
+                       for key in ("prompt", "on_missing", "on_wrong"))):
+        ctx.gap("AUTHOR_CONCEPT_RULE_CHECK", m["id"],
+                "authored neutral rule warrant must be complete and non-mastering", "CORE1A")
+        return ""
+    rule_labels = "".join(
+        f'<label><input type="radio" name="{esc(m["id"])}-rule" '
+        f'data-g9-rule-option value="{esc(choice["value"])}"> '
+        f'{esc(choice["label"])}</label>'
+        for choice in rule_choices
+    )
     labels = "".join(
         f'<label><input type="radio" name="{esc(m["id"])}-concept" '
         f'data-g9-concept-option value="{esc(choice["value"])}"> '
@@ -1497,6 +1518,14 @@ def _draft_concept_checkpoint(ctx: Ctx, m: dict) -> str:
         f'data-g9-diagnostic-add autocomplete="off" '
         f'aria-describedby="{esc(m["id"])}-concept-scope">'
         '</fieldset>'
+    )
+    diagnostic_html += (
+        f'<fieldset data-g9-rule-check data-g9-rule-correct="{esc(rule["correct_value"])}" '
+        f'data-g9-rule-missing="{esc(rule["on_missing"])}" '
+        f'data-g9-rule-wrong="{esc(rule["on_wrong"])}">'
+        '<legend>Explain the neutral factor law</legend>'
+        f'<p>{esc(rule["prompt"])}</p>'
+        + rule_labels + '</fieldset>'
     )
     return (
         f'<section class="g9-concept-first" data-g9-concept-check '
@@ -2923,7 +2952,9 @@ q('[data-g9-concept-check]').forEach(c=>{
   const setProgress=(code,description)=>{
     article.dataset.g9ConceptProgress=code;
     progress.dataset.g9Progress=code;
-    progress.textContent='Progress (this page only): '+description+' No independent mastery has been checked.';
+    progress.textContent='Progress (this page only): '+description+' No independent mastery has been checked.'
+      +(article.dataset.g9ConceptAidExposure==='guided_study'
+        ?' Guided teaching has already been displayed; later responses on this page are assisted.':'');
   };
   const openGuided=()=>{
     q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false});
@@ -2982,8 +3013,26 @@ q('[data-g9-concept-check]').forEach(c=>{
       feedback.textContent=numeric.dataset.g9DiagnosticInconsistent;
       return
     }
+    // A right prediction with an incorrect selected rule is an explicit
+    // contradiction; correct numbers alone do not unlock guided construction.
+    const rule=q('[data-g9-rule-check]',c)[0];
+    const warrantChoice=q('[data-g9-rule-option]:checked',c)[0]?.value||'';
+    if(!rule||!warrantChoice){
+      article.dataset.g9DiagnosticPattern='mechanism_check_missing';
+      setProgress('needs_reasoning','choose an explanation of the factor law.');
+      feedback.textContent=rule?.dataset.g9RuleMissing||'Choose the exponent-law explanation.';
+      return
+    }
+    if(warrantChoice!==rule.dataset.g9RuleCorrect){
+      article.dataset.g9DiagnosticPattern='mechanism_route_conflict';
+      setProgress('needs_reasoning','the explanation conflicts with the factor law.');
+      feedback.textContent=rule.dataset.g9RuleWrong;
+      return
+    }
     article.dataset.g9DiagnosticPattern='aligned_structured_counterexample';
     article.dataset.g9ConceptCheckCompleted='formative_only';
+    // Exposure is monotonic within this page; re-submission cannot restore independence.
+    article.dataset.g9ConceptAidExposure='guided_study';
     setProgress('guided_example_open','structured counterexample recorded; guided example open.');
     feedback.textContent=numeric.dataset.g9DiagnosticAligned+' '+c.dataset.g9FeedbackPassed
       +' Your explanation has NOT been graded for correctness.';
@@ -2993,6 +3042,7 @@ q('[data-g9-concept-check]').forEach(c=>{
     // Switching to unchecked guided study must not retain a previous format-pass marker.
     delete article.dataset.g9ConceptCheckCompleted;
     delete article.dataset.g9DiagnosticPattern;
+    article.dataset.g9ConceptAidExposure='guided_study';
     setProgress('guided_without_check','guided example open without checking the prediction.');
     feedback.textContent='Guided study opened. No prediction, explanation or independent mastery was verified.';
     openGuided()
@@ -3027,6 +3077,10 @@ CONCEPT_FIRST_CSS = (
     '{display:block;margin:.65rem 0 .2rem}'
     'html[data-g9-role="CORE1A"] [data-g9-neutral-diagnostic] input'
     '{display:block;box-sizing:border-box;max-width:100%;width:min(100%,18rem);min-height:48px}'
+    'html[data-g9-role="CORE1A"] [data-g9-rule-check] label'
+    '{display:block;margin:.55rem 0;line-height:1.5;cursor:pointer}'
+    'html[data-g9-role="CORE1A"] [data-g9-rule-check] input'
+    '{margin-right:.5rem;min-width:18px;min-height:18px}'
     '@media print{html[data-g9-role="CORE1A"] [data-g9-concept-target][hidden]'
     '{display:block!important}'
     'html[data-g9-role="CORE1A"] [data-g9-concept-target] .g9-stage-controls'

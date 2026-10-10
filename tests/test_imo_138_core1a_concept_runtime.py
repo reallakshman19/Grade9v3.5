@@ -36,6 +36,10 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn('data-g9-neutral-diagnostic data-g9-base="7" data-g9-exponent="2"', html)
         self.assertIn('data-g9-diagnostic-next autocomplete="off"', html)
         self.assertIn('data-g9-diagnostic-add autocomplete="off"', html)
+        self.assertIn('data-g9-rule-check data-g9-rule-correct="FACTOR_LAW"', html)
+        self.assertIn('data-g9-rule-option value="FACTOR_LAW"', html)
+        self.assertIn('data-g9-rule-option value="ADD_BASE"', html)
+        self.assertIn('data-g9-rule-option value="MULTIPLY_EXPONENT"', html)
         self.assertIn('data-g9-concept-feedback role="status" aria-live="polite"', html)
         self.assertLess(html.index('data-g9-concept-check'), html.index('data-g9-concept-target hidden'))
         self.assertIn('data-g9-concept-target hidden', html)
@@ -57,6 +61,10 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("repeated_additive_route_candidate", html)
         self.assertIn("choice_numeric_conflict", html)
         self.assertIn("possible_execution_slip_or_model_error", html)
+        self.assertIn("mechanism_check_missing", html)
+        self.assertIn("mechanism_route_conflict", html)
+        self.assertIn("setProgress('needs_reasoning'", html)
+        self.assertIn("warrantChoice!==rule.dataset.g9RuleCorrect", html)
         self.assertIn("aligned_structured_counterexample", html)
         self.assertIn("Your explanation has NOT been graded", html)
         self.assertEqual(html.count("delete article.dataset.g9ConceptCheckCompleted;"), 2,
@@ -91,6 +99,7 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertNotIn('<section class="g9-concept-first" data-g9-concept-check',
                          self.pages["core2a.html"])
         self.assertNotIn('<fieldset data-g9-neutral-diagnostic', self.pages["core2a.html"])
+        self.assertNotIn('<fieldset data-g9-rule-check', self.pages["core2a.html"])
         self.assertNotIn('[data-g9-concept-target][hidden]{display:block!important}',
                          self.pages["core2a.html"])
         self.assertNotIn('[data-g9-concept-target] .g9-stage-controls{display:none!important}',
