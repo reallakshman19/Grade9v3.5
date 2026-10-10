@@ -649,6 +649,79 @@
           ]
         }
       ]
+    },
+    {
+      "id": "REP-TEST-IMO-G9-AUTHORED-001-FACTORS-SAFE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:stage_mode": "REPLACE"
+      },
+      "kind": "ALGEBRA_TILES",
+      "purpose": "Preserve the actual authored #001 factors n, n+1, n+2 without giving away their divisibility or universal proof.",
+      "required_elements": [
+        "Three factor boxes labelled n, n+1 and n+2",
+        "Visible multiplication signs with no solution or divisor annotations"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read the arbitrary starting integer n and successors n+1 and n+2.",
+        "Build your own proof/counterexample route; the diagram makes no truth claim."
+      ],
+      "instance_constraints": [
+        "No factor-of-two, modulo-three, or answer-bearing marks in the pre-attempt asset.",
+        "No official source identity implied.",
+        "These are three labelled symbolic factor tiles, not counted unit-area algebra tiles; no area interpretation is asserted."
+      ],
+      "accessibility": [
+        "Each factor and multiplication sign is named in a descriptive text equivalent.",
+        "Do not reveal any proof in the SVG title, description or accessible label."
+      ],
+      "misleading_alternatives": [
+        "A diagram that colors an even factor or a multiple of three in advance"
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/imo-g9-authored-001-consecutive-factors-safe.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-TEST-IMO-G9-AUTHORED-001-SAFE",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-IMO-G9-AUTHORED-001-JUSTIFY-D3",
+          "datum_refs": [
+            "DATUM-TEST-IMO-G9-AUTHORED-001-FACTORS"
+          ],
+          "asset_ref": "TEST/library/figures/imo-g9-authored-001-consecutive-factors-safe.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Three consecutive factors starting at arbitrary n",
+            "caption": "Attempt prompt: n,n+1,n+2; the universal proof-or-counterexample decision belongs to the learner."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three adjacent factor boxes",
+          "symbol": "n(n+1)(n+2)",
+          "in_words": "The triple starts at arbitrary n and advances by one each time."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "AUTHORED-001-FACTORS-ONLY",
+          "label": "Given factors only",
+          "purpose": "Show the problem's three factors, without revealing parity/remainders, a truth decision, or universal conclusion.",
+          "visible_elements": [
+            "n,n+1,n+2"
+          ]
+        }
+      ]
     }
   ],
   "question_families": [
@@ -1051,7 +1124,7 @@
         "This item was independently authored for TEST practice, not copied from an SOF exam."
       ],
       "figure_refs": [
-        "REP-TEST-CORE2A-ADJACENT-FACTORS-SAFE"
+        "REP-TEST-IMO-G9-AUTHORED-001-FACTORS-SAFE"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
@@ -1175,11 +1248,11 @@
         }
       ],
       "representation_roles": {
-        "initial_ref": "REP-TEST-CORE2A-ADJACENT-FACTORS-SAFE",
-        "safe_ref": "REP-TEST-CORE2A-ADJACENT-FACTORS-SAFE",
+        "initial_ref": "REP-TEST-IMO-G9-AUTHORED-001-FACTORS-SAFE",
+        "safe_ref": "REP-TEST-IMO-G9-AUTHORED-001-FACTORS-SAFE",
         "bound_ref": null,
         "stage_refs": [
-          "PRACTICE-FACTORS-ONLY"
+          "AUTHORED-001-FACTORS-ONLY"
         ]
       },
       "repair_ref": "TC-03",
@@ -1359,6 +1432,23 @@
       "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>(</mo><mi>t</mi><mo>−</mo><mn>2</mn><mo>)</mo><mo>(</mo><mi>t</mi><mo>−</mo><mn>1</mn><mo>)</mo><mi>t</mi></mrow></math>",
       "meaning": "Three consecutive factors that end at an arbitrary positive integer t of at least three; no proof exposed",
       "locator": "AUTHOR_CREATED: TEST Core1B attempting the general product"
+    },
+    {
+      "id": "DATUM-TEST-IMO-G9-AUTHORED-001-FACTORS",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_SAFE_EXPRESSION"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>n</mi><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow></math>",
+      "meaning": "The original authored #001 arbitrary triple; not the different offset-triple expression from D2",
+      "symbol": "n(n+1)(n+2)",
+      "locator": "AUTHORED_PRACTICE_001: proof-free question representation"
     }
   ]
 }
