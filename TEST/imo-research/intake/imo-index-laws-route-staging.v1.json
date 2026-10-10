@@ -51,5 +51,25 @@
     "owner_channel_authorized": false,
     "live_deployed": false,
     "merged": false
+  },
+  "generated_projection_parity": {
+    "repair_completed_utc": "2026-10-10",
+    "state": "GENERATORS_RERUN_AND_COMMITTED_TO_DRAFT_NOT_RELEASED",
+    "final_repair_sha": "f380a63c3e4ae4ec3c9014b10247728ba70bf7f7",
+    "provenance": [
+      {
+        "mechanism": "Shared/tools/deploy_test.py pages",
+        "outcome": "SIX_GENERATED_TEST_AND_PAGES_MIRROR_FILES_REBUILT",
+        "sha": "0049f3eafaca6580f73c4f17d1ef1cd4270e6473"
+      },
+      {
+        "mechanism": "Shared/tools/build_manifest.py + build_pages_site.py",
+        "outcome": "SCHEMA_DEPENDENCY_SENSITIVE_RUNTIME_AND_PAGES_REPAIRED",
+        "sha": "f380a63c3e4ae4ec3c9014b10247728ba70bf7f7"
+      }
+    ],
+    "exact_head_ci": "NOT_RECORDED_IN_THIS_PROJECTION",
+    "exception": "Python 3.11 tablet workflow installs jsonschema. Generator results changed when build_manifest was invoked without that schema-validator environment; repairs matched installed jsonschema and omitted temporary workflow before output generation.",
+    "limitations": "Neither passing schema checks nor metadata implies academic acceptance, QRT approval, rights grant, stage-A publication, or main/release merge."
   }
 }
