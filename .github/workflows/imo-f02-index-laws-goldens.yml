@@ -23,5 +23,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_imo_327_core1a_math_proof.py' -v
       - name: Enforce concept-first versus question-hint authored modes
         run: python -m unittest discover -s tests -p 'test_imo_327_help_mode_separation.py' -v
+      - name: Test emitted TEST Core1A lesson concept checkpoint
+        run: python -m unittest discover -s tests -p 'test_imo_138_core1a_concept_runtime.py' -v
       - name: Verify 3 SHA-locked QRT goldens and negative mutations
         run: python -m unittest discover -s tests -p 'test_imo_327_qrt_help_golden.py' -v
