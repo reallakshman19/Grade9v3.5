@@ -82,7 +82,14 @@ try {
         await field.fill(role === 'core2a'
           ? 'Three examples are not a universal proof. I must consider arbitrary m and all residues.'
           : 'For any n, prove four factors give 24 and five factors give 5; combine coprime divisors.');
-        await commit.click();
+        if (role === 'core2b' && width === 390) {
+          await commit.focus();
+          assert.ok(await commit.evaluate(el => el === document.activeElement),
+            'commit control cannot receive keyboard focus');
+          await page.keyboard.press('Enter');
+        } else {
+          await commit.click();
+        }
         assert.equal(await gates.first().getAttribute('data-locked'), null,
           'valid typed commitment did not unlock ' + role);
         if (role === 'core2b') {
@@ -109,12 +116,38 @@ try {
           assert.ok(await article.locator('a[href^="core1a.html#"]').count() > 0,
             'post-attempt concept-repair navigation is missing');
         }
-        await gates.first().locator('summary').click();
-        assert.ok(await gates.first().evaluate(element => element.open),
-          role + ' disclosure cannot open after commitment');
+        const solutionGate = role === 'core2b'
+          ? article.locator('details[data-g9-reveal]').filter({
+              has: page.locator('summary:text-is("Review and solution")'),
+            }).first()
+          : gates.first();
+        assert.equal(await solutionGate.count(), 1, 'cannot identify complete solution disclosure');
+        await solutionGate.locator('summary').click();
+        assert.ok(await solutionGate.evaluate(element => element.open),
+          role + ' solution disclosure cannot open after commitment');
         await page.emulateMedia({ media: 'print' });
         assert.ok((await article.count()) === 1, 'print media discarded learner question');
+        if (role === 'core2b' && width === 390) {
+          const pdfPath = path.join(evidenceDir, 'core2b-A4-after-commit.pdf');
+          const bytes = await page.pdf({
+            path: pdfPath, format: 'A4', printBackground: true, preferCSSPageSize: false,
+          });
+          assert.ok(bytes.subarray(0, 5).toString() === '%PDF-', 'no actual Chromium PDF');
+          assert.ok(bytes.length > 2000, 'unexpectedly empty A4 print');
+          result.print = { path: path.basename(pdfPath), bytes: bytes.length, format: 'A4',
+            state: 'AFTER_LEARNER_COMMIT_AND_SOLUTION_OPEN', status: 'PENDING_PDF_STRUCTURE_CHECK' };
+        }
         await page.emulateMedia({ media: 'screen' });
+        if (role === 'core2b' && width === 390) {
+          await page.reload();
+          const resetArticle = page.locator('article[data-g9-role="CORE2B"]').first();
+          assert.ok(await resetArticle.locator('details[data-requires-attempt][data-locked]').count() > 0,
+            'Core2B refresh must not silently unlock a previous commitment');
+          const freshText = await resetArticle.innerText();
+          assert.ok(!freshText.includes(variant === 'boundary' ? 'n mod 4 != 1' : 'gcd(24,5)=1'),
+            'Core2B refresh disclosed a previously viewed protected solution');
+          result.refresh = 'CORE2B_FAILS_CLOSED_AND_REQUIRES_A_NEW_ATTEMPT';
+        }
       }
       assert.deepEqual(errors, [], role + ' JS errors at ' + width);
       assert.deepEqual(requests, [], role + ' missing page assets at ' + width);

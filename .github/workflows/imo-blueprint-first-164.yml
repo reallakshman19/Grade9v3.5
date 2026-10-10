@@ -9,6 +9,7 @@ on:
       - 'tests/test_imo_164_transfer_comparison.py'
       - 'tests/test_imo_164_regression_scope.py'
       - 'tests/test_imo_164_qrt_comparison.py'
+      - 'tests/check_imo_164_print.py'
       - 'TEST/imo-research/pilots/regression-scope-164.v1.json'
       - 'TEST/imo-research/pilots/transfer-comparison-164.v1.json'
       - 'TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg'
@@ -25,7 +26,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install shared renderer schema validator
-        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5'
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5' 'pypdf>=5,<7'
       - name: Verify real blueprint, proof, source isolation and HTML readback
         run: python -m unittest discover -s tests -p 'test_imo_blueprint_first_five_transfer.py' -v
       - name: Guard inherited Core1A snapshot and baseline-honesty scope
@@ -93,6 +94,11 @@ jobs:
             --manifest TEST/products/imo-g9-blueprint-boundary-12-transfer.manifest.json \
             --out "$alt" --draft --reference
           node tests/imo_blueprint_first_browser.mjs "$alt" "$RUNNER_TEMP/imo-164-boundary-browser-evidence" boundary
+      - name: Verify actual held A4 print structure and extracted question text
+        run: |
+          python tests/check_imo_164_print.py \
+            "$RUNNER_TEMP/imo-164-browser-evidence" \
+            "$RUNNER_TEMP/imo-164-boundary-browser-evidence"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
