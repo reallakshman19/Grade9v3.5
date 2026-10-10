@@ -118,6 +118,17 @@ class IMOAuthorHelpRoleRuntimeDenialTests(unittest.TestCase):
         # Static authored event handlers never prove event order/persistence.
         # The end-to-end suite separately asserts browser_qa == NOT_RUN.
 
+    def test_static_repair_listener_cannot_pass_late_template_binding(self):
+        from Shared.tools import render_core
+        pages, _gaps, _digest, _advisories, _waivers = render_core.build_report(
+            MANIFEST, "PAGES", held_to="REFERENCE")
+        emitted = pages["core2a.html"]
+        listener = "f02Article.addEventListener('click',event=>{"
+        self.assertEqual(emitted.count(listener), 1)
+        mutated = emitted.replace(listener, "f02Article.addEventListener('noop',event=>{", 1)
+        self.assertEqual(authored_core2a_runtime_findings(mutated),
+                         ["CORE2A_HELP_LOCAL_TRACE_INCOMPLETE"])
+
     def test_partial_or_fake_trace_does_not_bypass_runtime_hold(self):
         for markup in (
             "<script>const f02Schema='F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1';</script>",
