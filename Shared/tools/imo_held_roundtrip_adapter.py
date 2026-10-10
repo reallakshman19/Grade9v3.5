@@ -8,10 +8,13 @@ from __future__ import annotations
 
 import argparse
 from html import escape
+from html.parser import HTMLParser
 import json
+import os
 from pathlib import Path
 import re
 import sys
+import tempfile
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -20,6 +23,48 @@ from Shared.tools.imo_roundtrip_contract import audit  # noqa: E402
 
 class AdaptationError(ValueError):
     pass
+
+
+class _Shell(HTMLParser):
+    """Require the existing renderer identity on BOTH whole candidate pages."""
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.html: list[dict] = []
+        self.body: list[dict] = []
+        self.render_meta = 0
+        self.duplicate_attrs = False
+
+    def handle_starttag(self, tag: str, attributes: list[tuple[str, str | None]]) -> None:
+        keys = [name for name, _ in attributes]
+        if len(keys) != len(set(keys)):
+            self.duplicate_attrs = True
+        attrs = dict(attributes)
+        if tag == 'html':
+            self.html.append(attrs)
+        if tag == 'body':
+            self.body.append(attrs)
+        if tag == 'meta' and attrs.get('name') == 'g9-render':
+            self.render_meta += 1
+
+
+def _verify_draft_page_shell(text: str, role: str, product_id: str) -> None:
+    shell = _Shell()
+    shell.feed(text)
+    shell.close()
+    if (shell.duplicate_attrs or len(shell.html) != 1 or len(shell.body) != 1
+            or shell.render_meta != 1):
+        raise AdaptationError(f'{role}: missing/ambiguous renderer page shell')
+    html, body = shell.html[0], shell.body[0]
+    if (html.get('data-g9-shell') is None and 'data-g9-shell' not in html):
+        raise AdaptationError(f'{role}: unrecognized renderer shell')
+    if (html.get('data-g9-role') != role or body.get('data-core') != role
+            or html.get('data-g9-mode') != 'PAGES'
+            or html.get('data-g9-product') != product_id
+            or not html.get('data-g9-render-digest')):
+        raise AdaptationError(f'{role}: role/product/mode/digest binding mismatch')
+    # An existing local adapter marker is never accepted as fresh source.
+    if html.get('data-g9-held-adapter') or 'data-g9-held-step-focus' in text:
+        raise AdaptationError(f'{role}: already adapted candidate')
 
 
 def _html_article(html: str, *, qid: str, role: str) -> str:
@@ -55,6 +100,11 @@ def adapt(package: dict, manifest: dict, pilot: dict, practice: str, concept: st
     qid, mic, step = before['question_id'], before['microtopic_id'], before['repair_step_id']
     if not all(isinstance(k, str) and re.fullmatch(r'[A-Za-z0-9_-]+', k) for k in (qid, mic, step)):
         raise AdaptationError('missing or unsafe selected candidate identity')
+    product = manifest.get('product_id')
+    if not isinstance(product, str) or not re.fullmatch(r'[A-Za-z0-9_-]+', product):
+        raise AdaptationError('manifest has no safe product identity')
+    _verify_draft_page_shell(practice, 'CORE2A', product)
+    _verify_draft_page_shell(concept, 'CORE1A', product)
 
     question_article = _html_article(practice, qid=qid, role='CORE2A')
     concept_article = _html_article(concept, qid=mic, role='CORE1A')
@@ -128,6 +178,17 @@ def adapt(package: dict, manifest: dict, pilot: dict, practice: str, concept: st
     if 'data-g9-held-step-focus' in concept or concept.count('</body>') != 1:
         raise AdaptationError('concept page does not have an unmodified closing body')
     concept = concept.replace('</body>', focus_js + '</body>', 1)
+    # Mark both staging outputs unmistakably as unapproved TEST snapshots.
+    for name, value in (('practice', practice), ('concept', concept)):
+        if value.count('<html ') != 1 or value.count('</head>') != 1:
+            raise AdaptationError('candidate has unexpected page shell boundaries')
+        value = value.replace('<html ', '<html data-g9-held-adapter="true" ', 1)
+        value = value.replace('</head>', '<meta name="robots" content="noindex,nofollow">'
+                              '</head>', 1)
+        if name == 'practice':
+            practice = value
+        else:
+            concept = value
     after = audit(package, manifest, pilot, practice, concept, package_ref=package_ref)
     if after['status'] != 'STRUCTURAL_CANDIDATE_HELD':
         raise AdaptationError('post-adaptation round-trip contract failed: '
@@ -161,20 +222,31 @@ def main() -> int:
         output = args.output_dir.resolve()
         if core2a.parent != core1a.parent or core2a.name != 'core2a.html' or core1a.name != 'core1a.html':
             raise AdaptationError('core2a/core1a pages must belong to same draft product')
+        if not core2a.is_relative_to(root) or not core1a.is_relative_to(root):
+            raise AdaptationError('input role pages must belong to the declared checkout')
         if output == core2a.parent or output.is_relative_to(core2a.parent):
             raise AdaptationError('never overwrite the original draft product')
         forbidden = tuple(root / x for x in ('public', 'docs', 'Mathematics', 'Releases', 'TEST'))
         if any(output == x or output.is_relative_to(x) for x in forbidden):
             raise AdaptationError('cannot stage adapted candidate under protected source or site trees')
+        if not output.is_relative_to(root / 'build'):
+            raise AdaptationError('adapted TEST output must stay under the local build/ tree')
+        if any(core2a.is_relative_to(x) or core1a.is_relative_to(x) for x in forbidden):
+            raise AdaptationError('cannot consume production/site/source pages as draft input')
         a,b,report = adapt(*inputs, core2a.read_text(encoding='utf-8'),
                            core1a.read_text(encoding='utf-8'), package_ref=package_ref)
         # Refuse to overwrite existing artifacts or partially approved outputs.
         if output.exists():
             raise AdaptationError('output directory already exists')
-        output.mkdir(parents=True, exist_ok=False)
-        (output / 'core2a.html').write_text(a, encoding='utf-8')
-        (output / 'core1a.html').write_text(b, encoding='utf-8')
-        (output / 'local-held-report.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
+        output.parent.mkdir(parents=True, exist_ok=True)
+        # Stage completely before revealing the output path. No half-written
+        # output directory can be mistaken for a successful integration.
+        with tempfile.TemporaryDirectory(prefix='.g9-held-', dir=output.parent) as tmp:
+            staging = Path(tmp)
+            (staging / 'core2a.html').write_text(a, encoding='utf-8')
+            (staging / 'core1a.html').write_text(b, encoding='utf-8')
+            (staging / 'local-held-report.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
+            os.rename(staging, output)
         print(json.dumps(report, indent=2))
         return 0
     except (OSError, ValueError, TypeError, KeyError) as exc:
