@@ -13,11 +13,14 @@ from html.parser import HTMLParser
 import json
 from pathlib import Path, PurePosixPath
 import posixpath
+import sys
 from urllib.parse import urlsplit
 
-from Shared.tools import build_pages_site, release_authority
-
 REPO = Path(__file__).resolve().parents[2]
+if __package__ in (None, ""):
+    sys.path.insert(0, str(REPO))
+
+from Shared.tools import build_pages_site, release_authority  # noqa: E402
 SUBTOPIC = "NS-INDEX-LAWS"
 PAGE = "mathematics/number-systems/index-laws/index.html"
 PILOT = "TEST/imo-research/intake/imo-index-laws-subtopic-pilot.v1.json"
