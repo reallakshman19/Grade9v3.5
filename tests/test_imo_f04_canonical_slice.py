@@ -6,6 +6,9 @@ A green structural test is not a QRT reviewer YES or learner publication.
 from __future__ import annotations
 
 from copy import deepcopy
+from contextlib import redirect_stdout
+import io
+from unittest.mock import patch
 import json
 from pathlib import Path
 import unittest
@@ -123,6 +126,25 @@ class IMOCanonicalSliceTests(unittest.TestCase):
             'data-g9-role="CORE2A"', 'data-g9-role="CORE2"', 1)
         _facts, issues = inspect_rendered(modified, BLUEPRINT_REFS)
         self.assertIn("CORE2A_BLUEPRINT_ROLE_MISMATCH", issues)
+
+    def test_cli_stdout_is_safe_json_and_cannot_expose_protected_w(self):
+        # The canonical resolver's W is intentionally retained in an
+        # uncommitted local receipt, never streamed into public Actions logs.
+        from Shared.tools.imo_f04_canonical_slice import main
+        out = io.StringIO()
+        with patch("sys.argv", ["imo_f04_canonical_slice.py"]), redirect_stdout(out):
+            exit_code = main()
+        printed = out.getvalue()
+        status = json.loads(printed)
+        self.assertEqual(exit_code, 0 if self.report["state"] != "BLOCKED" else 1)
+        self.assertEqual(status["state"], self.report["state"])
+        self.assertFalse(status["release_authorized"])
+        self.assertNotIn("protected_W", printed)
+        self.assertNotIn("review_objectives", printed)
+        self.assertNotIn("semantic_review_asks", printed)
+        protected = self.report["f02_source_ledger"]["protected_W"]
+        self.assertTrue(protected)
+        self.assertNotIn(protected, printed)
 
     def test_navigation_is_reported_as_evidence_not_autofixed(self):
         real = self.report["render"]["pages"]
