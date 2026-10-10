@@ -135,6 +135,8 @@ try {
       await printPage.emulateMedia({ media: 'print' });
       assert(await untouchedTargets.first().isVisible(),
         'print: guided Core1A construction missing from fresh learner PDF');
+      assert(await printPage.locator('[data-g9-concept-target] .g9-stage-controls').first().isHidden(),
+        'print: obsolete Stage 1 of 3 interactive controls remain visible with all stages shown');
       // Media-query change callbacks fire asynchronously in Chromium.
       // Poll the actual geometry rather than sampling before print refit runs.
       let printedStages = {found:false};
