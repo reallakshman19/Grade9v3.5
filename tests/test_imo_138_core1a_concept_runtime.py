@@ -1,5 +1,6 @@
 """#138: emitted TEST Core1A concept-first HTML contract, not a mastery assertion."""
 import json
+import importlib.util
 import unittest
 from pathlib import Path
 from Shared.tools import render_core
@@ -9,6 +10,8 @@ MANIFEST = ROOT / "TEST/imo-research/candidates/imo-g9-r1-qrt-core2a-core1a.test
 PACKAGE = ROOT / "TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.v1.json"
 
 
+@unittest.skipUnless(importlib.util.find_spec("jsonschema") is not None,
+                     "jsonschema absent; exact-head F02 focused CI installs and runs this dependency")
 class TestConceptFirstHTML(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
