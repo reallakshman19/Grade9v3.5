@@ -1,0 +1,71 @@
+name: IMO F04 canonical QRT blueprint integration (TEST only)
+
+on:
+  pull_request:
+    paths:
+      - "Shared/tools/imo_f04_canonical_slice.py"
+      - "tests/test_imo_f04_canonical_slice.py"
+      - "TEST/imo-research/candidates/**"
+      - "TEST/imo-research/golden/**"
+      - "Shared/quality/question-demand-*.json"
+      - "Shared/vocabularies/cognitive-demand.v1.json"
+      - "Shared/web/interactive-page-blueprints.v1.json"
+      - "Shared/tools/question_review_matrix.py"
+      - "Shared/tools/render_core.py"
+      - "Shared/tools/web_blueprint_contract.py"
+      - ".github/workflows/imo-f04-canonical-qrt-blueprint.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  canonical-qrt-blueprint:
+    name: Real MODEL-D3 QRT, blueprint and held TEST render
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install canonical contract dependencies
+        run: python -m pip install --quiet jsonschema pypdf
+      - name: Verify canonical 7x4 QRT source and projection
+        run: |
+          python Shared/tools/question_review_matrix.py check
+          python Shared/tools/question_review_matrix.py write --check
+      - name: Verify active blueprint registry
+        run: python Shared/tools/web_blueprint_contract.py --enforce
+      - name: Run Agent 2 authored source-bound MODEL-D3 review-ledger tests
+        run: python -m unittest discover -s tests -p 'test_imo_138_qrt_blueprint_contract.py' -v
+      - name: Run Agent 3 REAL canonical generated-role tests
+        run: python -m unittest discover -s tests -p 'test_imo_f04_canonical_slice.py' -v
+      - name: Run real canonical TEST audit, never publish protected W in stdout
+        run: |
+          mkdir -p build
+          python Shared/tools/imo_f04_canonical_slice.py \
+            --output build/imo-f04-canonical-slice.json > "$RUNNER_TEMP/imo-f04-summary.json"
+          python - "$RUNNER_TEMP/imo-f04-summary.json" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          raw = Path(sys.argv[1]).read_text(encoding="utf-8")
+          data = json.loads(raw)
+          assert data["schema"] == "agent3-imo-f04-canonical-vertical-slice/v1"
+          assert data["qrt_cell"] == "QRT-MODEL-D3"
+          assert data["source_contract_status"] == "HOLD_NOT_ACCEPTED"
+          assert data["release_authorized"] is False
+          assert "protected_W" not in raw
+          assert "semantic_review_asks" not in raw
+          assert data["state"] in {"INTEGRATION_GAPS_HELD", "EVIDENCE_READY_REVIEW_HOLD"}
+          print("REAL_CANONICAL_TEST_AUDIT_COMPLETE; QRT_SEMANTICS_AND_RELEASE_HOLD")
+          PY
+      - name: Retain ONLY safe status without protected QRT/answer data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f04-canonical-safe-summary
+          path: ${{ runner.temp }}/imo-f04-summary.json
+          if-no-files-found: ignore
+          retention-days: 7
