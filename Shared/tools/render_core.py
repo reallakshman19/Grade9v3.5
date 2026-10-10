@@ -3204,8 +3204,12 @@ if(f02Article){
     const box=b.closest('[data-g9-attempt-box]');
     if(box&&validAttempt(box))f02Event('ATTEMPT_COMMIT');
   }));
-  q('[data-g9-repair-ref="TC-02"][data-g9-concept-link]',f02Article)
-    .forEach(link=>link.addEventListener('click',()=>f02Event('REPAIR_NAV')));
+  // The exact repair link is inside a gated <template> and is cloned only
+  // after the attempt. Delegate from the stable article, not a static NodeList.
+  f02Article.addEventListener('click',event=>{
+    const link=event.target.closest?.('a[data-g9-repair-ref="TC-02"][data-g9-concept-link]');
+    if(link&&f02Article.contains(link))f02Event('REPAIR_NAV');
+  });
 }
 const f02ConceptGate=q('[data-g9-concept-check][data-g9-concept-ref="'+f02Concept+'"]')[0];
 if(f02ConceptGate){

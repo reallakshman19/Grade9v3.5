@@ -127,6 +127,12 @@ class TestConceptFirstHTML(unittest.TestCase):
                 self.assertIn("Editable or missing local data never establishes independent mastery", html)
                 self.assertNotIn("store.set(f02Key,JSON.stringify({value:", html)
         self.assertIn("if(box&&validAttempt(box))f02Event('ATTEMPT_COMMIT')", core2a)
+        # The exact TC-02 link lives in a gated template, materialised only
+        # after a valid attempt. Static querySelectorAll cannot bind its click.
+        self.assertIn("f02Article.addEventListener('click',event=>{", core2a)
+        self.assertIn("event.target.closest?.('a[data-g9-repair-ref=\"TC-02\"][data-g9-concept-link]')", core2a)
+        self.assertIn("if(link&&f02Article.contains(link))f02Event('REPAIR_NAV')", core2a)
+        self.assertNotIn("q('[data-g9-repair-ref=\"TC-02\"][data-g9-concept-link]',f02Article)", core2a)
         self.assertIn("if(value.invalid){f02Reflect(value,false);return}", core2a)
         self.assertIn("if(value.events.length>=32)value.overflow=true", core2a)
         self.assertIn("value.events.push({n:value.events.length+1,kind})", core2a)

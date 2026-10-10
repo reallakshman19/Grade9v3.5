@@ -244,9 +244,9 @@ try {
       });
       if(stored){
         const evidence = JSON.parse(stored);
-        assert(evidence.events.length >= 1 && evidence.events[0].kind === 'ATTEMPT_COMMIT'
+        assert(evidence.events.length === 1 && evidence.events[0].kind === 'ATTEMPT_COMMIT'
           && !JSON.stringify(evidence).includes('Unscored trial reasoning'),
-          width + ': attempt trace omitted event or retained free-response text');
+          width + ': pre-repair attempt history is not exactly one valid marker');
       }else{
         assert(await traceNote.getAttribute('data-g9-f02-trace-state') !== 'UNTRUSTED_LOCAL_ONLY',
           width + ': unavailable local storage was mislabeled as saved evidence');
@@ -281,10 +281,12 @@ try {
         });
         if(persisted){
           const sequence=JSON.parse(persisted);
-          assert(sequence.events.every((e,i)=>e.n===i+1)
+          assert(JSON.stringify(sequence.events.map(e=>e.kind)) ===
+            JSON.stringify(['ATTEMPT_COMMIT','REPAIR_NAV','GUIDED_OPEN','RETURN_CLICK'])
+            && sequence.events.every((e,i)=>e.n===i+1)
             && !JSON.stringify(sequence).includes('Unscored trial reasoning')
             && sequence.assisted === true,
-            width + ': browser-local trace has invalid event order or content');
+            width + ': actual deferred-link journey did not record all four events in order');
         }else{
           assert(await tracePage.locator('[data-g9-f02-trace-status]')
             .getAttribute('data-g9-f02-trace-state') !== 'UNTRUSTED_LOCAL_ONLY',
