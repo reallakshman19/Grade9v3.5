@@ -1440,6 +1440,18 @@ def _stages_of(figure_html: str) -> int:
     return int(found.group(1)) if found else 0
 
 
+def _f02_exact_tc02_anchor(ctx: Ctx, m: dict, step_ref: str) -> bool:
+    """One authored TEST lesson only; not generic cross-role repair ownership."""
+    spec = (m.get("extensions") or {}).get("grade9v3:concept_checkpoint") or {}
+    return (ctx.manifest.get("subject") == "TEST"
+            and m.get("status") == "CANDIDATE"
+            and m.get("id") == "MIC-TEST-IMO-G9-COMMON-BASE-RELATION"
+            and spec.get("scope") == "TEST_AUTHORED_CORE1A_ONLY"
+            and step_ref == "TC-02"
+            and sum(step_ref in (u.get("step_refs") or [])
+                    for u in (m.get("construction_units") or [])) == 1)
+
+
 def _draft_concept_checkpoint(ctx: Ctx, m: dict) -> str:
     """Optional neutral Core1A check for wholly authored TEST candidates only.
 
@@ -1621,7 +1633,9 @@ def core1a(ctx: Ctx, m: dict) -> str:
         step_items = [steps[sid] for sid in u["step_refs"] if sid in steps]
         crux_step = u.get("crux_step_ref") if u.get("crux_question_refs") else None
         step_html = "".join(
-            f'<li data-g9-step="{esc(step["id"])}"{" data-g9-crux-step" if step["id"] == crux_step else ""}>'
+            (f'<li id="{esc(step["id"])}" tabindex="-1"'
+             if _f02_exact_tc02_anchor(ctx, m, step["id"]) else '<li')
+            + f' data-g9-step="{esc(step["id"])}"{" data-g9-crux-step" if step["id"] == crux_step else ""}>'
             + ('<span class="g9-crux-tag">The step the hard question turns on</span>' if step["id"] == crux_step else "")
             + f'<strong>{esc(step["action"])}</strong>'
             f'<br><em>Why valid:</em> {esc(step["why_valid"])}'
@@ -2443,7 +2457,8 @@ def _repair(ctx: Ctx, ref: str | None) -> str:
                     (row for row in m.get("construction_units") or [] if ref in (row.get("step_refs") or [])),
                     None,
                 )
-                target = unit["id"] if unit else m["id"]
+                target = (ref if unit and _f02_exact_tc02_anchor(ctx, m, ref)
+                          else unit["id"] if unit else m["id"])
                 label = f'Revisit: {esc(s["action"])}'
                 # Link to the exact owning construction unit, but only when Core1A is part of this packet.
                 if _unit_href(ctx, "CORE1A", m["id"]):
@@ -2959,10 +2974,21 @@ q('[data-g9-concept-check]').forEach(c=>{
   const openGuided=()=>{
     q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false});
     q('figure[data-g9-figure]',article).forEach(fitFigure);
-    const heading=q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0];
-    if(heading){heading.setAttribute('tabindex','-1');heading.focus();}
+    // A deep link from authored Core2A names TC-02, but never reveals it
+    // before the learner explicitly elects the concept check or guided study.
+    const repair=(window.location.hash==='#TC-02')
+      ?q('[data-g9-concept-target] [data-g9-step="TC-02"]',article)[0]:null;
+    if(repair){repair.focus();repair.scrollIntoView({block:'center'});}
+    else{
+      const heading=q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0];
+      if(heading){heading.setAttribute('tabindex','-1');heading.focus();}
+    }
   };
   setProgress('not_started','not started.');
+  if(window.location.hash==='#TC-02'){
+    feedback.textContent='The requested TC-02 repair step is behind this concept-first checkpoint. Review your prediction or choose guided explanation before opening that step. This does not grant independent credit.';
+    guide.focus();
+  }
   b.addEventListener('click',()=>{
     const choice=q('[data-g9-concept-option]:checked',c)[0]?.value||'';
     const reason=(q('[data-g9-concept-reason]',c)[0]?.value||'').trim();
