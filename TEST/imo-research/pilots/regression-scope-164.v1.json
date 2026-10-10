@@ -1,21 +1,10 @@
 {
   "schema_version": "imo-164-regression-scope/1",
   "status": "BASELINE_COMPARISON_INCOMPLETE",
-  "scope": "TEST_ONLY_PR_166",
+  "scope": "TEST_AUTHORED_PLUS_CONDITIONAL_SHARED_RENDERER_HINT_HOOK",
   "baseline_main_sha": "778eb35a70517a46108ad0a5dc01dfc89f61c0e3",
   "branch_sha_observed": "1174275060ced2110da5a7c0264323db31135d28",
-  "pr_changed_paths_only": [
-    ".github/workflows/imo-blueprint-first-164.yml",
-    "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg",
-    "TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg",
-    "TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json",
-    "TEST/imo-research/pilots/transfer-comparison-164.v1.json",
-    "TEST/products/imo-g9-blueprint-boundary-12-transfer.manifest.json",
-    "TEST/products/imo-g9-blueprint-first-five-transfer.manifest.json",
-    "tests/imo_blueprint_first_browser.mjs",
-    "tests/test_imo_164_transfer_comparison.py",
-    "tests/test_imo_blueprint_first_five_transfer.py"
-  ],
+  "pr_changed_paths_only": [],
   "inherited_copy_policy": "PINNED_SNAPSHOT_WITH_EXPLICIT_CORE2A_DIAGNOSTIC_FORK",
   "inherited_source": "TEST/imo-research/pilots/core1a-render-qualified-divisibility.v1.json",
   "snapshot_source": "TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json",
@@ -32,5 +21,35 @@
   "baseline_equivalence": "NOT_ESTABLISHED",
   "independent_baseline_attested": false,
   "global_ci_accepted": false,
-  "remediation": "Run exact pinned-main guardrails workflow in matching environment and compare named failure signatures before assigning pre-existing status; unrelated failures must not be masked by changes in this TEST PR."
+  "remediation": "Run exact pinned-main guardrails workflow in matching environment and compare named failure signatures before assigning pre-existing status; unrelated failures must not be masked by changes in this TEST PR.",
+  "observed_pr_diff_scope": {
+    "at_head": "a4fbf98c0dda107302b39998abb48d9591a2c8e3",
+    "compare_with": "778eb35a70517a46108ad0a5dc01dfc89f61c0e3",
+    "source_authority": "Authored TEST candidate and dedicated qualification; one narrow Shared/tools/render_core.py change to show Core2B ladders only when present.",
+    "caveat": "Global renderer change requires broader compatibility checks; no automatic attribution for any global CI failure.",
+    "explicit_shared_change": "Shared/tools/render_core.py: conditional gated guided-hints disclosure on Core2B items with hint_ladder; zero-ladder pages should render identically."
+  },
+  "broader_observations": [
+    {
+      "run": 38079640356,
+      "name": "core1a-tablet-browser",
+      "result": "failure",
+      "attribution": "NOT_BASELINE_PROVEN",
+      "detail": "Generated publication checks failed in a broad regression lane."
+    },
+    {
+      "run": 38079640273,
+      "name": "guardrails",
+      "result": "UNKNOWN_OR_IN_PROGRESS_AT_AUDIT",
+      "attribution": "NOT_BASELINE_PROVEN",
+      "detail": "Broad corpus failures already observed; compare exact pinned-main runner before assigning regression."
+    },
+    {
+      "run": 38079640262,
+      "name": "canonical-assurance",
+      "result": "UNKNOWN_OR_IN_PROGRESS_AT_AUDIT",
+      "attribution": "NOT_BASELINE_PROVEN",
+      "detail": "Await exact-head readback."
+    }
+  ]
 }

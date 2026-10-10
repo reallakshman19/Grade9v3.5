@@ -10,6 +10,8 @@ on:
       - 'tests/test_imo_164_regression_scope.py'
       - 'tests/test_imo_164_qrt_comparison.py'
       - 'tests/check_imo_164_print.py'
+      - 'tests/test_imo_164_release_hold.py'
+      - 'TEST/imo-research/pilots/issue-164-technical-handoff.md'
       - 'TEST/imo-research/pilots/regression-scope-164.v1.json'
       - 'TEST/imo-research/pilots/transfer-comparison-164.v1.json'
       - 'TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg'
@@ -31,6 +33,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_imo_blueprint_first_five_transfer.py' -v
       - name: Guard inherited Core1A snapshot and baseline-honesty scope
         run: python -m unittest discover -s tests -p 'test_imo_164_regression_scope.py' -v
+      - name: Assert publication, QRT and Owner authorization remain held
+        run: python -m unittest discover -s tests -p 'test_imo_164_release_hold.py' -v
       - name: Resolve real canonical QRT without claiming acceptance
         run: python -m unittest discover -s tests -p 'test_imo_164_qrt_comparison.py' -v
       - name: Verify both mathematical transfer candidates with actual blueprint

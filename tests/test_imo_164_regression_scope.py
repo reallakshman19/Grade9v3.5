@@ -51,7 +51,7 @@ class RegressionScope164(unittest.TestCase):
     def test_audit_never_calls_wide_guardrails_baselined_or_accepted(self):
         audit = self.audit
         self.assertEqual(audit["baseline_main_sha"], "778eb35a70517a46108ad0a5dc01dfc89f61c0e3")
-        self.assertEqual(audit["scope"], "TEST_ONLY_PR_166")
+        self.assertEqual(audit["scope"], "TEST_AUTHORED_PLUS_CONDITIONAL_SHARED_RENDERER_HINT_HOOK")
         self.assertEqual(audit["inherited_copy_policy"], "PINNED_SNAPSHOT_WITH_EXPLICIT_CORE2A_DIAGNOSTIC_FORK")
         self.assertEqual(audit["baseline_equivalence"], "NOT_ESTABLISHED")
         self.assertEqual(audit["guardrails_branch_head"]["conclusion"], "failure")
