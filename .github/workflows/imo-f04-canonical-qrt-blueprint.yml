@@ -43,6 +43,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_imo_f04_canonical_slice.py' -v
       - name: Run offline-compatible safe-summary route verdict tests
         run: python -m unittest discover -s tests -p 'test_imo_f04_route_gate.py' -v
+      - name: Replay F02 source-owned local trace (V8 only, no browser or academic credit)
+        run: node tools/site-audit/imo-f04-f02-trace-local-vm.mjs
       - name: Run real canonical TEST audit, never publish protected W in stdout
         if: always()
         run: |
