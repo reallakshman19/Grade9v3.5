@@ -126,6 +126,21 @@ class IMOCanonicalSliceTests(unittest.TestCase):
             'data-g9-role="CORE2A"', 'data-g9-role="CORE2"', 1)
         _facts, issues = inspect_rendered(modified, BLUEPRINT_REFS)
         self.assertIn("CORE2A_BLUEPRINT_ROLE_MISMATCH", issues)
+        # Mutate the actual rendered *article* role, not just the shell.
+        import re
+        modified["core2a.html"], changed = re.subn(
+            r'(<article\\b[^>]*\\bid="' + re.escape(QID)
+            + r'"[^>]*data-g9-role=")CORE2A(")',
+            r'\\g<1>CORE2\\2', pages["core2a.html"], count=1)
+        self.assertEqual(changed, 1)
+        _facts, issues = inspect_rendered(modified, BLUEPRINT_REFS)
+        self.assertIn("CORE2A_SELECTED_ARTICLE_MISSING", issues)
+        # There is no valid attempt gate if the learner cannot submit.
+        modified["core2a.html"] = pages["core2a.html"].replace(
+            '<div class="g9-attempt" data-g9-attempt-box',
+            '<div class="g9-attempt" data-g9-broken-attempt', 1)
+        _facts, issues = inspect_rendered(modified, BLUEPRINT_REFS)
+        self.assertIn("CORE2A_ATTEMPT_CONTROLS_MISSING", issues)
 
     def test_cli_stdout_is_safe_json_and_cannot_expose_protected_w(self):
         # The canonical resolver's W is intentionally retained in an
