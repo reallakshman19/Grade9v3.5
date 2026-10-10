@@ -16,7 +16,7 @@ const result = { schema: 'imo-f02-concept-first-chromium/v2', source: 'TEST_CAND
   authentic_core2_admitted: false, mastery_verified: false, human_screen_reader: 'NOT_RUN',
   viewports: [], failures: [], printed_pdf: null };
 const assert = (ok, label) => { if (!ok) result.failures.push(label); };
-const browser = await chromium.launch({ headless: true });
+let browser;
 // Host the two emitted TEST role pages on one short-lived loopback origin.
 // file:// storage isolation is browser-dependent and cannot prove round-trip persistence.
 const localServer = createServer((req,res)=>{
@@ -26,12 +26,13 @@ const localServer = createServer((req,res)=>{
   res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});
   fs.createReadStream(target).pipe(res);
 });
-await new Promise((resolve,reject)=>{
-  localServer.once('error',reject);
-  localServer.listen(0,'127.0.0.1',resolve);
-});
-const localOrigin='http://127.0.0.1:'+localServer.address().port+'/';
 try {
+  browser = await chromium.launch({ headless: true });
+  await new Promise((resolve,reject)=>{
+    localServer.once('error',reject);
+    localServer.listen(0,'127.0.0.1',resolve);
+  });
+  const localOrigin='http://127.0.0.1:'+localServer.address().port+'/';
   for (const width of [320, 390, 768, 1280]) {
     const page = await browser.newPage({ viewport: { width, height: 900 } });
     const errors = [];
@@ -430,9 +431,26 @@ try {
     assert(errors.length === 0, width + ': uncaught page errors ' + errors.join('; '));
     await page.close();
   }
+} catch (error) {
+  // Record even an unexpected Playwright, launch or loopback failure in the
+  // candidate audit receipt. Never echo page content or learner free text.
+  const category=String(error?.name||'UnknownError')
+    .replace(/[^A-Za-z0-9_-]/g,'').slice(0,48);
+  result.failures.push('UNCAUGHT_BROWSER_AUDIT_EXCEPTION:'+category);
+  process.exitCode=1;
 } finally {
-  await browser.close();
-  await new Promise(resolve=>localServer.close(resolve));
+  if(browser){
+    try{await browser.close()}catch(_){
+      result.failures.push('BROWSER_CLOSE_FAILED');process.exitCode=1;
+    }
+  }
+  if(localServer.listening){
+    try{await new Promise((resolve,reject)=>
+      localServer.close(error=>error?reject(error):resolve()));
+    }catch(_){
+      result.failures.push('AUDIT_SERVER_CLOSE_FAILED');process.exitCode=1;
+    }
+  }
   fs.writeFileSync(path.join(out, 'result.json'), JSON.stringify(result, null, 2) + '\n');
 }
 console.log(JSON.stringify(result, null, 2));
