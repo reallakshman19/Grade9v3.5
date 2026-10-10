@@ -52,7 +52,7 @@ def assert_distinct_modes(pkg: dict, manifest: dict) -> None:
         raise ValueError("Exactly three authored question hints; no authentic source hints")
     if ([h["order"] for h in ladder] != [1,2,3] or
             [h["from"] for h in ladder] != ["scaffolds[0]", "scaffolds[1]", "scaffolds[2]"] or
-            [h["purpose"] for h in ladder] != ["ORIENT", "CONNECT", "CONNECT"]):
+            [h["purpose"] for h in ladder] != ["ORIENT", "CONNECT", "OPEN_THE_WAY"]):
         raise ValueError("Question hint ordering/source changed")
     for index, item in enumerate(support):
         text = item["text"]
