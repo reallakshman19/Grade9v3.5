@@ -1444,7 +1444,7 @@ def _draft_concept_checkpoint(ctx: Ctx, m: dict) -> str:
     """Optional neutral Core1A check for wholly authored TEST candidates only.
 
     This client-side formative check selects a concept *before* guided work.
-    Its text match is not evidence of comprehension or independent mastery.
+    The authored choice and an ungraded free-text reflection are not evidence of mastery.
     """
     spec = (m.get("extensions") or {}).get("grade9v3:concept_checkpoint")
     if not spec:
@@ -2875,7 +2875,7 @@ def concept_first_js() -> str:
     """Insert F02 concept interaction only into opt-in TEST Core1A pages.
 
     All other roles, generic TEST pages and public site JavaScript retain
-    their original bytes; the formative keyword check confers no mastery.
+    their original bytes; the ungraded authored reflection confers no mastery.
     """
     js = JS
     checkpoint = """// F02 authored TEST/Core1A reflection; client inputs never confer mastery.
