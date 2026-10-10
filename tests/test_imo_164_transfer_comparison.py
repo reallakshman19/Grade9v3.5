@@ -125,6 +125,19 @@ class TransferComparison(unittest.TestCase):
             for forbidden in ("n mod 4 != 1","gcd(24,5)=1","n ≡ 1","exactly one", "counterexample n=1"):
                 self.assertNotIn(forbidden,all_hints)
 
+    def test_progressive_hints_explicitly_opt_in_without_implicitly_rewriting_physics(self):
+        production = json.loads((ROOT / "Physics/library/phy-kin-2d-motion.v1.json").read_text())
+        existing = [q for q in production["questions"]
+                    if any(e["core"] == "CORE2B" for e in (q.get("exposure") or []))]
+        self.assertTrue(existing)
+        self.assertTrue(any(q.get("hint_ladder") for q in existing))
+        self.assertTrue(all(q.get("extensions", {}).get(
+            "grade9v3:core2b_guided_hints_opt_in") is not True for q in existing))
+        for qid in (FIVE, BOUNDARY):
+            q = self.question[qid]
+            self.assertIs(q["extensions"]["grade9v3:core2b_guided_hints_opt_in"], True)
+            self.assertEqual(len(q["hint_ladder"]), 3)
+
     def test_review_is_explicitly_not_academic_acceptance_or_sof_admission(self):
         r = self.review
         self.assertEqual(r["status"], "INDEPENDENT_ACADEMIC_REVIEW_PENDING")
