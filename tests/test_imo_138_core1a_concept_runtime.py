@@ -41,10 +41,18 @@ class TestConceptFirstHTML(unittest.TestCase):
     def test_format_only_and_print_materialisation(self):
         html = self.pages["core1a.html"]
         self.assertIn("choice!==c.dataset.g9ConceptCorrect", html)
-        self.assertIn("reason.length<15", html)
-        self.assertIn("match(c.dataset.g9ReasonWords||'')", html)
-        self.assertIn("match(c.dataset.g9RuleWords||'')", html)
+        self.assertIn("reason.length<8", html)
+        # Keyword matching is not a validity check on free-form mathematical language.
+        self.assertNotIn("g9ReasonWords", html)
+        self.assertNotIn("g9RuleWords", html)
+        self.assertIn("Your explanation has NOT been graded for correctness", html)
         self.assertIn("article.dataset.g9ConceptCheckCompleted='formative_only'", html)
+        self.assertIn("setProgress('needs_review'", html)
+        self.assertIn("setProgress('needs_reflection'", html)
+        self.assertIn("setProgress('guided_without_check'", html)
+        self.assertIn("data-g9-learning-progress", html)
+        self.assertIn("data-g9-concept-review", html)
+        self.assertIn("aria-describedby=\"g9-concept-scope\"", html)
         self.assertIn("q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false})", html)
         self.assertIn("q('[data-g9-concept-target]').forEach(el=>el.hidden=false)", html)
 
