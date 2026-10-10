@@ -109,6 +109,17 @@ jobs:
           path: ${{ runner.temp }}/imo-index-laws-core1a-pages/
           if-no-files-found: error
           retention-days: 7
+      - name: Strict separate INTEGER Index Laws Core1A academic trial reference check
+        run: python Shared/tools/render_core.py gaps --manifest TEST/imo-research/candidates/imo-g9-index-laws-integer-core1a.test.manifest.json --reference
+      - name: Build private INTEGER Index Laws Core1A academic trial pages
+        run: python Shared/tools/render_core.py build --manifest TEST/imo-research/candidates/imo-g9-index-laws-integer-core1a.test.manifest.json --out "$RUNNER_TEMP/imo-index-laws-integer-core1a-pages" --mode PAGES --reference
+      - name: Retain review-only INTEGER Index Laws Core1A pages
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-index-laws-integer-core1a-review-pages
+          path: ${{ runner.temp }}/imo-index-laws-integer-core1a-pages/
+          if-no-files-found: error
+          retention-days: 7
       - name: Retain private TEST render for technical review only
         uses: actions/upload-artifact@v4
         with:
