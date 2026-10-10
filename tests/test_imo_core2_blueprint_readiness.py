@@ -105,6 +105,7 @@ class BlueprintReadinessTests(unittest.TestCase):
         row["status"] = "HOLD_RETAINED_SOURCE_NOT_VERIFIED"
         row["component_check_complete"] = False
         row["blocking_codes"] = ["PRIVATE_RETAINED_PDF_RECEIPT_MISSING_OR_INVALID"]
+        row["historical_version_comparison"] = "NOT_CHECKED_NO_RETAINED_BYTES"
         out = audit.report(self.root, row)
         self.assertIn("SOURCE_OPERATOR_SELF_CHECK_NOT_COMPLETE", out["blockers"])
 
@@ -112,6 +113,7 @@ class BlueprintReadinessTests(unittest.TestCase):
         row = self.verdict()
         row["status"] = "HOLD_SOURCE_VERSION_DIFFERS_FROM_HISTORICAL_PROBE"
         row["blocking_codes"] = ["SOURCE_VERSION_MATCH_TO_HISTORICAL_PROBE_UNCONFIRMED"]
+        row["historical_version_comparison"] = "DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION"
         out = audit.report(self.root, row)
         self.assertEqual(out["decision"], "HOLD_MISSING_EVIDENCE")
 
@@ -259,6 +261,72 @@ class BlueprintReadinessTests(unittest.TestCase):
         with self.assertRaises(audit.AuditError):
             audit._read_json(link, "SPOTCHECK_METADATA_UNAVAILABLE",
                              size_limit=audit.MAX_METADATA_BYTES)
+
+    def test_verdict_version_status_mismatch_is_rejected(self):
+        samples = (
+            ("SELF_SPOT_CHECK_COMPLETE_NOT_CORE2_OR_RIGHTS_AUTHORIZED", "NOT_CHECKED_NO_RETAINED_BYTES", []),
+            ("HOLD_RETAINED_SOURCE_NOT_VERIFIED", "MATCHES_HISTORICAL_EPHEMERAL_BYTES_ONLY",
+             ["PRIVATE_RETAINED_PDF_RECEIPT_MISSING_OR_INVALID"]),
+            ("HOLD_SOURCE_VERSION_DIFFERS_FROM_HISTORICAL_PROBE", "NOT_CHECKED_INVALID_RECEIPT",
+             ["SOURCE_VERSION_MATCH_TO_HISTORICAL_PROBE_UNCONFIRMED"]),
+            ("HOLD_SPOTCHECK_COMPONENTS_INCOMPLETE", "DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION",
+             ["NINE_COMPONENT_SELF_CHECK_INCOMPLETE"]),
+        )
+        for status, version, codes in samples:
+            with self.subTest(status=status):
+                row = self.verdict()
+                row.update(status=status, historical_version_comparison=version,
+                           blocking_codes=codes)
+                if status != "SELF_SPOT_CHECK_COMPLETE_NOT_CORE2_OR_RIGHTS_AUTHORIZED":
+                    row["component_check_complete"] = False
+                with self.assertRaisesRegex(audit.AuditError, "SPOTCHECK_METADATA_INCONSISTENT"):
+                    audit.report(self.root, row)
+
+    def test_unhashable_status_or_version_is_safe_hold(self):
+        for key in ("status", "historical_version_comparison"):
+            with self.subTest(key=key):
+                row = self.verdict()
+                row[key] = ["not", "a", "status"]
+                with self.assertRaisesRegex(audit.AuditError, "SPOTCHECK_METADATA_INVALID"):
+                    audit.report(self.root, row)
+
+    def test_verdict_unrecognized_version_is_rejected(self):
+        row = self.verdict()
+        row["historical_version_comparison"] = "ACTUALLY_LICENSED_AND_VERIFIED"
+        with self.assertRaisesRegex(audit.AuditError, "SPOTCHECK_METADATA_INVALID"):
+            audit.report(self.root, row)
+
+    def test_malformed_schema_shapes_return_safe_drift_code(self):
+        baseline = copy.deepcopy(self.schema)
+        variants = (
+            ("required", ["invalid", {"bad": "unhashable"}]),
+            ("$defs", ["invalid"]),
+            ("properties", {**self.schema["properties"], "version": ["invalid"]}),
+            ("properties", {**self.schema["properties"], "custody_mode": ["invalid"]}),
+        )
+        for field, value in variants:
+            with self.subTest(field=field, shape=repr(value)[:40]):
+                self.schema = copy.deepcopy(baseline)
+                self.schema[field] = copy.deepcopy(value)
+                self._write()
+                with self.assertRaises(audit.AuditError):
+                    audit.report(self.root)
+        self.schema = baseline
+
+    def test_blueprint_duplicate_nonrequired_and_malformed_slot_rejected(self):
+        original = copy.deepcopy(self.bp)
+        for transform in (
+            lambda bp: bp["blueprints"][0]["components"].append(
+                {"id": "IDENTITY", "level": "EXPECTED", "slot": "identity"}),
+            lambda bp: bp["blueprints"][0]["slots"].append({"id": ["invalid"]}),
+            lambda bp: bp["blueprints"][0]["components"][0].update(id=["invalid"]),
+        ):
+            self.bp = copy.deepcopy(original)
+            transform(self.bp)
+            self._write()
+            with self.assertRaisesRegex(audit.AuditError, "CORE2_BLUEPRINT_REQUIRED_COMPONENT_DRIFT"):
+                audit.report(self.root)
+        self.bp = original
 
     def test_untrusted_blocking_code_not_copied(self):
         row = self.verdict()
