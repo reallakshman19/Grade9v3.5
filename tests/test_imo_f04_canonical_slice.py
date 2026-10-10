@@ -31,12 +31,23 @@ class IMOCanonicalSliceTests(unittest.TestCase):
     def test_actual_qrt_uses_seven_by_four_and_twelve_qualitative_asks(self):
         result = self.report["qrt"]
         self.assertEqual(result["template_id"], CELL)
+        matrix = qrt.load(qrt.MATRIX_PATH)
+        vocab = qrt.load(qrt.VOCAB_PATH)
+        cells = qrt.compile_templates(matrix, vocab)
+        self.assertEqual(len(cells), 7 * 4)
+        self.assertEqual(len({c["template_id"] for c in cells}), 28)
+        self.assertIn(CELL, {c["template_id"] for c in cells})
+        self.assertEqual(tuple(qrt.DEMANDS),
+                         ("RETRIEVE", "EXPLAIN", "APPLY", "MODEL",
+                          "REPRESENT", "SYNTHESIZE", "JUSTIFY"))
+        self.assertEqual(tuple(qrt.BANDS), ("D1", "D2", "D3", "D4"))
         self.assertEqual(result["classification"]["demand"]["primary"], "MODEL")
         self.assertEqual(result["classification"]["band"], "D3")
         self.assertEqual(tuple(result["review_objectives"]), qrt.ASKS)
         self.assertEqual(len(result["review_objectives"]), 12)
         self.assertEqual(result["reviewer_verdicts"], "NOT_PROVIDED")
         self.assertEqual(result["profile_fit"], "NOT_MEASURED_DESIGN_PREVIEW")
+        self.assertIn("UNRESOLVED", result["slots"]["Y"]["text"])
         self.assertFalse(self.report["academic_accepted"])
         self.assertFalse(self.report["release_authorized"])
 
