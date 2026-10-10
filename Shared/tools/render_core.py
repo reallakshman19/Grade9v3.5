@@ -2522,7 +2522,7 @@ def units_for(ctx: Ctx, role: str) -> list[dict]:
 
 CSS = """
 [data-g9-m2-probe][hidden]{display:none!important}
-/* Opt-in A4 print: preserve complete authored factor diagrams without shrinking
+/* Opt-in A4 print: keep authored factor diagrams visible without shrinking
    them into clipped side-by-side blueprint columns. Screen layout is unchanged. */
 @media print{
  article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-split{display:block!important}
