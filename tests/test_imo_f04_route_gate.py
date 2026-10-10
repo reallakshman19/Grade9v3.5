@@ -77,13 +77,13 @@ class RouteGateTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         workflow = (root / ".github/workflows/imo-f04-canonical-qrt-blueprint.yml").read_text(
             encoding="utf-8")
-        anchor = "\\n  learner-route-acceptance:\\n"
+        anchor = "\n  learner-route-acceptance:\n"
         self.assertEqual(workflow.count(anchor), 1,
                          "route gate must be tested as its own isolated runner")
         route = workflow.split(anchor, 1)[1]
-        checkout = route.index("      - name: Check out route-gate source\\n"
-                               "        uses: actions/checkout@v4\\n"
-                               "        with:\\n"
+        checkout = route.index("      - name: Check out route-gate source\n"
+                               "        uses: actions/checkout@v4\n"
+                               "        with:\n"
                                "          persist-credentials: false")
         artifact = route.index("uses: actions/download-artifact@v4")
         verdict = route.index("python -m Shared.tools.imo_f04_route_gate")
