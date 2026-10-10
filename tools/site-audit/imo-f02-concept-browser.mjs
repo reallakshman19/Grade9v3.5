@@ -94,10 +94,34 @@ try {
       await access.close();
     }
     if (width === 1280) {
+      // Print must re-fit the full *authored* three-stage SVG, not crop to
+      // stage one after the interactive viewBox was narrowed on screen.
+      await page.emulateMedia({ media: 'print' });
+      const printedStages = await page.locator('figure[data-g9-stage="TEACHING"]').evaluateAll(figures => {
+        const target = figures.find(f => f.dataset.g9StagesTotal === '3');
+        if (!target) return { found: false };
+        const svg = target.querySelector('svg');
+        const stages = [...svg.querySelectorAll('g[data-g9-stage-id]')];
+        const visible = stages.filter(g => getComputedStyle(g).display !== 'none');
+        const b = svg.viewBox.baseVal;
+        const fits = visible.every(g => {
+          const r = g.getBBox();
+          return r.x >= b.x - 1 && r.y >= b.y - 1 &&
+            r.x + r.width <= b.x + b.width + 1 &&
+            r.y + r.height <= b.y + b.height + 1;
+        });
+        return { found: true, count: stages.length, visible: visible.length,
+          allInsideViewBox: fits, viewBox: [b.x,b.y,b.width,b.height] };
+      });
+      assert(printedStages.found && printedStages.count === 3 &&
+        printedStages.visible === 3 && printedStages.allInsideViewBox,
+        'print: authored three SVG stages are not all visible within print viewBox: ' + JSON.stringify(printedStages));
+      result.printed_svg = printedStages;
       await page.pdf({ path: path.join(out, 'core1a-print.pdf'), printBackground: true });
       const stat = fs.statSync(path.join(out, 'core1a-print.pdf'));
       result.printed_pdf = { bytes: stat.size, status: stat.size > 1000 ? 'GENERATED_NOT_MANUALLY_INSPECTED' : 'INVALID' };
       assert(stat.size > 1000, 'print PDF is unexpectedly small');
+      await page.emulateMedia({ media: 'screen' });
     }
     await page.screenshot({ path: path.join(out, 'core1a-' + width + '.png'), fullPage: true });
     result.viewports.push({ width, focus_after_check: focused, page_errors: errors,
