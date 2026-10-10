@@ -339,12 +339,12 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertIn(q["id"], html)
         self.assertIn(q["stem"], html)
         self.assertIn('data-g9-stage="PRE_ATTEMPT"', html)
-        self.assertRegex(html, r'<article\\b[^>]*data-g9-print-layout="SINGLE_COLUMN_A4"')
+        self.assertRegex(html, r'<article[^>]*data-g9-print-layout="SINGLE_COLUMN_A4"')
         self.assertIn('article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-split{display:block!important}', html)
         # The shared stylesheet is present on both pages; only the selected
         # authored Core2A <article> may opt into the A4 print override.
         self.assertNotRegex(pages["core1a.html"],
-                            r'<article\\b[^>]*data-g9-print-layout=')
+                            r'<article[^>]*data-g9-print-layout=')
         self.assertIn("data-g9-attempt-box", html)
         self.assertIn("data-g9-commit", html)
         self.assertIn("data-requires-attempt", html)
