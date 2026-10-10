@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 from html import escape
 from html.parser import HTMLParser
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -86,6 +87,8 @@ def _replace_tag_attribute(tag: str, name: str, expected: str, updated: str) -> 
 
 def adapt(package: dict, manifest: dict, pilot: dict, practice: str, concept: str,
           *, package_ref: str | None = None) -> tuple[str, str, dict]:
+    sources = {'core2a.html': hashlib.sha256(practice.encode('utf-8')).hexdigest(),
+               'core1a.html': hashlib.sha256(concept.encode('utf-8')).hexdigest()}
     before = audit(package, manifest, pilot, practice, concept, package_ref=package_ref)
     identity_errors = set(before['errors'])
     allowed = {
@@ -202,6 +205,11 @@ def adapt(package: dict, manifest: dict, pilot: dict, practice: str, concept: st
         'academic_qrt_approved': False,
         'browser_behavior_verified': False,
         'source_approved': False,
+        'input_sha256': sources,
+        'adapted_sha256': {
+            'core2a.html': hashlib.sha256(practice.encode('utf-8')).hexdigest(),
+            'core1a.html': hashlib.sha256(concept.encode('utf-8')).hexdigest(),
+        },
         'errors': [],
     }
 
@@ -229,8 +237,8 @@ def main() -> int:
         forbidden = tuple(root / x for x in ('public', 'docs', 'Mathematics', 'Releases', 'TEST'))
         if any(output == x or output.is_relative_to(x) for x in forbidden):
             raise AdaptationError('cannot stage adapted candidate under protected source or site trees')
-        if not output.is_relative_to(root / 'build'):
-            raise AdaptationError('adapted TEST output must stay under the local build/ tree')
+        if output == root / 'build' or not output.is_relative_to(root / 'build'):
+            raise AdaptationError('adapted TEST output must stay under a local build/ subdirectory')
         if any(core2a.is_relative_to(x) or core1a.is_relative_to(x) for x in forbidden):
             raise AdaptationError('cannot consume production/site/source pages as draft input')
         a,b,report = adapt(*inputs, core2a.read_text(encoding='utf-8'),
