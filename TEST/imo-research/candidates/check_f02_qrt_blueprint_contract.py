@@ -33,7 +33,9 @@ REPAIR_STAGES = (
     "NEUTRAL_DEMONSTRATION", "GENERAL_PRINCIPLE", "CONCEPT_CHECK",
     "GUIDED_APPLICATION", "FRESH_INDEPENDENT_EXIT",
 )
-HINT_PURPOSES = ("ORIENT", "CONNECT", "OPEN_THE_WAY")
+# Product-schema hint_ladder purposes; QRT H1/H2/H3 verbs are independent.
+PRODUCT_HINT_PURPOSES = ("ORIENT", "CONNECT", "CONNECT")
+QRT_HINT_OBJECTIVES = ("CLARIFY", "CORRELATE", "OPEN_THE_WAY")
 # Explicit source pointers for all 12 semantic questions. These are NOT grades.
 # S2/S3 use a *different authored Core1A teaching example*, not the D3 item.
 ASK_SOURCES = {
@@ -135,7 +137,11 @@ def audit(
     scaffolds = question.get("scaffolds") or []
     if len(hints) < 3 or len(scaffolds) < 3:
         errors.append("D3_PROGRESSIVE_HINTS_INCOMPLETE")
-    for index, target in enumerate(HINT_PURPOSES):
+    for index, target in enumerate(PRODUCT_HINT_PURPOSES):
+        qrt_verb = (matrix.get("review_asks", {}).get(f"H{index + 1}", {})
+                    .get("verb"))
+        if qrt_verb != QRT_HINT_OBJECTIVES[index]:
+            errors.append(f"QRT_H{index + 1}_OBJECTIVE_EXPECTED_{QRT_HINT_OBJECTIVES[index]}")
         row = hints[index] if index < len(hints) else {}
         scaffold = scaffolds[index] if index < len(scaffolds) else {}
         if row.get("order") != index + 1 or row.get("purpose") != target:
@@ -149,6 +155,8 @@ def audit(
         h_ledger.append({
             "objective": f"H{index + 1}",
             "declared_purpose": row.get("purpose"),
+            "product_hint_purpose": row.get("purpose"),
+            "qrt_semantic_verb": qrt_verb,
             "source": f"selected_question.scaffolds[{index}].text",
             "status": "SOURCE_PRESENT_SEMANTICS_REQUIRE_REVIEW",
         })

@@ -50,9 +50,10 @@ def assert_distinct_modes(pkg: dict, manifest: dict) -> None:
     ladder = q.get("hint_ladder") or []
     if len(support) != 3 or len(ladder) != 3 or q.get("hints") != []:
         raise ValueError("Exactly three authored question hints; no authentic source hints")
+    # Product-schema purposes are distinct from QRT H1/H2/H3 semantic objectives.
     if ([h["order"] for h in ladder] != [1,2,3] or
             [h["from"] for h in ladder] != ["scaffolds[0]", "scaffolds[1]", "scaffolds[2]"] or
-            [h["purpose"] for h in ladder] != ["ORIENT", "CONNECT", "OPEN_THE_WAY"]):
+            [h["purpose"] for h in ladder] != ["ORIENT", "CONNECT", "CONNECT"]):
         raise ValueError("Question hint ordering/source changed")
     for index, item in enumerate(support):
         text = item["text"]
