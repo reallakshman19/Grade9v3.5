@@ -109,6 +109,7 @@ class IMOReadinessProjectionTests(unittest.TestCase):
         self.assertEqual(len(report["items"]), 68)
         self.assertEqual(report["technical_spot_check_ready"], 0)
         self.assertEqual(report["source_custody_hold"], 68)
+        self.assertEqual(report["technical_spot_check_pending"], 68)
         self.assertEqual((report["core2_eligible"], report["core2_admitted"],
                           report["rights_verified"], report["learner_published"]),
                          (0, 0, 0, 0))
@@ -116,7 +117,8 @@ class IMOReadinessProjectionTests(unittest.TestCase):
     def test_synthetic_positive_exercises_movable_mechanical_boundary(self):
         report, item = self.status()
         self.assertEqual(report["technical_spot_check_ready"], 1)
-        self.assertEqual(report["source_custody_hold"], 67)
+        self.assertEqual(report["technical_spot_check_pending"], 67)
+        self.assertEqual(report["source_custody_hold"], 68)
         self.assertEqual(item["status"], "READY_FOR_SPOT_CHECK_NOT_ADMITTED")
         self.assertTrue(item["technical_spot_check_ready"])
         self.assertFalse(item["rights_verified"])
