@@ -11,6 +11,8 @@ on:
       - 'tests/test_imo_164_qrt_comparison.py'
       - 'tests/check_imo_164_print.py'
       - 'tests/test_imo_164_release_hold.py'
+      - 'tests/check_imo_164_baseline_differential.py'
+      - 'Shared/tools/render_core.py'
       - 'TEST/imo-research/pilots/issue-164-technical-handoff.md'
       - 'TEST/imo-research/pilots/regression-scope-164.v1.json'
       - 'TEST/imo-research/pilots/transfer-comparison-164.v1.json'
@@ -24,6 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -111,4 +115,34 @@ jobs:
             ${{ runner.temp }}/imo-164-browser-evidence/
             ${{ runner.temp }}/imo-164-boundary-browser-evidence/
           retention-days: 3
+          if-no-files-found: ignore
+
+  pinned-main-differential:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout original PR base independently
+        uses: actions/checkout@v4
+        with:
+          ref: 778eb35a70517a46108ad0a5dc01dfc89f61c0e3
+          path: baseline
+      - name: Checkout exact PR head independently
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install shared render schema dependency
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5'
+      - name: Compare pinned generator drift and actual existing HTML
+        run: |
+          python candidate/tests/check_imo_164_baseline_differential.py \
+            baseline candidate "$RUNNER_TEMP/imo-164-baseline-differential.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: imo-164-pinned-main-differential
+          path: ${{ runner.temp }}/imo-164-baseline-differential.json
+          retention-days: 7
           if-no-files-found: ignore
