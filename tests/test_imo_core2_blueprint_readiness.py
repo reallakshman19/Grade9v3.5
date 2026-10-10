@@ -27,14 +27,27 @@ class BlueprintReadinessTests(unittest.TestCase):
         self.bp_dir.mkdir(parents=True)
         self.schema = {
             "$id": "https://grade9v3.local/source-question-custody.schema.json",
+            "type": "object", "additionalProperties": False,
+            "required": sorted(audit.PROOF_REQUIRED),
             "$defs": {"componentStatus": {"enum": [
                 "PRESERVED", "NOT_PRESENT_IN_SOURCE", "EXTERNAL_REFERENCE_VERIFIED", "UNRESOLVED"]}},
-            "properties": {"components": {
-                "type": "object", "additionalProperties": False,
-                "required": sorted(audit.NINE),
-                "properties": {k: {"$ref": "#/$defs/componentStatus"}
-                               for k in audit.NINE},
-            }},
+            "properties": {
+                "version": {"const": "1.0.0"},
+                "acquisition_ref": {"type": "string"},
+                "resource_ref": {"type": "string"},
+                "source_item_locator": {"type": "string"},
+                "source_digest": {"pattern": "^[0-9a-f]{64}$"},
+                "custody_mode": {"enum": ["EMBEDDED_VERBATIM", "EXTERNAL_REFERENCE"]},
+                "comparison_status": {"enum": ["ORIGINAL_EXACT", "ADAPTED_DECLARED", "UNRESOLVED"]},
+                "demand_signature": {"pattern": "^[0-9a-f]{64}$"},
+                "notes": {"type": "array"},
+                "components": {
+                    "type": "object", "additionalProperties": False,
+                    "required": sorted(audit.NINE),
+                    "properties": {k: {"$ref": "#/$defs/componentStatus"}
+                                   for k in audit.NINE},
+                },
+            },
         }
         self.bp = {
             "registry_version": "1.17.0",
@@ -169,6 +182,40 @@ class BlueprintReadinessTests(unittest.TestCase):
             with self.assertRaises(audit.AuditError):
                 audit.report(self.root)
         self.bp = base
+
+    def test_proof_top_level_requisite_drift_rejected(self):
+        baseline = copy.deepcopy(self.schema)
+        for mutation in (
+            lambda schema: schema["required"].remove("source_digest"),
+            lambda schema: schema["properties"]["custody_mode"].update(enum=["EMBEDDED_VERBATIM"]),
+            lambda schema: schema["properties"]["comparison_status"].update(enum=["ORIGINAL_EXACT"]),
+            lambda schema: schema["properties"]["source_digest"].update(pattern=".*"),
+            lambda schema: schema.update(additionalProperties=True),
+        ):
+            with self.subTest(mutation=mutation):
+                candidate = copy.deepcopy(baseline)
+                mutation(candidate)
+                self.schema = candidate
+                self._write()
+                with self.assertRaisesRegex(audit.AuditError, "CUSTODY_PROOF_TOP_LEVEL_DRIFT"):
+                    audit.report(self.root)
+        self.schema = baseline
+
+    def test_required_blueprint_slot_reassignment_rejected(self):
+        self.bp["blueprints"][0]["components"][0]["slot"] = "support"
+        self._write()
+        with self.assertRaisesRegex(audit.AuditError, "CORE2_BLUEPRINT_REQUIRED_COMPONENT_DRIFT"):
+            audit.report(self.root)
+
+    def test_repository_canonical_contracts_when_present(self):
+        # Full-repository checkout executes this; isolated patch fixtures do not.
+        checkout = Path(__file__).resolve().parents[1]
+        if not (checkout / "Shared/web/interactive-page-blueprints.v1.json").is_file():
+            self.skipTest("full canonical registry not mounted in isolated patch test")
+        contracts = audit.canonical_contracts(checkout)
+        self.assertEqual(contracts["blueprint_ref"],
+                         "BP-CORE2-SOURCE-QUESTION@1.11.0")
+        self.assertEqual(len(contracts["custody_component_names"]), 9)
 
     def test_duplicate_blueprint_rejected(self):
         self.bp["blueprints"].append(copy.deepcopy(self.bp["blueprints"][0]))
