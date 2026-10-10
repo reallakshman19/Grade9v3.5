@@ -53,8 +53,8 @@ def no_copied_source_payload(obj: object, path: tuple[str, ...] = ()) -> None:
         prohibited = set(FORBIDDEN_SOURCE_PAYLOAD_FIELDS)
         if path == ("observation", "visual_component_sightings"):
             # This is the *name* of a required nine-part status category, not
-            # an original source choice list. Exact-value checking is below.
-            prohibited.discard("options")
+            # original stem text or a source choice list. Values are strictly checked below.
+            prohibited.difference_update({"stem", "options"})
         need(not (set(obj) & prohibited),
              "protected source content field is not allowed in pilot packet")
         for name, child in obj.items():
