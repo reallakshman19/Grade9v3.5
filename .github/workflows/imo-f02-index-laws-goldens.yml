@@ -6,6 +6,9 @@ on:
       - "TEST/imo-research/candidates/**"
       - "TEST/imo-research/golden/**"
       - "tests/test_imo_327_*.py"
+      - "tests/test_imo_138_core1a_concept_runtime.py"
+      - "Shared/tools/render_core.py"
+      - "tools/site-audit/imo-f02-concept-browser.mjs"
       - ".github/workflows/imo-f02-index-laws-goldens.yml"
   workflow_dispatch:
 
@@ -27,3 +30,32 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_imo_138_core1a_concept_runtime.py' -v
       - name: Verify 3 SHA-locked QRT goldens and negative mutations
         run: python -m unittest discover -s tests -p 'test_imo_327_qrt_help_golden.py' -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install fixed Chromium browser harness
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Build TEST role pages into temporary audit directory
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from Shared.tools import render_core
+          manifest = Path('TEST/imo-research/candidates/imo-g9-r1-qrt-core2a-core1a.test.manifest.json')
+          pages, gaps, _, advisories, waivers = render_core.build_report(manifest, "PAGES", held_to="REFERENCE")
+          assert not gaps and not advisories and not waivers, (gaps, advisories, waivers)
+          out = Path('/tmp/imo-f02-concept-browser')
+          out.mkdir(parents=True, exist_ok=True)
+          for name, html in pages.items():
+              (out / name).write_text(html, encoding='utf-8')
+          PY
+      - name: Audit real Chromium viewports, wrong laws, keyboard focus and print PDF
+        run: node tools/site-audit/imo-f02-concept-browser.mjs /tmp/imo-f02-concept-browser
+      - name: Preserve candidate browser receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f02-browser-evidence
+          path: /tmp/imo-f02-concept-browser/browser-evidence/
+          if-no-files-found: warn
