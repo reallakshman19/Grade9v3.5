@@ -7,6 +7,7 @@ import { chromium } from 'playwright';
 
 const folder = path.resolve(process.argv[2] || '');
 const html = path.join(folder, 'core1a.html');
+const core2aHtml = path.join(folder, 'core2a.html');
 if (!process.argv[2] || !fs.existsSync(html)) throw new Error('Provide rendered core1a.html directory');
 const out = path.join(folder, 'browser-evidence');
 fs.mkdirSync(out, { recursive: true });
@@ -172,6 +173,42 @@ try {
       width + ': guided repair falsely recorded independent form completion');
     assert(deepErrors.length === 0, width + ': TC-02 deep-link JavaScript errors ' + deepErrors.join('; '));
     await deep.close();
+    // F02 is a Core2A-only TEST manifest: the source repair query must return
+    // to one authored question, with no pretence of independent-credit recovery.
+    assert(fs.existsSync(core2aHtml), width + ': selected Core2A page was not emitted');
+    const questionId = 'Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
+    const conceptId = 'MIC-TEST-IMO-G9-COMMON-BASE-RELATION';
+    const source2a = fs.readFileSync(core2aHtml, 'utf8');
+    const queryHref = 'core1a.html?g9-return=' + questionId
+      + '&g9-concept=' + conceptId + '#TC-02';
+    assert(source2a.includes('href="' + queryHref.replace('&g9-concept=', '&amp;g9-concept=') + '"'),
+      width + ': authored Core2A repair does not carry exact return context');
+    assert(source2a.includes('data-g9-concept-link data-g9-question-ref="' + questionId + '"'),
+      width + ': authored Core2A repair lacks return-context bookkeeping');
+    const journey = await browser.newPage({viewport: {width, height: 900}});
+    const journeyErrors = [];
+    journey.on('pageerror', e => journeyErrors.push(String(e)));
+    await journey.goto(new URL(queryHref, pathToFileURL(core2aHtml)).href, {waitUntil:'load'});
+    const guideReturn = journey.locator('[data-g9-concept-review]');
+    const authoredReturn = journey.locator('[data-g9-authored-core2a-return]');
+    assert(await authoredReturn.count() === 1, width + ': missing scoped authored Core2A return link');
+    assert(await authoredReturn.isHidden(), width + ': return link available before concept-first guided study');
+    await guideReturn.click();
+    assert(await journey.locator('#TC-02').isVisible(), width + ': returned learner did not see exact TC-02 after guided choice');
+    assert(await journey.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-aid-exposure') === 'guided_study',
+      width + ': round-trip from authored practice lost assisted provenance');
+    assert((await authoredReturn.getAttribute('href')) === 'core2a.html#' + questionId,
+      width + ': link back to selected authored Core2A question is wrong');
+    await authoredReturn.evaluate(el => {
+      let parent = el.closest('details');
+      while(parent){parent.open=true;parent=parent.parentElement?.closest('details');}
+    });
+    await authoredReturn.click();
+    assert(new URL(journey.url()).pathname.endsWith('/core2a.html')
+      && new URL(journey.url()).hash === '#' + questionId,
+      width + ': guided learner was not returned to the exact authored Core2A article');
+    assert(journeyErrors.length === 0, width + ': guided return JavaScript errors ' + journeyErrors.join('; '));
+    await journey.close();
     if (width === 390) {
       const access = await browser.newPage({ viewport: {width:390,height:900}, reducedMotion:'reduce' });
       access.on('pageerror', e => result.failures.push('accessibility probe JS exception: '+String(e)));
