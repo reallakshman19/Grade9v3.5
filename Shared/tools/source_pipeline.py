@@ -89,13 +89,43 @@ def acquire_file(*, path: Path, subject: str, bucket_id: str, resource_ref: str,
     }
 
 
+class _RestrictedRedirects(urllib.request.HTTPRedirectHandler):
+    """Validate a location before following it, not after downloading bytes."""
+
+    def __init__(self, redirect_allowed):
+        super().__init__()
+        self.redirect_allowed = redirect_allowed
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if not self.redirect_allowed(newurl):
+            raise ValueError("source redirect location is not allowed")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
 def acquire_url(*, url: str, subject: str, bucket_id: str, resource_ref: str,
-                acquired_at: str, snapshot_output: Path | None = None) -> dict:
-    request = urllib.request.Request(url, headers={"User-Agent": "Grade9V3-source-acquisition/1.0"})
-    with urllib.request.urlopen(request, timeout=30) as response:
-        data = response.read()
+                acquired_at: str, snapshot_output: Path | None = None,
+                redirect_allowed=None, max_bytes: int | None = None) -> dict:
+    """Preserve legacy defaults; opt into restricted redirects/size for custody."""
+    if redirect_allowed is not None and not redirect_allowed(url):
+        raise ValueError("source URL is not within allowed location scope")
+    if max_bytes is not None and (type(max_bytes) is not int or max_bytes < 1):
+        raise ValueError("max_bytes must be a positive integer")
+    request = urllib.request.Request(
+        url, headers={"User-Agent": "Grade9V3-source-acquisition/1.0"})
+    if redirect_allowed is None:
+        response_context = urllib.request.urlopen(request, timeout=30)
+    else:
+        opener = urllib.request.build_opener(
+            _RestrictedRedirects(redirect_allowed))
+        response_context = opener.open(request, timeout=30)
+    with response_context as response:
+        # Limit network consumption *before* writing any private snapshot.
+        data = (response.read(max_bytes + 1)
+                if max_bytes is not None else response.read())
         resolved = response.geturl()
         media_type = response.headers.get_content_type() or "application/octet-stream"
+    if max_bytes is not None and len(data) > max_bytes:
+        raise ValueError("downloaded source exceeds permitted byte limit")
     if not data:
         raise ValueError("downloaded source is empty")
     if snapshot_output is not None:
