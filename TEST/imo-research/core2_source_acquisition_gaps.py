@@ -38,6 +38,16 @@ SOURCE_URLS = {
     "SOF-IMO-G09-L1-2025-26-A": "https://www.iswkoman.com/uploads/olympiad/9262492-IMO%2025-26%20CLASS%209.pdf",
     "SOF-IMO-G09-SAMPLE-2026-27": "https://sofworld.org/download/file/fid/73719",
 }
+FINGERPRINTS = ROOT / "core2-ephemeral-source-fingerprints.v1.json"
+HISTORICAL_PROBE_ARCHIVE_SHA256 = "399e14a5f3f992ef47014ab3594c989dfe4cf9192cd95322b135978de7c3a486"
+# Exact prior run observations; a new download may legitimately differ.
+# A match proves byte equality to that temporary probe only, never rights.
+HISTORICAL_PINS = {
+    "SOF-IMO-G09-L1-2023-24-A": (7417747, "462d1dae6091a00bb3cfe685c8cdbe93077ec205f674f2c8873b5fe0c0f0c91c"),
+    "SOF-IMO-G09-L1-2024-25-B": (3355199, "ee4b6060360e6c94eafd25c6bb0a9b15f2b81340f9b331d035056fe6c6bd8576"),
+    "SOF-IMO-G09-L1-2025-26-A": (7765096, "766402d4245514d43d18fa6e9d1468df5f393464926923defe180dc012924f54"),
+    "SOF-IMO-G09-SAMPLE-2026-27": (132856, "e1229c45cbecb13fe4e8ac65e83c1eec029e6eea83e601cc591e7ce97a65022f"),
+}
 HOLD = "HOLD_NO_CORE2_ADMISSION"
 BUCKET = "BUCKET-TEST-IMO-G9-SOURCE-ACQUISITION"
 
@@ -190,9 +200,89 @@ def receipt_status(doc: dict, workspace: Path | None) -> tuple[str, list[str]]:
         return "INVALID", ["RETAINED_DOCUMENT_RECEIPT_INVALID"]
 
 
+
+def historical_fingerprints(docs: dict[str, dict],
+                            supplied: dict | None = None) -> dict[str, dict]:
+    """Pin archived ephemeral CI observations; do NOT assert retained custody."""
+    obj = load(FINGERPRINTS) if supplied is None else supplied
+    required = {
+        "schema", "classification", "source_repository", "source_workflow_run",
+        "source_job_id", "source_artifact_id", "source_artifact_zip_sha256",
+        "artifact_contains_pdf_bytes", "temporary_pdf_downloads",
+        "retained_original_pdf_documents", "verified_source_item_custody",
+        "rights_status", "source_positions", "documents",
+    }
+    require(isinstance(obj, dict) and set(obj) == required,
+            "historical probe metadata envelope invalid")
+    require(obj["schema"] == "imo-g9-ephemeral-source-fingerprints-v1"
+            and obj["classification"] ==
+            "HISTORICAL_CI_NETWORK_PROBE_ONLY_NOT_SOURCE_CUSTODY_OR_RIGHTS"
+            and obj["source_repository"] == "reallaksh19/Grade9v3.5"
+            and obj["source_workflow_run"] == 37868836390
+            and obj["source_job_id"] == 113621920381
+            and obj["source_artifact_id"] == 11588893886
+            and obj["source_artifact_zip_sha256"] ==
+            HISTORICAL_PROBE_ARCHIVE_SHA256
+            and obj["artifact_contains_pdf_bytes"] is False
+            and obj["temporary_pdf_downloads"] == 4
+            and obj["retained_original_pdf_documents"] == 0
+            and obj["verified_source_item_custody"] == 0
+            and obj["rights_status"] == "NOT_REVIEWED"
+            and obj["source_positions"] == 68,
+            "historical ephemeral probe misrepresented as custody")
+    entries = obj["documents"]
+    require(isinstance(entries, list) and len(entries) == 4,
+            "historical probe must describe exactly four documents")
+    expected_keys = {
+        "source_id", "requested_url", "positions", "byte_length", "sha256",
+        "snapshot_retained", "local_byte_verification_passed_in_historical_run",
+    }
+    by_id = {}
+    for row in entries:
+        require(isinstance(row, dict) and set(row) == expected_keys,
+                "historical probe document structure invalid")
+        sid = row["source_id"]
+        require(sid in HISTORICAL_PINS and sid not in by_id
+                and sid in docs
+                and row["requested_url"] == docs[sid]["requested_pdf_url"]
+                and row["positions"] == SOURCE_IDS[sid]
+                and (row["byte_length"], row["sha256"]) == HISTORICAL_PINS[sid]
+                and row["snapshot_retained"] is False
+                and row["local_byte_verification_passed_in_historical_run"] is True,
+                "historical PDF fingerprint inconsistent with pinned job artifact")
+        by_id[sid] = row
+    require(set(by_id) == set(docs) == set(HISTORICAL_PINS),
+            "historical source ID incomplete")
+    return by_id
+
+
+def compare_historical_fingerprint(
+    doc: dict, workspace: Path | None, current_status: str,
+    fingerprint: dict,
+) -> str:
+    """Compare *valid retained bytes* with a former ephemeral SHA/length."""
+    if current_status == "NOT_ACQUIRED":
+        return "NOT_CHECKED_NO_RETAINED_BYTES"
+    if current_status == "INVALID":
+        return "NOT_CHECKED_INVALID_RECEIPT"
+    require(workspace is not None, "verified receipt needs a private workspace")
+    _, receipt_path = artifact_paths(workspace, doc["source_id"])
+    receipt = load(receipt_path)
+    if (receipt.get("sha256") == fingerprint["sha256"]
+            and receipt.get("byte_length") == fingerprint["byte_length"]):
+        return "MATCHES_HISTORICAL_EPHEMERAL_BYTES_ONLY"
+    return "DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION"
+
+
 def report(census: dict, handoff: dict, workspace: Path | None = None) -> dict:
     rows, docs = inventory(census, handoff)
+    fingerprints = historical_fingerprints(docs)
     states = {sid: receipt_status(doc, workspace) for sid, doc in docs.items()}
+    version_checks = {
+        sid: compare_historical_fingerprint(doc, workspace, states[sid][0],
+                                            fingerprints[sid])
+        for sid, doc in docs.items()
+    }
     doc_rows = []
     for sid, doc in docs.items():
         status, findings = states[sid]
@@ -200,7 +290,15 @@ def report(census: dict, handoff: dict, workspace: Path | None = None) -> dict:
             "source_id": sid,
             "indexed_positions": SOURCE_IDS[sid],
             "receipt_status": status,
-            "blocking_codes": findings,
+            "historical_probe_sha256": fingerprints[sid]["sha256"],
+            "historical_probe_byte_length": fingerprints[sid]["byte_length"],
+            "historical_version_comparison": version_checks[sid],
+            "historical_provenance": "EPHEMERAL_CI_ONLY_NO_SOURCE_BYTES_RETAINED",
+            "blocking_codes": findings + (
+                ["REVIEW_SOURCE_DOCUMENT_VERSION_DRIFT"]
+                if version_checks[sid] ==
+                "DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION"
+                else []),
             "source_rights": "NOT_REVIEWED",
             "independent_item_validation": "NOT_DONE",
         })
@@ -208,6 +306,8 @@ def report(census: dict, handoff: dict, workspace: Path | None = None) -> dict:
     for row in rows:
         status, doc_findings = states[row["source_id"]]
         codes = list(doc_findings)
+        if version_checks[row["source_id"]] == "DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION":
+            codes.append("REVIEW_SOURCE_DOCUMENT_VERSION_DRIFT")
         if row.get("source_locator_pdf_page_index") is None:
             codes.append("ITEM_PAGE_LOCATOR_UNOBSERVED")
         else:
@@ -244,6 +344,10 @@ def report(census: dict, handoff: dict, workspace: Path | None = None) -> dict:
             x["receipt_status"] ==
             "IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED"
             for x in doc_rows),
+        "historical_version_matches": sum(
+            value == "MATCHES_HISTORICAL_EPHEMERAL_BYTES_ONLY"
+            for value in version_checks.values()),
+        "historical_probe_archive_sha256": HISTORICAL_PROBE_ARCHIVE_SHA256,
         "question_count": 68,
         "source_custody_hold": 68,
         "core2_eligible": 0, "core2_admitted": 0, "learner_published": 0,
