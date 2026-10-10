@@ -275,6 +275,17 @@ class Q004PrivateSpotcheckTests(unittest.TestCase):
         with self.assertRaises(SourceGapError):
             q4._assessment_path(self.workspace, other)
 
+    def test_prepared_bundle_rejects_world_readable_assessment(self):
+        directory = self.workspace / "q004-private-review"
+        directory.mkdir(mode=0o700)
+        packet = directory / "q004.inspection.json"
+        packet.write_text("{}", encoding="utf-8")
+        packet.chmod(0o644)
+        with self.assertRaises(SourceGapError):
+            q4._assessment_path(self.workspace, packet)
+        packet.chmod(0o600)
+        self.assertEqual(q4._assessment_path(self.workspace, packet), packet)
+
     def test_prepared_bundle_assessment_rejects_public_child_or_symlink(self):
         directory = self.workspace / "q004-private-review"
         directory.mkdir(mode=0o700)
