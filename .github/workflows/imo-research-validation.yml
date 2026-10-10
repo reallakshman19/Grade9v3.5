@@ -98,6 +98,17 @@ jobs:
         run: python Shared/tools/render_core.py gaps --manifest TEST/products/imo-g9-authored-justify-d3-connected.manifest.json --reference
       - name: Build governed authored IMO TEST pages and receipt
         run: python Shared/tools/render_core.py build --manifest TEST/products/imo-g9-authored-justify-d3-connected.manifest.json --out "$RUNNER_TEMP/imo-g9-d3-pages" --mode PAGES --reference
+      - name: Strict reconciled Index Laws Core1A reference gap check
+        run: python Shared/tools/render_core.py gaps --manifest TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.test.manifest.json --reference
+      - name: Build reconciled Index Laws authored Core1A TEST pages
+        run: python Shared/tools/render_core.py build --manifest TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.test.manifest.json --out "$RUNNER_TEMP/imo-index-laws-core1a-pages" --mode PAGES --reference
+      - name: Retain Index Laws private Core1A pages and receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-index-laws-core1a-test-pages
+          path: ${{ runner.temp }}/imo-index-laws-core1a-pages/
+          if-no-files-found: error
+          retention-days: 7
       - name: Retain private TEST render for technical review only
         uses: actions/upload-artifact@v4
         with:
