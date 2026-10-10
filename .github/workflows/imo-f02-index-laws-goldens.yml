@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install candidate renderer structure validation dependency
-        run: python -m pip install --quiet jsonschema
+        run: python -m pip install --quiet jsonschema pypdf
       - name: Core1A independent math, assumptions and negative mutations
         run: python -m unittest discover -s tests -p 'test_imo_327_core1a_math_proof.py' -v
       - name: Enforce concept-first versus question-hint authored modes
@@ -54,6 +54,36 @@ jobs:
           PY
       - name: Audit real Chromium viewports, wrong laws, keyboard focus and print PDF
         run: node tools/site-audit/imo-f02-concept-browser.mjs /tmp/imo-f02-concept-browser
+      - name: Generate governed TEST learner PDFs without publishing or mirroring
+        run: |
+          python Shared/tools/deploy_test.py product TEST/imo-research/candidates/imo-g9-r1-qrt-core2a-core1a.test.manifest.json --no-mirror
+      - name: Verify offline PDF all SVG stages and Core2A attempt safety
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from pypdf import PdfReader
+          from Shared.tools import render_core
+          out = Path('public/test/products/imo-r1-q26-authored-qrt-core2a-core1a')
+          receipt = json.loads((out/'deploy-receipt.json').read_text())
+          assert receipt['subject']=='TEST' and receipt['draft'] is True and receipt['accepted'] is False, receipt
+          assert receipt['selection_counts']['core2']==0 and receipt['selection_counts']['core2a']==1, receipt
+          assert receipt['pdf']['status']=='PRINTED', receipt['pdf']
+          assert not render_core.pdf_publication_problems(out)
+          for role in ('core1a','core2a'):
+              pdf = out/(role+'.pdf')
+              assert pdf.is_file() and pdf.stat().st_size>1000, role
+              txt = ' '.join(page.extract_text() or '' for page in PdfReader(pdf).pages)
+              assert 'TEST' in txt, role
+              if role=='core1a':
+                  for stage in ('Name the positive quantity',
+                                'Keep the multiplicative factor',
+                                'Solve, then return to the exponent'):
+                      assert stage in txt, 'PRINT_MISSING_AUTHOR_SVG_STAGE: '+stage
+              else:
+                  assert '4t' not in txt and 'u=3/2' not in txt, 'LEARNER_CORE2A_PDF_ANSWER_LEAK'
+          print('TEST authored Core1A/Core2A governed PDF stages and answer boundary: PASS')
+          PY
       - name: Preserve candidate browser receipts
         if: always()
         uses: actions/upload-artifact@v4
