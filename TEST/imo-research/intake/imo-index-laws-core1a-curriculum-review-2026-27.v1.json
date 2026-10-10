@@ -1,0 +1,191 @@
+{
+  "schema": "imo-index-laws-core1a-curriculum-review-v1",
+  "document_kind": "INDEPENDENT_ACADEMIC_REVIEW_PACKET_NOT_APPROVAL",
+  "review_id": "REVIEW-IMO-G9-NS-INDEX-LAWS-COMMON-BASE-20261010",
+  "owning_issue": 130,
+  "programme_issue": 137,
+  "draft_pr": 155,
+  "candidate": {
+    "package_id": "TEST-IMO-G9-CORE1A-COMMON-BASE-PILOT",
+    "path": "TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.v1.json",
+    "selection_manifest": "TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.test.manifest.json",
+    "capability_ref": "CAP-TEST-IMO-G9-COMMON-EXPONENTIAL-QUANTITY",
+    "microtopic_ref": "MIC-TEST-IMO-G9-COMMON-BASE-RELATION",
+    "current_domain": "REAL_UNKNOWN",
+    "status": "AUTHORED_TEST_CANDIDATE_NOT_ACADEMICALLY_ACCEPTED",
+    "question_stem": "For real x, solve 3^(2x+1)=9^x+162, justify the shared positive quantity and check the original equality.",
+    "independent_exit": "For real y, solve 2^(2y+1)=4^y+64, justify each step, and reverse-check.",
+    "curricular_claim": "CANNOT_AUTO_ASSERT_AS_GRADE9_CORE1A"
+  },
+  "evidence_observed_utc_date": "2026-10-10",
+  "primary_curriculum_sources": [
+    {
+      "id": "CBSE-IX-2025-26",
+      "publisher": "Central Board of Secondary Education (CBSE)",
+      "year": "2025-26",
+      "url": "https://cbseacademic.nic.in/web_material/CurriculumMain26/Sec/Maths_Sec_2025-26.pdf",
+      "page_index_zero_based": 2,
+      "observation": "Unit I, Number Systems: explicitly recalls exponent laws with integral powers and considers rational exponents with positive real bases in particular cases.",
+      "supports": "Some prerequisite exponent-law manipulations in Grade IX in this specific prior-year syllabus.",
+      "does_not_prove": "Unknown real-exponent equations, real-exponential surjectivity and injectivity, logarithms or a canonical SOF microtopic are grade-level assessed prerequisites."
+    },
+    {
+      "id": "CBSE-IX-2026-27",
+      "publisher": "Central Board of Secondary Education (CBSE)",
+      "year": "2026-27",
+      "url": "https://cbseacademic.nic.in/web_material/CurriculumMain27/SecPart1/Maths_SecP1IX_2026-27.pdf",
+      "competency_page_index_zero_based": 1,
+      "detailed_unit_page_index_zero_based": 3,
+      "observation": "Curricular goal C-2.1 names understanding powers (radical powers) and exponents, but the detailed Unit I Number System list on p.4 addresses rational/irrational numbers, density, decimal representations, irrationality proofs and square-root spiral; it does not explicitly list real-exponent equation solving.",
+      "supports": "There is broad exponent competency language, without explicit detailed-unit placement of the proposed real-exponent inverse task.",
+      "does_not_prove": "Exponents are banned from all Class IX teaching, or that the real-exponent equation is formally out of every qualifying curriculum. A grade-specific independent review is required."
+    },
+    {
+      "id": "SOF-IMO-CLASS-9-SYLLABUS",
+      "publisher": "Science Olympiad Foundation",
+      "year": "accessed 2026-10-10",
+      "url": "https://sofworld.org/imo/class-9/imo-syllabus/imo-syllabus-class-9",
+      "observation": "Section 2 explicitly lists Number Systems at topic level; Sections 3 and 4 depend on or follow the Section 2 scope.",
+      "supports": "Number Systems as a broad topic in Class 9 SOF IMO.",
+      "does_not_prove": "Automatic NS-INDEX-LAWS microtopic acceptance, ability to solve equations with an unknown real exponent, or admission of an authentic paper Q26 item."
+    }
+  ],
+  "analytic_distinctions": {
+    "common_base_factor_law": "For any a>1 and integer n>=0, a^(2n+1)=a*(a*a)^n, so a^(2n+1)=(a*a)^n+c becomes (a-1)*(a*a)^n=c.",
+    "real_domain_extra_warrant": "For real x, recovering x from t=a^(2x) uses a strictly increasing/injective real exponential map; claiming every t>0 has such an x additionally invokes its real-range coverage, typically taught with logarithm or continuity-related facts.",
+    "natural_domain_warrant": "For integer n>=0, no real exponential inverse is required: after computing t>0, decide whether t equals a^(2n) for a non-negative integer n by exact integer powers. A positive t that is not an even integer power may have a real solution but no integer solution.",
+    "risk": "Avoid silently using integer-exponent teaching to certify general real-variable equations. Restricting the domain changes the mathematical statement and answer set; it is not a cosmetic wording fix."
+  },
+  "alternatives": [
+    {
+      "option": "A_KEEP_REAL_EXPONENT_WITH_EXPLICIT_ENRICHMENT_PREREQUISITES",
+      "treatment": "Keep existing TEST item and exits unchanged, teach the real exponential map's injectivity and positive range as a prerequisite, label beyond demonstrated syllabus evidence if the reviewer so decides.",
+      "merits": [
+        "Preserves the more general authored real-domain proof and original math candidate provenance."
+      ],
+      "risks": [
+        "Real-positive-surjectivity and inverse-exponent reasoning require justification beyond merely applying integral exponent laws.",
+        "SOF Section 2 does not itself establish this as a Grade 9 Core1A syllabus microtopic."
+      ],
+      "status": "NOT_ACCEPTED"
+    },
+    {
+      "option": "B_NARROW_TO_NONNEGATIVE_INTEGER_EXPONENTS",
+      "treatment": "Create a separate fully authored variant from the same algebraic teaching construction using n in {0,1,2,...}; keep the real-domain candidate unmodified and historically traceable.",
+      "worked_stem": "For a non-negative integer n, solve 3^(2n+1)=9^n+162. Justify each common-base transformation, decide whether an integer solution exists, and check the original equation.",
+      "teaching_warrants": [
+        "Write t=9^n=3^(2n)>0 using integral exponent rules.",
+        "Using 3^(2n+1)=3t gives 3t=t+162 and t=81.",
+        "Compare 81=3^4 with 3^(2n): the integer exponent 2n must be 4, so n=2; reverse-check 3^5=243=9^2+162.",
+        "Do not claim every positive t is an allowable even power of 3 when n must be an integer."
+      ],
+      "independent_exit_stem": "For a non-negative integer m, solve 2^(2m+1)=4^m+64. Show why each transformation is valid and check the original equation without substitution.",
+      "independent_exit_for_reviewer_only": "Let t=4^m>0. Then 2t=t+64, so t=64=2^6 and 2m=6, m=3. Check 2^7=128=4^3+64.",
+      "discriminating_boundary_probe": {
+        "prompt": "For a non-negative integer m, does 2^(2m+1)=4^m+8 have a solution? Explain how this differs from allowing a real m.",
+        "protected_solution_for_reviewer_only": "The equation reduces to 4^m=8, i.e. 2^(2m)=2^3, so 2m=3. There is no integer m; real m=3/2 is a solution. This separates the two domains.",
+        "preattempt_release_allowed": false
+      },
+      "merits": [
+        "Requires integral exponent laws and exact exponent comparison without assuming a real continuous inverse.",
+        "Boundary probe checks that the learner notices domain rather than blindly accepting a positive t."
+      ],
+      "risks": [
+        "Still more algebraic/olympiad than routine Number Systems tasks, and does not prove grade/role suitability without review.",
+        "Canonical microtopic title and subtopic placement require academic approval."
+      ],
+      "status": "AUTHOR_PROPOSED_VARIANT_UNSELECTED_NOT_ACCEPTED"
+    },
+    {
+      "option": "C_REDESIGN_AS_FOUNDATIONAL_INDEX_LAWS",
+      "treatment": "Build a distinct foundational Core1A that derives powers and product/quotient laws with integer exponents and classifies undefined/zero-base cases, with advanced common-base equation only as optional held extension.",
+      "merits": [
+        "Provides a safer on-ramp if the reviewer judges either equation variant too advanced for a first Grade 9 Core1A.",
+        "Separates prerequisite capability from advanced SOF enrichment."
+      ],
+      "risks": [
+        "Requires a new genuine teaching product, independent exit, QRT/academic review and mapping; not an automatic relabel of this candidate."
+      ],
+      "status": "REQUIRES_NEW_AUTHORED_CONSTRUCTION"
+    }
+  ],
+  "reviewer_required_decisions": [
+    {
+      "id": "D1",
+      "prompt": "Choose and justify the curricular basis for a Grade 9 Core1A versus optional SOF enrichment, specifically referencing the 2025-26 and 2026-27 CBSE differences and SOF topic-level syllabus.",
+      "allowed_decisions": [
+        "A_KEEP_REAL_EXPONENT_WITH_EXPLICIT_ENRICHMENT_PREREQUISITES",
+        "B_NARROW_TO_NONNEGATIVE_INTEGER_EXPONENTS",
+        "C_REDESIGN_AS_FOUNDATIONAL_INDEX_LAWS",
+        "REJECT_PENDING_MORE_EVIDENCE"
+      ]
+    },
+    {
+      "id": "D2",
+      "prompt": "Independently verify factor-law, exponent comparison, positive-t domain and original checks, especially the no-integer-solution boundary probe.",
+      "allowed_decisions": [
+        "PASS",
+        "REVISE",
+        "REJECT"
+      ]
+    },
+    {
+      "id": "D3",
+      "prompt": "Specify the supported prerequisite set and student-facing warning, particularly whether real-exponential range is taught or only integral exponent comparison.",
+      "allowed_decisions": [
+        "PASS",
+        "REVISE",
+        "REJECT"
+      ]
+    },
+    {
+      "id": "D4",
+      "prompt": "Approve a canonical topic, subtopic ID, capability/microtopic identity and Core1A exit only when supporting evidence is adequate. NS-INDEX-LAWS remains provisional.",
+      "allowed_decisions": [
+        "APPROVE_WITH_EXACT_IDS",
+        "REMAP",
+        "HOLD"
+      ]
+    },
+    {
+      "id": "D5",
+      "prompt": "Review safe revealed versus protected guidance, the independent exit, three misconceived solution routes, accessibility and planned learner return.",
+      "allowed_decisions": [
+        "APPROVE_WITH_EVIDENCE",
+        "REVISE",
+        "HOLD"
+      ]
+    }
+  ],
+  "decision": {
+    "human_reviewer_name": null,
+    "human_reviewer_role": null,
+    "reviewed_at_utc": null,
+    "reviewer_verification_url": null,
+    "choices": {
+      "D1": null,
+      "D2": null,
+      "D3": null,
+      "D4": null,
+      "D5": null
+    },
+    "written_justification": null,
+    "accepted_capability_id": null,
+    "accepted_microtopic_id": null,
+    "status": "AWAITING_NAMED_INDEPENDENT_SUBJECT_REVIEW"
+  },
+  "route_and_release": {
+    "stage_a_route": "mathematics/number-systems/index-laws/index.html",
+    "branch_staged_only": true,
+    "existing_public_status": "ACADEMIC_HOLD",
+    "current_manifest_alternative_selected": false,
+    "approved_core1a_public_product_url": null,
+    "named_owner_release_decision": null,
+    "rights_and_source_core2_admitted": 0,
+    "source_positions_held": 68,
+    "qrt_owner_accepted": 0,
+    "release_allowed": false,
+    "no_merge_or_publish_from_review_packet": true,
+    "v31_serialized_lease_issue": 212
+  }
+}
