@@ -1440,6 +1440,55 @@ def _stages_of(figure_html: str) -> int:
     return int(found.group(1)) if found else 0
 
 
+def _draft_concept_checkpoint(ctx: Ctx, m: dict) -> str:
+    """Optional neutral Core1A check for wholly authored TEST candidates only.
+
+    This client-side formative check selects a concept *before* guided work.
+    Its text match is not evidence of comprehension or independent mastery.
+    """
+    spec = (m.get("extensions") or {}).get("grade9v3:concept_checkpoint")
+    if not spec:
+        return ""
+    if (ctx.manifest.get("subject") != "TEST" or spec.get("scope") != "TEST_AUTHORED_CORE1A_ONLY"
+            or m.get("status") != "CANDIDATE"
+            or spec.get("status") != "LOCAL_TEACHING_FORMAT_CHECK_NOT_INDEPENDENT_MASTERY"):
+        ctx.gap("AUTHOR_CONCEPT_CHECKPOINT", m["id"],
+                "neutral concept checkpoint is restricted to unadmitted TEST authoring", "CORE1A")
+        return ""
+    options = spec.get("choices") or []
+    if (len(options) != 2 or {c.get("value") for c in options} != {"FACTOR", "ADD"}
+            or spec.get("correct_value") != "FACTOR"):
+        ctx.gap("AUTHOR_CONCEPT_CHECKPOINT", m["id"], "bad check choices", "CORE1A")
+        return ""
+    labels = "".join(
+        f'<label><input type="radio" name="{esc(m["id"])}-concept" '
+        f'data-g9-concept-option value="{esc(choice["value"])}"> '
+        f'{esc(choice["label"])}</label> '
+        for choice in options
+    )
+    return (
+        f'<section class="g9-concept-first" data-g9-concept-check '
+        f'data-g9-concept-ref="{esc(m["id"])}" '
+        f'data-g9-concept-correct="{esc(spec["correct_value"])}" '
+        f'data-g9-reason-words="{esc(",".join(spec["reason_contains_any"]))}" '
+        f'data-g9-rule-words="{esc(",".join(spec["reason_contains_any_rule"]))}" '
+        f'data-g9-feedback-choice="{esc(spec["on_wrong_choice"])}" '
+        f'data-g9-feedback-explain="{esc(spec["on_wrong_explanation"])}" '
+        f'data-g9-feedback-passed="{esc(spec["on_form_check"])}">'
+        '<h4>Concept first · before the worked equation</h4>'
+        f'<p>{esc(spec["neutral_demo"])}</p>'
+        f'<fieldset><legend>{esc(spec["prompt"])}</legend>{labels}</fieldset>'
+        '<label for="g9-concept-reason">Explain why in your own words</label>'
+        '<textarea id="g9-concept-reason" data-g9-concept-reason rows="3" '
+        'placeholder="Describe the index law and why it multiplies."></textarea>'
+        '<button type="button" data-g9-concept-commit>Check concept, then see guided work</button>'
+        '<p data-g9-concept-feedback role="status" aria-live="polite">'
+        'Choose a relationship and explain the exponent rule before continuing.</p>'
+        '<p>Formative teaching self-check only; this is not independent mastery evidence.</p>'
+        '</section>'
+    )
+
+
 def core1a(ctx: Ctx, m: dict) -> str:
     units = m.get("construction_units") or []
     if not units:
@@ -1606,7 +1655,11 @@ def core1a(ctx: Ctx, m: dict) -> str:
             "WORKED_EXAMPLE": unit_part("WORKED_EXAMPLE", block("worked_anchor", anchor_html, title="Worked explanation")),
         }
         card = component_body(ctx, "CORE1A", card_parts, "construction")
-        construction = f'<section id="{esc(u["id"])}" class="g9-cu" data-g9-cu="{esc(u["id"])}">{card}</section>'
+        checkpoint = _draft_concept_checkpoint(ctx, m) if n == 0 else ""
+        construction = (f'<section id="{esc(u["id"])}" class="g9-cu" data-g9-cu="{esc(u["id"])}">'
+                        + checkpoint
+                        + (f'<div data-g9-concept-target hidden>{card}</div>' if checkpoint else card)
+                        + '</section>')
         support_label = decision or f"Construction {n + 1}"
         trap = (block("wrong_path", items(row["wrong_idea"] for row in wrong), title="A tempting wrong path")
                 + block("diagnose", items(row["diagnostic_prompt"] for row in wrong), title="Diagnose")
@@ -1626,7 +1679,8 @@ def core1a(ctx: Ctx, m: dict) -> str:
         )
         rows += compose(ctx, "CORE1A", {
             "construction": construction,
-            **({"repair_closure": support} if support else {}),
+            **({"repair_closure": (f'<div data-g9-concept-target hidden>{support}</div>'
+                                    if checkpoint else support)} if support else {}),
         })
 
     if toughest and m["id"] == toughest["microtopic_ref"]:
@@ -1639,6 +1693,9 @@ def core1a(ctx: Ctx, m: dict) -> str:
                      if _unit_href(ctx, role, ref)), None)
         return_hrefs[ref] = href or ('#' + repair_row['construction_ref'])
     clinics = secondary_disclosure("Question-specific diagnosis and repair", learning_repair.clinic(repair_rows, return_hrefs), "core1a-question-repair") if repair_rows else ""
+    if _draft_concept_checkpoint(ctx, m):
+        clinics = f'<div data-g9-concept-target hidden>{clinics}</div>'
+        closing = f'<div data-g9-concept-target hidden>{closing}</div>'
     return head + rows + clinics + _purpose_extension(ctx, "CORE1A", m["id"]) + closing
 
 
@@ -2774,10 +2831,34 @@ q('[data-g9-commit]',a).forEach(b=>b.onclick=()=>{const box=b.closest('[data-g9-
 a.addEventListener('click',e=>{const b=e.target.closest('[data-g9-next-rung]');if(b&&a.contains(b)){markAssistance(a,'HINT_LADDER');nextRung(b.closest('.g9-ladder'));bindSupportRevealState(a);saveCore2State(a)}});attemptFields(a).forEach(el=>{el.addEventListener('input',()=>saveCore2State(a));el.addEventListener('change',()=>saveCore2State(a))});
 q('details[data-g9-payload-ref$="-wrong-route"]',a).forEach(d=>d.addEventListener('toggle',()=>{if(d.open){markAssistance(a,'WRONG_ROUTE');saveCore2State(a)}}));
 q('[data-g9-concept-link]',a).forEach(link=>link.addEventListener('click',()=>{markAssistance(a,'CONCEPT_NAV');saveCore2State(a);const key=returnKey(link.dataset.g9ConceptRef);if(key)store.set(key,link.dataset.g9QuestionRef||a.dataset.g9Unit);refreshReturnLinks()}))});
+// An opt-in, TEST-only formative concept checkpoint: verify a choice and
+// a minimal rule-oriented rationale before showing the guided lesson.
+// A keyword/radio check is NOT a knowledge score, mastery or secure receipt.
+q('[data-g9-concept-check]').forEach(c=>{
+  const article=c.closest('article[data-g9-role="CORE1A"]');
+  const b=q('[data-g9-concept-commit]',c)[0];
+  const feedback=q('[data-g9-concept-feedback]',c)[0];
+  if(!article||!b||!feedback)return;
+  b.addEventListener('click',()=>{
+    const choice=q('[data-g9-concept-option]:checked',c)[0]?.value||'';
+    const reason=(q('[data-g9-concept-reason]',c)[0]?.value||'').trim().toLowerCase();
+    const match=(s)=>s.split(',').some(w=>w&&reason.includes(w));
+    if(choice!==c.dataset.g9ConceptCorrect){feedback.textContent=c.dataset.g9FeedbackChoice;return}
+    if(reason.length<15||!match(c.dataset.g9ReasonWords||'')||!match(c.dataset.g9RuleWords||'')){
+      feedback.textContent=c.dataset.g9FeedbackExplain;return
+    }
+    article.dataset.g9ConceptCheckCompleted='formative_only';
+    q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false});
+    feedback.textContent=c.dataset.g9FeedbackPassed;
+    q('figure[data-g9-figure]',article).forEach(fitFigure);
+    q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0]?.setAttribute('tabindex','-1');
+    q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0]?.focus();
+  })
+});
 const practiceLinks=q('[data-g9-practice-link]');const practiceLabels=new Map(practiceLinks.map(link=>[link,link.textContent]));const navParams=new URLSearchParams(location.search);const navReturn=navParams.get('g9-return');const navConcept=navParams.get('g9-concept');
 function refreshReturnLinks(){practiceLinks.forEach(link=>{const key=returnKey(link.dataset.g9ConceptRef);const stored=!!key&&store.get(key)===link.dataset.g9QuestionRef;const routed=navReturn===link.dataset.g9QuestionRef&&navConcept===link.dataset.g9ConceptRef;const active=stored||routed;if(active){link.dataset.g9ReturnLink='';link.textContent='Return to question · '+practiceLabels.get(link)}else{delete link.dataset.g9ReturnLink;link.textContent=practiceLabels.get(link)}})}
 practiceLinks.forEach(link=>link.addEventListener('click',()=>{const key=returnKey(link.dataset.g9ConceptRef);if(key&&store.get(key)===link.dataset.g9QuestionRef)store.remove(key);refreshReturnLinks()}));refreshReturnLinks();
-window.g9MaterialiseAll=()=>articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)});
+window.g9MaterialiseAll=()=>{q('[data-g9-concept-target]').forEach(el=>el.hidden=false);articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)})};
 q('figure[data-g9-figure]').forEach(initFigure);
 q('[data-g9-toggle]').forEach(b=>b.onclick=()=>{const t=document.getElementById(b.getAttribute('aria-controls'));if(!t)return;const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));t.hidden=open});
 const input=q('[data-g9-search-input]')[0];if(input)input.oninput=()=>{const v=input.value.trim().toLowerCase();articles.forEach(a=>{a.hidden=!!v&&!(a.dataset.g9SearchText||'').toLowerCase().includes(v)})};
@@ -2802,7 +2883,7 @@ def core1b_js() -> str:
          "q('details[data-requires-attempt] summary',a).forEach(s=>s.addEventListener('click',e=>{const d=s.closest('details');if(!attemptedFor(a,d)){e.preventDefault();const selector=d.dataset.g9AttemptStage==='boundary'?'[data-g9-attempt-box][data-g9-attempt-stage=\"boundary\"]':'[data-g9-attempt-box]:not([data-g9-attempt-stage=\"boundary\"])';q('input,textarea,select',q(selector,a)[0]||a)[0]?.focus()}}));"),
         ("q('[data-g9-commit]',a).forEach(b=>b.onclick=()=>{const box=b.closest('[data-g9-attempt-box]');if(!box||!validAttempt(box)){q('input,textarea,select',box||a)[0]?.focus();return}a.dataset.attempted='1';lock();materialise(a);saveCore2State(a)});",
          "q('[data-g9-commit]',a).forEach(b=>b.onclick=()=>{const box=b.closest('[data-g9-attempt-box]');if(!box||!validAttempt(box)){q('input,textarea,select',box||a)[0]?.focus();return}if(box.dataset.g9AttemptStage==='boundary')a.dataset.g9BoundaryAttempted='1';else a.dataset.attempted='1';lock();materialise(a);saveCore2State(a)});"),
-        ("window.g9MaterialiseAll=()=>articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)});",
+        ("window.g9MaterialiseAll=()=>{q('[data-g9-concept-target]').forEach(el=>el.hidden=false);articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)})};",
          "window.g9MaterialiseAll=()=>articles.forEach(a=>{a.dataset.attempted='1';a.dataset.g9BoundaryAttempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)});"),
     )
     for generic, boundary_specific in patches:
