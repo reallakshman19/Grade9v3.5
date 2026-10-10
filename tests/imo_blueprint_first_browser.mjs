@@ -52,8 +52,6 @@ try {
           assert.ok(!before.includes('gcd(24,5)=1'), 'protected transfer proof is visible before an attempt');
           assert.equal(await article.locator('figure[data-g9-stage="PRE_ATTEMPT"]').count(), 1,
             'missing safe five-factor figure');
-          assert.ok(await article.locator('a[href^="core1a.html#"]').count() > 0,
-            'missing concept-repair navigation');
         }
         await commit.click();
         assert.ok((await gates.first().getAttribute('data-locked')) !== null,
@@ -64,6 +62,10 @@ try {
         await commit.click();
         assert.equal(await gates.first().getAttribute('data-locked'), null,
           'valid typed commitment did not unlock ' + role);
+        if (role === 'core2b') {
+          assert.ok(await article.locator('a[href^="core1a.html#"]').count() > 0,
+            'post-attempt concept-repair navigation is missing');
+        }
         await gates.first().locator('summary').click();
         assert.ok(await gates.first().evaluate(element => element.open),
           role + ' disclosure cannot open after commitment');
