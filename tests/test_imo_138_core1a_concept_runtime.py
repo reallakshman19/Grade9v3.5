@@ -33,6 +33,9 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn('data-g9-concept-option value="FACTOR"', html)
         self.assertIn('data-g9-concept-option value="ADD"', html)
         self.assertIn('data-g9-concept-reason', html)
+        self.assertIn('data-g9-neutral-diagnostic data-g9-base="7" data-g9-exponent="2"', html)
+        self.assertIn('data-g9-diagnostic-next autocomplete="off"', html)
+        self.assertIn('data-g9-diagnostic-add autocomplete="off"', html)
         self.assertIn('data-g9-concept-feedback role="status" aria-live="polite"', html)
         self.assertLess(html.index('data-g9-concept-check'), html.index('data-g9-concept-target hidden'))
         self.assertIn('data-g9-concept-target hidden', html)
@@ -49,14 +52,26 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("article.dataset.g9ConceptCheckCompleted='formative_only'", html)
         self.assertIn("setProgress('needs_review'", html)
         self.assertIn("setProgress('needs_reflection'", html)
+        self.assertIn("setProgress('needs_counterexample'", html)
         self.assertIn("setProgress('guided_without_check'", html)
+        self.assertIn("repeated_additive_route_candidate", html)
+        self.assertIn("choice_numeric_conflict", html)
+        self.assertIn("possible_execution_slip_or_model_error", html)
+        self.assertIn("aligned_structured_counterexample", html)
+        self.assertIn("Your explanation has NOT been graded", html)
         self.assertEqual(html.count("delete article.dataset.g9ConceptCheckCompleted;"), 2,
                          "both re-submission and guided bypass must invalidate stale format evidence")
+        self.assertEqual(html.count("delete article.dataset.g9DiagnosticPattern;"), 2,
+                         "a later submission or guided bypass invalidates all prior diagnostic patterns")
         self.assertIn("data-g9-learning-progress", html)
         self.assertIn("data-g9-concept-review", html)
         microtopic_id = self.pkg["microtopics"][0]["id"]
         self.assertIn(f'id="{microtopic_id}-concept-reason"', html)
         self.assertIn(f'for="{microtopic_id}-concept-reason"', html)
+        self.assertIn(f'id="{microtopic_id}-diagnostic-next"', html)
+        self.assertIn(f'id="{microtopic_id}-diagnostic-add"', html)
+        self.assertIn(f'for="{microtopic_id}-diagnostic-next"', html)
+        self.assertIn(f'for="{microtopic_id}-diagnostic-add"', html)
         self.assertIn(f'aria-describedby="{microtopic_id}-concept-scope"', html)
         self.assertIn(f'id="{microtopic_id}-concept-scope"', html)
         self.assertIn("q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false})", html)
@@ -73,6 +88,7 @@ class TestConceptFirstHTML(unittest.TestCase):
         # The *learner DOM* must not include the opt-in TEST Core1A checkpoint.
         self.assertNotIn('<section class="g9-concept-first" data-g9-concept-check',
                          self.pages["core2a.html"])
+        self.assertNotIn('<fieldset data-g9-neutral-diagnostic', self.pages["core2a.html"])
         self.assertNotIn('[data-g9-concept-target][hidden]{display:block!important}',
                          self.pages["core2a.html"])
         self.assertNotIn('[data-g9-concept-target] .g9-stage-controls{display:none!important}',
