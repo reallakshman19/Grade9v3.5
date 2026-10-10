@@ -36,7 +36,7 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn('data-g9-concept-feedback role="status" aria-live="polite"', html)
         self.assertLess(html.index('data-g9-concept-check'), html.index('data-g9-concept-target hidden'))
         self.assertIn('data-g9-concept-target hidden', html)
-        self.assertIn('Formative teaching self-check only', html)
+        self.assertIn('This reflection checks neither the meaning nor accuracy', html)
 
     def test_format_only_and_print_materialisation(self):
         html = self.pages["core1a.html"]
