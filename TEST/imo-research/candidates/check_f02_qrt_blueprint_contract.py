@@ -34,6 +34,22 @@ REPAIR_STAGES = (
     "GUIDED_APPLICATION", "FRESH_INDEPENDENT_EXIT",
 )
 HINT_PURPOSES = ("ORIENT", "CONNECT", "OPEN_THE_WAY")
+# Explicit source pointers for all 12 semantic questions. These are NOT grades.
+# S2/S3 use a *different authored Core1A teaching example*, not the D3 item.
+ASK_SOURCES = {
+    "H1": ("selected_question.scaffolds[0].text",),
+    "H2": ("selected_question.scaffolds[1].text",),
+    "H3": ("selected_question.scaffolds[2].text",),
+    "S1": ("selected_question.representation_roles.initial_ref",),
+    "S2": ("microtopics[0].representation_refs", "microtopics[0].construction_units[0].reveal_stage_refs"),
+    "S3": ("microtopics[0].construction_units[0].reveal_stage_refs",),
+    "P1": ("selected_question.stem", "selected_question.representation_roles.safe_ref"),
+    "P2": ("selected_question.repair_ref", "microtopics[0].teaching_path"),
+    "P3": ("selected_question.answer.reasoning_route", "selected_question.independent_check"),
+    "M1": ("selected_question.failure_signal", "microtopics[0].misconceptions"),
+    "M2": (),  # No diagnostic distinguishing misconception vs one-off execution slip.
+    "M3": ("selected_question.repair_ref", "microtopics[0].teaching_path"),
+}
 ROLE_SLOT_SOURCES = {
     "CORE1A": {
         "identity": ("microtopics[0].title",),
@@ -172,10 +188,18 @@ def audit(
     asks = []
     for name in qrt.ASKS:
         d = resolution.get("review", {}).get(name, {})
-        status = "SOURCE_PRESENT_SEMANTICS_REQUIRE_REVIEW" if name in ("H1", "H2", "H3", "P1", "P3", "M1") else "UNVERIFIED_OR_UNIMPLEMENTED"
+        if name == "M2":
+            status = "NOT_IMPLEMENTED_MISCONCEPTION_VS_SLIP_DIAGNOSTIC"
+        elif name == "P2":
+            status = "SOURCE_ROUTE_DECLARED_PRECISE_STEP_NOT_VERIFIED"
+        elif name in ("S2", "S3"):
+            status = "DIFFERENT_CORE1A_EXAMPLE_ITEM_SEMANTICS_UNVERIFIED"
+        else:
+            status = "SOURCE_PRESENT_SEMANTICS_REQUIRE_REVIEW"
         asks.append({
             "ask": name, "question": d.get("question", ""),
-            "objective": d.get("objective", ""), "status": status,
+            "objective": d.get("objective", ""),
+            "source_pointers": list(ASK_SOURCES[name]), "status": status,
         })
     review_gates.extend([
         "H_S_P_M_INDEPENDENT_SEMANTIC_REVIEW_REQUIRED",
@@ -185,6 +209,23 @@ def audit(
         "FREE_TEXT_REASON_MATHEMATICAL_CORRECTNESS_NOT_GRADED",
         "BLUEPRINT_RENDERED_CONTENT_AND_WAIVERS_NOT_INDEPENDENTLY_REVIEWED",
     ])
+    repair_sequence = [
+        {"stage": "NEUTRAL_DEMONSTRATION",
+         "source": "microtopics[0].extensions.grade9v3:concept_checkpoint.neutral_demo",
+         "status": "SOURCE_DECLARED_NOT_PEDAGOGICALLY_GRADED"},
+        {"stage": "GENERAL_PRINCIPLE",
+         "source": "microtopics[0].teaching_path[0].why_valid",
+         "status": "SOURCE_DECLARED_NOT_PEDAGOGICALLY_GRADED"},
+        {"stage": "CONCEPT_CHECK",
+         "source": "microtopics[0].extensions.grade9v3:concept_checkpoint.prompt",
+         "status": "FORMAT_ONLY_NO_SEMANTIC_GRADING"},
+        {"stage": "GUIDED_APPLICATION",
+         "source": "microtopics[0].teaching_path[1..4]",
+         "status": "DIFFERENT_AUTHORED_EXAMPLE_NOT_INDEPENDENT"},
+        {"stage": "FRESH_INDEPENDENT_EXIT",
+         "source": "microtopics[0].exit_task.prompt",
+         "status": "PROMPT_PRESENT_UNASSISTED_RETURN_NOT_ENFORCED"},
+    ]
     return {
         "schema": "imo-f02-qrt-blueprint-contract/v1",
         "subject": "TEST", "academic_status": "HOLD_NOT_ACCEPTED",
@@ -196,6 +237,7 @@ def audit(
         "rendered_coverage_cells": [resolution["template_id"]] if resolution else [],
         "source_hints": h_ledger,
         "semantic_review_asks": asks,
+        "core1a_repair_reference_alignment": repair_sequence,
         "blueprint_required_slots": slot_ledger,
         "errors": sorted(set(errors)),
         "review_gates": review_gates,
