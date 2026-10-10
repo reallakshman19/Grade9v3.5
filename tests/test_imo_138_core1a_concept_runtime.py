@@ -65,7 +65,6 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("mechanism_route_conflict", html)
         self.assertIn("setProgress('needs_reasoning'", html)
         self.assertIn("warrantChoice!==rule.dataset.g9RuleCorrect", html)
-        self.assertIn("RULE_WARRANT_RECOGNITION", "RULE_WARRANT_RECOGNITION_NOT_INDEPENDENT_REASONING")
         self.assertIn("aligned_structured_counterexample", html)
         self.assertIn("Your explanation has NOT been graded", html)
         self.assertEqual(html.count("delete article.dataset.g9ConceptCheckCompleted;"), 2,
