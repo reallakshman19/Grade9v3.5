@@ -116,9 +116,16 @@ class IMOReleaseRouteGuard(unittest.TestCase):
     def test_core2_cannot_launch_with_custody_hold_even_if_receipt_is_mocked(self):
         pilot = copy.deepcopy(self.pilot)
         pilot["scope"]["launch_authorized"] = True
+        pilot["scope"]["source_core2_admitted"] = 1
         pilot["routing"]["core2_source_product_url"] = "/mathematics/number-systems/index-laws/CORE2.html"
+        # Even a forged accepted research crosswalk plus a mocked receipt
+        # cannot replace the independent source-custody ledger.
+        pilot["source_questions"][0]["source_core2_admitted"] = True
+        pilot["source_questions"][0]["source_core2_eligible"] = True
+        pilot["source_questions"][0]["rights_status"] = "RIGHTS_CLEARED"
+        question_id = pilot["source_questions"][0]["question_id"]
         wrong = self.html.replace('data-g9-role="CORE2" data-g9-authority="SOURCE_CUSTODY_AND_RIGHTS_HOLD" data-g9-launch-authorized="false"',
-                                  'data-g9-role="CORE2" data-g9-authority="RELEASED" data-g9-launch-authorized="true" data-g9-release-receipt="Releases/receipts/REL-TEST.json"')
+                                  'data-g9-role="CORE2" data-g9-authority="RELEASED" data-g9-launch-authorized="true" data-g9-release-receipt="Releases/receipts/REL-TEST.json" data-g9-source-question-id="' + question_id + '"')
         wrong = wrong.replace("<h3>Core 2 · Authentic source question</h3>",
                               '<h3>Core 2 · Authentic source question</h3><a href="CORE2.html">Attempt</a>')
         with tempfile.TemporaryDirectory() as temp:
