@@ -12,6 +12,7 @@ import re
 import tempfile
 import unittest
 from pathlib import Path
+from html.parser import HTMLParser
 
 from Shared.tools import product_manifest, product_coverage, render_core
 from Shared.tools import question_review_matrix as qrt
@@ -22,6 +23,30 @@ ADDON = ROOT / "TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json"
 MANIFEST = ROOT / "TEST/products/imo-g9-blueprint-first-five-transfer.manifest.json"
 SVG = ROOT / "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg"
 QUESTION = "Q-TEST-IMO-164-FIVE-CONSECUTIVE-120"
+GOLDEN = ROOT / "golden/units"
+
+
+class VisibleLearnerText(HTMLParser):
+    """Collect rendered learner text, excluding inert templates and scripts.
+
+    This is a static disclosure check, not an interactive browser or AT audit.
+    """
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.inert = 0
+        self.text = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in {"template", "script", "style"}:
+            self.inert += 1
+
+    def handle_endtag(self, tag):
+        if tag in {"template", "script", "style"}:
+            self.inert -= 1
+
+    def handle_data(self, data):
+        if not self.inert:
+            self.text.append(data)
 
 
 class BlueprintFirstFiveTransferTests(unittest.TestCase):
@@ -162,6 +187,52 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
         importlib.util.find_spec("jsonschema") is not None,
         "full shared renderer requires jsonschema; dedicated #164 CI installs it",
     )
+    @unittest.skipUnless(
+        importlib.util.find_spec("jsonschema") is not None,
+        "full shared renderer requires jsonschema; dedicated #164 CI installs it",
+    )
+    def test_two_existing_goldens_and_candidate_share_attempt_gate_primitives(self):
+        """Golden T01/T09: use the same renderer and inert commitment grammar."""
+        examples = (
+            (GOLDEN / "G-CORE2-R2/manifest.json", "core2.html"),
+            (GOLDEN / "G-MATH-LINEAR-CONSTRAINT/manifest.json", "core2b.html"),
+            (MANIFEST, "core2b.html"),
+        )
+        for manifest, filename in examples:
+            with self.subTest(exemplar=manifest.parent.name):
+                pages, gaps, _ = render_core.build(manifest, "PAGES")
+                self.assertFalse(gaps, gaps)
+                html = pages[filename]
+                self.assertIn("data-g9-attempt-box", html)
+                self.assertIn("data-g9-commit", html)
+                self.assertIn("data-requires-attempt", html)
+                self.assertIn("<template data-g9-payload=", html)
+
+    @unittest.skipUnless(
+        importlib.util.find_spec("jsonschema") is not None,
+        "full shared renderer requires jsonschema; dedicated #164 CI installs it",
+    )
+    def test_transfer_proof_is_in_inert_template_not_pre_attempt_text(self):
+        """Golden T01/T03: question visible, mathematical warrant protected."""
+        pages, gaps, _, _, _ = render_core.build_report(
+            MANIFEST, "PAGES", held_to="REFERENCE",
+        )
+        self.assertFalse(gaps, gaps)
+        html = pages["core2b.html"]
+        visible = VisibleLearnerText()
+        visible.feed(html)
+        text = " ".join(visible.text)
+        self.assertIn(self.question["stem"][:42], text)
+        self.assertIn("gcd(24,5)=1", html)
+        self.assertNotIn("gcd(24,5)=1", text)
+        self.assertIn('data-g9-stage="PRE_ATTEMPT"', html)
+        self.assertIn('data-g9-stages="FIVE-FACTORS-ONLY"', html)
+        self.assertIn('data-g9-repair-ref="TC-03"', html)
+        self.assertIn(
+            "core1a.html#CU-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-PROOF",
+            html,
+        )
+
     def test_invalid_source_selection_fails_closed_in_draft(self):
         modified = copy.deepcopy(self.manifest)
         modified["selection"]["core2"] = [QUESTION]
