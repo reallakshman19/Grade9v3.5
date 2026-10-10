@@ -61,6 +61,7 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("q('[data-g9-concept-target]').forEach(el=>el.hidden=false)", html)
         self.assertIn("window.matchMedia('print')", html)
         self.assertIn("printMode.addEventListener('change'", html)
+        self.assertIn("window.addEventListener('beforeprint',refitPrintStages)", html)
         self.assertIn('[data-g9-concept-target][hidden]{display:block!important}', html)
         self.assertIn("q('figure[data-g9-figure]',article).forEach(fitFigure)", html)
 
