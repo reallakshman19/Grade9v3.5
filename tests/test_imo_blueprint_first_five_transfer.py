@@ -253,6 +253,10 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
             html,
         )
 
+    @unittest.skipUnless(
+        importlib.util.find_spec("jsonschema") is not None,
+        "full shared renderer requires jsonschema; dedicated #164 CI installs it",
+    )
     def test_invalid_source_selection_fails_closed_in_draft(self):
         modified = copy.deepcopy(self.manifest)
         modified["selection"]["core2"] = [QUESTION]
