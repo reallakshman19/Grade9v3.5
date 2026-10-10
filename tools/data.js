@@ -42528,15 +42528,7 @@ window.GRADE9V3 = {
                   "verification_status": "CHECKED_BY_AUTHOR"
                 },
                 "oracle": {
-                  "verification": {
-                    "validator_id": "TEST/imo-research/validate_core1a_candidate_package.py",
-                    "bindings": {
-                      "domain": "positive_integer",
-                      "divisor": "24",
-                      "residue_classes": "0..23",
-                      "symbolic_expression": "n(n+1)(n+2)(n+3)"
-                    }
-                  }
+                  "held_by": "ISS-TEST-IMO-G9-CORE1A-EXIT-VALIDATOR-HELD"
                 }
               },
               "prerequisites": []
@@ -43173,7 +43165,7 @@ window.GRADE9V3 = {
         {
           "package_id": "TEST-IMO-G9-CORE1A-NS-DIVISIBILITY-PILOT",
           "status": "CANDIDATE",
-          "admitted": false
+          "admitted": true
         },
         {
           "package_id": "TEST-LIB-ISS55-POLY",
