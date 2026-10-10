@@ -48,7 +48,10 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("q('[data-g9-concept-target]').forEach(el=>el.hidden=false)", html)
 
     def test_no_false_core2_source_or_lesson_gate_on_question(self):
-        self.assertNotIn('data-g9-concept-check', self.pages["core2a.html"])
+        # Shared inline JS contains the concept-check handler on every role page.
+        # The *learner DOM* must not include the opt-in TEST Core1A checkpoint.
+        self.assertNotIn('<section class="g9-concept-first" data-g9-concept-check',
+                         self.pages["core2a.html"])
         self.assertNotIn('data-g9-role="CORE2"', self.pages["core2a.html"])
         self.assertFalse(self.pkg["extensions"]["grade9v3:learner_published"])
 
