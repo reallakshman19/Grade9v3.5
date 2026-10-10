@@ -10,6 +10,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 FILE = Path(__file__).resolve().parents[1] / "TEST/imo-research/core2_blueprint_readiness.py"
 spec = importlib.util.spec_from_file_location("core2_blueprint_readiness", FILE)
@@ -22,6 +23,10 @@ class BlueprintReadinessTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
+        self.canonical_custody_pin = audit.CUSTODY_SCHEMA_BLOB_SHA
+        self.canonical_blueprint_pin = audit.BLUEPRINT_REGISTRY_BLOB_SHA
+        self.addCleanup(setattr, audit, "CUSTODY_SCHEMA_BLOB_SHA", self.canonical_custody_pin)
+        self.addCleanup(setattr, audit, "BLUEPRINT_REGISTRY_BLOB_SHA", self.canonical_blueprint_pin)
         self.schema_dir = self.root / "Shared/library"
         self.bp_dir = self.root / "Shared/web"
         self.schema_dir.mkdir(parents=True)
@@ -64,8 +69,14 @@ class BlueprintReadinessTests(unittest.TestCase):
         self._write()
 
     def _write(self):
-        (self.schema_dir / "source-question-custody.schema.json").write_text(json.dumps(self.schema))
-        (self.bp_dir / "interactive-page-blueprints.v1.json").write_text(json.dumps(self.bp))
+        custody = self.schema_dir / "source-question-custody.schema.json"
+        blueprint = self.bp_dir / "interactive-page-blueprints.v1.json"
+        custody.write_text(json.dumps(self.schema))
+        blueprint.write_text(json.dumps(self.bp))
+        # Synthetic mutation fixtures intentionally pin their own exact bytes.
+        # The full-checkout test below separately re-enforces real main pins.
+        audit.CUSTODY_SCHEMA_BLOB_SHA = audit._git_blob_sha(custody.read_bytes())
+        audit.BLUEPRINT_REGISTRY_BLOB_SHA = audit._git_blob_sha(blueprint.read_bytes())
 
     def verdict(self):
         return {
@@ -214,8 +225,19 @@ class BlueprintReadinessTests(unittest.TestCase):
         # Full-repository checkout executes this; isolated patch fixtures do not.
         checkout = Path(__file__).resolve().parents[1]
         if not (checkout / "Shared/web/interactive-page-blueprints.v1.json").is_file():
+            strict = (os.environ.get("CI", "").lower() in ("1", "true", "yes")
+                      or os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
+                      or os.environ.get("CORE2_REQUIRE_FULL_CHECKOUT") == "1")
+            if strict:
+                self.fail("full canonical registry missing in strict checkout validation")
             self.skipTest("full canonical registry not mounted in isolated patch test")
-        contracts = audit.canonical_contracts(checkout)
+        self.assertTrue(
+            (checkout / "Shared/library/source-question-custody.schema.json").is_file(),
+            "full canonical custody schema missing")
+        with (mock.patch.object(audit, "CUSTODY_SCHEMA_BLOB_SHA", self.canonical_custody_pin),
+              mock.patch.object(audit, "BLUEPRINT_REGISTRY_BLOB_SHA",
+                                self.canonical_blueprint_pin)):
+            contracts = audit.canonical_contracts(checkout)
         self.assertEqual(contracts["blueprint_ref"],
                          "BP-CORE2-SOURCE-QUESTION@1.11.0")
         self.assertEqual(len(contracts["custody_component_names"]), 9)
@@ -385,6 +407,46 @@ class BlueprintReadinessTests(unittest.TestCase):
             capture_output=True, text=True, check=False)
         self.assertNotEqual(result.returncode, 0)
         self.assertNotIn(sensitive, result.stdout + result.stderr)
+
+    def test_byte_exact_canonical_contract_pins_reject_cosmetic_drift(self):
+        custody = self.schema_dir / "source-question-custody.schema.json"
+        custody.write_bytes(custody.read_bytes() + b" ")
+        with self.assertRaisesRegex(audit.AuditError, "CUSTODY_SCHEMA_BYTES_DRIFT"):
+            audit.report(self.root)
+        self._write()
+        registry = self.bp_dir / "interactive-page-blueprints.v1.json"
+        registry.write_bytes(registry.read_bytes() + b" ")
+        with self.assertRaisesRegex(audit.AuditError, "CORE2_BLUEPRINT_BYTES_DRIFT"):
+            audit.report(self.root)
+
+    def test_upstream_spotcheck_statuses_are_only_reported_holds(self):
+        # Mirrors the four statuses and four source-version tokens in draft
+        # PR #145's q004_private_spotcheck.py. Not a live cross-branch test.
+        cases = (
+            ("HOLD_RETAINED_SOURCE_NOT_VERIFIED", "NOT_CHECKED_NO_RETAINED_BYTES",
+             ["PRIVATE_RETAINED_PDF_RECEIPT_MISSING_OR_INVALID"], False),
+            ("HOLD_RETAINED_SOURCE_NOT_VERIFIED", "NOT_CHECKED_INVALID_RECEIPT",
+             ["PRIVATE_RETAINED_PDF_RECEIPT_MISSING_OR_INVALID"], False),
+            ("HOLD_SOURCE_VERSION_DIFFERS_FROM_HISTORICAL_PROBE",
+             "DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION",
+             ["SOURCE_VERSION_MATCH_TO_HISTORICAL_PROBE_UNCONFIRMED"], False),
+            ("HOLD_SPOTCHECK_COMPONENTS_INCOMPLETE",
+             "MATCHES_HISTORICAL_EPHEMERAL_BYTES_ONLY",
+             ["NINE_COMPONENT_SELF_CHECK_INCOMPLETE"], False),
+            ("SELF_SPOT_CHECK_COMPLETE_NOT_CORE2_OR_RIGHTS_AUTHORIZED",
+             "MATCHES_HISTORICAL_EPHEMERAL_BYTES_ONLY", [], True),
+        )
+        for status, version, blockers, complete in cases:
+            with self.subTest(status=status, version=version):
+                row = self.verdict()
+                row.update(status=status, historical_version_comparison=version,
+                           blocking_codes=blockers, component_check_complete=complete)
+                report = audit.report(self.root, row)
+                self.assertEqual(report["decision"], "HOLD_MISSING_EVIDENCE")
+                self.assertEqual(report["spotcheck"]["operator_self_check_claimed"], complete)
+                for key in ("rights_granted", "independent_review_accepted",
+                            "core2_eligible", "core2_admitted", "learner_published"):
+                    self.assertIs(report[key], False)
 
     def test_untrusted_blocking_code_not_copied(self):
         row = self.verdict()
