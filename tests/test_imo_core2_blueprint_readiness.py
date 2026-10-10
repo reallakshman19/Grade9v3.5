@@ -83,14 +83,14 @@ class BlueprintReadinessTests(unittest.TestCase):
         # in-process tests. This is a TEST-ONLY bootstrap, never a production
         # environment override or a relaxation of the auditor's Git pins.
         bootstrap = (
-            "import importlib.util,sys\\n"
-            "spec=importlib.util.spec_from_file_location('fixture_audit',sys.argv[1])\\n"
-            "mod=importlib.util.module_from_spec(spec)\\n"
-            "spec.loader.exec_module(mod)\\n"
-            "mod.CUSTODY_SCHEMA_BLOB_SHA=sys.argv[2]\\n"
-            "mod.BLUEPRINT_REGISTRY_BLOB_SHA=sys.argv[3]\\n"
-            "sys.argv=[sys.argv[1]]+sys.argv[4:]\\n"
-            "raise SystemExit(mod.main())\\n"
+            "import importlib.util,sys\n"
+            "spec=importlib.util.spec_from_file_location('fixture_audit',sys.argv[1])\n"
+            "mod=importlib.util.module_from_spec(spec)\n"
+            "spec.loader.exec_module(mod)\n"
+            "mod.CUSTODY_SCHEMA_BLOB_SHA=sys.argv[2]\n"
+            "mod.BLUEPRINT_REGISTRY_BLOB_SHA=sys.argv[3]\n"
+            "sys.argv=[sys.argv[1]]+sys.argv[4:]\n"
+            "raise SystemExit(mod.main())\n"
         )
         return [sys.executable, "-c", bootstrap, str(FILE),
                 audit.CUSTODY_SCHEMA_BLOB_SHA,
