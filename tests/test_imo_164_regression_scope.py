@@ -48,6 +48,20 @@ class RegressionScope164(unittest.TestCase):
         self.assertIn("Does that reasoning prove", updated["stem"])
         self.assertNotIn("SOF-IMO-G09-", updated["stem"])
 
+    def test_scoped_pinned_main_evidence_is_specific_and_does_not_waive_global_ci(self):
+        d = self.audit["narrow_pinned_main_verification"]
+        self.assertEqual(d["baseline_sha"], self.audit["baseline_main_sha"])
+        self.assertEqual(d["evidence_run"], 38080953016)
+        self.assertEqual(d["stale_paths_in_both"],
+                         ["public/core-learning/data.js", "tools/data.js"])
+        self.assertEqual(d["new_stale_paths"], [])
+        self.assertFalse(d["architecture_manifest_drift_in_both"])
+        self.assertEqual(d["html_pages_compared"], 21)
+        self.assertEqual(d["changed_html_pages"], 0)
+        self.assertIn("NARROW", d["outcome"])
+        self.assertIn("NOT_ESTABLISHED", d["cannot_assert"])
+        self.assertEqual(self.audit["baseline_equivalence"], "NOT_ESTABLISHED")
+
     def test_audit_never_calls_wide_guardrails_baselined_or_accepted(self):
         audit = self.audit
         self.assertEqual(audit["baseline_main_sha"], "778eb35a70517a46108ad0a5dc01dfc89f61c0e3")

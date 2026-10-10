@@ -48,3 +48,11 @@ Each alternative is separately selected in a held TEST manifest, with the other 
 5. Resolve rights/custody (0/68 original source items) and substantive QRT intake (0/28 accepted) before any public mathematics route or learner release. Owner alone controls merge/publication authorization.
 
 **Disposition: engineering comparison review requested; publication, original-source Core2, and merge are held.**
+
+## Batch 10 — pinned-main narrow compatibility evidence
+
+[Run #38080953016](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38080953016) independently checked out base `778eb35a...` and exact PR head `b6a80948...`. The generated-file drift on both checkouts is identical: `tools/data.js` and `public/core-learning/data.js` are stale in **both**, with no newly stale generated files and no architecture-manifest drift. This establishes the narrow generated-check attribution, **not global Guardrails equivalence**.
+
+The same comparison rendered the two goldens and the existing Physics 2D motion product with the pinned main renderer and exact PR renderer: **7 + 7 + 7 = 21 HTML pages**, **0 changed pages**, exact byte-for-byte parity. The progressive Core2B hint hook now requires the explicit `grade9v3:core2b_guided_hints_opt_in: true` authored extension, present only on the two held TEST variants; existing Physics transfer questions with pre-existing ladders do not opt in. [Archived differential receipt](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38080953016/artifacts/11679843888).
+
+The [focused candidate run #38080953016](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38080953016) also passed the unchanged two-site browser/print tests and expanded authored checks. **No global CI or academic/release sign-off is implied.**
