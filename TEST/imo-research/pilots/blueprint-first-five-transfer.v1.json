@@ -923,7 +923,7 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED",
       "original_identifier": "AUTHORED-CORE2A-CONSECUTIVE-TRIPLE-OFFSET",
-      "stem": "For an arbitrary positive integer m, prove that (m+1)(m+2)(m+3) is divisible by 6. Your argument must cover every m, not only examples.",
+      "stem": "A student checks m = 1, 2 and 3 and claims those examples prove that (m+1)(m+2)(m+3) is divisible by 6 for every positive integer m. Does that reasoning prove the universal claim? Decide, then construct a valid proof or counterexample for arbitrary positive m. Your argument must cover every m, not only tested values.",
       "subparts": [],
       "options": [],
       "conditions": [
@@ -936,8 +936,9 @@
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "Every three consecutive integers contain a factor of 2 and a factor of 3, so their product is divisible by 6.",
+        "summary": "The three example checks do not prove the universal claim. However, the product is always divisible by 6: every three consecutive integers contain a factor of 2 and a factor of 3.",
         "reasoning": [
+          "The student's three checks do not prove a statement about every positive m; a valid argument must cover an arbitrary m.",
           "Set n=m+1. Then the product is n(n+1)(n+2), and n is a positive integer.",
           "At least one of n and n+1 is even, so 2 divides the product.",
           "If n mod 3 is 0, 1 or 2, the factor n, n+2 or n+1 is divisible by 3 respectively, so 3 divides the product in every case.",
@@ -947,8 +948,8 @@
           {
             "id": "MOVE-TEST-CORE2A-DECLARE",
             "kind": "REPRESENT",
-            "action": "Use n=m+1 to represent the given factors as an arbitrary consecutive triple.",
-            "why_valid": "m is any positive integer, so n is also positive and the consecutive-factor identity holds.",
+            "action": "Reject the inference from three checked examples, then use n=m+1 to represent the factors as an arbitrary consecutive triple.",
+            "why_valid": "A finite collection of checks cannot establish a universal statement; for each positive m the substitution n=m+1 is valid and the consecutive-factor identity holds.",
             "inputs": [
               "(m+1)(m+2)(m+3)",
               "m is positive"

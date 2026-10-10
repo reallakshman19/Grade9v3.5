@@ -32,7 +32,7 @@ jobs:
           from pathlib import Path
           directory = Path('/tmp/imo-blueprint-164')
           receipt = json.loads((directory/'render-receipt.json').read_text())
-          assert receipt['output_roles'] == ['CORE1A','CORE2A','CORE2B']
+          assert receipt['output_roles'] == ['CORE2A','CORE1A','CORE2B']
           assert {'core1a.html','core2a.html','core2b.html','index.html'} <= set(receipt['pages'])
           assert 'accepted' not in receipt
           assert all((directory/p).is_file() for p in receipt['pages'])

@@ -65,7 +65,7 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
         } <= present)
         self.assertEqual(
             product_manifest.selected_output_roles(self.manifest),
-            ["CORE1A", "CORE2A", "CORE2B"],
+            ["CORE2A", "CORE1A", "CORE2B"],
         )
         self.assertEqual(self.manifest["selection"]["core2"], [])
         self.assertEqual(self.manifest["bank_refs"], [])
@@ -177,7 +177,7 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
             )
             receipt = json.loads((folder / "render-receipt.json").read_text())
             self.assertEqual(receipt["output_roles"], [
-                "CORE1A", "CORE2A", "CORE2B"
+                "CORE2A", "CORE1A", "CORE2B"
             ])
             self.assertEqual(receipt["renderer"], render_core.RENDERER_VERSION)
             self.assertNotIn("accepted", receipt)
@@ -207,6 +207,26 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
                 self.assertIn("data-g9-commit", html)
                 self.assertIn("data-requires-attempt", html)
                 self.assertIn("<template data-g9-payload=", html)
+
+    @unittest.skipUnless(
+        importlib.util.find_spec("jsonschema") is not None,
+        "full shared renderer requires jsonschema; dedicated #164 CI installs it",
+    )
+    def test_attempt_first_route_and_example_fallacy_are_in_actual_pages(self):
+        """Index is attempt -> concept repair -> transfer, not a preworked recall loop."""
+        pages, gaps, _, _, _ = render_core.build_report(
+            MANIFEST, "PAGES", held_to="REFERENCE",
+        )
+        self.assertFalse(gaps, gaps)
+        route = pages["index.html"].split("<main>", 1)[1].split("<ol>", 1)[1]
+        self.assertLess(route.index('href="core2a.html"'), route.index('href="core1a.html"'))
+        self.assertLess(route.index('href="core1a.html"'), route.index('href="core2b.html"'))
+        practice = pages["core2a.html"]
+        self.assertIn("A student checks m = 1, 2 and 3", practice)
+        self.assertIn("Does that reasoning prove the universal claim?", practice)
+        self.assertIn("data-g9-attempt-box", practice)
+        self.assertIn("data-requires-attempt", practice)
+        self.assertIn("core1a.html#CU-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-PROOF", practice)
 
     @unittest.skipUnless(
         importlib.util.find_spec("jsonschema") is not None,
