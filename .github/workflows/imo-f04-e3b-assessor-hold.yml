@@ -1,0 +1,60 @@
+name: IMO F04 E3-B external assessor metadata denial (TEST only)
+
+on:
+  pull_request:
+    paths:
+      - "TEST/imo-research/candidates/imo_f02_e3_assessor_integrity.py"
+      - "TEST/imo-research/candidates/imo_f02_e3_transfer_gate.py"
+      - "TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.v1.json"
+      - "TEST/imo-research/golden/imo-327-model-d3.v1.json"
+      - "tests/test_imo_138_e3_assessor_integrity.py"
+      - "Shared/tools/imo_f04_e3b_assessor_denial_observer.py"
+      - "tests/test_imo_f04_e3b_assessor_denial_observer.py"
+      - ".github/workflows/imo-f04-e3b-assessor-hold.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  no-external-assessor-e3b:
+    name: Exact-head HMAC metadata test and NO learner credit
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Deny accidental external assessor secret in CI
+        run: |
+          if [ -n "$IMO_E3_EXTERNAL_ASSESSOR_KEY_HEX" ]; then
+            echo "E3B_PRIVATE_ASSESSOR_KEY_UNSAFE_IN_CI"
+            exit 1
+          fi
+          echo "E3B_NO_REAL_ASSESSOR_KEY; TEST_SYNTHETIC_ONLY"
+      - name: Execute all F02 assessor metadata integrity falsifiers
+        run: python -m unittest discover -s tests -p 'test_imo_138_e3_assessor_integrity.py' -v
+      - name: Independently falsify signer trust and unauthorized learner credit
+        run: python -m unittest discover -s tests -p 'test_imo_f04_e3b_assessor_denial_observer.py' -v
+      - name: Source-owned no-external-assessor CLI held receipt
+        run: |
+          python TEST/imo-research/candidates/imo_f02_e3_assessor_integrity.py \
+            --output "$RUNNER_TEMP/imo-f02-e3b-no-external-assessor.json"
+      - name: Observe exact checked-out SHA, E3-B code and held receipt only
+        run: |
+          mkdir -p build
+          python -m Shared.tools.imo_f04_e3b_assessor_denial_observer \
+            --expected-sha "$GITHUB_SHA" \
+            --receipt "$RUNNER_TEMP/imo-f02-e3b-no-external-assessor.json" \
+            --safe-summary build/imo-f04-e3b-denial-safe.json
+      - name: Retain safe hashes and fixed denial codes only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f04-e3b-no-external-assessor-safe
+          path: build/imo-f04-e3b-denial-safe.json
+          if-no-files-found: ignore
+          retention-days: 7
