@@ -303,7 +303,8 @@ def public_rights_notice(docs: dict[str, dict],
         "learner_original_question_publication_count": 0,
     }
     require(isinstance(obj, dict) and set(obj) == set(expected) | {"documents"}
-            and all(obj.get(k) == v for k, v in expected.items()),
+            and all(type(obj.get(k)) is type(v) and obj[k] == v
+                    for k, v in expected.items()),
             "general SOF public rights notice fabricated or overstated")
     documents = obj["documents"]
     require(isinstance(documents, list) and len(documents) == 4,
