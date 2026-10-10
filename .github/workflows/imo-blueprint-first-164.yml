@@ -40,3 +40,29 @@ jobs:
           print('REFERENCE_GAP_COUNT',len(receipt.get('gaps',[])))
           print('REFERENCE_ADVISORY_COUNT',len(receipt.get('advisories',[])))
           PY
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install scoped headless Chromium test dependency
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.0
+          npx playwright install --with-deps chromium
+      - name: Chromium learner journey smoke, held preview only
+        run: |
+          site="$RUNNER_TEMP/imo-164-site"
+          preview="$site/standalone/research/transfer"
+          mkdir -p "$site/css" "$site/js" "$preview"
+          cp public/css/modern-learner.css public/css/tablet-12-7.css "$site/css/"
+          cp public/js/display-controls.js public/js/site-header.js "$site/js/"
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-g9-blueprint-first-five-transfer.manifest.json \
+            --out "$preview" --draft --reference
+          node tests/imo_blueprint_first_browser.mjs "$preview" "$RUNNER_TEMP/imo-164-browser-evidence"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: imo-164-held-browser-smoke
+          path: ${{ runner.temp }}/imo-164-browser-evidence/
+          retention-days: 3
+          if-no-files-found: ignore
