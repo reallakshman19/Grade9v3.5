@@ -50,7 +50,8 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("setProgress('needs_review'", html)
         self.assertIn("setProgress('needs_reflection'", html)
         self.assertIn("setProgress('guided_without_check'", html)
-        self.assertIn("delete article.dataset.g9ConceptCheckCompleted;", html)
+        self.assertEqual(html.count("delete article.dataset.g9ConceptCheckCompleted;"), 2,
+                         "both re-submission and guided bypass must invalidate stale format evidence")
         self.assertIn("data-g9-learning-progress", html)
         self.assertIn("data-g9-concept-review", html)
         microtopic_id = self.pkg["microtopics"][0]["id"]
