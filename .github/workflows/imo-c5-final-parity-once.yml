@@ -1,8 +1,10 @@
 name: One-shot IMO C5 Q004 exact visual integrity parity
 on:
   push:
-    branches: [agent1/imo-core2-private-acquisition-gaps-130]
-    paths: [.github/workflows/imo-c5-final-parity-once.yml]
+    branches:
+      - agent1/imo-core2-private-acquisition-gaps-130
+    paths:
+      - '.github/workflows/imo-c5-final-parity-once.yml'
 permissions:
   contents: write
 concurrency:
@@ -30,7 +32,7 @@ jobs:
           import subprocess
           prior = subprocess.check_output(['git','rev-parse','HEAD^'],text=True).strip()
           branch = subprocess.check_output(['git','branch','--show-current'],text=True).strip()
-          assert prior == '283762f3d87e9e447fa898dc5bf990deca3eb315', (prior,'283762f3d87e9e447fa898dc5bf990deca3eb315')
+          assert prior == '6cba03bd8bcc11689d2e8d2cec42857efbd10a33', (prior,'6cba03bd8bcc11689d2e8d2cec42857efbd10a33')
           assert branch == 'agent1/imo-core2-private-acquisition-gaps-130',branch
           PY
           rm .github/workflows/imo-c5-final-parity-once.yml
