@@ -105,8 +105,20 @@ def _read_json(path: Path, category: str, *, size_limit: int) -> dict[str, Any]:
             raw = stream.read(size_limit + 1)
         if len(raw) > size_limit:
             raise AuditError(category)
-        data = json.loads(raw.decode("utf-8"))
-    except (OSError, UnicodeError, ValueError) as exc:
+        def unique_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+            item: dict[str, Any] = {}
+            for key, value in pairs:
+                if key in item:
+                    raise ValueError("duplicate JSON key")
+                item[key] = value
+            return item
+
+        def reject_nonfinite(_: str) -> None:
+            raise ValueError("non-finite JSON value")
+
+        data = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_keys,
+                          parse_constant=reject_nonfinite)
+    except (OSError, UnicodeError, ValueError, RecursionError) as exc:
         raise AuditError(category) from exc
     if not isinstance(data, dict):
         raise AuditError(category)
@@ -155,6 +167,8 @@ def canonical_contracts(repo: Path) -> dict[str, Any]:
         repo / "Shared/web/interactive-page-blueprints.v1.json",
         "BLUEPRINT_REGISTRY_UNAVAILABLE", size_limit=300000,
     )
+    if registry.get("registry_version") != "1.17.0":
+        raise AuditError("CORE2_BLUEPRINT_MISSING_OR_DRIFTED")
     blueprints = registry.get("blueprints")
     if not isinstance(blueprints, list):
         raise AuditError("CORE2_BLUEPRINT_MISSING_OR_DRIFTED")
