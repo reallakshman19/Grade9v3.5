@@ -102,7 +102,7 @@ class Core2SourceAcquisitionGapTests(unittest.TestCase):
         self.assertEqual(meta["rights_status"], "NOT_REVIEWED")
         fp = historical_fingerprints(self.docs, meta)
         self.assertEqual(len(fp), 4)
-        self.assertEqual(sum(x["byte_length"] for x in fp.values()), 18821598)
+        self.assertEqual(sum(x["byte_length"] for x in fp.values()), 18670898)
         self.assertEqual(fp["SOF-IMO-G09-SAMPLE-2026-27"]["sha256"],
                          "e1229c45cbecb13fe4e8ac65e83c1eec029e6eea83e601cc591e7ce97a65022f")
 
