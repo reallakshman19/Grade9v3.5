@@ -124,7 +124,17 @@ python TEST/imo-research/q004_private_spotcheck.py verify \
 ```
 
 Both the old root-level private assessment and the *one fixed bundle path* are
-accepted; arbitrary nested paths/symlink escapes are not. If the PDF was imported
+accepted; arbitrary nested paths/symlink escapes are not. **For the generated
+bundle path, verify rechecks the retained PDF receipt, the private manifest's
+source SHA/byte length and held authority flags, both fixed original PDF page
+indices, and the SHA-256 of each owner-only PNG. A deleted, swapped, altered,
+symlinked or world-readable rendered page/manifest is rejected** before any
+nine-component self-check verdict is emitted. The older root-level JSON-only
+checklist remains available but does not establish any image custody. These
+hash checks establish inspection-file consistency, not source authenticity,
+copyright permission or independent mathematics review.
+
+If the PDF was imported
 from a local file, the manifest retains
 `IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED`; a matching historic
 hash, operator self-check, or rendered page is **not** independent SOF source
