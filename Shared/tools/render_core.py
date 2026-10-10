@@ -2957,7 +2957,9 @@ q('[data-g9-concept-check]').forEach(c=>{
 # all three authored SVG stages. Never apply this override to source Core2A.
 CONCEPT_FIRST_PRINT_CSS = (
     '@media print{html[data-g9-role="CORE1A"] [data-g9-concept-target][hidden]'
-    '{display:block!important}}'
+    '{display:block!important}'
+    'html[data-g9-role="CORE1A"] [data-g9-concept-target] .g9-stage-controls'
+    '{display:none!important}}'
 )
 
 
