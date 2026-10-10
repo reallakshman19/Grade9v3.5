@@ -16,6 +16,7 @@ from html.parser import HTMLParser
 import runpy
 import json
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 import subprocess
 import tempfile
 
@@ -220,17 +221,34 @@ def navigation_findings(rendered: dict) -> list[str]:
         issues.append("CORE1A_STEP_FRAGMENT_NOT_ADDRESSABLE")
     if "selected_step_dom_id_count" in c1 and c1["selected_step_dom_id_count"] != 1:
         issues.append("CORE1A_REPAIR_STEP_DOM_ID_NOT_UNIQUE")
-    exact_repairs = [l for l in c2.get("repair_links", [])
-                     if l.get("ref") == STEP and l.get("href") == f"core1a.html#{STEP}"
-                     and l.get("protected_template")]
+    exact_repairs = []
+    for link in c2.get("repair_links", []):
+        if link.get("ref") != STEP or not link.get("protected_template"):
+            continue
+        href = link.get("href")
+        if not isinstance(href, str):
+            continue
+        try:
+            route = urlsplit(href)
+        except ValueError:
+            continue
+        # A relative same-packet route to the exact step is mandatory:
+        # no external host, protocol, other page or enclosing-unit anchor.
+        if (route.scheme or route.netloc or route.path != "core1a.html"
+                or route.fragment != STEP):
+            continue
+        exact_repairs.append((link, parse_qs(route.query, keep_blank_values=True)))
     if len(exact_repairs) != 1:
         issues.append("CORE2A_NOT_LINKED_TO_EXACT_REPAIR_STEP")
-    elif (not exact_repairs[0].get("concept_navigation")
-          or exact_repairs[0].get("question") != QID
-          or exact_repairs[0].get("concept") != MID):
-        # A correct-looking link is not enough to mark assisted navigation.
-        # A browser witness is STILL required for persisted assistance state.
-        issues.append("CORE2A_REPAIR_HELP_NAVIGATION_UNBOUND")
+    else:
+        link, context = exact_repairs[0]
+        if (not link.get("concept_navigation")
+                or link.get("question") != QID
+                or link.get("concept") != MID
+                or context != {"g9-return": [QID], "g9-concept": [MID]}):
+            # A question-matched URL is needed for an identifiable helped
+            # return. It is still NOT proof that browser state persisted.
+            issues.append("CORE2A_REPAIR_HELP_NAVIGATION_UNBOUND")
     exact_returns = [l for l in c1.get("return_links", [])
                      if l.get("question") == QID and l.get("href") == f"core2a.html#{QID}"]
     if len(exact_returns) != 1:
