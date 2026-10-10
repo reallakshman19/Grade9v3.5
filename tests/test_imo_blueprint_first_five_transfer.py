@@ -1,0 +1,169 @@
+"""Issue #164: real three-Core authored learner journey via the shared renderer.
+
+This is not an SOF question, QRT acceptance or learner release. Tests use the
+actual blueprint registry, canonical package/manifest and page renderer.
+"""
+from __future__ import annotations
+
+import copy
+import json
+import re
+import tempfile
+import unittest
+from pathlib import Path
+
+from Shared.tools import product_manifest, product_coverage, render_core
+from Shared.tools import question_review_matrix as qrt
+
+ROOT = Path(__file__).resolve().parents[1]
+PILOT = ROOT / "TEST/imo-research/pilots/core1a-render-qualified-divisibility.v1.json"
+ADDON = ROOT / "TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json"
+MANIFEST = ROOT / "TEST/products/imo-g9-blueprint-first-five-transfer.manifest.json"
+SVG = ROOT / "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg"
+QUESTION = "Q-TEST-IMO-164-FIVE-CONSECUTIVE-120"
+
+
+class BlueprintFirstFiveTransferTests(unittest.TestCase):
+    def setUp(self):
+        self.base = json.loads(PILOT.read_text(encoding="utf-8"))
+        self.addon = json.loads(ADDON.read_text(encoding="utf-8"))
+        self.manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        self.question = self.addon["questions"][0]
+
+    def test_real_shared_blueprint_contract_and_explicit_three_role_selection(self):
+        registry = json.loads(render_core.BLUEPRINTS.read_text(encoding="utf-8"))
+        present = {b["id"] for b in registry["blueprints"]}
+        self.assertTrue({
+            "BP-CORE1A-CONSTRUCTION", "BP-CORE2A-SUPPORTED-APPLICATION",
+            "BP-CORE2B-TRANSFER",
+        } <= present)
+        self.assertEqual(
+            product_manifest.selected_output_roles(self.manifest),
+            ["CORE1A", "CORE2A", "CORE2B"],
+        )
+        self.assertEqual(self.manifest["selection"]["core2"], [])
+        self.assertEqual(self.manifest["bank_refs"], [])
+        self.assertEqual(
+            self.manifest["package_refs"],
+            [
+                "TEST/imo-research/pilots/core1a-render-qualified-divisibility.v1.json",
+                "TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json",
+            ],
+        )
+        resolved = product_manifest.validate_selection(
+            self.manifest, [self.base, self.addon], []
+        )
+        self.assertEqual([q["id"] for q in resolved["core2b"]], [QUESTION])
+        product_coverage.validate(
+            self.manifest,
+            product_manifest.derivable([self.base, self.addon], []),
+        )
+
+    def test_authored_unpublished_item_cannot_become_sof_core2_or_qrt_accepted(self):
+        q = self.question
+        self.assertEqual(q["origin"], "AUTHORED")
+        self.assertEqual(q["exposure"][0]["core"], "CORE2B")
+        self.assertEqual(q["exposure"][0]["role"], "NEW_TRANSFER")
+        self.assertFalse(q["origin_ref"].startswith("SOF-"))
+        self.assertFalse(self.addon["extensions"]["grade9v3:core2_source_custody_granted"])
+        self.assertFalse(self.addon["extensions"]["grade9v3:learner_published"])
+        self.assertFalse(self.addon["extensions"]["grade9v3:qrt_admitted"])
+        self.assertEqual(q["extensions"]["grade9v3:qrt_status"], "PROPOSED_NOT_ACCEPTED")
+        self.assertEqual(len(qrt.DEMANDS) * len(qrt.BANDS), 28)
+        self.assertEqual(q["hints"], [])
+        self.assertEqual(q["scaffolds"], [])
+        self.assertEqual(q["hint_ladder"], [])
+        self.assertEqual(q["transfer"]["protected_move_ref"], q["answer"]["crux_move_ref"])
+
+    def test_actual_math_claim_is_true_for_exhaustive_residue_classes(self):
+        for n in range(120):
+            with self.subTest(residue=n):
+                first_four = n * (n + 1) * (n + 2) * (n + 3)
+                product = first_four * (n + 4)
+                self.assertEqual(first_four % 24, 0)
+                self.assertEqual(product % 5, 0)
+                self.assertEqual(product % 120, 0)
+        self.assertEqual(set(range(120)), set(n % 120 for n in range(120)))
+        self.assertEqual(self.question["answer"]["verification_status"], "CHECKED_BY_AUTHOR")
+        self.assertIn("gcd(24,5)=1", " ".join(self.question["answer"]["reasoning"]))
+
+    def test_transfer_is_not_previously_worked_anchor_relabelled_as_new(self):
+        q = self.question
+        self.assertNotEqual(
+            q["id"], self.base["questions"][1]["id"]
+        )
+        self.assertIn("modulo-five", q["transfer"]["novelty"]["why_new"])
+        self.assertEqual(q["transfer"]["dimension"], "reasoning_steps")
+        self.assertEqual(q["difficulty"]["band"], "D3")
+        self.assertIn("PROPOSED ONLY", q["difficulty"]["basis"])
+        self.assertEqual(q["answer"]["crux_move_ref"], "MOVE-IMO-164-CRUX")
+
+    def test_attempt_safe_svg_is_authored_and_withholds_the_proof(self):
+        svg = SVG.read_text(encoding="utf-8")
+        self.assertIn('data-g9-stage-id="FIVE-FACTORS-ONLY"', svg)
+        self.assertIn("n+4", svg)
+        self.assertIn("aria-labelledby=", svg)
+        self.assertNotIn("120", svg)
+        self.assertNotIn("divisible by 5", svg)
+        rep = self.addon["representations"][0]
+        self.assertEqual(rep["scene_instances"][0]["question_ref"], QUESTION)
+        self.assertEqual(rep["rendered_asset_refs"], [
+            "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg"
+        ])
+
+    def test_actual_shared_renderer_outputs_selected_roles_in_draft(self):
+        pages, gaps, digest, advisories, waivers = render_core.build_report(
+            MANIFEST, "PAGES", held_to="REFERENCE",
+        )
+        self.assertEqual(
+            set(pages),
+            {"index.html", "core1a.html", "core2a.html", "core2b.html"},
+        )
+        self.assertEqual(len(digest), 16)
+        self.assertIn("n(n+1)(n+2)(n+3)(n+4)", pages["core2b.html"])
+        self.assertIn("120", pages["core2b.html"])
+        self.assertIn("CORE1A", pages["core1a.html"])
+        self.assertIn("CORE2A", pages["core2a.html"])
+        self.assertNotIn(QUESTION, pages["core1a.html"])
+        self.assertNotIn(QUESTION, pages["core2a.html"])
+        self.assertNotIn("SOF-IMO-G09-", " ".join(pages.values()))
+        self.assertEqual(re.findall(
+            r'<article[^>]*data-g9-role="([^"]+)"', pages["core2b.html"]
+        ), ["CORE2B"])
+        self.assertTrue(all({"core", "record", "duty", "detail"} <= set(g) for g in gaps))
+
+    def test_cli_emits_actual_candidate_html_and_readback_receipt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            rc = render_core.main([
+                "build", "--manifest", str(MANIFEST),
+                "--out", str(folder), "--draft", "--reference",
+            ])
+            self.assertEqual(rc, 0)
+            self.assertEqual(
+                {p.name for p in folder.glob("*.html")},
+                {"index.html", "core1a.html", "core2a.html", "core2b.html"},
+            )
+            receipt = json.loads((folder / "render-receipt.json").read_text())
+            self.assertEqual(receipt["output_roles"], [
+                "CORE1A", "CORE2A", "CORE2B"
+            ])
+            self.assertEqual(receipt["renderer"], render_core.RENDERER_VERSION)
+            self.assertNotIn("accepted", receipt)
+            self.assertTrue((folder / "core2b.html").read_text().strip())
+
+    def test_invalid_source_selection_fails_closed_in_draft(self):
+        modified = copy.deepcopy(self.manifest)
+        modified["selection"]["core2"] = [QUESTION]
+        with tempfile.TemporaryDirectory() as tmp:
+            invalid = Path(tmp) / "wrong-authority.manifest.json"
+            invalid.write_text(json.dumps(modified), encoding="utf-8")
+            with self.assertRaisesRegex(
+                product_manifest.ProductSelectionError,
+                "PRODUCT_SELECTION_WRONG_AUTHORITY",
+            ):
+                render_core.build_report(invalid, "PAGES", held_to="REFERENCE")
+
+
+if __name__ == "__main__":
+    unittest.main()
