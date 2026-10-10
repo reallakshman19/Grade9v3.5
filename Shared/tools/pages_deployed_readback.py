@@ -13,6 +13,7 @@ import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
+import subprocess
 import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlsplit
@@ -131,10 +132,38 @@ def _get(url: str, *, bypass: bool, max_bytes: int = MAX_BYTES) -> dict:
     return observation
 
 
+def verify_committed_docs(repo: Path, expected_sha: str, routes: list[str]) -> None:
+    """Bind reports to the exact Git HEAD and committed route bytes.
+
+    A caller-provided SHA or mutable working-tree docs/ files cannot create
+    apparently verified deployment evidence for some other commit.
+    """
+    def git(*args: str) -> bytes:
+        try:
+            proc = subprocess.run(
+                ["git", "-C", str(repo), *args], capture_output=True, check=False,
+                timeout=15
+            )
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            raise ValueError("unable to inspect checked-out Git commit") from exc
+        if proc.returncode != 0:
+            raise ValueError("unable to read committed Pages route from Git")
+        return proc.stdout
+
+    head = git("rev-parse", "--verify", "HEAD").decode("ascii", "strict").strip()
+    if head != expected_sha:
+        raise ValueError(f"checkout SHA mismatch: expected {expected_sha}, HEAD is {head}")
+    for route in routes:
+        expected = git("show", f"HEAD:docs/{route}")
+        local = (repo / "docs" / route).read_bytes()
+        if expected != local:
+            raise ValueError(f"working-tree Pages route differs from exact Git commit: {route}")
+
+
 def audit(repo: Path = REPO, base_url: str = DEFAULT_URL, *,
           expected_sha: str, paths: list[str] | None = None,
           attempts: int = 1, delay: float = 0,
-          allow_loopback: bool = False) -> dict:
+          allow_loopback: bool = False, fixture_only: bool = False) -> dict:
     if not SHA.fullmatch(expected_sha):
         raise ValueError("expected commit must be an exact 40-character SHA")
     valid_base(base_url, allow_loopback=allow_loopback)
@@ -142,6 +171,8 @@ def audit(repo: Path = REPO, base_url: str = DEFAULT_URL, *,
         raise ValueError("invalid retry settings")
     repo = Path(repo)
     routes = route_inventory(repo, paths)
+    if not fixture_only:
+        verify_committed_docs(repo, expected_sha, routes)
     rows = {}
     pending = set(routes)
     for attempt in range(1, attempts + 1):
