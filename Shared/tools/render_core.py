@@ -1190,12 +1190,25 @@ def _concept_join(ctx: Ctx, role: str) -> dict[str, dict[str, list[str]]]:
         return {"question_to_microtopics": {}, "microtopic_to_questions": {}}
 
 
+def _f02_selected_authored_core2a(ctx: Ctx, m: dict) -> dict | None:
+    """Find the sole authored F02 TEST Core2A item; never admit a source Core2 question."""
+    if not _f02_exact_tc02_anchor(ctx, m, "TC-02"):
+        return None
+    selected = [
+        q for q in ctx.selection_rows.get("core2a", [])
+        if q.get("id") == "Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"
+        and q.get("origin") == "AUTHORED"
+        and q.get("repair_ref") == "TC-02"
+        and q.get("primary_capability_ref") == m.get("primary_capability_ref")
+        and _unit_href(ctx, "CORE2A", q["id"])
+    ]
+    return selected[0] if len(selected) == 1 else None
+
+
 def _core1a_practice_navigation(ctx: Ctx, m: dict) -> str:
-    """Generate exact Core2 practice links from the selected canonical capability graph."""
+    """Link to selected Core2, plus the one opt-in authored TEST Core2A repair return."""
     join = _concept_join(ctx, "CORE1A")
     ids = join["microtopic_to_questions"].get(m["id"], [])
-    if not ids:
-        return ""
     questions = {q["id"]: q for q in ctx.selection_rows.get("core2", [])}
     rows = []
     for question_id in ids:
@@ -1206,6 +1219,17 @@ def _core1a_practice_navigation(ctx: Ctx, m: dict) -> str:
         rows.append(
             f'<li><a data-g9-practice-link data-g9-question-ref="{esc(question_id)}" '
             f'data-g9-concept-ref="{esc(m["id"])}" href="core2.html#{esc(question_id)}">{esc(label)}</a></li>'
+        )
+    authored = _f02_selected_authored_core2a(ctx, m)
+    if authored:
+        question_id = authored["id"]
+        href = _unit_href(ctx, "CORE2A", question_id)
+        rows.append(
+            f'<li><a data-g9-practice-link data-g9-authored-core2a-return '
+            f'data-g9-question-ref="{esc(question_id)}" data-g9-concept-ref="{esc(m["id"])}" '
+            f'href="{esc(href)}">Return to authored Core2A question (guided practice)</a>'
+            '<p role="note">Returning after guided teaching is assisted practice, '
+            'not a fresh unassisted transfer or independently verified mastery.</p></li>'
         )
     return block("practice_navigation", "<ul>" + "".join(rows) + "</ul>" if rows else "",
                  title="Practice this concept in Core2")
@@ -2444,8 +2468,8 @@ def _family_title(ctx: Ctx, ref: str | None) -> str:
     return fam.get("title", "") if fam else ""
 
 
-def _repair(ctx: Ctx, ref: str | None) -> str:
-    """Link a canonical repair step to its exact Core1A construction location when one exists."""
+def _repair(ctx: Ctx, ref: str | None, question_ref: str | None = None) -> str:
+    """Link canonical repair; only selected F02 TEST Core2A also encodes return context."""
     if not ref:
         return ""
     for p in ctx.packages:
@@ -2462,9 +2486,17 @@ def _repair(ctx: Ctx, ref: str | None) -> str:
                 label = f'Revisit: {esc(s["action"])}'
                 # Link to the exact owning construction unit, but only when Core1A is part of this packet.
                 if _unit_href(ctx, "CORE1A", m["id"]):
+                    authored = _f02_selected_authored_core2a(ctx, m)
+                    exact_return = bool(authored and authored["id"] == question_ref
+                                        and _f02_exact_tc02_anchor(ctx, m, ref))
+                    href = (f'core1a.html?g9-return={esc(question_ref)}'
+                            f'&g9-concept={esc(m["id"])}#{esc(target)}' if exact_return
+                            else f'core1a.html#{esc(target)}')
                     return (
                         f'<p><a data-g9-repair-ref="{esc(ref)}" data-g9-concept-ref="{esc(m["id"])}" '
-                        f'data-g9-repair-target="{esc(target)}" href="core1a.html#{esc(target)}">{label}</a></p>'
+                        + (f'data-g9-concept-link data-g9-question-ref="{esc(question_ref)}" '
+                           if exact_return else '')
+                        + f'data-g9-repair-target="{esc(target)}" href="{href}">{label}</a></p>'
                     )
                 return f"<p>{label}</p>"
     return ""
@@ -2499,7 +2531,7 @@ def core2a(ctx: Ctx, q: dict) -> str:
                             + block("answer", para(ans.get("summary")), title="Answer")
                             + block("independent_check", para(check), title="Independent check")
                             + block("failure_signal", para(q.get("failure_signal")), title="If you went wrong")
-                            + block("repair", _repair(ctx, q.get("repair_ref")), title="Repair")
+                            + block("repair", _repair(ctx, q.get("repair_ref"), question_ref=q["id"]), title="Repair")
                             + block("exposure_closure", para(fam.get("closure")), title="What this establishes"),
                             ref=f'CORE2A-{q["id"]}-reasoning'),
     })
