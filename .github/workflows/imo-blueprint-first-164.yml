@@ -8,6 +8,7 @@ on:
       - 'tests/test_imo_blueprint_first_five_transfer.py'
       - 'tests/test_imo_164_transfer_comparison.py'
       - 'tests/test_imo_164_regression_scope.py'
+      - 'tests/test_imo_164_qrt_comparison.py'
       - 'TEST/imo-research/pilots/regression-scope-164.v1.json'
       - 'TEST/imo-research/pilots/transfer-comparison-164.v1.json'
       - 'TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg'
@@ -29,6 +30,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_imo_blueprint_first_five_transfer.py' -v
       - name: Guard inherited Core1A snapshot and baseline-honesty scope
         run: python -m unittest discover -s tests -p 'test_imo_164_regression_scope.py' -v
+      - name: Resolve real canonical QRT without claiming acceptance
+        run: python -m unittest discover -s tests -p 'test_imo_164_qrt_comparison.py' -v
       - name: Verify both mathematical transfer candidates with actual blueprint
         run: python -m unittest discover -s tests -p 'test_imo_164_transfer_comparison.py' -v
       - name: Build actual authored Core1A Core2A Core2B through canonical renderer
