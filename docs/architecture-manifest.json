@@ -6,20 +6,20 @@
     "adapter",
     "adapter"
   ],
-  "component_count": 554,
-  "relation_count": 565,
+  "component_count": 555,
+  "relation_count": 567,
   "components_by_role": {
     "CONTRACT": 9,
     "ENGINE": 10,
     "GATES": 2,
     "LIBRARY": 56,
-    "TEST": 286,
+    "TEST": 287,
     "TOOLING": 153,
     "WEB": 21,
     "WEB_CONTRACT": 8,
     "WEB_RUNTIME": 9
   },
-  "digest": "sha256:0c2c2c89eb34c7b684c3dbbe3afe57c02ce402ab295846a8077266f49ac2b466",
+  "digest": "sha256:1075b4e75a70ce0e64e8eb746b412e4bb9d28477c095a5d24eeaefcb37773535",
   "components": [
     {
       "path": "Shared/gates/gate.schema.json",
@@ -2890,6 +2890,13 @@
       "role_description": "Executable checks",
       "bytes": 7565,
       "sha256": "f168f540be968cb0b0d8ad332b62baf29ca911f002e1017597f9d02e499c2dc6"
+    },
+    {
+      "path": "tests/test_imo_index_laws_integer_trial.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 10086,
+      "sha256": "53a81a3d9d43a9226342853f9bd5fb5c66aa816920aacebf3af57a2d01881a23"
     },
     {
       "path": "tests/test_imo_index_laws_stage_route.py",
@@ -5873,6 +5880,16 @@
     },
     {
       "from": "tests/test_imo_index_laws_core1a_reconciled.py",
+      "to": "Shared.tools",
+      "kind": "IMPORTS"
+    },
+    {
+      "from": "tests/test_imo_index_laws_integer_trial.py",
+      "to": "Shared.library.resolve",
+      "kind": "IMPORTS"
+    },
+    {
+      "from": "tests/test_imo_index_laws_integer_trial.py",
       "to": "Shared.tools",
       "kind": "IMPORTS"
     },
