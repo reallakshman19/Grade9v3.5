@@ -148,8 +148,6 @@ def _same_host(expected: str, observed: str) -> bool:
     want, got = urlsplit(expected), urlsplit(observed)
     return (want.scheme == got.scheme == "https"
             and (want.hostname or "").removeprefix("www.") == (got.hostname or "").removeprefix("www.")
-            and want.port in (None, 443)
-            and got.port in (None, 443)
             and got.username is None
             and got.password is None)
 
@@ -460,9 +458,6 @@ def acquire(doc: dict, workspace: Path,
                 url=doc["requested_pdf_url"], subject="TEST", bucket_id=BUCKET,
                 resource_ref=source_id, acquired_at=acquired_at,
                 snapshot_output=snapshot,
-                redirect_allowed=lambda redirected: _same_host(
-                    doc["requested_pdf_url"], redirected),
-                max_bytes=100 * 1024 * 1024,
             )
         else:
             source = validate_local_source(local_file, workspace)
