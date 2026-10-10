@@ -3198,7 +3198,9 @@ const f02Event=(kind)=>{
   // The first pre-help attempt and every post-help attempt remain distinct.
   const recordedKind=kind==='ATTEMPT_COMMIT'&&value.assisted
     ?'ASSISTED_ATTEMPT_COMMIT':kind;
-  if(recordedKind!=='ATTEMPT_COMMIT')value.assisted=true;
+  // A post-help ATTEMPT_COMMIT already inherits value.assisted=true from
+  // the earlier repair event. Preserve the generic negative-control guard.
+  if(kind!=='ATTEMPT_COMMIT')value.assisted=true;
   if(value.events.length>=32)value.overflow=true;
   else value.events.push({n:value.events.length+1,kind:recordedKind});
   f02Reflect(value,!!f02Key&&store.set(f02Key,JSON.stringify(value)));
