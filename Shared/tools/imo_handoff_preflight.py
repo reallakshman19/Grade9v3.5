@@ -36,10 +36,18 @@ def check(package: dict, manifest: dict, pilot: dict) -> dict:
         'NO_LEARNER_PRODUCT_URL_WHILE_HELD')
     selected_mic = selection.get('microtopics') or []
     selected_q = selection.get('core2a') or []
-    need(len(selected_mic) == len(set(selected_mic)) == 1, 'ONE_UNIQUE_TEACHING_MICROTOPIC')
-    need(len(selected_q) == len(set(selected_q)) == 1, 'ONE_UNIQUE_AUTHORED_QUESTION')
-    mic_by_id = {m.get('id'): m for m in package.get('microtopics', []) if isinstance(m, dict)}
-    q_by_id = {q.get('id'): q for q in package.get('questions', []) if isinstance(q, dict)}
+    need(isinstance(selected_mic, list) and len(selected_mic) == 1
+         and isinstance(selected_mic[0], str) and bool(selected_mic[0]),
+         'ONE_UNIQUE_TEACHING_MICROTOPIC')
+    need(isinstance(selected_q, list) and len(selected_q) == 1
+         and isinstance(selected_q[0], str) and bool(selected_q[0]),
+         'ONE_UNIQUE_AUTHORED_QUESTION')
+    microtopics = [m for m in package.get('microtopics', []) if isinstance(m, dict)]
+    questions = [q for q in package.get('questions', []) if isinstance(q, dict)]
+    mic_by_id = {m.get('id'): m for m in microtopics}
+    q_by_id = {q.get('id'): q for q in questions}
+    need(len(microtopics) == len(mic_by_id), 'DUPLICATE_TEACHING_MICROTOPIC_ID')
+    need(len(questions) == len(q_by_id), 'DUPLICATE_AUTHORED_QUESTION_ID')
     selected_steps: list[str] = []
     repair_ref = None
     question_id = selected_q[0] if len(selected_q) == 1 else None
@@ -64,8 +72,11 @@ def check(package: dict, manifest: dict, pilot: dict) -> dict:
     if concept and question:
         need(question.get('primary_capability_ref') == concept.get('primary_capability_ref'),
              'CAPABILITY_MISMATCH')
-    need(manifest.get('package_refs') and len(manifest['package_refs']) == 1,
-         'EXACT_ONE_PACKAGE_REF_REQUIRED')
+    refs = manifest.get('package_refs')
+    need(isinstance(refs, list) and len(refs) == 1
+         and isinstance(refs[0], str)
+         and refs[0].startswith('TEST/imo-research/candidates/')
+         and '..' not in refs[0].split('/'), 'EXACT_ONE_PACKAGE_REF_REQUIRED')
     return {
         'schema': 'imo-f04-unadmitted-handoff-preflight/v1',
         'state': 'CANDIDATE_HELD_WELL_FORMED' if not errors else 'INCONSISTENT_CANDIDATE_HOLD',
