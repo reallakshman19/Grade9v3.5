@@ -1,0 +1,56 @@
+name: One-shot IMO C5 Q004 exact visual integrity parity
+on:
+  push:
+    branches: [agent1/imo-core2-private-acquisition-gaps-130]
+    paths: [.github/workflows/imo-c5-final-parity-once.yml]
+permissions:
+  contents: write
+concurrency:
+  group: imo-c5-final-parity-once
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    if: github.repository == 'reallakshman19/Grade9v3.5'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent1/imo-core2-private-acquisition-gaps-130
+          fetch-depth: 2
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check immutable source and regenerate only derived manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet jsonschema pypdf cffi
+          python3 - <<'PY'
+          import subprocess
+          prior = subprocess.check_output(['git','rev-parse','HEAD^'],text=True).strip()
+          branch = subprocess.check_output(['git','branch','--show-current'],text=True).strip()
+          assert prior == '283762f3d87e9e447fa898dc5bf990deca3eb315', (prior,'283762f3d87e9e447fa898dc5bf990deca3eb315')
+          assert branch == 'agent1/imo-core2-private-acquisition-gaps-130',branch
+          PY
+          rm .github/workflows/imo-c5-final-parity-once.yml
+          python3 Shared/tools/build_manifest.py
+          python3 Shared/tools/build_pages_site.py
+          python3 Shared/tools/build_manifest.py --check
+          python3 Shared/tools/build_pages_site.py --check
+          python3 - <<'PY'
+          import subprocess
+          changed = {line[3:] for line in subprocess.check_output(
+             ['git','status','--porcelain','--untracked-files=all'],text=True
+          ).splitlines()}
+          one = '.github/workflows/imo-c5-final-parity-once.yml'
+          allow = {one, 'docs/architecture-manifest.json'}
+          assert one in changed and changed <= allow,sorted(changed)
+          print('PROVEN_SCOPED_DELTA:',*sorted(changed),sep='\n')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -u -- .github/workflows/imo-c5-final-parity-once.yml docs/architecture-manifest.json
+          git diff --cached --check
+          git commit -m "chore(imo-core2): reconcile exact private Q004 image verifier manifest (#130)"
+          git push origin HEAD:refs/heads/agent1/imo-core2-private-acquisition-gaps-130
