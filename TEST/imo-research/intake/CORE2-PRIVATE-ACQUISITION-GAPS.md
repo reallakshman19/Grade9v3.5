@@ -90,6 +90,49 @@ Research-only test command:
 python -m unittest discover -s tests -p 'test_imo_core2_q004_spotcheck.py' -v
 ```
 
+## Q004 private visual inspection bundle (actual retained PDF only)
+
+After acquiring and verifying the official sample's exact bytes in the
+**restricted non-repository workspace**, prepare two local visual page renders and
+a fresh, **unchecked** Q004 inspection packet:
+
+```sh
+python TEST/imo-research/q004_private_review_bundle.py \
+  --private-dir /private/imo-g9-source-custody
+```
+
+The command requires an existing valid source snapshot and SHA-256 acquisition
+receipt for `SOF-IMO-G09-SAMPLE-2026-27`. It uses the locally installed
+`pdftoppm` (Poppler) to render the previously observed printed Q004 item page
+(PDF index 0) and sample key page (PDF index 1), into a new private
+`q004-private-review/` directory (mode 0700). It writes two mode-0600 PNGs,
+`review-manifest.json` (exact snapshot digest, source/version status, PNG digests,
+**zero** acceptance), and `q004.inspection.json` (all nine checks **NOT_CHECKED**).
+It refuses missing/tampered receipts, non-private workspaces, forged accepted
+statuses, missing page images, or any existing review directory; partial output
+is deleted after rendering failure. The images and packet **must never be
+committed, uploaded to CI, or copied into public/docs**.
+
+Open the image files privately, compare them with the *actual stored PDF*, and
+fill the nine source-component dispositions only from real observation. Then
+execute the **existing verifier** against the exact generated packet path:
+
+```sh
+python TEST/imo-research/q004_private_spotcheck.py verify \
+  --private-dir /private/imo-g9-source-custody \
+  --assessment /private/imo-g9-source-custody/q004-private-review/q004.inspection.json
+```
+
+Both the old root-level private assessment and the *one fixed bundle path* are
+accepted; arbitrary nested paths/symlink escapes are not. If the PDF was imported
+from a local file, the manifest retains
+`IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED`; a matching historic
+hash, operator self-check, or rendered page is **not** independent SOF source
+authentication. A different current source hash is a version-review hold, not a
+reason to forge the old digest. This private inspection does not change any of
+the 68 source Core2 HOLDS, licence status, canonical admissions, academic/QRT
+acceptance, or learner release.
+
 ## Public publisher-rights notice — no licence asserted
 
 SOF's [official website](https://sofworld.org/) publicly displays a copyright footer restricting copying/use without **prior written consent**. Its [official contact page](https://sofworld.org/contact) gives general enquiries email `info@sofworld.org`. These observations were checked on 2026-10-10. The public notice is general website language: it **does not** itself establish the rights holder or rights disposition for each school-mirrored past-paper PDF, nor does it supply a licence or explicit policy on mere linking to external original pages.
