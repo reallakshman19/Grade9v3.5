@@ -42,10 +42,12 @@ jobs:
       - name: Run Agent 3 REAL canonical generated-role tests
         run: python -m unittest discover -s tests -p 'test_imo_f04_canonical_slice.py' -v
       - name: Run real canonical TEST audit, never publish protected W in stdout
+        if: always()
         run: |
           mkdir -p build
+          audit_rc=0
           python Shared/tools/imo_f04_canonical_slice.py \
-            --output build/imo-f04-canonical-slice.json > "$RUNNER_TEMP/imo-f04-summary.json"
+            --output build/imo-f04-canonical-slice.json > "$RUNNER_TEMP/imo-f04-summary.json" || audit_rc=$?
           python - "$RUNNER_TEMP/imo-f04-summary.json" <<'PY'
           import json
           import sys
@@ -58,9 +60,14 @@ jobs:
           assert data["release_authorized"] is False
           assert "protected_W" not in raw
           assert "semantic_review_asks" not in raw
-          assert data["state"] in {"INTEGRATION_GAPS_HELD", "EVIDENCE_READY_REVIEW_HOLD"}
-          print("REAL_CANONICAL_TEST_AUDIT_COMPLETE; QRT_SEMANTICS_AND_RELEASE_HOLD")
+          assert data["state"] in {"BLOCKED", "INTEGRATION_GAPS_HELD", "EVIDENCE_READY_REVIEW_HOLD"}
+          if data["state"] == "BLOCKED":
+              assert data["blocking_findings"], "Blocked state requires an actionable denial"
+              print("CANONICAL_TEST_AUDIT_BLOCKED; QRT_SEMANTICS_AND_RELEASE_HOLD")
+          else:
+              print("REAL_CANONICAL_TEST_AUDIT_COMPLETE; QRT_SEMANTICS_AND_RELEASE_HOLD")
           PY
+          exit "$audit_rc"
       - name: Retain ONLY safe status without protected QRT/answer data
         if: always()
         uses: actions/upload-artifact@v4
