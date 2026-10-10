@@ -9,12 +9,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
-from Shared.tools import question_review_matrix as qrt
-
 ROOT = Path(__file__).resolve().parents[3]
+# The standalone CLI is invoked by path in CI; its script directory otherwise
+# replaces the repository root on sys.path.
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from Shared.tools import question_review_matrix as qrt
 PACKAGE = ROOT / "TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.v1.json"
 MANIFEST = ROOT / "TEST/imo-research/candidates/imo-g9-r1-qrt-core2a-core1a.test.manifest.json"
 BLUEPRINTS = ROOT / "Shared/web/interactive-page-blueprints.v1.json"
