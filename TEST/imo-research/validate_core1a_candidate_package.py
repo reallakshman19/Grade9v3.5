@@ -131,7 +131,7 @@ def validate_package(package: Path = PACKAGE) -> dict:
            and "divisible by 3" in " ".join(answer.get("reasoning", []))
            and "24" in answer.get("check","")
            and exit_task.get("source_ref") == S
-           and exit_task.get("oracle") == {"held_by": I}
+           and exit_task.get("oracle") == {"held_by": I},
            "exit task must have an authored full 24-divisibility closure and oracle")
     # A Python research falsifier is not a declared TEST subject oracle.
     # The contract deliberately has no validator catalogue: record a real hold.
