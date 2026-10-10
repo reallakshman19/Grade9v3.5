@@ -122,8 +122,10 @@ class Boundary24Trial(unittest.TestCase):
         for leak in ("n ≡ 1", "n % 4 != 1", "q(n) is always",
                      "a is false", "8 divides", "distinct even"):
             self.assertNotIn(leak, combined)
-        self.assertIn("2-adic", " ".join(
-            t["existing_d2_comparison"]["learner_owned_new_work"]).lower())
+        differentiators = " ".join(
+            t["existing_d2_comparison"]["learner_owned_new_work"]).lower()
+        self.assertIn("distinct", differentiators)
+        self.assertIn("8-divisibility", differentiators)
         self.assertIn("independently decide", t["protected_work"].lower())
 
     def test_every_review_slot_is_explicitly_not_accepted(self):
