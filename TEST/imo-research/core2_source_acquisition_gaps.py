@@ -39,6 +39,7 @@ SOURCE_URLS = {
     "SOF-IMO-G09-SAMPLE-2026-27": "https://sofworld.org/download/file/fid/73719",
 }
 FINGERPRINTS = ROOT / "core2-ephemeral-source-fingerprints.v1.json"
+RIGHTS_NOTICE = ROOT / "core2-public-rights-notice.v1.json"
 HISTORICAL_PROBE_ARCHIVE_SHA256 = "399e14a5f3f992ef47014ab3594c989dfe4cf9192cd95322b135978de7c3a486"
 # Exact prior run observations; a new download may legitimately differ.
 # A match proves byte equality to that temporary probe only, never rights.
@@ -274,9 +275,62 @@ def compare_historical_fingerprint(
     return "DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION"
 
 
+
+def public_rights_notice(docs: dict[str, dict],
+                         supplied: dict | None = None) -> dict:
+    """Research notice, not a publisher licence or source ownership finding."""
+    obj = load(RIGHTS_NOTICE) if supplied is None else supplied
+    expected = {
+        "schema": "imo-g9-public-rights-notice-observation-v1",
+        "responsibility_issue": 130,
+        "observation_date_utc": "2026-10-10",
+        "organization": "SCIENCE_OLYMPIAD_FOUNDATION",
+        "public_notice_url": "https://sofworld.org/",
+        "general_contact_url": "https://sofworld.org/contact",
+        "general_contact_email": "info@sofworld.org",
+        "notice_summary": "GENERAL_SOF_SITE_NOTICE_REQUIRES_PRIOR_WRITTEN_CONSENT_FOR_COPY_OR_USE",
+        "notice_scope": "GENERAL_OFFICIAL_SITE_FOOTER_NOT_SPECIFIC_FOUR_PDF_LICENSE_REVIEW",
+        "written_reproduction_permission_received": False,
+        "publisher_rights_holder_for_all_mirror_pdfs_verified": False,
+        "permission_request_sent": False,
+        "permission_request_receipt": None,
+        "license_document_ref": None,
+        "verbatim_question_reuse_authorized": False,
+        "figure_reuse_authorized": False,
+        "rights_to_publish_original_works": "NOT_EVIDENCED",
+        "external_linking_authorization": "NOT_DETERMINED_BY_THIS_NOTICE",
+        "canonical_source_admission_count": 0,
+        "learner_original_question_publication_count": 0,
+    }
+    require(isinstance(obj, dict) and set(obj) == set(expected) | {"documents"}
+            and all(obj.get(k) == v for k, v in expected.items()),
+            "general SOF public rights notice fabricated or overstated")
+    documents = obj["documents"]
+    require(isinstance(documents, list) and len(documents) == 4,
+            "rights observation must preserve four source documents")
+    seen = set()
+    for row in documents:
+        require(isinstance(row, dict) and set(row) == {
+            "source_id", "rights_disposition",
+            "policy_notice_applies_as_general_context_only",
+            "publication_authorized",
+        }, "rights observation document fields invalid")
+        sid = row["source_id"]
+        require(sid in docs and sid not in seen
+                and row["rights_disposition"] == "NOT_GRANTED_OR_EVIDENCED"
+                and row["policy_notice_applies_as_general_context_only"] is True
+                and row["publication_authorized"] is False,
+                "source rights authorization cannot be invented")
+        seen.add(sid)
+    require(seen == set(docs),
+            "source rights notice must cover all four source document IDs")
+    return obj
+
+
 def report(census: dict, handoff: dict, workspace: Path | None = None) -> dict:
     rows, docs = inventory(census, handoff)
     fingerprints = historical_fingerprints(docs)
+    rights = public_rights_notice(docs)
     states = {sid: receipt_status(doc, workspace) for sid, doc in docs.items()}
     version_checks = {
         sid: compare_historical_fingerprint(doc, workspace, states[sid][0],
@@ -300,6 +354,8 @@ def report(census: dict, handoff: dict, workspace: Path | None = None) -> dict:
                 "DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION"
                 else []),
             "source_rights": "NOT_REVIEWED",
+            "general_publisher_site_notice": rights["notice_summary"],
+            "specific_pdf_reproduction_grant": "NOT_EVIDENCED",
             "independent_item_validation": "NOT_DONE",
         })
     question_rows = []
@@ -317,6 +373,8 @@ def report(census: dict, handoff: dict, workspace: Path | None = None) -> dict:
         if row.get("material_source_discrepancy_hold"):
             codes.append("RECORDED_SOURCE_DISCREPANCY_OPEN")
         codes.extend(["SOURCE_REUSE_RIGHTS_NOT_REVIEWED",
+                      "PUBLIC_SOF_SITE_NOTICE_REQUIRES_PRIOR_WRITTEN_CONSENT",
+                      "SOURCE_SPECIFIC_WRITTEN_PERMISSION_NOT_EVIDENCED",
                       "OWNER_CORE2_ADMISSION_NOT_GRANTED"])
         question_rows.append({
             "question_id": row["question_id"],
@@ -348,6 +406,8 @@ def report(census: dict, handoff: dict, workspace: Path | None = None) -> dict:
             value == "MATCHES_HISTORICAL_EPHEMERAL_BYTES_ONLY"
             for value in version_checks.values()),
         "historical_probe_archive_sha256": HISTORICAL_PROBE_ARCHIVE_SHA256,
+        "public_rights_notice": rights["notice_summary"],
+        "source_specific_reproduction_grants_evidenced": 0,
         "question_count": 68,
         "source_custody_hold": 68,
         "core2_eligible": 0, "core2_admitted": 0, "learner_published": 0,
