@@ -55,6 +55,26 @@ try {
           assert.ok(!before.includes(secret), 'protected transfer proof is visible before an attempt');
           assert.equal(await article.locator('figure[data-g9-stage="PRE_ATTEMPT"]').count(), 1,
             'missing safe five-factor figure');
+          if (variant === 'boundary') {
+            const figure = article.locator('figure[data-g9-stage="PRE_ATTEMPT"]').first();
+            const chips = figure.locator('button[data-g9-stage-goto]');
+            assert.equal(await chips.count(), 2, 'boundary requires two learner-selectable safe stages');
+            assert.equal(await chips.nth(0).getAttribute('aria-pressed'), 'true');
+            await chips.nth(1).focus();
+            await page.keyboard.press('Enter');
+            assert.equal(await chips.nth(1).getAttribute('aria-pressed'), 'true',
+              'keyboard stage selection must activate the alternative stage');
+            assert.equal(await chips.nth(0).getAttribute('aria-pressed'), 'false');
+            assert.ok(await figure.locator('[data-g9-stage-id="BOUNDARY-TARGET-12"]').isVisible(),
+              'target-question stage not shown');
+            assert.ok(!(await figure.locator('[data-g9-stage-id="BOUNDARY-TRIPLE-FACTORS"]').isVisible()),
+              'REPLACE mode must hide the prior stage');
+            assert.ok(!(await article.innerText()).includes('n mod 4 != 1'),
+              'changing safe stages revealed the protected exception');
+            await chips.nth(0).focus();
+            await page.keyboard.press('Enter');
+            assert.equal(await chips.nth(0).getAttribute('aria-pressed'), 'true');
+          }
         }
         await commit.click();
         assert.ok((await gates.first().getAttribute('data-locked')) !== null,
