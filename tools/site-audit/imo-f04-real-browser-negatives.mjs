@@ -71,7 +71,7 @@ try{
   const textBox=article.locator('[data-g9-attempt-box] textarea[data-g9-attempt]');
   const commit=article.locator('[data-g9-commit]').first();
   const status=page.locator('[data-g9-f02-trace-status]');
-  const template=page.locator('template[id="'+INERT_ID+'"]');
+  const template=article.locator('template[data-g9-payload="'+INERT_ID+'"]');
   check(await article.count()===1 && await template.count()===1 &&
     await template.evaluate(el=>el.content.nodeType===11),
     'INERT_TEMPLATE_INVALID');
