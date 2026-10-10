@@ -54,6 +54,10 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertNotIn("g9RuleWords", html)
         self.assertIn("Your explanation has NOT been graded for correctness", html)
         self.assertIn("article.dataset.g9ConceptCheckCompleted='formative_only'", html)
+        self.assertEqual(html.count("article.dataset.g9ConceptAidExposure='guided_study';"), 2,
+                         "both approved-check reveal and guided bypass must mark non-independent exposure")
+        self.assertIn("later responses on this page are assisted", html)
+        self.assertIn("article.dataset.g9ConceptAidExposure==='guided_study'", html)
         self.assertIn("setProgress('needs_review'", html)
         self.assertIn("setProgress('needs_reflection'", html)
         self.assertIn("setProgress('needs_counterexample'", html)
