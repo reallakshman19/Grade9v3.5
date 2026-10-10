@@ -31,6 +31,13 @@ SOURCE_IDS = {
     "SOF-IMO-G09-L1-2025-26-A": 22,
     "SOF-IMO-G09-SAMPLE-2026-27": 10,
 }
+# Exact pinned download targets are a network safety allowlist, NOT source authority.
+SOURCE_URLS = {
+    "SOF-IMO-G09-L1-2023-24-A": "https://iswkoman.com/uploads/olympiad/8919398-CL%20IX%20IMO%202023-24%20(1).pdf",
+    "SOF-IMO-G09-L1-2024-25-B": "https://www.iswkoman.com/uploads/olympiad/2107431-CLASS%209-IMO24.pdf",
+    "SOF-IMO-G09-L1-2025-26-A": "https://www.iswkoman.com/uploads/olympiad/9262492-IMO%2025-26%20CLASS%209.pdf",
+    "SOF-IMO-G09-SAMPLE-2026-27": "https://sofworld.org/download/file/fid/73719",
+}
 HOLD = "HOLD_NO_CORE2_ADMISSION"
 BUCKET = "BUCKET-TEST-IMO-G9-SOURCE-ACQUISITION"
 
@@ -78,7 +85,8 @@ def inventory(census: dict, handoff: dict) -> tuple[list[dict], dict[str, dict]]
     for source_id, doc in docs.items():
         url = doc.get("requested_pdf_url")
         parts = urlsplit(url if isinstance(url, str) else "")
-        require(parts.scheme == "https" and bool(parts.hostname)
+        require(url == SOURCE_URLS[source_id]
+                and parts.scheme == "https" and bool(parts.hostname)
                 and parts.username is None and parts.password is None,
                 "source URL is not a trusted HTTPS locator")
         require(doc.get("position_count_in_68") == SOURCE_IDS[source_id],
@@ -128,7 +136,8 @@ def artifact_paths(workspace: Path, source_id: str) -> tuple[Path, Path]:
 def _same_host(expected: str, observed: str) -> bool:
     want, got = urlsplit(expected), urlsplit(observed)
     return (want.scheme == got.scheme == "https"
-            and want.hostname == got.hostname and got.username is None
+            and (want.hostname or "").removeprefix("www.") == (got.hostname or "").removeprefix("www.")
+            and got.username is None
             and got.password is None)
 
 
