@@ -48,6 +48,18 @@ Acquire requires an explicitly selected one of four pinned HTTPS source document
 
 If acquisition fails, record the failure as `NOT_ACQUIRED` and continue preparing the honest missing-evidence queue. Never invent a SHA256, publication licence, inspector, approved answer or missing question text. The tool never performs OCR, does not reproduce any source stem/figures in the report and never sends private snapshots to CI or GitHub.
 
+## Historical PDF version fingerprint comparison (verified older evidence)
+
+The original old-repository [source-acquisition-probe GitHub Actions run 37868836390](https://github.com/reallaksh19/Grade9v3.5/actions/runs/37868836390), job 113621920381, successfully downloaded and SHA-256-hashed four source documents on 2026-10-09. Its retained [artifact 11588893886](https://github.com/reallaksh19/Grade9v3.5/actions/runs/37868836390/artifacts/11588893886) was downloaded and independently SHA-256 checked as `399e14a5f3f992ef47014ab3594c989dfe4cf9192cd95322b135978de7c3a486`. The artifact contains **only** `source-probe-evidence.json`—not any source PDFs—and explicitly records zero durable PDF snapshots, zero canonical custody receipts and no reuse permission.
+
+The four exact ephemeral byte hashes/sizes are now frozen as **historical comparison evidence** in `core2-ephemeral-source-fingerprints.v1.json`, with fail-closed code pins and tests. When the operator imports a PDF or network acquisition succeeds, the report shows the historical hash and one of:
+
+- `MATCHES_HISTORICAL_EPHEMERAL_BYTES_ONLY`: the **retained** source snapshot SHA-256 **and byte length** match the temporary file observed in the 2026-10-09 CI run; *not* independently signed publisher origin, question fidelity or permission
+- `DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION`: retained, internally consistent PDF differs from that earlier version; requires a human source-version inspection (the publisher/mirror may have legitimately updated it)
+- `NOT_CHECKED_NO_RETAINED_BYTES` or `NOT_CHECKED_INVALID_RECEIPT`: no trustworthy local receipt to compare
+
+The report never marks a question eligible or published merely because the historic hashes match. The version mismatch adds `REVIEW_SOURCE_DOCUMENT_VERSION_DRIFT` to the ten/four/etc affected item rows so the operator can prioritize exact-version checks. This source-version comparison is **read-only observation**, not a new rights or academic authority.
+
 ## Required next acceptance work
 
 For each printed position: inspect the exact PDF item; preserve exact source number, stem, conditions, option order, captions, figures, source hints and source answer independently of author's mathematical computation; resolve the ten known discrepancy cases affecting eleven positions; record a rights disposition and authentic question-level proof via existing source-custody structures. Engineering **self-check and spot review** remain distinct from genuine source rights and Owner/Core/QRT publication decisions.
