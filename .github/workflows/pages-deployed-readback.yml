@@ -1,0 +1,59 @@
+name: Pages deployed readback
+
+on:
+  pull_request:
+    paths:
+      - 'Shared/tools/pages_deployed_readback.py'
+      - 'tests/test_pages_deployed_readback.py'
+      - '.github/workflows/pages-deployed-readback.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'Shared/tools/pages_deployed_readback.py'
+      - 'tests/test_pages_deployed_readback.py'
+      - '.github/workflows/pages-deployed-readback.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exercise offline HTTP and hostile cache/redirect fixtures
+        run: python -m unittest discover -s tests -p 'test_pages_deployed_readback.py' -v
+
+  deployed-readback:
+    # A PR candidate is NOT deployed to project Pages. Only main may be read
+    # back as the expected publish candidate, and this is not release authority.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: contract-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Ensure committed Pages projection is current
+        run: python Shared/tools/build_pages_site.py --check
+      - name: Read real GitHub Pages responses and compare exact selected bytes
+        run: |
+          python Shared/tools/pages_deployed_readback.py \
+            --base-url https://reallakshman19.github.io/Grade9v3.5/ \
+            --expected-sha "$GITHUB_SHA" \
+            --attempts 12 --delay 20 \
+            --output build/pages-readback/report.json
+      - name: Preserve receipt, including partial failure details
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-deployed-readback
+          path: build/pages-readback/report.json
+          if-no-files-found: warn
