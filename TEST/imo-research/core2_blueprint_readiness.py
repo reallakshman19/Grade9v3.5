@@ -30,6 +30,15 @@ NINE = frozenset({
 REQUIRED_BLUEPRINT_COMPONENTS = frozenset({
     "IDENTITY", "STEM", "ATTEMPT", "SOLUTION", "SOLUTION_STEPS", "ANSWER",
 })
+PROOF_REQUIRED = frozenset({
+    "version", "acquisition_ref", "resource_ref", "source_item_locator",
+    "source_digest", "custody_mode", "comparison_status", "demand_signature",
+    "components", "notes",
+})
+REQUIRED_COMPONENT_SLOTS = {
+    "IDENTITY": "identity", "STEM": "attempt", "ATTEMPT": "attempt",
+    "SOLUTION": "solution", "SOLUTION_STEPS": "solution", "ANSWER": "solution",
+}
 SPOTCHECK_KEYS = frozenset({
     "schema", "question_id", "status", "component_check_complete",
     "historical_version_comparison", "blocking_codes",
@@ -75,7 +84,26 @@ def canonical_contracts(repo: Path) -> dict[str, Any]:
         repo / "Shared/library/source-question-custody.schema.json",
         "SOURCE_CUSTODY_SCHEMA_UNAVAILABLE", size_limit=250000,
     )
-    components = (custody.get("properties") or {}).get("components")
+    proof_props = custody.get("properties")
+    if (custody.get("type") != "object"
+        or custody.get("additionalProperties") is not False
+        or custody.get("required") is None
+        or not isinstance(custody["required"], list)
+        or len(custody["required"]) != len(PROOF_REQUIRED)
+        or set(custody["required"]) != PROOF_REQUIRED
+        or not isinstance(proof_props, dict)
+        or set(proof_props) != PROOF_REQUIRED
+        or proof_props.get("version", {}).get("const") != "1.0.0"
+        or proof_props.get("source_digest", {}).get("pattern") != "^[0-9a-f]{64}$"
+        or proof_props.get("demand_signature", {}).get("pattern") != "^[0-9a-f]{64}$"
+        or set(proof_props.get("custody_mode", {}).get("enum", [])) != {
+            "EMBEDDED_VERBATIM", "EXTERNAL_REFERENCE"
+        }
+        or set(proof_props.get("comparison_status", {}).get("enum", [])) != {
+            "ORIGINAL_EXACT", "ADAPTED_DECLARED", "UNRESOLVED"
+        }):
+        raise AuditError("CUSTODY_PROOF_TOP_LEVEL_DRIFT")
+    components = proof_props.get("components")
     if not isinstance(components, dict):
         raise AuditError("CUSTODY_SCHEMA_COMPONENT_DRIFT")
     names = components.get("required")
@@ -115,7 +143,10 @@ def canonical_contracts(repo: Path) -> dict[str, Any]:
                 if isinstance(c, dict) and c.get("level") == "REQUIRED"]
     if (len(required) != len(set(required))
         or set(required) != REQUIRED_BLUEPRINT_COMPONENTS
-        or any(c.get("slot") not in slot_ids for c in comps if isinstance(c, dict))):
+        or any(not isinstance(c, dict) for c in comps)
+        or any(c.get("slot") not in slot_ids for c in comps)
+        or any(next((c.get("slot") for c in comps if c.get("id") == name), None)
+               != slot for name, slot in REQUIRED_COMPONENT_SLOTS.items())):
         raise AuditError("CORE2_BLUEPRINT_REQUIRED_COMPONENT_DRIFT")
     return {
         "custody_schema_id": custody["$id"],
