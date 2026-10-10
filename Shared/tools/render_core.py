@@ -2927,10 +2927,12 @@ q('[data-g9-concept-check]').forEach(c=>{
   // A staged teaching SVG is fitted to its visible interactive stage.
   // Printing displays all authored stages, so recompute its viewBox for print
   // and restore the interactive fit on return. This is TEST/Core1A only.
-  const printMode=window.matchMedia('print');
-  printMode.addEventListener('change',()=>{
+  const refitPrintStages=()=>{
     q('figure[data-g9-figure]',article).forEach(fitFigure);
-  })
+  };
+  const printMode=window.matchMedia('print');
+  printMode.addEventListener('change',refitPrintStages);
+  window.addEventListener('beforeprint',refitPrintStages)
 });
 """
     anchor = "const practiceLinks=q('[data-g9-practice-link]');"
