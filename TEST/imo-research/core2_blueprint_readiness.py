@@ -9,6 +9,7 @@ Never feed original SOF stems/options/figures or private PNG/PDF bytes to it.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -62,6 +63,11 @@ BLOCKERS_ALWAYS = (
     "LEARNER_RELEASE_NOT_AUTHORIZED",
 )
 MAX_METADATA_BYTES = 16384
+# Git blob IDs of the reviewed, byte-exact canonical files on pinned destination
+# main. They do not attest a trusted checkout HEAD, original SOF source custody,
+# independent approval, or publication authority.
+CUSTODY_SCHEMA_BLOB_SHA = "48312db70340d5ebea9c98ec24fa831f7a37ffed"
+BLUEPRINT_REGISTRY_BLOB_SHA = "591ba061b8771c30fdffc4506aa720ca9ba89335"
 # Upstream compare_historical_fingerprint returns only these values. A spotcheck
 # summary cannot prove its own provenance, but internally contradictory claims
 # must not be portrayed as a completed operator inspection.
@@ -88,7 +94,14 @@ class AuditError(ValueError):
     """Internal categorized failure. No input text or private paths are echoed."""
 
 
-def _read_json(path: Path, category: str, *, size_limit: int) -> dict[str, Any]:
+def _git_blob_sha(raw: bytes) -> str:
+    """Compute Git blob identity of already-read file bytes."""
+    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
+
+
+def _read_json(path: Path, category: str, *, size_limit: int,
+               expected_blob: str | None = None,
+               drift_code: str | None = None) -> dict[str, Any]:
     """Open the checked input once; never follow a final symlink or block on a FIFO."""
     try:
         # The prior path.is_symlink/stat/read_text sequence was vulnerable to
@@ -122,6 +135,8 @@ def _read_json(path: Path, category: str, *, size_limit: int) -> dict[str, Any]:
         raise AuditError(category) from exc
     if not isinstance(data, dict):
         raise AuditError(category)
+    if expected_blob is not None and _git_blob_sha(raw) != expected_blob:
+        raise AuditError(drift_code or category)
     return data
 
 
@@ -130,6 +145,7 @@ def canonical_contracts(repo: Path) -> dict[str, Any]:
     custody = _read_json(
         repo / "Shared/library/source-question-custody.schema.json",
         "SOURCE_CUSTODY_SCHEMA_UNAVAILABLE", size_limit=250000,
+        expected_blob=CUSTODY_SCHEMA_BLOB_SHA, drift_code="CUSTODY_SCHEMA_BYTES_DRIFT",
     )
     proof_props = custody.get("properties")
     if (custody.get("type") != "object"
@@ -166,6 +182,7 @@ def canonical_contracts(repo: Path) -> dict[str, Any]:
     registry = _read_json(
         repo / "Shared/web/interactive-page-blueprints.v1.json",
         "BLUEPRINT_REGISTRY_UNAVAILABLE", size_limit=300000,
+        expected_blob=BLUEPRINT_REGISTRY_BLOB_SHA, drift_code="CORE2_BLUEPRINT_BYTES_DRIFT",
     )
     if registry.get("registry_version") != "1.17.0":
         raise AuditError("CORE2_BLUEPRINT_MISSING_OR_DRIFTED")
