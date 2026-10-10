@@ -22,6 +22,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Install candidate renderer structure validation dependency
+        run: python -m pip install --quiet jsonschema
       - name: Core1A independent math, assumptions and negative mutations
         run: python -m unittest discover -s tests -p 'test_imo_327_core1a_math_proof.py' -v
       - name: Enforce concept-first versus question-hint authored modes
