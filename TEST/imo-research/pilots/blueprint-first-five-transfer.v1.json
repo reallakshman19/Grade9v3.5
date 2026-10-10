@@ -751,6 +751,88 @@
           ]
         }
       ]
+    },
+    {
+      "id": "REP-TEST-IMO-164-TRIPLE-BOUNDARY-12",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:stage_mode": "REPLACE"
+      },
+      "kind": "ALGEBRA_TILES",
+      "purpose": "Proof-free two-stage figure for an undecided triple-product divisibility claim.",
+      "required_elements": [
+        "Neutral three factors n, n+1, n+2.",
+        "12-divisibility shown only as a question."
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read triple factors.",
+        "Compare with target 12 as a question."
+      ],
+      "instance_constraints": [
+        "Never reveal truth or exception.",
+        "No specific factor highlighted."
+      ],
+      "accessibility": [
+        "Both stages pose the given question but withhold classification."
+      ],
+      "misleading_alternatives": [
+        "A visual that marks residue one as failure."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-TEST-IMO-164-BOUNDARY-12",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-IMO-164-TRIPLE-12-IFF-BOUNDARY",
+          "datum_refs": [
+            "DATUM-TEST-IMO-164-TRIPLE-P"
+          ],
+          "asset_ref": "TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Three factor cards and divisor question",
+            "caption": "The verdict and proof remain to be determined."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three adjacent factor cards",
+          "symbol": "n(n+1)(n+2)",
+          "in_words": "Three consecutive integers."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "BOUNDARY-TRIPLE-FACTORS",
+          "label": "Three factors",
+          "purpose": "State the factors only.",
+          "visible_elements": [
+            "n",
+            "n+1",
+            "n+2"
+          ]
+        },
+        {
+          "id": "BOUNDARY-TARGET-12",
+          "label": "Target twelve?",
+          "purpose": "Rephrase the problem as an undecided question.",
+          "visible_elements": [
+            "P(n)",
+            "12?"
+          ]
+        }
+      ]
     }
   ],
   "question_families": [
@@ -831,6 +913,46 @@
       ],
       "item_refs": [
         "Q-TEST-IMO-164-FIVE-CONSECUTIVE-120"
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-IMO-164-BOUNDARY-12-CLASSIFICATION",
+      "title": "Authored exact triple-divisibility classification",
+      "capability_refs": [
+        "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY"
+      ],
+      "solution_structure": [
+        "Disprove universal assertion.",
+        "Reduce to extra factor four.",
+        "Prove all residue cases both ways.",
+        "State iff and corroborate with full modulo-twelve cycle."
+      ],
+      "demand_dimensions": {
+        "model_choice": "False universal claim versus iff classification.",
+        "representation_translation": "Use n modulo four.",
+        "reasoning_steps": "Necessary and sufficient conditions.",
+        "novelty": "Complete exception classification."
+      },
+      "safe_variations": [],
+      "transfer_boundaries": [
+        "Counterexample alone not a classification.",
+        "6 cannot imply 12.",
+        "No pre-attempt residue verdict."
+      ],
+      "common_wrong_routes": [
+        "6 implies 12.",
+        "One counterexample classifies.",
+        "Even means divisible by four."
+      ],
+      "item_refs": [
+        "Q-TEST-IMO-164-TRIPLE-12-IFF-BOUNDARY"
       ]
     }
   ],
@@ -1274,6 +1396,197 @@
           "why_new": "No prior worked or supported task in the selected journey requires proving a factor 5 over five positions and combining it with 24 for a product divisible by 120. Distinct numerical parameters alone would not suffice."
         }
       }
+    },
+    {
+      "id": "Q-TEST-IMO-164-TRIPLE-12-IFF-BOUNDARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "issue-164-boundary-review",
+        "grade9v3:qrt_status": "PROPOSED_NOT_ACCEPTED",
+        "grade9v3:source_custody": "NO_ORIGINAL_SOURCE_QUESTION",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "CLASSIFY"
+          ],
+          "basis": "False universal claim needs exact necessary-and-sufficient classification, not a variable rename or one extra divisor."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Prove n modulo 4 classes 0,2,3 satisfy factor-four and class 1 cannot; combine with always factor-three.",
+          "common_wrong_route": "Assume 6 implies 12, or give n=1 alone without proving all successes."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO-164-AUTHORED",
+      "original_identifier": "AUTHORED-IMO-164-TRIPLE-12-IFF-BOUNDARY",
+      "stem": "Let n be any positive integer. Define P(n)=n(n+1)(n+2). A student claims P(n) is divisible by 12 for EVERY positive integer n because it is always divisible by 6. Decide whether the claim is true. If false, give a counterexample, then classify EXACTLY which positive n make P(n) divisible by 12. Prove both directions, not just numerical cases.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "n is an arbitrary positive integer.",
+        "The product of any three consecutive positive integers is already known to be divisible by 6.",
+        "A counterexample can refute every, but not prove a complete iff classification.",
+        "Independently authored TEST task, not an SOF source item."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO-164-TRIPLE-BOUNDARY-12"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The claim for every n is false: P(1)=6. Exactly when n mod 4 is not 1 does 12 divide P(n).",
+        "reasoning": [
+          "For n=1 the product is 1·2·3=6, not divisible by 12. This disproves 'every' but does not classify all successes.",
+          "Every triple supplies a multiple of 3. Because gcd(3,4)=1, P(n) is divisible by 12 exactly when P(n) is divisible by 4.",
+          "If n mod 4 equals 0, n is a multiple of 4. If it equals 2, n+2 is a multiple of 4. If it equals 3, n+1 is a multiple of 4. Thus 4 divides P(n) for each of these complete cases.",
+          "If n mod 4 equals 1, n and n+2 are odd while n+1 is 2 modulo 4. The product then has exactly one factor of 2 and is not divisible by 4.",
+          "The four residues exhaust every positive n, proving necessity as well as sufficiency: 12 divides P(n) iff n mod 4 != 1."
+        ],
+        "reasoning_route": [
+          {
+            "id": "MOVE-IMO-164-BOUNDARY-DISPROVE",
+            "kind": "DECIDE",
+            "action": "Find a valid counterexample to the universal assertion and distinguish it from full classification.",
+            "why_valid": "P(1)=6 is not divisible by 12 but leaves all other n undecided.",
+            "inputs": [
+              "n positive",
+              "P(n) triple"
+            ],
+            "output": "Universal claim false; classification still needed."
+          },
+          {
+            "id": "MOVE-IMO-164-BOUNDARY-REDUCE",
+            "kind": "CONNECT",
+            "action": "Use the known factor of 3 and coprimality to identify the remaining factor-four question.",
+            "why_valid": "Three consecutive integers guarantee 3; 3 and 4 are coprime.",
+            "inputs": [
+              "3 divides P(n)",
+              "gcd(3,4)=1"
+            ],
+            "output": "12 divides P iff 4 divides P."
+          },
+          {
+            "id": "MOVE-IMO-164-BOUNDARY-CRUX",
+            "kind": "DECIDE",
+            "action": "Classify all four residues of n modulo 4, proving both the successful cases and the residue-one obstruction.",
+            "why_valid": "Residues 0,2,3 supply a multiple of 4 among three factors; in residue 1 only one factor is even and it is 2 modulo 4.",
+            "inputs": [
+              "n mod 4",
+              "P(n) triple"
+            ],
+            "output": "12 divides P(n) if and only if n mod 4 != 1."
+          },
+          {
+            "id": "MOVE-IMO-164-BOUNDARY-CHECK",
+            "kind": "VERIFY",
+            "action": "Independently check a complete cycle of twelve residues as a falsifier, not as sampled proof.",
+            "why_valid": "P(n) modulo 12 depends only on n modulo 12.",
+            "inputs": [
+              "iff classification"
+            ],
+            "output": "All twelve residue classes agree."
+          }
+        ],
+        "crux_move_ref": "MOVE-IMO-164-BOUNDARY-CRUX",
+        "check": "Check all 12 residues modulo 12 as a corroborating complete congruence cycle; the mathematical proof must independently explain both directions for all n.",
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "rubric": [
+          {
+            "criterion": "Rejects a false universal claim.",
+            "evidence_of": "Gives P(1)=6 and states why this only disproves every."
+          },
+          {
+            "criterion": "Identifies the missing factor of 4.",
+            "evidence_of": "Uses guaranteed 3 and coprimality of 3 and 4."
+          },
+          {
+            "criterion": "Proves both directions for all n modulo 4.",
+            "evidence_of": "Explains residues 0,2,3 succeed and exactly why residue 1 fails."
+          },
+          {
+            "criterion": "States an exact iff, not a list of examples.",
+            "evidence_of": "Concludes n mod 4 != 1 and justifies exhaustive cases."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO-164-BOUNDARY-12-CLASSIFICATION",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "NEW_TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO-164-TRIPLE-BOUNDARY-12",
+        "safe_ref": "REP-TEST-IMO-164-TRIPLE-BOUNDARY-12",
+        "bound_ref": null,
+        "stage_refs": [
+          "BOUNDARY-TRIPLE-FACTORS",
+          "BOUNDARY-TARGET-12"
+        ]
+      },
+      "repair_ref": "TC-03",
+      "failure_signal": "Knowing 6 divides the triple does not establish 12; n=1 is a counterexample, not a complete classification. Inspect when the product has a guaranteed factor of 4 and prove the successful and failing residue classes.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO-164-BOUNDARY-12-CLASSIFICATION",
+        "closure": "REVIEW CANDIDATE only. Falsify the universal claim and establish exact iff classification; QRT and academic acceptance are still held."
+      },
+      "independent_check": {
+        "statement": "Check all 12 residues modulo 12 against the iff result; distinguish this corroboration from the general proof.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "PROPOSED ONLY: falsify and prove an iff modulo-four classification; independent D3 judgment required.",
+        "component_evidence": {
+          "concept_model_selection": "Decide counterexample versus classification.",
+          "representation_translation": "Move from factors to four residues.",
+          "reasoning_chain_length": "Disprove universal, isolate four, prove iff.",
+          "algebra_computational_load": "Short symbolic factors.",
+          "trap_exception_sensitivity": "Reject 6=>12 and insufficient checked examples."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "model_choice",
+        "statement": "Switch from a true universal proof to a false universal assertion requiring counterexample and exact necessary-and-sufficient exception classification.",
+        "builds_on": [
+          "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF",
+          "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS"
+        ],
+        "protected_move_ref": "MOVE-IMO-164-BOUNDARY-CRUX",
+        "invariant": "Exhaustive residue classes, divisibility and coprimality remain valid.",
+        "novelty": {
+          "checked_against": [
+            "Core1A triple 6 worked theorem",
+            "Core1A four-factor 24 exit",
+            "Core2A finite-example diagnostic",
+            "Unselected five-factor 120 candidate"
+          ],
+          "why_new": "Earlier tasks prove a positive universal property, not an iff exception classification. The four-factor 24 theorem is not disguised as new work."
+        }
+      }
     }
   ],
   "teaching_routes": [
@@ -1430,6 +1743,23 @@
       "meaning": "Neutral symbolic expression of five consecutive factors; no protected proof step",
       "symbol": "n(n+1)(n+2)(n+3)(n+4)",
       "locator": "AUTHORED: issue #164 five-factor attempt-safe visual"
+    },
+    {
+      "id": "DATUM-TEST-IMO-164-TRIPLE-P",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_SAFE_EXPRESSION"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>n</mi><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow></math>",
+      "meaning": "Neutral triple without verdict.",
+      "symbol": "n(n+1)(n+2)",
+      "locator": "AUTHOR_CREATED: issue 164"
     }
   ]
 }
