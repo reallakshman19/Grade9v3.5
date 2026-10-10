@@ -204,7 +204,7 @@ class IndexLawsCore1AReconciled(unittest.TestCase):
         visible = VisiblePreAttempt()
         visible.feed(html)
         raw = " ".join(visible.lines)
-        self.assertNotRegex(raw, r"\\by\\s*=\\s*3\\b")
+        self.assertNotRegex(raw, r"\by\s*=\s*3\b")
         self.assertNotIn("unique real solution y=3", raw)
         self.assertNotIn("2^7=128", raw)
         # The complete worked *teaching* example x=2 is permitted, but
