@@ -285,11 +285,26 @@ def inspect_real_candidate() -> dict:
         output = Path(tmp) / "render"
         # Canonical renderer writes the real package-selected TEST pages.
         # Renderer stdout is not an academic publication surface.
-        with redirect_stdout(io.StringIO()):
-            rc = render_core.main(["build", "--manifest", str(MANIFEST),
-                                   "--out", str(output), "--mode", "PAGES",
-                                   "--reference", "--draft"])
-        if rc != 0:
+        try:
+            with redirect_stdout(io.StringIO()):
+                rc = render_core.main(["build", "--manifest", str(MANIFEST),
+                                       "--out", str(output), "--mode", "PAGES",
+                                       "--reference", "--draft"])
+        except ValueError as exc:
+            # The owning package validator refuses an invalid authored item.
+            # Keep the reason code but never export exception text: validation
+            # paths/messages may contain protected authored material.
+            if not str(exc).startswith("PRODUCT_STRUCTURE_INVALID:"):
+                raise
+            problems.append("RENDER_PRODUCT_STRUCTURE_INVALID")
+            render_basis = {
+                "status": "CANONICAL_RENDER_BLOCKED_INVALID_PACKAGE",
+                "receipt": "NOT_CREATED",
+            }
+            rc = None
+        if rc is None:
+            pass  # A failed package must never proceed to HTML or static QA.
+        elif rc != 0:
             problems.append("CANONICAL_RENDER_FAILED")
         elif not (output / "render-receipt.json").is_file():
             problems.append("CANONICAL_RENDER_RECEIPT_MISSING")
