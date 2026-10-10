@@ -46,7 +46,7 @@ jobs:
         run: |
           mkdir -p build
           audit_rc=0
-          python Shared/tools/imo_f04_canonical_slice.py \
+          python -m Shared.tools.imo_f04_canonical_slice \
             --output build/imo-f04-canonical-slice.json > "$RUNNER_TEMP/imo-f04-summary.json" || audit_rc=$?
           python - "$RUNNER_TEMP/imo-f04-summary.json" <<'PY'
           import json
