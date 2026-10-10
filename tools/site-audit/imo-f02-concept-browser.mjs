@@ -113,6 +113,8 @@ try {
     await submit.click();
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
       width + ': deliberate recheck failed to restore formative-only status');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'aligned_after_guided_exposure',
+      width + ': correct recheck after guided study masqueraded as pre-help evidence');
     // Subsequent wrong or incomplete submissions cannot retain old evidence.
     await page.locator('[data-g9-concept-option][value="ADD"]').check();
     await submit.click();
@@ -142,6 +144,8 @@ try {
     await submit.click();
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
       width + ': renewed valid reflection and neutral counterexample could not restore formative-only status');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'aligned_after_guided_exposure',
+      width + ': corrected resubmission cleared its assisted recognition provenance');
     if (width === 390) {
       const access = await browser.newPage({ viewport: {width:390,height:900}, reducedMotion:'reduce' });
       access.on('pageerror', e => result.failures.push('accessibility probe JS exception: '+String(e)));

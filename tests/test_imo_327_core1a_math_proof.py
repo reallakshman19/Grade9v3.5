@@ -58,6 +58,14 @@ def verify_structure(pkg: dict, manifest: dict) -> None:
     micro = next(m for m in pkg["microtopics"] if m["id"] == MIC)
     if micro["primary_capability_ref"] != CAP:
         raise ValueError("Wrong teaching capability")
+    # A universal exponent identity must not be confused with equality that
+    # happens accidentally at a specific base/exponent pair.
+    principle = micro.get("inferential_jump") or ""
+    if ("P+b is not the general exponent law" not in principle
+            or "2^2=2^1+2=4" not in principle
+            or "2^4=2*2^3=16" not in principle
+            or "never P+b" in principle):
+        raise ValueError("Core1A factor-law explanation overstates the additive alternative")
     steps = micro["teaching_path"]
     if [s["id"] for s in steps] != ["TC-01", "TC-02", "TC-03", "TC-04", "TC-05"]:
         raise ValueError("Lost or reordered core inferential steps")
@@ -129,6 +137,25 @@ class IndexLawsCore1AMath(unittest.TestCase):
                     self.assertGreater(t, 0)
                     self.assertTrue(math.isclose((a*a)**x, t, rel_tol=1e-12))
                     self.assertTrue(math.isclose(a**(2*x+1), a*t, rel_tol=1e-12))
+
+    def test_additive_numeric_coincidence_is_not_a_general_exponent_law(self):
+        # 2^(n+1)=2^n+2 can be true *for one n* without being the law.
+        self.assertEqual(2**2, 2**1 + 2)
+        self.assertEqual(2**2, 2 * 2**1)
+        self.assertNotEqual(2**4, 2**3 + 2)
+        self.assertEqual(2**4, 2 * 2**3)
+        self.assertIn("P+b is not the general exponent law",
+                      self.pkg["microtopics"][0]["inferential_jump"])
+
+    def test_mutation_false_never_addition_claim_is_rejected(self):
+        d = copy.deepcopy(self.pkg)
+        d["microtopics"][0]["inferential_jump"] = (
+            d["microtopics"][0]["inferential_jump"].replace(
+                "P+b is not the general exponent law", "never P+b"
+            )
+        )
+        with self.assertRaisesRegex(ValueError, "overstates"):
+            verify_structure(d, self.manifest)
 
     def test_nonpositive_substitution_has_no_real_solution(self):
         for a in (2, 3, 4):

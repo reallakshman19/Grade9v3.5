@@ -3029,7 +3029,11 @@ q('[data-g9-concept-check]').forEach(c=>{
       feedback.textContent=rule.dataset.g9RuleWrong;
       return
     }
-    article.dataset.g9DiagnosticPattern='aligned_structured_counterexample';
+    // A post-reveal answer is assisted recognition, not clean pre-help evidence.
+    // This data is transient and must never qualify independent transfer.
+    const previouslyGuided=article.dataset.g9ConceptAidExposure==='guided_study';
+    article.dataset.g9DiagnosticPattern=previouslyGuided
+      ?'aligned_after_guided_exposure':'aligned_structured_counterexample';
     article.dataset.g9ConceptCheckCompleted='formative_only';
     // Exposure is monotonic within this page; re-submission cannot restore independence.
     article.dataset.g9ConceptAidExposure='guided_study';
