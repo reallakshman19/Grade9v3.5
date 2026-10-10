@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import argparse
 from copy import deepcopy
+from contextlib import redirect_stdout
+import io
 from hashlib import sha256
 from html.parser import HTMLParser
 import runpy
@@ -271,9 +273,11 @@ def inspect_real_candidate() -> dict:
     with tempfile.TemporaryDirectory(prefix="imo-f04-canonical-test-") as tmp:
         output = Path(tmp) / "render"
         # Canonical renderer writes the real package-selected TEST pages.
-        rc = render_core.main(["build", "--manifest", str(MANIFEST),
-                               "--out", str(output), "--mode", "PAGES",
-                               "--reference", "--draft"])
+        # Renderer stdout is not an academic publication surface.
+        with redirect_stdout(io.StringIO()):
+            rc = render_core.main(["build", "--manifest", str(MANIFEST),
+                                   "--out", str(output), "--mode", "PAGES",
+                                   "--reference", "--draft"])
         if rc != 0:
             problems.append("CANONICAL_RENDER_FAILED")
         elif not (output / "render-receipt.json").is_file():
