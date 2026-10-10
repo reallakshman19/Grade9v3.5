@@ -99,6 +99,22 @@ class Core2PilotHoldTests(unittest.TestCase):
             "visual_component_sightings"].update(
                 options=["copied source choices"]))
 
+    def test_visual_stem_status_is_not_copied_stem(self):
+        # The typed component *name* is allowed; its value is a fixed status.
+        packet = copy.deepcopy(self.packet)
+        self.assertEqual(packet["observation"]["visual_component_sightings"]["stem"],
+                         "SEEN_ON_RENDER_ONLY")
+        self.assertEqual(validate(packet, self.census)["status"],
+                         "SOURCE_CUSTODY_HOLD")
+
+    def test_visual_stem_cannot_embed_publisher_stem_text(self):
+        self.rejects(lambda p: p["observation"][
+            "visual_component_sightings"].update(stem="Original question wording"))
+
+    def test_original_stem_payload_still_forbidden_outside_status_path(self):
+        self.rejects(lambda p: p["source"].update(
+            stem="Original question wording"))
+
     def test_original_option_list_still_forbidden_outside_status_path(self):
         self.rejects(lambda p: p["source"].update(
             options=["copied question choices"]))
