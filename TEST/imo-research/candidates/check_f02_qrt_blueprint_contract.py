@@ -47,7 +47,8 @@ ASK_SOURCES = {
     "P2": ("selected_question.repair_ref", "microtopics[0].teaching_path"),
     "P3": ("selected_question.answer.reasoning_route", "selected_question.independent_check"),
     "M1": ("selected_question.failure_signal", "microtopics[0].misconceptions"),
-    "M2": (),  # No diagnostic distinguishing misconception vs one-off execution slip.
+    "M2": ("microtopics[0].extensions.grade9v3:concept_checkpoint.diagnostic",),
+    # Structured patterns now exist; they DO NOT determine cognitive cause.
     "M3": ("selected_question.repair_ref", "microtopics[0].teaching_path"),
 }
 ROLE_SLOT_SOURCES = {
@@ -156,8 +157,29 @@ def audit(
         errors.append("P2_REPAIR_REF_UNRESOLVED")
     if not microtopic.get("exit_task", {}).get("prompt"):
         errors.append("CORE1A_FRESH_EXIT_ABSENT")
-    if microtopic.get("extensions", {}).get("grade9v3:concept_checkpoint", {}).get("status") != "LOCAL_TEACHING_FORMAT_CHECK_NOT_INDEPENDENT_MASTERY":
+    concept = microtopic.get("extensions", {}).get("grade9v3:concept_checkpoint", {})
+    if concept.get("status") != "LOCAL_TEACHING_FORMAT_CHECK_NOT_INDEPENDENT_MASTERY":
         errors.append("CONCEPT_CHECK_FALSE_MASTERY_STATUS")
+    neutral = concept.get("diagnostic") or {}
+    if (neutral.get("scope") != "NEUTRAL_NUMERICAL_COUNTEREXAMPLE_NOT_TARGET_ITEM"
+            or neutral.get("status") != "LOCAL_STRUCTURED_NUMERICAL_PATTERN_NOT_MASTERY"
+            or neutral.get("base") != 7 or neutral.get("exponent") != 2
+            or not isinstance(neutral.get("prompt"), str)
+            or "7³" not in neutral["prompt"]):
+        errors.append("NEUTRAL_COUNTEREXAMPLE_MISSING_OR_NOT_AUTHORED")
+    else:
+        # This numerical case is independent of the source D3 question;
+        # its expected outputs (343, 56) do not prove a general exponent law.
+        if neutral["base"] ** (neutral["exponent"] + 1) == (
+                neutral["base"] ** neutral["exponent"] + neutral["base"]):
+            errors.append("NEUTRAL_COUNTEREXAMPLE_CANNOT_FALSIFY_ADDITION")
+        forbidden = golden_model.get("item_help", {}).get("must_not_reveal_before_attempt", [])
+        public_neutral = " ".join(str(neutral.get(k) or "") for k in (
+            "prompt", "next_label", "add_label", "on_missing", "on_inconsistent",
+            "on_additive_route", "on_conflict", "on_aligned",
+        ))
+        if any(_norm(token) in _norm(public_neutral) for token in forbidden):
+            errors.append("NEUTRAL_COUNTEREXAMPLE_LEAKS_D3_PROTECTED_WORK")
 
     # The three author goldens contain a design sequence, NOT accepted runtime evidence.
     golden_steps = [s.get("stage") for s in golden_model.get("core1a_repair", {}).get("sequence", [])]
@@ -189,7 +211,7 @@ def audit(
     for name in qrt.ASKS:
         d = resolution.get("review", {}).get(name, {})
         if name == "M2":
-            status = "NOT_IMPLEMENTED_MISCONCEPTION_VS_SLIP_DIAGNOSTIC"
+            status = "STRUCTURED_RESPONSE_PATTERNS_COGNITIVE_CAUSE_UNVERIFIED"
         elif name == "P2":
             status = "SOURCE_ROUTE_DECLARED_PRECISE_STEP_NOT_VERIFIED"
         elif name in ("S2", "S3"):
@@ -203,7 +225,7 @@ def audit(
         })
     review_gates.extend([
         "H_S_P_M_INDEPENDENT_SEMANTIC_REVIEW_REQUIRED",
-        "M2_MISCONCEPTION_VS_EXECUTION_SLIP_NOT_TESTED",
+        "M2_CAUSAL_MISCONCEPTION_VS_EXECUTION_SLIP_NOT_VERIFIED",
         "P2_PRECISE_TC02_LEARNER_ROUTE_NOT_VERIFIED",
         "FRESH_UNASSISTED_POST_REPAIR_RETURN_NOT_ENFORCED",
         "FREE_TEXT_REASON_MATHEMATICAL_CORRECTNESS_NOT_GRADED",
@@ -218,7 +240,7 @@ def audit(
          "status": "SOURCE_DECLARED_NOT_PEDAGOGICALLY_GRADED"},
         {"stage": "CONCEPT_CHECK",
          "source": "microtopics[0].extensions.grade9v3:concept_checkpoint.prompt",
-         "status": "FORMAT_ONLY_NO_SEMANTIC_GRADING"},
+         "status": "STRUCTURED_NUMERIC_CHECK_ONLY_FREE_TEXT_UNGRADED"},
         {"stage": "GUIDED_APPLICATION",
          "source": "microtopics[0].teaching_path[1..4]",
          "status": "DIFFERENT_AUTHORED_EXAMPLE_NOT_INDEPENDENT"},
