@@ -130,6 +130,8 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("if(value.invalid){f02Reflect(value,false);return}", core2a)
         self.assertIn("if(value.events.length>=32)value.overflow=true", core2a)
         self.assertIn("value.events.push({n:value.events.length+1,kind})", core2a)
+        self.assertIn("events:value.events.map(e=>({n:e.n,kind:e.kind}))", core2a)
+        self.assertIn("if(value.invalid){f02Reflect(value,false);return}", core1a)
         self.assertIn("if(!f02Key)return {invalid:true}", core1a)
         self.assertIn("value.assisted||value.invalid", core2a)
         self.assertIn("if(params.get('g9-return')===f02Question", core1a)
