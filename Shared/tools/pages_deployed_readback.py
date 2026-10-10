@@ -57,14 +57,16 @@ def valid_route(path: str) -> str:
 def valid_base(url: str, *, allow_loopback: bool = False) -> str:
     parsed = urlsplit(url)
     host = parsed.hostname or ""
-    if (not url.endswith("/") or parsed.username or parsed.password or parsed.port
+    if (not url.endswith("/") or parsed.username or parsed.password
         or parsed.query or parsed.fragment or not parsed.path.startswith("/")
         or not parsed.path.endswith("/") or "//" in parsed.path or
         any(x in {".", ".."} for x in parsed.path.split("/"))):
         raise ValueError("invalid Pages project-base URL")
+    # Loopback is an explicit API-only fixture feature; the CLI has no flag
+    # exposing it to a production workflow.
     if allow_loopback and parsed.scheme == "http" and host in {"127.0.0.1", "localhost"}:
         return url
-    if parsed.scheme != "https" or not host.endswith(".github.io"):
+    if parsed.port or parsed.scheme != "https" or not host.endswith(".github.io"):
         raise ValueError("external verification requires a HTTPS github.io Pages origin")
     if not re.fullmatch(r"/[A-Za-z0-9_.-]+/", parsed.path):
         raise ValueError("project Pages URL must be an explicit single project path")
