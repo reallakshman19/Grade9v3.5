@@ -53,8 +53,11 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
         self.assertTrue(all(a["status"] != "PASS" for a in result["semantic_review_asks"]))
         self.assertTrue(all("source_pointers" in a for a in result["semantic_review_asks"]))
         diagnostic = next(a for a in result["semantic_review_asks"] if a["ask"] == "M2")
-        self.assertEqual(diagnostic["source_pointers"], [])
-        self.assertEqual(diagnostic["status"], "NOT_IMPLEMENTED_MISCONCEPTION_VS_SLIP_DIAGNOSTIC")
+        self.assertEqual(diagnostic["source_pointers"],
+                         ["microtopics[0].extensions.grade9v3:concept_checkpoint.diagnostic"])
+        self.assertEqual(diagnostic["status"], "STRUCTURED_RESPONSE_PATTERNS_COGNITIVE_CAUSE_UNVERIFIED")
+        self.assertIn("M2_CAUSAL_MISCONCEPTION_VS_EXECUTION_SLIP_NOT_VERIFIED",
+                      result["review_gates"])
         self.assertEqual(
             [s["stage"] for s in result["core1a_repair_reference_alignment"]],
             list(f02.REPAIR_STAGES),
@@ -75,6 +78,33 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
             ("CORE2A", "attempt"), ("CORE2A", "reasoning"),
         })
         self.assertTrue(all("UNVERIFIED" in x["status"] for x in result["blueprint_required_slots"]))
+
+    def test_neutral_counterexample_is_distinct_and_not_a_mastery_verdict(self):
+        pkg = self.package
+        diagnostic = pkg["microtopics"][0]["extensions"]["grade9v3:concept_checkpoint"]["diagnostic"]
+        self.assertEqual((diagnostic["base"], diagnostic["exponent"]), (7, 2))
+        self.assertEqual(diagnostic["status"], "LOCAL_STRUCTURED_NUMERICAL_PATTERN_NOT_MASTERY")
+        self.assertEqual((7 ** 3, 7 ** 2 + 7), (343, 56))
+        self.assertNotEqual(7 ** 3, 7 ** 2 + 7)
+        self.assertEqual(self.audit()["errors"], [])
+
+    def test_mutation_neutral_diagnostic_missing_is_rejected(self):
+        pkg = copy.deepcopy(self.package)
+        del pkg["microtopics"][0]["extensions"]["grade9v3:concept_checkpoint"]["diagnostic"]
+        self.assertIn("NEUTRAL_COUNTEREXAMPLE_MISSING_OR_NOT_AUTHORED",
+                      self.audit(package=pkg)["errors"])
+
+    def test_mutation_neutral_diagnostic_false_mastery_is_rejected(self):
+        pkg = copy.deepcopy(self.package)
+        pkg["microtopics"][0]["extensions"]["grade9v3:concept_checkpoint"]["diagnostic"]["status"] = "INDEPENDENT_MASTERY"
+        self.assertIn("NEUTRAL_COUNTEREXAMPLE_MISSING_OR_NOT_AUTHORED",
+                      self.audit(package=pkg)["errors"])
+
+    def test_mutation_neutral_diagnostic_leaks_target_model_is_rejected(self):
+        pkg = copy.deepcopy(self.package)
+        pkg["microtopics"][0]["extensions"]["grade9v3:concept_checkpoint"]["diagnostic"]["prompt"] += " Set t=4^(2u)."
+        self.assertIn("NEUTRAL_COUNTEREXAMPLE_LEAKS_D3_PROTECTED_WORK",
+                      self.audit(package=pkg)["errors"])
 
     def test_mutation_wrong_third_hint_purpose_is_rejected(self):
         pkg = copy.deepcopy(self.package)

@@ -1460,11 +1460,43 @@ def _draft_concept_checkpoint(ctx: Ctx, m: dict) -> str:
             or spec.get("correct_value") != "FACTOR"):
         ctx.gap("AUTHOR_CONCEPT_CHECKPOINT", m["id"], "bad check choices", "CORE1A")
         return ""
+    diagnostic = spec.get("diagnostic") or {}
+    base = diagnostic.get("base")
+    exponent = diagnostic.get("exponent")
+    if (diagnostic.get("scope") != "NEUTRAL_NUMERICAL_COUNTEREXAMPLE_NOT_TARGET_ITEM"
+            or diagnostic.get("status") != "LOCAL_STRUCTURED_NUMERICAL_PATTERN_NOT_MASTERY"
+            or type(base) is not int or not 3 <= base <= 9
+            or type(exponent) is not int or not 1 <= exponent <= 3
+            or not all(isinstance(diagnostic.get(key), str) and diagnostic[key].strip()
+                       for key in ("prompt", "next_label", "add_label", "on_missing",
+                                   "on_inconsistent", "on_additive_route", "on_conflict", "on_aligned"))):
+        ctx.gap("AUTHOR_CONCEPT_DIAGNOSTIC", m["id"],
+                "neutral numerical counterexample must be authored and cannot grade mathematical mastery",
+                "CORE1A")
+        return ""
     labels = "".join(
         f'<label><input type="radio" name="{esc(m["id"])}-concept" '
         f'data-g9-concept-option value="{esc(choice["value"])}"> '
         f'{esc(choice["label"])}</label> '
         for choice in options
+    )
+    diagnostic_html = (
+        f'<fieldset data-g9-neutral-diagnostic data-g9-base="{base}" data-g9-exponent="{exponent}" '
+        f'data-g9-diagnostic-missing="{esc(diagnostic["on_missing"])}" '
+        f'data-g9-diagnostic-inconsistent="{esc(diagnostic["on_inconsistent"])}" '
+        f'data-g9-diagnostic-additive="{esc(diagnostic["on_additive_route"])}" '
+        f'data-g9-diagnostic-conflict="{esc(diagnostic["on_conflict"])}" '
+        f'data-g9-diagnostic-aligned="{esc(diagnostic["on_aligned"])}">'
+        f'<legend>Check a different number case</legend><p>{esc(diagnostic["prompt"])}</p>'
+        f'<label for="{esc(m["id"])}-diagnostic-next">{esc(diagnostic["next_label"])}</label>'
+        f'<input id="{esc(m["id"])}-diagnostic-next" type="text" inputmode="numeric" '
+        f'data-g9-diagnostic-next autocomplete="off" '
+        f'aria-describedby="{esc(m["id"])}-concept-scope">'
+        f'<label for="{esc(m["id"])}-diagnostic-add">{esc(diagnostic["add_label"])}</label>'
+        f'<input id="{esc(m["id"])}-diagnostic-add" type="text" inputmode="numeric" '
+        f'data-g9-diagnostic-add autocomplete="off" '
+        f'aria-describedby="{esc(m["id"])}-concept-scope">'
+        '</fieldset>'
     )
     return (
         f'<section class="g9-concept-first" data-g9-concept-check '
@@ -1476,6 +1508,7 @@ def _draft_concept_checkpoint(ctx: Ctx, m: dict) -> str:
         '<h4>Concept first · before the worked equation</h4>'
         f'<p>{esc(spec["neutral_demo"])}</p>'
         f'<fieldset><legend>{esc(spec["prompt"])}</legend>{labels}</fieldset>'
+        + diagnostic_html +
         f'<label for="{esc(m["id"])}-concept-reason">Explain your prediction in your own words</label>'
         f'<textarea id="{esc(m["id"])}-concept-reason" data-g9-concept-reason rows="3" '
         f'aria-describedby="{esc(m["id"])}-concept-scope" '
@@ -2902,32 +2935,64 @@ q('[data-g9-concept-check]').forEach(c=>{
   b.addEventListener('click',()=>{
     const choice=q('[data-g9-concept-option]:checked',c)[0]?.value||'';
     const reason=(q('[data-g9-concept-reason]',c)[0]?.value||'').trim();
-    // An earlier format pass is invalid once the learner submits a new response.
+    const numeric=q('[data-g9-neutral-diagnostic]',c)[0];
+    const nextValue=(q('[data-g9-diagnostic-next]',c)[0]?.value||'').trim();
+    const additiveValue=(q('[data-g9-diagnostic-add]',c)[0]?.value||'').trim();
+    // Every fresh response clears prior formative evidence and prior error pattern.
     delete article.dataset.g9ConceptCheckCompleted;
+    delete article.dataset.g9DiagnosticPattern;
     if(!choice){
       setProgress('needs_review','choose a relationship.');
       feedback.textContent='Choose one relationship, or open the guided explanation.';
       return
     }
-    if(choice!==c.dataset.g9ConceptCorrect){
-      setProgress('needs_review','prediction needs review.');
-      feedback.textContent=c.dataset.g9FeedbackChoice;
-      return
-    }
-    // A written reflection is invited; its words are not machine-graded.
-    if(reason.length<8){
+    // The free-text explanation is NEVER machine-graded. A distinct neutral
+    // numerical counterexample checks a testable prediction, not understanding.
+    if(choice===c.dataset.g9ConceptCorrect && reason.length<8){
       setProgress('needs_reflection','a short explanation is still needed.');
       feedback.textContent=c.dataset.g9FeedbackExplain;
       return
     }
+    const hasNumbers=/^[0-9]{1,7}$/.test(nextValue)&&/^[0-9]{1,7}$/.test(additiveValue);
+    if(!numeric||!hasNumbers){
+      article.dataset.g9DiagnosticPattern='numerical_check_missing';
+      setProgress(choice===c.dataset.g9ConceptCorrect?'needs_counterexample':'needs_review',
+        'the numerical counterexample needs work.');
+      feedback.textContent=numeric?.dataset.g9DiagnosticMissing||'Enter both numerical values.';
+      return
+    }
+    const base=Number(numeric.dataset.g9Base), exp=Number(numeric.dataset.g9Exponent);
+    const nextExpected=base**(exp+1), additiveExpected=base**exp+base;
+    const nextNumber=Number(nextValue), additiveNumber=Number(additiveValue);
+    const correctNumbers=nextNumber===nextExpected&&additiveNumber===additiveExpected;
+    if(choice!==c.dataset.g9ConceptCorrect){
+      article.dataset.g9DiagnosticPattern=correctNumbers
+        ?'choice_numeric_conflict'
+        :(nextNumber===additiveExpected&&additiveNumber===additiveExpected
+          ?'repeated_additive_route_candidate':'additive_choice_unresolved');
+      setProgress('needs_review','prediction and numerical check need review.');
+      feedback.textContent=correctNumbers?numeric.dataset.g9DiagnosticConflict
+        :(nextNumber===additiveExpected&&additiveNumber===additiveExpected
+          ?numeric.dataset.g9DiagnosticAdditive:c.dataset.g9FeedbackChoice);
+      return
+    }
+    if(!correctNumbers){
+      article.dataset.g9DiagnosticPattern='possible_execution_slip_or_model_error';
+      setProgress('needs_counterexample','numerical prediction needs review.');
+      feedback.textContent=numeric.dataset.g9DiagnosticInconsistent;
+      return
+    }
+    article.dataset.g9DiagnosticPattern='aligned_structured_counterexample';
     article.dataset.g9ConceptCheckCompleted='formative_only';
-    setProgress('guided_example_open','prediction recorded; guided example open.');
-    feedback.textContent=c.dataset.g9FeedbackPassed+' Your explanation has NOT been graded for correctness.';
+    setProgress('guided_example_open','structured counterexample recorded; guided example open.');
+    feedback.textContent=numeric.dataset.g9DiagnosticAligned+' '+c.dataset.g9FeedbackPassed
+      +' Your explanation has NOT been graded for correctness.';
     openGuided()
   });
   guide.addEventListener('click',()=>{
     // Switching to unchecked guided study must not retain a previous format-pass marker.
     delete article.dataset.g9ConceptCheckCompleted;
+    delete article.dataset.g9DiagnosticPattern;
     setProgress('guided_without_check','guided example open without checking the prediction.');
     feedback.textContent='Guided study opened. No prediction, explanation or independent mastery was verified.';
     openGuided()
@@ -2955,7 +3020,13 @@ q('[data-g9-concept-check]').forEach(c=>{
 # Only the authored TEST/Core1A format gate withholds its construction on
 # screen. The learner print must contain the full concept lesson, including
 # all three authored SVG stages. Never apply this override to source Core2A.
-CONCEPT_FIRST_PRINT_CSS = (
+CONCEPT_FIRST_CSS = (
+    'html[data-g9-role="CORE1A"] [data-g9-neutral-diagnostic]'
+    '{box-sizing:border-box;min-width:0;max-width:100%}'
+    'html[data-g9-role="CORE1A"] [data-g9-neutral-diagnostic] label'
+    '{display:block;margin:.65rem 0 .2rem}'
+    'html[data-g9-role="CORE1A"] [data-g9-neutral-diagnostic] input'
+    '{display:block;box-sizing:border-box;max-width:100%;width:min(100%,18rem);min-height:48px}'
     '@media print{html[data-g9-role="CORE1A"] [data-g9-concept-target][hidden]'
     '{display:block!important}'
     'html[data-g9-role="CORE1A"] [data-g9-concept-target] .g9-stage-controls'
@@ -3163,7 +3234,7 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
             '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<meta name="g9-render" content="{RENDERER_VERSION} {digest}">'
             f'{_shared_head_assets(ctx, mode)}'
-            f'<title>{esc(ROLE_TITLE[role])} · {esc(m["title"])}</title><style>{CSS}{CORE1B_PRINT_CSS if role == "CORE1B" else ""}{CONCEPT_FIRST_PRINT_CSS if checkpoint_page else ""}{COMPONENT_CSS}{learning_repair.CSS}{layout_css(ctx.blueprints)}</style></head>'
+            f'<title>{esc(ROLE_TITLE[role])} · {esc(m["title"])}</title><style>{CSS}{CORE1B_PRINT_CSS if role == "CORE1B" else ""}{CONCEPT_FIRST_CSS if checkpoint_page else ""}{COMPONENT_CSS}{learning_repair.CSS}{layout_css(ctx.blueprints)}</style></head>'
             f'<body data-core="{role}" data-blueprint-ref="{esc(bp["id"])}@{esc(bp["version"])}">'
             f'{header}{crumbs}<noscript>Answers open after you attempt; this page needs JavaScript.</noscript>'
             f'<main><h1>{esc(m["title"])}: {esc(ROLE_TITLE[role])}</h1>'

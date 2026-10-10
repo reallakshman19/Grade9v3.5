@@ -134,7 +134,23 @@
           "status": "LOCAL_TEACHING_FORMAT_CHECK_NOT_INDEPENDENT_MASTERY",
           "on_wrong_choice": "Compare the earlier 2³ to 2⁴: 8 to 16 is multiplication, not an addition of 2. Try the concept check again.",
           "on_wrong_explanation": "Explain why an extra exponent introduces a factor of the base. A selected answer alone is not a reason.",
-          "on_form_check": "Your concept-check selection and explanation have been recorded for this page only. Now study the guided application. This is not independent mastery evidence."
+          "on_form_check": "Your concept-check selection and explanation have been recorded for this page only. Now study the guided application. This is not independent mastery evidence.",
+          "diagnostic": {
+            "version": "1",
+            "scope": "NEUTRAL_NUMERICAL_COUNTEREXAMPLE_NOT_TARGET_ITEM",
+            "symbol": "R",
+            "base": 7,
+            "exponent": 2,
+            "prompt": "If R = 7² = 49, independently calculate 7³ and R + 7. Which number is the next power, and does adding seven give the same result?",
+            "next_label": "7³ (the actual next power)",
+            "add_label": "R + 7 (the tempting additive prediction)",
+            "status": "LOCAL_STRUCTURED_NUMERICAL_PATTERN_NOT_MASTERY",
+            "on_missing": "Enter both numerical values to test the two predictions; this is a structured check, not a grade for your written explanation.",
+            "on_inconsistent": "Your factor choice and numerical values do not yet agree. Recompute both quantities; an arithmetic slip and a conceptual misunderstanding cannot be distinguished from this response alone.",
+            "on_additive_route": "The additive relationship has been selected again. Compare both computations carefully. This is a repeated answer pattern, not proof of a lasting misconception.",
+            "on_conflict": "Your computed values contradict the additive choice. Reconsider the exponent law and explain the conflict; no mastery judgment is made.",
+            "on_aligned": "Both calculations match the exponent-law comparison. This is structured practice only; your written mathematical explanation remains ungraded."
+          }
         }
       },
       "id": "MIC-TEST-IMO-G9-COMMON-BASE-RELATION",
@@ -859,12 +875,12 @@
       ],
       "help_plan": [
         "Core1A concept first: derive a^(n+1)=a*a^n using P=2^3 and P=5^n before showing the separately authored 3/9 example.",
-        "Require the learner to explain why one exponent increment multiplies the power; a TEST-only browser formative choice+rationale gate is implemented, but it does not verify conceptual understanding or award mastery.",
+        "Require the learner to state why an exponent increment multiplies the base, then numerically compare an unrelated 7³ with 7²+7 as a check against the additive misconception. The TEST-only browser records a prediction, ungraded rationale, and neutral numeric response patterns (aligned, conflicting, repeated additive, possible arithmetic slip); these patterns neither prove comprehension nor identify a learner misconception with certainty.",
         "Only after the conceptual bridge, guide 3^(2x+1)=9^x+162, then diagnose common wrong routes; the independent exit remains a new base-2 problem.",
         "Core2A hints remain optional, question-scoped and progressively revealing; each disclosure must be recorded before independent-credit logic can rely on it.",
         "A failed Core2A attempt must return to concept reconstruction, not directly display its own solved equation. Returning to a fresh, unassisted attempt and proof of transfer requires renderer/QRT work not delivered by this content-only edit."
       ],
-      "reveal_plan": "Core1A's TEST renderer first displays an unrelated numerical/index-law explanation and requires a selected factor-law option plus a minimal rule-worded rationale before revealing the authored 3/9 guided solution and fresh base-2 exit. This is a client-only FORMATIVE FORMAT GATE, not verified conceptual comprehension, secure assessment, academic acceptance, or independent mastery. Core2A hints are now initially hidden/optional and disclosed hints mark the local attempt as assisted, with best-effort local persistence; no signed learner evidence, secure grading, or fresh unseen post-repair return loop is implemented.",
+      "reveal_plan": "Core1A's TEST renderer first displays the unrelated 2³/2⁴ exponent-law demonstration, requests a 5ⁿ multiplier-vs-additive choice and ungraded rationale, and separately checks a 7²→7³ numerical counterexample before revealing the authored 3/9 guided solution and fresh base-2 exit. A correct structured comparison records FORMATIVE ONLY; neither a rationale's length nor numeric agreement constitutes a verified general proof, reliable misconception-vs-slip diagnosis, academic acceptance or independent mastery. Guided bypass always remains available. Core2A hints remain optional, attempt-scoped and assisted; no signed learner evidence, secure grading or fresh unseen post-repair return loop is implemented.",
       "source_preferences": [
         {
           "resource_ref": "SRC-TEST-IMO-G9-INDEX-AUTHORED",
