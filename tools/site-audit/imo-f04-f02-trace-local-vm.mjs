@@ -14,15 +14,16 @@ if(!match)throw Error('Source-owned F02 trace not found');
 const code=match[1],storage=new Map(),SCHEMA='F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1';
 let blocked=false,n=0;const check=(x,reason)=>{assert.ok(x,reason);n++};
 class El {
- constructor(data={}){this.dataset={...data};this.listeners=[];this.box=null;this.article=null;this.textContent=''}
+ constructor(data={}){this.dataset={...data};this.listeners=[];this.box=null;this.article=null;this.parent=null;this.textContent=''}
  addEventListener(t,fn){if(t==='click')this.listeners.push(fn)}
- click(){this.listeners.forEach(fn=>fn({}))}
- closest(selector){return selector==='[data-g9-attempt-box]'?this.box:selector==='article[data-g9-role="CORE1A"]'?this.article:null}
+ contains(node){return node===this||node.parent===this}
+ click(){const event={target:this};this.listeners.forEach(fn=>fn(event));this.parent?.listeners.forEach(fn=>fn(event))}
+ closest(selector){return selector==='[data-g9-attempt-box]'?this.box:selector==='article[data-g9-role="CORE1A"]'?this.article:selector==='a[data-g9-repair-ref="TC-02"][data-g9-concept-link]'&&this.isRepairLink?this:null}
 }
 function visit(role,search='',valid=false){
  const article=new El(role==='CORE2A'?{g9Role:'CORE2A',g9Unit:QID}:{g9Role:'CORE1A'});
  const status=new El(),commit=new El(),repair=new El(),gate=new El(),review=new El(),guided=new El(),back=new El();
- commit.box=new El();gate.article=article;
+ commit.box=new El();gate.article=article;repair.isRepairLink=true;repair.parent=article;
  const q=(selector,root)=>{
   if(selector==='[data-g9-f02-trace-status]')return [status];
   if(selector===`article[data-g9-unit="${QID}"]`)return role==='CORE2A'?[article]:[];
