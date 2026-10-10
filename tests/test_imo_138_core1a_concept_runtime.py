@@ -1,5 +1,6 @@
 """#138: emitted TEST Core1A concept-first HTML contract, not a mastery assertion."""
 import json
+import re
 import importlib.util
 import unittest
 from pathlib import Path
@@ -52,7 +53,10 @@ class TestConceptFirstHTML(unittest.TestCase):
         # The *learner DOM* must not include the opt-in TEST Core1A checkpoint.
         self.assertNotIn('<section class="g9-concept-first" data-g9-concept-check',
                          self.pages["core2a.html"])
-        self.assertNotIn('data-g9-role="CORE2"', self.pages["core2a.html"])
+        # Again, shared inline JS legitimately contains all role selectors.
+        # Verify *rendered page/article* role rather than searching JS source.
+        self.assertIsNone(re.search(r'<(?:html|article)[^>]*data-g9-role="CORE2"',
+                                    self.pages["core2a.html"]))
         self.assertFalse(self.pkg["extensions"]["grade9v3:learner_published"])
 
 
