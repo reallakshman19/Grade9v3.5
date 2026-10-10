@@ -103,9 +103,21 @@ class RenderFacts(HTMLParser):
         self.return_links = []
         self.protected = 0
         self._template_depth = 0
+        self._element_stack = []  # (tag, hidden Core1A concept container)
+        self.dom_ids = []
 
     def handle_starttag(self, tag, pairs):
         attrs = dict(pairs)
+        if attrs.get("id") is not None:
+            self.dom_ids.append(attrs["id"])
+        # The HTML parser is an observer, never a post-render mutator.
+        # Track actual ancestor containers so a mere return href outside the
+        # concept-first gate cannot pretend to be an approved learner journey.
+        if tag not in {"area", "base", "br", "col", "embed", "hr", "img",
+                       "input", "link", "meta", "param", "source", "track", "wbr"}:
+            self._element_stack.append((
+                tag, "data-g9-concept-target" in attrs and "hidden" in attrs,
+            ))
         if tag == "html":
             self.root_roles.append(attrs.get("data-g9-role"))
         if tag == "body":
@@ -128,14 +140,23 @@ class RenderFacts(HTMLParser):
                 "ref": attrs.get("data-g9-repair-ref"),
                 "href": attrs.get("href"),
                 "protected_template": self._template_depth > 0,
+                "concept_navigation": "data-g9-concept-link" in attrs,
+                "question": attrs.get("data-g9-question-ref"),
+                "concept": attrs.get("data-g9-concept-ref"),
             })
         if tag == "a" and "data-g9-practice-link" in attrs:
             self.return_links.append({
                 "question": attrs.get("data-g9-question-ref"),
                 "href": attrs.get("href"),
+                "concept": attrs.get("data-g9-concept-ref"),
+                "concept_gate_hidden": any(is_hidden for _tag, is_hidden in self._element_stack),
             })
 
     def handle_endtag(self, tag):
+        for index in range(len(self._element_stack) - 1, -1, -1):
+            if self._element_stack[index][0] == tag:
+                del self._element_stack[index:]
+                break
         if tag == "template":
             self._template_depth = max(0, self._template_depth - 1)
 
@@ -163,6 +184,7 @@ def inspect_rendered(pages: dict[str, str], blueprint_refs: dict[str, str]) -> t
             "steps": parsed.steps,
             "repair_links": parsed.repair_links,
             "return_links": parsed.return_links,
+            "selected_step_dom_id_count": parsed.dom_ids.count(STEP),
         }
         facts[role] = fact
         if parsed.root_roles != [role] or parsed.blueprint_refs != [blueprint_refs[role]]:
@@ -196,12 +218,28 @@ def navigation_findings(rendered: dict) -> list[str]:
     c2 = rendered.get("CORE2A", {})
     if sum(s.get("step") == STEP and s.get("id") == STEP for s in c1.get("steps", [])) != 1:
         issues.append("CORE1A_STEP_FRAGMENT_NOT_ADDRESSABLE")
-    if sum(l.get("ref") == STEP and l.get("href") == f"core1a.html#{STEP}"
-           and l.get("protected_template") for l in c2.get("repair_links", [])) != 1:
+    if "selected_step_dom_id_count" in c1 and c1["selected_step_dom_id_count"] != 1:
+        issues.append("CORE1A_REPAIR_STEP_DOM_ID_NOT_UNIQUE")
+    exact_repairs = [l for l in c2.get("repair_links", [])
+                     if l.get("ref") == STEP and l.get("href") == f"core1a.html#{STEP}"
+                     and l.get("protected_template")]
+    if len(exact_repairs) != 1:
         issues.append("CORE2A_NOT_LINKED_TO_EXACT_REPAIR_STEP")
-    if sum(l.get("question") == QID and l.get("href") == f"core2a.html#{QID}"
-           for l in c1.get("return_links", [])) != 1:
+    elif (not exact_repairs[0].get("concept_navigation")
+          or exact_repairs[0].get("question") != QID
+          or exact_repairs[0].get("concept") != MID):
+        # A correct-looking link is not enough to mark assisted navigation.
+        # A browser witness is STILL required for persisted assistance state.
+        issues.append("CORE2A_REPAIR_HELP_NAVIGATION_UNBOUND")
+    exact_returns = [l for l in c1.get("return_links", [])
+                     if l.get("question") == QID and l.get("href") == f"core2a.html#{QID}"]
+    if len(exact_returns) != 1:
         issues.append("CORE1A_AUTHORED_CORE2A_RETURN_ABSENT")
+    else:
+        if exact_returns[0].get("concept") != MID:
+            issues.append("CORE1A_AUTHORED_RETURN_WRONG_CONCEPT")
+        if not exact_returns[0].get("concept_gate_hidden"):
+            issues.append("CORE1A_AUTHORED_RETURN_BYPASSES_CONCEPT_GATE")
     return issues
 
 
