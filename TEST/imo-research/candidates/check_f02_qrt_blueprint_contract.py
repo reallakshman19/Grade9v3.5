@@ -161,8 +161,28 @@ def audit(
             "status": "SOURCE_PRESENT_SEMANTICS_REQUIRE_REVIEW",
         })
 
-    if question.get("repair_ref") not in [s.get("id") for s in microtopic.get("teaching_path", [])]:
+    repair_ref = question.get("repair_ref")
+    if repair_ref not in [s.get("id") for s in microtopic.get("teaching_path", [])]:
         errors.append("P2_REPAIR_REF_UNRESOLVED")
+    owning_units = [
+        unit for unit in microtopic.get("construction_units", [])
+        if repair_ref in (unit.get("step_refs") or [])
+    ]
+    if len(owning_units) != 1:
+        errors.append("P2_REPAIR_STEP_NOT_BOUND_TO_UNIQUE_CONSTRUCTION_UNIT")
+    unit = owning_units[0] if len(owning_units) == 1 else {}
+    unit_steps = unit.get("step_refs") or []
+    # The current renderer anchors to the construction-unit ID, not TC-02;
+    # one unit covers TC-01 through TC-05. This is not exact-step return.
+    repair_binding = {
+        "requested_step": repair_ref,
+        "construction_unit": unit.get("id"),
+        "construction_unit_steps": unit_steps,
+        "render_link_target": ("core1a.html#" + unit["id"]) if unit.get("id") else None,
+        "status": ("SHARED_CONSTRUCTION_UNIT_ANCHOR_NOT_EXACT_STEP"
+                   if len(unit_steps) > 1 else
+                   "UNIT_ANCHOR_RUNTIME_SEMANTICS_UNVERIFIED"),
+    }
     if not microtopic.get("exit_task", {}).get("prompt"):
         errors.append("CORE1A_FRESH_EXIT_ABSENT")
     concept = microtopic.get("extensions", {}).get("grade9v3:concept_checkpoint", {})
@@ -243,7 +263,9 @@ def audit(
         if name == "M2":
             status = "STRUCTURED_RESPONSE_PATTERNS_COGNITIVE_CAUSE_UNVERIFIED"
         elif name == "P2":
-            status = "SOURCE_ROUTE_DECLARED_PRECISE_STEP_NOT_VERIFIED"
+            status = ("SOURCE_SHARED_CONSTRUCTION_UNIT_NOT_EXACT_STEP"
+                      if len(unit_steps) > 1 else
+                      "SOURCE_ROUTE_DECLARED_PRECISE_STEP_NOT_VERIFIED")
         elif name in ("S2", "S3"):
             status = "DIFFERENT_CORE1A_EXAMPLE_ITEM_SEMANTICS_UNVERIFIED"
         else:
@@ -289,6 +311,7 @@ def audit(
         "golden_reference_cells": golden_cells,
         "rendered_coverage_cells": [resolution["template_id"]] if resolution else [],
         "source_hints": h_ledger,
+        "p2_repair_binding": repair_binding,
         "semantic_review_asks": asks,
         "core1a_repair_reference_alignment": repair_sequence,
         "blueprint_required_slots": slot_ledger,
