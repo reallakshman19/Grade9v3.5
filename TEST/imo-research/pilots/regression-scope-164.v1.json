@@ -1,0 +1,36 @@
+{
+  "schema_version": "imo-164-regression-scope/1",
+  "status": "BASELINE_COMPARISON_INCOMPLETE",
+  "scope": "TEST_ONLY_PR_166",
+  "baseline_main_sha": "778eb35a70517a46108ad0a5dc01dfc89f61c0e3",
+  "branch_sha_observed": "1174275060ced2110da5a7c0264323db31135d28",
+  "pr_changed_paths_only": [
+    ".github/workflows/imo-blueprint-first-164.yml",
+    "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg",
+    "TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg",
+    "TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json",
+    "TEST/imo-research/pilots/transfer-comparison-164.v1.json",
+    "TEST/products/imo-g9-blueprint-boundary-12-transfer.manifest.json",
+    "TEST/products/imo-g9-blueprint-first-five-transfer.manifest.json",
+    "tests/imo_blueprint_first_browser.mjs",
+    "tests/test_imo_164_transfer_comparison.py",
+    "tests/test_imo_blueprint_first_five_transfer.py"
+  ],
+  "inherited_copy_policy": "PINNED_SNAPSHOT_WITH_EXPLICIT_CORE2A_DIAGNOSTIC_FORK",
+  "inherited_source": "TEST/imo-research/pilots/core1a-render-qualified-divisibility.v1.json",
+  "snapshot_source": "TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json",
+  "copy_scope": "10 shared record arrays; every inherited record byte-equivalent after JSON parsing except Core2A question under narrowly allowed pedagogical fields",
+  "rationale": "Self-contained candidate package currently required for standalone manifest render. Refactor to cross-package refs only after schema and renderer resolution are demonstrated; never silently duplicate untracked data.",
+  "guardrails_branch_head": {
+    "source": "RUN_38078233685",
+    "conclusion": "failure",
+    "test_failures": 119,
+    "test_errors": 34,
+    "skipped": 7,
+    "scope": "Global suite includes generated/staged artifact, math, physics, accessibility and contract checks outside the ten PR paths; precise cause not attributed to main."
+  },
+  "baseline_equivalence": "NOT_ESTABLISHED",
+  "independent_baseline_attested": false,
+  "global_ci_accepted": false,
+  "remediation": "Run exact pinned-main guardrails workflow in matching environment and compare named failure signatures before assigning pre-existing status; unrelated failures must not be masked by changes in this TEST PR."
+}
