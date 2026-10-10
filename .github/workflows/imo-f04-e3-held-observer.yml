@@ -1,0 +1,55 @@
+name: IMO F04 E3 independent-transfer denial (TEST only)
+
+on:
+  pull_request:
+    paths:
+      - "TEST/imo-research/candidates/imo_f02_e3_transfer_gate.py"
+      - "TEST/imo-research/candidates/imo-g9-r1-qrt-core2a-core1a.test.manifest.json"
+      - "TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.v1.json"
+      - "TEST/imo-research/golden/imo-327-model-d3.v1.json"
+      - "tests/test_imo_138_e3_transfer_gate.py"
+      - "Shared/tools/imo_f04_e3_held_observer.py"
+      - "tests/test_imo_f04_e3_held_observer.py"
+      - ".github/workflows/imo-f04-e3-held-observer.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e3-held-independent-observer:
+    name: Denial only — no unseen unaided learner assessment
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: F02 source-owned negative E3 contract tests
+        run: python -m unittest discover -s tests -p 'test_imo_138_e3_transfer_gate.py' -v
+      - name: F04 independently falsifies E3 credit and reviewer authority
+        run: python -m unittest discover -s tests -p 'test_imo_f04_e3_held_observer.py' -v
+      - name: Reproduce source-owned E3 held-only evidence receipt
+        run: |
+          python TEST/imo-research/candidates/imo_f02_e3_transfer_gate.py \
+            --output "$RUNNER_TEMP/imo-f02-e3-held-transfer.json"
+      - name: Cross-check five unmet reviewer requirements and exact source digests
+        run: |
+          mkdir -p build
+          python -m Shared.tools.imo_f04_e3_held_observer \
+            --manifest TEST/imo-research/candidates/imo-g9-r1-qrt-core2a-core1a.test.manifest.json \
+            --package TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.v1.json \
+            --golden TEST/imo-research/golden/imo-327-model-d3.v1.json \
+            --e3-receipt "$RUNNER_TEMP/imo-f02-e3-held-transfer.json" \
+            --safe-output build/imo-f04-e3-held-safe.json
+      - name: Upload safe status only; no learner answer or academic-grant claim
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f04-e3-held-safe-summary
+          path: build/imo-f04-e3-held-safe.json
+          if-no-files-found: ignore
+          retention-days: 7
