@@ -1585,6 +1585,8 @@ def _draft_concept_checkpoint(ctx: Ctx, m: dict) -> str:
         'Choose a relationship and explain the exponent rule before continuing.</p>'
         '<p data-g9-learning-progress data-g9-progress="not_started" role="note">'
         'Progress (this page only): not started. No independent check has been made.</p>'
+        '<p data-g9-f02-trace-status role="status" aria-live="polite">'
+        'TEST evidence not independently verified.</p>'
         f'<p id="{esc(m["id"])}-concept-scope">This reflection checks neither the meaning nor accuracy of your wording. '
         'It opens guided study only; it is not independently verified mastery.</p>'
         '</section>'
@@ -2519,7 +2521,14 @@ def core2a(ctx: Ctx, q: dict) -> str:
     return compose(ctx, "CORE2A", {
         "identity": (block("provenance", f'<p class="g9-prov">{esc(q.get("origin"))} practice</p>')
                      + metadata_strip(ctx, "CORE2A", q)
-                     + block("family_identity", para(_family_title(ctx, fam.get("family_ref") or q.get("family_ref"))))),
+                     + block("family_identity", para(_family_title(ctx, fam.get("family_ref") or q.get("family_ref")))) + ('<p data-g9-f02-trace-status role="status" aria-live="polite">'
+                        'TEST evidence not independently verified.</p>'
+                        if q.get("id") == "Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"
+                        and q.get("origin") == "AUTHORED"
+                        and q.get("status") == "CANDIDATE"
+                        and any(_f02_selected_authored_core2a(ctx, topic)
+                                for topic in ctx.selection_rows.get("microtopics", []))
+                        else '')),
         "attempt": (block("stem", f"<h2>{esc(q['stem'])}</h2>")
                     + block("conditions", items(q.get("conditions")), title="Conditions")
                     + figure(ctx, roles.get("initial_ref"), "PRE_ATTEMPT", "CORE2A", q["id"], allowed=roles.get("stage_refs"))
@@ -3130,6 +3139,94 @@ q('[data-g9-concept-check]').forEach(c=>{
     return js.replace(print_original, print_checkpoint, 1)
 
 
+def f02_local_trace_js(js: str) -> str:
+    """Append browser-local evidence only to the exact authored F02 TEST pages.
+
+    Storage is user-editable and best-effort, never signed/verified credit.
+    No answers or free-text responses are stored in this small trace.
+    """
+    tail = "\n})();\n"
+    if not js.endswith(tail) or js.count(tail) != 1:
+        raise ValueError("F02_LOCAL_TRACE_JS_PATCH_UNSAFE")
+    trace = r"""// F02-only browser-local, editable evidence trace: never academic credit.
+const f02Question='Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
+const f02Concept='MIC-TEST-IMO-G9-COMMON-BASE-RELATION';
+const f02Key=scope?'f02-trace:'+scope+':'+f02Question:null;
+const f02Schema='F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1';
+const f02Allowed=['ATTEMPT_COMMIT','REPAIR_NAV','GUIDED_OPEN','RETURN_CLICK'];
+const f02Empty=()=>({schema:f02Schema,events:[],assisted:false,overflow:false});
+const f02Read=()=>{
+  if(!f02Key)return {invalid:true};
+  const raw=store.get(f02Key);
+  if(!raw)return f02Empty();
+  try{
+    const value=JSON.parse(raw);
+    if(value?.schema!==f02Schema||!Array.isArray(value.events)||
+       typeof value.assisted!=='boolean'||typeof value.overflow!=='boolean'||
+       value.events.length>32||!value.events.every((e,i)=>
+         e&&e.n===i+1&&f02Allowed.includes(e.kind))||
+       (value.events.some(e=>e.kind!=='ATTEMPT_COMMIT')&&!value.assisted))
+      return {invalid:true};
+    // Drop any non-schema fields from editable localStorage before rewriting:
+    // an injected answer/PII property must never be propagated by this trace.
+    return {schema:f02Schema,events:value.events.map(e=>({n:e.n,kind:e.kind})),
+      assisted:value.assisted,overflow:value.overflow};
+  }catch(_){return {invalid:true}}
+};
+const f02Status=q('[data-g9-f02-trace-status]')[0];
+const f02Reflect=(value,persisted)=>{
+  if(!f02Status)return;
+  const stage=value.invalid?'INVALID_OR_UNAVAILABLE':value.overflow?'INCOMPLETE':
+    persisted===false?'NOT_SAVED':value.events.length?'UNTRUSTED_LOCAL_ONLY':'NOT_RECORDED';
+  f02Status.dataset.g9F02TraceState=stage;
+  f02Status.textContent='TEST evidence (this browser only): '+stage+
+    '. Ordered event markers, not answers. Editable or missing local data never establishes independent mastery.';
+  const target=q('article[data-g9-unit="'+f02Question+'"]')[0];
+  if(target){
+    target.dataset.g9F02TraceState=stage;
+    if(value.assisted||value.invalid)target.dataset.g9F02Assisted='1';
+    else delete target.dataset.g9F02Assisted;
+  }
+};
+const f02Event=(kind)=>{
+  if(!f02Allowed.includes(kind))return;
+  const value=f02Read();
+  if(value.invalid){f02Reflect(value,false);return}
+  if(kind!=='ATTEMPT_COMMIT')value.assisted=true;
+  if(value.events.length>=32)value.overflow=true;
+  else value.events.push({n:value.events.length+1,kind});
+  f02Reflect(value,!!f02Key&&store.set(f02Key,JSON.stringify(value)));
+};
+f02Reflect(f02Read(),null);
+const f02Article=q('article[data-g9-role="CORE2A"][data-g9-unit="'+f02Question+'"]')[0];
+if(f02Article){
+  q('[data-g9-commit]',f02Article).forEach(b=>b.addEventListener('click',()=>{
+    const box=b.closest('[data-g9-attempt-box]');
+    if(box&&validAttempt(box))f02Event('ATTEMPT_COMMIT');
+  }));
+  q('[data-g9-repair-ref="TC-02"][data-g9-concept-link]',f02Article)
+    .forEach(link=>link.addEventListener('click',()=>f02Event('REPAIR_NAV')));
+}
+const f02ConceptGate=q('[data-g9-concept-check][data-g9-concept-ref="'+f02Concept+'"]')[0];
+if(f02ConceptGate){
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('g9-return')===f02Question&&params.get('g9-concept')===f02Concept){
+    const article=f02ConceptGate.closest('article[data-g9-role="CORE1A"]');
+    q('[data-g9-concept-review]',f02ConceptGate).forEach(b=>b.addEventListener('click',()=>{
+      if(article?.dataset.g9ConceptAidExposure==='guided_study')f02Event('GUIDED_OPEN');
+    }));
+    q('[data-g9-concept-commit]',f02ConceptGate).forEach(b=>b.addEventListener('click',()=>{
+      if(article?.dataset.g9ConceptCheckCompleted==='formative_only'&&
+         article?.dataset.g9ConceptAidExposure==='guided_study')
+        f02Event('GUIDED_OPEN');
+    }));
+    q('[data-g9-authored-core2a-return]',article)
+      .forEach(link=>link.addEventListener('click',()=>f02Event('RETURN_CLICK')));
+  }
+}"""
+    return js[:-len(tail)] + "\n" + trace + tail
+
+
 # Only the authored TEST/Core1A format gate withholds its construction on
 # screen. The learner print must contain the full concept lesson, including
 # all three authored SVG stages. Never apply this override to source Core2A.
@@ -3337,11 +3434,20 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
                      f' data-g9-role="{esc(role)}" data-g9-search-text="{esc(search_text)}"{klass}>{RENDER[role](ctx, rec)}</article>')
     header, crumbs = shell(ctx, role, mode)
     m = ctx.manifest
-    # Only TEST/Core1A authored opt-ins receive checkpoint behaviour. An
-    # ordinary Core1A, Core1B or Core2A render retains unchanged shared JS.
+    # Only the selected wholly authored F02 TEST pair receives client-side
+    # ordered assistance event markers. Generic Core2, Core1B and all live
+    # products retain their original JavaScript and authority contracts.
     checkpoint_page = (role == "CORE1A"
                        and '<section class="g9-concept-first" data-g9-concept-check' in articles)
+    f02_selected = any(_f02_selected_authored_core2a(ctx, topic)
+                       for topic in ctx.selection_rows.get("microtopics", []))
+    f02_trace_page = f02_selected and (
+        (role == "CORE1A" and checkpoint_page)
+        or (role == "CORE2A" and
+            'data-g9-unit="Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"' in articles))
     page_js = core1b_js() if role == "CORE1B" else concept_first_js() if checkpoint_page else JS
+    if f02_trace_page:
+        page_js = f02_local_trace_js(page_js)
     # The blueprint says which theme its page opens in (the Core1A benchmark opens dark); a learner's own choice still wins.
     theme = (bp.get("presentation_policy") or {}).get("default_theme")
     theme_attr = f' data-theme="{esc(theme)}"' if theme in {"light", "dark"} else ""
