@@ -1190,12 +1190,26 @@ def _concept_join(ctx: Ctx, role: str) -> dict[str, dict[str, list[str]]]:
         return {"question_to_microtopics": {}, "microtopic_to_questions": {}}
 
 
+def _f02_selected_authored_core2a(ctx: Ctx, m: dict) -> dict | None:
+    """Find the sole authored F02 TEST Core2A item; never admit a source Core2 question."""
+    if not _f02_exact_tc02_anchor(ctx, m, "TC-02"):
+        return None
+    selected = [
+        q for q in ctx.selection_rows.get("core2a", [])
+        if q.get("id") == "Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"
+        and q.get("origin") == "AUTHORED"
+        and q.get("status") == "CANDIDATE"
+        and q.get("repair_ref") == "TC-02"
+        and q.get("primary_capability_ref") == m.get("primary_capability_ref")
+        and _unit_href(ctx, "CORE2A", q["id"])
+    ]
+    return selected[0] if len(selected) == 1 else None
+
+
 def _core1a_practice_navigation(ctx: Ctx, m: dict) -> str:
-    """Generate exact Core2 practice links from the selected canonical capability graph."""
+    """Link to selected Core2, plus the one opt-in authored TEST Core2A repair return."""
     join = _concept_join(ctx, "CORE1A")
     ids = join["microtopic_to_questions"].get(m["id"], [])
-    if not ids:
-        return ""
     questions = {q["id"]: q for q in ctx.selection_rows.get("core2", [])}
     rows = []
     for question_id in ids:
@@ -1206,6 +1220,17 @@ def _core1a_practice_navigation(ctx: Ctx, m: dict) -> str:
         rows.append(
             f'<li><a data-g9-practice-link data-g9-question-ref="{esc(question_id)}" '
             f'data-g9-concept-ref="{esc(m["id"])}" href="core2.html#{esc(question_id)}">{esc(label)}</a></li>'
+        )
+    authored = _f02_selected_authored_core2a(ctx, m)
+    if authored:
+        question_id = authored["id"]
+        href = _unit_href(ctx, "CORE2A", question_id)
+        rows.append(
+            f'<li><a data-g9-practice-link data-g9-authored-core2a-return '
+            f'data-g9-question-ref="{esc(question_id)}" data-g9-concept-ref="{esc(m["id"])}" '
+            f'href="{esc(href)}">Return to authored Core2A question (guided practice)</a>'
+            '<p role="note">Returning after guided teaching is assisted practice, '
+            'not a fresh unassisted transfer or independently verified mastery.</p></li>'
         )
     return block("practice_navigation", "<ul>" + "".join(rows) + "</ul>" if rows else "",
                  title="Practice this concept in Core2")
@@ -1440,6 +1465,134 @@ def _stages_of(figure_html: str) -> int:
     return int(found.group(1)) if found else 0
 
 
+def _f02_exact_tc02_anchor(ctx: Ctx, m: dict, step_ref: str) -> bool:
+    """One authored TEST lesson only; not generic cross-role repair ownership."""
+    spec = (m.get("extensions") or {}).get("grade9v3:concept_checkpoint") or {}
+    return (ctx.manifest.get("subject") == "TEST"
+            and m.get("status") == "CANDIDATE"
+            and m.get("id") == "MIC-TEST-IMO-G9-COMMON-BASE-RELATION"
+            and spec.get("scope") == "TEST_AUTHORED_CORE1A_ONLY"
+            and step_ref == "TC-02"
+            and sum(step_ref in (u.get("step_refs") or [])
+                    for u in (m.get("construction_units") or [])) == 1)
+
+
+def _draft_concept_checkpoint(ctx: Ctx, m: dict) -> str:
+    """Optional neutral Core1A check for wholly authored TEST candidates only.
+
+    This client-side formative check selects a concept *before* guided work.
+    The authored choice and an ungraded free-text reflection are not evidence of mastery.
+    """
+    spec = (m.get("extensions") or {}).get("grade9v3:concept_checkpoint")
+    if not spec:
+        return ""
+    if (ctx.manifest.get("subject") != "TEST" or spec.get("scope") != "TEST_AUTHORED_CORE1A_ONLY"
+            or m.get("status") != "CANDIDATE"
+            or spec.get("status") != "LOCAL_TEACHING_FORMAT_CHECK_NOT_INDEPENDENT_MASTERY"):
+        ctx.gap("AUTHOR_CONCEPT_CHECKPOINT", m["id"],
+                "neutral concept checkpoint is restricted to unadmitted TEST authoring", "CORE1A")
+        return ""
+    options = spec.get("choices") or []
+    if (len(options) != 2 or {c.get("value") for c in options} != {"FACTOR", "ADD"}
+            or spec.get("correct_value") != "FACTOR"):
+        ctx.gap("AUTHOR_CONCEPT_CHECKPOINT", m["id"], "bad check choices", "CORE1A")
+        return ""
+    diagnostic = spec.get("diagnostic") or {}
+    base = diagnostic.get("base")
+    exponent = diagnostic.get("exponent")
+    if (diagnostic.get("scope") != "NEUTRAL_NUMERICAL_COUNTEREXAMPLE_NOT_TARGET_ITEM"
+            or diagnostic.get("status") != "LOCAL_STRUCTURED_NUMERICAL_PATTERN_NOT_MASTERY"
+            or type(base) is not int or not 3 <= base <= 9
+            or type(exponent) is not int or not 1 <= exponent <= 3
+            or not all(isinstance(diagnostic.get(key), str) and diagnostic[key].strip()
+                       for key in ("prompt", "next_label", "add_label", "on_missing",
+                                   "on_inconsistent", "on_additive_route", "on_conflict", "on_aligned"))):
+        ctx.gap("AUTHOR_CONCEPT_DIAGNOSTIC", m["id"],
+                "neutral numerical counterexample must be authored and cannot grade mathematical mastery",
+                "CORE1A")
+        return ""
+    # A selected rule is a falsifiable recognition check, not a grade for free text.
+    rule = diagnostic.get("rule_check") or {}
+    rule_choices = rule.get("choices") or []
+    if (rule.get("status") != "LOCAL_SELECTED_RULE_NOT_INDEPENDENT_REASONING"
+            or not isinstance(rule_choices, list) or len(rule_choices) != 3
+            or any(not isinstance(row, dict) or not isinstance(row.get("label"), str)
+                   or not row["label"].strip() for row in rule_choices)
+            or {row.get("value") for row in rule_choices}
+                  != {"FACTOR_LAW", "ADD_BASE", "MULTIPLY_EXPONENT"}
+            or rule.get("correct_value") != "FACTOR_LAW"
+            or not all(isinstance(rule.get(key), str) and rule[key].strip()
+                       for key in ("prompt", "on_missing", "on_wrong"))):
+        ctx.gap("AUTHOR_CONCEPT_RULE_CHECK", m["id"],
+                "authored neutral rule warrant must be complete and non-mastering", "CORE1A")
+        return ""
+    rule_labels = "".join(
+        f'<label><input type="radio" name="{esc(m["id"])}-rule" '
+        f'data-g9-rule-option value="{esc(choice["value"])}"> '
+        f'{esc(choice["label"])}</label>'
+        for choice in rule_choices
+    )
+    labels = "".join(
+        f'<label><input type="radio" name="{esc(m["id"])}-concept" '
+        f'data-g9-concept-option value="{esc(choice["value"])}"> '
+        f'{esc(choice["label"])}</label> '
+        for choice in options
+    )
+    diagnostic_html = (
+        f'<fieldset data-g9-neutral-diagnostic data-g9-base="{base}" data-g9-exponent="{exponent}" '
+        f'data-g9-diagnostic-missing="{esc(diagnostic["on_missing"])}" '
+        f'data-g9-diagnostic-inconsistent="{esc(diagnostic["on_inconsistent"])}" '
+        f'data-g9-diagnostic-additive="{esc(diagnostic["on_additive_route"])}" '
+        f'data-g9-diagnostic-conflict="{esc(diagnostic["on_conflict"])}" '
+        f'data-g9-diagnostic-aligned="{esc(diagnostic["on_aligned"])}">'
+        f'<legend>Check a different number case</legend><p>{esc(diagnostic["prompt"])}</p>'
+        f'<label for="{esc(m["id"])}-diagnostic-next">{esc(diagnostic["next_label"])}</label>'
+        f'<input id="{esc(m["id"])}-diagnostic-next" type="text" inputmode="numeric" '
+        f'data-g9-diagnostic-next autocomplete="off" '
+        f'aria-describedby="{esc(m["id"])}-concept-scope">'
+        f'<label for="{esc(m["id"])}-diagnostic-add">{esc(diagnostic["add_label"])}</label>'
+        f'<input id="{esc(m["id"])}-diagnostic-add" type="text" inputmode="numeric" '
+        f'data-g9-diagnostic-add autocomplete="off" '
+        f'aria-describedby="{esc(m["id"])}-concept-scope">'
+        '</fieldset>'
+    )
+    diagnostic_html += (
+        f'<fieldset data-g9-rule-check data-g9-rule-correct="{esc(rule["correct_value"])}" '
+        f'data-g9-rule-missing="{esc(rule["on_missing"])}" '
+        f'data-g9-rule-wrong="{esc(rule["on_wrong"])}">'
+        '<legend>Explain the neutral factor law</legend>'
+        f'<p>{esc(rule["prompt"])}</p>'
+        + rule_labels + '</fieldset>'
+    )
+    return (
+        f'<section class="g9-concept-first" data-g9-concept-check '
+        f'data-g9-concept-ref="{esc(m["id"])}" '
+        f'data-g9-concept-correct="{esc(spec["correct_value"])}" '
+        f'data-g9-feedback-choice="{esc(spec["on_wrong_choice"])}" '
+        f'data-g9-feedback-explain="{esc(spec["on_wrong_explanation"])}" '
+        f'data-g9-feedback-passed="{esc(spec["on_form_check"])}">'
+        '<h4>Concept first · before the worked equation</h4>'
+        f'<p>{esc(spec["neutral_demo"])}</p>'
+        f'<fieldset><legend>{esc(spec["prompt"])}</legend>{labels}</fieldset>'
+        + diagnostic_html +
+        f'<label for="{esc(m["id"])}-concept-reason">Explain your prediction in your own words</label>'
+        f'<textarea id="{esc(m["id"])}-concept-reason" data-g9-concept-reason rows="3" '
+        f'aria-describedby="{esc(m["id"])}-concept-scope" '
+        'placeholder="What changes when an exponent increases by one?"></textarea>'
+        '<div><button type="button" data-g9-concept-commit>Review my prediction</button> '
+        '<button type="button" data-g9-concept-review>Study the guided explanation instead</button></div>'
+        '<p data-g9-concept-feedback role="status" aria-live="polite">'
+        'Choose a relationship and explain the exponent rule before continuing.</p>'
+        '<p data-g9-learning-progress data-g9-progress="not_started" role="note">'
+        'Progress (this page only): not started. No independent check has been made.</p>'
+        '<p data-g9-f02-trace-status role="status" aria-live="polite">'
+        'TEST evidence not independently verified.</p>'
+        f'<p id="{esc(m["id"])}-concept-scope">This reflection checks neither the meaning nor accuracy of your wording. '
+        'It opens guided study only; it is not independently verified mastery.</p>'
+        '</section>'
+    )
+
+
 def core1a(ctx: Ctx, m: dict) -> str:
     units = m.get("construction_units") or []
     if not units:
@@ -1507,7 +1660,9 @@ def core1a(ctx: Ctx, m: dict) -> str:
         step_items = [steps[sid] for sid in u["step_refs"] if sid in steps]
         crux_step = u.get("crux_step_ref") if u.get("crux_question_refs") else None
         step_html = "".join(
-            f'<li data-g9-step="{esc(step["id"])}"{" data-g9-crux-step" if step["id"] == crux_step else ""}>'
+            (f'<li id="{esc(step["id"])}" tabindex="-1"'
+             if _f02_exact_tc02_anchor(ctx, m, step["id"]) else '<li')
+            + f' data-g9-step="{esc(step["id"])}"{" data-g9-crux-step" if step["id"] == crux_step else ""}>'
             + ('<span class="g9-crux-tag">The step the hard question turns on</span>' if step["id"] == crux_step else "")
             + f'<strong>{esc(step["action"])}</strong>'
             f'<br><em>Why valid:</em> {esc(step["why_valid"])}'
@@ -1606,7 +1761,11 @@ def core1a(ctx: Ctx, m: dict) -> str:
             "WORKED_EXAMPLE": unit_part("WORKED_EXAMPLE", block("worked_anchor", anchor_html, title="Worked explanation")),
         }
         card = component_body(ctx, "CORE1A", card_parts, "construction")
-        construction = f'<section id="{esc(u["id"])}" class="g9-cu" data-g9-cu="{esc(u["id"])}">{card}</section>'
+        checkpoint = _draft_concept_checkpoint(ctx, m) if n == 0 else ""
+        construction = (f'<section id="{esc(u["id"])}" class="g9-cu" data-g9-cu="{esc(u["id"])}">'
+                        + checkpoint
+                        + (f'<div data-g9-concept-target hidden>{card}</div>' if checkpoint else card)
+                        + '</section>')
         support_label = decision or f"Construction {n + 1}"
         trap = (block("wrong_path", items(row["wrong_idea"] for row in wrong), title="A tempting wrong path")
                 + block("diagnose", items(row["diagnostic_prompt"] for row in wrong), title="Diagnose")
@@ -1626,7 +1785,8 @@ def core1a(ctx: Ctx, m: dict) -> str:
         )
         rows += compose(ctx, "CORE1A", {
             "construction": construction,
-            **({"repair_closure": support} if support else {}),
+            **({"repair_closure": (f'<div data-g9-concept-target hidden>{support}</div>'
+                                    if checkpoint else support)} if support else {}),
         })
 
     if toughest and m["id"] == toughest["microtopic_ref"]:
@@ -1639,6 +1799,9 @@ def core1a(ctx: Ctx, m: dict) -> str:
                      if _unit_href(ctx, role, ref)), None)
         return_hrefs[ref] = href or ('#' + repair_row['construction_ref'])
     clinics = secondary_disclosure("Question-specific diagnosis and repair", learning_repair.clinic(repair_rows, return_hrefs), "core1a-question-repair") if repair_rows else ""
+    if _draft_concept_checkpoint(ctx, m):
+        clinics = f'<div data-g9-concept-target hidden>{clinics}</div>'
+        closing = f'<div data-g9-concept-target hidden>{closing}</div>'
     return head + rows + clinics + _purpose_extension(ctx, "CORE1A", m["id"]) + closing
 
 
@@ -2308,8 +2471,8 @@ def _family_title(ctx: Ctx, ref: str | None) -> str:
     return fam.get("title", "") if fam else ""
 
 
-def _repair(ctx: Ctx, ref: str | None) -> str:
-    """Link a canonical repair step to its exact Core1A construction location when one exists."""
+def _repair(ctx: Ctx, ref: str | None, question_ref: str | None = None) -> str:
+    """Link canonical repair; only selected F02 TEST Core2A also encodes return context."""
     if not ref:
         return ""
     for p in ctx.packages:
@@ -2321,13 +2484,22 @@ def _repair(ctx: Ctx, ref: str | None) -> str:
                     (row for row in m.get("construction_units") or [] if ref in (row.get("step_refs") or [])),
                     None,
                 )
-                target = unit["id"] if unit else m["id"]
+                target = (ref if unit and _f02_exact_tc02_anchor(ctx, m, ref)
+                          else unit["id"] if unit else m["id"])
                 label = f'Revisit: {esc(s["action"])}'
                 # Link to the exact owning construction unit, but only when Core1A is part of this packet.
                 if _unit_href(ctx, "CORE1A", m["id"]):
+                    authored = _f02_selected_authored_core2a(ctx, m)
+                    exact_return = bool(authored and authored["id"] == question_ref
+                                        and _f02_exact_tc02_anchor(ctx, m, ref))
+                    href = (f'core1a.html?g9-return={esc(question_ref)}'
+                            f'&amp;g9-concept={esc(m["id"])}#{esc(target)}' if exact_return
+                            else f'core1a.html#{esc(target)}')
                     return (
                         f'<p><a data-g9-repair-ref="{esc(ref)}" data-g9-concept-ref="{esc(m["id"])}" '
-                        f'data-g9-repair-target="{esc(target)}" href="core1a.html#{esc(target)}">{label}</a></p>'
+                        + (f'data-g9-concept-link data-g9-question-ref="{esc(question_ref)}" '
+                           if exact_return else '')
+                        + f'data-g9-repair-target="{esc(target)}" href="{href}">{label}</a></p>'
                     )
                 return f"<p>{label}</p>"
     return ""
@@ -2349,7 +2521,14 @@ def core2a(ctx: Ctx, q: dict) -> str:
     return compose(ctx, "CORE2A", {
         "identity": (block("provenance", f'<p class="g9-prov">{esc(q.get("origin"))} practice</p>')
                      + metadata_strip(ctx, "CORE2A", q)
-                     + block("family_identity", para(_family_title(ctx, fam.get("family_ref") or q.get("family_ref"))))),
+                     + block("family_identity", para(_family_title(ctx, fam.get("family_ref") or q.get("family_ref")))) + ('<p data-g9-f02-trace-status role="status" aria-live="polite">'
+                        'TEST evidence not independently verified.</p>'
+                        if q.get("id") == "Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"
+                        and q.get("origin") == "AUTHORED"
+                        and q.get("status") == "CANDIDATE"
+                        and any(_f02_selected_authored_core2a(ctx, topic)
+                                for topic in ctx.selection_rows.get("microtopics", []))
+                        else '')),
         "attempt": (block("stem", f"<h2>{esc(q['stem'])}</h2>")
                     + block("conditions", items(q.get("conditions")), title="Conditions")
                     + figure(ctx, roles.get("initial_ref"), "PRE_ATTEMPT", "CORE2A", q["id"], allowed=roles.get("stage_refs"))
@@ -2362,7 +2541,7 @@ def core2a(ctx: Ctx, q: dict) -> str:
                             + block("answer", para(ans.get("summary")), title="Answer")
                             + block("independent_check", para(check), title="Independent check")
                             + block("failure_signal", para(q.get("failure_signal")), title="If you went wrong")
-                            + block("repair", _repair(ctx, q.get("repair_ref")), title="Repair")
+                            + block("repair", _repair(ctx, q.get("repair_ref"), question_ref=q["id"]), title="Repair")
                             + block("exposure_closure", para(fam.get("closure")), title="What this establishes"),
                             ref=f'CORE2A-{q["id"]}-reasoning'),
     })
@@ -2812,6 +2991,275 @@ def core1b_js() -> str:
     return js
 
 
+def concept_first_js() -> str:
+    """Insert F02 concept interaction only into opt-in TEST Core1A pages.
+
+    All other roles, generic TEST pages and public site JavaScript retain
+    their original bytes; the ungraded authored reflection confers no mastery.
+    """
+    js = JS
+    checkpoint = """// F02 authored TEST/Core1A reflection; client inputs never confer mastery.
+q('[data-g9-concept-check]').forEach(c=>{
+  const article=c.closest('article[data-g9-role="CORE1A"]');
+  const b=q('[data-g9-concept-commit]',c)[0];
+  const guide=q('[data-g9-concept-review]',c)[0];
+  const feedback=q('[data-g9-concept-feedback]',c)[0];
+  const progress=q('[data-g9-learning-progress]',c)[0];
+  if(!article||!b||!guide||!feedback||!progress)return;
+  const setProgress=(code,description)=>{
+    article.dataset.g9ConceptProgress=code;
+    progress.dataset.g9Progress=code;
+    progress.textContent='Progress (this page only): '+description+' No independent mastery has been checked.'
+      +(article.dataset.g9ConceptAidExposure==='guided_study'
+        ?' Guided teaching has already been displayed; later responses on this page are assisted.':'');
+  };
+  const openGuided=()=>{
+    q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false});
+    q('figure[data-g9-figure]',article).forEach(fitFigure);
+    // A deep link from authored Core2A names TC-02, but never reveals it
+    // before the learner explicitly elects the concept check or guided study.
+    const repair=(window.location.hash==='#TC-02')
+      ?q('[data-g9-concept-target] [data-g9-step="TC-02"]',article)[0]:null;
+    if(repair){repair.focus();repair.scrollIntoView({block:'center'});}
+    else{
+      const heading=q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0];
+      if(heading){heading.setAttribute('tabindex','-1');heading.focus();}
+    }
+  };
+  setProgress('not_started','not started.');
+  if(window.location.hash==='#TC-02'){
+    feedback.textContent='The requested TC-02 repair step is behind this concept-first checkpoint. Review your prediction or choose guided explanation before opening that step. This does not grant independent credit.';
+    guide.focus();
+  }
+  b.addEventListener('click',()=>{
+    const choice=q('[data-g9-concept-option]:checked',c)[0]?.value||'';
+    const reason=(q('[data-g9-concept-reason]',c)[0]?.value||'').trim();
+    const numeric=q('[data-g9-neutral-diagnostic]',c)[0];
+    const nextValue=(q('[data-g9-diagnostic-next]',c)[0]?.value||'').trim();
+    const additiveValue=(q('[data-g9-diagnostic-add]',c)[0]?.value||'').trim();
+    // Every fresh response clears prior formative evidence and prior error pattern.
+    delete article.dataset.g9ConceptCheckCompleted;
+    delete article.dataset.g9DiagnosticPattern;
+    if(!choice){
+      setProgress('needs_review','choose a relationship.');
+      feedback.textContent='Choose one relationship, or open the guided explanation.';
+      return
+    }
+    // The free-text explanation is NEVER machine-graded. A distinct neutral
+    // numerical counterexample checks a testable prediction, not understanding.
+    if(choice===c.dataset.g9ConceptCorrect && reason.length<8){
+      setProgress('needs_reflection','a short explanation is still needed.');
+      feedback.textContent=c.dataset.g9FeedbackExplain;
+      return
+    }
+    const hasNumbers=/^[0-9]{1,7}$/.test(nextValue)&&/^[0-9]{1,7}$/.test(additiveValue);
+    if(!numeric||!hasNumbers){
+      article.dataset.g9DiagnosticPattern='numerical_check_missing';
+      setProgress(choice===c.dataset.g9ConceptCorrect?'needs_counterexample':'needs_review',
+        'the numerical counterexample needs work.');
+      feedback.textContent=numeric?.dataset.g9DiagnosticMissing||'Enter both numerical values.';
+      return
+    }
+    const base=Number(numeric.dataset.g9Base), exp=Number(numeric.dataset.g9Exponent);
+    const nextExpected=base**(exp+1), additiveExpected=base**exp+base;
+    const nextNumber=Number(nextValue), additiveNumber=Number(additiveValue);
+    const correctNumbers=nextNumber===nextExpected&&additiveNumber===additiveExpected;
+    if(choice!==c.dataset.g9ConceptCorrect){
+      article.dataset.g9DiagnosticPattern=correctNumbers
+        ?'choice_numeric_conflict'
+        :(nextNumber===additiveExpected&&additiveNumber===additiveExpected
+          ?'repeated_additive_route_candidate':'additive_choice_unresolved');
+      setProgress('needs_review','prediction and numerical check need review.');
+      feedback.textContent=correctNumbers?numeric.dataset.g9DiagnosticConflict
+        :(nextNumber===additiveExpected&&additiveNumber===additiveExpected
+          ?numeric.dataset.g9DiagnosticAdditive:c.dataset.g9FeedbackChoice);
+      return
+    }
+    if(!correctNumbers){
+      article.dataset.g9DiagnosticPattern='possible_execution_slip_or_model_error';
+      setProgress('needs_counterexample','numerical prediction needs review.');
+      feedback.textContent=numeric.dataset.g9DiagnosticInconsistent;
+      return
+    }
+    // A right prediction with an incorrect selected rule is an explicit
+    // contradiction; correct numbers alone do not unlock guided construction.
+    const rule=q('[data-g9-rule-check]',c)[0];
+    const warrantChoice=q('[data-g9-rule-option]:checked',c)[0]?.value||'';
+    if(!rule||!warrantChoice){
+      article.dataset.g9DiagnosticPattern='mechanism_check_missing';
+      setProgress('needs_reasoning','choose an explanation of the factor law.');
+      feedback.textContent=rule?.dataset.g9RuleMissing||'Choose the exponent-law explanation.';
+      return
+    }
+    if(warrantChoice!==rule.dataset.g9RuleCorrect){
+      article.dataset.g9DiagnosticPattern='mechanism_route_conflict';
+      setProgress('needs_reasoning','the explanation conflicts with the factor law.');
+      feedback.textContent=rule.dataset.g9RuleWrong;
+      return
+    }
+    // A post-reveal answer is assisted recognition, not clean pre-help evidence.
+    // This data is transient and must never qualify independent transfer.
+    const previouslyGuided=article.dataset.g9ConceptAidExposure==='guided_study';
+    article.dataset.g9DiagnosticPattern=previouslyGuided
+      ?'aligned_after_guided_exposure':'aligned_structured_counterexample';
+    article.dataset.g9ConceptCheckCompleted='formative_only';
+    // Exposure is monotonic within this page; re-submission cannot restore independence.
+    article.dataset.g9ConceptAidExposure='guided_study';
+    setProgress('guided_example_open','structured counterexample recorded; guided example open.');
+    feedback.textContent=numeric.dataset.g9DiagnosticAligned+' '+c.dataset.g9FeedbackPassed
+      +' Your explanation has NOT been graded for correctness.';
+    openGuided()
+  });
+  guide.addEventListener('click',()=>{
+    // Switching to unchecked guided study must not retain a previous format-pass marker.
+    delete article.dataset.g9ConceptCheckCompleted;
+    delete article.dataset.g9DiagnosticPattern;
+    article.dataset.g9ConceptAidExposure='guided_study';
+    setProgress('guided_without_check','guided example open without checking the prediction.');
+    feedback.textContent='Guided study opened. No prediction, explanation or independent mastery was verified.';
+    openGuided()
+  });
+  // A staged teaching SVG is fitted to its visible interactive stage.
+  // Printing displays all authored stages, so recompute its viewBox for print
+  // and restore the interactive fit on return. This is TEST/Core1A only.
+  const refitPrintStages=()=>{
+    q('figure[data-g9-figure]',article).forEach(fitFigure);
+  };
+  const printMode=window.matchMedia('print');
+  printMode.addEventListener('change',refitPrintStages);
+  window.addEventListener('beforeprint',refitPrintStages)
+});
+"""
+    anchor = "const practiceLinks=q('[data-g9-practice-link]');"
+    print_original = "window.g9MaterialiseAll=()=>articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)});"
+    print_checkpoint = "window.g9MaterialiseAll=()=>{q('[data-g9-concept-target]').forEach(el=>el.hidden=false);articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)})};"
+    if js.count(anchor) != 1 or js.count(print_original) != 1:
+        raise ValueError("F02_CONCEPT_FIRST_JS_PATCH_UNSAFE: generic runtime changed")
+    js = js.replace(anchor, checkpoint + anchor, 1)
+    return js.replace(print_original, print_checkpoint, 1)
+
+
+def f02_local_trace_js(js: str) -> str:
+    """Append browser-local evidence only to the exact authored F02 TEST pages.
+
+    Storage is user-editable and best-effort, never signed/verified credit.
+    No answers or free-text responses are stored in this small trace.
+    """
+    tail = "\n})();\n"
+    if not js.endswith(tail) or js.count(tail) != 1:
+        raise ValueError("F02_LOCAL_TRACE_JS_PATCH_UNSAFE")
+    trace = r"""// F02-only browser-local, editable evidence trace: never academic credit.
+const f02Question='Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
+const f02Concept='MIC-TEST-IMO-G9-COMMON-BASE-RELATION';
+const f02Key=scope?'f02-trace:'+scope+':'+f02Question:null;
+const f02Schema='F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1';
+const f02Allowed=['ATTEMPT_COMMIT','ASSISTED_ATTEMPT_COMMIT','REPAIR_NAV','GUIDED_OPEN','RETURN_CLICK'];
+const f02Empty=()=>({schema:f02Schema,events:[],assisted:false,overflow:false});
+const f02Read=()=>{
+  if(!f02Key)return {invalid:true};
+  const raw=store.get(f02Key);
+  if(!raw)return f02Empty();
+  try{
+    const value=JSON.parse(raw);
+    if(value?.schema!==f02Schema||!Array.isArray(value.events)||
+       typeof value.assisted!=='boolean'||typeof value.overflow!=='boolean'||
+       value.events.length>32||!value.events.every((e,i)=>
+         e&&e.n===i+1&&f02Allowed.includes(e.kind))||
+       (value.events.some(e=>e.kind!=='ATTEMPT_COMMIT')&&!value.assisted))
+      return {invalid:true};
+    // Drop any non-schema fields from editable localStorage before rewriting:
+    // an injected answer/PII property must never be propagated by this trace.
+    return {schema:f02Schema,events:value.events.map(e=>({n:e.n,kind:e.kind})),
+      assisted:value.assisted,overflow:value.overflow};
+  }catch(_){return {invalid:true}}
+};
+const f02Status=q('[data-g9-f02-trace-status]')[0];
+const f02Reflect=(value,persisted)=>{
+  if(!f02Status)return;
+  const stage=value.invalid?'INVALID_OR_UNAVAILABLE':value.overflow?'INCOMPLETE':
+    persisted===false?'NOT_SAVED':value.events.length?'UNTRUSTED_LOCAL_ONLY':'NOT_RECORDED';
+  f02Status.dataset.g9F02TraceState=stage;
+  f02Status.textContent='TEST evidence (this browser only): '+stage+
+    '. Ordered event markers, not answers. Editable or missing local data never establishes independent mastery.'
+    +(value.events?.some(e=>e.kind==='ASSISTED_ATTEMPT_COMMIT')
+      ?' Any subsequent attempt here was after help and remains assisted, not independent transfer.':'');
+  const target=q('article[data-g9-unit="'+f02Question+'"]')[0];
+  if(target){
+    target.dataset.g9F02TraceState=stage;
+    if(value.assisted||value.invalid)target.dataset.g9F02Assisted='1';
+    else delete target.dataset.g9F02Assisted;
+  }
+};
+const f02Event=(kind)=>{
+  if(!f02Allowed.includes(kind))return;
+  const value=f02Read();
+  if(value.invalid){f02Reflect(value,false);return}
+  // Guidance cannot be un-seen by reloading or resubmitting a new answer.
+  // The first pre-help attempt and every post-help attempt remain distinct.
+  const recordedKind=kind==='ATTEMPT_COMMIT'&&value.assisted
+    ?'ASSISTED_ATTEMPT_COMMIT':kind;
+  // A post-help ATTEMPT_COMMIT already inherits value.assisted=true from
+  // the earlier repair event. Preserve the generic negative-control guard.
+  if(kind!=='ATTEMPT_COMMIT')value.assisted=true;
+  if(value.events.length>=32)value.overflow=true;
+  else value.events.push({n:value.events.length+1,kind:recordedKind});
+  f02Reflect(value,!!f02Key&&store.set(f02Key,JSON.stringify(value)));
+};
+f02Reflect(f02Read(),null);
+const f02Article=q('article[data-g9-role="CORE2A"][data-g9-unit="'+f02Question+'"]')[0];
+if(f02Article){
+  q('[data-g9-commit]',f02Article).forEach(b=>b.addEventListener('click',()=>{
+    const box=b.closest('[data-g9-attempt-box]');
+    if(box&&validAttempt(box))f02Event('ATTEMPT_COMMIT');
+  }));
+  // The exact repair link is inside a gated <template> and is cloned only
+  // after the attempt. Delegate from the stable article, not a static NodeList.
+  f02Article.addEventListener('click',event=>{
+    const link=event.target.closest?.('a[data-g9-repair-ref="TC-02"][data-g9-concept-link]');
+    if(link&&f02Article.contains(link))f02Event('REPAIR_NAV');
+  });
+}
+const f02ConceptGate=q('[data-g9-concept-check][data-g9-concept-ref="'+f02Concept+'"]')[0];
+if(f02ConceptGate){
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('g9-return')===f02Question&&params.get('g9-concept')===f02Concept){
+    const article=f02ConceptGate.closest('article[data-g9-role="CORE1A"]');
+    q('[data-g9-concept-review]',f02ConceptGate).forEach(b=>b.addEventListener('click',()=>{
+      if(article?.dataset.g9ConceptAidExposure==='guided_study')f02Event('GUIDED_OPEN');
+    }));
+    q('[data-g9-concept-commit]',f02ConceptGate).forEach(b=>b.addEventListener('click',()=>{
+      if(article?.dataset.g9ConceptCheckCompleted==='formative_only'&&
+         article?.dataset.g9ConceptAidExposure==='guided_study')
+        f02Event('GUIDED_OPEN');
+    }));
+    q('[data-g9-authored-core2a-return]',article)
+      .forEach(link=>link.addEventListener('click',()=>f02Event('RETURN_CLICK')));
+  }
+}"""
+    return js[:-len(tail)] + "\n" + trace + tail
+
+
+# Only the authored TEST/Core1A format gate withholds its construction on
+# screen. The learner print must contain the full concept lesson, including
+# all three authored SVG stages. Never apply this override to source Core2A.
+CONCEPT_FIRST_CSS = (
+    'html[data-g9-role="CORE1A"] [data-g9-neutral-diagnostic]'
+    '{box-sizing:border-box;min-width:0;max-width:100%}'
+    'html[data-g9-role="CORE1A"] [data-g9-neutral-diagnostic] label'
+    '{display:block;margin:.65rem 0 .2rem}'
+    'html[data-g9-role="CORE1A"] [data-g9-neutral-diagnostic] input'
+    '{display:block;box-sizing:border-box;max-width:100%;width:min(100%,18rem);min-height:48px}'
+    'html[data-g9-role="CORE1A"] [data-g9-rule-check] label'
+    '{display:block;margin:.55rem 0;line-height:1.5;cursor:pointer}'
+    'html[data-g9-role="CORE1A"] [data-g9-rule-check] input'
+    '{margin-right:.5rem;min-width:18px;min-height:18px}'
+    '@media print{html[data-g9-role="CORE1A"] [data-g9-concept-target][hidden]'
+    '{display:block!important}'
+    'html[data-g9-role="CORE1A"] [data-g9-concept-target] .g9-stage-controls'
+    '{display:none!important}}'
+)
+
+
 def _mode_href(href: str, mode: str) -> str:
     """Rebase public-root-relative links for the governed standalone publication path."""
     if mode == "SINGLE_FILE" and href.startswith("../../../"):
@@ -2998,6 +3446,20 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
                      f' data-g9-role="{esc(role)}" data-g9-search-text="{esc(search_text)}"{klass}>{RENDER[role](ctx, rec)}</article>')
     header, crumbs = shell(ctx, role, mode)
     m = ctx.manifest
+    # Only the selected wholly authored F02 TEST pair receives client-side
+    # ordered assistance event markers. Generic Core2, Core1B and all live
+    # products retain their original JavaScript and authority contracts.
+    checkpoint_page = (role == "CORE1A"
+                       and '<section class="g9-concept-first" data-g9-concept-check' in articles)
+    f02_selected = any(_f02_selected_authored_core2a(ctx, topic)
+                       for topic in ctx.selection_rows.get("microtopics", []))
+    f02_trace_page = f02_selected and (
+        (role == "CORE1A" and checkpoint_page)
+        or (role == "CORE2A" and
+            'data-g9-unit="Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"' in articles))
+    page_js = core1b_js() if role == "CORE1B" else concept_first_js() if checkpoint_page else JS
+    if f02_trace_page:
+        page_js = f02_local_trace_js(page_js)
     # The blueprint says which theme its page opens in (the Core1A benchmark opens dark); a learner's own choice still wins.
     theme = (bp.get("presentation_policy") or {}).get("default_theme")
     theme_attr = f' data-theme="{esc(theme)}"' if theme in {"light", "dark"} else ""
@@ -3007,13 +3469,13 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
             '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<meta name="g9-render" content="{RENDERER_VERSION} {digest}">'
             f'{_shared_head_assets(ctx, mode)}'
-            f'<title>{esc(ROLE_TITLE[role])} · {esc(m["title"])}</title><style>{CSS}{CORE1B_PRINT_CSS if role == "CORE1B" else ""}{COMPONENT_CSS}{learning_repair.CSS}{layout_css(ctx.blueprints)}</style></head>'
+            f'<title>{esc(ROLE_TITLE[role])} · {esc(m["title"])}</title><style>{CSS}{CORE1B_PRINT_CSS if role == "CORE1B" else ""}{CONCEPT_FIRST_CSS if checkpoint_page else ""}{COMPONENT_CSS}{learning_repair.CSS}{layout_css(ctx.blueprints)}</style></head>'
             f'<body data-core="{role}" data-blueprint-ref="{esc(bp["id"])}@{esc(bp["version"])}">'
             f'{header}{crumbs}<noscript>Answers open after you attempt; this page needs JavaScript.</noscript>'
             f'<main><h1>{esc(m["title"])}: {esc(ROLE_TITLE[role])}</h1>'
             f'{_core1a_bucket_orientation(ctx) if role == "CORE1A" else ""}{articles}</main>'
             f'<footer data-g9-footer>{esc(m["subject"])} · {esc(m["title"])}</footer>'
-            f"<script>{core1b_js() if role == 'CORE1B' else JS}{learning_repair.JS}</script>{_shared_script_assets(ctx, mode)}</body></html>\n")
+            f"<script>{page_js}{learning_repair.JS}</script>{_shared_script_assets(ctx, mode)}</body></html>\n")
 
 
 def index_page(ctx: Ctx, digest: str) -> str:
