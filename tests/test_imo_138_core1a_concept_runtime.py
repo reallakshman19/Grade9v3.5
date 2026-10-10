@@ -174,7 +174,7 @@ class TestConceptFirstHTML(unittest.TestCase):
         """A hostile JS exception may contain learner text; never serialize it."""
         source = (ROOT / "tools/site-audit/imo-f02-concept-browser.mjs").read_text(
             encoding="utf-8")
-        handlers = re.findall(r"\\.on\\('pageerror',\\s*([^\\n]+)", source)
+        handlers = re.findall(r"\.on\('pageerror',\s*([^\n]+)", source)
         self.assertEqual(len(handlers), 5)
         for handler in handlers:
             with self.subTest(handler=handler):
@@ -196,7 +196,7 @@ class TestConceptFirstHTML(unittest.TestCase):
             "errors.push('PAGE_SCRIPT_EXCEPTION')", "errors.push(String(e))", 1)
         self.assertTrue(any(
             "String(e)" in handler
-            for handler in re.findall(r"\\.on\\('pageerror',\\s*([^\\n]+)", tainted)
+            for handler in re.findall(r"\.on\('pageerror',\s*([^\n]+)", tainted)
         ))
 
     def test_f02_loopback_browser_fixture_serves_declared_assets_only(self):
