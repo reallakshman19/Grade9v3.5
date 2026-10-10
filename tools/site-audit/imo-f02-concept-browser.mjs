@@ -52,6 +52,18 @@ try {
       width + ': missing explicit warning that free text was not graded');
     const focused = await page.evaluate(() => document.activeElement?.tagName || '');
     assert(['H3', 'H4'].includes(focused), width + ': focus not moved to revealed section heading');
+    // A learner may switch to unverified guided study *after* a format-pass.
+    // The historical marker must not survive this transition.
+    await page.locator('[data-g9-concept-review]').click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'guided_without_check',
+      width + ': successful reflection-to-guided transition not labelled unchecked');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': stale formative status survived unchecked guided-study choice');
+    assert((await page.locator('[data-g9-learning-progress]').innerText()).includes('No independent mastery'),
+      width + ': learner status made a mastery assertion');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
+      width + ': deliberate recheck failed to restore formative-only status');
     if (width === 390) {
       const access = await browser.newPage({ viewport: {width:390,height:900}, reducedMotion:'reduce' });
       access.on('pageerror', e => result.failures.push('accessibility probe JS exception: '+String(e)));
