@@ -3020,7 +3020,13 @@ q('[data-g9-concept-check]').forEach(c=>{
 # Only the authored TEST/Core1A format gate withholds its construction on
 # screen. The learner print must contain the full concept lesson, including
 # all three authored SVG stages. Never apply this override to source Core2A.
-CONCEPT_FIRST_PRINT_CSS = (
+CONCEPT_FIRST_CSS = (
+    'html[data-g9-role="CORE1A"] [data-g9-neutral-diagnostic]'
+    '{box-sizing:border-box;min-width:0;max-width:100%}'
+    'html[data-g9-role="CORE1A"] [data-g9-neutral-diagnostic] label'
+    '{display:block;margin:.65rem 0 .2rem}'
+    'html[data-g9-role="CORE1A"] [data-g9-neutral-diagnostic] input'
+    '{display:block;box-sizing:border-box;max-width:100%;width:min(100%,18rem);min-height:48px}'
     '@media print{html[data-g9-role="CORE1A"] [data-g9-concept-target][hidden]'
     '{display:block!important}'
     'html[data-g9-role="CORE1A"] [data-g9-concept-target] .g9-stage-controls'
@@ -3228,7 +3234,7 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
             '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<meta name="g9-render" content="{RENDERER_VERSION} {digest}">'
             f'{_shared_head_assets(ctx, mode)}'
-            f'<title>{esc(ROLE_TITLE[role])} · {esc(m["title"])}</title><style>{CSS}{CORE1B_PRINT_CSS if role == "CORE1B" else ""}{CONCEPT_FIRST_PRINT_CSS if checkpoint_page else ""}{COMPONENT_CSS}{learning_repair.CSS}{layout_css(ctx.blueprints)}</style></head>'
+            f'<title>{esc(ROLE_TITLE[role])} · {esc(m["title"])}</title><style>{CSS}{CORE1B_PRINT_CSS if role == "CORE1B" else ""}{CONCEPT_FIRST_CSS if checkpoint_page else ""}{COMPONENT_CSS}{learning_repair.CSS}{layout_css(ctx.blueprints)}</style></head>'
             f'<body data-core="{role}" data-blueprint-ref="{esc(bp["id"])}@{esc(bp["version"])}">'
             f'{header}{crumbs}<noscript>Answers open after you attempt; this page needs JavaScript.</noscript>'
             f'<main><h1>{esc(m["title"])}: {esc(ROLE_TITLE[role])}</h1>'
