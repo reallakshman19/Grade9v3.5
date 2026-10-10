@@ -269,6 +269,7 @@ class Q004PrivateSpotcheckTests(unittest.TestCase):
         directory.mkdir(mode=0o700)
         packet = directory / "q004.inspection.json"
         packet.write_text("{}", encoding="utf-8")
+        packet.chmod(0o600)
         self.assertEqual(q4._assessment_path(self.workspace, packet), packet)
         other = directory / "other.json"
         other.write_text("{}", encoding="utf-8")
