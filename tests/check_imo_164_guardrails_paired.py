@@ -16,7 +16,6 @@ import re
 import subprocess
 import sys
 import time
-import yaml
 
 BASE_SHA = "778eb35a70517a46108ad0a5dc01dfc89f61c0e3"
 WORKFLOW_BLOB = "ac1397685bf522ccbaed9df88af6e52496fdf5f6"
@@ -40,6 +39,8 @@ def git(root: Path, *args: str) -> str:
 
 
 def load_steps(root: Path) -> list[tuple[str, str]]:
+    # Only paired-replay CI needs PyYAML; ordinary research test discovery does not.
+    import yaml
     path = root / WORKFLOW_PATH
     demand(git(root, "hash-object", WORKFLOW_PATH) == WORKFLOW_BLOB,
            "guardrails.yml blob changed; cannot replay under approved contract")
@@ -129,6 +130,7 @@ def replay(root: Path, scripts: list[tuple[str, str]], logs: Path) -> list[dict]
     temp = logs / "runner-temp"
     temp.mkdir(exist_ok=True)
     env = os.environ.copy()
+    env["GITHUB_WORKSPACE"] = str(root.resolve())
     env["TMPDIR"] = str(temp.resolve())
     env["TMP"] = env["TMPDIR"]
     env["TEMP"] = env["TMPDIR"]
@@ -230,6 +232,6 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main(sys.argv[1:]))
     except (OSError, ValueError, KeyError, TypeError, subprocess.CalledProcessError,
-            yaml.YAMLError) as exc:
+            ImportError) as exc:
         print("GUARDRAILS_PAIRED_INVALID", exc, file=sys.stderr)
         raise SystemExit(2)
