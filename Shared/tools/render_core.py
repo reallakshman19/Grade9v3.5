@@ -2335,29 +2335,34 @@ def _repair(ctx: Ctx, ref: str | None) -> str:
 
 
 def authored_m2_probe(ctx: Ctx, q: dict) -> str:
-    """Opt-in, post-commit two-signal diagnostic for authored Core2A.
+    """Opt-in, post-commit concept-transfer and arithmetic diagnostic for Core2A.
 
-    The probe does not grade the submitted proof. It discriminates an
-    example-only universal argument from a correct universal-method
-    recognition accompanied by a separate arithmetic slip. All feedback
-    is inert until the learner commits and explicitly checks the probe.
+    Repeated example-only answers across distinct universal claims are a
+    stronger conceptual warning than one multiple-choice error. A learner who
+    recognizes both general arguments but miscomputes gets arithmetic repair;
+    mixed or incomplete patterns remain inconclusive. It is not proof grading.
     """
     spec = (q.get("extensions") or {}).get("grade9v3:m2_probe")
     if not spec:
         return ""
     choices = spec.get("reason_choices") or []
+    transfer = spec.get("transfer_choices") or []
     messages = spec.get("feedback") or {}
+    expected_ids = ["EXAMPLE_ONLY", "UNIVERSAL", "UNSURE"]
     required = {"MISCONCEPTION", "SLIP", "NO_SIGNAL", "INCONCLUSIVE"}
-    if ([choice.get("id") for choice in choices] !=
-            ["EXAMPLE_ONLY", "UNIVERSAL", "UNSURE"] or
-            not all(isinstance(c.get("text"), str) and c["text"] for c in choices) or
+    if ([choice.get("id") for choice in choices] != expected_ids or
+            [choice.get("id") for choice in transfer] != expected_ids or
+            not all(isinstance(c.get("text"), str) and c["text"]
+                    for c in choices + transfer) or
             not all(isinstance(messages.get(k), str) and messages[k] for k in required) or
             not str(spec.get("arithmetic_expected", "")).isdigit() or
-            not spec.get("reason_prompt") or not spec.get("arithmetic_prompt") or
+            not spec.get("reason_prompt") or not spec.get("transfer_prompt") or
+            not spec.get("arithmetic_prompt") or
             spec.get("repair_ref") != q.get("repair_ref") or
             not _repair(ctx, q.get("repair_ref"))):
         ctx.gap("AUTHOR_M2_DIAGNOSTIC", q["id"],
-                "post-commit probe must define both signals, differentiated feedback and a real repair",
+                "post-commit probe requires two independently worded concept checks,"
+                " separate arithmetic check, honest feedback, and real Core1A repair",
                 "CORE2A")
         return ""
     group = "m2-" + re.sub(r"[^A-Za-z0-9_-]+", "-", q["id"])
@@ -2365,6 +2370,11 @@ def authored_m2_probe(ctx: Ctx, q: dict) -> str:
         f'<label class="g9-answer-option"><input type="radio" name="{esc(group)}" '
         f'data-g9-m2-reason value="{esc(c["id"])}"><span>{esc(c["text"])}</span></label>'
         for c in choices
+    )
+    transfer_options = "".join(
+        f'<label class="g9-answer-option"><input type="radio" name="{esc(group)}-transfer" '
+        f'data-g9-m2-transfer value="{esc(c["id"])}"><span>{esc(c["text"])}</span></label>'
+        for c in transfer
     )
     feedback = "".join(
         f'<template data-g9-m2-message="{esc(kind)}"><p>{esc(messages[kind])}</p>'
@@ -2376,8 +2386,9 @@ def authored_m2_probe(ctx: Ctx, q: dict) -> str:
         f'<section data-g9-m2-probe hidden class="g9-attempt" '
         f'data-g9-m2-expected="{esc(spec["arithmetic_expected"])}">'
         '<h3>Check your reasoning after committing</h3>'
-        '<p>This short diagnostic checks two signals; it does not grade your original proof.</p>'
+        '<p>These separate checks look for a pattern, not a grade or certain diagnosis.</p>'
         f'<fieldset><legend>{esc(spec["reason_prompt"])}</legend>{options}</fieldset>'
+        f'<fieldset><legend>{esc(spec["transfer_prompt"])}</legend>{transfer_options}</fieldset>'
         f'<label>{esc(spec["arithmetic_prompt"])} '
         '<input type="text" inputmode="numeric" autocomplete="off" '
         'data-g9-m2-arithmetic></label>'
@@ -2838,22 +2849,27 @@ q('[data-g9-commit]',a).forEach(b=>b.onclick=()=>{const box=b.closest('[data-g9-
 a.addEventListener('click',e=>{const b=e.target.closest('[data-g9-next-rung]');if(b&&a.contains(b)){markAssistance(a,'HINT_LADDER');nextRung(b.closest('.g9-ladder'));bindSupportRevealState(a);saveCore2State(a)}});attemptFields(a).forEach(el=>{el.addEventListener('input',()=>saveCore2State(a));el.addEventListener('change',()=>saveCore2State(a))});
 q('details[data-g9-payload-ref$="-wrong-route"]',a).forEach(d=>d.addEventListener('toggle',()=>{if(d.open){markAssistance(a,'WRONG_ROUTE');saveCore2State(a)}}));
 q('[data-g9-concept-link]',a).forEach(link=>link.addEventListener('click',()=>{markAssistance(a,'CONCEPT_NAV');saveCore2State(a);const key=returnKey(link.dataset.g9ConceptRef);if(key)store.set(key,link.dataset.g9QuestionRef||a.dataset.g9Unit);refreshReturnLinks()}))});
-// An authored M2 probe is shown only after a valid commitment, not on page load.
+// Authored M2: two distinct conceptual checks and a separate computation.
 q('[data-g9-m2-probe]').forEach(p=>{
  const a=p.closest('article[data-g9-unit]');if(!a)return;
  const show=()=>{p.hidden=!a.dataset.attempted};show();
  q('[data-g9-commit]',a).forEach(b=>b.addEventListener('click',show));
+ const slot=q('[data-g9-m2-feedback]',p)[0];
+ q('[data-g9-m2-reason], [data-g9-m2-transfer], [data-g9-m2-arithmetic]',p).forEach(el=>{
+  el.addEventListener('input',()=>slot?.replaceChildren());
+  el.addEventListener('change',()=>slot?.replaceChildren());
+ });
  q('[data-g9-m2-check]',p).forEach(b=>b.addEventListener('click',()=>{
   if(!a.dataset.attempted)return;
   const reason=q('[data-g9-m2-reason]:checked',p)[0]?.value;
+  const transfer=q('[data-g9-m2-transfer]:checked',p)[0]?.value;
   const value=q('[data-g9-m2-arithmetic]',p)[0]?.value.trim()||'';
   let outcome='INCONCLUSIVE';
-  if(reason&&/^\d+$/.test(value)){
-   if(reason==='EXAMPLE_ONLY')outcome='MISCONCEPTION';
-   else if(reason==='UNIVERSAL')outcome=value===p.dataset.g9M2Expected?'NO_SIGNAL':'SLIP';
+  if(reason&&transfer&&/^\d+$/.test(value)){
+   if(reason==='EXAMPLE_ONLY'&&transfer==='EXAMPLE_ONLY')outcome='MISCONCEPTION';
+   else if(reason==='UNIVERSAL'&&transfer==='UNIVERSAL')outcome=value===p.dataset.g9M2Expected?'NO_SIGNAL':'SLIP';
   }
   const payload=q('template[data-g9-m2-message]',p).find(t=>t.dataset.g9M2Message===outcome);
-  const slot=q('[data-g9-m2-feedback]',p)[0];
   if(payload&&slot)slot.replaceChildren(payload.content.cloneNode(true));
  }));
 });

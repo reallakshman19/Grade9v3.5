@@ -401,6 +401,11 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertEqual(probe["status"], "IMPLEMENTED_TEST_CANDIDATE_NOT_ACADEMICALLY_ACCEPTED")
         self.assertEqual([choice["id"] for choice in probe["reason_choices"]],
                          ["EXAMPLE_ONLY", "UNIVERSAL", "UNSURE"])
+        self.assertEqual([choice["id"] for choice in probe["transfer_choices"]],
+                         ["EXAMPLE_ONLY", "UNIVERSAL", "UNSURE"])
+        self.assertIn("two consecutive integers", probe["transfer_prompt"])
+        self.assertIn("durable", probe["feedback"]["MISCONCEPTION"])
+        self.assertIn("incomplete", probe["feedback"]["INCONCLUSIVE"])
         self.assertEqual(probe["arithmetic_expected"], "120")
         self.assertEqual(probe["repair_ref"], q["repair_ref"])
         self.assertEqual(set(probe["feedback"]),
@@ -418,6 +423,8 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertIn('data-g9-m2-probe hidden', html)
         self.assertIn('data-g9-m2-expected="120"', html)
         self.assertIn("data-g9-m2-reason", html)
+        self.assertIn("data-g9-m2-transfer", html)
+        self.assertEqual(html.count("data-g9-m2-transfer value="), 3)
         self.assertIn('data-g9-m2-arithmetic', html)
         self.assertIn('data-g9-m2-check', html)
         self.assertIn('role="status" aria-live="polite"', html)
@@ -425,7 +432,9 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
             self.assertIn('data-g9-m2-message="' + key + '"', html)
         self.assertIn('data-g9-repair-ref="TC-03"', html)
         self.assertIn('href="core1a.html#CU-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-PROOF"', html)
-        self.assertIn("if(reason==='EXAMPLE_ONLY')outcome='MISCONCEPTION'", render_core.JS)
+        self.assertIn("if(reason==='EXAMPLE_ONLY'&&transfer==='EXAMPLE_ONLY')outcome='MISCONCEPTION'", render_core.JS)
+        self.assertIn("else if(reason==='UNIVERSAL'&&transfer==='UNIVERSAL')", render_core.JS)
+        self.assertIn("slot?.replaceChildren()", render_core.JS)
         self.assertIn("outcome=value===p.dataset.g9M2Expected?'NO_SIGNAL':'SLIP'",
                       render_core.JS)
         self.assertIn("const show=()=>{p.hidden=!a.dataset.attempted}", render_core.JS)
@@ -437,6 +446,7 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
     def test_m2_malformed_evidence_fails_closed_as_render_gap(self):
         _, _, _, q = snapshot()
         invalid = copy.deepcopy(q)
+        invalid["extensions"]["grade9v3:m2_probe"]["transfer_prompt"] = ""
         invalid["extensions"]["grade9v3:m2_probe"]["feedback"].pop("SLIP")
         ctx = render_core.Ctx(manifest={"product_id": "TEST-PROBE-BROKEN"},
                               packages=[load(PACKAGE)], bank=[], blueprints={})

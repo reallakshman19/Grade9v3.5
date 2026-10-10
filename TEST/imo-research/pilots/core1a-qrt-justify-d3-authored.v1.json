@@ -1167,7 +1167,7 @@
               "author_evidence_ref": "extensions.grade9v3:m2_probe",
               "needs_subject_spot_review": true,
               "evidence_status": "SUPPORTED_CANDIDATE",
-              "observed_behavior": "After a valid free-response commitment, a live two-signal probe distinguishes an example-only universal argument (route to TC-03 repair) from correct universal-method recognition paired with a wrong arithmetic result (recalculation feedback). Uncertain/blank responses remain INCONCLUSIVE; full learner/AT QA not run.",
+              "observed_behavior": "Post-commit two different universal-claim choices plus independent 4×5×6 calculation classify repeated example-only reasoning as a conceptual warning with TC-03 repair; two universal choices plus arithmetic error as a possible one-off slip; mixed, uncertain and incomplete patterns as inconclusive. Browser QA of this revision remains pending.",
               "owner_acceptance": false
             },
             "M3": {
@@ -1184,7 +1184,7 @@
             "remaining_gaps": [],
             "governing_asks_total": 12,
             "owner_accepted_slots": 0,
-            "evidence_limit": "IMPLEMENTED_POST_COMMIT_DIAGNOSTIC_IN_CODE; NOT YET VERIFIED IN ACTUAL BROWSER, INDEPENDENT REVIEW OR LEARNER STUDY",
+            "evidence_limit": "AUTHOR-CODED TWO-CONCEPT TRANSFER + ARITHMETIC DIAGNOSTIC; INDEPENDENT REVIEW/LEARNER STUDY NOT RUN",
             "risk": "D3_PROVISIONAL: if a learner has just memorized the identical Core1A proof, the proposed D3 demand may collapse to recall; candidate must be tested as an attempt-first diagnostic or revised."
           },
           "learning_sequence": "AUTHOR_DIAGNOSTIC_ATTEMPT_FIRST_THEN_OPTIONAL_CORE1A_REPAIR"
@@ -1210,12 +1210,27 @@
           "arithmetic_expected": "120",
           "repair_ref": "TC-03",
           "feedback": {
-            "MISCONCEPTION": "The example-only argument does not cover all positive integers. You need a general justification rather than more samples. Review the Core1A reasoning construction.",
-            "SLIP": "Your answer to the universal-reasoning check is sound, but 4 × 5 × 6 = 120. Recalculate carefully; this arithmetic check alone does not establish a conceptual misunderstanding.",
-            "NO_SIGNAL": "Both short checks are consistent. This does not grade your submitted proof or establish mastery. Compare your reasoning with the complete solution after your attempt.",
-            "INCONCLUSIVE": "Both responses are required to diagnose an issue. No misconception or execution slip was identified."
+            "MISCONCEPTION": "Choosing example-only justifications for both distinct universal claims is a conceptual warning, not proof of a durable misconception. A few checked values never establish every positive integer; revisit general proof with Core1A repair.",
+            "SLIP": "You recognized a general warrant in both situations, but 4 × 5 × 6 = 120. Recalculate the numerical check. One wrong calculation is not evidence of an enduring conceptual misunderstanding.",
+            "NO_SIGNAL": "All three short checks are consistent; this does not grade your proof or establish mastery. You can compare your reasoning with the complete solution after your attempt.",
+            "INCONCLUSIVE": "These responses are incomplete or do not establish a consistent pattern. Neither an enduring conceptual misconception nor an execution slip can be diagnosed from them."
           },
-          "limits": "This post-commit probe distinguishes response patterns, not actual reasoning processes with certainty. A guessed selection, an ambiguous response or an untested browser remains outside academic M2 acceptance."
+          "limits": "Two independent universal-claim choice responses reduce but do not eliminate guessing or cue-following. Mixed, uncertain or incomplete patterns are inconclusive; repeated choices still do not prove an enduring misconception. Independent academic and learner-study acceptance remain absent.",
+          "transfer_prompt": "A different claim: the sum of two consecutive integers is always odd. Which statement proves it for every positive integer k?",
+          "transfer_choices": [
+            {
+              "id": "EXAMPLE_ONLY",
+              "text": "Checking k=1, 2 and 3 proves this claim for every k."
+            },
+            {
+              "id": "UNIVERSAL",
+              "text": "For any integer k, k+(k+1)=2k+1, which is odd."
+            },
+            {
+              "id": "UNSURE",
+              "text": "I am unsure how to justify this for all k."
+            }
+          ]
         },
         "grade9v3:print_layout": "SINGLE_COLUMN_A4"
       },
@@ -1365,7 +1380,7 @@
         ]
       },
       "repair_ref": "TC-03",
-      "failure_signal": "If you have generalised from finitely many examples, first repair the universal-proof reasoning. If you understand arbitrary-n reasoning but miscomputed a numerical check, correct the arithmetic instead. The post-attempt two-signal diagnostic distinguishes those response patterns; it is not an automatic proof grader.",
+      "failure_signal": "A wrong generalization across both independently phrased proof checks may signal a misconception to repair at TC-03. Recognizing both universal proofs but miscomputing the sample product signals a possible calculation slip instead. One wrong or mixed choice is inconclusive; the post-attempt probe never grades the submitted proof.",
       "family_exposure": {
         "family_ref": "FAM-TEST-CORE1A-QUAL-G9-AUTHORED-CONSECUTIVE-PRODUCT",
         "closure": "Full proof requires independent guarantees for 2 and 3, their justified coprime combination, and the truth decision for all n. No independent mastery or QRT acceptance is inferred from page completion."
