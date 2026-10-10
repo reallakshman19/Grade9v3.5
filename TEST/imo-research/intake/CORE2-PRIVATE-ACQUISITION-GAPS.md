@@ -133,6 +133,25 @@ reason to forge the old digest. This private inspection does not change any of
 the 68 source Core2 HOLDS, licence status, canonical admissions, academic/QRT
 acceptance, or learner release.
 
+## Private-bundle source integrity and handoff verification
+
+The review bundle validates source bytes *again after* rendering both page images.
+If an original PDF changes between the first verified receipt read and the
+completion of Poppler output, the bundle fails closed and removes incomplete
+private output. The inspection verifier also refuses world-readable inspection
+JSON: the mode-0700 review directory must contain owner-owned mode-0600
+`q004.inspection.json`. This protects the operator workspace; it does **not**
+certify the original SOF edition or grant reproduction rights.
+
+The GitHub Actions one-shot generator for this branch completed at
+[run #38067000492](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38067000492).
+It regenerated only the seven governed derived projections, ran generator
+read-back checks, and deleted its temporary workflow in the generated commit.
+Because that commit was produced by GitHub Actions, separate normal PR CI
+may require a fresh non-bot commit/approval; do not treat `action_required` as
+a passing or failing verifier. Authentic Core2 remains held at 0/68 until
+real retained original-source evidence and external decisions exist.
+
 ## Public publisher-rights notice — no licence asserted
 
 SOF's [official website](https://sofworld.org/) publicly displays a copyright footer restricting copying/use without **prior written consent**. Its [official contact page](https://sofworld.org/contact) gives general enquiries email `info@sofworld.org`. These observations were checked on 2026-10-10. The public notice is general website language: it **does not** itself establish the rights holder or rights disposition for each school-mirrored past-paper PDF, nor does it supply a licence or explicit policy on mere linking to external original pages.
