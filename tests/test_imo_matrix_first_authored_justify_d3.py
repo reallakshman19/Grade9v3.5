@@ -158,14 +158,12 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
                             v["owner_acceptance"] is False and
                             len(v["observed_behavior"]) > 40
                             for v in mark["matrix_slots"].values()))
-        self.assertEqual(mark["semantic_coverage"]["remaining_gaps"],
-                         ["M2"])
-        self.assertEqual(mark["semantic_coverage"]["supported_candidate_slots"], 11)
+        self.assertEqual(mark["semantic_coverage"]["remaining_gaps"], [])
+        self.assertEqual(mark["semantic_coverage"]["supported_candidate_slots"], 12)
         self.assertEqual(mark["semantic_coverage"]["owner_accepted_slots"], 0)
         self.assertEqual(
             [name for name, row in mark["matrix_slots"].items()
-             if row["evidence_status"] == "GAP_NOT_IMPLEMENTED"],
-            ["M2"])
+             if row["evidence_status"] == "GAP_NOT_IMPLEMENTED"], [])
         self.assertEqual(mark["learning_sequence"],
                          "AUTHOR_DIAGNOSTIC_ATTEMPT_FIRST_THEN_OPTIONAL_CORE1A_REPAIR")
         self.assertEqual(len(manifest["selection"]["core2a"]), 1)
@@ -245,19 +243,21 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
                          ["AUTHORED-001-FACTORS-ONLY", "AUTHORED-001-PARITY-OBSERVE",
                           "AUTHORED-001-RESIDUES-OBSERVE"])
 
-    def test_qrt_missing_visual_and_diagnostic_support_is_not_fake_complete(self):
+    def test_qrt_m2_candidate_is_implemented_but_not_accepted(self):
         _, _, _, q = snapshot()
         evidence = q["extensions"][REVIEW]
         self.assertEqual(evidence["semantic_coverage"]["governing_asks_total"], 12)
         self.assertEqual(evidence["semantic_coverage"]["owner_accepted_slots"], 0)
-        self.assertEqual(evidence["semantic_coverage"]["remaining_gaps"],
-                         ["M2"])
+        self.assertEqual(evidence["semantic_coverage"]["remaining_gaps"], [])
         self.assertIn("may collapse to recall",
                       evidence["semantic_coverage"]["risk"].lower().replace("_", " "))
-        for name in ("M2",):
-            self.assertEqual(evidence["matrix_slots"][name]["evidence_status"],
-                             "GAP_NOT_IMPLEMENTED")
-            self.assertNotEqual(evidence["matrix_slots"][name]["observed_behavior"], "")
+        self.assertEqual(evidence["matrix_slots"]["M2"]["evidence_status"],
+                         "SUPPORTED_CANDIDATE")
+        self.assertEqual(evidence["matrix_slots"]["M2"]["review_state"],
+                         "NOT_ACCEPTED")
+        self.assertFalse(evidence["matrix_slots"]["M2"]["owner_acceptance"])
+        self.assertIn("NOT YET VERIFIED",
+                      evidence["semantic_coverage"]["evidence_limit"])
 
     def test_question_attempt_first_without_prelesson_proof_or_visual_leaks(self):
         pkg, manifest, _, q = snapshot()
@@ -296,7 +296,7 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertEqual(scores["S1"]["evidence_status"], "SUPPORTED_CANDIDATE")
         self.assertEqual(scores["S2"]["evidence_status"], "SUPPORTED_CANDIDATE")
         self.assertEqual(scores["S3"]["evidence_status"], "SUPPORTED_CANDIDATE")
-        self.assertEqual(scores["M2"]["evidence_status"], "GAP_NOT_IMPLEMENTED")
+        self.assertEqual(scores["M2"]["evidence_status"], "SUPPORTED_CANDIDATE")
         self.assertTrue(all(score["owner_acceptance"] is False
                             for score in scores.values()))
 
@@ -377,6 +377,56 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertIn("data-g9-commit", html)
         self.assertIn("data-requires-attempt", html)
         self.assertIn('data-g9-payload-slot', html)
+
+
+    def test_m2_probe_evidence_has_two_separate_signals_and_no_fake_grading(self):
+        _, _, _, q = snapshot()
+        probe = q["extensions"]["grade9v3:m2_probe"]
+        self.assertEqual(probe["status"], "IMPLEMENTED_TEST_CANDIDATE_NOT_ACADEMICALLY_ACCEPTED")
+        self.assertEqual([choice["id"] for choice in probe["reason_choices"]],
+                         ["EXAMPLE_ONLY", "UNIVERSAL", "UNSURE"])
+        self.assertEqual(probe["arithmetic_expected"], "120")
+        self.assertEqual(probe["repair_ref"], q["repair_ref"])
+        self.assertEqual(set(probe["feedback"]),
+                         {"MISCONCEPTION", "SLIP", "NO_SIGNAL", "INCONCLUSIVE"})
+        self.assertNotEqual(probe["feedback"]["MISCONCEPTION"], probe["feedback"]["SLIP"])
+        self.assertIn("not grade", probe["feedback"]["NO_SIGNAL"].lower())
+        self.assertIn("guessed selection", probe["limits"])
+
+    def test_m2_probe_is_revealed_only_after_a_valid_attempt_in_runtime(self):
+        _, _, _, q = snapshot()
+        pages, gaps, _, _, _ = render_core.build_report(
+            MANIFEST, "PAGES", held_to="REFERENCE")
+        self.assertEqual(gaps, [], gaps)
+        html = pages["core2a.html"]
+        self.assertIn('data-g9-m2-probe hidden', html)
+        self.assertIn('data-g9-m2-expected="120"', html)
+        self.assertIn("data-g9-m2-reason", html)
+        self.assertIn('data-g9-m2-arithmetic', html)
+        self.assertIn('data-g9-m2-check', html)
+        self.assertIn('role="status" aria-live="polite"', html)
+        for key in ("MISCONCEPTION", "SLIP", "NO_SIGNAL", "INCONCLUSIVE"):
+            self.assertIn('data-g9-m2-message="' + key + '"', html)
+        self.assertIn('data-g9-repair-ref="TC-03"', html)
+        self.assertIn('href="core1a.html#CU-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-PROOF"', html)
+        self.assertIn("if(reason==='EXAMPLE_ONLY')outcome='MISCONCEPTION'", render_core.JS)
+        self.assertIn("outcome=value===p.dataset.g9M2Expected?'NO_SIGNAL':'SLIP'",
+                      render_core.JS)
+        self.assertIn("const show=()=>{p.hidden=!a.dataset.attempted}", render_core.JS)
+        # The diagnostic helps classify reasoning, but cannot claim to grade
+        # the original free-response proof from a multiple-choice probe.
+        self.assertNotIn("graded_correct", html)
+        self.assertIn(q["stem"], html)
+
+    def test_m2_malformed_evidence_fails_closed_as_render_gap(self):
+        _, _, _, q = snapshot()
+        invalid = copy.deepcopy(q)
+        invalid["extensions"]["grade9v3:m2_probe"]["feedback"].pop("SLIP")
+        ctx = render_core.Ctx(manifest={"product_id": "TEST-PROBE-BROKEN"},
+                              packages=[load(PACKAGE)], bank=[], blueprints={})
+        markup = render_core.authored_m2_probe(ctx, invalid)
+        self.assertEqual(markup, "")
+        self.assertEqual([gap["duty"] for gap in ctx.gaps], ["AUTHOR_M2_DIAGNOSTIC"])
 
     def test_no_source_core2_or_learner_promotion_via_authored_render(self):
         pkg, manifest, _, q = snapshot()
