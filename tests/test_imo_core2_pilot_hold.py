@@ -53,6 +53,73 @@ class Core2PilotHoldTests(unittest.TestCase):
         self.rejects(lambda p: p["source"].update(
             printed_key_choice_sighted="C"))
 
+    def test_unique_choice_from_derived_x_zero_witness(self):
+        self.assertEqual(validate(self.packet, self.census)["core2_admitted"], 0)
+        values = self.packet["math_check"]["distractor_exclusion_spotcheck"]
+        self.assertEqual(values["witness_x"], 0)
+        self.assertEqual(values["source_output_at_witness"], -1)
+        self.assertTrue(all(v != -1 for v in
+                            values["other_choice_outputs_at_witness"].values()))
+        self.assertEqual(values["unique_matching_choice"], "B")
+
+    def test_mutated_distractor_witness_rejected(self):
+        self.rejects(lambda p: p["math_check"][
+            "distractor_exclusion_spotcheck"].update(witness_x=1))
+
+    def test_mutated_distractor_output_rejected(self):
+        self.rejects(lambda p: p["math_check"][
+            "distractor_exclusion_spotcheck"][
+                "other_choice_outputs_at_witness"].update(C=-1))
+
+    def test_extra_answer_choice_rejected(self):
+        self.rejects(lambda p: p["math_check"][
+            "distractor_exclusion_spotcheck"][
+                "other_choice_outputs_at_witness"].update(E=5))
+
+    def test_forged_unique_answer_choice_rejected(self):
+        self.rejects(lambda p: p["math_check"][
+            "distractor_exclusion_spotcheck"].update(unique_matching_choice="A"))
+
+    def test_copied_source_option_text_claim_rejected(self):
+        self.rejects(lambda p: p["math_check"][
+            "distractor_exclusion_spotcheck"].update(
+                original_source_option_text_copied=True))
+
+    def test_fabricated_math_approval_rejected(self):
+        self.rejects(lambda p: p["math_check"][
+            "distractor_exclusion_spotcheck"].update(
+                authority="INDEPENDENT_PUBLISHER_APPROVED"))
+
+    def test_missing_visual_component_rejected(self):
+        self.rejects(lambda p: p["observation"][
+            "visual_component_sightings"].pop("captions"))
+
+    def test_visual_component_upgraded_without_bytes_rejected(self):
+        self.rejects(lambda p: p["observation"][
+            "visual_component_sightings"].update(stem="VERIFIED_WITH_SOURCE_BYTES"))
+
+    def test_rendered_table_not_discarded_as_nonvisual(self):
+        self.rejects(lambda p: p["observation"][
+            "visual_component_sightings"].update(
+                figures="NOT_PRESENT_ON_VIEWED_ITEM"))
+
+    def test_key_sighting_cannot_claim_custody(self):
+        self.rejects(lambda p: p["observation"][
+            "visual_component_sightings"].update(
+                answer_or_rubric="VERIFIED_IN_RESTRICTED_SOURCE"))
+
+    def test_self_check_not_independent_principal(self):
+        self.rejects(lambda p: p["observation"].update(
+            principal_independence="INDEPENDENT"))
+
+    def test_self_check_mode_not_external_signoff(self):
+        self.rejects(lambda p: p["observation"].update(
+            source_sighting_review_mode="THIRD_PARTY_APPROVED"))
+
+    def test_visual_spotcheck_cannot_claim_durable_custody(self):
+        self.rejects(lambda p: p["observation"].update(
+            visual_component_custody_status="VERIFIED"))
+
     def test_modified_math_result_rejected(self):
         self.rejects(lambda p: p["math_check"].update(
             computed_output_values=[-3, -1, 2, 3]))
