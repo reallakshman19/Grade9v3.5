@@ -263,6 +263,11 @@ def authored_core2a_runtime_findings(page: str | None) -> list[str]:
             "const f02Event=(kind)=>",
             "f02Event('ATTEMPT_COMMIT')",
             "f02Event('REPAIR_NAV')",
+            # Repair is inside a gated template, materialized after attempt.
+            # Static q(...) binding at initial page load cannot observe it.
+            "f02Article.addEventListener('click',event=>",
+            "event.target.closest?.('a[data-g9-repair-ref=\"TC-02\"][data-g9-concept-link]')",
+            "if(link&&f02Article.contains(link))f02Event('REPAIR_NAV');",
             "f02Event('GUIDED_OPEN')",
             "f02Event('RETURN_CLICK')",
             "if(kind!=='ATTEMPT_COMMIT')value.assisted=true;",
