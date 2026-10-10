@@ -1,0 +1,602 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO-G9-CORE1A-COMMON-BASE-INTEGER-TRIAL",
+  "title": "Authored integer-exponent common-base Core1A · academic trial",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Restrict the unknown exponent to non-negative integers. After solving for a shared power t, verify membership among permitted integer powers rather than presuming a real inverse. Independently review before selecting for Grade 9.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Wholly authored non-negative-integer common-base reasoning",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallaksh19/Grade9v3.5/issues/294",
+      "edition": "Project-authored integer-domain educational alternative, 2026",
+      "section": "Integral exponent laws, admissible powers, exact reverse substitution",
+      "last_checked": "2026-10-09",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Wholly authored teaching content; no licensed third-party original source stems, answer options or figures",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "For any non-negative integer n, 9^n=3^(2n)>0 and 3^(2n+1)=3*9^n.",
+        "The authored equation 3^(2n+1)=9^n+162 has the unique non-negative integer solution n=2.",
+        "If t=a^(2n) with integer n>=0, positivity alone does not guarantee t is an admissible integer power.",
+        "The two independent base-2 exit answers are protected until a learner attempts the task."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Authorial mathematical truth is independent of a source question's copyright status or printed answer; source-specific Q26 alignment remains a separately held research hypothesis.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-TEST-IMO-G9-COMMON-BASE-INTEGER",
+      "title": "Integral index laws with a shared admissible power",
+      "topic": "Number Systems; Index Laws; whole-number powers, academic-review alternative",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "The student must preserve the exponent offset as multiplication and verify whole-number exponent admissibility after solving in t.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-IMO-G9-COMMON-BASE-RELATION-TABLE-INTEGER",
+      "conventions": [
+        {
+          "id": "integer_domain",
+          "statement": "The unknown n or m must be one of 0,1,2,...; a real solution does not automatically satisfy this."
+        },
+        {
+          "id": "integral_power_law",
+          "statement": "For integer r,s>=0 and integer a>1, a^(r+s)=a^r*a^s and (a^r)^s=a^(rs)."
+        },
+        {
+          "id": "admissible_t",
+          "statement": "If t=a^(2n), n>=0 integer, t must be one of 1,a^2,a^4,..., not just any positive number."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-TEST-IMO-G9-COMMON-EXPONENTIAL-QUANTITY-INTEGER",
+      "action": "Transform an integer-index equation to a common t, justify the multiplier, solve, verify t is an allowed integer power, then check the original equation.",
+      "success_criterion": "Solve the authored n>=0 integer worked anchor, independently justify base-2 exit and distinguish a positive substituted quantity with no integer exponent solution.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-TEST-IMO-G9-COMMON-BASE-RELATION-INTEGER",
+      "title": "Match a shared integer power and check its allowed exponent",
+      "bucket_id": "BUCKET-TEST-IMO-G9-COMMON-BASE-INTEGER",
+      "primary_capability_ref": "CAP-TEST-IMO-G9-COMMON-EXPONENTIAL-QUANTITY-INTEGER",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "A positive t only qualifies when it equals the exact even power required by n>=0.",
+      "entry_assumptions": [
+        "Integral exponent laws for positive integer bases and non-negative integer exponents.",
+        "Whole-number powers of fixed integer a>1 are distinct and strictly increasing.",
+        "Substitution and linear equation transformations preserve equality; t=3^(2n) must also lie among the even powers of 3.",
+        "Positivity t>0 is necessary but not sufficient for existence of a non-negative integer exponent."
+      ],
+      "inferential_jump": "Name t=9^n=3^(2n), use exponent offset to make 3t, solve for t and prove it is an admissible whole-number power before checking n in the original equation.",
+      "teaching_path": [
+        {
+          "id": "TC-01-INTEGER",
+          "action": "For non-negative integer n, set t=9^n=3^(2n)>0 and list possible powers 1,9,81,729,... .",
+          "why_valid": "Because 9=3^2 and n is an integer>=0, integral exponent laws give 9^n=3^(2n). Not every positive t can arise.",
+          "inputs": [],
+          "output": "9^n=3^(2n)=t, n>=0 integer",
+          "role": "DECLARE",
+          "source_ref": "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+        },
+        {
+          "id": "TC-02-INTEGER",
+          "action": "Write 3^(2n+1)=3*3^(2n)=3t; do not treat the +1 in the exponent as addition to t.",
+          "why_valid": "The integral exponent addition law says one extra 3 in the exponent multiplies the power by 3.",
+          "inputs": [],
+          "output": "3^(2n+1)=3t",
+          "role": "TRANSFORM",
+          "source_ref": "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+        },
+        {
+          "id": "TC-03-INTEGER",
+          "action": "Use 3t=t+162 to obtain 2t=162, hence t=81; check that this is an allowed even power of 3.",
+          "why_valid": "Linear operations preserve equality; t=81 is positive AND 81=3^4 belongs to the required whole-number even powers.",
+          "inputs": [],
+          "output": "3t=t+162; t=81=3^4",
+          "role": "TRANSFORM",
+          "source_ref": "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+        },
+        {
+          "id": "TC-04-INTEGER",
+          "action": "From 3^(2n)=3^4, compare integer exponents to obtain 2n=4, hence n=2.",
+          "why_valid": "For base 3>1, whole-number powers are strictly increasing, so equal exact powers have equal integer exponents, without any real-exponential inverse assumption.",
+          "inputs": [],
+          "output": "2n=4; n=2",
+          "role": "TRANSFORM",
+          "source_ref": "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+        },
+        {
+          "id": "TC-05-INTEGER",
+          "action": "Substitute n=2 into the original equation: 3^5=243 and 9^2+162=243.",
+          "why_valid": "An exact reverse check establishes the proposed non-negative integer solution satisfies the original equation.",
+          "inputs": [],
+          "output": "243=243, verified at n=2",
+          "role": "VERIFY",
+          "source_ref": "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO-G9-EXPONENTIAL-FACTOR-INTEGER"
+      ],
+      "representation_refs": [
+        "REP-TEST-IMO-G9-COMMON-BASE-RELATION-TABLE-INTEGER"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-IMO-G9-AUTHORED-EXPONENTIAL-RELATIONS-INTEGER"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Add the exponent offset to the power as t+3 or equate exponents across a sum.",
+          "diagnostic_prompt": "If t=9^n, does 3^(2n+1) equal 3t or t+3? Why cannot one equate exponents across t+162?",
+          "repair": "Integral exponent addition gives 3^(2n+1)=3t; transform the full equation in t before comparing exact powers."
+        },
+        {
+          "wrong_idea": "Conclude any t>0 is generated by a permitted non-negative integer exponent.",
+          "diagnostic_prompt": "Could t=12 equal 4^m for non-negative integer m, even though 12 is positive?",
+          "repair": "4^1=4 and 4^2=16. Powers of 4 increase in m, so 12 is not an integer power of 4; t>0 alone is insufficient."
+        },
+        {
+          "wrong_idea": "Ignore the factor 2 in 3^(2n)=3^4 and report n=4.",
+          "diagnostic_prompt": "Does equality of these powers give n=4 or 2n=4? Reverse-check either in the original equation.",
+          "repair": "Whole-number power uniqueness gives 2n=4, so n=2. At n=4 the original sides are 19683 and 6723, unequal; n=2 gives 243 on both sides."
+        }
+      ],
+      "exit_task": {
+        "prompt": "For non-negative integer m, answer BOTH parts and explain the restrictions. A: Solve 2^(2m+1)=4^m+64, with reverse substitution. B: Does 2^(2m+1)=4^m+8 have an integer solution? Explain, and state whether allowing a real m would change your conclusion.",
+        "source_ref": "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "A: m=3 is the unique non-negative integer solution. B: no non-negative integer solution; allowing real m produces m=3/2.",
+          "reasoning": [
+            "A: Let t=4^m=2^(2m)>0. The factor law gives 2t=t+64 and therefore t=64=2^6.",
+            "Since 2m is an even whole number and equals 6, the permitted exponent is m=3.",
+            "Check A in the original equation: 2^7=128 and 4^3+64=128.",
+            "B: 2t=t+8 implies t=8=2^3, but t=2^(2m) needs an even non-negative integer exponent 2m; no integer m satisfies 2m=3.",
+            "For the distinct real domain, m=3/2 gives 2^4=16 and 4^(3/2)+8=8+8=16."
+          ],
+          "check": "A balances at 128=128. B has no integer m; real m=3/2 balances 16=16.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "research_contribution": "A fresh two-part review-only exit tests exact integer power membership, contrasting an allowed integer solution with a positive t yielding only a fractional real exponent.",
+        "prerequisite_refs": [],
+        "lineage": []
+      },
+      "research_contribution": "A wholly authored Core1A construction with five complete inferential steps, a named positive quantity, one factor law bridge, wrong-route diagnosis, positivity domain exception and independent fresh exit. The related original source Q26 component custody remains unresolved.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-IMO-G9-EXPONENTIAL-RELATION-INTEGER",
+          "decision": "Use the factor relation 3t=t+162, check t=81 is an allowed integer power, and verify the worked anchor n=2 in the original equation.",
+          "step_refs": [
+            "TC-01-INTEGER",
+            "TC-02-INTEGER",
+            "TC-03-INTEGER",
+            "TC-04-INTEGER",
+            "TC-05-INTEGER"
+          ],
+          "representation_ref": "REP-TEST-IMO-G9-COMMON-BASE-RELATION-TABLE-INTEGER",
+          "misconception_indexes": [
+            0,
+            1,
+            2
+          ],
+          "relation_refs": [
+            "REL-TEST-IMO-G9-EXPONENTIAL-FACTOR-INTEGER"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Reverse-check the completely worked integer-exponent anchor at n=2 in its original equation.",
+              "check_type": "WORKED_ORIGINAL_REVERSE_CHECK"
+            },
+            {
+              "statement": "After attempting both fresh base-2 parts, verify your own proposed answers against the original equations and justify the integer exponent restriction.",
+              "check_type": "FRESH_EXIT_DOMAIN_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "Q26-BASE-INTEGER",
+            "Q26-FACTOR-INTEGER",
+            "Q26-SOLVE-INTEGER"
+          ],
+          "worked_anchor_ref": "Q-TEST-IMO-G9-Q26-CORE1A-WORKED-ANCHOR-INTEGER"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "For integer n>=0, if t=3^(2n), why is 3^(2n+1)=3t, not t+3?",
+        "result": "The integral exponent law multiplies by 3. Then t must match an admissible integer power.",
+        "representation_ref": "REP-TEST-IMO-G9-COMMON-BASE-RELATION-TABLE-INTEGER"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-TEST-IMO-G9-EXPONENTIAL-FACTOR-INTEGER",
+      "expression": "For non-negative integer n, 9^n=3^(2n)>0 and 3^(2n+1)=3*9^n.",
+      "meaning": "One t=9^n linearizes the equation, but permitted t values are restricted to whole-number powers 1,9,81,...",
+      "symbols": [
+        {
+          "symbol": "n",
+          "meaning": "Non-negative integer unknown exponent",
+          "unit_or_domain": "nonnegative_integer"
+        },
+        {
+          "symbol": "t",
+          "meaning": "A positive admissible integer power of 9",
+          "unit_or_domain": "integer_power"
+        }
+      ],
+      "conditions": [
+        "n is a non-negative integer.",
+        "Power identities use integer exponent laws; t belongs to 1,9,81,..."
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-INT-2",
+          "action": "Write 3^(2n+1)=3*3^(2n)=3t; do not treat the +1 in the exponent as addition to t.",
+          "why_valid": "The integral exponent addition law says one extra 3 in the exponent multiplies the power by 3.",
+          "inputs": [],
+          "output": "3^(2n+1)=3t",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "DERIV-INT-3",
+          "action": "Use 3t=t+162 to obtain 2t=162, hence t=81; check that this is an allowed even power of 3.",
+          "why_valid": "Linear operations preserve equality; t=81 is positive AND 81=3^4 belongs to the required whole-number even powers.",
+          "inputs": [],
+          "output": "3t=t+162; t=81=3^4",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "DERIV-INT-4",
+          "action": "From 3^(2n)=3^4, compare integer exponents to obtain 2n=4, hence n=2.",
+          "why_valid": "For base 3>1, whole-number powers are strictly increasing, so equal exact powers have equal integer exponents, without any real-exponential inverse assumption.",
+          "inputs": [],
+          "output": "2n=4; n=2",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "DERIV-INT-5",
+          "action": "Substitute n=2 into the original equation: 3^5=243 and 9^2+162=243.",
+          "why_valid": "An exact reverse check establishes the proposed non-negative integer solution satisfies the original equation.",
+          "inputs": [],
+          "output": "243=243, verified at n=2",
+          "role": "VERIFY"
+        }
+      ],
+      "limits": [
+        "Do not equate exponents across a sum.",
+        "Do not mistake positivity for allowed integer-power membership.",
+        "No authentic publisher paper material."
+      ],
+      "checks": [
+        "Worked anchor n=2 satisfies 243=243.",
+        "Independent fresh exit solutions stay protected until attempt."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><mrow><msup><mn>9</mn><mi>n</mi></msup><mo>=</mo><msup><mn>3</mn><mrow><mn>2</mn><mi>n</mi></mrow></msup><mo>=</mo><mi>t</mi><mo>&gt;</mo><mn>0</mn></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO-G9-COMMON-BASE-RELATION-TABLE-INTEGER",
+      "kind": "TABLE_OF_VALUES",
+      "purpose": "Stage the authored worked example of shared integer powers, the factor law, and the exact admissibility check. No exit answers appear.",
+      "required_elements": [
+        "For n>=0 integer, t=9^n=3^(2n) is a permitted power of 9.",
+        "The exponent offset +1 means multiplication by 3: 3^(2n+1)=3t.",
+        "Solve 3t=t+162, giving t=81=3^4, so 2n=4, n=2.",
+        "Protected independent base-2 A/B exit is absent from this open figure."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO-G9-EXPONENTIAL-FACTOR-INTEGER"
+      ],
+      "read_order": [
+        "Name t from the base-3 equality and state t>0.",
+        "Read the second power as a multiple 3t, not a sum of exponents.",
+        "Solve the linear t equation and map t back to n.",
+        "Return to the original authored equation for exact checking."
+      ],
+      "instance_constraints": [
+        "Every worked stage must identify the integral exponent law and allowed n-domain.",
+        "A positive substitute need not be an admissible whole-number power.",
+        "Never reveal the independent exit A or B answer in visible figure."
+      ],
+      "accessibility": [
+        "Each expression has an equivalent plain-language description in reading order.",
+        "Do not convey the factor relationship by color or arrows alone.",
+        "Any optional visual stage must pair 3t and t+162 with explicit labels."
+      ],
+      "misleading_alternatives": [
+        "Treating the exponent offset +1 as addition to the power value.",
+        "Dropping t>0 and accepting a negative substitution result."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/candidates/assets/REP-TEST-IMO-G9-COMMON-BASE-INTEGER.svg"
+      ],
+      "scene_instances": [],
+      "correspondence": [
+        {
+          "element": "Integer common power",
+          "symbol": "9^n=3^(2n)=t",
+          "in_words": "t belongs to 1,9,81,... when n>=0 integer."
+        },
+        {
+          "element": "Factor law",
+          "symbol": "3^(2n+1)=3t",
+          "in_words": "The extra 3 is multiplication, not addition."
+        },
+        {
+          "element": "Worked exponent check",
+          "symbol": "t=81=3^4, 2n=4, n=2",
+          "in_words": "Equality of these integer powers fixes the permitted exponent."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "Q26-BASE-INTEGER",
+          "label": "Identify allowed whole-number power",
+          "purpose": "Worked anchor: name t=9^n, n>=0.",
+          "visible_elements": [
+            "9^n=3^(2n)=t",
+            "t>0"
+          ]
+        },
+        {
+          "id": "Q26-FACTOR-INTEGER",
+          "label": "Preserve exponent multiplier",
+          "purpose": "Worked anchor: keep factor 3 in 3t.",
+          "visible_elements": [
+            "3^(2n+1)=3t"
+          ]
+        },
+        {
+          "id": "Q26-SOLVE-INTEGER",
+          "label": "Check exact exponent and reverse-substitute",
+          "purpose": "Worked anchor: t=81 is an allowed 3^(2n) and n=2.",
+          "visible_elements": [
+            "3t=t+162",
+            "t=81",
+            "n=2"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-IMO-G9-AUTHORED-EXPONENTIAL-RELATIONS-INTEGER",
+      "title": "Authored common-base equations with integer exponent restrictions",
+      "capability_refs": [
+        "CAP-TEST-IMO-G9-COMMON-EXPONENTIAL-QUANTITY-INTEGER"
+      ],
+      "solution_structure": [
+        "Use integral exponent laws to identify t=a^(2n).",
+        "Write the exponent offset as a factor.",
+        "Solve for t and test admissibility among non-negative integer powers.",
+        "Map to a whole-number exponent and reverse-check.",
+        "Contrast with a real exponent only after answering the integer-domain exit."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Choose t=3^(2n)>0 from the common power rather than guessing an exponent equality.",
+        "representation_translation": "Map 9^n, 3^(2n) and 3^(2n+1) to t and 3t without erasing a factor.",
+        "reasoning_steps": "Common base → factor relation → t equation → invert positive exponential → reverse-check.",
+        "novelty": "Protected step is recognizing the multiplicative relationship, not only carrying out linear arithmetic."
+      },
+      "safe_variations": [
+        "Choose other integer bases and admissible powers.",
+        "Use positive t that is not an even integer power to detect a domain false positive."
+      ],
+      "transfer_boundaries": [
+        "Positive t is necessary but not sufficient for a permitted integer exponent.",
+        "A fractional real exponent can solve an equation while no integer exponent does.",
+        "No authenticated SOF source item is included."
+      ],
+      "common_wrong_routes": [
+        "Exponent addition mistaken for addition of values.",
+        "Treat t>0 as sufficient for integer solution.",
+        "Forget 2 in 2n=4."
+      ],
+      "item_refs": []
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-IMO-G9-Q26-CORE1A-WORKED-ANCHOR-INTEGER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "imo-q26-original-core1a-author",
+        "grade9v3:source_status": "AUTHORED_ANCHOR_NO_SOF",
+        "grade9v3:review_variant": "INTEGER_DOMAIN_UNACCEPTED"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER",
+      "original_identifier": "AUTHORED-INTEGER-INDEX-LAWS-WORKED-ANCHOR",
+      "stem": "For a non-negative integer n, prove whether 3^(2n+1)=9^n+162 has a unique integer solution using a common power.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "n>=0 is an integer; this is not a real-exponent question.",
+        "Wholly authored mathematical instruction, not SOF source content."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO-G9-COMMON-BASE-RELATION-TABLE-INTEGER"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Exactly one non-negative integer solution n=2.",
+        "reasoning": [
+          "For non-negative integer n, set t=9^n=3^(2n)>0 and list possible powers 1,9,81,729,... .",
+          "Write 3^(2n+1)=3*3^(2n)=3t; do not treat the +1 in the exponent as addition to t.",
+          "Use 3t=t+162 to obtain 2t=162, hence t=81; check that this is an allowed even power of 3.",
+          "From 3^(2n)=3^4, compare integer exponents to obtain 2n=4, hence n=2.",
+          "Substitute n=2 into the original equation: 3^5=243 and 9^2+162=243."
+        ],
+        "check": "3^5=243=9^2+162.",
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "acceptable_alternatives": [],
+        "subpart_answers": []
+      },
+      "primary_capability_ref": "CAP-TEST-IMO-G9-COMMON-EXPONENTIAL-QUANTITY-INTEGER",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO-G9-AUTHORED-EXPONENTIAL-RELATIONS-INTEGER",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": null,
+        "safe_ref": null,
+        "bound_ref": "REP-TEST-IMO-G9-COMMON-BASE-RELATION-TABLE-INTEGER",
+        "stage_refs": []
+      },
+      "failure_signal": null,
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO-G9-AUTHORED-EXPONENTIAL-RELATIONS-INTEGER",
+        "closure": null
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-TEST-IMO-G9-CORE1A-COMMON-BASE-INTEGER",
+      "title": "Author-only whole-number common-base Core1A trial",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-IMO-G9-COMMON-BASE-RELATION-INTEGER"
+      ],
+      "entry_needs": [
+        "Integer exponent addition/multiplication laws for positive integer bases.",
+        "Whole-number power comparison and linear arithmetic."
+      ],
+      "learner_actions": [
+        "Name a restricted common power t=9^n.",
+        "Preserve 3^(2n+1)=3t.",
+        "Solve t=81 and justify its allowed exponent n=2.",
+        "Complete fresh exit parts A/B before the solution key; distinguish integer and real domains."
+      ],
+      "help_plan": [
+        "Worked anchor is fully visible.",
+        "Both independent exit answers, including the integer boundary, remain protected until commitment."
+      ],
+      "reveal_plan": "Allow the authored n=2 worked example but withhold the two fresh exit answers until learner attempt; never expose an authenticated source key.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-IMO-G9-INDEX-AUTHORED-INTEGER",
+          "purpose": "Wholly authored exponent-law mathematical instruction",
+          "reason": "SOF printed source custody and reuse rights are not cleared; this teaching content is independent of source key authority."
+        }
+      ],
+      "when_not_suitable": [
+        "Independent Grade 9 scope acceptance has not been recorded.",
+        "Do not select as public Core1A or replace the real-domain TEST candidate.",
+        "No authentic SOF source question is admitted."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "WHOLLY_AUTHORED_INTEGER_EXPO_REVIEW_VARIANT_NOT_SOF",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false,
+    "grade9v3:academic_acceptance": false,
+    "grade9v3:variant_policy": "ISOLATED_TEST_MANIFEST_ONLY_PARENT_REAL_PILOT_UNMODIFIED",
+    "grade9v3:academic_packet": "TEST/imo-research/intake/imo-index-laws-core1a-curriculum-review-2026-27.v1.json"
+  },
+  "data": []
+}
