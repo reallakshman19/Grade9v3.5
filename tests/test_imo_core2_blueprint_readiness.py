@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -327,6 +328,27 @@ class BlueprintReadinessTests(unittest.TestCase):
             with self.assertRaisesRegex(audit.AuditError, "CORE2_BLUEPRINT_REQUIRED_COMPONENT_DRIFT"):
                 audit.report(self.root)
         self.bp = original
+
+    def test_fifo_verdict_is_rejected_without_blocking(self):
+        if not hasattr(os, "mkfifo"):
+            self.skipTest("FIFO unsupported on this operating system")
+        fifo = self.root / "blocked.fifo"
+        os.mkfifo(fifo)
+        result = subprocess.run(
+            [sys.executable, str(FILE), "report", "--repo-root", str(self.root),
+             "--spotcheck-verdict", str(fifo)],
+            capture_output=True, text=True, check=False, timeout=5)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("SPOTCHECK_METADATA_UNAVAILABLE", result.stderr)
+        self.assertNotIn(str(fifo), result.stdout + result.stderr)
+
+    def test_json_reader_rejects_directory_and_nonobject(self):
+        with self.assertRaisesRegex(audit.AuditError, "SPOTCHECK_METADATA_UNAVAILABLE"):
+            audit._read_json(self.root, "SPOTCHECK_METADATA_UNAVAILABLE", size_limit=1024)
+        item = self.root / "list.json"
+        item.write_text("[1,2,3]")
+        with self.assertRaisesRegex(audit.AuditError, "SPOTCHECK_METADATA_UNAVAILABLE"):
+            audit._read_json(item, "SPOTCHECK_METADATA_UNAVAILABLE", size_limit=1024)
 
     def test_untrusted_blocking_code_not_copied(self):
         row = self.verdict()
