@@ -10,7 +10,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import stat
 from pathlib import Path
 from typing import Any
 
@@ -87,11 +89,24 @@ class AuditError(ValueError):
 
 
 def _read_json(path: Path, category: str, *, size_limit: int) -> dict[str, Any]:
+    """Open the checked input once; never follow a final symlink or block on a FIFO."""
     try:
-        if path.is_symlink() or not path.is_file() or path.stat().st_size > size_limit:
+        # The prior path.is_symlink/stat/read_text sequence was vulnerable to
+        # replacement between its check and the actual read. Validate the opened
+        # descriptor and bound bytes read even if its reported size is stale.
+        flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+        if not hasattr(os, "O_NOFOLLOW") and path.is_symlink():
             raise AuditError(category)
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, UnicodeError, ValueError, json.JSONDecodeError) as exc:
+        fd = os.open(path, flags)
+        with os.fdopen(fd, "rb") as stream:
+            info = os.fstat(stream.fileno())
+            if not stat.S_ISREG(info.st_mode) or info.st_size > size_limit:
+                raise AuditError(category)
+            raw = stream.read(size_limit + 1)
+        if len(raw) > size_limit:
+            raise AuditError(category)
+        data = json.loads(raw.decode("utf-8"))
+    except (OSError, UnicodeError, ValueError) as exc:
         raise AuditError(category) from exc
     if not isinstance(data, dict):
         raise AuditError(category)
