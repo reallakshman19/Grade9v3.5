@@ -269,6 +269,34 @@ class BlueprintReadinessTests(unittest.TestCase):
                          "BP-CORE2-SOURCE-QUESTION@1.11.0")
         self.assertEqual(len(contracts["custody_component_names"]), 9)
 
+    def test_production_cli_on_real_checkout_stays_hold(self):
+        # Unlike synthetic subprocess fixtures, exercise the unmodified CLI
+        # against the real checked-out canonical schema and blueprint bytes.
+        checkout = Path(__file__).resolve().parents[1]
+        registry = checkout / "Shared/web/interactive-page-blueprints.v1.json"
+        custody = checkout / "Shared/library/source-question-custody.schema.json"
+        if not (registry.is_file() and custody.is_file()):
+            strict = (os.environ.get("CI", "").lower() in ("1", "true", "yes")
+                      or os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
+                      or os.environ.get("CORE2_REQUIRE_FULL_CHECKOUT") == "1")
+            if strict:
+                self.fail("production CLI requires full canonical checkout")
+            self.skipTest("real checkout unavailable to production CLI smoke test")
+        result = subprocess.run(
+            [sys.executable, str(FILE), "report", "--repo-root", str(checkout)],
+            capture_output=True, text=True, check=False, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        data = json.loads(result.stdout)
+        self.assertEqual(data["decision"], "HOLD_MISSING_EVIDENCE")
+        self.assertEqual(data["spotcheck"]["state"], "NO_VERDICT_SUPPLIED")
+        self.assertEqual(data["contracts"]["blueprint_ref"],
+                         "BP-CORE2-SOURCE-QUESTION@1.11.0")
+        self.assertEqual(len(data["contracts"]["custody_component_names"]), 9)
+        for key in ("rights_granted", "independent_review_accepted",
+                    "core2_eligible", "core2_admitted", "learner_published"):
+            self.assertIs(data[key], False)
+        self.assertNotIn(str(checkout), result.stdout + result.stderr)
+
     def test_duplicate_blueprint_rejected(self):
         self.bp["blueprints"].append(copy.deepcopy(self.bp["blueprints"][0]))
         self._write()
