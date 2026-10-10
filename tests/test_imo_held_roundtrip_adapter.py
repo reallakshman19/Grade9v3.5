@@ -1,6 +1,7 @@
 """No-publication synthetic fixtures for the opt-in held HTML adapter."""
 from __future__ import annotations
 import copy
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -46,6 +47,10 @@ class HeldAdapter(unittest.TestCase):
         self.assertIn('data-g9-held-step-focus',nb)
         self.assertIn('data-g9-held-adapter="true"',nb)
         self.assertIn('noindex,nofollow',na)
+        self.assertEqual(report['input_sha256']['core2a.html'], hashlib.sha256(a.encode()).hexdigest())
+        self.assertEqual(report['input_sha256']['core1a.html'], hashlib.sha256(b.encode()).hexdigest())
+        self.assertEqual(report['adapted_sha256']['core2a.html'], hashlib.sha256(na.encode()).hexdigest())
+        self.assertEqual(report['adapted_sha256']['core1a.html'], hashlib.sha256(nb.encode()).hexdigest())
         self.assertIn(f'href="core2a.html#{Q}"',nb)
         self.assertEqual(audit(*args,na,nb)['status'],'STRUCTURAL_CANDIDATE_HELD')
         for key in ['authorizes_learner_launch','authorizes_independent_credit','academic_qrt_approved',
@@ -126,6 +131,12 @@ class HeldAdapter(unittest.TestCase):
             self.assertEqual(json.loads(proc.stdout)['authorizes_learner_launch'],False)
             self.assertTrue((root/'build/adapted/core2a.html').is_file())
             self.assertTrue((root/'build/adapted/core1a.html').is_file())
+            report=json.loads((root/'build/adapted/local-held-report.json').read_text())
+            self.assertEqual(report['adapted_sha256']['core1a.html'],
+                             hashlib.sha256((root/'build/adapted/core1a.html').read_bytes()).hexdigest())
+            cmd[-1]=str(root/'build')
+            proc=subprocess.run(cmd,capture_output=True,text=True)
+            self.assertNotEqual(proc.returncode,0)
             cmd[-1]=str(root/'unscoped/adapted')
             proc=subprocess.run(cmd,capture_output=True,text=True)
             self.assertNotEqual(proc.returncode,0)
