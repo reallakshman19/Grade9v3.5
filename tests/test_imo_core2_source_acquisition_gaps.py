@@ -148,6 +148,18 @@ class Core2SourceAcquisitionGapTests(unittest.TestCase):
         with self.assertRaises(SourceGapError):
             public_rights_notice(self.docs, obj)
 
+    def test_rights_record_integer_alias_cannot_impersonate_boolean(self):
+        obj = load(RIGHTS_NOTICE)
+        obj["written_reproduction_permission_received"] = 0
+        with self.assertRaises(SourceGapError):
+            public_rights_notice(self.docs, obj)
+
+    def test_rights_record_boolean_alias_cannot_impersonate_zero(self):
+        obj = load(RIGHTS_NOTICE)
+        obj["canonical_source_admission_count"] = False
+        with self.assertRaises(SourceGapError):
+            public_rights_notice(self.docs, obj)
+
     def test_historical_artifact_sha_and_four_pins_are_frozen(self):
         meta = load(FINGERPRINTS)
         self.assertEqual(meta["source_artifact_zip_sha256"],
