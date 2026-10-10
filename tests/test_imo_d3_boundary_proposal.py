@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import unittest
 from pathlib import Path
+import xml.etree.ElementTree as ET
 
 
 REPO = Path(__file__).resolve().parents[1]
@@ -127,6 +128,31 @@ class Boundary24Trial(unittest.TestCase):
         self.assertIn("distinct", differentiators)
         self.assertIn("8-divisibility", differentiators)
         self.assertIn("independently decide", t["protected_work"].lower())
+
+    def test_authored_staged_figure_matches_both_claims_without_answer_leak(self):
+        figure = self.trial["pre_attempt_representation"]
+        self.assertEqual(figure["status"], "AUTHOR_SOURCE_SAFE_REVIEW_ASSET_NOT_LIVE")
+        self.assertFalse(figure["owner_acceptance"])
+        self.assertEqual(figure["stage_mode"], "REPLACE")
+        self.assertIn("NOT_YET_REVIEWED", figure["accessibility_status"])
+        path = REPO / figure["asset_ref"]
+        svg_text = path.read_text(encoding="utf-8")
+        root = ET.fromstring(svg_text)
+        stages = [g.attrib["data-g9-stage-id"]
+                  for g in root.iter()
+                  if "data-g9-stage-id" in g.attrib]
+        self.assertEqual(stages, figure["stage_refs"])
+        self.assertEqual(len(stages), 3)
+        self.assertIn("n + 3", svg_text)
+        self.assertIn("24 divides Q(n)", svg_text)
+        self.assertIn("12 divides P(n)", svg_text)
+        title = next(child.text for child in root
+                     if child.tag.endswith("title"))
+        self.assertIn("Authored boundary transfer", title)
+        for forbidden in ("n ≡ 1", "n % 4 != 1", "8 divides Q",
+                          "claim a is false", "claim b is true",
+                          "gcd(8,3)=1", "factor of 4 and another even"):
+            self.assertNotIn(forbidden.lower(), svg_text.lower())
 
     def test_every_review_slot_is_explicitly_not_accepted(self):
         t = self.trial
