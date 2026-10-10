@@ -146,6 +146,32 @@ try {
       width + ': renewed valid reflection and neutral counterexample could not restore formative-only status');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'aligned_after_guided_exposure',
       width + ': corrected resubmission cleared its assisted recognition provenance');
+    // Direct repair fragment is not permission to bypass concept-first review.
+    // This is a fresh navigation, not the already-unlocked lesson above.
+    const deep = await browser.newPage({ viewport: { width, height: 900 } });
+    const deepErrors = [];
+    deep.on('pageerror', e => deepErrors.push(String(e)));
+    await deep.goto(pathToFileURL(html).href + '#TC-02', {waitUntil:'load'});
+    const step = deep.locator('#TC-02');
+    const deepArticle = deep.locator('article[data-g9-role="CORE1A"]');
+    assert(await step.count() === 1, width + ': exact TC-02 fragment is not a unique DOM target');
+    assert(await step.isHidden(), width + ': hash deep-link bypassed hidden concept-first lesson');
+    assert((await deep.locator('[data-g9-concept-feedback]').innerText()).includes('behind this concept-first checkpoint'),
+      width + ': learner was not told why deep-linked TC-02 remains gated');
+    assert(await deepArticle.getAttribute('data-g9-concept-aid-exposure') === null,
+      width + ': deep link silently asserted guided exposure without revealing teaching');
+    assert(await deepArticle.getAttribute('data-g9-concept-check-completed') === null,
+      width + ': deep link silently claimed a completed check');
+    await deep.locator('[data-g9-concept-review]').click();
+    assert(await step.isVisible(), width + ': deliberate guided choice did not reveal exact TC-02');
+    assert(await step.evaluate(el => document.activeElement === el),
+      width + ': focus did not reach the exact TC-02 step after deliberate guided choice');
+    assert(await deepArticle.getAttribute('data-g9-concept-aid-exposure') === 'guided_study',
+      width + ': exact repair revealed without assisted evidence');
+    assert(await deepArticle.getAttribute('data-g9-concept-check-completed') === null,
+      width + ': guided repair falsely recorded independent form completion');
+    assert(deepErrors.length === 0, width + ': TC-02 deep-link JavaScript errors ' + deepErrors.join('; '));
+    await deep.close();
     if (width === 390) {
       const access = await browser.newPage({ viewport: {width:390,height:900}, reducedMotion:'reduce' });
       access.on('pageerror', e => result.failures.push('accessibility probe JS exception: '+String(e)));

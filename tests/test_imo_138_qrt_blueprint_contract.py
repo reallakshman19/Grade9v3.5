@@ -74,19 +74,28 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
         self.assertIn("FREE_TEXT_REASON_MATHEMATICAL_CORRECTNESS_NOT_GRADED", result["review_gates"])
         self.assertIn("RULE_WARRANT_RECOGNITION_NOT_INDEPENDENT_REASONING", result["review_gates"])
 
-    def test_p2_repair_points_to_shared_unit_not_unique_tc02_step(self):
+    def test_p2_repair_exact_tc02_source_fragment_is_gated_not_accepted(self):
         result = self.audit()
         binding = result["p2_repair_binding"]
         self.assertEqual(binding["requested_step"], "TC-02")
         self.assertEqual(binding["construction_unit"], "CU-TEST-IMO-G9-EXPONENTIAL-RELATION")
         self.assertEqual(binding["construction_unit_steps"],
                          ["TC-01", "TC-02", "TC-03", "TC-04", "TC-05"])
-        self.assertEqual(binding["render_link_target"],
-                         "core1a.html#CU-TEST-IMO-G9-EXPONENTIAL-RELATION")
-        self.assertEqual(binding["status"], "SHARED_CONSTRUCTION_UNIT_ANCHOR_NOT_EXACT_STEP")
+        self.assertEqual(binding["render_link_target"], "core1a.html#TC-02")
+        self.assertTrue(binding["checkpoint_required"])
+        self.assertEqual(binding["status"],
+                         "EXACT_TC02_FRAGMENT_DECLARED_GUIDED_BROWSER_UNVERIFIED")
         p2 = next(a for a in result["semantic_review_asks"] if a["ask"] == "P2")
-        self.assertEqual(p2["status"], "SOURCE_SHARED_CONSTRUCTION_UNIT_NOT_EXACT_STEP")
+        self.assertEqual(p2["status"],
+                         "EXACT_TC02_SOURCE_FRAGMENT_GATE_RUNTIME_NOT_INDEPENDENTLY_REVIEWED")
+        self.assertIn("P2_PRECISE_TC02_LEARNER_ROUTE_NOT_VERIFIED", result["review_gates"])
         self.assertEqual(result["academic_status"], "HOLD_NOT_ACCEPTED")
+
+    def test_mutation_exact_repair_checkpoint_ownership_missing_is_rejected(self):
+        pkg = copy.deepcopy(self.package)
+        pkg["microtopics"][0]["extensions"]["grade9v3:concept_checkpoint"]["scope"] = "GENERIC"
+        self.assertIn("P2_F02_EXACT_STEP_OPT_IN_NOT_AUTHORIZED",
+                      self.audit(package=pkg)["errors"])
 
     def test_mutation_repair_reference_loses_construction_owner(self):
         pkg = copy.deepcopy(self.package)
