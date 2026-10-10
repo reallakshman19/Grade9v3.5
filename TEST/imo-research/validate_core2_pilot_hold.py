@@ -59,6 +59,12 @@ def no_copied_source_payload(obj: object) -> None:
             no_copied_source_payload(child)
 
 
+def exact_fields(record: object, fields: tuple[str, ...], name: str) -> None:
+    """A closed schema prevents invented rights/publication evidence aliases."""
+    need(isinstance(record, dict) and set(record) == set(fields),
+         f"{name}: missing or unexpected fields")
+
+
 def validate(packet: dict, census: dict) -> dict:
     need(packet.get("schema") == "imo-g9-core2-pilot-hold-v1",
          "incorrect pilot schema")
@@ -71,6 +77,39 @@ def validate(packet: dict, census: dict) -> dict:
     need(packet.get("pilot_question_id") == QID,
          "pilot must be the specifically selected source position")
     no_copied_source_payload(packet)
+    exact_fields(packet, (
+        "schema", "responsibility_issue", "programme_issue",
+        "governed_purpose", "pilot_question_id", "source", "math_check",
+        "custody", "observation", "decision",
+    ), "pilot packet")
+    exact_fields(packet["source"], (
+        "source_id", "source_document_url", "source_host_kind",
+        "origin_scope", "pdf_page_index_zero_based", "printed_position",
+        "source_key_page_index_zero_based", "printed_key_choice_sighted",
+        "observation",
+    ), "source identity")
+    exact_fields(packet["math_check"], (
+        "independently_computed_relation", "tested_input_values",
+        "computed_output_values", "computed_choice",
+        "math_reviewer_independent_approval", "mathematical_method",
+    ), "math observation")
+    exact_fields(packet["custody"], (
+        "retained_restricted_document_receipt", "retained_document_sha256",
+        "precise_item_byte_locator",
+        "seven_component_custody_independently_verified",
+        "official_key_custody_independently_verified",
+        "rights_to_reproduce", "external_reference_rights",
+        "independent_source_reviewer", "independent_rights_reviewer",
+        "protected_bytes_embedded",
+    ), "custody")
+    exact_fields(packet["observation"], (
+        "date_utc", "method", "document_pages_observed",
+        "authority_limit", "scope",
+    ), "visual observation")
+    exact_fields(packet["decision"], (
+        "status", "core2_eligible", "core2_admitted",
+        "learner_published", "all_other_67_positions", "next_action",
+    ), "decision")
 
     c = census.get("source_census", {})
     rows = census.get("records", [])
