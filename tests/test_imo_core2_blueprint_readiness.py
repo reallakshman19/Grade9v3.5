@@ -350,6 +350,42 @@ class BlueprintReadinessTests(unittest.TestCase):
         with self.assertRaisesRegex(audit.AuditError, "SPOTCHECK_METADATA_UNAVAILABLE"):
             audit._read_json(item, "SPOTCHECK_METADATA_UNAVAILABLE", size_limit=1024)
 
+    def test_duplicate_json_keys_and_nonfinite_values_fail_closed(self):
+        candidate = self.root / "spoofed.json"
+        for raw in ('{"schema":"a","schema":"b"}', '{"n":NaN}',
+                    '{"n":Infinity}', '{"n":-Infinity}'):
+            with self.subTest(raw=raw):
+                candidate.write_text(raw)
+                with self.assertRaisesRegex(audit.AuditError,
+                                            "SPOTCHECK_METADATA_UNAVAILABLE"):
+                    audit._read_json(candidate, "SPOTCHECK_METADATA_UNAVAILABLE",
+                                     size_limit=audit.MAX_METADATA_BYTES)
+
+    def test_deeply_nested_json_fails_without_traceback(self):
+        candidate = self.root / "private-question-file.json"
+        candidate.write_text('{' + '"a":' * 1200 + 'null' + '}' * 1200)
+        result = subprocess.run(
+            [sys.executable, str(FILE), "report", "--repo-root", str(self.root),
+             "--spotcheck-verdict", str(candidate)], capture_output=True,
+            text=True, check=False, timeout=5)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("SPOTCHECK_METADATA_UNAVAILABLE", result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
+        self.assertNotIn(str(candidate), result.stderr + result.stdout)
+
+    def test_unsafe_registry_version_never_reflected(self):
+        sensitive = "private source text must stay private"
+        self.bp["registry_version"] = {"untrusted": sensitive}
+        self._write()
+        with self.assertRaisesRegex(audit.AuditError,
+                                    "CORE2_BLUEPRINT_MISSING_OR_DRIFTED"):
+            audit.report(self.root)
+        result = subprocess.run(
+            [sys.executable, str(FILE), "report", "--repo-root", str(self.root)],
+            capture_output=True, text=True, check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertNotIn(sensitive, result.stdout + result.stderr)
+
     def test_untrusted_blocking_code_not_copied(self):
         row = self.verdict()
         row["status"] = "HOLD_SPOTCHECK_COMPONENTS_INCOMPLETE"
