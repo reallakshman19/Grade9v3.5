@@ -37,6 +37,11 @@ try {
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'repeated_additive_route_candidate',
       width + ': repeated additive prediction was not marked provisional');
     assert(await targets.first().isHidden(), width + ': wrong additive law unblocked construction');
+    await page.locator('[data-g9-diagnostic-add]').fill('57');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'additive_choice_unresolved',
+      width + ': inconsistent additive computation was misclassified as repeated pattern');
+    await page.locator('[data-g9-diagnostic-add]').fill('56');
     await page.locator('[data-g9-diagnostic-next]').fill('343');
     await submit.click();
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'choice_numeric_conflict',
