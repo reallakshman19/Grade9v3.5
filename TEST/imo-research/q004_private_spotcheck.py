@@ -200,7 +200,10 @@ def _assessment_path(workspace: Path, path: Path) -> Path:
                and private_bundle.is_dir()
                and not private_bundle.is_symlink()
                and private_bundle.stat().st_uid == os.getuid()
-               and stat.S_IMODE(private_bundle.stat().st_mode) == 0o700)
+               and stat.S_IMODE(private_bundle.stat().st_mode) == 0o700
+               and p.is_file()
+               and p.stat().st_uid == os.getuid()
+               and stat.S_IMODE(p.stat().st_mode) == 0o600)
     require(p.is_file() and ((p.parent == workspace and
                              p.name.endswith(".json")) or bundled),
             "assessment must be a permitted private Q004 JSON file")
