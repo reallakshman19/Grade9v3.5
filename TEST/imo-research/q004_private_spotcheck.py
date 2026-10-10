@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import hashlib
 import re
 from datetime import datetime, timezone
 import os
@@ -210,6 +211,93 @@ def _assessment_path(workspace: Path, path: Path) -> Path:
     return p
 
 
+
+def verify_private_bundle(workspace: Path, assessment: Path) -> None:
+    """Fail closed if a privately rendered page or its manifest changed.
+
+    This protects the handoff between the exact retained PDF and the images an
+    operator inspects. It is not independent original-source authentication.
+    The historic root-level JSON-only checklist intentionally has no PNGs.
+    """
+    root = workspace / "q004-private-review"
+    require(assessment == root / "q004.inspection.json",
+            "only the fixed Q004 bundle assessment supports image verification")
+    manifest_path = root / "review-manifest.json"
+
+    def private_file(path: Path) -> None:
+        require(not path.is_symlink() and path.is_file()
+                and path.stat().st_uid == os.getuid()
+                and stat.S_IMODE(path.stat().st_mode) == 0o600,
+                "private Q004 review file missing, linked or improperly permissioned")
+
+    private_file(manifest_path)
+    manifest = load(manifest_path)
+    expected_keys = {
+        "schema", "question_id", "source_id", "source_pdf_sha256",
+        "source_pdf_byte_length", "source_retention_status",
+        "source_version_comparison", "images",
+        "component_dispositions_completed", "source_origin_authenticated",
+        "independent_reviewer_approved", "rights_granted", "core2_eligible",
+        "core2_admitted", "learner_published",
+    }
+    require(set(manifest) == expected_keys,
+            "Q004 review manifest has unexpected or missing fields")
+    template = make_template(workspace)
+    _, docs = inventory(load(CENSUS), load(HANDOFF))
+    status, _ = receipt_status(docs[DOC_ID], workspace)
+    require(status in {
+        "VERIFIED_RETAINED_BYTES_ONLY",
+        "IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED",
+    }, "Q004 source PDF receipt is missing or invalid")
+    require(
+        manifest["schema"] == "imo-g9-q004-private-visual-inspection-bundle-v1"
+        and manifest["question_id"] == QID
+        and manifest["source_id"] == DOC_ID
+        and manifest["source_pdf_sha256"] == template["snapshot_sha256"]
+        and manifest["source_pdf_byte_length"] == template["snapshot_byte_length"]
+        and manifest["source_retention_status"] == status
+        and manifest["source_version_comparison"]
+        == template["historical_version_comparison"]
+        and type(manifest["component_dispositions_completed"]) is int
+        and manifest["component_dispositions_completed"] == 0
+        and all(manifest[key] is False for key in (
+            "source_origin_authenticated", "independent_reviewer_approved",
+            "rights_granted", "core2_eligible", "core2_admitted",
+            "learner_published",
+        )),
+        "Q004 visual bundle does not match retained source or makes a grant",
+    )
+    entries = manifest["images"]
+    require(isinstance(entries, list) and len(entries) == 2,
+            "Q004 visual bundle must have exactly two source pages")
+    expected_images = (
+        (ITEM_PAGE, "source-question-page.png"),
+        (KEY_PAGE, "source-answer-key-page.png"),
+    )
+    for item, (index, name) in zip(entries, expected_images):
+        require(isinstance(item, dict) and set(item) == {
+            "pdf_page_index_zero_based", "private_filename", "image_sha256",
+            "purpose",
+        } and type(item["pdf_page_index_zero_based"]) is int
+                and item["pdf_page_index_zero_based"] == index
+                and item["private_filename"] == name
+                and item["purpose"] == "VISUAL_SELF_INSPECTION_ONLY"
+                and isinstance(item["image_sha256"], str)
+                and re.fullmatch(r"[0-9a-f]{64}", item["image_sha256"]),
+                "private Q004 page index, identity or image hash malformed")
+        image = root / name
+        private_file(image)
+        require(8 < image.stat().st_size <= 20 * 1024 * 1024,
+                "Q004 private image size invalid")
+        with image.open("rb") as fp:
+            data = fp.read()
+        require(data.startswith(b"\\x89PNG\\r\\n\\x1a\\n")
+                and hashlib.sha256(data).hexdigest() == item["image_sha256"],
+                "Q004 privately rendered page is no longer hash-bound")
+
+
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("operation", choices=("template", "verify"))
@@ -226,8 +314,10 @@ def main() -> int:
         else:
             require(args.assessment is not None,
                     "verify requires --assessment in private directory")
-            outcome = evaluate(load(_assessment_path(workspace, args.assessment)),
-                               workspace)
+            assessment = _assessment_path(workspace, args.assessment)
+            if assessment.parent == workspace / "q004-private-review":
+                verify_private_bundle(workspace, assessment)
+            outcome = evaluate(load(assessment), workspace)
         print(json.dumps(outcome, indent=2, sort_keys=True))
         return 0
     except (SourceGapError, OSError, ValueError) as exc:
