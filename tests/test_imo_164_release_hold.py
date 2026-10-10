@@ -42,6 +42,9 @@ class Issue164ReleaseHold(unittest.TestCase):
         self.assertEqual(self.audit["narrow_pinned_main_verification"]["changed_html_pages"],0)
         self.assertEqual(self.audit["narrow_pinned_main_verification"]["new_stale_paths"],[])
 
+        self.assertEqual(self.audit["assurance_pinned_main_verification"]["introduced_all_failure_findings"],0)
+        self.assertEqual(self.audit["assurance_pinned_main_verification"]["release_eligibility"],"NOT_GRANTED")
+        self.assertEqual(self.audit["assurance_pinned_main_verification"]["global_guardrails_equivalence"],"NOT_ESTABLISHED")
         self.assertFalse(self.audit["independent_baseline_attested"])
         self.assertFalse(self.audit["global_ci_accepted"])
         self.assertEqual(self.audit["observed_pr_diff_scope"]["explicit_shared_change"].split(":")[0],

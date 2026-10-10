@@ -62,6 +62,24 @@ class RegressionScope164(unittest.TestCase):
         self.assertIn("NOT_ESTABLISHED", d["cannot_assert"])
         self.assertEqual(self.audit["baseline_equivalence"], "NOT_ESTABLISHED")
 
+    def test_complete_assurance_findings_are_proven_against_pinned_main_without_claiming_global_pass(self):
+        d = self.audit["assurance_pinned_main_verification"]
+        self.assertEqual(d["baseline_sha"], self.audit["baseline_main_sha"])
+        self.assertEqual(d["evidence_run"], 38081856308)
+        self.assertEqual(d["full_canonical_severe_main"], 20)
+        self.assertEqual(d["full_canonical_severe_candidate"], 20)
+        self.assertEqual(d["full_ledger_worse_main"], 62)
+        self.assertEqual(d["full_ledger_worse_candidate"], 62)
+        self.assertEqual(d["pages_site_findings_main"], 0)
+        self.assertEqual(d["pages_site_findings_candidate"], 0)
+        for key in ("introduced_canonical_severe", "introduced_ledger_worse",
+                    "introduced_pages_site_findings", "introduced_all_failure_findings",
+                    "introduced_findings_new_vs_ledger"):
+            self.assertEqual(d[key], 0, key)
+        self.assertIn("SCOPED", d["outcome"])
+        self.assertEqual(d["global_guardrails_equivalence"], "NOT_ESTABLISHED")
+        self.assertEqual(d["release_eligibility"], "NOT_GRANTED")
+
     def test_audit_never_calls_wide_guardrails_baselined_or_accepted(self):
         audit = self.audit
         self.assertEqual(audit["baseline_main_sha"], "778eb35a70517a46108ad0a5dc01dfc89f61c0e3")
