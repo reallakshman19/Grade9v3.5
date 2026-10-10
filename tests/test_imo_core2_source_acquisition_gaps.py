@@ -16,7 +16,9 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "TEST/imo-research"))
 from core2_source_acquisition_gaps import (  # noqa: E402
     BUCKET, CENSUS, HANDOFF, SOURCE_IDS, SourceGapError,
-    acquire, artifact_paths, inventory, load, private_workspace,
+    FINGERPRINTS, HISTORICAL_PINS, HISTORICAL_PROBE_ARCHIVE_SHA256,
+    acquire, artifact_paths, compare_historical_fingerprint,
+    historical_fingerprints, inventory, load, private_workspace,
     receipt_status, report,
 )
 
@@ -80,7 +82,110 @@ class Core2SourceAcquisitionGapTests(unittest.TestCase):
         output = report(self.census, self.handoff)
         self.assertTrue(all(d["receipt_status"] == "NOT_ACQUIRED"
                             for d in output["documents"]))
-        self.assertNotIn("sha256", json.dumps(output).lower())
+        self.assertEqual(output["historical_version_matches"], 0)
+        self.assertEqual(output["verified_retained_document_count"], 0)
+        self.assertTrue(all(
+            item["historical_version_comparison"] ==
+            "NOT_CHECKED_NO_RETAINED_BYTES"
+            for item in output["documents"]))
+
+    def test_historical_artifact_sha_and_four_pins_are_frozen(self):
+        meta = load(FINGERPRINTS)
+        self.assertEqual(meta["source_artifact_zip_sha256"],
+                         HISTORICAL_PROBE_ARCHIVE_SHA256)
+        self.assertEqual(meta["source_workflow_run"], 37868836390)
+        self.assertEqual(meta["source_job_id"], 113621920381)
+        self.assertEqual(meta["source_artifact_id"], 11588893886)
+        self.assertFalse(meta["artifact_contains_pdf_bytes"])
+        self.assertEqual(meta["retained_original_pdf_documents"], 0)
+        self.assertEqual(meta["verified_source_item_custody"], 0)
+        self.assertEqual(meta["rights_status"], "NOT_REVIEWED")
+        fp = historical_fingerprints(self.docs, meta)
+        self.assertEqual(len(fp), 4)
+        self.assertEqual(sum(x["byte_length"] for x in fp.values()), 18821598)
+        self.assertEqual(fp["SOF-IMO-G09-SAMPLE-2026-27"]["sha256"],
+                         "e1229c45cbecb13fe4e8ac65e83c1eec029e6eea83e601cc591e7ce97a65022f")
+
+    def test_historical_digest_tampering_rejected(self):
+        meta = load(FINGERPRINTS)
+        meta["documents"][0]["sha256"] = "a" * 64
+        with self.assertRaises(SourceGapError):
+            historical_fingerprints(self.docs, meta)
+
+    def test_historical_wrong_zip_digest_rejected(self):
+        meta = load(FINGERPRINTS)
+        meta["source_artifact_zip_sha256"] = "a" * 64
+        with self.assertRaises(SourceGapError):
+            historical_fingerprints(self.docs, meta)
+
+    def test_historical_fake_retained_source_rejected(self):
+        meta = load(FINGERPRINTS)
+        meta["documents"][0]["snapshot_retained"] = True
+        with self.assertRaises(SourceGapError):
+            historical_fingerprints(self.docs, meta)
+
+    def test_historical_fake_rights_grant_rejected(self):
+        meta = load(FINGERPRINTS)
+        meta["rights_status"] = "AUTHORIZED"
+        with self.assertRaises(SourceGapError):
+            historical_fingerprints(self.docs, meta)
+
+    def test_historical_wrong_source_url_rejected(self):
+        meta = load(FINGERPRINTS)
+        meta["documents"][0]["requested_url"] = "https://example.org/fake.pdf"
+        with self.assertRaises(SourceGapError):
+            historical_fingerprints(self.docs, meta)
+
+    def test_historical_duplicate_source_rejected(self):
+        meta = load(FINGERPRINTS)
+        meta["documents"][1] = copy.deepcopy(meta["documents"][0])
+        with self.assertRaises(SourceGapError):
+            historical_fingerprints(self.docs, meta)
+
+    def test_historical_byte_match_oracle_still_does_not_admit_source(self):
+        self.write_fake_receipt()
+        status, _ = receipt_status(self.sample, self.workspace)
+        snap, receipt_path = artifact_paths(self.workspace, self.sample["source_id"])
+        own = load(receipt_path)
+        fake_pin = {"sha256": own["sha256"], "byte_length": own["byte_length"]}
+        self.assertEqual(compare_historical_fingerprint(
+            self.sample, self.workspace, status, fake_pin),
+            "MATCHES_HISTORICAL_EPHEMERAL_BYTES_ONLY")
+        self.assertEqual(report(self.census, self.handoff,
+                                self.workspace)["core2_admitted"], 0)
+        # This deliberately injected fake fingerprint is NOT the production pin:
+        self.assertNotEqual(fake_pin["sha256"],
+                            HISTORICAL_PINS[self.sample["source_id"]][1])
+
+    def test_historical_matching_hash_with_wrong_length_does_not_match(self):
+        self.write_fake_receipt()
+        status, _ = receipt_status(self.sample, self.workspace)
+        _, receipt_path = artifact_paths(self.workspace, self.sample["source_id"])
+        own = load(receipt_path)
+        probe = {"sha256": own["sha256"],
+                 "byte_length": own["byte_length"] + 1}
+        self.assertEqual(compare_historical_fingerprint(
+            self.sample, self.workspace, status, probe),
+            "DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION")
+
+    def test_synthetic_import_is_different_version_and_all_items_hold(self):
+        self.write_fake_receipt()
+        output = report(self.census, self.handoff, self.workspace)
+        self.assertEqual(output["historical_version_matches"], 0)
+        documents = [d for d in output["documents"]
+                     if d["source_id"] == self.sample["source_id"]]
+        self.assertEqual(len(documents), 1)
+        self.assertEqual(
+            documents[0]["historical_version_comparison"],
+            "DIFFERS_FROM_HISTORICAL_EPHEMERAL_BYTES_REVIEW_VERSION")
+        sample_rows = [q for q in output["questions"]
+                       if q["source_id"] == self.sample["source_id"]]
+        self.assertEqual(len(sample_rows), 10)
+        self.assertTrue(all("REVIEW_SOURCE_DOCUMENT_VERSION_DRIFT"
+                            in row["blocking_codes"] for row in sample_rows))
+        self.assertEqual((output["source_custody_hold"],
+                          output["core2_admitted"], output["learner_published"]),
+                         (68, 0, 0))
 
     def test_page_observations_distinguish_unobserved(self):
         questions = report(self.census, self.handoff)["questions"]
