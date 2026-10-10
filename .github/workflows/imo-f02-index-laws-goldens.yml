@@ -57,6 +57,27 @@ jobs:
       - name: Generate governed TEST learner PDFs without publishing or mirroring
         run: |
           python Shared/tools/deploy_test.py product TEST/imo-research/candidates/imo-g9-r1-qrt-core2a-core1a.test.manifest.json --no-mirror
+      - name: Verify print-evidence artifact is wholly authored learner Core1A only
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('public/test/products/imo-r1-q26-authored-qrt-core2a-core1a')
+          receipt = json.loads((root/'deploy-receipt.json').read_text())
+          assert receipt.get('subject')=='TEST' and receipt.get('draft') is True and receipt.get('accepted') is False
+          assert receipt.get('selection_counts',{}).get('core2')==0
+          assert receipt.get('selection_counts',{}).get('core2a')==1
+          pdf = root/'core1a.pdf'
+          assert receipt['pdf']['status']=='PRINTED' and pdf.is_file() and pdf.stat().st_size>1000
+          print('Eligible wholly authored TEST learner Core1A PDF; no key PDF or Core2A PDF uploaded')
+          PY
+      - name: Preserve governed TEST Core1A learner-only PDF for manual print audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f02-governed-learner-core1a-pdf
+          path: public/test/products/imo-r1-q26-authored-qrt-core2a-core1a/core1a.pdf
+          if-no-files-found: error
+          retention-days: 7
       - name: Verify offline PDF all SVG stages and Core2A attempt safety
         run: |
           python - <<'PY'
