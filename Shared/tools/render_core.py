@@ -2902,7 +2902,13 @@ q('[data-g9-concept-check]').forEach(c=>{
   b.addEventListener('click',()=>{
     const choice=q('[data-g9-concept-option]:checked',c)[0]?.value||'';
     const reason=(q('[data-g9-concept-reason]',c)[0]?.value||'').trim();
-    if(!choice){feedback.textContent='Choose one relationship, or open the guided explanation.';return}
+    // An earlier format pass is invalid once the learner submits a new response.
+    delete article.dataset.g9ConceptCheckCompleted;
+    if(!choice){
+      setProgress('needs_review','choose a relationship.');
+      feedback.textContent='Choose one relationship, or open the guided explanation.';
+      return
+    }
     if(choice!==c.dataset.g9ConceptCorrect){
       setProgress('needs_review','prediction needs review.');
       feedback.textContent=c.dataset.g9FeedbackChoice;
