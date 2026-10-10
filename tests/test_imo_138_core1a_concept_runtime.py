@@ -111,6 +111,39 @@ class TestConceptFirstHTML(unittest.TestCase):
         bad_topic["primary_capability_ref"] = "CAP-NOT-SELECTED"
         self.assertIsNone(render_core._f02_selected_authored_core2a(ctx, bad_topic))
 
+    def test_authored_f02_local_trace_only_records_untrusted_event_markers(self):
+        core1a = self.pages["core1a.html"]
+        core2a = self.pages["core2a.html"]
+        for name, html in (("Core1A", core1a), ("Core2A", core2a)):
+            with self.subTest(page=name):
+                self.assertEqual(html.count("data-g9-f02-trace-status"), 2,
+                                 "one DOM note and one runtime selector")
+                self.assertIn("F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1", html)
+                self.assertIn("f02-trace:", html)
+                self.assertIn("ATTEMPT_COMMIT", html)
+                self.assertIn("REPAIR_NAV", html)
+                self.assertIn("GUIDED_OPEN", html)
+                self.assertIn("RETURN_CLICK", html)
+                self.assertIn("Editable or missing local data never establishes independent mastery", html)
+                self.assertNotIn("store.set(f02Key,JSON.stringify({value:", html)
+        self.assertIn("if(box&&validAttempt(box))f02Event('ATTEMPT_COMMIT')", core2a)
+        self.assertIn("if(value.invalid){f02Reflect(value,false);return}", core2a)
+        self.assertIn("if(value.events.length>=32)value.overflow=true", core2a)
+        self.assertIn("value.events.push({n:value.events.length+1,kind})", core2a)
+        self.assertIn("if(!f02Key)return {invalid:true}", core1a)
+        self.assertIn("value.assisted||value.invalid", core2a)
+        self.assertIn("if(params.get('g9-return')===f02Question", core1a)
+        self.assertIn("article?.dataset.g9ConceptAidExposure==='guided_study'", core1a)
+        self.assertIn("returnKey=concept=>", render_core.JS)
+        self.assertNotIn("F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1", render_core.JS)
+
+    def test_trace_patch_stays_opt_in_and_rejects_ambiguous_generic_tail(self):
+        self.assertEqual(render_core.f02_local_trace_js(render_core.JS).count(
+            "F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1"), 1)
+        with self.assertRaisesRegex(ValueError, "F02_LOCAL_TRACE_JS_PATCH_UNSAFE"):
+            render_core.f02_local_trace_js(render_core.JS + "\n})();\n")
+        self.assertFalse(self.pkg["extensions"]["grade9v3:learner_published"])
+
     def test_format_only_and_print_materialisation(self):
         html = self.pages["core1a.html"]
         self.assertIn("choice!==c.dataset.g9ConceptCorrect", html)
