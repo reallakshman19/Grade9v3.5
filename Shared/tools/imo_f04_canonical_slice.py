@@ -212,6 +212,61 @@ def inspect_rendered(pages: dict[str, str], blueprint_refs: dict[str, str]) -> t
     return facts, sorted(set(errors))
 
 
+class _InlineScriptReader(HTMLParser):
+    """Extract live inline script text, not comments, attributes or authored text."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.in_script = False
+        self.chunks = []
+        self.scripts = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "script":
+            self.in_script = True
+            self.chunks = []
+
+    def handle_data(self, text):
+        if self.in_script:
+            self.chunks.append(text)
+
+    def handle_endtag(self, tag):
+        if tag == "script" and self.in_script:
+            self.scripts.append("".join(self.chunks))
+            self.in_script = False
+            self.chunks = []
+
+
+def authored_core2a_runtime_findings(page: str | None) -> list[str]:
+    """Observe the live authored-role help JS; no browser/learner grade inference.
+
+    A string-matching probe can DENY known broken role guards, not certify
+    persistence, browser execution, accessibility or independent mastery.
+    Unknown/changed implementation stays UNVERIFIED rather than falsely green.
+    """
+    if not isinstance(page, str):
+        return ["CORE2A_HELP_RUNTIME_NOT_RENDERED"]
+    scripts = _InlineScriptReader()
+    scripts.feed(page)
+    scripts.close()
+    actual = "\n".join(scripts.scripts)
+    if not actual:
+        return ["CORE2A_HELP_RUNTIME_STATIC_UNVERIFIED"]
+    known_invalid = {
+        "function markAssistance(a,kind){if(a.dataset.g9Role!=='CORE2'||!kind)return;":
+            "CORE2A_HELP_ASSISTANCE_ROLE_EXCLUDED",
+        "function saveCore2State(a){if(a.dataset.g9Role!=='CORE2')return;":
+            "CORE2A_HELP_PERSISTENCE_ROLE_EXCLUDED",
+        "function restoreCore2State(a,lock){if(a.dataset.g9Role!=='CORE2')return;":
+            "CORE2A_HELP_RESTORE_ROLE_EXCLUDED",
+    }
+    observed = [code for source, code in known_invalid.items() if source in actual]
+    # A future, different runtime must be reviewed and tested explicitly.
+    if not observed:
+        return ["CORE2A_HELP_RUNTIME_STATIC_UNVERIFIED"]
+    return observed
+
+
 def navigation_findings(rendered: dict) -> list[str]:
     """Candidate integration gaps, not authority to mutate HTML after rendering."""
     issues = []
@@ -376,7 +431,10 @@ def inspect_real_candidate() -> dict:
                      for p in output.glob("*.html")}
             facts, html_issues = inspect_rendered(pages, refs)
             problems.extend(html_issues)
-            navigation = navigation_findings(facts)
+            navigation = sorted(set(
+                navigation_findings(facts)
+                + authored_core2a_runtime_findings(pages.get("core2a.html"))
+            ))
             if sorted(pages) != ["core1a.html", "core2a.html", "index.html"]:
                 problems.append("UNEXPECTED_RENDERED_ROLES")
             render_basis = {
