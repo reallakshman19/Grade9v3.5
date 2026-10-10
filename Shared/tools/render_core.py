@@ -2511,6 +2511,13 @@ def units_for(ctx: Ctx, role: str) -> list[dict]:
 
 CSS = """
 [data-g9-m2-probe][hidden]{display:none!important}
+/* Opt-in A4 print: preserve complete authored factor diagrams without shrinking
+   them into clipped side-by-side blueprint columns. Screen layout is unchanged. */
+@media print{
+ article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-split{display:block!important}
+ article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-col-support{position:static!important;max-height:none!important;overflow:visible!important}
+ article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-diagram-scroll{overflow:visible!important}
+}
 
 [hidden]{display:none!important}
 :root{--g9-zoom:1;--g9-content-max:1380px;--g9-touch-min:48px;--g9-space:clamp(16px,2vw,28px);--g9-type-body:17px;--bg:#f6f7fb;--fg:#172033;--card:#fff;--line:#d5dce6;--accent:#1f5fae;--muted:#52627a;
@@ -3070,8 +3077,13 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
     for rec in units_for(ctx, role):
         kind = "CONCEPT" if role in {"CORE1", "CORE1A", "CORE1B"} else "QUESTION"
         search_text = metadata_search_text(ctx, role, rec)
+        print_layout = (rec.get("extensions") or {}).get("grade9v3:print_layout")
+        if print_layout not in (None, "SINGLE_COLUMN_A4"):
+            ctx.gap("AUTHOR_PRINT_LAYOUT", rec["id"], "unsupported opt-in print layout", role)
+        print_attr = (' data-g9-print-layout="SINGLE_COLUMN_A4"'
+                      if print_layout == "SINGLE_COLUMN_A4" else "")
         articles += (f'<article id="{esc(rec["id"])}" data-g9-unit="{esc(rec["id"])}" data-g9-kind="{kind}"'
-                     f' data-g9-role="{esc(role)}" data-g9-search-text="{esc(search_text)}"{klass}>{RENDER[role](ctx, rec)}</article>')
+                     f' data-g9-role="{esc(role)}" data-g9-search-text="{esc(search_text)}"{print_attr}{klass}>{RENDER[role](ctx, rec)}</article>')
     header, crumbs = shell(ctx, role, mode)
     m = ctx.manifest
     # The blueprint says which theme its page opens in (the Core1A benchmark opens dark); a learner's own choice still wins.
