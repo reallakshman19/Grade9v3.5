@@ -72,6 +72,59 @@ class IMOCanonicalRenderDenialTests(unittest.TestCase):
                 inspect_real_candidate()
 
 
+
+class IMOCanonicalRouteAcceptanceContracts(unittest.TestCase):
+    """Exact learner links, separately from structural renderer success."""
+
+    @staticmethod
+    def valid_route_facts():
+        return {
+            "CORE1A": {
+                "steps": [{"step": STEP, "id": STEP}],
+                "return_links": [{
+                    "question": QID, "href": f"core2a.html#{QID}",
+                }],
+            },
+            "CORE2A": {
+                "repair_links": [{
+                    "ref": STEP, "href": f"core1a.html#{STEP}",
+                    "protected_template": True,
+                }],
+            },
+        }
+
+    def test_exact_step_and_authored_return_are_sufficient_structurally(self):
+        self.assertEqual(navigation_findings(self.valid_route_facts()), [])
+        # This is structural link acceptance, not a browser, pedagogy or
+        # independent post-repair transfer judgment.
+
+    def test_missing_step_fragment_must_block_route(self):
+        facts = self.valid_route_facts()
+        facts["CORE1A"]["steps"][0]["id"] = "ENClosing-UNIT"
+        self.assertEqual(navigation_findings(facts),
+                         ["CORE1A_STEP_FRAGMENT_NOT_ADDRESSABLE"])
+
+    def test_enclosing_unit_or_pre_attempt_repair_must_block_route(self):
+        for problem, mutate in (
+            ("wrong target", lambda d: d.update(
+                href="core1a.html#ENClosing-UNIT")),
+            ("unguarded", lambda d: d.update(protected_template=False)),
+        ):
+            with self.subTest(problem=problem):
+                facts = self.valid_route_facts()
+                mutate(facts["CORE2A"]["repair_links"][0])
+                self.assertEqual(
+                    navigation_findings(facts),
+                    ["CORE2A_NOT_LINKED_TO_EXACT_REPAIR_STEP"])
+
+    def test_source_core2_link_is_not_authored_core2a_return(self):
+        facts = self.valid_route_facts()
+        facts["CORE1A"]["return_links"][0]["href"] = f"core2.html#{QID}"
+        self.assertEqual(
+            navigation_findings(facts),
+            ["CORE1A_AUTHORED_CORE2A_RETURN_ABSENT"])
+
+
 class IMOCanonicalSliceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
