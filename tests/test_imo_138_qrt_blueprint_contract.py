@@ -51,6 +51,18 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
         result = self.audit()
         self.assertEqual([a["ask"] for a in result["semantic_review_asks"]], list(f02.qrt.ASKS))
         self.assertTrue(all(a["status"] != "PASS" for a in result["semantic_review_asks"]))
+        self.assertTrue(all("source_pointers" in a for a in result["semantic_review_asks"]))
+        diagnostic = next(a for a in result["semantic_review_asks"] if a["ask"] == "M2")
+        self.assertEqual(diagnostic["source_pointers"], [])
+        self.assertEqual(diagnostic["status"], "NOT_IMPLEMENTED_MISCONCEPTION_VS_SLIP_DIAGNOSTIC")
+        self.assertEqual(
+            [s["stage"] for s in result["core1a_repair_reference_alignment"]],
+            list(f02.REPAIR_STAGES),
+        )
+        self.assertEqual(
+            result["core1a_repair_reference_alignment"][-1]["status"],
+            "PROMPT_PRESENT_UNASSISTED_RETURN_NOT_ENFORCED",
+        )
         self.assertIn("FRESH_UNASSISTED_POST_REPAIR_RETURN_NOT_ENFORCED", result["review_gates"])
         self.assertIn("FREE_TEXT_REASON_MATHEMATICAL_CORRECTNESS_NOT_GRADED", result["review_gates"])
 
