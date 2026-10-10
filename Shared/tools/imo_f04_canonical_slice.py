@@ -94,6 +94,8 @@ class RenderFacts(HTMLParser):
         self.root_roles = []
         self.blueprint_refs = []
         self.article_ids = []
+        self.articles = []
+        self.attempt_boxes = 0
         self.templates = []
         self.attempt_details = []
         self.steps = []
@@ -110,6 +112,9 @@ class RenderFacts(HTMLParser):
             self.blueprint_refs.append(attrs.get("data-blueprint-ref"))
         if tag == "article":
             self.article_ids.append(attrs.get("id"))
+            self.articles.append({"id": attrs.get("id"), "role": attrs.get("data-g9-role")})
+        if "data-g9-attempt-box" in attrs:
+            self.attempt_boxes += 1
         if tag == "template":
             self._template_depth += 1
             if attrs.get("data-g9-payload"):
@@ -150,6 +155,8 @@ def inspect_rendered(pages: dict[str, str], blueprint_refs: dict[str, str]) -> t
             "root_roles": parsed.root_roles,
             "body_blueprint_refs": parsed.blueprint_refs,
             "article_ids": parsed.article_ids,
+            "articles": parsed.articles,
+            "attempt_boxes": parsed.attempt_boxes,
             "sha256": sha256(data.encode("utf-8")).hexdigest(),
             "templates": parsed.templates,
             "attempt_detail_refs": parsed.attempt_details,
@@ -160,7 +167,9 @@ def inspect_rendered(pages: dict[str, str], blueprint_refs: dict[str, str]) -> t
         facts[role] = fact
         if parsed.root_roles != [role] or parsed.blueprint_refs != [blueprint_refs[role]]:
             errors.append(f"{role}_BLUEPRINT_ROLE_MISMATCH")
-        if (MID if role == "CORE1A" else QID) not in parsed.article_ids:
+        selected = MID if role == "CORE1A" else QID
+        if sum(a.get("id") == selected and a.get("role") == role
+               for a in parsed.articles) != 1:
             errors.append(f"{role}_SELECTED_ARTICLE_MISSING")
 
     core1 = facts.get("CORE1A", {})
@@ -168,6 +177,8 @@ def inspect_rendered(pages: dict[str, str], blueprint_refs: dict[str, str]) -> t
     if not any(s.get("step") == STEP for s in core1.get("steps", [])):
         errors.append("CORE1A_EXACT_STEP_MISSING")
     payload = f"CORE2A-{QID}-reasoning"
+    if core2.get("attempt_boxes", 0) < 1:
+        errors.append("CORE2A_ATTEMPT_CONTROLS_MISSING")
     if core2.get("templates", []).count(payload) != 1:
         errors.append("CORE2A_REASONING_TEMPLATE_MISSING")
     if core2.get("attempt_detail_refs", []).count(payload) != 1:
@@ -284,6 +295,12 @@ def inspect_real_candidate() -> dict:
             problems.append("CANONICAL_RENDER_RECEIPT_MISSING")
         else:
             receipt = load(output / "render-receipt.json")
+            if receipt.get("gaps"):
+                problems.append("CANONICAL_REFERENCE_DEPTH_GAPS")
+            if (receipt.get("output_roles") != list(ROLES)
+                    or receipt.get("mode") != "PAGES"
+                    or receipt.get("held_to") != "REFERENCE"):
+                problems.append("CANONICAL_RENDER_RECEIPT_INVALID")
             pages = {p.name: p.read_text(encoding="utf-8")
                      for p in output.glob("*.html")}
             facts, html_issues = inspect_rendered(pages, refs)
