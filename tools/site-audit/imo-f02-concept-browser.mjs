@@ -64,6 +64,24 @@ try {
     await submit.click();
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
       width + ': deliberate recheck failed to restore formative-only status');
+    // Subsequent wrong or incomplete submissions cannot retain old evidence.
+    await page.locator('[data-g9-concept-option][value="ADD"]').check();
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': stale formative flag survived a later wrong index law');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_review',
+      width + ': wrong resubmission not labelled needs review');
+    await page.locator('[data-g9-concept-option][value="FACTOR"]').check();
+    await page.locator('[data-g9-concept-reason]').fill('No');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': stale formative flag survived a short later reflection');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_reflection',
+      width + ': short resubmission not labelled needs reflection');
+    await page.locator('[data-g9-concept-reason]').fill('One additional copy of five joins each group.');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
+      width + ': renewed valid reflection could not restore formative-only status');
     if (width === 390) {
       const access = await browser.newPage({ viewport: {width:390,height:900}, reducedMotion:'reduce' });
       access.on('pageerror', e => result.failures.push('accessibility probe JS exception: '+String(e)));
