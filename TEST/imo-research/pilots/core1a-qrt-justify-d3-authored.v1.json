@@ -664,13 +664,15 @@
       "kind": "ALGEBRA_TILES",
       "purpose": "Preserve the actual authored #001 factors n, n+1, n+2 without giving away their divisibility or universal proof.",
       "required_elements": [
-        "Three factor boxes labelled n, n+1 and n+2",
-        "Visible multiplication signs with no solution or divisor annotations"
+        "Neutral first view with factors n,n+1,n+2",
+        "Second view shows neighboring parity, without selecting a fixed always-even named factor",
+        "Third view lists exhaustive n mod 3 cases without claiming divisibility by 6"
       ],
       "relation_refs": [],
       "read_order": [
-        "Read the arbitrary starting integer n and successors n+1 and n+2.",
-        "Build your own proof/counterexample route; the diagram makes no truth claim."
+        "First read the three given factors n, n+1 and n+2.",
+        "Select the second view to observe neighboring parity, without deciding the final claim.",
+        "Select the third view to observe three exhaustive remainder cases, then combine the separate guarantees yourself."
       ],
       "instance_constraints": [
         "No factor-of-two, modulo-three, or answer-bearing marks in the pre-attempt asset.",
@@ -707,18 +709,46 @@
       ],
       "correspondence": [
         {
-          "element": "Three adjacent factor boxes",
+          "element": "First stage factor boxes",
           "symbol": "n(n+1)(n+2)",
-          "in_words": "The triple starts at arbitrary n and advances by one each time."
+          "in_words": "The triple begins at arbitrary n."
+        },
+        {
+          "element": "Second stage adjacent pair",
+          "symbol": "n,n+1",
+          "in_words": "The parity of two neighboring integers alternates."
+        },
+        {
+          "element": "Third stage remainder cases",
+          "symbol": "n mod 3 in {0,1,2}",
+          "in_words": "Exactly these three residue classes cover every starting n."
         }
       ],
       "reveal_stages": [
         {
           "id": "AUTHORED-001-FACTORS-ONLY",
-          "label": "Given factors only",
-          "purpose": "Show the problem's three factors, without revealing parity/remainders, a truth decision, or universal conclusion.",
+          "label": "Given factors",
+          "purpose": "Show n,n+1,n+2 without any factor proof or conclusion.",
           "visible_elements": [
             "n,n+1,n+2"
+          ]
+        },
+        {
+          "id": "AUTHORED-001-PARITY-OBSERVE",
+          "label": "Adjacent parity",
+          "purpose": "Show the parity relationship of neighbors as a separate general observation; do not connect it to the final divisor.",
+          "visible_elements": [
+            "n,n+1",
+            "adjacent parity changes"
+          ]
+        },
+        {
+          "id": "AUTHORED-001-RESIDUES-OBSERVE",
+          "label": "Three remainder cases",
+          "purpose": "Show all n mod 3 cases and one zero-remainder factor in each case without giving the coprime combination or truth decision.",
+          "visible_elements": [
+            "n mod 3 in {0,1,2}",
+            "one zero-remainder factor in each case"
           ]
         }
       ]
@@ -1083,18 +1113,18 @@
             },
             "S2": {
               "review_state": "NOT_ACCEPTED",
-              "author_evidence_ref": "representation_roles.stage_refs",
+              "author_evidence_ref": "representation_roles.stage_refs[1]",
               "needs_subject_spot_review": true,
-              "evidence_status": "GAP_NOT_IMPLEMENTED",
-              "observed_behavior": "There is no pre-attempt visual stage showing a known parity or residue idea in the problem context; do not count S1 again as S2.",
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "Select the second authored SVG stage to see the pair n,n+1 and its parity alternation; the learner still has to establish what follows for the whole product.",
               "owner_acceptance": false
             },
             "S3": {
               "review_state": "NOT_ACCEPTED",
-              "author_evidence_ref": "representation_roles.stage_refs",
+              "author_evidence_ref": "representation_roles.stage_refs[2]",
               "needs_subject_spot_review": true,
-              "evidence_status": "GAP_NOT_IMPLEMENTED",
-              "observed_behavior": "There is no second or third pre-attempt visual stage that visually opens the proof bridge without providing it.",
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "Select the third authored SVG stage to connect n mod 3 = 0,1,2 with the factor bearing remainder zero, without supplying the final coprime bridge/truth decision.",
               "owner_acceptance": false
             },
             "P1": {
@@ -1147,10 +1177,8 @@
             }
           },
           "semantic_coverage": {
-            "supported_candidate_slots": 9,
+            "supported_candidate_slots": 11,
             "remaining_gaps": [
-              "S2",
-              "S3",
               "M2"
             ],
             "governing_asks_total": 12,
@@ -1301,7 +1329,9 @@
         "safe_ref": "REP-TEST-IMO-G9-AUTHORED-001-FACTORS-SAFE",
         "bound_ref": null,
         "stage_refs": [
-          "AUTHORED-001-FACTORS-ONLY"
+          "AUTHORED-001-FACTORS-ONLY",
+          "AUTHORED-001-PARITY-OBSERVE",
+          "AUTHORED-001-RESIDUES-OBSERVE"
         ]
       },
       "repair_ref": "TC-03",
