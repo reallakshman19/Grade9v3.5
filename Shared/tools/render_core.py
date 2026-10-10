@@ -2423,7 +2423,12 @@ def core2b(ctx: Ctx, q: dict) -> str:
                     + attempt_box("Your commitment: the model or representation you choose, and your first relation",
                                   response_for(q), q.get("options"), q["id"])),
         "post_attempt": (
-            block("lineage_check", para("Before you open the solution: what from the earlier item still holds here, "
+            (block("guided_hints",
+                  reveal("Hints after your first attempt",
+                         _ladder(ctx, q, "CORE2B"),
+                         ref=f'CORE2B-{q["id"]}-guided-hints'),
+                  title="Progressive hints") if q.get("hint_ladder") else "")
+            + block("lineage_check", para("Before you open the solution: what from the earlier item still holds here, "
                                         "and what is different?") if tr.get("invariant") else "", title="Lineage check")
             + reveal("Review and solution",
                      block("invariant_changed", para(tr.get("invariant")), title="What stayed valid")

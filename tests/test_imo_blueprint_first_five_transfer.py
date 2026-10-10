@@ -95,7 +95,8 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
         self.assertEqual(len(qrt.DEMANDS) * len(qrt.BANDS), 28)
         self.assertEqual(q["hints"], [])
         self.assertEqual(q["scaffolds"], [])
-        self.assertEqual(q["hint_ladder"], [])
+        self.assertEqual([r["purpose"] for r in q["hint_ladder"]],
+                         ["ORIENT","REPRESENT","FIRST_RELATION"])
         self.assertEqual(q["transfer"]["protected_move_ref"], q["answer"]["crux_move_ref"])
 
     def test_actual_math_claim_is_true_for_exhaustive_residue_classes(self):

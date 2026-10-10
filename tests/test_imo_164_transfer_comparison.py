@@ -79,7 +79,9 @@ class TransferComparison(unittest.TestCase):
         self.assertEqual(boundary["extensions"]["grade9v3:qrt_status"], "PROPOSED_NOT_ACCEPTED")
         self.assertEqual(boundary["hints"], [])
         self.assertEqual(boundary["scaffolds"], [])
-        self.assertEqual(boundary["hint_ladder"], [])
+        self.assertEqual([r["order"] for r in boundary["hint_ladder"]], [1,2,3])
+        self.assertEqual([r["purpose"] for r in boundary["hint_ladder"]],
+                         ["ORIENT","REPRESENT","FIRST_RELATION"])
 
     def test_two_manifests_select_one_transfer_and_explicitly_omit_the_other(self):
         for manifest in (self.five_manifest, self.boundary_manifest):
@@ -109,6 +111,20 @@ class TransferComparison(unittest.TestCase):
             self.assertNotIn(leak, asset.lower())
         self.assertIn("12 divides P(n) for every n?", asset)
 
+
+    def test_both_three_rung_ladders_are_authored_and_keep_protected_decision_private(self):
+        for qid in (FIVE,BOUNDARY):
+            q=self.question[qid]
+            self.assertEqual(len(q["hint_ladder"]),3)
+            self.assertEqual([row["order"] for row in q["hint_ladder"]],[1,2,3])
+            self.assertTrue(all(row["provenance"]=="AUTHORED_HINT" for row in q["hint_ladder"]))
+            self.assertTrue(all(row["purpose"]!="ANSWER" for row in q["hint_ladder"]))
+            self.assertEqual(q["hints"],[])
+            self.assertEqual(q["scaffolds"],[])
+            all_hints=" ".join(row["text"].lower() for row in q["hint_ladder"])
+            for forbidden in ("n mod 4 != 1","gcd(24,5)=1","n ≡ 1","exactly one", "counterexample n=1"):
+                self.assertNotIn(forbidden,all_hints)
+
     def test_review_is_explicitly_not_academic_acceptance_or_sof_admission(self):
         r = self.review
         self.assertEqual(r["status"], "INDEPENDENT_ACADEMIC_REVIEW_PENDING")
@@ -136,6 +152,9 @@ class TransferComparison(unittest.TestCase):
                 self.assertIn('data-g9-role="CORE2B"', pages["core2b.html"])
                 self.assertIn('data-requires-attempt', pages["core2b.html"])
                 self.assertIn("<template data-g9-payload=", pages["core2b.html"])
+                self.assertIn("Hints after your first attempt", pages["core2b.html"])
+                self.assertIn("data-g9-next-rung", pages["core2b.html"])
+                self.assertEqual(pages["core2b.html"].count('data-g9-rung-payload='),2)
                 parser = Visible()
                 parser.feed(pages["core2b.html"])
                 before = " ".join(parser.output)

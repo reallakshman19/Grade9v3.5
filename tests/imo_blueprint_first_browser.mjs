@@ -86,6 +86,26 @@ try {
         assert.equal(await gates.first().getAttribute('data-locked'), null,
           'valid typed commitment did not unlock ' + role);
         if (role === 'core2b') {
+          const hintReveal = article.locator('details[data-g9-reveal]').filter({
+            has: page.locator('summary:text-is("Hints after your first attempt")')
+          }).first();
+          assert.equal(await hintReveal.count(), 1, 'missing post-commit progressive hint disclosure');
+          await hintReveal.locator('summary').click();
+          assert.ok(await hintReveal.evaluate(el => el.open), 'post-commit hints should open');
+          const ladder = hintReveal.locator('.g9-ladder');
+          assert.equal(await ladder.locator('li[data-g9-rung]').count(), 1,
+            'only the orientation rung should be revealed initially');
+          const nextHint = ladder.locator('button[data-g9-next-rung]');
+          await nextHint.focus();
+          await page.keyboard.press('Enter');
+          assert.equal(await ladder.locator('li[data-g9-rung]').count(), 2,
+            'keyboard activation must progressively reveal the second rung');
+          await nextHint.click();
+          assert.equal(await ladder.locator('li[data-g9-rung]').count(), 3,
+            'third rung should appear after a separate request');
+          assert.ok(await nextHint.isDisabled(), 'third hint must be the last rung');
+          assert.ok(!(await article.innerText()).includes(variant === 'boundary' ? 'n mod 4 != 1' : 'gcd(24,5)=1'),
+            'progressive hint revealed the protected proof');
           assert.ok(await article.locator('a[href^="core1a.html#"]').count() > 0,
             'post-attempt concept-repair navigation is missing');
         }
