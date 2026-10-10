@@ -1,0 +1,208 @@
+name: IMO Blueprint First #164 — real renderer qualification
+on:
+  pull_request:
+    paths:
+      - 'TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json'
+      - 'TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg'
+      - 'TEST/products/imo-g9-blueprint-first-five-transfer.manifest.json'
+      - 'tests/test_imo_blueprint_first_five_transfer.py'
+      - 'tests/test_imo_164_transfer_comparison.py'
+      - 'tests/test_imo_164_regression_scope.py'
+      - 'tests/test_imo_164_qrt_comparison.py'
+      - 'tests/check_imo_164_print.py'
+      - 'tests/test_imo_164_release_hold.py'
+      - 'tests/check_imo_164_baseline_differential.py'
+      - 'tests/check_imo_164_assurance_baseline.py'
+      - 'tests/summarize_imo_164_deltas.py'
+      - 'tests/test_imo_164_delta_summary.py'
+      - 'tests/check_imo_164_guardrails_paired.py'
+      - 'tests/test_imo_164_guardrails_paired.py'
+      - 'Shared/tools/render_core.py'
+      - 'TEST/imo-research/pilots/issue-164-technical-handoff.md'
+      - 'TEST/imo-research/pilots/regression-scope-164.v1.json'
+      - 'TEST/imo-research/pilots/transfer-comparison-164.v1.json'
+      - 'TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg'
+      - 'TEST/products/imo-g9-blueprint-boundary-12-transfer.manifest.json'
+      - '.github/workflows/imo-blueprint-first-164.yml'
+permissions:
+  contents: read
+jobs:
+  authored-three-core-render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install shared renderer schema validator
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5' 'pypdf>=5,<7'
+      - name: Verify real blueprint, proof, source isolation and HTML readback
+        run: python -m unittest discover -s tests -p 'test_imo_blueprint_first_five_transfer.py' -v
+      - name: Guard inherited Core1A snapshot and baseline-honesty scope
+        run: python -m unittest discover -s tests -p 'test_imo_164_regression_scope.py' -v
+      - name: Assert publication, QRT and Owner authorization remain held
+        run: python -m unittest discover -s tests -p 'test_imo_164_release_hold.py' -v
+      - name: Falsify scoped pinned-main CI summary, including false-green attempts
+        run: python -m unittest discover -s tests -p 'test_imo_164_delta_summary.py' -v
+      - name: Resolve real canonical QRT without claiming acceptance
+        run: python -m unittest discover -s tests -p 'test_imo_164_qrt_comparison.py' -v
+      - name: Verify both mathematical transfer candidates with actual blueprint
+        run: python -m unittest discover -s tests -p 'test_imo_164_transfer_comparison.py' -v
+      - name: Build actual authored Core1A Core2A Core2B through canonical renderer
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-g9-blueprint-first-five-transfer.manifest.json \
+            --out /tmp/imo-blueprint-164 \
+            --draft --reference
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          directory = Path('/tmp/imo-blueprint-164')
+          receipt = json.loads((directory/'render-receipt.json').read_text())
+          assert receipt['output_roles'] == ['CORE2A','CORE1A','CORE2B']
+          assert {'core1a.html','core2a.html','core2b.html','index.html'} <= set(receipt['pages'])
+          assert 'accepted' not in receipt
+          assert all((directory/p).is_file() for p in receipt['pages'])
+          print('AUTHORED_TEST_DRAFT_ONLY; pages', sorted(receipt['pages']))
+          print('REFERENCE_GAP_COUNT',len(receipt.get('gaps',[])))
+          print('REFERENCE_ADVISORY_COUNT',len(receipt.get('advisories',[])))
+          PY
+
+      - name: Build held boundary-12 comparator via unchanged renderer
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-g9-blueprint-boundary-12-transfer.manifest.json \
+            --out /tmp/imo-164-boundary --draft --reference
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('/tmp/imo-164-boundary')
+          r=json.loads((p/'render-receipt.json').read_text())
+          assert r['output_roles']==['CORE2A','CORE1A','CORE2B']
+          assert len(r.get('gaps',[]))==0, r.get('gaps')
+          assert len(r.get('advisories',[]))==0, r.get('advisories')
+          print('BOUNDARY_REVIEW_ONLY', sorted(r['pages']))
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install scoped headless Chromium test dependency
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.0
+          npx playwright install --with-deps chromium
+      - name: Chromium learner journey smoke, held preview only
+        run: |
+          site="$RUNNER_TEMP/imo-164-site"
+          preview="$site/standalone/research/transfer"
+          mkdir -p "$site/css" "$site/js" "$preview"
+          cp public/css/modern-learner.css public/css/tablet-12-7.css "$site/css/"
+          cp public/js/display-controls.js public/js/site-header.js "$site/js/"
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-g9-blueprint-first-five-transfer.manifest.json \
+            --out "$preview" --draft --reference
+          node tests/imo_blueprint_first_browser.mjs "$preview" "$RUNNER_TEMP/imo-164-browser-evidence"
+          alt="$site/standalone/research/boundary"
+          mkdir -p "$alt"
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-g9-blueprint-boundary-12-transfer.manifest.json \
+            --out "$alt" --draft --reference
+          node tests/imo_blueprint_first_browser.mjs "$alt" "$RUNNER_TEMP/imo-164-boundary-browser-evidence" boundary
+      - name: Verify actual held A4 print structure and extracted question text
+        run: |
+          python tests/check_imo_164_print.py \
+            "$RUNNER_TEMP/imo-164-browser-evidence" \
+            "$RUNNER_TEMP/imo-164-boundary-browser-evidence"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: imo-164-held-browser-smoke
+          path: |
+            ${{ runner.temp }}/imo-164-browser-evidence/
+            ${{ runner.temp }}/imo-164-boundary-browser-evidence/
+          retention-days: 3
+          if-no-files-found: ignore
+
+  pinned-main-differential:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout original PR base independently
+        uses: actions/checkout@v4
+        with:
+          ref: 778eb35a70517a46108ad0a5dc01dfc89f61c0e3
+          path: baseline
+      - name: Checkout exact PR head independently
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install shared render schema dependency
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5'
+      - name: Compare pinned generator drift and actual existing HTML
+        run: |
+          python candidate/tests/check_imo_164_baseline_differential.py \
+            baseline candidate "$RUNNER_TEMP/imo-164-baseline-differential.json"
+      - name: Compare complete canonical assurance and Pages findings with pinned main
+        run: |
+          python candidate/tests/check_imo_164_assurance_baseline.py \
+            baseline candidate "$RUNNER_TEMP/imo-164-assurance-baseline.json"
+      - name: Summarize complete scoped ID differences with exact SHA and hard HOLD
+        if: ${{ !cancelled() }}
+        run: |
+          python candidate/tests/summarize_imo_164_deltas.py \
+            "$RUNNER_TEMP/imo-164-baseline-differential.json" \
+            "$RUNNER_TEMP/imo-164-assurance-baseline.json" \
+            "${{ github.event.pull_request.head.sha }}" \
+            "$RUNNER_TEMP/imo-164-delta-summary.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: imo-164-pinned-main-differential
+          path: |
+            ${{ runner.temp }}/imo-164-baseline-differential.json
+            ${{ runner.temp }}/imo-164-assurance-baseline.json
+            ${{ runner.temp }}/imo-164-delta-summary.json
+          retention-days: 7
+          if-no-files-found: ignore
+
+  paired-full-guardrails-differential:
+    name: Paired full Guardrails run-command differential (HOLD-only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout fixed main independently
+        uses: actions/checkout@v4
+        with:
+          ref: 778eb35a70517a46108ad0a5dc01dfc89f61c0e3
+          path: baseline
+      - name: Checkout exact PR branch independently
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+      - name: Use Python 3.11 as native Guardrails does
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install YAML reader for held replay wrapper only
+        run: python -m pip install --disable-pip-version-check 'pyyaml>=6,<7'
+      - name: Falsify full-step same-runner comparisons before interpreting CI
+        run: python -m unittest discover -s candidate/tests -p 'test_imo_164_guardrails_paired.py' -v
+      - name: Execute every native Guardrails run step on both checkouts in one runner
+        run: |
+          python candidate/tests/check_imo_164_guardrails_paired.py \
+            baseline candidate \
+            "${{ github.event.pull_request.head.sha }}" \
+            "$RUNNER_TEMP/imo-164-paired-full-guardrails"
+      - name: Preserve per-checkout command logs and strictly scoped summary
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: imo-164-paired-full-guardrails
+          path: ${{ runner.temp }}/imo-164-paired-full-guardrails/
+          retention-days: 7
+          if-no-files-found: warn
