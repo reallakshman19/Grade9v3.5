@@ -2427,7 +2427,8 @@ def core2b(ctx: Ctx, q: dict) -> str:
                   reveal("Hints after your first attempt",
                          _ladder(ctx, q, "CORE2B"),
                          ref=f'CORE2B-{q["id"]}-guided-hints'),
-                  title="Progressive hints") if q.get("hint_ladder") else "")
+                  title="Progressive hints") if (q.get("hint_ladder") and
+                  (q.get("extensions") or {}).get("grade9v3:core2b_guided_hints_opt_in") is True) else "")
             + block("lineage_check", para("Before you open the solution: what from the earlier item still holds here, "
                                         "and what is different?") if tr.get("invariant") else "", title="Lineage check")
             + reveal("Review and solution",
