@@ -6,20 +6,20 @@
     "adapter",
     "adapter"
   ],
-  "component_count": 533,
-  "relation_count": 557,
+  "component_count": 551,
+  "relation_count": 561,
   "components_by_role": {
     "CONTRACT": 9,
     "ENGINE": 10,
     "GATES": 2,
     "LIBRARY": 56,
-    "TEST": 270,
+    "TEST": 284,
     "TOOLING": 153,
-    "WEB": 16,
+    "WEB": 20,
     "WEB_CONTRACT": 8,
     "WEB_RUNTIME": 9
   },
-  "digest": "sha256:9597aa51210b8612fc755b4aad296225d9d2f79d982b14fcc8ae2d63ed85ab91",
+  "digest": "sha256:d5f69959e4423ee5e270e23936d9042450075ce4978447dbf52293d10bc4d071",
   "components": [
     {
       "path": "Shared/gates/gate.schema.json",
@@ -1334,8 +1334,8 @@
       "path": "Shared/tools/render_core.py",
       "role": "TOOLING",
       "role_description": "Guardrails and generators",
-      "bytes": 214208,
-      "sha256": "309a19fda3a2585b28c7d41effbc897b04a147e37d1c7f60624c58efc4f4286c"
+      "bytes": 220887,
+      "sha256": "0ec1acc79750f24af2000adeb2549068414032ddcc72347b4bae97551fcceb06"
     },
     {
       "path": "Shared/tools/renderer_inventory.py",
@@ -1726,8 +1726,8 @@
       "path": "public/core-learning/data.js",
       "role": "WEB",
       "role_description": "Static Core learner host and generated projection data",
-      "bytes": 2497022,
-      "sha256": "49091cb258c99e8a558d2f44830fb7271ebd56ca4ad5c989733140bfdb71a32e"
+      "bytes": 2500901,
+      "sha256": "2b5568a7d0afaacb31ce374c157df50d79f89f12389184d9e6ad7b9815514969"
     },
     {
       "path": "public/core-learning/index.html",
@@ -2381,11 +2381,32 @@
       "sha256": "8cb7b0c9987a253bc7e4318f753c480269d34447e10a3be1b21f5852ed942bba"
     },
     {
+      "path": "tests/test_core1a_renderer_maturity.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 8426,
+      "sha256": "75b263004ef7f7c175d13973f65f208b9dfd7714109d3ccc6697c5e7f8359e15"
+    },
+    {
+      "path": "tests/test_core1b_key_custody.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 4675,
+      "sha256": "d9ca7fb8eeac1b5f993a9fcad5e53593e86ea94a2a6c0738d36819d389446f19"
+    },
+    {
       "path": "tests/test_core1b_reconstruction.py",
       "role": "TEST",
       "role_description": "Executable checks",
       "bytes": 8906,
       "sha256": "198387b9d08b1fbdbcbfa159d4591179fd7e07552156283383eb901b5719c213"
+    },
+    {
+      "path": "tests/test_core1b_reconstruction_maturity.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 16268,
+      "sha256": "b2408a56f4d31c0f733e729ce3f5533947bd1ee2512dd2a4e8574bb3cc836f71"
     },
     {
       "path": "tests/test_core2_v2.py",
@@ -2435,6 +2456,13 @@
       "role_description": "Executable checks",
       "bytes": 7926,
       "sha256": "eddf27635e266f84ed1d25c2db68f7da0bd6f8c2c022688a3c7493d52c489801"
+    },
+    {
+      "path": "tests/test_core_authored_qrt_repair_journey.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 8217,
+      "sha256": "00383ddc2d2dada2247e9d2e1479a55b3aefec0faf977dd3af7bbe6b898b0ae3"
     },
     {
       "path": "tests/test_core_authority_contract.py",
@@ -2794,6 +2822,48 @@
       "sha256": "b88fa289b74d8382fdddfc662d2bc6259acfc49f3a6fa86ffca3e6785d35f57d"
     },
     {
+      "path": "tests/test_imo_core1a_candidate_package.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 5424,
+      "sha256": "f906f8576fea3443491cb6517106d25ef989fdf84cd5b228073778c8d841b450"
+    },
+    {
+      "path": "tests/test_imo_core1a_test_review.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 9840,
+      "sha256": "dca3ad6ca6af103bef473660a7c69879481f0b919569e98c9c5f375930d74a91"
+    },
+    {
+      "path": "tests/test_imo_core2_private_review_bundle.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 8662,
+      "sha256": "c7a0693f22b5fb70abf6008cde7d79c86f80d2174632dbb444aa8991160fe95d"
+    },
+    {
+      "path": "tests/test_imo_core2_q004_spotcheck.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 18203,
+      "sha256": "4d9e1f2b7e03c38b7899a86000e01a2de2ae2552afd1d3c304b8a084e479e1cb"
+    },
+    {
+      "path": "tests/test_imo_core2_source_acquisition_gaps.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 25875,
+      "sha256": "1e26bedb2dd95509f4c11e8667c012fa4c47d9203e37f6f69b000269003ce9ae"
+    },
+    {
+      "path": "tests/test_imo_core_pilot_research.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 9813,
+      "sha256": "0db7f7e796e3beeef94b9ed35dbf0cf4a68ac27f9dce7a0415965050915ac54b"
+    },
+    {
       "path": "tests/test_imo_discrepancy_register.py",
       "role": "TEST",
       "role_description": "Executable checks",
@@ -2822,6 +2892,13 @@
       "sha256": "0b47d3bdcab0ce2522f806b1b926158d8becaef07900fb985fcf0f49a0b99341"
     },
     {
+      "path": "tests/test_imo_index_laws_subtopic_pilot.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 14760,
+      "sha256": "dfd544d02c5ed1ba472b9d8d5ca8d7558701fdf36e2605b174301cc96f064bce"
+    },
+    {
       "path": "tests/test_imo_intake_contract.py",
       "role": "TEST",
       "role_description": "Executable checks",
@@ -2829,11 +2906,25 @@
       "sha256": "0ca940f5742a32e36553d00b6ba761b7e49470a49b5932ecaf077a27b85494f2"
     },
     {
+      "path": "tests/test_imo_learner_quality.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 6320,
+      "sha256": "df66f57a0c64f24e30ca923125fb86f8be6120cc7919b96abbc8bed08aa3c8ce"
+    },
+    {
       "path": "tests/test_imo_math_audit.py",
       "role": "TEST",
       "role_description": "Executable checks",
       "bytes": 4088,
       "sha256": "75e7081fa3289bbe12185fbc0a362aed3d55a27f9eeb4246d62d0f93a9d68db6"
+    },
+    {
+      "path": "tests/test_imo_math_tab.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 8857,
+      "sha256": "20cce2bbf0137318b874fbfb0a3fab198d8c8f0a2e3723225dce50d89d8d80e3"
     },
     {
       "path": "tests/test_imo_original_practice.py",
@@ -2855,6 +2946,13 @@
       "role_description": "Executable checks",
       "bytes": 5520,
       "sha256": "f6e73047a900f226860987f566593f6a312b055b0cf1009d6e13bf75d9730b43"
+    },
+    {
+      "path": "tests/test_imo_qualification_evidence.py",
+      "role": "TEST",
+      "role_description": "Executable checks",
+      "bytes": 6755,
+      "sha256": "55cf5d42ac5ecd2079f577be36f1e06b8a50e69ed683015bfab11eb2b9807c76"
     },
     {
       "path": "tests/test_imo_review_gates.py",
@@ -3182,8 +3280,8 @@
       "path": "tests/test_product_blueprint_safety.py",
       "role": "TEST",
       "role_description": "Executable checks",
-      "bytes": 4390,
-      "sha256": "2a1146fbabea4a133b9667be177e0edc7e2e7ac7f72d067804d9a776819589d3"
+      "bytes": 6283,
+      "sha256": "83d4d2fab25c84ce6a682832cb264493c483c247e0de9f89f0f8162d5b958533"
     },
     {
       "path": "tests/test_product_coverage.py",
@@ -3672,8 +3770,8 @@
       "path": "tools/data.js",
       "role": "WEB",
       "role_description": "Browsable surfaces over generated data",
-      "bytes": 2464475,
-      "sha256": "4d0d1462434e10196c98e8c25edbdacbca7977a06617312256601c1a146795cd"
+      "bytes": 2473283,
+      "sha256": "151bb206f898749600581229dd0da7a31ef4f361191a8c330515eb51c1d171a0"
     },
     {
       "path": "tools/index.html",
@@ -3711,11 +3809,39 @@
       "sha256": "234816f6b042fb80bd0a602cb4484713dd9e3856212580d8f60e1a3959404066"
     },
     {
+      "path": "tools/site-audit/core-authored-qrt-repair-journey-audit.mjs",
+      "role": "WEB",
+      "role_description": "Browsable surfaces over generated data",
+      "bytes": 7035,
+      "sha256": "990794d7fa81accd8e6e96976112233a8204a6d4b13a4b4a948916ae4687c59b"
+    },
+    {
       "path": "tools/site-audit/core-page-audit.mjs",
       "role": "WEB",
       "role_description": "Browsable surfaces over generated data",
       "bytes": 43522,
       "sha256": "02fe802183189d69d061a09ef2d0025b15ff758ceb7a29bdcc7adf10560409e2"
+    },
+    {
+      "path": "tools/site-audit/core1a-render-maturity-audit.mjs",
+      "role": "WEB",
+      "role_description": "Browsable surfaces over generated data",
+      "bytes": 4554,
+      "sha256": "c4919130e422be90854093a2fe0e70e19f7a22726a23cc9843d5f7ca589b1519"
+    },
+    {
+      "path": "tools/site-audit/core1b-custody-evidence.py",
+      "role": "WEB",
+      "role_description": "Browsable surfaces over generated data",
+      "bytes": 7466,
+      "sha256": "cd88ecc6c39f6bc3161fc7a16782febf0956e7b024075ed90d2dd7e3a1620cbf"
+    },
+    {
+      "path": "tools/site-audit/core1b-reconstruction-audit.mjs",
+      "role": "WEB",
+      "role_description": "Browsable surfaces over generated data",
+      "bytes": 8552,
+      "sha256": "07425f0ba1a256fe123658b71da66c8b90bf253b5197606eccaa8554898ebebf"
     },
     {
       "path": "tools/site-audit/core2-v2-browser-audit.mjs",
@@ -5280,8 +5406,23 @@
       "kind": "IMPORTS"
     },
     {
+      "from": "tests/test_core1a_renderer_maturity.py",
+      "to": "Shared.tools",
+      "kind": "IMPORTS"
+    },
+    {
       "from": "tests/test_core1b_reconstruction.py",
       "to": "Shared.library",
+      "kind": "IMPORTS"
+    },
+    {
+      "from": "tests/test_core1b_reconstruction_maturity.py",
+      "to": "Shared.tools",
+      "kind": "IMPORTS"
+    },
+    {
+      "from": "tests/test_core1b_reconstruction_maturity.py",
+      "to": "Shared.tools",
       "kind": "IMPORTS"
     },
     {
@@ -5316,6 +5457,11 @@
     },
     {
       "from": "tests/test_core2b_inventory.py",
+      "to": "Shared.tools",
+      "kind": "IMPORTS"
+    },
+    {
+      "from": "tests/test_core_authored_qrt_repair_journey.py",
       "to": "Shared.tools",
       "kind": "IMPORTS"
     },
