@@ -78,6 +78,33 @@ class BlueprintReadinessTests(unittest.TestCase):
         audit.CUSTODY_SCHEMA_BLOB_SHA = audit._git_blob_sha(custody.read_bytes())
         audit.BLUEPRINT_REGISTRY_BLOB_SHA = audit._git_blob_sha(blueprint.read_bytes())
 
+    def synthetic_cli(self, *args):
+        # Each subprocess uses the same exact synthetic fixture pins as the
+        # in-process tests. This is a TEST-ONLY bootstrap, never a production
+        # environment override or a relaxation of the auditor's Git pins.
+        bootstrap = (
+            "import importlib.util,sys\\n"
+            "spec=importlib.util.spec_from_file_location('fixture_audit',sys.argv[1])\\n"
+            "mod=importlib.util.module_from_spec(spec)\\n"
+            "spec.loader.exec_module(mod)\\n"
+            "mod.CUSTODY_SCHEMA_BLOB_SHA=sys.argv[2]\\n"
+            "mod.BLUEPRINT_REGISTRY_BLOB_SHA=sys.argv[3]\\n"
+            "sys.argv=[sys.argv[1]]+sys.argv[4:]\\n"
+            "raise SystemExit(mod.main())\\n"
+        )
+        return [sys.executable, "-c", bootstrap, str(FILE),
+                audit.CUSTODY_SCHEMA_BLOB_SHA,
+                audit.BLUEPRINT_REGISTRY_BLOB_SHA, *args]
+
+    def test_production_cli_rejects_synthetic_contract_bytes(self):
+        # Direct production entrypoint retains reviewed main contract pins.
+        result = subprocess.run(
+            [sys.executable, str(FILE), "report", "--repo-root", str(self.root)],
+            capture_output=True, text=True, check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("CUSTODY_SCHEMA_BYTES_DRIFT", result.stderr)
+        self.assertNotIn(str(self.root), result.stderr + result.stdout)
+
     def verdict(self):
         return {
             "schema": audit.SPOTCHECK_SCHEMA,
@@ -255,8 +282,8 @@ class BlueprintReadinessTests(unittest.TestCase):
         row["blocking_codes"] = [secret]
         candidate.write_text(json.dumps(row))
         result = subprocess.run(
-            [sys.executable, str(FILE), "report", "--repo-root", str(self.root),
-             "--spotcheck-verdict", str(candidate)],
+            self.synthetic_cli("report", "--repo-root", str(self.root),
+                               "--spotcheck-verdict", str(candidate)),
             capture_output=True, text=True, check=False)
         self.assertNotEqual(result.returncode, 0)
         self.assertNotIn(secret, result.stderr + result.stdout)
@@ -265,7 +292,7 @@ class BlueprintReadinessTests(unittest.TestCase):
 
     def test_cli_default_success_never_prints_raw_source(self):
         result = subprocess.run(
-            [sys.executable, str(FILE), "report", "--repo-root", str(self.root)],
+            self.synthetic_cli("report", "--repo-root", str(self.root)),
             capture_output=True, text=True, check=False)
         self.assertEqual(result.returncode, 0, result.stderr)
         obj = json.loads(result.stdout)
@@ -357,8 +384,8 @@ class BlueprintReadinessTests(unittest.TestCase):
         fifo = self.root / "blocked.fifo"
         os.mkfifo(fifo)
         result = subprocess.run(
-            [sys.executable, str(FILE), "report", "--repo-root", str(self.root),
-             "--spotcheck-verdict", str(fifo)],
+            self.synthetic_cli("report", "--repo-root", str(self.root),
+                               "--spotcheck-verdict", str(fifo)),
             capture_output=True, text=True, check=False, timeout=5)
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("SPOTCHECK_METADATA_UNAVAILABLE", result.stderr)
@@ -387,8 +414,8 @@ class BlueprintReadinessTests(unittest.TestCase):
         candidate = self.root / "private-question-file.json"
         candidate.write_text('{' + '"a":' * 1200 + 'null' + '}' * 1200)
         result = subprocess.run(
-            [sys.executable, str(FILE), "report", "--repo-root", str(self.root),
-             "--spotcheck-verdict", str(candidate)], capture_output=True,
+            self.synthetic_cli("report", "--repo-root", str(self.root),
+                               "--spotcheck-verdict", str(candidate)), capture_output=True,
             text=True, check=False, timeout=5)
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("SPOTCHECK_METADATA_UNAVAILABLE", result.stderr)
@@ -403,7 +430,7 @@ class BlueprintReadinessTests(unittest.TestCase):
                                     "CORE2_BLUEPRINT_MISSING_OR_DRIFTED"):
             audit.report(self.root)
         result = subprocess.run(
-            [sys.executable, str(FILE), "report", "--repo-root", str(self.root)],
+            self.synthetic_cli("report", "--repo-root", str(self.root)),
             capture_output=True, text=True, check=False)
         self.assertNotEqual(result.returncode, 0)
         self.assertNotIn(sensitive, result.stdout + result.stderr)
