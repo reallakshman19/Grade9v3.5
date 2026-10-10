@@ -88,7 +88,10 @@ try {
     assert(await hubLink.count() === 1, width + 'px: Mathematics Hub missing Number Systems');
     if (await hubLink.count()) {
       await hubLink.focus();
-      await page.keyboard.press('Enter');
+      await Promise.all([
+        page.waitForURL(url => url.pathname.endsWith('/number-systems/index.html'), {waitUntil: 'load'}),
+        page.keyboard.press('Enter')
+      ]);
       assert(new URL(page.url()).pathname.endsWith('/number-systems/index.html'),
         width + 'px: Mathematics Hub keyboard navigation failed');
     }
@@ -97,7 +100,10 @@ try {
     assert(await imoLink.count() === 1, width + 'px: IMO Number Systems route missing');
     if (await imoLink.count()) {
       await imoLink.focus();
-      await page.keyboard.press('Enter');
+      await Promise.all([
+        page.waitForURL(url => url.pathname.endsWith('/number-systems/index-laws/index.html'), {waitUntil: 'load'}),
+        page.keyboard.press('Enter')
+      ]);
       assert(new URL(page.url()).pathname.endsWith('/number-systems/index-laws/index.html'),
         width + 'px: IMO Index Laws keyboard navigation failed');
     }
