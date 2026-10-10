@@ -70,6 +70,9 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("setProgress('needs_reasoning'", html)
         self.assertIn("warrantChoice!==rule.dataset.g9RuleCorrect", html)
         self.assertIn("aligned_structured_counterexample", html)
+        self.assertIn("aligned_after_guided_exposure", html)
+        self.assertIn("const previouslyGuided=article.dataset.g9ConceptAidExposure==='guided_study'", html)
+        self.assertIn("previouslyGuided", html)
         self.assertIn("Your explanation has NOT been graded", html)
         self.assertEqual(html.count("delete article.dataset.g9ConceptCheckCompleted;"), 2,
                          "both re-submission and guided bypass must invalidate stale format evidence")
