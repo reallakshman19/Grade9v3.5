@@ -17,16 +17,34 @@ const result = { schema: 'imo-f02-concept-first-chromium/v2', source: 'TEST_CAND
   viewports: [], failures: [], printed_pdf: null };
 const assert = (ok, label) => { if (!ok) result.failures.push(label); };
 let browser;
-// Host the two emitted TEST role pages on one short-lived loopback origin.
-// file:// storage isolation is browser-dependent and cannot prove round-trip persistence.
+// Only the two generated TEST role pages and four declared static shell
+// dependencies share the temporary origin; never serve arbitrary files.
+const publicRoot=path.resolve(process.cwd(),'public');
+const allowedAssets=new Map([
+  ['/css/modern-learner.css','css/modern-learner.css'],
+  ['/css/tablet-12-7.css','css/tablet-12-7.css'],
+  ['/js/display-controls.js','js/display-controls.js'],
+  ['/js/site-header.js','js/site-header.js'],
+]);
+const assetTargets=new Map([...allowedAssets].map(([url,relative])=>
+  [url,path.join(publicRoot,relative)]));
 const localServer = createServer((req,res)=>{
   const route=(req.url||'').split(/[?#]/,1)[0];
-  const target=route==='/core1a.html'?html:route==='/core2a.html'?core2aHtml:null;
+  const target=route==='/core1a.html'?html:route==='/core2a.html'?core2aHtml:
+    assetTargets.get(route);
   if(!target){res.writeHead(404);res.end('not found');return;}
-  res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});
-  fs.createReadStream(target).pipe(res);
+  const type=route.endsWith('.css')?'text/css; charset=utf-8':
+    route.endsWith('.js')?'application/javascript; charset=utf-8':
+    'text/html; charset=utf-8';
+  res.writeHead(200,{'Content-Type':type,'Cache-Control':'no-store'});
+  const file=fs.createReadStream(target);
+  file.on('error',()=>res.destroy());
+  file.pipe(res);
 });
 try {
+  for(const target of assetTargets.values()){
+    if(!fs.existsSync(target))throw new Error('MissingDeclaredTestAsset');
+  }
   browser = await chromium.launch({ headless: true });
   await new Promise((resolve,reject)=>{
     localServer.once('error',reject);
@@ -236,6 +254,17 @@ try {
     const tracePage = await browser.newPage({viewport: {width, height: 900}});
     const traceErrors = [];
     tracePage.on('pageerror', e => traceErrors.push(String(e)));
+    // Verify the test is exercising real styles/scripts, not two bare pages.
+    const assetHealth=await Promise.all([...allowedAssets.keys()].map(async route=>{
+      const response=await tracePage.request.get(new URL(route,localOrigin).href);
+      return {route,status:response.status()};
+    }));
+    assert(assetHealth.every(a=>a.status===200),
+      width+': loopback shell CSS/JS unavailable: '+
+      assetHealth.map(a=>a.route+'='+a.status).join(','));
+    const denied=await tracePage.request.get(new URL('/Shared/tools/render_core.py',localOrigin).href);
+    assert(denied.status()===404,
+      width+': TEST browser fixture must not serve arbitrary repository files');
     await tracePage.goto(new URL('core2a.html',localOrigin).href, {waitUntil:'load'});
     const scopedQuestion = tracePage.locator('article[data-g9-role="CORE2A"][id="' + questionId + '"]');
     const traceNote = tracePage.locator('[data-g9-f02-trace-status]');
