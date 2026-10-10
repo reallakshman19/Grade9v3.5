@@ -29,7 +29,7 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
         self.base = json.loads(PILOT.read_text(encoding="utf-8"))
         self.addon = json.loads(ADDON.read_text(encoding="utf-8"))
         self.manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-        self.question = self.addon["questions"][0]
+        self.question = next(q for q in self.addon["questions"] if q["id"] == QUESTION)
 
     def test_real_shared_blueprint_contract_and_explicit_three_role_selection(self):
         registry = json.loads(render_core.BLUEPRINTS.read_text(encoding="utf-8"))
@@ -46,18 +46,15 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
         self.assertEqual(self.manifest["bank_refs"], [])
         self.assertEqual(
             self.manifest["package_refs"],
-            [
-                "TEST/imo-research/pilots/core1a-render-qualified-divisibility.v1.json",
-                "TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json",
-            ],
+            ["TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json"],
         )
         resolved = product_manifest.validate_selection(
-            self.manifest, [self.base, self.addon], []
+            self.manifest, [self.addon], []
         )
         self.assertEqual([q["id"] for q in resolved["core2b"]], [QUESTION])
         product_coverage.validate(
             self.manifest,
-            product_manifest.derivable([self.base, self.addon], []),
+            product_manifest.derivable([self.addon], []),
         )
 
     def test_authored_unpublished_item_cannot_become_sof_core2_or_qrt_accepted(self):
@@ -106,7 +103,7 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
         self.assertIn("aria-labelledby=", svg)
         self.assertNotIn("120", svg)
         self.assertNotIn("divisible by 5", svg)
-        rep = self.addon["representations"][0]
+        rep = next(r for r in self.addon["representations"] if r["id"] == "REP-TEST-IMO-164-FIVE-NEUTRAL-FACTORS")
         self.assertEqual(rep["scene_instances"][0]["question_ref"], QUESTION)
         self.assertEqual(rep["rendered_asset_refs"], [
             "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg"
