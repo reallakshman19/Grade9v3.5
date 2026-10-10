@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import subprocess
 from pathlib import Path
 import tempfile
 import threading
@@ -67,7 +68,7 @@ class ReadbackTests(unittest.TestCase):
 
     def check(self, *, attempts=1):
         return audit.audit(self.repo, self.base, expected_sha=SHA, paths=[ROUTE],
-                           attempts=attempts, allow_loopback=True)
+                           attempts=attempts, allow_loopback=True, fixture_only=True)
 
     def test_success_checks_default_and_cache_busted_bytes(self):
         result = self.check()
@@ -135,6 +136,30 @@ class ReadbackTests(unittest.TestCase):
                 audit.valid_base(bad)
         self.assertEqual(audit.valid_base("https://reallakshman19.github.io/Grade9v3.5/"),
                          "https://reallakshman19.github.io/Grade9v3.5/")
+
+
+    def test_exact_head_binding_rejects_forged_sha_and_dirty_docs(self):
+        def git(*args):
+            proc = subprocess.run(["git", "-C", str(self.repo), *args],
+                                  capture_output=True, check=True)
+            return proc.stdout.decode("utf-8").strip()
+        git("init", "-q")
+        git("add", "docs")
+        git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+            "commit", "-qm", "test fixture")
+        true_sha = git("rev-parse", "HEAD")
+        with self.assertRaisesRegex(ValueError, "checkout SHA mismatch"):
+            audit.audit(self.repo, self.base, expected_sha=SHA, paths=[ROUTE],
+                        allow_loopback=True)
+        self.assertEqual(self.server.calls, [], "incorrect commit must fail before HTTP")
+        observed = audit.audit(self.repo, self.base, expected_sha=true_sha,
+                               paths=[ROUTE], allow_loopback=True)
+        self.assertEqual(observed["status"], "PASS")
+        self.assertEqual(observed["expected_commit_sha"], true_sha)
+        (self.repo / "docs" / ROUTE).write_bytes(b"uncommitted tampering")
+        with self.assertRaisesRegex(ValueError, "working-tree Pages route differs"):
+            audit.audit(self.repo, self.base, expected_sha=true_sha, paths=[ROUTE],
+                        allow_loopback=True)
 
     def test_no_network_is_failure_not_a_success_or_not_run(self):
         with patch.object(audit, "_get", return_value={
