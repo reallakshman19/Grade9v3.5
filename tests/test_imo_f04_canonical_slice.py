@@ -129,6 +129,21 @@ class IMOAuthorHelpRoleRuntimeDenialTests(unittest.TestCase):
         self.assertEqual(authored_core2a_runtime_findings(mutated),
                          ["CORE2A_HELP_LOCAL_TRACE_INCOMPLETE"])
 
+    def test_post_help_recommit_is_assisted_not_fresh_independent(self):
+        from Shared.tools import render_core
+        pages, _gaps, _digest, _advisories, _waivers = render_core.build_report(
+            MANIFEST, "PAGES", held_to="REFERENCE")
+        html = pages["core2a.html"]
+        self.assertEqual(authored_core2a_runtime_findings(html), [])
+        label = "?'ASSISTED_ATTEMPT_COMMIT':kind;"
+        self.assertEqual(html.count(label), 1)
+        # A trace that silently downgrades a post-help response to a clean
+        # ATTEMPT_COMMIT must be denied, regardless of its links.
+        bad = html.replace(label, "?'ATTEMPT_COMMIT':kind;", 1)
+        self.assertEqual(authored_core2a_runtime_findings(bad),
+                         ["CORE2A_HELP_ASSISTED_RETRY_UNCLASSIFIED"])
+        self.assertIn("F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1", html)
+
     def test_partial_or_fake_trace_does_not_bypass_runtime_hold(self):
         for markup in (
             "<script>const f02Schema='F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1';</script>",
