@@ -17,7 +17,7 @@ from Shared.tools import question_review_matrix as qrt, web_blueprint_contract
 from Shared.tools.imo_f04_canonical_slice import (
     BLUEPRINT_REFS, CELL, MANIFEST, MID, PACKAGE, QID, ROLES, STEP,
     held_candidate_findings, inspect_real_candidate, inspect_rendered,
-    navigation_findings, question_by_id,
+    navigation_findings, question_by_id, RenderFacts,
 )
 
 
@@ -83,12 +83,16 @@ class IMOCanonicalRouteAcceptanceContracts(unittest.TestCase):
                 "steps": [{"step": STEP, "id": STEP}],
                 "return_links": [{
                     "question": QID, "href": f"core2a.html#{QID}",
+                    "concept": MID, "concept_gate_hidden": True,
                 }],
+                "selected_step_dom_id_count": 1,
             },
             "CORE2A": {
                 "repair_links": [{
                     "ref": STEP, "href": f"core1a.html#{STEP}",
                     "protected_template": True,
+                    "concept_navigation": True,
+                    "question": QID, "concept": MID,
                 }],
             },
         }
@@ -116,6 +120,45 @@ class IMOCanonicalRouteAcceptanceContracts(unittest.TestCase):
                 self.assertEqual(
                     navigation_findings(facts),
                     ["CORE2A_NOT_LINKED_TO_EXACT_REPAIR_STEP"])
+
+    def test_duplicate_step_dom_ids_are_not_valid_repair_targets(self):
+        facts = self.valid_route_facts()
+        facts["CORE1A"]["selected_step_dom_id_count"] = 2
+        self.assertEqual(navigation_findings(facts),
+                         ["CORE1A_REPAIR_STEP_DOM_ID_NOT_UNIQUE"])
+
+    def test_repair_help_state_binding_must_match_selected_question(self):
+        for key, value in (("concept_navigation", False),
+                           ("question", "UNKNOWN"), ("concept", "WRONG")):
+            with self.subTest(key=key):
+                facts = self.valid_route_facts()
+                facts["CORE2A"]["repair_links"][0][key] = value
+                self.assertEqual(navigation_findings(facts),
+                                 ["CORE2A_REPAIR_HELP_NAVIGATION_UNBOUND"])
+
+    def test_core2a_return_must_remain_inside_held_concept(self):
+        for key, value, error in (
+            ("concept", "WRONG", "CORE1A_AUTHORED_RETURN_WRONG_CONCEPT"),
+            ("concept_gate_hidden", False, "CORE1A_AUTHORED_RETURN_BYPASSES_CONCEPT_GATE"),
+        ):
+            with self.subTest(key=key):
+                facts = self.valid_route_facts()
+                facts["CORE1A"]["return_links"][0][key] = value
+                self.assertEqual(navigation_findings(facts), [error])
+
+    def test_html_parser_detects_hidden_ancestor_not_link_attribute_claim(self):
+        def inspected(markup):
+            parsed = RenderFacts()
+            parsed.feed(markup)
+            parsed.close()
+            return parsed.return_links
+        link = (f'<a data-g9-practice-link data-g9-question-ref="{QID}" '
+                f'data-g9-concept-ref="{MID}" href="core2a.html#{QID}">Back</a>')
+        nested = f'<article><div data-g9-concept-target hidden><p>{link}</p></div></article>'
+        self.assertTrue(inspected(nested)[0]["concept_gate_hidden"])
+        exposed = f'<article><div data-g9-concept-target hidden></div><p>{link}</p></article>'
+        self.assertFalse(inspected(exposed)[0]["concept_gate_hidden"])
+        self.assertEqual(inspected(exposed)[0]["concept"], MID)
 
     def test_source_core2_link_is_not_authored_core2a_return(self):
         facts = self.valid_route_facts()
