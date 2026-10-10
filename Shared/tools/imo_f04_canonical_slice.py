@@ -252,6 +252,26 @@ def authored_core2a_runtime_findings(page: str | None) -> list[str]:
     actual = "\n".join(scripts.scripts)
     if not actual:
         return ["CORE2A_HELP_RUNTIME_STATIC_UNVERIFIED"]
+    # Agent 2 may supply an explicitly scoped F02 local event trace on BOTH
+    # held role pages, independent of generic CORE2 state helpers. Its presence
+    # is static implementation evidence ONLY: browser execution, persistence,
+    # spoof-resistance and learner independence remain unverified.
+    if "F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1" in actual:
+        required = (
+            "const f02Key=scope?'f02-trace:'+scope+':'+f02Question:null;",
+            "const f02Read=()=>",
+            "const f02Event=(kind)=>",
+            "f02Event('ATTEMPT_COMMIT')",
+            "f02Event('REPAIR_NAV')",
+            "f02Event('GUIDED_OPEN')",
+            "f02Event('RETURN_CLICK')",
+            "if(kind!=='ATTEMPT_COMMIT')value.assisted=true;",
+            "if(value.assisted||value.invalid)target.dataset.g9F02Assisted='1';",
+        )
+        if ("data-g9-f02-trace-status" not in page
+                or any(fragment not in actual for fragment in required)):
+            return ["CORE2A_HELP_LOCAL_TRACE_INCOMPLETE"]
+        return []  # LOCAL_TRACE_DECLARED, never BROWSER_VERIFIED or academic.
     known_invalid = {
         "function markAssistance(a,kind){if(a.dataset.g9Role!=='CORE2'||!kind)return;":
             "CORE2A_HELP_ASSISTANCE_ROLE_EXCLUDED",
