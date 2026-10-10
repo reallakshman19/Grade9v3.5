@@ -18,6 +18,7 @@ from core2_source_acquisition_gaps import (  # noqa: E402
     private_workspace, CENSUS, SourceGapError,
 )
 import q004_private_spotcheck as q4  # noqa: E402
+import q004_private_review_bundle as bundle  # noqa: E402
 
 
 class Q004PrivateSpotcheckTests(unittest.TestCase):
@@ -263,6 +264,85 @@ class Q004PrivateSpotcheckTests(unittest.TestCase):
         with self.assertRaises(SourceGapError):
             q4._assessment_path(self.workspace, link)
 
+
+    def prepare_synthetic_visual_bundle(self):
+        """Two invented PNGs under a real self-authenticated test-file receipt."""
+        self.install_synthetic_import()
+        def fake_render(pdf, page, output):
+            output.write_bytes(
+                bundle.PNG_MAGIC + bytes([page]) + b"SYNTHETIC_IMAGE_ONLY"
+            )
+        with mock.patch.object(bundle, "_render_page", side_effect=fake_render):
+            bundle.prepare(self.workspace)
+        directory = self.workspace / bundle.REVIEW_DIR
+        return directory / "q004.inspection.json", directory
+
+    def test_visual_review_verifier_checks_retained_source_and_both_png_hashes(self):
+        packet, root = self.prepare_synthetic_visual_bundle()
+        self.assertEqual(q4._assessment_path(self.workspace, packet), packet)
+        q4.verify_private_bundle(self.workspace, packet)
+        self.assertFalse(json.loads((root / "review-manifest.json").read_text())[
+            "core2_admitted"
+        ])
+
+    def test_visual_review_refuses_mutated_question_or_key_png(self):
+        for target in ("source-question-page.png", "source-answer-key-page.png"):
+            with self.subTest(target=target):
+                if (self.workspace / bundle.REVIEW_DIR).exists():
+                    import shutil
+                    shutil.rmtree(self.workspace / bundle.REVIEW_DIR)
+                packet, root = self.prepare_synthetic_visual_bundle()
+                (root / target).write_bytes(
+                    bundle.PNG_MAGIC + b"REPLACED_SYNTHETIC_CONTENT"
+                )
+                with self.assertRaises(SourceGapError):
+                    q4.verify_private_bundle(self.workspace, packet)
+
+    def test_visual_review_refuses_forged_manifest_grants_and_index(self):
+        for field, new_value in (
+            ("rights_granted", True),
+            ("core2_admitted", True),
+            ("source_pdf_sha256", "f" * 64),
+            ("source_retention_status", "VERIFIED_RETAINED_BYTES_ONLY"),
+        ):
+            with self.subTest(field=field):
+                if (self.workspace / bundle.REVIEW_DIR).exists():
+                    import shutil
+                    shutil.rmtree(self.workspace / bundle.REVIEW_DIR)
+                packet, root = self.prepare_synthetic_visual_bundle()
+                path = root / "review-manifest.json"
+                manifest = json.loads(path.read_text())
+                manifest[field] = new_value
+                path.write_text(json.dumps(manifest), encoding="utf-8")
+                with self.assertRaises(SourceGapError):
+                    q4.verify_private_bundle(self.workspace, packet)
+
+    def test_visual_review_refuses_swapped_page_indices(self):
+        packet, root = self.prepare_synthetic_visual_bundle()
+        path = root / "review-manifest.json"
+        manifest = json.loads(path.read_text())
+        manifest["images"][0]["pdf_page_index_zero_based"] = q4.KEY_PAGE
+        path.write_text(json.dumps(manifest), encoding="utf-8")
+        with self.assertRaises(SourceGapError):
+            q4.verify_private_bundle(self.workspace, packet)
+
+    def test_visual_review_refuses_missing_or_world_readable_manifest(self):
+        packet, root = self.prepare_synthetic_visual_bundle()
+        path = root / "review-manifest.json"
+        path.chmod(0o644)
+        with self.assertRaises(SourceGapError):
+            q4.verify_private_bundle(self.workspace, packet)
+        path.chmod(0o600)
+        path.unlink()
+        with self.assertRaises(SourceGapError):
+            q4.verify_private_bundle(self.workspace, packet)
+
+    def test_visual_review_refuses_changed_source_pdf_since_preparation(self):
+        packet, root = self.prepare_synthetic_visual_bundle()
+        snapshot, receipt = artifact_paths(self.workspace, q4.DOC_ID)
+        snapshot.write_bytes(self.bytes + b"CHANGED")
+        with self.assertRaises(SourceGapError):
+            q4.verify_private_bundle(self.workspace, packet)
 
     def test_prepared_bundle_assessment_inside_exact_private_child_is_accepted(self):
         directory = self.workspace / "q004-private-review"
