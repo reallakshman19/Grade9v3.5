@@ -68,14 +68,17 @@ class TestConceptFirstHTML(unittest.TestCase):
         core2a = self.pages["core2a.html"]
         question_id = "Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"
         concept_id = self.pkg["microtopics"][0]["id"]
-        self.assertEqual(core1a.count("data-g9-authored-core2a-return"), 1)
+        # The marker occurs once on the emitted anchor and once in the
+        # opt-in inline-JS query selector. Count actual anchors, not source text.
+        return_anchor = '<a data-g9-practice-link data-g9-authored-core2a-return '
+        self.assertEqual(core1a.count(return_anchor), 1)
         self.assertIn('href="core2a.html#' + question_id + '"', core1a)
         self.assertNotIn('href="core2.html#' + question_id + '"', core1a)
         self.assertIn('data-g9-question-ref="' + question_id + '"', core1a)
         self.assertIn('data-g9-concept-ref="' + concept_id + '"', core1a)
         self.assertIn('Returning after guided teaching is assisted practice', core1a)
         self.assertLess(core1a.index('data-g9-concept-target hidden'),
-                        core1a.index("data-g9-authored-core2a-return"))
+                        core1a.index(return_anchor))
         self.assertIn('data-g9-concept-link data-g9-question-ref="' + question_id + '"',
                       core2a)
         self.assertIn('href="core1a.html?g9-return=' + question_id +
