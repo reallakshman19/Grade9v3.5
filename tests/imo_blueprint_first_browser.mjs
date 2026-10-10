@@ -59,7 +59,7 @@ try {
               const svg = fig.locator('svg').first();
               assert.equal(await svg.count(), 1, 'five-factor safe SVG missing');
               const bounds = await svg.evaluate(root => {
-                const last = root.querySelector('rect[x="724"]');
+                const last = root.querySelector('rect[data-g9-final-factor="true"]');
                 const figure = root.closest('figure');
                 if (!last || !figure) return null;
                 const host = figure.getBoundingClientRect();
