@@ -187,8 +187,9 @@ def receipt_status(doc: dict, workspace: Path | None) -> tuple[str, list[str]]:
                 )
                 and receipt.get("snapshot_ref") == str(snapshot),
                 "receipt/source identity mismatch")
-        require(snapshot.open("rb").read(5) == b"%PDF-",
-                "snapshot does not contain PDF header")
+        with snapshot.open("rb") as source_bytes:
+            require(source_bytes.read(5) == b"%PDF-",
+                    "snapshot does not contain PDF header")
         outcome = source_pipeline.verify_acquisition(receipt, repo=REPO)
         require(outcome.get("passed") is True, "retained bytes or digest invalid")
         if receipt["source_kind"] == "FILE":
@@ -467,8 +468,10 @@ def acquire(doc: dict, workspace: Path,
                 requested_locator=doc["requested_pdf_url"],
                 acquired_at=acquired_at, snapshot_output=snapshot,
             )
-        require(snapshot.is_file() and snapshot.open("rb").read(5) == b"%PDF-",
-                "downloaded response is not a PDF")
+        require(snapshot.is_file(), "downloaded response is not a PDF")
+        with snapshot.open("rb") as source_bytes:
+            require(source_bytes.read(5) == b"%PDF-",
+                    "downloaded response is not a PDF")
         if local_file is None:
             require(_same_host(doc["requested_pdf_url"], result["resolved_locator"]),
                     "unexpected cross-domain redirect")
