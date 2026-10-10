@@ -90,6 +90,14 @@ Research-only test command:
 python -m unittest discover -s tests -p 'test_imo_core2_q004_spotcheck.py' -v
 ```
 
+## Public publisher-rights notice — no licence asserted
+
+SOF's [official website](https://sofworld.org/) publicly displays a copyright footer restricting copying/use without **prior written consent**. Its [official contact page](https://sofworld.org/contact) gives general enquiries email `info@sofworld.org`. These observations were checked on 2026-10-10. The public notice is general website language: it **does not** itself establish the rights holder or rights disposition for each school-mirrored past-paper PDF, nor does it supply a licence or explicit policy on mere linking to external original pages.
+
+The versioned research-only `core2-public-rights-notice.v1.json` binds this observation to all four indexed source-document IDs while expressly recording **no permission requested**, **no licence received**, **no wording/figure reproduction authorized**, **no separate original-page-link permission determination**, and no accepted Core2/public original-paper product. The gap reporter adds `PUBLIC_SOF_SITE_NOTICE_REQUIRES_PRIOR_WRITTEN_CONSENT` and `SOURCE_SPECIFIC_WRITTEN_PERMISSION_NOT_EVIDENCED` to the 68 question-level blockers. Source-specific immutable historical ledger rows intentionally retain their existing `publisher_publication_rights: NOT_REVIEWED` because no signed licence/copyright review resolves an actual paper.
+
+**Operator rights action:** Send a specific permission enquiry to SOF through the official contact address, asking separately about (a) exact stem/options/answers, (b) reproduced diagrams/tables/figures, (c) adapted/paraphrased questions, and (d) linking out to the official PDF without embedding protected material. Record recipient, date, exact reply and licensed scope in a *private/authorized* source-rights workflow; only then propose an update through a new reviewed rights decision. This engineering PR **did not send the enquiry** and never claims receipt of permission. In the absence of a grant, prefer **authored concept examples** or clearly attributed research-only external references; neither substitutes for authentic Core2 custody.
+
 ## Required next acceptance work
 
 For each printed position: inspect the exact PDF item; preserve exact source number, stem, conditions, option order, captions, figures, source hints and source answer independently of author's mathematical computation; resolve the ten known discrepancy cases affecting eleven positions; record a rights disposition and authentic question-level proof via existing source-custody structures. Engineering **self-check and spot review** remain distinct from genuine source rights and Owner/Core/QRT publication decisions.
