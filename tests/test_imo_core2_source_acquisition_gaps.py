@@ -121,6 +121,26 @@ class Core2SourceAcquisitionGapTests(unittest.TestCase):
             "requested_locator": "https://example.com/other.pdf"})
         self.assertEqual(receipt_status(self.sample, self.workspace)[0], "INVALID")
 
+    def test_www_same_host_redirect_is_allowed(self):
+        self.write_fake_receipt(changes={
+            "resolved_locator": "https://www.sofworld.org/download/file/fid/73719"
+        })
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0],
+                         "VERIFIED_RETAINED_BYTES_ONLY")
+
+    def test_changed_source_handoff_url_rejected_even_with_matching_census(self):
+        handoff = copy.deepcopy(self.handoff)
+        census = copy.deepcopy(self.census)
+        identity = self.sample["source_id"]
+        evil = "https://untrusted.example.org/other.pdf"
+        next(d for d in handoff["source_documents_queue"]
+             if d["source_id"] == identity)["requested_pdf_url"] = evil
+        for row in census["records"]:
+            if row["source_id"] == identity:
+                row["source_document_url"] = evil
+        with self.assertRaises(SourceGapError):
+            report(census, handoff)
+
     def test_cross_domain_redirect_rejected(self):
         self.write_fake_receipt(changes={
             "resolved_locator": "https://otherhost.example.net/item.pdf"})
