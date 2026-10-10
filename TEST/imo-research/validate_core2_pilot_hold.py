@@ -55,6 +55,9 @@ def no_copied_source_payload(obj: object, path: tuple[str, ...] = ()) -> None:
             # This is the *name* of a required nine-part status category, not
             # original stem text or a source choice list. Values are strictly checked below.
             prohibited.difference_update({"stem", "options"})
+            need(obj.get("stem") == "SEEN_ON_RENDER_ONLY" and
+                 obj.get("options") == "SEEN_ON_RENDER_ONLY",
+                 "typed component statuses cannot embed original source wording")
         need(not (set(obj) & prohibited),
              "protected source content field is not allowed in pilot packet")
         for name, child in obj.items():
