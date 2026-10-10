@@ -207,6 +207,8 @@ try {
     assert(new URL(journey.url()).pathname.endsWith('/core2a.html')
       && new URL(journey.url()).hash === '#' + questionId,
       width + ': guided learner was not returned to the exact authored Core2A article');
+    assert(await journey.locator('article[data-g9-role="CORE2A"][id="' + questionId + '"]').count() === 1,
+      width + ': Core2A destination fragment does not identify the authored question article');
     assert(journeyErrors.length === 0, width + ': guided return JavaScript errors ' + journeyErrors.join('; '));
     await journey.close();
     if (width === 390) {
