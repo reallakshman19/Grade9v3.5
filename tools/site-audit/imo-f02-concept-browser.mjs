@@ -54,7 +54,7 @@ try {
   for (const width of [320, 390, 768, 1280]) {
     const page = await browser.newPage({ viewport: { width, height: 900 } });
     const errors = [];
-    page.on('pageerror', e => errors.push(String(e)));
+    page.on('pageerror', () => errors.push('PAGE_SCRIPT_EXCEPTION'));
     await page.goto(pathToFileURL(html).href, { waitUntil: 'load' });
     const check = page.locator('[data-g9-concept-check]');
     const targets = page.locator('[data-g9-concept-target]');
@@ -185,7 +185,7 @@ try {
     // This is a fresh navigation, not the already-unlocked lesson above.
     const deep = await browser.newPage({ viewport: { width, height: 900 } });
     const deepErrors = [];
-    deep.on('pageerror', e => deepErrors.push(String(e)));
+    deep.on('pageerror', () => deepErrors.push('PAGE_SCRIPT_EXCEPTION'));
     await deep.goto(pathToFileURL(html).href + '#TC-02', {waitUntil:'load'});
     const step = deep.locator('#TC-02');
     const deepArticle = deep.locator('article[data-g9-role="CORE1A"]');
@@ -205,7 +205,7 @@ try {
       width + ': exact repair revealed without assisted evidence');
     assert(await deepArticle.getAttribute('data-g9-concept-check-completed') === null,
       width + ': guided repair falsely recorded independent form completion');
-    assert(deepErrors.length === 0, width + ': TC-02 deep-link JavaScript errors ' + deepErrors.join('; '));
+    assert(deepErrors.length === 0, width + ': TC-02 deep-link JavaScript error count=' + deepErrors.length);
     await deep.close();
     // F02 is a Core2A-only TEST manifest: the source repair query must return
     // to one authored question, with no pretence of independent-credit recovery.
@@ -221,7 +221,7 @@ try {
       width + ': authored Core2A repair lacks return-context bookkeeping');
     const journey = await browser.newPage({viewport: {width, height: 900}});
     const journeyErrors = [];
-    journey.on('pageerror', e => journeyErrors.push(String(e)));
+    journey.on('pageerror', () => journeyErrors.push('PAGE_SCRIPT_EXCEPTION'));
     await journey.goto(new URL(queryHref, pathToFileURL(core2aHtml)).href, {waitUntil:'load'});
     const guideReturn = journey.locator('[data-g9-concept-review]');
     const authoredReturn = journey.locator('[data-g9-authored-core2a-return]');
@@ -247,13 +247,13 @@ try {
       width + ': guided learner was not returned to the exact authored Core2A article');
     assert(await journey.locator('article[data-g9-role="CORE2A"][id="' + questionId + '"]').count() === 1,
       width + ': Core2A destination fragment does not identify the authored question article');
-    assert(journeyErrors.length === 0, width + ': guided return JavaScript errors ' + journeyErrors.join('; '));
+    assert(journeyErrors.length === 0, width + ': guided return JavaScript error count=' + journeyErrors.length);
     await journey.close();
     // Local-only, mutable chronology. This is NOT a verified assessment record.
     // A file:// browser may refuse storage; in that case do not fabricate saved evidence.
     const tracePage = await browser.newPage({viewport: {width, height: 900}});
     const traceErrors = [];
-    tracePage.on('pageerror', e => traceErrors.push(String(e)));
+    tracePage.on('pageerror', () => traceErrors.push('PAGE_SCRIPT_EXCEPTION'));
     // Verify the test is exercising real styles/scripts, not two bare pages.
     const assetHealth=await Promise.all([...allowedAssets.keys()].map(async route=>{
       const response=await tracePage.request.get(new URL(route,localOrigin).href);
@@ -357,11 +357,11 @@ try {
         }
       }
     }
-    assert(traceErrors.length === 0, width + ': local trace browser exceptions ' + traceErrors.join('; '));
+    assert(traceErrors.length === 0, width + ': local trace browser exception count=' + traceErrors.length);
     await tracePage.close();
     if (width === 390) {
       const access = await browser.newPage({ viewport: {width:390,height:900}, reducedMotion:'reduce' });
-      access.on('pageerror', e => result.failures.push('accessibility probe JS exception: '+String(e)));
+      access.on('pageerror', () => result.failures.push('ACCESSIBILITY_PAGE_SCRIPT_EXCEPTION'));
       await access.goto(pathToFileURL(html).href, {waitUntil:'load'});
       assert(await access.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches),
         '390: reduced-motion media emulation not enabled');
@@ -457,7 +457,7 @@ try {
     await page.screenshot({ path: path.join(out, 'core1a-' + width + '.png'), fullPage: true });
     result.viewports.push({ width, focus_after_check: focused, page_errors: errors,
       note: 'TEST-only visible behavior; no learner comprehension claim' });
-    assert(errors.length === 0, width + ': uncaught page errors ' + errors.join('; '));
+    assert(errors.length === 0, width + ': uncaught page error count=' + errors.length);
     await page.close();
   }
 } catch (error) {
