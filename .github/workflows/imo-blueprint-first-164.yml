@@ -12,6 +12,7 @@ on:
       - 'tests/check_imo_164_print.py'
       - 'tests/test_imo_164_release_hold.py'
       - 'tests/check_imo_164_baseline_differential.py'
+      - 'tests/check_imo_164_assurance_baseline.py'
       - 'Shared/tools/render_core.py'
       - 'TEST/imo-research/pilots/issue-164-technical-handoff.md'
       - 'TEST/imo-research/pilots/regression-scope-164.v1.json'
@@ -139,10 +140,16 @@ jobs:
         run: |
           python candidate/tests/check_imo_164_baseline_differential.py \
             baseline candidate "$RUNNER_TEMP/imo-164-baseline-differential.json"
+      - name: Compare complete canonical assurance and Pages findings with pinned main
+        run: |
+          python candidate/tests/check_imo_164_assurance_baseline.py \
+            baseline candidate "$RUNNER_TEMP/imo-164-assurance-baseline.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: imo-164-pinned-main-differential
-          path: ${{ runner.temp }}/imo-164-baseline-differential.json
+          path: |
+            ${{ runner.temp }}/imo-164-baseline-differential.json
+            ${{ runner.temp }}/imo-164-assurance-baseline.json
           retention-days: 7
           if-no-files-found: ignore
