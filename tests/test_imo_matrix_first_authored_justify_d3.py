@@ -107,8 +107,9 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
                    q["representation_roles"]["initial_ref"])
         self.assertEqual(rep["scene_instances"][0]["question_ref"], q["id"])
         self.assertEqual(rep["correspondence"][0]["symbol"], "n(n+1)(n+2)")
-        self.assertEqual(rep["reveal_stages"][0]["id"],
-                         "AUTHORED-001-FACTORS-ONLY")
+        self.assertEqual([stage["id"] for stage in rep["reveal_stages"]],
+                         ["AUTHORED-001-FACTORS-ONLY", "AUTHORED-001-PARITY-OBSERVE",
+                          "AUTHORED-001-RESIDUES-OBSERVE"])
         self.assertEqual(rep["scene_instances"][0]["datum_refs"],
                          ["DATUM-TEST-IMO-G9-AUTHORED-001-FACTORS"])
         datum = next(x for x in pkg["data"] if x["id"] ==
@@ -117,6 +118,9 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         asset = ROOT / rep["rendered_asset_refs"][0]
         svg = asset.read_text(encoding="utf-8")
         self.assertIn("AUTHORED-001-FACTORS-ONLY", svg)
+        self.assertEqual(svg.count("data-g9-stage-id="), 3)
+        self.assertIn("AUTHORED-001-PARITY-OBSERVE", svg)
+        self.assertIn("AUTHORED-001-RESIDUES-OBSERVE", svg)
         self.assertIn(">n</text>", svg)
         self.assertIn(">n + 1</text>", svg)
         self.assertIn(">n + 2</text>", svg)
@@ -155,13 +159,13 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
                             len(v["observed_behavior"]) > 40
                             for v in mark["matrix_slots"].values()))
         self.assertEqual(mark["semantic_coverage"]["remaining_gaps"],
-                         ["S2", "S3", "M2"])
-        self.assertEqual(mark["semantic_coverage"]["supported_candidate_slots"], 9)
+                         ["M2"])
+        self.assertEqual(mark["semantic_coverage"]["supported_candidate_slots"], 11)
         self.assertEqual(mark["semantic_coverage"]["owner_accepted_slots"], 0)
         self.assertEqual(
             [name for name, row in mark["matrix_slots"].items()
              if row["evidence_status"] == "GAP_NOT_IMPLEMENTED"],
-            ["S2", "S3", "M2"])
+            ["M2"])
         self.assertEqual(mark["learning_sequence"],
                          "AUTHOR_DIAGNOSTIC_ATTEMPT_FIRST_THEN_OPTIONAL_CORE1A_REPAIR")
         self.assertEqual(len(manifest["selection"]["core2a"]), 1)
@@ -233,7 +237,8 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
             x["id"] for x in q["answer"]["reasoning_route"]
         } for s in q["scaffolds"]))
         self.assertEqual(q["representation_roles"]["stage_refs"],
-                         ["AUTHORED-001-FACTORS-ONLY"])
+                         ["AUTHORED-001-FACTORS-ONLY", "AUTHORED-001-PARITY-OBSERVE",
+                          "AUTHORED-001-RESIDUES-OBSERVE"])
 
     def test_qrt_missing_visual_and_diagnostic_support_is_not_fake_complete(self):
         _, _, _, q = snapshot()
@@ -241,10 +246,10 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertEqual(evidence["semantic_coverage"]["governing_asks_total"], 12)
         self.assertEqual(evidence["semantic_coverage"]["owner_accepted_slots"], 0)
         self.assertEqual(evidence["semantic_coverage"]["remaining_gaps"],
-                         ["S2", "S3", "M2"])
+                         ["M2"])
         self.assertIn("may collapse to recall",
                       evidence["semantic_coverage"]["risk"].lower().replace("_", " "))
-        for name in ("S2", "S3", "M2"):
+        for name in ("M2",):
             self.assertEqual(evidence["matrix_slots"][name]["evidence_status"],
                              "GAP_NOT_IMPLEMENTED")
             self.assertNotEqual(evidence["matrix_slots"][name]["observed_behavior"], "")
@@ -265,6 +270,30 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
             self.assertNotIn(item, svg.lower(), item)
         self.assertEqual(rep["reveal_stages"][0]["visible_elements"],
                          ["n,n+1,n+2"])
+
+    def test_three_learner_stages_protect_qrt_d3_warrant(self):
+        pkg, _, _, q = snapshot()
+        rep = next(row for row in pkg["representations"] if row["id"] ==
+                   q["representation_roles"]["initial_ref"])
+        stages = rep["reveal_stages"]
+        self.assertEqual(len(stages), 3)
+        self.assertEqual(q["representation_roles"]["stage_refs"],
+                         [stage["id"] for stage in stages])
+        self.assertEqual(rep["extensions"]["grade9v3:stage_mode"], "REPLACE")
+        self.assertIn("n,n+1,n+2", stages[0]["visible_elements"])
+        self.assertIn("adjacent parity changes", stages[1]["visible_elements"])
+        self.assertIn("n mod 3 in {0,1,2}", stages[2]["visible_elements"])
+        text = " ".join(item["purpose"] for item in stages).lower()
+        self.assertNotIn("gcd(2,3)", text)
+        self.assertNotIn("6 divides", text)
+        self.assertNotIn("claim is true", text)
+        scores = q["extensions"][REVIEW]["matrix_slots"]
+        self.assertEqual(scores["S1"]["evidence_status"], "SUPPORTED_CANDIDATE")
+        self.assertEqual(scores["S2"]["evidence_status"], "SUPPORTED_CANDIDATE")
+        self.assertEqual(scores["S3"]["evidence_status"], "SUPPORTED_CANDIDATE")
+        self.assertEqual(scores["M2"]["evidence_status"], "GAP_NOT_IMPLEMENTED")
+        self.assertTrue(all(score["owner_acceptance"] is False
+                            for score in scores.values()))
 
     def test_manifest_is_real_product_selection_with_explicit_d2_omission(self):
         pkg, manifest, _, _ = snapshot()
