@@ -339,6 +339,9 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertIn(q["id"], html)
         self.assertIn(q["stem"], html)
         self.assertIn('data-g9-stage="PRE_ATTEMPT"', html)
+        self.assertIn('data-g9-print-layout="SINGLE_COLUMN_A4"', html)
+        self.assertIn('article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-split{display:block!important}', html)
+        self.assertNotIn('data-g9-print-layout="SINGLE_COLUMN_A4"', pages["core1a.html"])
         self.assertIn("data-g9-attempt-box", html)
         self.assertIn("data-g9-commit", html)
         self.assertIn("data-requires-attempt", html)
@@ -378,6 +381,16 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertIn("data-requires-attempt", html)
         self.assertIn('data-g9-payload-slot', html)
 
+
+    def test_a4_print_preference_is_author_owned_and_scope_limited(self):
+        pkg, _, _, q = snapshot()
+        self.assertEqual(q["extensions"]["grade9v3:print_layout"],
+                         "SINGLE_COLUMN_A4")
+        other = [x for x in pkg["questions"] if x["id"] != q["id"]]
+        self.assertTrue(all("grade9v3:print_layout" not in x.get("extensions", {})
+                            for x in other))
+        # A4 layout policy does not change the inherited canonical Core1A.
+        self.assertEqual(pkg["microtopics"], load(BASE_PACKAGE)["microtopics"])
 
     def test_m2_probe_evidence_has_two_separate_signals_and_no_fake_grading(self):
         _, _, _, q = snapshot()
