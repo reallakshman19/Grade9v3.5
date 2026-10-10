@@ -1198,6 +1198,7 @@ def _f02_selected_authored_core2a(ctx: Ctx, m: dict) -> dict | None:
         q for q in ctx.selection_rows.get("core2a", [])
         if q.get("id") == "Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"
         and q.get("origin") == "AUTHORED"
+        and q.get("status") == "CANDIDATE"
         and q.get("repair_ref") == "TC-02"
         and q.get("primary_capability_ref") == m.get("primary_capability_ref")
         and _unit_href(ctx, "CORE2A", q["id"])
