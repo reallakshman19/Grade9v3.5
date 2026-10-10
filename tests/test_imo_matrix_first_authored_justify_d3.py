@@ -184,8 +184,13 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertEqual(review["classification"]["demand"]["primary_move_ref"],
                          q["answer"]["crux_move_ref"])
         self.assertEqual(tuple(review["review"]), qrt.ASKS)
-        self.assertIn(matrix["band_policies"]["D3"]["protected_work"],
-                      review["slots"]["W"]["text"])
+        # W is the question-specific decisive action; the generic D3 policy
+        # governs what scaffolds may expose, but is not literal W wording.
+        self.assertEqual(review["slots"]["W"]["text"],
+                         next(move["action"] for move in q["answer"]["reasoning_route"]
+                              if move["id"] == q["answer"]["crux_move_ref"]))
+        self.assertEqual(q["extensions"][REVIEW]["protected_work"],
+                         matrix["band_policies"]["D3"]["protected_work"])
 
     def test_d3_is_not_an_unexplained_relabel_of_preexisting_d2(self):
         pkg, _, original, q = snapshot()
