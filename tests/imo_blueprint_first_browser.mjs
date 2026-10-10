@@ -51,6 +51,35 @@ try {
         assert.ok(await field.count() === 1, role + ' missing typed learner attempt');
         const before = await article.innerText();
         if (role === 'core2b') {
+          // Root scrollWidth can still be zero when an inline diagram is clipped
+          // by its local figure wrapper. Check the rightmost actual factor.
+          if (variant === 'five') {
+            const assertLastFactorFits = async (medium) => {
+              const fig = article.locator('figure[data-g9-stage="PRE_ATTEMPT"]').first();
+              const svg = fig.locator('svg').first();
+              assert.equal(await svg.count(), 1, 'five-factor safe SVG missing');
+              const bounds = await svg.evaluate(root => {
+                const last = root.querySelector('rect[x="724"]');
+                const figure = root.closest('figure');
+                if (!last || !figure) return null;
+                const host = figure.getBoundingClientRect();
+                const image = root.getBoundingClientRect();
+                const card = last.getBoundingClientRect();
+                return { figureRight: host.right, svgRight: image.right,
+                  cardRight: card.right, svgWidth: image.width };
+              });
+              assert.ok(bounds && bounds.svgWidth > 0 &&
+                bounds.svgRight <= bounds.figureRight + 2 &&
+                bounds.cardRight <= bounds.figureRight + 2,
+                'five-factor diagram clips rightmost n+4 card in ' + medium +
+                ' at ' + width + 'px: ' + JSON.stringify(bounds));
+            };
+            await assertLastFactorFits('screen');
+            // Inspect actual print CSS positioning before Chromium PDF creation.
+            await page.emulateMedia({ media: 'print' });
+            await assertLastFactorFits('print CSS');
+            await page.emulateMedia({ media: 'screen' });
+          }
           const secret = variant === 'boundary' ? 'n mod 4 != 1' : 'gcd(24,5)=1';
           assert.ok(!before.includes(secret), 'protected transfer proof is visible before an attempt');
           assert.equal(await article.locator('figure[data-g9-stage="PRE_ATTEMPT"]').count(), 1,
