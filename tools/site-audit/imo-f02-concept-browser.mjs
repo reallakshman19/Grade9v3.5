@@ -72,6 +72,20 @@ try {
       width + ': single wrong numeric check was falsely declared a proven misconception');
     await page.locator('[data-g9-diagnostic-next]').fill('343');
     await submit.click();
+    assert(await targets.first().isHidden(), width + ': correct numerical answers alone bypassed the rule explanation');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'mechanism_check_missing',
+      width + ': missing mathematical explanation was not recorded');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_reasoning',
+      width + ': missing explanation did not hold the guided construction');
+    await page.locator('[data-g9-rule-option][value="ADD_BASE"]').check();
+    await submit.click();
+    assert(await targets.first().isHidden(), width + ': incorrect exponent-law explanation unlocked guided construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'mechanism_route_conflict',
+      width + ': correct arithmetic and false reasoning were misclassified as aligned');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': false mathematical explanation received formative completion');
+    await page.locator('[data-g9-rule-option][value="FACTOR_LAW"]').check();
+    await submit.click();
     assert(await targets.first().isVisible(), width + ': structured neutral check failed to reveal construction');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'aligned_structured_counterexample',
       width + ': valid structured check lacks an explicitly formative evidence marker');
