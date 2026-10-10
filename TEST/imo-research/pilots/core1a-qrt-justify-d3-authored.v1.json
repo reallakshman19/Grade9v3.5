@@ -355,6 +355,16 @@
           "symbol": "n",
           "meaning": "Arbitrary positive integer starting value",
           "unit_or_domain": "Z_{>0}"
+        },
+        {
+          "symbol": "n+1",
+          "meaning": "The second of three consecutive positive integer factors",
+          "unit_or_domain": "Z_{>0}"
+        },
+        {
+          "symbol": "n+2",
+          "meaning": "The third of three consecutive positive integer factors",
+          "unit_or_domain": "Z_{>0}"
         }
       ],
       "conditions": [
@@ -465,14 +475,24 @@
       ],
       "correspondence": [
         {
-          "element": "Three ordered rows for residues 0,1,2",
-          "symbol": "n mod 3 ∈ {0,1,2}",
-          "in_words": "The residue cases exhaust all integer starts."
+          "element": "n modulo 3 has three rows: 0,1,2.",
+          "symbol": "n",
+          "in_words": "The three possible remainders of the arbitrary starting integer n exhaust all cases."
         },
         {
-          "element": "Highlighted guaranteed factor per row",
-          "symbol": "n, n+2, or n+1",
-          "in_words": "One of the factors is divisible by 3 in every case."
+          "element": "For residue 0, n is divisible by 3.",
+          "symbol": "n",
+          "in_words": "When n leaves remainder zero, the first factor supplies the multiple of three."
+        },
+        {
+          "element": "For residue 1, n+2 is divisible by 3.",
+          "symbol": "n+2",
+          "in_words": "When n leaves remainder one, the third factor supplies the multiple of three."
+        },
+        {
+          "element": "For residue 2, n+1 is divisible by 3.",
+          "symbol": "n+1",
+          "in_words": "When n leaves remainder two, the second factor supplies the multiple of three."
         }
       ],
       "reveal_stages": [
