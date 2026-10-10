@@ -134,6 +134,14 @@ checklist remains available but does not establish any image custody. These
 hash checks establish inspection-file consistency, not source authenticity,
 copyright permission or independent mathematics review.
 
+**Current Q004 visual-integrity test evidence:** [SOF IMO run #38068636783](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38068636783)
+passed all **537** focused cases (including synthetic valid images, changed
+question/key images, modified manifest flags/page indices and altered PDF
+source), after the PNG-signature byte-check correction. The [restricted one-shot
+generator #38068782823](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38068782823)
+checked architecture and Pages parity and removed its own temporary workflow.
+Neither run contains any genuine SOF original PDF or human rights consent.
+
 If the PDF was imported
 from a local file, the manifest retains
 `IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED`; a matching historic
