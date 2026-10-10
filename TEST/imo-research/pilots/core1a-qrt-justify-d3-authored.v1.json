@@ -662,7 +662,7 @@
         "grade9v3:stage_mode": "REPLACE"
       },
       "kind": "ALGEBRA_TILES",
-      "purpose": "Preserve the actual authored #001 factors n, n+1, n+2 without giving away their divisibility or universal proof.",
+      "purpose": "Show the exact authored n-triple and separately support parity and modulo-three case observations in three learner-controlled visual stages; the final combined universal conclusion remains protected.",
       "required_elements": [
         "Neutral first view with factors n,n+1,n+2",
         "Second view shows neighboring parity, without selecting a fixed always-even named factor",
@@ -675,16 +675,19 @@
         "Select the third view to observe three exhaustive remainder cases, then combine the separate guarantees yourself."
       ],
       "instance_constraints": [
-        "No factor-of-two, modulo-three, or answer-bearing marks in the pre-attempt asset.",
-        "No official source identity implied.",
-        "These are three labelled symbolic factor tiles, not counted unit-area algebra tiles; no area interpretation is asserted."
+        "Stage one displays only n,n+1,n+2 without selecting any factor.",
+        "Stages two and three may show adjacent parity and exhaustive mod-three factors separately but must not display 6-divisibility, coprimality or the truth verdict.",
+        "No public-source SOF identity, stem or printed answer implied.",
+        "Symbolic factor tiles do not represent area units and must not be interpreted as countable shaded squares."
       ],
       "accessibility": [
-        "Each factor and multiplication sign is named in a descriptive text equivalent.",
-        "Do not reveal any proof in the SVG title, description or accessible label."
+        "Each selectable stage's shown information has a neutral readable name; stage one names the three given factors.",
+        "Stage two's parity and stage three's remainder-case observations must not expose the final combined-divisor warrant.",
+        "Use the existing renderer's keyboard-operable stage selector; do not infer that static SVG alone proves an accessibility audit."
       ],
       "misleading_alternatives": [
-        "A diagram that colors an even factor or a multiple of three in advance"
+        "A first stage that preselects a particular always-even named factor or announces the universal conclusion.",
+        "A later stage that explicitly concludes 6 divides the product or that the original claim is true before the learner chooses the warrant."
       ],
       "rendered_asset_refs": [
         "TEST/library/figures/imo-g9-authored-001-consecutive-factors-safe.svg"
@@ -1108,7 +1111,7 @@
               "author_evidence_ref": "representation_roles.initial_ref",
               "needs_subject_spot_review": true,
               "evidence_status": "SUPPORTED_CANDIDATE",
-              "observed_behavior": "The neutral stage displays exactly the three authored factors n, n+1, n+2, with no distinguished factor or numerical answer.",
+              "observed_behavior": "The first selectable SVG view displays exactly n, n+1, n+2 with no highlighted divisor, truth value or proof.",
               "owner_acceptance": false
             },
             "S2": {
@@ -1132,7 +1135,7 @@
               "author_evidence_ref": "answer.crux_move_ref",
               "needs_subject_spot_review": true,
               "evidence_status": "SUPPORTED_CANDIDATE",
-              "observed_behavior": "The authored question, neutral SVG and three hints omit the truth decision and final coprime warrant; final reasoning is behind attempt-gated template.",
+              "observed_behavior": "The problem, the three selectable SVG stages, and three hints may show the given factors plus separate parity and modulo-three observations, but never the coprime bridge or final truth verdict; full solution remains attempt-gated.",
               "owner_acceptance": false
             },
             "P2": {
@@ -1184,7 +1187,7 @@
             "governing_asks_total": 12,
             "owner_accepted_slots": 0,
             "evidence_limit": "AUTHOR_SPOT_ASSESSMENT_ONLY_NO_LEARNER_STUDY_OR_BROWSER_TEST",
-            "risk": "D3_REMAINS_PROVISIONAL; SAME_CORE1A_PROOF_MAY_COLLAPSE_TO_RECALL_IF_LEARNER_PRESTUDIES"
+            "risk": "D3_PROVISIONAL: if a learner has just memorized the identical Core1A proof, the proposed D3 demand may collapse to recall; candidate must be tested as an attempt-first diagnostic or revised."
           },
           "learning_sequence": "AUTHOR_DIAGNOSTIC_ATTEMPT_FIRST_THEN_OPTIONAL_CORE1A_REPAIR"
         }
