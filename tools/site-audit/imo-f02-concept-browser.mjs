@@ -192,6 +192,10 @@ try {
     const guideReturn = journey.locator('[data-g9-concept-review]');
     const authoredReturn = journey.locator('[data-g9-authored-core2a-return]');
     assert(await authoredReturn.count() === 1, width + ': missing scoped authored Core2A return link');
+    assert(await authoredReturn.getAttribute('data-g9-return-link') !== null,
+      width + ': return query did not mark the scoped authored question as the return target');
+    assert((await authoredReturn.textContent()).includes('Return to question'),
+      width + ': learner does not get a clear return-to-question label');
     assert(await authoredReturn.isHidden(), width + ': return link available before concept-first guided study');
     await guideReturn.click();
     assert(await journey.locator('#TC-02').isVisible(), width + ': returned learner did not see exact TC-02 after guided choice');
