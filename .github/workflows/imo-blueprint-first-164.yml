@@ -1,0 +1,42 @@
+name: IMO Blueprint First #164 — real renderer qualification
+on:
+  pull_request:
+    paths:
+      - 'TEST/imo-research/pilots/blueprint-first-five-transfer.v1.json'
+      - 'TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg'
+      - 'TEST/products/imo-g9-blueprint-first-five-transfer.manifest.json'
+      - 'tests/test_imo_blueprint_first_five_transfer.py'
+      - '.github/workflows/imo-blueprint-first-164.yml'
+permissions:
+  contents: read
+jobs:
+  authored-three-core-render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install shared renderer schema validator
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5'
+      - name: Verify real blueprint, proof, source isolation and HTML readback
+        run: python -m unittest discover -s tests -p 'test_imo_blueprint_first_five_transfer.py' -v
+      - name: Build actual authored Core1A Core2A Core2B through canonical renderer
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-g9-blueprint-first-five-transfer.manifest.json \
+            --out /tmp/imo-blueprint-164 \
+            --draft --reference
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          directory = Path('/tmp/imo-blueprint-164')
+          receipt = json.loads((directory/'render-receipt.json').read_text())
+          assert receipt['output_roles'] == ['CORE1A','CORE2A','CORE2B']
+          assert {'core1a.html','core2a.html','core2b.html','index.html'} <= set(receipt['pages'])
+          assert 'accepted' not in receipt
+          assert all((directory/p).is_file() for p in receipt['pages'])
+          print('AUTHORED_TEST_DRAFT_ONLY; pages', sorted(receipt['pages']))
+          print('REFERENCE_GAP_COUNT',len(receipt.get('gaps',[])))
+          print('REFERENCE_ADVISORY_COUNT',len(receipt.get('advisories',[])))
+          PY
