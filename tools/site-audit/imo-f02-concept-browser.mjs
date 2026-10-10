@@ -434,8 +434,8 @@ try {
 } catch (error) {
   // Record even an unexpected Playwright, launch or loopback failure in the
   // candidate audit receipt. Never echo page content or learner free text.
-  const category=String(error?.name||'UnknownError')
-    .replace(/[^A-Za-z0-9_-]/g,'').slice(0,48);
+  const safeCategories=new Set(['TimeoutError','TargetClosedError','ProtocolError','Error']);
+  const category=safeCategories.has(error?.name)?error.name:'UnknownError';
   result.failures.push('UNCAUGHT_BROWSER_AUDIT_EXCEPTION:'+category);
   process.exitCode=1;
 } finally {
