@@ -92,6 +92,7 @@ def validate(packet: dict, census: dict) -> dict:
         "independently_computed_relation", "tested_input_values",
         "computed_output_values", "computed_choice",
         "math_reviewer_independent_approval", "mathematical_method",
+        "distractor_exclusion_spotcheck",
     ), "math observation")
     exact_fields(packet["custody"], (
         "retained_restricted_document_receipt", "retained_document_sha256",
@@ -105,6 +106,8 @@ def validate(packet: dict, census: dict) -> dict:
     exact_fields(packet["observation"], (
         "date_utc", "method", "document_pages_observed",
         "authority_limit", "scope",
+        "visual_component_sightings", "source_sighting_review_mode",
+        "principal_independence", "visual_component_custody_status",
     ), "visual observation")
     exact_fields(packet["decision"], (
         "status", "core2_eligible", "core2_admitted",
@@ -157,6 +160,25 @@ def validate(packet: dict, census: dict) -> dict:
          math.get("math_reviewer_independent_approval") is None,
          "independent arithmetic/key sighting inconsistent or improperly approved")
 
+    spot = math.get("distractor_exclusion_spotcheck") or {}
+    exact_fields(spot, (
+        "witness_x", "source_output_at_witness", "other_choice_outputs_at_witness",
+        "unique_matching_choice", "original_source_option_text_copied",
+        "authority",
+    ), "Q004 distractor exclusion arithmetic spot-check")
+    exclusions = spot.get("other_choice_outputs_at_witness")
+    need(isinstance(exclusions, dict)
+         and set(exclusions) == {"A", "C", "D"}
+         and exclusions == {"A": -2, "C": -3, "D": 1}
+         and all(value != -1 for value in exclusions.values())
+         and spot.get("witness_x") == 0
+         and spot.get("source_output_at_witness") == -1
+         and spot.get("unique_matching_choice") == "B"
+         and spot.get("original_source_option_text_copied") is False
+         and spot.get("authority") ==
+         "SELF_CHECKED_DERIVED_ARITHMETIC_NOT_SOURCE_FIDELITY_OR_ADMISSION",
+         "nonmatching answer choices or spot check authority were misrepresented")
+
     observation = packet.get("observation") or {}
     need(observation.get("date_utc") == "2026-10-10" and
          observation.get("method") == "VISUAL_PDF_RENDER_PAGE_0_AND_PAGE_1" and
@@ -164,6 +186,26 @@ def validate(packet: dict, census: dict) -> dict:
          observation.get("authority_limit") ==
          "VISUAL_SIGHTING_NOT_DURABLE_BYTES_RIGHTS_OR_INDEPENDENT_APPROVAL",
          "unreviewed web-view scope changed")
+
+    sight = observation.get("visual_component_sightings")
+    expected_sight = {
+        "original_identifier": "SEEN_ON_RENDER_ONLY",
+        "stem": "SEEN_ON_RENDER_ONLY",
+        "subparts": "NOT_PRESENT_ON_VIEWED_ITEM",
+        "options": "SEEN_ON_RENDER_ONLY",
+        "conditions": "SEEN_ON_RENDER_ONLY",
+        "figures": "TABULAR_VISUAL_SEEN_ONLY",
+        "captions": "NOT_PRESENT_ON_VIEWED_ITEM",
+        "hints": "NOT_PRESENT_ON_VIEWED_ITEM",
+        "answer_or_rubric": "PRINTED_KEY_SEEN_ON_RENDER_ONLY",
+    }
+    need(isinstance(sight, dict) and sight == expected_sight
+         and observation.get("source_sighting_review_mode") ==
+         "SELF_CHECK_AND_SPOT_REVIEW_ONLY"
+         and observation.get("principal_independence") == "NONE"
+         and observation.get("visual_component_custody_status") ==
+         "SIGHTED_BUT_NOT_FULLY_VERIFIED_WITH_RETAINED_SOURCE_BYTES",
+         "visual item components cannot be upgraded to full source custody")
 
     custody = packet.get("custody") or {}
     for key in ("retained_restricted_document_receipt",
