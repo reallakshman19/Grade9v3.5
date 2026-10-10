@@ -124,6 +124,23 @@ class IMOReadinessProjectionTests(unittest.TestCase):
         self.assertFalse(item["rights_verified"])
         self.assertEqual((report["core2_eligible"], report["core2_admitted"]), (0, 0))
 
+    def test_missing_acquisition_metadata_cannot_pass_without_optional_schema(self):
+        _, item = self.status(lambda x: x["acquisition"].pop("acquisition_id"))
+        self.assertIn("ACQUISITION_METADATA_INVALID", item["blocking_codes"])
+
+    def test_missing_component_cannot_pass_without_optional_schema(self):
+        _, item = self.status(lambda x: x["question"]["extensions"][
+            "source_custody"]["components"].pop("hints"))
+        self.assertIn("CUSTODY_COMPONENT_COVERAGE_INVALID", item["blocking_codes"])
+
+    def test_support_resource_cannot_replace_acquired_source(self):
+        _, item = self.status(lambda x: x["supporting_resources"].append({
+            "id": x["resource"]["id"], "_collection": "resources",
+            "snapshot_digest": x["acquisition"]["sha256"],
+            "snapshot_ref": x["acquisition"]["snapshot_ref"],
+        }))
+        self.assertIn("FIGURE_RESOURCE_RECORD_INVALID", item["blocking_codes"])
+
     def test_source_digest_tampered_is_held(self):
         _, item = self.status(lambda x: x["acquisition"].update(sha256="a" * 64))
         self.assertIn("RETAINED_BYTES_DIGEST_OR_SCHEMA_FAILED", item["blocking_codes"])
