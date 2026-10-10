@@ -94,10 +94,18 @@ try {
       await access.close();
     }
     if (width === 1280) {
-      // Print must re-fit the full *authored* three-stage SVG, not crop to
-      // stage one after the interactive viewBox was narrowed on screen.
-      await page.emulateMedia({ media: 'print' });
-      const printedStages = await page.locator('figure[data-g9-stage="TEACHING"]').evaluateAll(figures => {
+      // Real governed learner prints start from a fresh page, with the
+      // lesson gated on screen. Print must include the authored construction
+      // and re-fit the three SVG stages; no learner concept check is performed.
+      const printPage = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+      await printPage.goto(pathToFileURL(html).href, { waitUntil: 'load' });
+      const untouchedTargets = printPage.locator('[data-g9-concept-target]');
+      assert(await untouchedTargets.first().isHidden(),
+        'print: guided lesson unexpectedly exposed on fresh interactive page');
+      await printPage.emulateMedia({ media: 'print' });
+      assert(await untouchedTargets.first().isVisible(),
+        'print: guided Core1A construction missing from fresh learner PDF');
+      const printedStages = await printPage.locator('figure[data-g9-stage="TEACHING"]').evaluateAll(figures => {
         const target = figures.find(f => f.dataset.g9StagesTotal === '3');
         if (!target) return { found: false };
         const svg = target.querySelector('svg');
@@ -117,11 +125,11 @@ try {
         printedStages.visible === 3 && printedStages.allInsideViewBox,
         'print: authored three SVG stages are not all visible within print viewBox: ' + JSON.stringify(printedStages));
       result.printed_svg = printedStages;
-      await page.pdf({ path: path.join(out, 'core1a-print.pdf'), printBackground: true });
+      await printPage.pdf({ path: path.join(out, 'core1a-print.pdf'), printBackground: true });
       const stat = fs.statSync(path.join(out, 'core1a-print.pdf'));
       result.printed_pdf = { bytes: stat.size, status: stat.size > 1000 ? 'GENERATED_NOT_MANUALLY_INSPECTED' : 'INVALID' };
       assert(stat.size > 1000, 'print PDF is unexpectedly small');
-      await page.emulateMedia({ media: 'screen' });
+      await printPage.close();
     }
     await page.screenshot({ path: path.join(out, 'core1a-' + width + '.png'), fullPage: true });
     result.viewports.push({ width, focus_after_check: focused, page_errors: errors,
