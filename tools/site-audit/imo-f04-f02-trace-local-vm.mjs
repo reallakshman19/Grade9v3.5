@@ -57,6 +57,11 @@ page=visit('CORE1A',`?g9-return=WRONG&g9-concept=${MID}`);
 page.article.dataset.g9ConceptAidExposure='guided_study';page.review.click();page.back.click();
 check(storage.get(KEY)===unchanged,'wrong question cannot record return');
 page=visit('CORE2A');check(page.article.dataset.g9F02Assisted==='1','wrong query does not clear help');
+page=visit('CORE2A','',true);page.commit.click();
+check(events().at(-1)==='ASSISTED_ATTEMPT_COMMIT'&&read().assisted,
+      'post-help reattempt cannot be relabeled independent');
+check(page.status.textContent.includes('remains assisted, not independent transfer'),
+      'post-help status tells learner it is assisted practice');
 let edited=read();edited.protected_W='SECRET';edited.events[0].response='PII';
 storage.set(KEY,JSON.stringify(edited));page=visit('CORE2A');page.repair.click();
 check(!storage.get(KEY).includes('SECRET')&&!storage.get(KEY).includes('PII'),'drop extraneous local fields');
