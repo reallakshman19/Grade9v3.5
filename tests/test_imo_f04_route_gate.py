@@ -94,6 +94,10 @@ class RouteGateTests(unittest.TestCase):
         self.assertIn("contents: read", route)
         self.assertIn('name: imo-f04-canonical-safe-summary', route)
         self.assertIn('--summary "${{ runner.temp }}/imo-f04-route/imo-f04-summary.json"', route)
+        # Changes to this gate or its own tests must not silently bypass CI.
+        watched = workflow.split("\njobs:\n", 1)[0]
+        self.assertIn('      - "Shared/tools/imo_f04_route_gate.py"', watched)
+        self.assertIn('      - "tests/test_imo_f04_route_gate.py"', watched)
 
     def test_invalid_json_is_safe_failure(self):
         with tempfile.TemporaryDirectory() as d:
