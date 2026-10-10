@@ -190,15 +190,7 @@
           "verification_status": "CHECKED_BY_AUTHOR"
         },
         "oracle": {
-          "verification": {
-            "validator_id": "TEST/imo-research/validate_core1a_candidate_package.py",
-            "bindings": {
-              "domain": "positive_integer",
-              "divisor": "24",
-              "residue_classes": "0..23",
-              "symbolic_expression": "n(n+1)(n+2)(n+3)"
-            }
-          }
+          "held_by": "ISS-TEST-IMO-G9-CORE1A-EXIT-VALIDATOR-HELD"
         }
       },
       "research_contribution": "Authored reasoning construction with explicit case completeness and coprimality. Curriculum placement, diagrams, learner comprehension, formal product acceptance and source exam representation remain pending.",
@@ -445,7 +437,17 @@
   ],
   "practice_profiles": [],
   "evidence": [],
-  "known_issues": [],
+  "known_issues": [
+    {
+      "id": "ISS-TEST-IMO-G9-CORE1A-EXIT-VALIDATOR-HELD",
+      "affected_refs": [
+        "MIC-TEST-IMO-G9-CONSECUTIVE-FACTOR-INVARIANTS"
+      ],
+      "classification": "CAPABILITY_LIMIT",
+      "description": "This TEST subject has an empty validator_catalogue. The Python exhaustive residue proof and author's model answer are research checks, not an independently registered subject validator or academic acceptance.",
+      "next_action": "Use Issue #130 to design and register a real subject-owned validator with declared symbolic datums, independent reviewer evidence and an exact versioned binding; until then leave the exit oracle held."
+    }
+  ],
   "extensions": {
     "grade9v3:imo_provenance": "ISSUE_296_AUTHORED_CORE1A_CANDIDATE_NO_SOF_CORE2",
     "grade9v3:qrt_admitted": false,
