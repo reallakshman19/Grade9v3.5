@@ -116,7 +116,8 @@ class IMOAuthorHelpRoleRuntimeDenialTests(unittest.TestCase):
         self.assertIn("F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1", core2a)
         self.assertEqual(authored_core2a_runtime_findings(core2a), [])
         # Static authored event handlers never prove event order/persistence.
-        self.assertIn("NOT_RUN", {"NOT_RUN"})
+        self.assertEqual(self.report["browser_qa"], "NOT_RUN")
+        self.assertFalse(self.report["academic_accepted"])
 
     def test_partial_or_fake_trace_does_not_bypass_runtime_hold(self):
         for markup in (
