@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
+import { createServer } from 'node:http';
 
 const folder = path.resolve(process.argv[2] || '');
 const html = path.join(folder, 'core1a.html');
@@ -16,6 +17,20 @@ const result = { schema: 'imo-f02-concept-first-chromium/v2', source: 'TEST_CAND
   viewports: [], failures: [], printed_pdf: null };
 const assert = (ok, label) => { if (!ok) result.failures.push(label); };
 const browser = await chromium.launch({ headless: true });
+// Host the two emitted TEST role pages on one short-lived loopback origin.
+// file:// storage isolation is browser-dependent and cannot prove round-trip persistence.
+const localServer = createServer((req,res)=>{
+  const route=(req.url||'').split(/[?#]/,1)[0];
+  const target=route==='/core1a.html'?html:route==='/core2a.html'?core2aHtml:null;
+  if(!target){res.writeHead(404);res.end('not found');return;}
+  res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});
+  fs.createReadStream(target).pipe(res);
+});
+await new Promise((resolve,reject)=>{
+  localServer.once('error',reject);
+  localServer.listen(0,'127.0.0.1',resolve);
+});
+const localOrigin='http://127.0.0.1:'+localServer.address().port+'/';
 try {
   for (const width of [320, 390, 768, 1280]) {
     const page = await browser.newPage({ viewport: { width, height: 900 } });
@@ -220,7 +235,7 @@ try {
     const tracePage = await browser.newPage({viewport: {width, height: 900}});
     const traceErrors = [];
     tracePage.on('pageerror', e => traceErrors.push(String(e)));
-    await tracePage.goto(pathToFileURL(core2aHtml).href, {waitUntil:'load'});
+    await tracePage.goto(new URL('core2a.html',localOrigin).href, {waitUntil:'load'});
     const scopedQuestion = tracePage.locator('article[data-g9-role="CORE2A"][id="' + questionId + '"]');
     const traceNote = tracePage.locator('[data-g9-f02-trace-status]');
     assert(await traceNote.count() === 1, width + ': F02 source question missing local-only trace notice');
@@ -248,8 +263,7 @@ try {
           && !JSON.stringify(evidence).includes('Unscored trial reasoning'),
           width + ': pre-repair attempt history is not exactly one valid marker');
       }else{
-        assert(await traceNote.getAttribute('data-g9-f02-trace-state') !== 'UNTRUSTED_LOCAL_ONLY',
-          width + ': unavailable local storage was mislabeled as saved evidence');
+        assert(false, width + ': loopback HTTP localStorage must preserve the submitted attempt marker');
       }
       // The clicked exact TC-02 repair is behind the attempt-dependent disclosure.
       await scopedQuestion.evaluate(el => el.querySelectorAll('details').forEach(d => d.open=true));
@@ -288,9 +302,7 @@ try {
             && sequence.assisted === true,
             width + ': actual deferred-link journey did not record all four events in order');
         }else{
-          assert(await tracePage.locator('[data-g9-f02-trace-status]')
-            .getAttribute('data-g9-f02-trace-state') !== 'UNTRUSTED_LOCAL_ONLY',
-            width + ': round-trip without storage falsely reports preserved ledger');
+          assert(false, width + ': loopback HTTP round-trip lost the stored help chronology');
         }
       }
     }
@@ -399,6 +411,7 @@ try {
   }
 } finally {
   await browser.close();
+  await new Promise(resolve=>localServer.close(resolve));
   fs.writeFileSync(path.join(out, 'result.json'), JSON.stringify(result, null, 2) + '\n');
 }
 console.log(JSON.stringify(result, null, 2));
