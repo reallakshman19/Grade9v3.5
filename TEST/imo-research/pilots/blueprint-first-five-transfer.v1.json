@@ -1,0 +1,357 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO-164-BLUEPRINT-FIRST-FIVE-TRANSFER",
+  "title": "TEST independently authored five-factor proof transfer",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "One authored Core2B transfer item extending existing Core1A/Core2A mathematical proof instruction; no original SOF item or publication, no accepted D3 or QRT.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-IMO-164-AUTHORED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original authored five-consecutive-integer transfer problem",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/164",
+      "edition": "Issue #164 authored learning candidate, not a publisher original",
+      "section": "Five adjacent integers and coprime divisibility",
+      "last_checked": "2026-10-10",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Original independent authoring only; no publisher rights asserted",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "For all positive integers n, 120 divides n(n+1)(n+2)(n+3)(n+4)"
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Newly authored TEST transfer follows existing worked Core1A and supported Core2A; does not reproduce a source exam.",
+      "fallback": []
+    }
+  ],
+  "buckets": [],
+  "capabilities": [],
+  "microtopics": [],
+  "relations": [],
+  "representations": [
+    {
+      "id": "REP-TEST-IMO-164-FIVE-NEUTRAL-FACTORS",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:stage_mode": "REPLACE"
+      },
+      "kind": "ALGEBRA_TILES",
+      "purpose": "Neutral pre-attempt sequence of five consecutive integer factors without revealing the guaranteed divisors or proof.",
+      "required_elements": [
+        "Five labelled factor boxes n through n+4 and multiplication signs.",
+        "No marked multiple of five, no factor-24 bracket and no solution."
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read five factors left to right.",
+        "The learner must decide how to prove universal divisibility."
+      ],
+      "instance_constraints": [
+        "Never highlight a factor in advance.",
+        "No official exam source identity.",
+        "Neutral SVG text is original authored material."
+      ],
+      "accessibility": [
+        "Alternative text names five symbolic factors without indicating the protected modulo-five choice."
+      ],
+      "misleading_alternatives": [
+        "A visual that labels n+4 a multiple of five in all cases"
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-TEST-IMO-164-FIVE-NEUTRAL",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-IMO-164-FIVE-CONSECUTIVE-120",
+          "datum_refs": [],
+          "asset_ref": "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Five consecutive integer factors from n through n+4",
+            "caption": "Five factors are shown; the protected universal argument is not supplied."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Five consecutive factor boxes",
+          "symbol": "n(n+1)(n+2)(n+3)(n+4)",
+          "in_words": "Five arbitrary consecutive positive integers."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "FIVE-FACTORS-ONLY",
+          "label": "Five symbolic factors only",
+          "purpose": "Present the factor structure without identifying the divisibility strategy.",
+          "visible_elements": [
+            "n,n+1,n+2,n+3,n+4"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-IMO-164-FIVE-PRODUCT",
+      "title": "Authored five-consecutive-factor universal transfer",
+      "capability_refs": [
+        "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY"
+      ],
+      "solution_structure": "Use previously proved four-factor divisibility by 24; establish a multiple of five among five terms; combine coprime 24 and 5.",
+      "demand_dimensions": {
+        "model_choice": "Represent arbitrary n, not finite samples.",
+        "representation_translation": "Move between residue table and algebraic proof.",
+        "reasoning_steps": "Parity plus modulo 3 plus coprimality.",
+        "novelty": "Universal proof instead of pattern extrapolation."
+      },
+      "safe_variations": [],
+      "transfer_boundaries": [
+        "A numerical example is not a universal proof.",
+        "The fifth term need not be the multiple of five.",
+        "The new modulo-five argument must be learned and justified, not revealed in pre-attempt hints."
+      ],
+      "common_wrong_routes": [
+        "Checking three values rather than proving all starts.",
+        "Concluding divisibility by 6 from an unproven choice of even and multiple-of-3 factors."
+      ],
+      "item_refs": [
+        "Q-TEST-IMO-164-FIVE-CONSECUTIVE-120"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-IMO-164-FIVE-CONSECUTIVE-120",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "issue-164-blueprint-first",
+        "grade9v3:qrt_status": "PROPOSED_NOT_ACCEPTED",
+        "grade9v3:source_custody": "NO_ORIGINAL_SOURCE_QUESTION",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "SYNTHESIZE"
+          ],
+          "basis": "Unlike the familiar triple proof, learner must combine a four-factor 24-warrant with a five-factor residue warrant and explain coprimality."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Guarantee a factor 5 in every block of five; combine it with the established factor 24 from four by coprimality, without assuming the factors must occur in distinct positions.",
+          "common_wrong_route": "Conclude 120 merely because the first four factors yield 24, or check a few examples, or assume the fifth factor must always be a multiple of five."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO-164-AUTHORED",
+      "original_identifier": "AUTHORED-IMO-164-TRANSFER-FIVE-FACTOR-PROOF",
+      "stem": "Let n be any positive integer. Prove, without testing only particular numbers, that n(n+1)(n+2)(n+3)(n+4) is always divisible by 120. Explain why a proof using the first four factors alone is incomplete.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "n is an arbitrary positive integer.",
+        "You may use the earlier established result that any four consecutive positive integers have a product divisible by 24.",
+        "You must independently justify the additional factor that makes 120; numerical examples alone are insufficient.",
+        "This is independently authored practice, not an SOF source question."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO-164-FIVE-NEUTRAL-FACTORS"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The first four consecutive factors have product divisible by 24. Of the five factors, one is divisible by 5. As gcd(24,5)=1, the full product is divisible by 120 for every positive integer n.",
+        "reasoning": [
+          "Let P=n(n+1)(n+2)(n+3)(n+4), for an arbitrary positive integer n.",
+          "The four consecutive factors n through n+3 form a product divisible by 24, by the established four-factor result. Therefore 24 divides P.",
+          "Exactly one of n,n+1,n+2,n+3,n+4 is congruent to 0 modulo 5, so 5 divides P for every possible n.",
+          "Because gcd(24,5)=1, the simultaneous divisibility of P by 24 and by 5 implies 120 divides P. The multiple of five may occur among the first four factors; this does not invalidate the conclusion.",
+          "Checking selected n values would not prove the universal statement. The four-factor warrant plus all five residue positions covers every positive integer."
+        ],
+        "reasoning_route": [
+          {
+            "id": "MOVE-IMO-164-REPRESENT",
+            "kind": "REPRESENT",
+            "action": "Name the product P of five consecutive integers with arbitrary positive start n.",
+            "why_valid": "The notation covers every permitted positive integer n.",
+            "inputs": [
+              "n is arbitrary",
+              "five consecutive positive integers"
+            ],
+            "output": "P=n(n+1)(n+2)(n+3)(n+4)"
+          },
+          {
+            "id": "MOVE-IMO-164-24",
+            "kind": "CONNECT",
+            "action": "Apply the previously established 24-divisibility theorem to the first four factors.",
+            "why_valid": "n,n+1,n+2,n+3 are any four consecutive positive integers, so their product and hence P are multiples of 24.",
+            "inputs": [
+              "first four factors",
+              "known 4-factor theorem"
+            ],
+            "output": "24 divides P"
+          },
+          {
+            "id": "MOVE-IMO-164-CRUX",
+            "kind": "DECIDE",
+            "action": "Prove that exactly one of the five consecutive integers is divisible by 5, then combine coprime divisors 24 and 5.",
+            "why_valid": "The residues n mod 5 = 0,1,2,3,4 exhaust all positive starts. In each case one of five consecutive factors is a multiple of 5, and gcd(24,5)=1.",
+            "inputs": [
+              "24 divides P",
+              "n mod 5 covers 0..4"
+            ],
+            "output": "120 divides P"
+          },
+          {
+            "id": "MOVE-IMO-164-VERIFY",
+            "kind": "VERIFY",
+            "action": "Check a complete set of residue classes modulo 120 only as a corroboration, not as isolated examples.",
+            "why_valid": "Each positive integer is represented by one of the 120 residue classes, providing an independent exhaustive check.",
+            "inputs": [
+              "universal proof",
+              "n modulo 120"
+            ],
+            "output": "no remainder class contradicts 120 divisibility"
+          }
+        ],
+        "crux_move_ref": "MOVE-IMO-164-CRUX",
+        "check": "For each residue r from 0 to 119, the integer r(r+1)(r+2)(r+3)(r+4) has remainder zero modulo 120. This is an exhaustive modular check, not a list of sample values.",
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "rubric": [
+          {
+            "criterion": "Establishes the four-consecutive-integer factor 24 for an arbitrary start.",
+            "evidence_of": "Invokes or reconstructs a valid proof, not just an example."
+          },
+          {
+            "criterion": "Establishes a guaranteed factor 5 across every block of five.",
+            "evidence_of": "Covers all residues modulo five without assuming the final factor is always divisible by five."
+          },
+          {
+            "criterion": "Justifies 120 from the simultaneous divisors 24 and 5.",
+            "evidence_of": "States gcd(24,5)=1 and correctly combines coprime divisibility, whether the factor of five appears inside the first four or not."
+          },
+          {
+            "criterion": "Distinguishes universal proof from numeric experimentation.",
+            "evidence_of": "Explains how the argument covers every permitted n."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO-164-FIVE-PRODUCT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "NEW_TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO-164-FIVE-NEUTRAL-FACTORS",
+        "safe_ref": "REP-TEST-IMO-164-FIVE-NEUTRAL-FACTORS",
+        "bound_ref": null,
+        "stage_refs": [
+          "FIVE-FACTORS-ONLY"
+        ]
+      },
+      "repair_ref": "TC-03",
+      "failure_signal": "A proof of divisibility by 24 alone does not establish divisibility by 120. Five checked examples do not establish a universal claim. Locate the missing factor for every possible starting integer, and explain why factors can be combined.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO-164-FIVE-PRODUCT",
+        "closure": "Candidate transfer only: justify a guaranteed 24 from four adjacent factors and a 5 among five; no independent QRT acceptance or learner mastery is inferred."
+      },
+      "independent_check": {
+        "statement": "Check each possible residue of n modulo 120 as a corroborating finite residue-class argument, separately from the general proof.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "PROPOSED ONLY: changed universal divisibility warrant from established 24 result to 120 via modulo-five exhaustion and coprimality; not QRT reviewed.",
+        "component_evidence": {
+          "concept_model_selection": "Select 24×5 coprime structure rather than merely calculating products.",
+          "representation_translation": "Interpret a symbolic product of five terms as residue classes modulo five.",
+          "reasoning_chain_length": "Link previous theorem, modulo-five guarantee and coprime multiplication.",
+          "algebra_computational_load": "Track five symbolic factors and gcd(24,5).",
+          "trap_exception_sensitivity": "Reject unproved claim that the fifth factor must supply the five and unrepresentative numeric examples."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "reasoning_steps",
+        "statement": "Move beyond the previously worked 3-factor 6-warrant and 4-factor 24-exit to a five-factor 120-warrant that requires a new universal modulo-five guarantee and a coprime combination.",
+        "builds_on": [
+          "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF",
+          "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS"
+        ],
+        "protected_move_ref": "MOVE-IMO-164-CRUX",
+        "invariant": "General proof requires exhaustive integer classes and justified combination of coprime divisors, not sampled products.",
+        "novelty": {
+          "checked_against": [
+            "Core1A worked triple-divisibility proof by 6",
+            "Core1A exit four-factor proof by 24",
+            "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF"
+          ],
+          "why_new": "No prior worked or supported task in the selected journey requires proving a factor 5 over five positions and combining it with 24 for a product divisible by 120. Distinct numerical parameters alone would not suffice."
+        }
+      }
+    }
+  ],
+  "teaching_routes": [],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false,
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core_maturity": "AUTHORED_TRANSFER_TEST_CANDIDATE"
+  },
+  "data": []
+}
