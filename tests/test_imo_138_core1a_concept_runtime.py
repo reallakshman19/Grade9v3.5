@@ -79,6 +79,8 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("window.matchMedia('print')", html)
         self.assertIn("printMode.addEventListener('change'", html)
         self.assertIn("window.addEventListener('beforeprint',refitPrintStages)", html)
+        self.assertIn('[data-g9-neutral-diagnostic] input{display:block;box-sizing:border-box;', html)
+        self.assertIn('max-width:100%;width:min(100%,18rem);min-height:48px', html)
         self.assertIn('[data-g9-concept-target][hidden]{display:block!important}', html)
         self.assertIn('[data-g9-concept-target] .g9-stage-controls{display:none!important}', html)
         self.assertIn("q('figure[data-g9-figure]',article).forEach(fitFigure)", html)
