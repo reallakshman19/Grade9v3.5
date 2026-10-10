@@ -151,7 +151,7 @@ def validate_preview(
            and "not an accepted Core 1A lesson" in math_index
            and "separate TEST sandbox" in math_index
            and 'href="../number-systems/index-laws/index.html"' in math_index
-           and re.search(r"""href\\s*=\\s*["'][^"']*/test/""", math_index,
+           and re.search(r"""href\s*=\s*["'][^"']*/test/""", math_index,
                          flags=re.IGNORECASE) is None,
            "Mathematics index must disclose the held research candidate without a direct TEST link")
 
