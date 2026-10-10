@@ -105,7 +105,11 @@ try {
       await printPage.emulateMedia({ media: 'print' });
       assert(await untouchedTargets.first().isVisible(),
         'print: guided Core1A construction missing from fresh learner PDF');
-      const printedStages = await printPage.locator('figure[data-g9-stage="TEACHING"]').evaluateAll(figures => {
+      // Media-query change callbacks fire asynchronously in Chromium.
+      // Poll the actual geometry rather than sampling before print refit runs.
+      let printedStages = {found:false};
+      for (let probe = 0; probe < 50; probe++) {
+        printedStages = await printPage.locator('figure[data-g9-stage="TEACHING"]').evaluateAll(figures => {
         const target = figures.find(f => f.dataset.g9StagesTotal === '3');
         if (!target) return { found: false };
         const svg = target.querySelector('svg');
@@ -120,7 +124,11 @@ try {
         });
         return { found: true, count: stages.length, visible: visible.length,
           allInsideViewBox: fits, viewBox: [b.x,b.y,b.width,b.height] };
-      });
+        });
+        if (printedStages.found && printedStages.count === 3 &&
+            printedStages.visible === 3 && printedStages.allInsideViewBox) break;
+        await printPage.waitForTimeout(20);
+      }
       assert(printedStages.found && printedStages.count === 3 &&
         printedStages.visible === 3 && printedStages.allInsideViewBox,
         'print: authored three SVG stages are not all visible within print viewBox: ' + JSON.stringify(printedStages));
