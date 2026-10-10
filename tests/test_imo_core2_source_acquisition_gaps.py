@@ -232,6 +232,78 @@ class Core2SourceAcquisitionGapTests(unittest.TestCase):
         self.assertEqual(receipt_status(self.sample, self.workspace)[0],
                          "VERIFIED_RETAINED_BYTES_ONLY")
 
+    def test_offline_import_from_browser_download_is_not_authenticated(self):
+        downloaded = Path(self.tmp.name) / "operator-browser-download.pdf"
+        downloaded.write_bytes(self.payload)
+        result = acquire(self.sample, self.workspace, local_file=downloaded)
+        self.assertEqual(result["status"],
+                         "IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED")
+        self.assertFalse(result["source_origin_authenticated"])
+        self.assertFalse(result["core2_admitted"])
+        self.assertEqual(result["sha256"],
+                         hashlib.sha256(self.payload).hexdigest())
+        snapshot, receipt = artifact_paths(self.workspace, self.sample["source_id"])
+        self.assertEqual(stat.S_IMODE(snapshot.stat().st_mode), 0o600)
+        self.assertEqual(stat.S_IMODE(receipt.stat().st_mode), 0o600)
+        downloaded.unlink()
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0],
+                         "IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED")
+        gaps = report(self.census, self.handoff, self.workspace)
+        self.assertEqual(gaps["local_import_document_count"], 1)
+        self.assertEqual(gaps["verified_retained_document_count"], 1)
+        self.assertEqual(gaps["source_custody_hold"], 68)
+        self.assertEqual(gaps["core2_admitted"], 0)
+        self.assertTrue(all("LOCAL_FILE_SOURCE_ORIGIN_UNVERIFIED"
+                            in item["blocking_codes"]
+                            for item in gaps["questions"]
+                            if item["source_id"] == self.sample["source_id"]))
+
+    def test_browser_download_html_response_is_rejected_and_deleted(self):
+        downloaded = Path(self.tmp.name) / "fake-browser-download.pdf"
+        downloaded.write_bytes(b"<html>Error</html>")
+        with self.assertRaises(SourceGapError):
+            acquire(self.sample, self.workspace, local_file=downloaded)
+        snapshot, receipt = artifact_paths(self.workspace, self.sample["source_id"])
+        self.assertFalse(snapshot.exists() or receipt.exists())
+
+    def test_offline_import_symlink_source_rejected(self):
+        downloaded = Path(self.tmp.name) / "real.pdf"
+        downloaded.write_bytes(self.payload)
+        link = Path(self.tmp.name) / "alias.pdf"
+        link.symlink_to(downloaded)
+        with self.assertRaises(SourceGapError):
+            acquire(self.sample, self.workspace, local_file=link)
+
+    def test_offline_import_relative_source_rejected(self):
+        with self.assertRaises(SourceGapError):
+            acquire(self.sample, self.workspace, local_file=Path("download.pdf"))
+
+    def test_offline_import_missing_source_rejected(self):
+        with self.assertRaises(SourceGapError):
+            acquire(self.sample, self.workspace,
+                    local_file=Path(self.tmp.name) / "does-not-exist.pdf")
+
+    def test_offline_import_oversize_file_rejected_without_reading(self):
+        downloaded = Path(self.tmp.name) / "oversize.pdf"
+        with downloaded.open("wb") as stream:
+            stream.truncate(101 * 1024 * 1024)
+        with self.assertRaises(SourceGapError):
+            acquire(self.sample, self.workspace, local_file=downloaded)
+
+    def test_faked_local_file_receipt_redirect_rejected(self):
+        self.write_fake_receipt(changes={
+            "source_kind": "FILE",
+            "resolved_locator": "https://sofworld.org/download/file/fid/73719",
+        })
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0], "INVALID")
+
+    def test_unrecognized_local_file_path_with_repo_origin_rejected(self):
+        self.write_fake_receipt(changes={
+            "source_kind": "FILE",
+            "resolved_locator": str(REPO / "public/original.pdf"),
+        })
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0], "INVALID")
+
     def test_network_failure_cleans_partial_snapshot(self):
         def partial(**kwargs):
             kwargs["snapshot_output"].write_bytes(b"partial")
