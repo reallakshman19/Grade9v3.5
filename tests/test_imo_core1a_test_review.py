@@ -180,10 +180,22 @@ class Core1ATestReviewTests(unittest.TestCase):
             "No authentic SOF question stem",
             "SOF-IMO-G09-L1-2025-26-A-Q001 original item"))
 
-    def test_math_hub_must_keep_explicit_review_link(self):
+    def test_math_index_keeps_explicit_held_candidate_notice(self):
         self.reject(lambda:self.edit_page(
             'data-test-review-link="IMO-G9-CORE1A-CANDIDATE"',
             'data-test-review-link="FULLY_ADMITTED_CORE1A"',
+            which=("math_pub","math_docs")))
+
+    def test_math_index_must_not_link_directly_to_unapproved_test_preview(self):
+        self.reject(lambda:self.edit_page(
+            '<p role="note">This unapproved teaching draft remains available',
+            '<p role="note"><a href="../../test/imo-grade9/core1a.html">Open TEST draft</a> This unapproved teaching draft remains available',
+            which=("math_pub","math_docs")))
+
+    def test_math_index_must_keep_held_subtopic_route(self):
+        self.reject(lambda:self.edit_page(
+            'href="../number-systems/index-laws/index.html"',
+            'href="../number-systems/index.html"',
             which=("math_pub","math_docs")))
 
     def test_source_bytes_cannot_be_invented(self):
