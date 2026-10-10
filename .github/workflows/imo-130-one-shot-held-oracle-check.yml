@@ -43,13 +43,13 @@ jobs:
           git status --short
           while IFS= read -r changed; do
             case "$changed" in
-              docs/architecture-manifest.json|docs/data/data.js|docs/tools/data.js|.github/workflows/imo-130-one-shot-held-oracle-check.yml) ;;
+              docs/architecture-manifest.json|docs/data/data.js|docs/tools/data.js|public/data/data.js|tools/data.js|.github/workflows/imo-130-one-shot-held-oracle-check.yml) ;;
               *) echo "UNEXPECTED CHANGE: $changed" >&2; exit 1 ;;
             esac
           done < <( { git diff --name-only; git ls-files --others --exclude-standard; } | sort -u )
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -u -- .github/workflows/imo-130-one-shot-held-oracle-check.yml docs/architecture-manifest.json docs/data/data.js docs/tools/data.js
+          git add -u -- .github/workflows/imo-130-one-shot-held-oracle-check.yml docs/architecture-manifest.json docs/data/data.js docs/tools/data.js public/data/data.js tools/data.js
           if ! git diff --cached --quiet; then
             git commit -m "build(imo): regenerate truthful oracle hold architecture and remove check workflow (#130)"
             git push origin "HEAD:refs/heads/agent1/imo-matrix-first-authored-justify-d3-130"
