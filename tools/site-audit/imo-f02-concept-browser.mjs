@@ -301,6 +301,27 @@ try {
             && !JSON.stringify(sequence).includes('Unscored trial reasoning')
             && sequence.assisted === true,
             width + ': actual deferred-link journey did not record all four events in order');
+          assert(await scopedQuestion.getAttribute('data-g9-f02-assisted') === '1',
+            width + ': helped learner returned without assisted classification');
+          // A NEW attempt after this return is assisted recognition, even
+          // though its mathematics is ungraded and the input is fresh.
+          const nextAttempt = scopedQuestion.locator('[data-g9-attempt-box] textarea[data-g9-attempt]');
+          await nextAttempt.fill('After guided teaching, attempting another explanation.');
+          await scopedQuestion.locator('[data-g9-commit]').first().click();
+          const postHelp = await tracePage.evaluate(() => {
+            const d=document.documentElement;
+            const key='g9-f02-trace:'+d.dataset.g9Product+':'+d.dataset.g9RenderDigest
+              +':Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
+            try{return JSON.parse(localStorage.getItem(key)||'null')}catch(_){return null}
+          });
+          assert(postHelp && JSON.stringify(postHelp.events.map(e=>e.kind)) ===
+            JSON.stringify(['ATTEMPT_COMMIT','REPAIR_NAV','GUIDED_OPEN',
+              'RETURN_CLICK','ASSISTED_ATTEMPT_COMMIT'])
+            && postHelp.assisted === true
+            && !JSON.stringify(postHelp).includes('After guided teaching'),
+            width + ': post-help attempt lost assisted provenance or leaked response text');
+          assert((await traceNote.textContent()).includes('remains assisted, not independent transfer'),
+            width + ': assisted reattempt lacks visible caution');
         }else{
           assert(false, width + ': loopback HTTP round-trip lost the stored help chronology');
         }
