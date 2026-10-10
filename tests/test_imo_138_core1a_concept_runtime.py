@@ -52,7 +52,11 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("setProgress('guided_without_check'", html)
         self.assertIn("data-g9-learning-progress", html)
         self.assertIn("data-g9-concept-review", html)
-        self.assertIn("aria-describedby=\"g9-concept-scope\"", html)
+        microtopic_id = self.pkg["microtopics"][0]["id"]
+        self.assertIn(f'id="{microtopic_id}-concept-reason"', html)
+        self.assertIn(f'for="{microtopic_id}-concept-reason"', html)
+        self.assertIn(f'aria-describedby="{microtopic_id}-concept-scope"', html)
+        self.assertIn(f'id="{microtopic_id}-concept-scope"', html)
         self.assertIn("q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false})", html)
         self.assertIn("q('[data-g9-concept-target]').forEach(el=>el.hidden=false)", html)
 
