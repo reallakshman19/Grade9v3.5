@@ -2952,7 +2952,9 @@ q('[data-g9-concept-check]').forEach(c=>{
   const setProgress=(code,description)=>{
     article.dataset.g9ConceptProgress=code;
     progress.dataset.g9Progress=code;
-    progress.textContent='Progress (this page only): '+description+' No independent mastery has been checked.';
+    progress.textContent='Progress (this page only): '+description+' No independent mastery has been checked.'
+      +(article.dataset.g9ConceptAidExposure==='guided_study'
+        ?' Guided teaching has already been displayed; later responses on this page are assisted.':'');
   };
   const openGuided=()=>{
     q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false});
@@ -3029,6 +3031,8 @@ q('[data-g9-concept-check]').forEach(c=>{
     }
     article.dataset.g9DiagnosticPattern='aligned_structured_counterexample';
     article.dataset.g9ConceptCheckCompleted='formative_only';
+    // Exposure is monotonic within this page; re-submission cannot restore independence.
+    article.dataset.g9ConceptAidExposure='guided_study';
     setProgress('guided_example_open','structured counterexample recorded; guided example open.');
     feedback.textContent=numeric.dataset.g9DiagnosticAligned+' '+c.dataset.g9FeedbackPassed
       +' Your explanation has NOT been graded for correctness.';
@@ -3038,6 +3042,7 @@ q('[data-g9-concept-check]').forEach(c=>{
     // Switching to unchecked guided study must not retain a previous format-pass marker.
     delete article.dataset.g9ConceptCheckCompleted;
     delete article.dataset.g9DiagnosticPattern;
+    article.dataset.g9ConceptAidExposure='guided_study';
     setProgress('guided_without_check','guided example open without checking the prediction.');
     feedback.textContent='Guided study opened. No prediction, explanation or independent mastery was verified.';
     openGuided()
