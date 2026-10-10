@@ -10,6 +10,9 @@ on:
       - "Shared/tools/render_core.py"
       - "tools/site-audit/imo-f02-concept-browser.mjs"
       - "TEST/imo-research/candidates/**"
+      - "tools/site-audit/imo-f04-real-browser-negatives.mjs"
+      - "Shared/tools/imo_f04_real_browser_negative_gate.py"
+      - "tests/test_imo_f04_real_browser_negative_gate.py"
       - ".github/workflows/imo-f04-bound-browser-witness.yml"
   workflow_dispatch:
 
@@ -73,11 +76,25 @@ jobs:
             --render-dir "$RUNNER_TEMP/imo-f04-bound-render" \
             --canonical-audit build/imo-f04-bound-private.json \
             --safe-summary build/imo-f04-bound-safe-summary.json
+      - name: Verify F04 browser negative-receipt denial mutations
+        run: python -m unittest discover -s tests -p 'test_imo_f04_real_browser_negative_gate.py' -v
+      - name: Independently exercise real Chromium pre-attempt and tampered-storage denials
+        run: |
+          node tools/site-audit/imo-f04-real-browser-negatives.mjs \
+            "$RUNNER_TEMP/imo-f04-bound-render" \
+            build/imo-f04-negative-browser-safe.json
+      - name: Enforce evidence-bound browser negative denials without accepting mastery
+        run: |
+          python -m Shared.tools.imo_f04_real_browser_negative_gate \
+            --receipt build/imo-f04-negative-browser-safe.json \
+            --rendered-core2a "$RUNNER_TEMP/imo-f04-bound-render/core2a.html"
       - name: Preserve only protected-content-safe digests and fixed denial codes
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: imo-f04-bound-browser-safe-summary
-          path: build/imo-f04-bound-safe-summary.json
+          path: |
+            build/imo-f04-bound-safe-summary.json
+            build/imo-f04-negative-browser-safe.json
           if-no-files-found: ignore
           retention-days: 7
