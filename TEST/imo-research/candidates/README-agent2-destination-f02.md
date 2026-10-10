@@ -14,3 +14,10 @@ Goldens are **three example cells out of 28**, not academic/QRT approved learner
 - Owner merge/publication and #130 rights/source custody are independent gates. No release actions in this branch.
 
 Earlier migration-only SHA `85bd79f54862d8ae7c44bb45a37a41aa39403486` passed 32 focused Python tests; newer renderer/browser changes invalidate inheritance of that result. See current exact-HEAD issue/PR receipts for the actual CI results and precise checkpoint. Never equate copied, compiles, or fixture-existence with verified learner readiness.
+
+## F02 micro-UX quick wins — opt-in TEST only
+
+- The authored CORE1A radio choice and free-text reflection are a **local teaching prompt**, never an open-ended mathematics grader. The guided lesson opens after the authored correct rule choice and any minimally nonempty reflection; **keyword lists are not scoring criteria**. A learner may instead choose **Study the guided explanation instead** without supplying a rationale.
+- Per-page status is explicit: `not_started`, `needs_review`, `needs_reflection`, `guided_example_open` or `guided_without_check`. The status is transient DOM state only. It is intentionally **not** stored, shared, counted as a passed exam item, or used for independent mastery.
+- Browser regression checks failed choices, alternate correct mathematical wording, ungraded rationale warning, keyboard Enter activation of the guided route, focus placed on the revealed heading, reduced-motion emulation and a **200% CSS zoom simulation**. CSS zoom is **not native browser 200% zoom**; screen-reader and human accessibility validation remain **NOT_RUN**.
+- All runtime behavior is scoped to the authored opt-in TEST Core1A. No change to source Core2, QRT authority, shared Core1B/ordinary CORE JS, production routes, public/docs releases or generated mirrors. Prior PDF stage-completeness and generated-file CI blockers remain separate.
