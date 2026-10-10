@@ -21,6 +21,57 @@ from Shared.tools.imo_f04_canonical_slice import (
 )
 
 
+
+class IMOCanonicalRenderDenialTests(unittest.TestCase):
+    """A rejected package cannot be treated as a rendered or approved product."""
+
+    def test_schema_rejection_yields_safe_blocked_report(self):
+        # The existing validator owns the schema; this test injects its actual
+        # exception class/prefix without changing academic source material.
+        rejection = ValueError(
+            "PRODUCT_STRUCTURE_INVALID: protected-stem-must-not-escape")
+        with patch("Shared.tools.imo_f04_canonical_slice.render_core.main",
+                   side_effect=rejection):
+            report = inspect_real_candidate()
+        self.assertEqual(report["state"], "BLOCKED")
+        self.assertIn("RENDER_PRODUCT_STRUCTURE_INVALID",
+                      report["blocking_findings"])
+        self.assertEqual(report["render"]["status"],
+                         "CANONICAL_RENDER_BLOCKED_INVALID_PACKAGE")
+        self.assertEqual(report["render"]["receipt"], "NOT_CREATED")
+        self.assertEqual(report["quality_gate"]["status"], "NOT_RUN")
+        self.assertFalse(report["release_authorized"])
+        self.assertNotIn("protected-stem-must-not-escape",
+                         json.dumps(report))
+
+    def test_cli_retains_nonzero_safe_json_on_schema_rejection(self):
+        from Shared.tools.imo_f04_canonical_slice import main
+        output = io.StringIO()
+        with patch("Shared.tools.imo_f04_canonical_slice.render_core.main",
+                   side_effect=ValueError(
+                       "PRODUCT_STRUCTURE_INVALID: hidden protected work")), \
+             patch("sys.argv", ["imo_f04_canonical_slice.py"]), \
+             redirect_stdout(output):
+            rc = main()
+        status = json.loads(output.getvalue())
+        self.assertEqual(rc, 1)
+        self.assertEqual(status["state"], "BLOCKED")
+        self.assertIn("RENDER_PRODUCT_STRUCTURE_INVALID",
+                      status["blocking_findings"])
+        self.assertEqual(status["render_status"],
+                         "CANONICAL_RENDER_BLOCKED_INVALID_PACKAGE")
+        self.assertFalse(status["release_authorized"])
+        for secret in ("hidden protected work", "protected_W",
+                       "semantic_review_asks", "review_objectives"):
+            self.assertNotIn(secret, output.getvalue())
+
+    def test_unrelated_renderer_value_error_is_not_misclassified(self):
+        with patch("Shared.tools.imo_f04_canonical_slice.render_core.main",
+                   side_effect=ValueError("UNRELATED_BUG")):
+            with self.assertRaisesRegex(ValueError, "UNRELATED_BUG"):
+                inspect_real_candidate()
+
+
 class IMOCanonicalSliceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
