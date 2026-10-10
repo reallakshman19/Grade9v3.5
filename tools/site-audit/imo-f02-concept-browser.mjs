@@ -29,8 +29,19 @@ try {
     const submit = page.locator('[data-g9-concept-commit]');
     await page.locator('[data-g9-concept-option][value="ADD"]').check();
     await page.locator('[data-g9-concept-reason]').fill('An exponent increase multiplies the power by a factor of the base.');
+    // Two independent numerical evaluations distinguish *response patterns*,
+    // not a stable misconception or a verified mathematical explanation.
+    await page.locator('[data-g9-diagnostic-next]').fill('56');
+    await page.locator('[data-g9-diagnostic-add]').fill('56');
     await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'repeated_additive_route_candidate',
+      width + ': repeated additive prediction was not marked provisional');
     assert(await targets.first().isHidden(), width + ': wrong additive law unblocked construction');
+    await page.locator('[data-g9-diagnostic-next]').fill('343');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'choice_numeric_conflict',
+      width + ': conflicting factor evidence was not distinguished from repeated additive choice');
+    assert(await targets.first().isHidden(), width + ': contradictory choice revealed guided lesson');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_review',
       width + ': wrong choice not marked as needs review');
     await page.locator('[data-g9-concept-option][value="FACTOR"]').check();
@@ -42,8 +53,16 @@ try {
     // Mathematical wording without the old keyword list must no longer be rejected.
     await page.locator('[data-g9-concept-reason]').fill(
       'One extra copy of five is attached to the previous group.');
+    await page.locator('[data-g9-diagnostic-next]').fill('56');
     await submit.click();
-    assert(await targets.first().isVisible(), width + ': authored reflection failed to reveal construction');
+    assert(await targets.first().isHidden(), width + ': factor option and bad arithmetic falsely unblocked construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_counterexample',
+      width + ': factor choice plus wrong numeric evidence was not held for review');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'possible_execution_slip_or_model_error',
+      width + ': single wrong numeric check was falsely declared a proven misconception');
+    await page.locator('[data-g9-diagnostic-next]').fill('343');
+    await submit.click();
+    assert(await targets.first().isVisible(), width + ': structured neutral check failed to reveal construction');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
       width + ': wrong evidence state (must remain formative only)');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'guided_example_open',
@@ -57,6 +76,8 @@ try {
     await page.locator('[data-g9-concept-review]').click();
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'guided_without_check',
       width + ': successful reflection-to-guided transition not labelled unchecked');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === null,
+      width + ': stale numerical diagnostic evidence survived unchecked guided bypass');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
       width + ': stale formative status survived unchecked guided-study choice');
     assert((await page.locator('[data-g9-learning-progress]').innerText()).includes('No independent mastery'),
@@ -79,9 +100,16 @@ try {
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_reflection',
       width + ': short resubmission not labelled needs reflection');
     await page.locator('[data-g9-concept-reason]').fill('One additional copy of five joins each group.');
+    await page.locator('[data-g9-diagnostic-next]').fill('56');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': wrong later neutral computation retained formative flag');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'possible_execution_slip_or_model_error',
+      width + ': later wrong neutral computation not classified as uncertain pattern');
+    await page.locator('[data-g9-diagnostic-next]').fill('343');
     await submit.click();
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
-      width + ': renewed valid reflection could not restore formative-only status');
+      width + ': renewed valid reflection and neutral counterexample could not restore formative-only status');
     if (width === 390) {
       const access = await browser.newPage({ viewport: {width:390,height:900}, reducedMotion:'reduce' });
       access.on('pageerror', e => result.failures.push('accessibility probe JS exception: '+String(e)));
@@ -94,6 +122,10 @@ try {
         '390: rationale input does not have microtopic-scoped ID');
       assert(await reasonInput.getAttribute('aria-describedby') === conceptId + '-concept-scope',
         '390: rationale input not programmatically described');
+      assert(await access.locator('[data-g9-diagnostic-next]').getAttribute('id') === conceptId + '-diagnostic-next',
+        '390: neutral next-power field is not uniquely identified');
+      assert(await access.locator('[data-g9-diagnostic-add]').getAttribute('id') === conceptId + '-diagnostic-add',
+        '390: neutral additive field is not uniquely identified');
       assert(await access.locator('[id="' + conceptId + '-concept-scope"]').count() === 1,
         '390: accessible description missing or duplicated');
       // CSS zoom is a reflow/keyboard stress test, NOT a claim of native 200% browser zoom.
