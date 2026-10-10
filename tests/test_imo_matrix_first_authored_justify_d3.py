@@ -50,7 +50,7 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertEqual(manifest["selection"]["core2"], [])
         self.assertEqual(manifest["bank_refs"], [])
         self.assertEqual(manifest["selection"]["core2a"], [ID])
-        self.assertEqual(manifest["output_roles"], ["CORE1A", "CORE2A"])
+        self.assertEqual(manifest["output_roles"], ["CORE2A", "CORE1A"])
         self.assertEqual(pkg["extensions"]["grade9v3:review_reset"]["source_sof_admitted"], 0)
         self.assertEqual(pkg["extensions"]["grade9v3:review_reset"]["qrt_accepted"], 0)
 
@@ -95,6 +95,8 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertNotIn(">m + 2</text>", svg)
         self.assertNotIn(">m + 3</text>", svg)
         self.assertNotIn("gcd", svg.lower())
+        self.assertNotIn("even factor", svg.lower())
+        self.assertNotIn("multiple of three", svg.lower())
         self.assertNotIn("divisible by 6", svg.lower())
         self.assertIn("n plus two", svg.lower())
         self.assertEqual(q["figure_refs"], [rep["id"]])
@@ -119,8 +121,20 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertEqual(mark["template_id"], "QRT-JUSTIFY-D3")
         self.assertEqual(mark["protected_work"], matrix["band_policies"]["D3"]["protected_work"])
         self.assertEqual(set(mark["matrix_slots"]), set(qrt.ASKS))
-        self.assertTrue(all(v["review_state"] == "NOT_ACCEPTED"
+        self.assertTrue(all(v["review_state"] == "NOT_ACCEPTED" and
+                            v["owner_acceptance"] is False and
+                            len(v["observed_behavior"]) > 40
                             for v in mark["matrix_slots"].values()))
+        self.assertEqual(mark["semantic_coverage"]["remaining_gaps"],
+                         ["S2", "S3", "M2"])
+        self.assertEqual(mark["semantic_coverage"]["supported_candidate_slots"], 9)
+        self.assertEqual(mark["semantic_coverage"]["owner_accepted_slots"], 0)
+        self.assertEqual(
+            [name for name, row in mark["matrix_slots"].items()
+             if row["evidence_status"] == "GAP_NOT_IMPLEMENTED"],
+            ["S2", "S3", "M2"])
+        self.assertEqual(mark["learning_sequence"],
+                         "AUTHOR_DIAGNOSTIC_ATTEMPT_FIRST_THEN_OPTIONAL_CORE1A_REPAIR")
         self.assertEqual(len(manifest["selection"]["core2a"]), 1)
         self.assertNotEqual(mark["d2_contrast"], "")
 
@@ -192,6 +206,37 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertEqual(q["representation_roles"]["stage_refs"],
                          ["AUTHORED-001-FACTORS-ONLY"])
 
+    def test_qrt_missing_visual_and_diagnostic_support_is_not_fake_complete(self):
+        _, _, _, q = snapshot()
+        evidence = q["extensions"][REVIEW]
+        self.assertEqual(evidence["semantic_coverage"]["governing_asks_total"], 12)
+        self.assertEqual(evidence["semantic_coverage"]["owner_accepted_slots"], 0)
+        self.assertEqual(evidence["semantic_coverage"]["remaining_gaps"],
+                         ["S2", "S3", "M2"])
+        self.assertIn("may collapse to recall",
+                      evidence["semantic_coverage"]["risk"].lower().replace("_", " "))
+        for name in ("S2", "S3", "M2"):
+            self.assertEqual(evidence["matrix_slots"][name]["evidence_status"],
+                             "GAP_NOT_IMPLEMENTED")
+            self.assertNotEqual(evidence["matrix_slots"][name]["observed_behavior"], "")
+
+    def test_question_attempt_first_without_prelesson_proof_or_visual_leaks(self):
+        pkg, manifest, _, q = snapshot()
+        self.assertEqual(manifest["output_roles"][0], "CORE2A")
+        self.assertEqual(len(q["scaffolds"]), 3)
+        self.assertEqual(len(q["answer"]["reasoning_route"]), 5)
+        self.assertEqual(q["answer"]["crux_move_ref"],
+                         q["answer"]["reasoning_route"][3]["id"])
+        rep = next(x for x in pkg["representations"]
+                   if x["id"] == q["representation_roles"]["initial_ref"])
+        svg = (ROOT / rep["rendered_asset_refs"][0]).read_text(encoding="utf-8")
+        forbidden = ("even factor", "multiple of three", "factor of 2",
+                     "divisible by 6", "the claim is true", "gcd")
+        for item in forbidden:
+            self.assertNotIn(item, svg.lower(), item)
+        self.assertEqual(rep["reveal_stages"][0]["visible_elements"],
+                         ["n,n+1,n+2"])
+
     def test_manifest_is_real_product_selection_with_explicit_d2_omission(self):
         pkg, manifest, _, _ = snapshot()
         selected = product_manifest.validate_selection(manifest, [pkg], [])
@@ -221,6 +266,9 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         pages, gaps, _, advice, waivers = render_core.build_report(
             MANIFEST, "PAGES", held_to="REFERENCE")
         self.assertEqual(set(pages), {"index.html", "core1a.html", "core2a.html"})
+        index_body = pages["index.html"].partition("<main>")[2].partition("</main>")[0]
+        self.assertLess(index_body.find('href="core2a.html"'),
+                        index_body.find('href="core1a.html"'))
         self.assertEqual(gaps, [], gaps)
         self.assertEqual(advice, [], advice)
         self.assertEqual(waivers, [], waivers)
@@ -228,6 +276,12 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         self.assertIn(q["id"], html)
         self.assertIn(q["stem"], html)
         self.assertIn('data-g9-stage="PRE_ATTEMPT"', html)
+        self.assertIn("data-g9-attempt-box", html)
+        self.assertIn("data-g9-commit", html)
+        self.assertIn("data-requires-attempt", html)
+        self.assertIn('data-g9-payload-ref="CORE2A-' + q["id"] + '-reasoning"', html)
+        self.assertIn('<template data-g9-payload="CORE2A-' +
+                      q["id"] + '-reasoning">', html)
         self.assertIn("AUTHORED", html)
         self.assertIn("core1a.html#CU-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-PROOF",
                       html)
