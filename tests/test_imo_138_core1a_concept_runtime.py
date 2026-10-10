@@ -170,6 +170,35 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertNotIn("String(error?.name||", source)
         self.assertNotIn("result.failures.push(String(error", source)
 
+    def test_chromium_page_errors_are_fixed_codes_without_page_text(self):
+        """A hostile JS exception may contain learner text; never serialize it."""
+        source = (ROOT / "tools/site-audit/imo-f02-concept-browser.mjs").read_text(
+            encoding="utf-8")
+        handlers = re.findall(r"\.on\('pageerror',\s*([^\n]+)", source)
+        self.assertEqual(len(handlers), 5)
+        for handler in handlers:
+            with self.subTest(handler=handler):
+                self.assertNotIn("String(", handler)
+                self.assertNotIn(".message", handler)
+                self.assertNotIn(".stack", handler)
+                self.assertTrue(
+                    "PAGE_SCRIPT_EXCEPTION" in handler
+                    or "ACCESSIBILITY_PAGE_SCRIPT_EXCEPTION" in handler
+                )
+        self.assertNotIn("deepErrors.join(", source)
+        self.assertNotIn("journeyErrors.join(", source)
+        self.assertNotIn("traceErrors.join(", source)
+        self.assertNotIn("errors.join(", source)
+        self.assertIn("page_errors: errors", source)
+        self.assertIn("width + ': uncaught page error count=' + errors.length", source)
+        # Falsify the guard: raw exception string interpolation is detectable.
+        tainted = source.replace(
+            "errors.push('PAGE_SCRIPT_EXCEPTION')", "errors.push(String(e))", 1)
+        self.assertTrue(any(
+            "String(e)" in handler
+            for handler in re.findall(r"\.on\('pageerror',\s*([^\n]+)", tainted)
+        ))
+
     def test_f02_loopback_browser_fixture_serves_declared_assets_only(self):
         """The same-origin ledger browser test must have real shell assets."""
         source = (ROOT / "tools/site-audit/imo-f02-concept-browser.mjs").read_text(
