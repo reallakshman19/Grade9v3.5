@@ -152,11 +152,30 @@ def _check_published(repo: Path, role: str, card: dict, pilot: dict) -> list[str
         questions = pilot.get("source_questions", [])
         source_id = attrs.get("data-g9-source-question-id")
         matches = [r for r in questions if r.get("question_id") == source_id]
+        # Research crosswalks are NOT custody authority. A forged candidate flag
+        # cannot substitute for the original source position's custody record.
+        ledger_path = repo / "TEST/imo-research/intake/core2-source-custody-eligibility.v1.json"
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            custody = [row for row in ledger["records"] if row.get("question_id") == source_id]
+        except (OSError, ValueError, KeyError, TypeError):
+            custody = []
+        custody_ready = (
+            len(custody) == 1
+            and custody[0].get("core2_eligible") is True
+            and custody[0].get("core2_admitted") is True
+            and custody[0].get("publisher_publication_rights") in {"REPRODUCTION_GRANTED", "RIGHTS_CLEARED"}
+            and custody[0].get("source_seed_custody_status") == "VERIFIED"
+            and custody[0].get("source_text_fidelity_status") == "VERIFIED"
+            and (bool(custody[0].get("document_retained_sha256"))
+                 or custody[0].get("external_reference_custody_authorized") is True)
+        )
         if (pilot.get("scope", {}).get("source_core2_admitted", 0) < 1 or
             len(matches) != 1 or
             not matches[0].get("source_core2_admitted") or
             not matches[0].get("source_core2_eligible") or
-            matches[0].get("rights_status") not in {"REPRODUCTION_GRANTED", "RIGHTS_CLEARED"}):
+            matches[0].get("rights_status") not in {"REPRODUCTION_GRANTED", "RIGHTS_CLEARED"} or
+            not custody_ready):
             issues.append("CORE2: source identity, fidelity, custody/admission or rights remain held")
     return issues
 
