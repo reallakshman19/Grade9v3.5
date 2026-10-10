@@ -47,16 +47,21 @@ def load(path: Path) -> dict:
     return obj
 
 
-def no_copied_source_payload(obj: object) -> None:
-    """Avoid embedding source-protected wording/figures in the new packet."""
+def no_copied_source_payload(obj: object, path: tuple[str, ...] = ()) -> None:
+    """Forbid copied publisher bytes/text, while allowing one typed status label."""
     if isinstance(obj, dict):
-        need(not (set(obj) & FORBIDDEN_SOURCE_PAYLOAD_FIELDS),
+        prohibited = set(FORBIDDEN_SOURCE_PAYLOAD_FIELDS)
+        if path == ("observation", "visual_component_sightings"):
+            # This is the *name* of a required nine-part status category, not
+            # an original source choice list. Exact-value checking is below.
+            prohibited.discard("options")
+        need(not (set(obj) & prohibited),
              "protected source content field is not allowed in pilot packet")
-        for child in obj.values():
-            no_copied_source_payload(child)
+        for name, child in obj.items():
+            no_copied_source_payload(child, path + (name,))
     elif isinstance(obj, list):
         for child in obj:
-            no_copied_source_payload(child)
+            no_copied_source_payload(child, path)
 
 
 def exact_fields(record: object, fields: tuple[str, ...], name: str) -> None:
