@@ -117,6 +117,24 @@ class Q004PrivateSpotcheckTests(unittest.TestCase):
         self.assertIn("PINNED_Q004_IDENTITY_DIGEST_KEY_OR_AUTHORITY_MISMATCH",
                       q4.evaluate(packet, None)["blocking_codes"])
 
+    def test_three_archived_authored_goldens_cannot_claim_source_core2(self):
+        # Historical PR #333 golden fixtures are WHOLLY_AUTHORED_NOT_SOF,
+        # regardless of their proposed EXPLAIN-D2/MODEL-D3/JUSTIFY-D4 labels.
+        for authored_id in (
+            "GOLDEN-IMO327-EXPLAIN-D2",
+            "GOLDEN-IMO327-MODEL-D3",
+            "GOLDEN-IMO327-JUSTIFY-D4",
+        ):
+            packet = q4.make_template(None)
+            packet["question_id"] = authored_id
+            result = q4.evaluate(packet, None)
+            self.assertEqual(result["core2_admitted"], False)
+            self.assertEqual(result["source_custody_hold"], 68)
+            self.assertIn(
+                "PINNED_Q004_IDENTITY_DIGEST_KEY_OR_AUTHORITY_MISMATCH",
+                result["blocking_codes"],
+            )
+
     def test_original_source_document_identity_is_pinned(self):
         packet = q4.make_template(None)
         packet["source_url"] = "https://evil.example.org/paper.pdf"
