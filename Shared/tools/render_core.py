@@ -3167,7 +3167,10 @@ const f02Read=()=>{
          e&&e.n===i+1&&f02Allowed.includes(e.kind))||
        (value.events.some(e=>e.kind!=='ATTEMPT_COMMIT')&&!value.assisted))
       return {invalid:true};
-    return value;
+    // Drop any non-schema fields from editable localStorage before rewriting:
+    // an injected answer/PII property must never be propagated by this trace.
+    return {schema:f02Schema,events:value.events.map(e=>({n:e.n,kind:e.kind})),
+      assisted:value.assisted,overflow:value.overflow};
   }catch(_){return {invalid:true}}
 };
 const f02Status=q('[data-g9-f02-trace-status]')[0];
