@@ -10,7 +10,7 @@ const html = path.join(folder, 'core1a.html');
 if (!process.argv[2] || !fs.existsSync(html)) throw new Error('Provide rendered core1a.html directory');
 const out = path.join(folder, 'browser-evidence');
 fs.mkdirSync(out, { recursive: true });
-const result = { schema: 'imo-f02-concept-first-chromium/v1', source: 'TEST_CANDIDATE',
+const result = { schema: 'imo-f02-concept-first-chromium/v2', source: 'TEST_CANDIDATE',
   authentic_core2_admitted: false, mastery_verified: false, human_screen_reader: 'NOT_RUN',
   viewports: [], failures: [], printed_pdf: null };
 const assert = (ok, label) => { if (!ok) result.failures.push(label); };
@@ -31,18 +31,62 @@ try {
     await page.locator('[data-g9-concept-reason]').fill('An exponent increase multiplies the power by a factor of the base.');
     await submit.click();
     assert(await targets.first().isHidden(), width + ': wrong additive law unblocked construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_review',
+      width + ': wrong choice not marked as needs review');
     await page.locator('[data-g9-concept-option][value="FACTOR"]').check();
-    await page.locator('[data-g9-concept-reason]').fill('I guess the answer but cannot justify it.');
+    await page.locator('[data-g9-concept-reason]').fill('No');
     await submit.click();
-    assert(await targets.first().isHidden(), width + ': insufficient rule explanation unblocked construction');
+    assert(await targets.first().isHidden(), width + ': short reflection unblocked construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_reflection',
+      width + ': missing reflection progress not recorded');
+    // Mathematical wording without the old keyword list must no longer be rejected.
     await page.locator('[data-g9-concept-reason]').fill(
-      'The exponent law multiplies the earlier power by one factor of the base, not an addition.');
+      'One extra copy of five is attached to the previous group.');
     await submit.click();
-    assert(await targets.first().isVisible(), width + ': valid explanation failed to reveal construction');
+    assert(await targets.first().isVisible(), width + ': authored reflection failed to reveal construction');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
       width + ': wrong evidence state (must remain formative only)');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'guided_example_open',
+      width + ': guided study progress not recorded');
+    assert((await page.locator('[data-g9-concept-feedback]').innerText()).includes('NOT been graded'),
+      width + ': missing explicit warning that free text was not graded');
     const focused = await page.evaluate(() => document.activeElement?.tagName || '');
     assert(['H3', 'H4'].includes(focused), width + ': focus not moved to revealed section heading');
+    if (width === 390) {
+      const access = await browser.newPage({ viewport: {width:390,height:900}, reducedMotion:'reduce' });
+      access.on('pageerror', e => result.failures.push('accessibility probe JS exception: '+String(e)));
+      await access.goto(pathToFileURL(html).href, {waitUntil:'load'});
+      assert(await access.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches),
+        '390: reduced-motion media emulation not enabled');
+      assert(await access.locator('[data-g9-concept-reason]').getAttribute('aria-describedby') === 'g9-concept-scope',
+        '390: rationale input not programmatically described');
+      // CSS zoom is a reflow/keyboard stress test, NOT a claim of native 200% browser zoom.
+      await access.evaluate(() => { document.body.style.zoom = '200%'; });
+      const guide = access.locator('[data-g9-concept-review]');
+      await guide.focus();
+      await access.keyboard.press('Enter');
+      assert(await access.locator('[data-g9-concept-target]').first().isVisible(),
+        '390 CSS 200%: keyboard-guided-study button did not reveal construction');
+      assert(await access.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'guided_without_check',
+        '390 CSS 200%: bypass incorrectly classified as checked');
+      assert(await access.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+        '390 CSS 200%: bypass falsely marked as completed');
+      assert(['H3','H4'].includes(await access.evaluate(() => document.activeElement?.tagName || '')),
+        '390 CSS 200%: focus not moved after keyboard reveal');
+      await access.screenshot({path:path.join(out,'core1a-390-css-zoom-200.png'),fullPage:true});
+      await access.reload();
+      assert(await access.locator('[data-g9-concept-target]').first().isHidden(),
+        '390: refreshing a page must not retain fake learner progress');
+      assert(await access.locator('[data-g9-learning-progress]').getAttribute('data-g9-progress') === 'not_started',
+        '390: progress not reset on fresh page visit');
+      result.accessibility = {
+        css_zoom_200: 'KEYBOARD_PATH_PASS_WHEN_ASSERTIONS_CLEAR',
+        browser_native_zoom: 'NOT_RUN', human_screen_reader: 'NOT_RUN',
+        reduced_motion_emulated: true, keyboard_enter_guided_bypass: true,
+        no_client_persistence_claim: true
+      };
+      await access.close();
+    }
     if (width === 1280) {
       await page.pdf({ path: path.join(out, 'core1a-print.pdf'), printBackground: true });
       const stat = fs.statSync(path.join(out, 'core1a-print.pdf'));
