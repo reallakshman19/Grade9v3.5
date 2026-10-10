@@ -59,6 +59,9 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn(f'id="{microtopic_id}-concept-scope"', html)
         self.assertIn("q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false})", html)
         self.assertIn("q('[data-g9-concept-target]').forEach(el=>el.hidden=false)", html)
+        self.assertIn("window.matchMedia('print')", html)
+        self.assertIn("printMode.addEventListener('change'", html)
+        self.assertIn("q('figure[data-g9-figure]',article).forEach(fitFigure)", html)
 
     def test_no_false_core2_source_or_lesson_gate_on_question(self):
         # Shared inline JS contains the concept-check handler on every role page.
