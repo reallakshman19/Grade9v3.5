@@ -53,7 +53,7 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertLess(core1a.index('data-g9-concept-target hidden'), core1a.index(step),
                         "deep-linked step must initially be inside the concealed construction")
         self.assertIn('data-g9-repair-ref="TC-02"', core2a)
-        self.assertIn('data-g9-repair-target="TC-02" href="core1a.html#TC-02"', core2a)
+        self.assertIn('data-g9-repair-target="TC-02" href="core1a.html?g9-return=', core2a)
         self.assertNotIn('data-g9-repair-target="CU-TEST-IMO-G9-EXPONENTIAL-RELATION"',
                          core2a)
         self.assertIn("window.location.hash==='#TC-02'", core1a)
@@ -62,6 +62,54 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("repair.focus();repair.scrollIntoView({block:'center'});", core1a)
         self.assertIn("guide.focus();", core1a)
         self.assertFalse(self.pkg["extensions"]["grade9v3:learner_published"])
+
+    def test_author_selected_core2a_return_route_is_assisted_not_another_core2(self):
+        core1a = self.pages["core1a.html"]
+        core2a = self.pages["core2a.html"]
+        question_id = "Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"
+        concept_id = self.pkg["microtopics"][0]["id"]
+        self.assertEqual(core1a.count("data-g9-authored-core2a-return"), 1)
+        self.assertIn('href="core2a.html#' + question_id + '"', core1a)
+        self.assertNotIn('href="core2.html#' + question_id + '"', core1a)
+        self.assertIn('data-g9-question-ref="' + question_id + '"', core1a)
+        self.assertIn('data-g9-concept-ref="' + concept_id + '"', core1a)
+        self.assertIn('Returning after guided teaching is assisted practice', core1a)
+        self.assertLess(core1a.index('data-g9-concept-target hidden'),
+                        core1a.index("data-g9-authored-core2a-return"))
+        self.assertIn('data-g9-concept-link data-g9-question-ref="' + question_id + '"',
+                      core2a)
+        self.assertIn('href="core1a.html?g9-return=' + question_id +
+                      '&amp;g9-concept=' + concept_id + '#TC-02"', core2a)
+        self.assertIn('const navReturn=navParams.get(\'g9-return\')', core1a)
+        self.assertIn('const navConcept=navParams.get(\'g9-concept\')', core1a)
+        self.assertFalse(self.pkg["extensions"]["grade9v3:learner_published"])
+
+    def test_author_selected_return_fails_closed_on_wrong_custody_or_selection(self):
+        from types import SimpleNamespace
+        import copy
+
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        microtopic = self.pkg["microtopics"][0]
+        authored = next(q for q in self.pkg["questions"]
+                        if q["id"] == "Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01")
+        ctx = SimpleNamespace(manifest=manifest, selection_rows={"core2a": [authored]})
+        self.assertEqual(render_core._f02_selected_authored_core2a(ctx, microtopic)["id"],
+                         authored["id"])
+
+        forged = copy.deepcopy(authored)
+        forged["origin"] = "SOURCE"
+        ctx.selection_rows["core2a"] = [forged]
+        self.assertIsNone(render_core._f02_selected_authored_core2a(ctx, microtopic))
+
+        ctx.selection_rows["core2a"] = [authored]
+        ctx.manifest = copy.deepcopy(manifest)
+        ctx.manifest["selection"]["core2a"] = []
+        self.assertIsNone(render_core._f02_selected_authored_core2a(ctx, microtopic))
+
+        ctx.manifest = manifest
+        bad_topic = copy.deepcopy(microtopic)
+        bad_topic["primary_capability_ref"] = "CAP-NOT-SELECTED"
+        self.assertIsNone(render_core._f02_selected_authored_core2a(ctx, bad_topic))
 
     def test_format_only_and_print_materialisation(self):
         html = self.pages["core1a.html"]

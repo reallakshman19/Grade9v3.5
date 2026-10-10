@@ -186,13 +186,31 @@ def audit(
     )
     if not exact_step_opt_in:
         errors.append("P2_F02_EXACT_STEP_OPT_IN_NOT_AUTHORIZED")
+    selected_return = (
+        exact_step_opt_in
+        and question.get("id") == "Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"
+        and question.get("origin") == "AUTHORED"
+        and question.get("status") == "CANDIDATE"
+        and question.get("primary_capability_ref") == microtopic.get("primary_capability_ref")
+        and selection.get("core2a") == [question["id"]]
+    )
+    if not selected_return:
+        errors.append("F02_AUTHORED_ASSISTED_RETURN_SOURCE_UNRESOLVED")
     repair_binding = {
         "requested_step": repair_ref,
         "construction_unit": unit.get("id"),
         "construction_unit_steps": unit_steps,
-        "render_link_target": ("core1a.html#" + repair_ref) if exact_step_opt_in
-                              else ("core1a.html#" + unit["id"] if unit.get("id") else None),
+        "render_link_target": (
+            "core1a.html?g9-return=" + question["id"]
+            + "&g9-concept=" + microtopic["id"] + "#TC-02"
+            if selected_return else
+            ("core1a.html#" + repair_ref if exact_step_opt_in else
+             "core1a.html#" + unit["id"] if unit.get("id") else None)
+        ),
+        "return_link_target": ("core2a.html#" + question["id"]) if selected_return else None,
         "checkpoint_required": bool(exact_step_opt_in),
+        "return_status": ("AUTHOR_SELECTED_GUIDED_RETURN_LINK_NOT_UNASSISTED_TRANSFER"
+                          if selected_return else "RETURN_SOURCE_NOT_ACCEPTED"),
         "status": ("EXACT_TC02_FRAGMENT_DECLARED_GUIDED_BROWSER_UNVERIFIED"
                    if exact_step_opt_in else
                    "SHARED_CONSTRUCTION_UNIT_FALLBACK_NOT_ACCEPTED"),

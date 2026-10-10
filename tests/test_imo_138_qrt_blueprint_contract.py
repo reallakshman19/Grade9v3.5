@@ -81,7 +81,17 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
         self.assertEqual(binding["construction_unit"], "CU-TEST-IMO-G9-EXPONENTIAL-RELATION")
         self.assertEqual(binding["construction_unit_steps"],
                          ["TC-01", "TC-02", "TC-03", "TC-04", "TC-05"])
-        self.assertEqual(binding["render_link_target"], "core1a.html#TC-02")
+        self.assertEqual(
+            binding["render_link_target"],
+            "core1a.html?g9-return=Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01"
+            "&g9-concept=MIC-TEST-IMO-G9-COMMON-BASE-RELATION#TC-02",
+        )
+        self.assertEqual(
+            binding["return_link_target"],
+            "core2a.html#Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01",
+        )
+        self.assertEqual(binding["return_status"],
+                         "AUTHOR_SELECTED_GUIDED_RETURN_LINK_NOT_UNASSISTED_TRANSFER")
         self.assertTrue(binding["checkpoint_required"])
         self.assertEqual(binding["status"],
                          "EXACT_TC02_FRAGMENT_DECLARED_GUIDED_BROWSER_UNVERIFIED")
@@ -95,6 +105,20 @@ class TestF02QRTBlueprintContract(unittest.TestCase):
         pkg = copy.deepcopy(self.package)
         pkg["microtopics"][0]["extensions"]["grade9v3:concept_checkpoint"]["scope"] = "GENERIC"
         self.assertIn("P2_F02_EXACT_STEP_OPT_IN_NOT_AUTHORIZED",
+                      self.audit(package=pkg)["errors"])
+
+    def test_mutation_return_question_no_longer_selected_is_rejected(self):
+        manifest = copy.deepcopy(self.manifest)
+        manifest["selection"]["core2a"] = []
+        self.assertIn("F02_AUTHORED_ASSISTED_RETURN_SOURCE_UNRESOLVED",
+                      self.audit(manifest=manifest)["errors"])
+
+    def test_mutation_return_question_custody_forged_is_rejected(self):
+        pkg = copy.deepcopy(self.package)
+        item = next(x for x in pkg["questions"]
+                    if x["id"] == "Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01")
+        item["origin"] = "SOURCE"
+        self.assertIn("F02_AUTHORED_ASSISTED_RETURN_SOURCE_UNRESOLVED",
                       self.audit(package=pkg)["errors"])
 
     def test_mutation_repair_reference_loses_construction_owner(self):
