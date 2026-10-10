@@ -1,0 +1,16 @@
+# Destination Agent 2 F02 migration evidence (issue #138)
+
+Historical reference: `reallaksh19/Grade9v3.5` draft PRs #312 and #333. Canonical destination: `reallakshman19/Grade9v3.5`; programme #137.
+
+This migration *only* copies an unadmitted `TEST` / `CANDIDATE` authored Index Laws package, its TEST role-scoped manifest and two authored visual assets, historic academic/spec docs, and three reviewer **golden** 4×7 QRT examples with mutation tests. Source Git blob equality is exact: EXPLAIN-D2 `a179660279540ae2f397717be5fffeff0d02b1e6`, MODEL-D3 `43296ad5b7e3517f76ae84b439a0eeef653d7d95`, JUSTIFY-D4 `ee1ea98ed5949841aa0e9fde4a88fdff79e7302d`.
+
+Goldens are **three example cells out of 28**, not academic/QRT approved learner products. No original SOF source Core2 is admitted, no route or generated `public/`/`docs/` output is created, and no academic, external review or Owner publication authorization is implied. Old PRs #312/#333 remain distinct historical provenance, **not merged** into destination.
+
+## Remaining work
+
+- F02 runtime concept-first gate must be safely integrated into the current destination shared renderer *without overwriting other mainline changes* and tested with genuine Chromium at 320/390/768/1280 and 200% zoom, keyboard, print.
+- F03 authored Core2A must separately enforce committed attempt, H1-H3 hint accounting and nonretroactive assistance, exact TC-02 repair navigation, *unseen* unassisted transfer. A client-only keyword check does not establish independent mastery.
+- Academic and QRT reviewers must independently scrutinize exact-head proofs, hidden answer leakage and release decisions. Human learner/screen-reader review and deployed destination parity remain NOT_RUN.
+- Owner merge/publication and #130 rights/source custody are independent gates. No release actions in this branch.
+
+See the issue/PR for the actual CI results and precise checkpoint. Never equate copied, compiles, or fixture-existence with verified learner readiness.
