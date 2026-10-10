@@ -54,12 +54,12 @@ class ReadbackTests(unittest.TestCase):
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
         self.base = f"http://127.0.0.1:{self.server.server_port}/Grade9v3.5/"
-        # loopback fixture permits test-only port; production origin validation rejects ports.
-        self.patcher = patch.object(audit, "valid_base", side_effect=lambda url, **_: url)
-        self.patcher.start()
+        # Loopback HTTP is enabled only for the test API, never the CLI.
+        self.assertEqual(audit.valid_base(self.base, allow_loopback=True), self.base)
+        with self.assertRaises(ValueError):
+            audit.valid_base(self.base)
 
     def tearDown(self):
-        self.patcher.stop()
         self.server.shutdown()
         self.thread.join()
         self.server.server_close()
@@ -127,18 +127,14 @@ class ReadbackTests(unittest.TestCase):
                 audit.valid_route(bad)
 
     def test_external_origin_must_be_project_github_pages(self):
-        self.patcher.stop()
-        try:
-            for bad in ("http://example.org/Grade9v3.5/",
-                        "https://evil.example/Grade9v3.5/",
-                        "https://x.github.io/../../secret/",
-                        "https://x.github.io/Grade9v3.5/?test=1"):
-                with self.subTest(url=bad), self.assertRaises(ValueError):
-                    audit.valid_base(bad)
-            self.assertEqual(audit.valid_base("https://reallakshman19.github.io/Grade9v3.5/"),
-                             "https://reallakshman19.github.io/Grade9v3.5/")
-        finally:
-            self.patcher.start()
+        for bad in ("http://example.org/Grade9v3.5/",
+                    "https://evil.example/Grade9v3.5/",
+                    "https://x.github.io/../../secret/",
+                    "https://x.github.io/Grade9v3.5/?test=1"):
+            with self.subTest(url=bad), self.assertRaises(ValueError):
+                audit.valid_base(bad)
+        self.assertEqual(audit.valid_base("https://reallakshman19.github.io/Grade9v3.5/"),
+                         "https://reallakshman19.github.io/Grade9v3.5/")
 
     def test_no_network_is_failure_not_a_success_or_not_run(self):
         with patch.object(audit, "_get", return_value={
