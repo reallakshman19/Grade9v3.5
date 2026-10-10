@@ -58,6 +58,11 @@ try {
     // Mathematical wording without the old keyword list must no longer be rejected.
     await page.locator('[data-g9-concept-reason]').fill(
       'One extra copy of five is attached to the previous group.');
+    await page.locator('[data-g9-diagnostic-next]').fill('');
+    await submit.click();
+    assert(await targets.first().isHidden(), width + ': missing neutral number falsely unblocked construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'numerical_check_missing',
+      width + ': missing numerical counterexample not recorded as incomplete');
     await page.locator('[data-g9-diagnostic-next]').fill('56');
     await submit.click();
     assert(await targets.first().isHidden(), width + ': factor option and bad arithmetic falsely unblocked construction');
@@ -68,6 +73,8 @@ try {
     await page.locator('[data-g9-diagnostic-next]').fill('343');
     await submit.click();
     assert(await targets.first().isVisible(), width + ': structured neutral check failed to reveal construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'aligned_structured_counterexample',
+      width + ': valid structured check lacks an explicitly formative evidence marker');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
       width + ': wrong evidence state (must remain formative only)');
     assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'guided_example_open',
