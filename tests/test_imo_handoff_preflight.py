@@ -50,6 +50,9 @@ class Preflight(unittest.TestCase):
             ('source_claim', lambda p,m,s: p['questions'][0].__setitem__('origin', 'SOF'), 'SUPPORTED_PRACTICE_MUST_BE_AUTHORED_CANDIDATE'),
             ('source_role', lambda p,m,s: p['questions'][0]['exposure'].append({'core': 'CORE2'}), 'SOURCE_CORE2_EXPOSURE_FORBIDDEN'),
             ('fake_academic_accept', lambda p,m,s: p.__setitem__('status', 'ACCEPTED'), 'UNADMITTED_PACKAGE_REQUIRED'),
+            ('duplicated_mic_id', lambda p,m,s: p['microtopics'].append(dict(p['microtopics'][0])), 'DUPLICATE_TEACHING_MICROTOPIC_ID'),
+            ('duplicated_question_id', lambda p,m,s: p['questions'].append(dict(p['questions'][0])), 'DUPLICATE_AUTHORED_QUESTION_ID'),
+            ('package_escape', lambda p,m,s: m.__setitem__('package_refs', ['../OTHER/package.json']), 'EXACT_ONE_PACKAGE_REF_REQUIRED'),
         ]
         for label, mutation, code in cases:
             with self.subTest(label=label):
