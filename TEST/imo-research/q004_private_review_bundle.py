@@ -105,6 +105,16 @@ def prepare(workspace: Path) -> dict:
                     "image_sha256": h,
                     "purpose": "VISUAL_SELF_INSPECTION_ONLY",
                 })
+            # A source document can change while Poppler is rendering. Reject
+            # an image/receipt pair bound to the digest of old source bytes.
+            require(snapshot.is_file() and not snapshot.is_symlink()
+                    and snapshot.stat().st_size == template["snapshot_byte_length"]
+                    and hashlib.sha256(snapshot.read_bytes()).hexdigest()
+                    == template["snapshot_sha256"],
+                    "retained PDF changed during private page rendering")
+            refreshed, _ = receipt_status(document, workspace)
+            require(refreshed == status,
+                    "retained PDF custody receipt changed during rendering")
             _write_json_private(target / "q004.inspection.json", template)
             _write_json_private(target / "review-manifest.json", {
                 "schema": "imo-g9-q004-private-visual-inspection-bundle-v1",
