@@ -1470,21 +1470,23 @@ def _draft_concept_checkpoint(ctx: Ctx, m: dict) -> str:
         f'<section class="g9-concept-first" data-g9-concept-check '
         f'data-g9-concept-ref="{esc(m["id"])}" '
         f'data-g9-concept-correct="{esc(spec["correct_value"])}" '
-        f'data-g9-reason-words="{esc(",".join(spec["reason_contains_any"]))}" '
-        f'data-g9-rule-words="{esc(",".join(spec["reason_contains_any_rule"]))}" '
         f'data-g9-feedback-choice="{esc(spec["on_wrong_choice"])}" '
         f'data-g9-feedback-explain="{esc(spec["on_wrong_explanation"])}" '
         f'data-g9-feedback-passed="{esc(spec["on_form_check"])}">'
         '<h4>Concept first · before the worked equation</h4>'
         f'<p>{esc(spec["neutral_demo"])}</p>'
         f'<fieldset><legend>{esc(spec["prompt"])}</legend>{labels}</fieldset>'
-        '<label for="g9-concept-reason">Explain why in your own words</label>'
+        '<label for="g9-concept-reason">Explain your prediction in your own words</label>'
         '<textarea id="g9-concept-reason" data-g9-concept-reason rows="3" '
-        'placeholder="Describe the index law and why it multiplies."></textarea>'
-        '<button type="button" data-g9-concept-commit>Check concept, then see guided work</button>'
+        'aria-describedby="g9-concept-scope" placeholder="What changes when an exponent increases by one?"></textarea>'
+        '<div><button type="button" data-g9-concept-commit>Review my prediction</button> '
+        '<button type="button" data-g9-concept-review>Study the guided explanation instead</button></div>'
         '<p data-g9-concept-feedback role="status" aria-live="polite">'
         'Choose a relationship and explain the exponent rule before continuing.</p>'
-        '<p>Formative teaching self-check only; this is not independent mastery evidence.</p>'
+        '<p data-g9-learning-progress data-g9-progress="not_started" role="note">'
+        'Progress (this page only): not started. No independent check has been made.</p>'
+        '<p id="g9-concept-scope">This reflection checks neither the meaning nor accuracy of your wording. '
+        'It opens guided study only; it is not independently verified mastery.</p>'
         '</section>'
     )
 
@@ -2876,7 +2878,53 @@ def concept_first_js() -> str:
     their original bytes; the formative keyword check confers no mastery.
     """
     js = JS
-    checkpoint = "// An opt-in, TEST-only formative concept checkpoint: verify a choice and\n// a minimal rule-oriented rationale before showing the guided lesson.\n// A keyword/radio check is NOT a knowledge score, mastery or secure receipt.\nq('[data-g9-concept-check]').forEach(c=>{\n  const article=c.closest('article[data-g9-role=\"CORE1A\"]');\n  const b=q('[data-g9-concept-commit]',c)[0];\n  const feedback=q('[data-g9-concept-feedback]',c)[0];\n  if(!article||!b||!feedback)return;\n  b.addEventListener('click',()=>{\n    const choice=q('[data-g9-concept-option]:checked',c)[0]?.value||'';\n    const reason=(q('[data-g9-concept-reason]',c)[0]?.value||'').trim().toLowerCase();\n    const match=(s)=>s.split(',').some(w=>w&&reason.includes(w));\n    if(choice!==c.dataset.g9ConceptCorrect){feedback.textContent=c.dataset.g9FeedbackChoice;return}\n    if(reason.length<15||!match(c.dataset.g9ReasonWords||'')||!match(c.dataset.g9RuleWords||'')){\n      feedback.textContent=c.dataset.g9FeedbackExplain;return\n    }\n    article.dataset.g9ConceptCheckCompleted='formative_only';\n    q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false});\n    feedback.textContent=c.dataset.g9FeedbackPassed;\n    q('figure[data-g9-figure]',article).forEach(fitFigure);\n    q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0]?.setAttribute('tabindex','-1');\n    q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0]?.focus();\n  })\n});\n"
+    checkpoint = """// F02 authored TEST/Core1A reflection; client inputs never confer mastery.
+q('[data-g9-concept-check]').forEach(c=>{
+  const article=c.closest('article[data-g9-role="CORE1A"]');
+  const b=q('[data-g9-concept-commit]',c)[0];
+  const guide=q('[data-g9-concept-review]',c)[0];
+  const feedback=q('[data-g9-concept-feedback]',c)[0];
+  const progress=q('[data-g9-learning-progress]',c)[0];
+  if(!article||!b||!guide||!feedback||!progress)return;
+  const setProgress=(code,description)=>{
+    article.dataset.g9ConceptProgress=code;
+    progress.dataset.g9Progress=code;
+    progress.textContent='Progress (this page only): '+description+' No independent mastery has been checked.';
+  };
+  const openGuided=()=>{
+    q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false});
+    q('figure[data-g9-figure]',article).forEach(fitFigure);
+    const heading=q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0];
+    if(heading){heading.setAttribute('tabindex','-1');heading.focus();}
+  };
+  setProgress('not_started','not started.');
+  b.addEventListener('click',()=>{
+    const choice=q('[data-g9-concept-option]:checked',c)[0]?.value||'';
+    const reason=(q('[data-g9-concept-reason]',c)[0]?.value||'').trim();
+    if(!choice){feedback.textContent='Choose one relationship, or open the guided explanation.';return}
+    if(choice!==c.dataset.g9ConceptCorrect){
+      setProgress('needs_review','prediction needs review.');
+      feedback.textContent=c.dataset.g9FeedbackChoice;
+      return
+    }
+    // A written reflection is invited; its words are not machine-graded.
+    if(reason.length<8){
+      setProgress('needs_reflection','a short explanation is still needed.');
+      feedback.textContent=c.dataset.g9FeedbackExplain;
+      return
+    }
+    article.dataset.g9ConceptCheckCompleted='formative_only';
+    setProgress('guided_example_open','prediction recorded; guided example open.');
+    feedback.textContent=c.dataset.g9FeedbackPassed+' Your explanation has NOT been graded for correctness.';
+    openGuided()
+  });
+  guide.addEventListener('click',()=>{
+    setProgress('guided_without_check','guided example open without checking the prediction.');
+    feedback.textContent='Guided study opened. No prediction, explanation or independent mastery was verified.';
+    openGuided()
+  })
+});
+"""
     anchor = "const practiceLinks=q('[data-g9-practice-link]');"
     print_original = "window.g9MaterialiseAll=()=>articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)});"
     print_checkpoint = "window.g9MaterialiseAll=()=>{q('[data-g9-concept-target]').forEach(el=>el.hidden=false);articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)})};"
