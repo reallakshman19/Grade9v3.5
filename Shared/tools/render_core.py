@@ -2920,6 +2920,8 @@ q('[data-g9-concept-check]').forEach(c=>{
     openGuided()
   });
   guide.addEventListener('click',()=>{
+    // Switching to unchecked guided study must not retain a previous format-pass marker.
+    delete article.dataset.g9ConceptCheckCompleted;
     setProgress('guided_without_check','guided example open without checking the prediction.');
     feedback.textContent='Guided study opened. No prediction, explanation or independent mastery was verified.';
     openGuided()
