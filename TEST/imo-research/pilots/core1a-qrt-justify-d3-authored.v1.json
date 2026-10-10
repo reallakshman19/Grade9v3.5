@@ -1052,64 +1052,113 @@
             "H1": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "scaffolds[0]",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "Hint 1 asks the learner to distinguish universal proof/disproof from finite examples without settling the claim.",
+              "owner_acceptance": false
             },
             "H2": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "scaffolds[1]",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "Hint 2 names parity and remainder classes separately but does not give the combined divisibility warrant.",
+              "owner_acceptance": false
             },
             "H3": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "scaffolds[2]",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "Hint 3 explicitly leaves the connection from separate guarantees to the requested divisor for the learner.",
+              "owner_acceptance": false
             },
             "S1": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "representation_roles.initial_ref",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "The neutral stage displays exactly the three authored factors n, n+1, n+2, with no distinguished factor or numerical answer.",
+              "owner_acceptance": false
             },
             "S2": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "representation_roles.stage_refs",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "GAP_NOT_IMPLEMENTED",
+              "observed_behavior": "There is no pre-attempt visual stage showing a known parity or residue idea in the problem context; do not count S1 again as S2.",
+              "owner_acceptance": false
             },
             "S3": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "representation_roles.stage_refs",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "GAP_NOT_IMPLEMENTED",
+              "observed_behavior": "There is no second or third pre-attempt visual stage that visually opens the proof bridge without providing it.",
+              "owner_acceptance": false
             },
             "P1": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "answer.crux_move_ref",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "The authored question, neutral SVG and three hints omit the truth decision and final coprime warrant; final reasoning is behind attempt-gated template.",
+              "owner_acceptance": false
             },
             "P2": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "repair_ref",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "repair_ref TC-03 resolves to the canonical Core1A construction unit that teaches all residue classes, after learner-led attempt.",
+              "owner_acceptance": false
             },
             "P3": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "answer.reasoning_route",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "Five reasoning moves include a why_valid warrant; a six-class residue check corroborates but does not replace the general argument.",
+              "owner_acceptance": false
             },
             "M1": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "failure_signal",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "failure_signal explicitly names the finite-example fallacy and the unjustified claim that one named factor is always even.",
+              "owner_acceptance": false
             },
             "M2": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "diagnostic",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "GAP_NOT_IMPLEMENTED",
+              "observed_behavior": "The current attempt is free response, with no diagnostic exchange that separates an instance-only misconception from a one-time arithmetic error.",
+              "owner_acceptance": false
             },
             "M3": {
               "review_state": "NOT_ACCEPTED",
               "author_evidence_ref": "repair_ref",
-              "needs_subject_spot_review": true
+              "needs_subject_spot_review": true,
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "After attempting, Core1A repair at TC-03 provides exhaustive modulo-three cases as a replacement for isolated numerical examples.",
+              "owner_acceptance": false
             }
-          }
+          },
+          "semantic_coverage": {
+            "supported_candidate_slots": 9,
+            "remaining_gaps": [
+              "S2",
+              "S3",
+              "M2"
+            ],
+            "governing_asks_total": 12,
+            "owner_accepted_slots": 0,
+            "evidence_limit": "AUTHOR_SPOT_ASSESSMENT_ONLY_NO_LEARNER_STUDY_OR_BROWSER_TEST",
+            "risk": "D3_REMAINS_PROVISIONAL; SAME_CORE1A_PROOF_MAY_COLLAPSE_TO_RECALL_IF_LEARNER_PRESTUDIES"
+          },
+          "learning_sequence": "AUTHOR_DIAGNOSTIC_ATTEMPT_FIRST_THEN_OPTIONAL_CORE1A_REPAIR"
         }
       },
       "origin": "AUTHORED",
