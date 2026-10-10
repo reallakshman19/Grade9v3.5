@@ -17,6 +17,7 @@ sys.path.insert(0, str(REPO / "TEST/imo-research"))
 from core2_source_acquisition_gaps import (  # noqa: E402
     BUCKET, CENSUS, HANDOFF, SOURCE_IDS, SourceGapError,
     FINGERPRINTS, HISTORICAL_PINS, HISTORICAL_PROBE_ARCHIVE_SHA256,
+    RIGHTS_NOTICE, public_rights_notice,
     acquire, artifact_paths, compare_historical_fingerprint,
     historical_fingerprints, inventory, load, private_workspace,
     receipt_status, report,
@@ -88,6 +89,64 @@ class Core2SourceAcquisitionGapTests(unittest.TestCase):
             item["historical_version_comparison"] ==
             "NOT_CHECKED_NO_RETAINED_BYTES"
             for item in output["documents"]))
+
+    def test_sighted_public_notice_is_not_specific_source_licence(self):
+        obj = public_rights_notice(self.docs)
+        self.assertEqual(obj["general_contact_email"], "info@sofworld.org")
+        self.assertEqual(obj["notice_summary"],
+                         "GENERAL_SOF_SITE_NOTICE_REQUIRES_PRIOR_WRITTEN_CONSENT_FOR_COPY_OR_USE")
+        self.assertEqual(obj["rights_to_publish_original_works"], "NOT_EVIDENCED")
+        self.assertIsNone(obj["permission_request_receipt"])
+        self.assertEqual(obj["canonical_source_admission_count"], 0)
+        result = report(self.census, self.handoff)
+        self.assertEqual(result["source_specific_reproduction_grants_evidenced"], 0)
+        self.assertEqual(result["source_custody_hold"], 68)
+        self.assertEqual(result["core2_admitted"], 0)
+        self.assertTrue(all(
+            "SOURCE_SPECIFIC_WRITTEN_PERMISSION_NOT_EVIDENCED" in row["blocking_codes"]
+            for row in result["questions"]))
+
+    def test_public_notice_does_not_assume_specific_pdf_rightsholder(self):
+        obj = public_rights_notice(self.docs)
+        self.assertFalse(obj["publisher_rights_holder_for_all_mirror_pdfs_verified"])
+        self.assertEqual(obj["notice_scope"],
+                         "GENERAL_OFFICIAL_SITE_FOOTER_NOT_SPECIFIC_FOUR_PDF_LICENSE_REVIEW")
+
+    def test_rights_record_fake_grant_is_rejected(self):
+        obj = load(RIGHTS_NOTICE)
+        obj["written_reproduction_permission_received"] = True
+        with self.assertRaises(SourceGapError):
+            public_rights_notice(self.docs, obj)
+
+    def test_rights_record_false_sent_email_is_rejected(self):
+        obj = load(RIGHTS_NOTICE)
+        obj["permission_request_sent"] = True
+        with self.assertRaises(SourceGapError):
+            public_rights_notice(self.docs, obj)
+
+    def test_rights_record_fake_source_approval_is_rejected(self):
+        obj = load(RIGHTS_NOTICE)
+        obj["documents"][0]["publication_authorized"] = True
+        with self.assertRaises(SourceGapError):
+            public_rights_notice(self.docs, obj)
+
+    def test_rights_record_unmatched_source_count_is_rejected(self):
+        obj = load(RIGHTS_NOTICE)
+        obj["documents"].pop()
+        with self.assertRaises(SourceGapError):
+            public_rights_notice(self.docs, obj)
+
+    def test_rights_record_cannot_relabel_notice_as_specific_licence(self):
+        obj = load(RIGHTS_NOTICE)
+        obj["notice_scope"] = "SOF_GRANTS_ALL_FOUR_PDFS"
+        with self.assertRaises(SourceGapError):
+            public_rights_notice(self.docs, obj)
+
+    def test_rights_record_cannot_invent_licensed_figure_use(self):
+        obj = load(RIGHTS_NOTICE)
+        obj["figure_reuse_authorized"] = True
+        with self.assertRaises(SourceGapError):
+            public_rights_notice(self.docs, obj)
 
     def test_historical_artifact_sha_and_four_pins_are_frozen(self):
         meta = load(FINGERPRINTS)
