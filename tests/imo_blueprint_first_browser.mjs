@@ -111,6 +111,35 @@ try {
             assert.equal(await chips.nth(0).getAttribute('aria-pressed'), 'true');
           }
         }
+        // Capture the denied/locked print state BEFORE the learner commits.
+        // Previously this harness produced only an after-commit, solution-open PDF.
+        // Keep this local to the authored TEST browser evidence; never materialise
+        // solutions or alter the shared Core renderer to manufacture a green gate.
+        if (role === 'core2b' && width === 390) {
+          const locked = await gates.evaluateAll(rows =>
+            rows.length > 0 && rows.every(d => d.hasAttribute('data-locked') && !d.open));
+          assert.ok(locked, 'pre-commit disclosures must be locked and closed');
+          await page.emulateMedia({ media: 'print' });
+          try {
+            const hidden = await gates.evaluateAll(rows =>
+              rows.every(d => getComputedStyle(d).display === 'none'));
+            assert.ok(hidden, 'print CSS must withhold all locked disclosures');
+            const pdfPath = path.join(evidenceDir, 'core2b-A4-before-commit.pdf');
+            const bytes = await page.pdf({
+              path: pdfPath, format: 'A4', printBackground: true, preferCSSPageSize: false,
+            });
+            assert.ok(bytes.subarray(0, 5).toString() === '%PDF-',
+              'no actual locked, before-commit Chromium PDF');
+            assert.ok(bytes.length > 2000, 'unexpectedly empty locked A4 print');
+            result.print_before = {
+              path: path.basename(pdfPath), bytes: bytes.length, format: 'A4',
+              state: 'BEFORE_LEARNER_COMMIT_AND_SOLUTION_LOCKED',
+              status: 'PENDING_PDF_STRUCTURE_CHECK',
+            };
+          } finally {
+            await page.emulateMedia({ media: 'screen' });
+          }
+        }
         await commit.click();
         assert.ok((await gates.first().getAttribute('data-locked')) !== null,
           'blank commitment unlocked ' + role);
