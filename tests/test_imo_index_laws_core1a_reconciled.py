@@ -7,7 +7,9 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import unittest
+from html.parser import HTMLParser
 from pathlib import Path
 from xml.etree import ElementTree
 
@@ -36,6 +38,26 @@ def exact_general_solution(a: int, k: int) -> float | None:
     if t <= 0:
         return None
     return math.log(t, a) / 2
+
+
+class VisiblePreAttempt(HTMLParser):
+    """Text visible on a fresh page; protected templates are inert."""
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.omit = 0
+        self.lines = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in {"template", "script", "style"}:
+            self.omit += 1
+
+    def handle_endtag(self, tag):
+        if tag in {"template", "script", "style"}:
+            self.omit -= 1
+
+    def handle_data(self, data):
+        if not self.omit:
+            self.lines.append(data)
 
 
 class IndexLawsCore1AReconciled(unittest.TestCase):
@@ -170,6 +192,26 @@ class IndexLawsCore1AReconciled(unittest.TestCase):
         self.assertEqual(stage_ids, ["Q26-BASE", "Q26-FACTOR", "Q26-SOLVE"])
         self.assertNotIn("SOF-IMO-G09", svg)
         self.assertNotIn("16^u", svg)
+
+    def test_independent_exit_answer_cannot_leak_via_quick_checks(self):
+        checks = self.mic["construction_units"][0]["independent_checks"]
+        self.assertEqual(len(checks), 2)
+        self.assertNotIn("y=3", json.dumps(checks))
+        self.assertIn("verify your own proposed y", checks[1]["statement"])
+        pages, _, _, _, _ = render_core.build_report(
+            MANIFEST, "PAGES", held_to="REFERENCE")
+        html = pages["core1a.html"]
+        visible = VisiblePreAttempt()
+        visible.feed(html)
+        raw = " ".join(visible.lines)
+        self.assertNotRegex(raw, r"\\by\\s*=\\s*3\\b")
+        self.assertNotIn("unique real solution y=3", raw)
+        self.assertNotIn("2^7=128", raw)
+        # The complete worked *teaching* example x=2 is permitted, but
+        # the fresh base-2 exit model answer remains protected in template.
+        self.assertIn("unique real solution is x=2", raw)
+        self.assertIn('data-g9-payload="CORE1A-', html)
+        self.assertIn("unique real solution y=3", html)
 
     def test_f01_source_roles_and_routing_remain_held(self):
         rows = self.crosswalk["source_questions"]
