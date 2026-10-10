@@ -21,7 +21,7 @@ def legacy_fixture():
     a=a.replace('href="core1a.html#TC-02"',f'href="core1a.html#{CU}"')
     b=b.replace(f'id="{T}" data-g9-step="{T}"',f'data-g9-step="{T}"')
     b=b.replace('data-g9-practice-link','data-g9-not-core2a-return')
-    return a,b
+    return '<body>'+a+'</body>','<body>'+b+'</body>'
 
 class HeldAdapter(unittest.TestCase):
     def test_legacy_roundtrip_is_adapted_but_never_published(self):
@@ -31,7 +31,8 @@ class HeldAdapter(unittest.TestCase):
         na,nb,report=adapt(*args,a,b)
         self.assertEqual(report['status'],'LOCAL_TEST_CANDIDATE_ADAPTED_NOT_PUBLISHED')
         self.assertIn(f'data-g9-repair-target="{T}" href="core1a.html#{T}"',na)
-        self.assertIn(f'data-g9-step="{T}" id="{T}"',nb)
+        self.assertIn(f'data-g9-step="{T}" id="{T}" tabindex="-1"',nb)
+        self.assertIn('data-g9-held-step-focus',nb)
         self.assertIn(f'href="core2a.html#{Q}"',nb)
         self.assertEqual(audit(*args,na,nb)['status'],'STRUCTURAL_CANDIDATE_HELD')
         for key in ['authorizes_learner_launch','authorizes_independent_credit','academic_qrt_approved',
@@ -43,6 +44,7 @@ class HeldAdapter(unittest.TestCase):
 
     def test_fail_closed_mutations(self):
         cases=[
+          ('missing_commit',0,'data-g9-commit','data-g9-other'),
           ('missing_gate',0,'data-g9-payload-ref="CORE2A-'+Q+'-reasoning"','data-g9-payload-ref="OTHER"'),
           ('foreign_href',0,f'href="core1a.html#{CU}"','href="https://attacker.example/"'),
           ('unmatched_repair',0,'data-g9-repair-ref="TC-02"','data-g9-repair-ref="BAD"'),
