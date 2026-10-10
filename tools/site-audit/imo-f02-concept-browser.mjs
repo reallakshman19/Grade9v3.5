@@ -58,8 +58,14 @@ try {
       await access.goto(pathToFileURL(html).href, {waitUntil:'load'});
       assert(await access.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches),
         '390: reduced-motion media emulation not enabled');
-      assert(await access.locator('[data-g9-concept-reason]').getAttribute('aria-describedby') === 'g9-concept-scope',
+      const conceptId = await access.locator('[data-g9-concept-check]').getAttribute('data-g9-concept-ref');
+      const reasonInput = access.locator('[data-g9-concept-reason]');
+      assert(await reasonInput.getAttribute('id') === conceptId + '-concept-reason',
+        '390: rationale input does not have microtopic-scoped ID');
+      assert(await reasonInput.getAttribute('aria-describedby') === conceptId + '-concept-scope',
         '390: rationale input not programmatically described');
+      assert(await access.locator('[id="' + conceptId + '-concept-scope"]').count() === 1,
+        '390: accessible description missing or duplicated');
       // CSS zoom is a reflow/keyboard stress test, NOT a claim of native 200% browser zoom.
       await access.evaluate(() => { document.body.style.zoom = '200%'; });
       const guide = access.locator('[data-g9-concept-review]');
