@@ -58,13 +58,46 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
         pkg, _, _, q = snapshot()
         original = load(BASE_PACKAGE)
         for field in ("resources", "buckets", "capabilities", "microtopics",
-                      "relations", "representations", "teaching_routes"):
+                      "relations", "teaching_routes"):
             self.assertEqual(pkg[field], original[field], field)
+        # Preserve old Core1A/D2 representations; add one correctly authored
+        # visual for the *different* n,n+1,n+2 question instead of borrowing
+        # the old offset diagram for m+1,m+2,m+3.
+        self.assertEqual(pkg["representations"][:len(original["representations"])],
+                         original["representations"])
+        self.assertEqual(pkg["data"][:len(original["data"])], original["data"])
         self.assertEqual(pkg["questions"][:2], original["questions"])
         self.assertEqual(q["primary_capability_ref"], original["capabilities"][0]["id"])
         self.assertIn(q["family_ref"],
                       [f["id"] for f in original["question_families"]])
         self.assertIn(q["id"], pkg["question_families"][0]["item_refs"])
+
+    def test_real_svg_carries_exact_authored_n_triple_not_d2_m_offset(self):
+        pkg, _, _, q = snapshot()
+        rep = next(x for x in pkg["representations"] if x["id"] ==
+                   q["representation_roles"]["initial_ref"])
+        self.assertEqual(rep["scene_instances"][0]["question_ref"], q["id"])
+        self.assertEqual(rep["correspondence"][0]["symbol"], "n(n+1)(n+2)")
+        self.assertEqual(rep["reveal_stages"][0]["id"],
+                         "AUTHORED-001-FACTORS-ONLY")
+        self.assertEqual(rep["scene_instances"][0]["datum_refs"],
+                         ["DATUM-TEST-IMO-G9-AUTHORED-001-FACTORS"])
+        datum = next(x for x in pkg["data"] if x["id"] ==
+                     rep["scene_instances"][0]["datum_refs"][0])
+        self.assertEqual(datum["symbol"], "n(n+1)(n+2)")
+        asset = ROOT / rep["rendered_asset_refs"][0]
+        svg = asset.read_text(encoding="utf-8")
+        self.assertIn("AUTHORED-001-FACTORS-ONLY", svg)
+        self.assertIn(">n</text>", svg)
+        self.assertIn(">n + 1</text>", svg)
+        self.assertIn(">n + 2</text>", svg)
+        self.assertNotIn(">m + 1</text>", svg)
+        self.assertNotIn(">m + 2</text>", svg)
+        self.assertNotIn(">m + 3</text>", svg)
+        self.assertNotIn("gcd", svg.lower())
+        self.assertNotIn("divisible by 6", svg.lower())
+        self.assertIn("n plus two", svg.lower())
+        self.assertEqual(q["figure_refs"], [rep["id"]])
 
     def test_one_primary_qrt_cell_from_all_28_real_canonical_templates(self):
         pkg, manifest, authored, q = snapshot()
@@ -157,7 +190,7 @@ class MatrixFirstAuthoredD3CoreTests(unittest.TestCase):
             x["id"] for x in q["answer"]["reasoning_route"]
         } for s in q["scaffolds"]))
         self.assertEqual(q["representation_roles"]["stage_refs"],
-                         ["PRACTICE-FACTORS-ONLY"])
+                         ["AUTHORED-001-FACTORS-ONLY"])
 
     def test_manifest_is_real_product_selection_with_explicit_d2_omission(self):
         pkg, manifest, _, _ = snapshot()
