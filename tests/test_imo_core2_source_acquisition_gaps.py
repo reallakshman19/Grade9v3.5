@@ -1,0 +1,241 @@
+"""Offline, synthetic checks for private document acquisition and 68-item HOLD reporting."""
+from __future__ import annotations
+
+import copy
+import hashlib
+import json
+import os
+import stat
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+from unittest import mock
+
+REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "TEST/imo-research"))
+from core2_source_acquisition_gaps import (  # noqa: E402
+    BUCKET, CENSUS, HANDOFF, SOURCE_IDS, SourceGapError,
+    acquire, artifact_paths, inventory, load, private_workspace,
+    receipt_status, report,
+)
+
+
+class Core2SourceAcquisitionGapTests(unittest.TestCase):
+    def setUp(self):
+        self.census, self.handoff = load(CENSUS), load(HANDOFF)
+        self.rows, self.docs = inventory(self.census, self.handoff)
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.workspace_path = Path(self.tmp.name) / "restricted"
+        self.workspace = private_workspace(self.workspace_path, create=True)
+        self.sample = self.docs["SOF-IMO-G09-SAMPLE-2026-27"]
+        self.payload = b"%PDF-1.4\n% SYNTHETIC INVENTED TEST SNAPSHOT\n%%EOF\n"
+
+    def write_fake_receipt(self, doc=None, changes=None, pdf=None):
+        """Build test-only acquisition bytes; never claim SOF source identity."""
+        doc = doc or self.sample
+        snapshot, receipt = artifact_paths(self.workspace, doc["source_id"])
+        snapshot.write_bytes(self.payload if pdf is None else pdf)
+        sha = hashlib.sha256(snapshot.read_bytes()).hexdigest()
+        data = {
+            "acquisition_id": "ACQ-SYNTHETIC-PRIVATE-TEST",
+            "version": "1.0.0", "subject": "TEST",
+            "bucket_id": BUCKET,
+            "resource_ref": doc["source_id"],
+            "source_kind": "URL",
+            "requested_locator": doc["requested_pdf_url"],
+            "resolved_locator": doc["requested_pdf_url"],
+            "acquired_at": "2026-10-10T00:00:00+00:00",
+            "media_type": "application/pdf",
+            "byte_length": len(snapshot.read_bytes()),
+            "sha256": sha,
+            "snapshot_ref": str(snapshot),
+        }
+        if changes:
+            data.update(changes)
+        receipt.write_text(json.dumps(data) + "\n", encoding="utf-8")
+        return snapshot, receipt
+
+    def test_census_68_and_four_source_counts(self):
+        self.assertEqual(len(self.rows), 68)
+        self.assertEqual({k: v["position_count_in_68"]
+                          for k, v in self.docs.items()}, SOURCE_IDS)
+
+    def test_default_report_all_holds(self):
+        output = report(self.census, self.handoff)
+        self.assertEqual((output["question_count"], output["document_count"]), (68, 4))
+        self.assertEqual(output["verified_retained_document_count"], 0)
+        self.assertEqual((output["source_custody_hold"],
+                          output["core2_eligible"], output["core2_admitted"],
+                          output["learner_published"]), (68, 0, 0, 0))
+        self.assertEqual(len(output["questions"]), len({
+            x["question_id"] for x in output["questions"]}))
+
+    def test_all_source_items_have_next_action(self):
+        self.assertTrue(all(row["next_action"] and row["blocking_codes"]
+                            for row in report(self.census, self.handoff)["questions"]))
+
+    def test_missing_document_report_does_not_invent_digest(self):
+        output = report(self.census, self.handoff)
+        self.assertTrue(all(d["receipt_status"] == "NOT_ACQUIRED"
+                            for d in output["documents"]))
+        self.assertNotIn("sha256", json.dumps(output).lower())
+
+    def test_page_observations_distinguish_unobserved(self):
+        questions = report(self.census, self.handoff)["questions"]
+        observed = [q for q in questions if q["observed_pdf_page_index"] is not None]
+        unknown = [q for q in questions if q["observed_pdf_page_index"] is None]
+        self.assertTrue(observed and unknown)
+        self.assertTrue(all("ITEM_PAGE_OBSERVATION_NOT_COMPONENT_CUSTODY"
+                            in q["blocking_codes"] for q in observed))
+        self.assertTrue(all("ITEM_PAGE_LOCATOR_UNOBSERVED"
+                            in q["blocking_codes"] for q in unknown))
+
+    def test_discrepancy_cases_still_held(self):
+        output = report(self.census, self.handoff)
+        self.assertEqual(sum("RECORDED_SOURCE_DISCREPANCY_OPEN"
+                             in x["blocking_codes"] for x in output["questions"]), 11)
+
+    def test_synthetic_retained_byte_receipt_without_admission(self):
+        self.write_fake_receipt()
+        output = report(self.census, self.handoff, self.workspace)
+        self.assertEqual(output["verified_retained_document_count"], 1)
+        self.assertEqual(output["source_custody_hold"], 68)
+        self.assertEqual(output["core2_admitted"], 0)
+        sample = [x for x in output["questions"] if x["source_id"] ==
+                  self.sample["source_id"]]
+        self.assertEqual(len(sample), 10)
+        self.assertTrue(all(x["document_receipt_status"] ==
+                            "VERIFIED_RETAINED_BYTES_ONLY" for x in sample))
+        self.assertTrue(all(x["status"] == "HOLD_NO_CORE2_ADMISSION" for x in sample))
+
+    def test_bad_digest_cannot_verify(self):
+        self.write_fake_receipt(changes={"sha256": "a" * 64})
+        status, codes = receipt_status(self.sample, self.workspace)
+        self.assertEqual((status, codes),
+                         ("INVALID", ["RETAINED_DOCUMENT_RECEIPT_INVALID"]))
+
+    def test_source_url_swap_rejected(self):
+        self.write_fake_receipt(changes={
+            "requested_locator": "https://example.com/other.pdf"})
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0], "INVALID")
+
+    def test_cross_domain_redirect_rejected(self):
+        self.write_fake_receipt(changes={
+            "resolved_locator": "https://otherhost.example.net/item.pdf"})
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0], "INVALID")
+
+    def test_missing_snapshot_rejected(self):
+        snapshot, _ = self.write_fake_receipt()
+        snapshot.unlink()
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0], "NOT_ACQUIRED")
+
+    def test_fake_pdf_header_rejected(self):
+        self.write_fake_receipt(pdf=b"<html>not pdf</html>")
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0], "INVALID")
+
+    def test_acquisition_wrong_source_id_rejected(self):
+        self.write_fake_receipt(changes={"resource_ref": "WRONG"})
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0], "INVALID")
+
+    def test_symlink_receipt_rejected(self):
+        snapshot, receipt = self.write_fake_receipt()
+        safe = self.workspace / "replacement.json"
+        receipt.rename(safe)
+        receipt.symlink_to(safe)
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0], "INVALID")
+
+    def test_private_dir_must_be_absolute(self):
+        with self.assertRaises(SourceGapError):
+            private_workspace(Path("relative/source-data"), create=True)
+
+    def test_private_dir_cannot_be_checkout(self):
+        with self.assertRaises(SourceGapError):
+            private_workspace(REPO / "TEST", create=False)
+
+    def test_private_dir_rejects_public_permissions(self):
+        os.chmod(self.workspace, 0o755)
+        with self.assertRaises(SourceGapError):
+            private_workspace(self.workspace)
+
+    def test_private_dir_rejects_symlink(self):
+        link = Path(self.tmp.name) / "link"
+        link.symlink_to(self.workspace, target_is_directory=True)
+        with self.assertRaises(SourceGapError):
+            private_workspace(link)
+
+    def test_source_seed_count_tampering_fails(self):
+        census = copy.deepcopy(self.census)
+        census["records"].pop()
+        with self.assertRaises(SourceGapError):
+            report(census, self.handoff)
+
+    def test_wrong_handoff_document_count_fails(self):
+        handoff = copy.deepcopy(self.handoff)
+        handoff["source_documents_queue"][0]["position_count_in_68"] = 25
+        with self.assertRaises(SourceGapError):
+            report(self.census, handoff)
+
+    def test_frozen_core2_admission_cannot_be_faked(self):
+        census = copy.deepcopy(self.census)
+        census["records"][0]["core2_admitted"] = True
+        with self.assertRaises(SourceGapError):
+            report(census, self.handoff)
+
+    def test_synthetic_network_acquisition_reuses_source_pipeline(self):
+        def fetch(*, url, subject, bucket_id, resource_ref, acquired_at,
+                  snapshot_output):
+            snapshot_output.write_bytes(self.payload)
+            sha = hashlib.sha256(self.payload).hexdigest()
+            return {
+                "acquisition_id": "ACQ-SYNTHETIC-ONLY",
+                "version": "1.0.0", "subject": subject, "bucket_id": bucket_id,
+                "resource_ref": resource_ref, "source_kind": "URL",
+                "requested_locator": url, "resolved_locator": url,
+                "acquired_at": acquired_at, "media_type": "application/pdf",
+                "byte_length": len(self.payload), "sha256": sha,
+                "snapshot_ref": str(snapshot_output),
+            }
+        with mock.patch(
+            "core2_source_acquisition_gaps.source_pipeline.acquire_url",
+            side_effect=fetch,
+        ) as f:
+            outcome = acquire(self.sample, self.workspace)
+            self.assertEqual(f.call_count, 1)
+        self.assertEqual(outcome["status"], "VERIFIED_RETAINED_BYTES_ONLY")
+        snapshot, receipt = artifact_paths(self.workspace, self.sample["source_id"])
+        self.assertTrue(snapshot.is_file() and receipt.is_file())
+        self.assertEqual(stat.S_IMODE(snapshot.stat().st_mode), 0o600)
+        self.assertEqual(stat.S_IMODE(receipt.stat().st_mode), 0o600)
+        self.assertEqual(outcome["core2_eligible"], False)
+        self.assertEqual(receipt_status(self.sample, self.workspace)[0],
+                         "VERIFIED_RETAINED_BYTES_ONLY")
+
+    def test_network_failure_cleans_partial_snapshot(self):
+        def partial(**kwargs):
+            kwargs["snapshot_output"].write_bytes(b"partial")
+            raise OSError("temporary provider failure")
+        with mock.patch(
+            "core2_source_acquisition_gaps.source_pipeline.acquire_url",
+            side_effect=partial,
+        ):
+            with self.assertRaises(OSError):
+                acquire(self.sample, self.workspace)
+        s, receipt = artifact_paths(self.workspace, self.sample["source_id"])
+        self.assertFalse(s.exists() or receipt.exists())
+
+    def test_existing_private_snapshot_refuses_overwrite(self):
+        self.write_fake_receipt()
+        with self.assertRaises(SourceGapError):
+            acquire(self.sample, self.workspace)
+
+    def test_original_question_text_never_in_report(self):
+        self.write_fake_receipt()
+        serialized = json.dumps(report(self.census, self.handoff, self.workspace))
+        self.assertNotIn("SYNTHETIC INVENTED TEST SNAPSHOT", serialized)
+        self.assertNotIn(str(self.workspace), serialized)
+
+
+if __name__ == "__main__":
+    unittest.main()
