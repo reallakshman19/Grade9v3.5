@@ -14,8 +14,10 @@ if (!fs.existsSync(path.join(directory, 'core2b.html'))) {
 }
 fs.mkdirSync(evidenceDir, { recursive: true });
 
+const variant = process.argv[4] || 'five';
+assert.ok(['five','boundary'].includes(variant), 'unknown transfer variant');
 const profiles = [320, 390, 768, 1280];
-const result = { status: 'CANDIDATE_BROWSER_SMOKE', widths: profiles, checks: [] };
+const result = { status: 'CANDIDATE_BROWSER_SMOKE', variant, widths: profiles, checks: [] };
 const browser = await chromium.launch({ headless: true });
 try {
   for (const width of profiles) {
@@ -49,7 +51,8 @@ try {
         assert.ok(await field.count() === 1, role + ' missing typed learner attempt');
         const before = await article.innerText();
         if (role === 'core2b') {
-          assert.ok(!before.includes('gcd(24,5)=1'), 'protected transfer proof is visible before an attempt');
+          const secret = variant === 'boundary' ? 'n mod 4 != 1' : 'gcd(24,5)=1';
+          assert.ok(!before.includes(secret), 'protected transfer proof is visible before an attempt');
           assert.equal(await article.locator('figure[data-g9-stage="PRE_ATTEMPT"]').count(), 1,
             'missing safe five-factor figure');
         }
