@@ -41,6 +41,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_imo_138_qrt_blueprint_contract.py' -v
       - name: Run Agent 3 REAL canonical generated-role tests
         run: python -m unittest discover -s tests -p 'test_imo_f04_canonical_slice.py' -v
+      - name: Run offline-compatible safe-summary route verdict tests
+        run: python -m unittest discover -s tests -p 'test_imo_f04_route_gate.py' -v
       - name: Run real canonical TEST audit, never publish protected W in stdout
         if: always()
         run: |
@@ -93,31 +95,5 @@ jobs:
           path: ${{ runner.temp }}/imo-f04-route
       - name: Enforce rendered learner-route acceptance independently of technical CI
         run: |
-          python - "${{ runner.temp }}/imo-f04-route/imo-f04-summary.json" <<'PY'
-          import json
-          import sys
-          from pathlib import Path
-
-          report = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-          assert report["schema"] == "agent3-imo-f04-canonical-vertical-slice/v1"
-          assert report["release_authorized"] is False
-          assert report["source_contract_status"] == "HOLD_NOT_ACCEPTED"
-          if report.get("render_status") != "REAL_CANONICAL_TEST_RENDER":
-              print("F04_ROUTE_BLOCKED: NO_VALID_CANONICAL_TEST_RENDER")
-              raise SystemExit(1)
-          issues = report.get("integration_findings")
-          if not isinstance(issues, list) or issues:
-              # Diagnostic identifiers are safe; never print protected W,
-              # free text, the question or the detailed local receipt.
-              safe_codes = {
-                  "CORE1A_STEP_FRAGMENT_NOT_ADDRESSABLE",
-                  "CORE2A_NOT_LINKED_TO_EXACT_REPAIR_STEP",
-                  "CORE1A_AUTHORED_CORE2A_RETURN_ABSENT",
-              }
-              if not isinstance(issues, list) or any(x not in safe_codes for x in issues):
-                  print("F04_ROUTE_BLOCKED: UNSAFE_OR_MISSING_ROUTE_DIAGNOSTIC")
-              else:
-                  print("F04_ROUTE_BLOCKED: " + ",".join(sorted(issues)))
-              raise SystemExit(1)
-          print("F04_ROUTE_STRUCTURE_OK; ACADEMIC_QRT_BROWSER_LEARNER_RELEASE_HOLD")
-          PY
+          python -m Shared.tools.imo_f04_route_gate \
+            --summary "${{ runner.temp }}/imo-f04-route/imo-f04-summary.json"
