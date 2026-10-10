@@ -92,7 +92,7 @@ class BlueprintFirstFiveTransferTests(unittest.TestCase):
         self.assertNotEqual(
             q["id"], self.base["questions"][1]["id"]
         )
-        self.assertIn("modulo-five", q["transfer"]["novelty"]["why_new"])
+        self.assertIn("factor 5", q["transfer"]["novelty"]["why_new"])
         self.assertEqual(q["transfer"]["dimension"], "reasoning_steps")
         self.assertEqual(q["difficulty"]["band"], "D3")
         self.assertIn("PROPOSED ONLY", q["difficulty"]["basis"])
