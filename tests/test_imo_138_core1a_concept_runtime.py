@@ -170,6 +170,34 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertNotIn("String(error?.name||", source)
         self.assertNotIn("result.failures.push(String(error", source)
 
+    def test_f02_loopback_browser_fixture_serves_declared_assets_only(self):
+        """The same-origin ledger browser test must have real shell assets."""
+        source = (ROOT / "tools/site-audit/imo-f02-concept-browser.mjs").read_text(
+            encoding="utf-8")
+        declared = (
+            "css/modern-learner.css",
+            "css/tablet-12-7.css",
+            "js/display-controls.js",
+            "js/site-header.js",
+        )
+        for asset in declared:
+            with self.subTest(asset=asset):
+                self.assertTrue((ROOT / "public" / asset).is_file())
+                self.assertIn("'/" + asset + "','" + asset + "'", source)
+        self.assertEqual(source.count("['/css/"), 2)
+        self.assertEqual(source.count("['/js/"), 2)
+        self.assertIn("const publicRoot=path.resolve(process.cwd(),'public')", source)
+        self.assertIn("assetTargets.get(route)", source)
+        self.assertIn("if(!target){res.writeHead(404);res.end('not found');return;}", source)
+        self.assertIn("if(!fs.existsSync(target))throw new Error('MissingDeclaredTestAsset')",
+                      source)
+        self.assertIn("assetHealth.every(a=>a.status===200)", source)
+        self.assertIn("assert(denied.status()===404", source)
+        self.assertIn("new URL('core2a.html',localOrigin)", source)
+        # No permissive URL-to-disk mapping or arbitrary public directory serving.
+        self.assertNotIn("path.join(publicRoot,route)", source)
+        self.assertNotIn("fs.createReadStream(path.join(publicRoot", source)
+
     def test_trace_patch_stays_opt_in_and_rejects_ambiguous_generic_tail(self):
         self.assertEqual(render_core.f02_local_trace_js(render_core.JS).count(
             "F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1"), 1)
