@@ -65,6 +65,7 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("printMode.addEventListener('change'", html)
         self.assertIn("window.addEventListener('beforeprint',refitPrintStages)", html)
         self.assertIn('[data-g9-concept-target][hidden]{display:block!important}', html)
+        self.assertIn('[data-g9-concept-target] .g9-stage-controls{display:none!important}', html)
         self.assertIn("q('figure[data-g9-figure]',article).forEach(fitFigure)", html)
 
     def test_no_false_core2_source_or_lesson_gate_on_question(self):
@@ -73,6 +74,8 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertNotIn('<section class="g9-concept-first" data-g9-concept-check',
                          self.pages["core2a.html"])
         self.assertNotIn('[data-g9-concept-target][hidden]{display:block!important}',
+                         self.pages["core2a.html"])
+        self.assertNotIn('[data-g9-concept-target] .g9-stage-controls{display:none!important}',
                          self.pages["core2a.html"])
         # Again, shared inline JS legitimately contains all role selectors.
         # Verify *rendered page/article* role rather than searching JS source.
