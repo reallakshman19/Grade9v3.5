@@ -62,7 +62,7 @@ class IMOCanonicalSliceTests(unittest.TestCase):
         self.assertEqual([a["ask"] for a in owned["semantic_review_asks"]], list(qrt.ASKS))
         self.assertFalse(any(a["status"] == "PASS"
                              for a in owned["semantic_review_asks"]))
-        self.assertIn("M2_MISCONCEPTION_VS_EXECUTION_SLIP_NOT_TESTED",
+        self.assertIn("M2_CAUSAL_MISCONCEPTION_VS_EXECUTION_SLIP_NOT_VERIFIED",
                       owned["review_gates"])
         self.assertIn("P2_PRECISE_TC02_LEARNER_ROUTE_NOT_VERIFIED",
                       owned["review_gates"])
