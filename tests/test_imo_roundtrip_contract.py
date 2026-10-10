@@ -82,14 +82,15 @@ class RoundTripContract(unittest.TestCase):
                 self.assertFalse(result['authorizes_learner_launch'])
 
     def test_existing_renderer_shape_is_structurally_incomplete(self):
-        # Source-reviewed approximation of render_core._repair() without
-        # construction_units and _core1a_practice_navigation() (Core2-only).
+        # Source-reviewed approximation of render_core._repair() with the
+        # current candidate construction unit, and Core2-only practice nav.
         # This fixture is NOT a rendered test of the actual Agent 2 product.
         practice, concept = html_fixture()
+        unit = 'CU-TEST-IMO-G9-EXPONENTIAL-RELATION'
         practice = practice.replace('data-g9-repair-target="TC-02"',
-                                    'data-g9-repair-target="'+M+'"')
+                                    'data-g9-repair-target="'+unit+'"')
         practice = practice.replace('href="core1a.html#TC-02"',
-                                    'href="core1a.html#'+M+'"')
+                                    'href="core1a.html#'+unit+'"')
         concept = concept.replace('id="TC-02" data-g9-step="TC-02"',
                                   'data-g9-step="TC-02"')
         concept = concept.replace('data-g9-practice-link','data-g9-not-core2a-return')
