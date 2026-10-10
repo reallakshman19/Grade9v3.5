@@ -60,6 +60,14 @@ class Core2PilotHoldTests(unittest.TestCase):
     def test_source_figure_bytes_rejected(self):
         self.rejects(lambda p: p.update(source_figure_bytes="fake-pixel-content"))
 
+    def test_unknown_publication_field_rejected(self):
+        self.rejects(lambda p: p["decision"].update(
+            learner_route="/public/imo/fake-source-core2"))
+
+    def test_unreviewed_rights_alias_rejected(self):
+        self.rejects(lambda p: p["custody"].update(
+            publisher_permission="AUTHORIZED"))
+
     def test_question_stem_reproduction_rejected(self):
         self.rejects(lambda p: p["source"].update(stem="unlicensed source"))
 
