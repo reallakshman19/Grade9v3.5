@@ -172,6 +172,18 @@ class F04BoundBrowserWitnessTests(unittest.TestCase):
         self.fixture.save_audit()
         self.assertIn("CANONICAL_RENDER_BLOCKED", self.fixture.inspect()["blocking_codes"])
 
+    def test_malformed_nested_audit_denies_without_exception(self):
+        for malformed in (None, "suspicious raw data", {"pages": []}):
+            with self.subTest(malformed=str(malformed)):
+                self.fixture.audit["render"] = malformed
+                self.fixture.save_audit()
+                result = self.fixture.inspect()
+                self.assertEqual(result["status"], "BLOCKED")
+                self.assertIn("INDEPENDENT_CANONICAL_DIGEST_MISMATCH",
+                              result["blocking_codes"])
+                self.assertIn("CANONICAL_RENDER_BLOCKED", result["blocking_codes"])
+                self.assertNotIn("suspicious raw data", json.dumps(result))
+
     def test_unreadable_canonical_audit_fails_closed(self):
         self.fixture.audit_path.write_text("{garbage", encoding="utf-8")
         self.assertIn("CANONICAL_AUDIT_UNREADABLE", self.fixture.inspect()["blocking_codes"])
