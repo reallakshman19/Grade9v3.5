@@ -90,5 +90,52 @@ jobs:
         run: python TEST/imo-research/validate_core1a_candidate_package.py
       - name: Validate TEST-only IMO Core1A teaching page and honest Core2 source PDF handoff
         run: python TEST/imo-research/validate_core1a_test_review.py
+      - name: Install required Core renderer schema validator
+        run: python -m pip install 'jsonschema>=4.22,<5'
       - name: Run research-only falsifier tests
         run: python -m unittest discover -s tests -p 'test_imo_*.py' -v
+      - name: Strict authored IMO Core2A plus Core1A reference gap check
+        run: python Shared/tools/render_core.py gaps --manifest TEST/products/imo-g9-authored-justify-d3-connected.manifest.json --reference
+      - name: Build governed authored IMO TEST pages and receipt
+        run: python Shared/tools/render_core.py build --manifest TEST/products/imo-g9-authored-justify-d3-connected.manifest.json --out "$RUNNER_TEMP/imo-g9-d3-pages" --mode PAGES --reference
+      - name: Strict reconciled Index Laws Core1A reference gap check
+        run: python Shared/tools/render_core.py gaps --manifest TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.test.manifest.json --reference
+      - name: Build reconciled Index Laws authored Core1A TEST pages
+        run: python Shared/tools/render_core.py build --manifest TEST/imo-research/candidates/imo-g9-q26-common-base-core1a.test.manifest.json --out "$RUNNER_TEMP/imo-index-laws-core1a-pages" --mode PAGES --reference
+      - name: Retain Index Laws private Core1A pages and receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-index-laws-core1a-test-pages
+          path: ${{ runner.temp }}/imo-index-laws-core1a-pages/
+          if-no-files-found: error
+          retention-days: 7
+      - name: Verify exact integer-only exponent oracle and noninteger real boundary
+        run: python TEST/imo-research/candidates/validate_integer_index_laws_trial.py
+      - name: Strict separate INTEGER Index Laws Core1A academic trial reference check
+        run: python Shared/tools/render_core.py gaps --manifest TEST/imo-research/candidates/imo-g9-index-laws-integer-core1a.test.manifest.json --reference
+      - name: Build private INTEGER Index Laws Core1A academic trial pages
+        run: python Shared/tools/render_core.py build --manifest TEST/imo-research/candidates/imo-g9-index-laws-integer-core1a.test.manifest.json --out "$RUNNER_TEMP/imo-index-laws-integer-core1a-pages" --mode PAGES --reference
+      - name: Retain review-only INTEGER Index Laws Core1A pages
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-index-laws-integer-core1a-review-pages
+          path: ${{ runner.temp }}/imo-index-laws-integer-core1a-pages/
+          if-no-files-found: error
+          retention-days: 7
+      - name: Retain private TEST render for technical review only
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-g9-authored-d3-test-pages
+          path: ${{ runner.temp }}/imo-g9-d3-pages/
+          if-no-files-found: error
+          retention-days: 7
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned Chromium for held Index Laws staged route audit
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Real Chromium held-route and keyboard/deep-link audit (not release)
+        run: node tools/site-audit/imo-index-laws-staged-home-audit.mjs

@@ -48505,6 +48505,101 @@ window.GRADE9V3_CORE = {
       "adapter_ref": null,
       "injection_refs": [],
       "explorer_locator": null
+    },
+    {
+      "id": "test:bucket-test-imo-g9-ns-divisibility:core1",
+      "subject": "TEST",
+      "source_ref": "BUCKET-TEST-IMO-G9-NS-DIVISIBILITY",
+      "projection": {
+        "contract_version": "1.1",
+        "core": "CORE1",
+        "orientation": {
+          "bucket_ref": "BUCKET-TEST-IMO-G9-NS-DIVISIBILITY",
+          "title": "Universal divisibility with consecutive integers",
+          "blocks": [
+            {
+              "id": "CORE1-CONVENTIONS",
+              "kind": "TEXT",
+              "text": "Read these before anything that uses them.\nn is an arbitrary positive integer, not a chosen sample.\na divides N means there exists an integer k with N=a*k.\nEvery integer has exactly one residue modulo m among 0,...,m-1.\nA factor of 2 and a factor of 3 in the product may occur in different terms; 2 and 3 are coprime."
+            },
+            {
+              "id": "CORE1-DEMAND",
+              "kind": "TEXT",
+              "text": "Where the hard work is.\nReasoning from exhaustive residue cases to a universal divisibility claim. (HARD) A finite set of examples is not a universal proof; learners must connect parity, exhaustive modular cases and coprime divisibility across an arbitrary starting integer."
+            }
+          ]
+        },
+        "concept": null,
+        "application": null,
+        "delivery": {
+          "web": {
+            "blueprint_ref": "BP-CORE1-ORIENTATION@1.1.0",
+            "blueprint_id": "BP-CORE1-ORIENTATION",
+            "blueprint_version": "1.1.0",
+            "shell_ref": "G9-TABLET-SHELL-V1",
+            "layout_family": "READING_ORIENTATION",
+            "required_slots": [
+              "identity",
+              "orientation"
+            ],
+            "slot_order": [
+              "identity",
+              "orientation"
+            ],
+            "interaction_policy": {
+              "attempt_before_reveal": "FROM_PROJECTION",
+              "progressive_support": false,
+              "solution_policy": "FROM_PROJECTION"
+            },
+            "representation_policy": {
+              "preferred_mount_modes": [
+                "PORTABLE_SCENE",
+                "COMPONENT",
+                "STATIC_FIGURE"
+              ],
+              "legacy_iframe": "MIGRATION_ONLY"
+            },
+            "responsive_policy": {
+              "compact": "SINGLE_PANE",
+              "medium": "SINGLE_PANE",
+              "expanded": "SINGLE_PANE",
+              "primary_fraction": 1,
+              "support_fraction": 0
+            },
+            "touch_policy": {
+              "minimum_target_css_px": 48,
+              "minimum_control_gap_css_px": 8
+            },
+            "packaging_modes": [
+              "PUBLIC",
+              "PAGES",
+              "OFFLINE_DIRECTORY",
+              "SINGLE_FILE",
+              "EMBED"
+            ],
+            "forbidden": [
+              "PAGE_LOCAL_ACADEMIC_TRUTH",
+              "HOVER_ONLY_ESSENTIAL_INFORMATION",
+              "FULL_INFERENTIAL_CONSTRUCTION"
+            ]
+          }
+        },
+        "presentation": {
+          "attempt_before_reveal": false,
+          "show_full_construction": false,
+          "show_solution_initially": false,
+          "initial_visual_ref": "REP-TEST-IMO-G9-RESIDUE-TABLE",
+          "initial_visual_stage_ref": null,
+          "protected_move_refs": [],
+          "pre_attempt_scaffold_limit": 0,
+          "pre_attempt_hint_limit": 0,
+          "post_attempt_hint_limit": 0
+        }
+      },
+      "scene_ref": null,
+      "adapter_ref": null,
+      "injection_refs": [],
+      "explorer_locator": null
     }
   ],
   "bucket_availability": [
@@ -49081,6 +49176,17 @@ window.GRADE9V3_CORE = {
       "findings": [],
       "projection_refs": [
         "test:bucket-math-poly-stress-iss55:core1"
+      ]
+    },
+    {
+      "subject": "TEST",
+      "bucket_ref": "BUCKET-TEST-IMO-G9-NS-DIVISIBILITY",
+      "status": "AVAILABLE",
+      "code": null,
+      "detail": null,
+      "findings": [],
+      "projection_refs": [
+        "test:bucket-test-imo-g9-ns-divisibility:core1"
       ]
     }
   ],

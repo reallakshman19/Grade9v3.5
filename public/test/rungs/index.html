@@ -1,5 +1,14 @@
 <!doctype html>
 <html lang="en" data-g9-shell data-g9-role="TEST" data-g9-test="sandbox-draft" data-g9-mode="PAGES"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../css/tablet-12-7.css"><title>Rungs · TEST · Grade9V3</title><style>
+[data-g9-m2-probe][hidden]{display:none!important}
+/* Opt-in A4 print: keep authored factor diagrams visible without shrinking
+   them into clipped side-by-side blueprint columns. Screen layout is unchanged. */
+@media print{
+ article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-split{display:block!important}
+ article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-col-support{position:static!important;max-height:none!important;overflow:visible!important}
+ article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-diagram-scroll{overflow:visible!important}
+}
+
 [hidden]{display:none!important}
 :root{--g9-zoom:1;--g9-content-max:1380px;--g9-touch-min:48px;--g9-space:clamp(16px,2vw,28px);--g9-type-body:17px;--bg:#f6f7fb;--fg:#172033;--card:#fff;--line:#d5dce6;--accent:#1f5fae;--muted:#52627a;
 --soft:#fbfdff;--pill-bg:#eef2ff;--pill-fg:#4338ca;--src-bg:#ecfdf5;--src-fg:#047857;--info-bg:#f8fbff;--info-line:#93c5fd;--info-fg:#455d72;--warn-bg:#fff7f8;--warn-line:#ffc9d3;--warn-fg:#8a2942;--ok-bg:#f0fdf7;--ok-line:#bbf7d0;--ok-fg:#14532d}
@@ -127,6 +136,30 @@ q('[data-g9-commit]',a).forEach(b=>b.onclick=()=>{const box=b.closest('[data-g9-
 a.addEventListener('click',e=>{const b=e.target.closest('[data-g9-next-rung]');if(b&&a.contains(b)){markAssistance(a,'HINT_LADDER');nextRung(b.closest('.g9-ladder'));bindSupportRevealState(a);saveCore2State(a)}});attemptFields(a).forEach(el=>{el.addEventListener('input',()=>saveCore2State(a));el.addEventListener('change',()=>saveCore2State(a))});
 q('details[data-g9-payload-ref$="-wrong-route"]',a).forEach(d=>d.addEventListener('toggle',()=>{if(d.open){markAssistance(a,'WRONG_ROUTE');saveCore2State(a)}}));
 q('[data-g9-concept-link]',a).forEach(link=>link.addEventListener('click',()=>{markAssistance(a,'CONCEPT_NAV');saveCore2State(a);const key=returnKey(link.dataset.g9ConceptRef);if(key)store.set(key,link.dataset.g9QuestionRef||a.dataset.g9Unit);refreshReturnLinks()}))});
+// Authored M2: two distinct conceptual checks and a separate computation.
+q('[data-g9-m2-probe]').forEach(p=>{
+ const a=p.closest('article[data-g9-unit]');if(!a)return;
+ const show=()=>{p.hidden=!a.dataset.attempted};show();
+ q('[data-g9-commit]',a).forEach(b=>b.addEventListener('click',show));
+ const slot=q('[data-g9-m2-feedback]',p)[0];
+ q('[data-g9-m2-reason], [data-g9-m2-transfer], [data-g9-m2-arithmetic]',p).forEach(el=>{
+  el.addEventListener('input',()=>slot?.replaceChildren());
+  el.addEventListener('change',()=>slot?.replaceChildren());
+ });
+ q('[data-g9-m2-check]',p).forEach(b=>b.addEventListener('click',()=>{
+  if(!a.dataset.attempted)return;
+  const reason=q('[data-g9-m2-reason]:checked',p)[0]?.value;
+  const transfer=q('[data-g9-m2-transfer]:checked',p)[0]?.value;
+  const value=q('[data-g9-m2-arithmetic]',p)[0]?.value.trim()||'';
+  let outcome='INCONCLUSIVE';
+  if(reason&&transfer&&/^\d+$/.test(value)){
+   if(reason==='EXAMPLE_ONLY'&&transfer==='EXAMPLE_ONLY')outcome='MISCONCEPTION';
+   else if(reason==='UNIVERSAL'&&transfer==='UNIVERSAL')outcome=value===p.dataset.g9M2Expected?'NO_SIGNAL':'SLIP';
+  }
+  const payload=q('template[data-g9-m2-message]',p).find(t=>t.dataset.g9M2Message===outcome);
+  if(payload&&slot)slot.replaceChildren(payload.content.cloneNode(true));
+ }));
+});
 const practiceLinks=q('[data-g9-practice-link]');const practiceLabels=new Map(practiceLinks.map(link=>[link,link.textContent]));const navParams=new URLSearchParams(location.search);const navReturn=navParams.get('g9-return');const navConcept=navParams.get('g9-concept');
 function refreshReturnLinks(){practiceLinks.forEach(link=>{const key=returnKey(link.dataset.g9ConceptRef);const stored=!!key&&store.get(key)===link.dataset.g9QuestionRef;const routed=navReturn===link.dataset.g9QuestionRef&&navConcept===link.dataset.g9ConceptRef;const active=stored||routed;if(active){link.dataset.g9ReturnLink='';link.textContent='Return to question · '+practiceLabels.get(link)}else{delete link.dataset.g9ReturnLink;link.textContent=practiceLabels.get(link)}})}
 practiceLinks.forEach(link=>link.addEventListener('click',()=>{const key=returnKey(link.dataset.g9ConceptRef);if(key&&store.get(key)===link.dataset.g9QuestionRef)store.remove(key);refreshReturnLinks()}));refreshReturnLinks();
