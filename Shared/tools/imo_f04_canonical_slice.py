@@ -276,6 +276,17 @@ def authored_core2a_runtime_findings(page: str | None) -> list[str]:
         if ("data-g9-f02-trace-status" not in page
                 or any(fragment not in actual for fragment in required)):
             return ["CORE2A_HELP_LOCAL_TRACE_INCOMPLETE"]
+        # A repeated submission after opening guidance is never a new clean
+        # attempt. Verify the authored trace distinguishes those two events.
+        # This is a required source contract, NOT an independent learner grade.
+        assisted_retry = (
+            "'ASSISTED_ATTEMPT_COMMIT'",
+            "const recordedKind=kind==='ATTEMPT_COMMIT'&&value.assisted",
+            "?'ASSISTED_ATTEMPT_COMMIT':kind;",
+            "kind:recordedKind",
+        )
+        if any(fragment not in actual for fragment in assisted_retry):
+            return ["CORE2A_HELP_ASSISTED_RETRY_UNCLASSIFIED"]
         return []  # LOCAL_TRACE_DECLARED, never BROWSER_VERIFIED or academic.
     known_invalid = {
         "function markAssistance(a,kind){if(a.dataset.g9Role!=='CORE2'||!kind)return;":
