@@ -94,3 +94,14 @@ jobs:
         run: python -m pip install 'jsonschema>=4.22,<5'
       - name: Run research-only falsifier tests
         run: python -m unittest discover -s tests -p 'test_imo_*.py' -v
+      - name: Strict authored IMO Core2A plus Core1A reference gap check
+        run: python Shared/tools/render_core.py gaps --manifest TEST/products/imo-g9-authored-justify-d3-connected.manifest.json --reference
+      - name: Build governed authored IMO TEST pages and receipt
+        run: python Shared/tools/render_core.py build --manifest TEST/products/imo-g9-authored-justify-d3-connected.manifest.json --out "$RUNNER_TEMP/imo-g9-d3-pages" --mode PAGES --reference
+      - name: Retain private TEST render for technical review only
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-g9-authored-d3-test-pages
+          path: ${{ runner.temp }}/imo-g9-d3-pages/
+          if-no-files-found: error
+          retention-days: 7
