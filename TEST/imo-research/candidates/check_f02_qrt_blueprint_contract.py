@@ -172,16 +172,30 @@ def audit(
         errors.append("P2_REPAIR_STEP_NOT_BOUND_TO_UNIQUE_CONSTRUCTION_UNIT")
     unit = owning_units[0] if len(owning_units) == 1 else {}
     unit_steps = unit.get("step_refs") or []
-    # The current renderer anchors to the construction-unit ID, not TC-02;
-    # one unit covers TC-01 through TC-05. This is not exact-step return.
+    # This F02-only source opt-in permits an exact TC-02 anchor in the
+    # emitted page *after* deliberate concept review/guided reveal.
+    # Source mapping alone is NOT actual browser P2 semantic acceptance.
+    checkpoint = (microtopic.get("extensions") or {}).get("grade9v3:concept_checkpoint") or {}
+    exact_step_opt_in = (
+        package.get("subject") == "TEST"
+        and microtopic.get("status") == "CANDIDATE"
+        and microtopic.get("id") == "MIC-TEST-IMO-G9-COMMON-BASE-RELATION"
+        and checkpoint.get("scope") == "TEST_AUTHORED_CORE1A_ONLY"
+        and repair_ref == "TC-02"
+        and len(owning_units) == 1
+    )
+    if not exact_step_opt_in:
+        errors.append("P2_F02_EXACT_STEP_OPT_IN_NOT_AUTHORIZED")
     repair_binding = {
         "requested_step": repair_ref,
         "construction_unit": unit.get("id"),
         "construction_unit_steps": unit_steps,
-        "render_link_target": ("core1a.html#" + unit["id"]) if unit.get("id") else None,
-        "status": ("SHARED_CONSTRUCTION_UNIT_ANCHOR_NOT_EXACT_STEP"
-                   if len(unit_steps) > 1 else
-                   "UNIT_ANCHOR_RUNTIME_SEMANTICS_UNVERIFIED"),
+        "render_link_target": ("core1a.html#" + repair_ref) if exact_step_opt_in
+                              else ("core1a.html#" + unit["id"] if unit.get("id") else None),
+        "checkpoint_required": bool(exact_step_opt_in),
+        "status": ("EXACT_TC02_FRAGMENT_DECLARED_GUIDED_BROWSER_UNVERIFIED"
+                   if exact_step_opt_in else
+                   "SHARED_CONSTRUCTION_UNIT_FALLBACK_NOT_ACCEPTED"),
     }
     if not microtopic.get("exit_task", {}).get("prompt"):
         errors.append("CORE1A_FRESH_EXIT_ABSENT")
@@ -263,9 +277,9 @@ def audit(
         if name == "M2":
             status = "STRUCTURED_RESPONSE_PATTERNS_COGNITIVE_CAUSE_UNVERIFIED"
         elif name == "P2":
-            status = ("SOURCE_SHARED_CONSTRUCTION_UNIT_NOT_EXACT_STEP"
-                      if len(unit_steps) > 1 else
-                      "SOURCE_ROUTE_DECLARED_PRECISE_STEP_NOT_VERIFIED")
+            status = ("EXACT_TC02_SOURCE_FRAGMENT_GATE_RUNTIME_NOT_INDEPENDENTLY_REVIEWED"
+                      if exact_step_opt_in else
+                      "SOURCE_SHARED_CONSTRUCTION_UNIT_NOT_EXACT_STEP")
         elif name in ("S2", "S3"):
             status = "DIFFERENT_CORE1A_EXAMPLE_ITEM_SEMANTICS_UNVERIFIED"
         else:
