@@ -1164,10 +1164,10 @@
             },
             "M2": {
               "review_state": "NOT_ACCEPTED",
-              "author_evidence_ref": "diagnostic",
+              "author_evidence_ref": "extensions.grade9v3:m2_probe",
               "needs_subject_spot_review": true,
-              "evidence_status": "GAP_NOT_IMPLEMENTED",
-              "observed_behavior": "The current attempt is free response, with no diagnostic exchange that separates an instance-only misconception from a one-time arithmetic error.",
+              "evidence_status": "SUPPORTED_CANDIDATE",
+              "observed_behavior": "After a valid free-response commitment, a live two-signal probe distinguishes an example-only universal argument (route to TC-03 repair) from correct universal-method recognition paired with a wrong arithmetic result (recalculation feedback). Uncertain/blank responses remain INCONCLUSIVE; full learner/AT QA not run.",
               "owner_acceptance": false
             },
             "M3": {
@@ -1180,16 +1180,42 @@
             }
           },
           "semantic_coverage": {
-            "supported_candidate_slots": 11,
-            "remaining_gaps": [
-              "M2"
-            ],
+            "supported_candidate_slots": 12,
+            "remaining_gaps": [],
             "governing_asks_total": 12,
             "owner_accepted_slots": 0,
-            "evidence_limit": "AUTHOR_SPOT_ASSESSMENT_ONLY_NO_LEARNER_STUDY_OR_BROWSER_TEST",
+            "evidence_limit": "IMPLEMENTED_POST_COMMIT_DIAGNOSTIC_IN_CODE; NOT YET VERIFIED IN ACTUAL BROWSER, INDEPENDENT REVIEW OR LEARNER STUDY",
             "risk": "D3_PROVISIONAL: if a learner has just memorized the identical Core1A proof, the proposed D3 demand may collapse to recall; candidate must be tested as an attempt-first diagnostic or revised."
           },
           "learning_sequence": "AUTHOR_DIAGNOSTIC_ATTEMPT_FIRST_THEN_OPTIONAL_CORE1A_REPAIR"
+        },
+        "grade9v3:m2_probe": {
+          "status": "IMPLEMENTED_TEST_CANDIDATE_NOT_ACADEMICALLY_ACCEPTED",
+          "reason_prompt": "What is wrong with using just n=1, n=2 and n=3 to prove a claim for every positive integer?",
+          "reason_choices": [
+            {
+              "id": "EXAMPLE_ONLY",
+              "text": "Those three examples succeed, so the claim is proved for every positive starting integer."
+            },
+            {
+              "id": "UNIVERSAL",
+              "text": "A finite set of examples cannot prove every case; we need reasoning for arbitrary n or a counterexample to disprove it."
+            },
+            {
+              "id": "UNSURE",
+              "text": "I am not sure which type of argument settles a universal claim."
+            }
+          ],
+          "arithmetic_prompt": "Separately, calculate the sample product 4 × 5 × 6.",
+          "arithmetic_expected": "120",
+          "repair_ref": "TC-03",
+          "feedback": {
+            "MISCONCEPTION": "The example-only argument does not cover all positive integers. You need a general justification rather than more samples. Review the Core1A reasoning construction.",
+            "SLIP": "Your answer to the universal-reasoning check is sound, but 4 × 5 × 6 = 120. Recalculate carefully; this arithmetic check alone does not establish a conceptual misunderstanding.",
+            "NO_SIGNAL": "Both short checks are consistent. This does not grade your submitted proof or establish mastery. Compare your reasoning with the complete solution after your attempt.",
+            "INCONCLUSIVE": "Both responses are required to diagnose an issue. No misconception or execution slip was identified."
+          },
+          "limits": "This post-commit probe distinguishes response patterns, not actual reasoning processes with certainty. A guessed selection, an ambiguous response or an untested browser remains outside academic M2 acceptance."
         }
       },
       "origin": "AUTHORED",
@@ -1338,7 +1364,7 @@
         ]
       },
       "repair_ref": "TC-03",
-      "failure_signal": "A finite-example argument or a claim that one particular factor is always even has not proved the universal claim. A diagnostic must distinguish that misunderstanding from an arithmetic slip before repair.",
+      "failure_signal": "If you have generalised from finitely many examples, first repair the universal-proof reasoning. If you understand arbitrary-n reasoning but miscomputed a numerical check, correct the arithmetic instead. The post-attempt two-signal diagnostic distinguishes those response patterns; it is not an automatic proof grader.",
       "family_exposure": {
         "family_ref": "FAM-TEST-CORE1A-QUAL-G9-AUTHORED-CONSECUTIVE-PRODUCT",
         "closure": "Full proof requires independent guarantees for 2 and 3, their justified coprime combination, and the truth decision for all n. No independent mastery or QRT acceptance is inferred from page completion."
