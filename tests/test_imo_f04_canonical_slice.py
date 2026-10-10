@@ -89,7 +89,8 @@ class IMOCanonicalRouteAcceptanceContracts(unittest.TestCase):
             },
             "CORE2A": {
                 "repair_links": [{
-                    "ref": STEP, "href": f"core1a.html#{STEP}",
+                    "ref": STEP, "href": (f"core1a.html?g9-return={QID}"
+                                      f"&g9-concept={MID}#{STEP}"),
                     "protected_template": True,
                     "concept_navigation": True,
                     "question": QID, "concept": MID,
@@ -120,6 +121,24 @@ class IMOCanonicalRouteAcceptanceContracts(unittest.TestCase):
                 self.assertEqual(
                     navigation_findings(facts),
                     ["CORE2A_NOT_LINKED_TO_EXACT_REPAIR_STEP"])
+
+    def test_help_return_url_identity_and_origin_cannot_be_forged(self):
+        for label, href, expected in (
+            ("no context", f"core1a.html#{STEP}",
+             "CORE2A_REPAIR_HELP_NAVIGATION_UNBOUND"),
+            ("wrong question", f"core1a.html?g9-return=WRONG&g9-concept={MID}#{STEP}",
+             "CORE2A_REPAIR_HELP_NAVIGATION_UNBOUND"),
+            ("wrong concept", f"core1a.html?g9-return={QID}&g9-concept=WRONG#{STEP}",
+             "CORE2A_REPAIR_HELP_NAVIGATION_UNBOUND"),
+            ("extra query", f"core1a.html?g9-return={QID}&g9-concept={MID}&grant=YES#{STEP}",
+             "CORE2A_REPAIR_HELP_NAVIGATION_UNBOUND"),
+            ("external", f"https://phishing.example/core1a.html?g9-return={QID}&g9-concept={MID}#{STEP}",
+             "CORE2A_NOT_LINKED_TO_EXACT_REPAIR_STEP"),
+        ):
+            with self.subTest(label=label):
+                facts = self.valid_route_facts()
+                facts["CORE2A"]["repair_links"][0]["href"] = href
+                self.assertEqual(navigation_findings(facts), [expected])
 
     def test_duplicate_step_dom_ids_are_not_valid_repair_targets(self):
         facts = self.valid_route_facts()
