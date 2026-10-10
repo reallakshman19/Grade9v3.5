@@ -28,6 +28,22 @@ python TEST/imo-research/core2_source_acquisition_gaps.py report \
   --output /tmp/imo-68-source-gaps.json
 ```
 
+### Offline fallback — browser-downloaded PDF, source authenticity still unverified
+
+If this execution environment cannot resolve the organizer's host but the operator can manually download the official PDF, import that **local file** without uploading it to GitHub or CI. Keep the manual download outside the repository, e.g. the operator's Downloads folder, then pass its **absolute** path:
+
+```sh
+python TEST/imo-research/core2_source_acquisition_gaps.py acquire \
+  --private-dir /private/imo-g9-source-custody \
+  --source-id SOF-IMO-G09-SAMPLE-2026-27 \
+  --local-file /absolute/path/to/class-9-sample.pdf
+python TEST/imo-research/core2_source_acquisition_gaps.py report \
+  --private-dir /private/imo-g9-source-custody \
+  --output /tmp/imo-68-source-gaps.json
+```
+
+The local file must be an existing, absolute non-symlink PDF (maximum 100 MiB), outside both the repository and custody workspace. The wrapper uses existing `source_pipeline.acquire_file` to make a private snapshot, rehashes the exact stored bytes and refuses every overwrite. The receipt explicitly records `source_kind: FILE` and a local resolved locator. It is **not proof that SOF supplied the file**. The report labels it `IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED`, counts the byte-verifiable retention separately, and includes `LOCAL_FILE_SOURCE_ORIGIN_UNVERIFIED` on all ten positions linked to that sample until genuine document identity/source-item custody and rights are established. The source PDF must still be inspected against the organizer's live version and version/rights evidence before any authentic Core2 approval. Do not tell downstream agents that a filename, PDF header, or SHA256 alone proves authenticity.
+
 Acquire requires an explicitly selected one of four pinned HTTPS source documents and refuses an existing private PDF or receipt instead of silently overwriting. Source bytes and acquisition JSON are written only to the private workspace with restrictive permissions. Reconciliation checks PDF header, same-host HTTPS redirect, URL and resource identity, snapshot length and SHA-256. A failed fetch, invalid header, redirect or checksum removes any partial created files. A successful receipt is **verified retained bytes only**. It does not establish SOF publisher authenticity or redistribution rights merely because a school mirror/organizer URL responds.
 
 If acquisition fails, record the failure as `NOT_ACQUIRED` and continue preparing the honest missing-evidence queue. Never invent a SHA256, publication licence, inspector, approved answer or missing question text. The tool never performs OCR, does not reproduce any source stem/figures in the report and never sends private snapshots to CI or GitHub.
