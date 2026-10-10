@@ -287,21 +287,42 @@ def acquire(doc: dict, workspace: Path,
             "source snapshot/receipt already exists: refuse overwrite")
     old_mask = os.umask(0o077)
     try:
-        result = source_pipeline.acquire_url(
-            url=doc["requested_pdf_url"], subject="TEST", bucket_id=BUCKET,
-            resource_ref=source_id,
-            acquired_at=datetime.now(timezone.utc).isoformat(),
-            snapshot_output=snapshot,
-        )
+        acquired_at = datetime.now(timezone.utc).isoformat()
+        if local_file is None:
+            result = source_pipeline.acquire_url(
+                url=doc["requested_pdf_url"], subject="TEST", bucket_id=BUCKET,
+                resource_ref=source_id, acquired_at=acquired_at,
+                snapshot_output=snapshot,
+            )
+        else:
+            source = validate_local_source(local_file, workspace)
+            result = source_pipeline.acquire_file(
+                path=source, subject="TEST", bucket_id=BUCKET,
+                resource_ref=source_id,
+                requested_locator=doc["requested_pdf_url"],
+                acquired_at=acquired_at, snapshot_output=snapshot,
+            )
         require(snapshot.is_file() and snapshot.open("rb").read(5) == b"%PDF-",
                 "downloaded response is not a PDF")
-        require(_same_host(doc["requested_pdf_url"], result["resolved_locator"]),
-                "unexpected cross-domain redirect")
+        if local_file is None:
+            require(_same_host(doc["requested_pdf_url"], result["resolved_locator"]),
+                    "unexpected cross-domain redirect")
+        else:
+            require(result["source_kind"] == "FILE"
+                    and result["requested_locator"] == doc["requested_pdf_url"]
+                    and result["resolved_locator"] == str(source),
+                    "operator file import identity mismatch")
         require(source_pipeline.verify_acquisition(result, repo=REPO)["passed"],
                 "downloaded source cannot be independently rehashed")
         _write_exclusive(receipt, json.dumps(result, indent=2) + "\n")
-        return {"source_id": source_id, "status": "VERIFIED_RETAINED_BYTES_ONLY",
+        status, findings = receipt_status(doc, workspace)
+        require(status in {
+            "VERIFIED_RETAINED_BYTES_ONLY",
+            "IMPORTED_LOCAL_BYTES_ONLY_SOURCE_ORIGIN_UNVERIFIED",
+        }, "persisted private receipt cannot be read back")
+        return {"source_id": source_id, "status": status,
                 "byte_length": result["byte_length"], "sha256": result["sha256"],
+                "source_origin_authenticated": False,
                 "core2_eligible": False, "core2_admitted": False}
     except BaseException:
         # Never leave a partial or invalid "success" snapshot behind.
@@ -317,6 +338,7 @@ def main() -> int:
     p.add_argument("operation", choices=("report", "acquire"))
     p.add_argument("--private-dir", type=Path)
     p.add_argument("--source-id", choices=sorted(SOURCE_IDS))
+    p.add_argument("--local-file", type=Path, help="manual local PDF import (provenance unverified)")
     p.add_argument("--output", type=Path)
     args = p.parse_args()
     try:
@@ -327,8 +349,11 @@ def main() -> int:
                     "acquire requires --private-dir and exactly one --source-id")
             require(args.output is None, "acquisition output must stay private")
             workspace = private_workspace(args.private_dir, create=True)
-            result = acquire(docs[args.source_id], workspace)
+            result = acquire(docs[args.source_id], workspace,
+                             local_file=args.local_file)
         else:
+            require(args.local_file is None,
+                    "--local-file is valid only for explicitly selected acquire")
             require(args.source_id is None, "report cannot filter source denominator")
             workspace = (private_workspace(args.private_dir)
                          if args.private_dir else None)
