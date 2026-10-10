@@ -2831,34 +2831,10 @@ q('[data-g9-commit]',a).forEach(b=>b.onclick=()=>{const box=b.closest('[data-g9-
 a.addEventListener('click',e=>{const b=e.target.closest('[data-g9-next-rung]');if(b&&a.contains(b)){markAssistance(a,'HINT_LADDER');nextRung(b.closest('.g9-ladder'));bindSupportRevealState(a);saveCore2State(a)}});attemptFields(a).forEach(el=>{el.addEventListener('input',()=>saveCore2State(a));el.addEventListener('change',()=>saveCore2State(a))});
 q('details[data-g9-payload-ref$="-wrong-route"]',a).forEach(d=>d.addEventListener('toggle',()=>{if(d.open){markAssistance(a,'WRONG_ROUTE');saveCore2State(a)}}));
 q('[data-g9-concept-link]',a).forEach(link=>link.addEventListener('click',()=>{markAssistance(a,'CONCEPT_NAV');saveCore2State(a);const key=returnKey(link.dataset.g9ConceptRef);if(key)store.set(key,link.dataset.g9QuestionRef||a.dataset.g9Unit);refreshReturnLinks()}))});
-// An opt-in, TEST-only formative concept checkpoint: verify a choice and
-// a minimal rule-oriented rationale before showing the guided lesson.
-// A keyword/radio check is NOT a knowledge score, mastery or secure receipt.
-q('[data-g9-concept-check]').forEach(c=>{
-  const article=c.closest('article[data-g9-role="CORE1A"]');
-  const b=q('[data-g9-concept-commit]',c)[0];
-  const feedback=q('[data-g9-concept-feedback]',c)[0];
-  if(!article||!b||!feedback)return;
-  b.addEventListener('click',()=>{
-    const choice=q('[data-g9-concept-option]:checked',c)[0]?.value||'';
-    const reason=(q('[data-g9-concept-reason]',c)[0]?.value||'').trim().toLowerCase();
-    const match=(s)=>s.split(',').some(w=>w&&reason.includes(w));
-    if(choice!==c.dataset.g9ConceptCorrect){feedback.textContent=c.dataset.g9FeedbackChoice;return}
-    if(reason.length<15||!match(c.dataset.g9ReasonWords||'')||!match(c.dataset.g9RuleWords||'')){
-      feedback.textContent=c.dataset.g9FeedbackExplain;return
-    }
-    article.dataset.g9ConceptCheckCompleted='formative_only';
-    q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false});
-    feedback.textContent=c.dataset.g9FeedbackPassed;
-    q('figure[data-g9-figure]',article).forEach(fitFigure);
-    q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0]?.setAttribute('tabindex','-1');
-    q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0]?.focus();
-  })
-});
 const practiceLinks=q('[data-g9-practice-link]');const practiceLabels=new Map(practiceLinks.map(link=>[link,link.textContent]));const navParams=new URLSearchParams(location.search);const navReturn=navParams.get('g9-return');const navConcept=navParams.get('g9-concept');
 function refreshReturnLinks(){practiceLinks.forEach(link=>{const key=returnKey(link.dataset.g9ConceptRef);const stored=!!key&&store.get(key)===link.dataset.g9QuestionRef;const routed=navReturn===link.dataset.g9QuestionRef&&navConcept===link.dataset.g9ConceptRef;const active=stored||routed;if(active){link.dataset.g9ReturnLink='';link.textContent='Return to question · '+practiceLabels.get(link)}else{delete link.dataset.g9ReturnLink;link.textContent=practiceLabels.get(link)}})}
 practiceLinks.forEach(link=>link.addEventListener('click',()=>{const key=returnKey(link.dataset.g9ConceptRef);if(key&&store.get(key)===link.dataset.g9QuestionRef)store.remove(key);refreshReturnLinks()}));refreshReturnLinks();
-window.g9MaterialiseAll=()=>{q('[data-g9-concept-target]').forEach(el=>el.hidden=false);articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)})};
+window.g9MaterialiseAll=()=>articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)});
 q('figure[data-g9-figure]').forEach(initFigure);
 q('[data-g9-toggle]').forEach(b=>b.onclick=()=>{const t=document.getElementById(b.getAttribute('aria-controls'));if(!t)return;const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));t.hidden=open});
 const input=q('[data-g9-search-input]')[0];if(input)input.oninput=()=>{const v=input.value.trim().toLowerCase();articles.forEach(a=>{a.hidden=!!v&&!(a.dataset.g9SearchText||'').toLowerCase().includes(v)})};
@@ -2883,7 +2859,7 @@ def core1b_js() -> str:
          "q('details[data-requires-attempt] summary',a).forEach(s=>s.addEventListener('click',e=>{const d=s.closest('details');if(!attemptedFor(a,d)){e.preventDefault();const selector=d.dataset.g9AttemptStage==='boundary'?'[data-g9-attempt-box][data-g9-attempt-stage=\"boundary\"]':'[data-g9-attempt-box]:not([data-g9-attempt-stage=\"boundary\"])';q('input,textarea,select',q(selector,a)[0]||a)[0]?.focus()}}));"),
         ("q('[data-g9-commit]',a).forEach(b=>b.onclick=()=>{const box=b.closest('[data-g9-attempt-box]');if(!box||!validAttempt(box)){q('input,textarea,select',box||a)[0]?.focus();return}a.dataset.attempted='1';lock();materialise(a);saveCore2State(a)});",
          "q('[data-g9-commit]',a).forEach(b=>b.onclick=()=>{const box=b.closest('[data-g9-attempt-box]');if(!box||!validAttempt(box)){q('input,textarea,select',box||a)[0]?.focus();return}if(box.dataset.g9AttemptStage==='boundary')a.dataset.g9BoundaryAttempted='1';else a.dataset.attempted='1';lock();materialise(a);saveCore2State(a)});"),
-        ("window.g9MaterialiseAll=()=>{q('[data-g9-concept-target]').forEach(el=>el.hidden=false);articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)})};",
+        ("window.g9MaterialiseAll=()=>articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)});",
          "window.g9MaterialiseAll=()=>articles.forEach(a=>{a.dataset.attempted='1';a.dataset.g9BoundaryAttempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)});"),
     )
     for generic, boundary_specific in patches:
@@ -2891,6 +2867,23 @@ def core1b_js() -> str:
             raise ValueError("CORE1B_JS_PATCH_UNSAFE: shared runtime changed")
         js = js.replace(generic, boundary_specific, 1)
     return js
+
+
+def concept_first_js() -> str:
+    """Insert F02 concept interaction only into opt-in TEST Core1A pages.
+
+    All other roles, generic TEST pages and public site JavaScript retain
+    their original bytes; the formative keyword check confers no mastery.
+    """
+    js = JS
+    checkpoint = "// An opt-in, TEST-only formative concept checkpoint: verify a choice and\n// a minimal rule-oriented rationale before showing the guided lesson.\n// A keyword/radio check is NOT a knowledge score, mastery or secure receipt.\nq('[data-g9-concept-check]').forEach(c=>{\n  const article=c.closest('article[data-g9-role=\"CORE1A\"]');\n  const b=q('[data-g9-concept-commit]',c)[0];\n  const feedback=q('[data-g9-concept-feedback]',c)[0];\n  if(!article||!b||!feedback)return;\n  b.addEventListener('click',()=>{\n    const choice=q('[data-g9-concept-option]:checked',c)[0]?.value||'';\n    const reason=(q('[data-g9-concept-reason]',c)[0]?.value||'').trim().toLowerCase();\n    const match=(s)=>s.split(',').some(w=>w&&reason.includes(w));\n    if(choice!==c.dataset.g9ConceptCorrect){feedback.textContent=c.dataset.g9FeedbackChoice;return}\n    if(reason.length<15||!match(c.dataset.g9ReasonWords||'')||!match(c.dataset.g9RuleWords||'')){\n      feedback.textContent=c.dataset.g9FeedbackExplain;return\n    }\n    article.dataset.g9ConceptCheckCompleted='formative_only';\n    q('[data-g9-concept-target]',article).forEach(el=>{el.hidden=false});\n    feedback.textContent=c.dataset.g9FeedbackPassed;\n    q('figure[data-g9-figure]',article).forEach(fitFigure);\n    q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0]?.setAttribute('tabindex','-1');\n    q('[data-g9-concept-target] h3,[data-g9-concept-target] h4',article)[0]?.focus();\n  })\n});\n"
+    anchor = "const practiceLinks=q('[data-g9-practice-link]');"
+    print_original = "window.g9MaterialiseAll=()=>articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)});"
+    print_checkpoint = "window.g9MaterialiseAll=()=>{q('[data-g9-concept-target]').forEach(el=>el.hidden=false);articles.forEach(a=>{a.dataset.attempted='1';q('details[data-requires-attempt]',a).forEach(d=>delete d.dataset.locked);materialise(a);q('.g9-ladder',a).forEach(l=>{while(nextRung(l)){};});q('details[data-g9-support-reveal]',a).forEach(d=>d.open=true)})};"
+    if js.count(anchor) != 1 or js.count(print_original) != 1:
+        raise ValueError("F02_CONCEPT_FIRST_JS_PATCH_UNSAFE: generic runtime changed")
+    js = js.replace(anchor, checkpoint + anchor, 1)
+    return js.replace(print_original, print_checkpoint, 1)
 
 
 def _mode_href(href: str, mode: str) -> str:
@@ -3079,6 +3072,11 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
                      f' data-g9-role="{esc(role)}" data-g9-search-text="{esc(search_text)}"{klass}>{RENDER[role](ctx, rec)}</article>')
     header, crumbs = shell(ctx, role, mode)
     m = ctx.manifest
+    # Only TEST/Core1A authored opt-ins receive checkpoint behaviour. An
+    # ordinary Core1A, Core1B or Core2A render retains unchanged shared JS.
+    checkpoint_page = (role == "CORE1A"
+                       and '<section class="g9-concept-first" data-g9-concept-check' in articles)
+    page_js = core1b_js() if role == "CORE1B" else concept_first_js() if checkpoint_page else JS
     # The blueprint says which theme its page opens in (the Core1A benchmark opens dark); a learner's own choice still wins.
     theme = (bp.get("presentation_policy") or {}).get("default_theme")
     theme_attr = f' data-theme="{esc(theme)}"' if theme in {"light", "dark"} else ""
@@ -3094,7 +3092,7 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
             f'<main><h1>{esc(m["title"])}: {esc(ROLE_TITLE[role])}</h1>'
             f'{_core1a_bucket_orientation(ctx) if role == "CORE1A" else ""}{articles}</main>'
             f'<footer data-g9-footer>{esc(m["subject"])} · {esc(m["title"])}</footer>'
-            f"<script>{core1b_js() if role == 'CORE1B' else JS}{learning_repair.JS}</script>{_shared_script_assets(ctx, mode)}</body></html>\n")
+            f"<script>{page_js}{learning_repair.JS}</script>{_shared_script_assets(ctx, mode)}</body></html>\n")
 
 
 def index_page(ctx: Ctx, digest: str) -> str:
