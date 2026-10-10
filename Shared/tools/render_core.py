@@ -3153,7 +3153,7 @@ const f02Question='Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
 const f02Concept='MIC-TEST-IMO-G9-COMMON-BASE-RELATION';
 const f02Key=scope?'f02-trace:'+scope+':'+f02Question:null;
 const f02Schema='F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1';
-const f02Allowed=['ATTEMPT_COMMIT','REPAIR_NAV','GUIDED_OPEN','RETURN_CLICK'];
+const f02Allowed=['ATTEMPT_COMMIT','ASSISTED_ATTEMPT_COMMIT','REPAIR_NAV','GUIDED_OPEN','RETURN_CLICK'];
 const f02Empty=()=>({schema:f02Schema,events:[],assisted:false,overflow:false});
 const f02Read=()=>{
   if(!f02Key)return {invalid:true};
@@ -3180,7 +3180,9 @@ const f02Reflect=(value,persisted)=>{
     persisted===false?'NOT_SAVED':value.events.length?'UNTRUSTED_LOCAL_ONLY':'NOT_RECORDED';
   f02Status.dataset.g9F02TraceState=stage;
   f02Status.textContent='TEST evidence (this browser only): '+stage+
-    '. Ordered event markers, not answers. Editable or missing local data never establishes independent mastery.';
+    '. Ordered event markers, not answers. Editable or missing local data never establishes independent mastery.'
+    +(value.events?.some(e=>e.kind==='ASSISTED_ATTEMPT_COMMIT')
+      ?' Any subsequent attempt here was after help and remains assisted, not independent transfer.':'');
   const target=q('article[data-g9-unit="'+f02Question+'"]')[0];
   if(target){
     target.dataset.g9F02TraceState=stage;
@@ -3192,9 +3194,13 @@ const f02Event=(kind)=>{
   if(!f02Allowed.includes(kind))return;
   const value=f02Read();
   if(value.invalid){f02Reflect(value,false);return}
-  if(kind!=='ATTEMPT_COMMIT')value.assisted=true;
+  // Guidance cannot be un-seen by reloading or resubmitting a new answer.
+  // The first pre-help attempt and every post-help attempt remain distinct.
+  const recordedKind=kind==='ATTEMPT_COMMIT'&&value.assisted
+    ?'ASSISTED_ATTEMPT_COMMIT':kind;
+  if(recordedKind!=='ATTEMPT_COMMIT')value.assisted=true;
   if(value.events.length>=32)value.overflow=true;
-  else value.events.push({n:value.events.length+1,kind});
+  else value.events.push({n:value.events.length+1,kind:recordedKind});
   f02Reflect(value,!!f02Key&&store.set(f02Key,JSON.stringify(value)));
 };
 f02Reflect(f02Read(),null);
