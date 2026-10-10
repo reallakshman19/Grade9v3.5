@@ -142,6 +142,11 @@ private output. The inspection verifier also refuses world-readable inspection
 JSON: the mode-0700 review directory must contain owner-owned mode-0600
 `q004.inspection.json`. This protects the operator workspace; it does **not**
 certify the original SOF edition or grant reproduction rights.
+Acquisition and receipt-validation PDF magic-header checks open retained source
+bytes with context managers, closing file handles on both valid and invalid
+receipts. A synthetic test traps `ResourceWarning: unclosed file` for both the
+offline acquisition path and its subsequent receipt revalidation; original PDF
+bytes remain in the restricted operator workspace.
 
 The GitHub Actions one-shot generator for this branch completed at
 [run #38067000492](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38067000492).
