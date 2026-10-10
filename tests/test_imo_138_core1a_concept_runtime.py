@@ -151,6 +151,25 @@ class TestConceptFirstHTML(unittest.TestCase):
         self.assertIn("returnKey=concept=>", render_core.JS)
         self.assertNotIn("F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1", render_core.JS)
 
+    def test_chromium_witness_retains_sanitized_failure_receipt(self):
+        """Playwright or loopback failure must not produce a false empty receipt."""
+        source = (ROOT / "tools/site-audit/imo-f02-concept-browser.mjs").read_text(
+            encoding="utf-8")
+        self.assertIn("} catch (error) {", source)
+        self.assertIn("const safeCategories=new Set(", source)
+        self.assertIn("const category=safeCategories.has(error?.name)?error.name:'UnknownError';",
+                      source)
+        self.assertIn("result.failures.push('UNCAUGHT_BROWSER_AUDIT_EXCEPTION:'+category)",
+                      source)
+        self.assertIn("if(browser){", source)
+        self.assertIn("if(localServer.listening){", source)
+        self.assertIn("result.failures.push('BROWSER_CLOSE_FAILED')", source)
+        self.assertIn("result.failures.push('AUDIT_SERVER_CLOSE_FAILED')", source)
+        self.assertIn("fs.writeFileSync(path.join(out, 'result.json')", source)
+        self.assertNotIn("error?.message", source)
+        self.assertNotIn("String(error?.name||", source)
+        self.assertNotIn("result.failures.push(String(error", source)
+
     def test_trace_patch_stays_opt_in_and_rejects_ambiguous_generic_tail(self):
         self.assertEqual(render_core.f02_local_trace_js(render_core.JS).count(
             "F02_BROWSER_LOCAL_UNTRUSTED_TRACE_V1"), 1)
