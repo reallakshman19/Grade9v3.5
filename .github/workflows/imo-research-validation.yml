@@ -50,6 +50,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      # The broad test_imo_*.py discovery imports F02/F04's real renderer,
+      # whose product-schema validation requires jsonschema.  Match the
+      # focused F02/F04 runners without changing research/source authority.
+      - name: Install IMO renderer test dependencies
+        run: python -m pip install --quiet jsonschema pypdf
       - name: Validate source identity and quarantine
         run: python TEST/imo-research/validate_seed.py
       - name: Validate printed-source mathematical audit
