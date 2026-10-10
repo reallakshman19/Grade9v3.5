@@ -2968,11 +2968,12 @@ q('[data-g9-concept-check]').forEach(c=>{
     if(choice!==c.dataset.g9ConceptCorrect){
       article.dataset.g9DiagnosticPattern=correctNumbers
         ?'choice_numeric_conflict'
-        :(nextNumber===additiveExpected
+        :(nextNumber===additiveExpected&&additiveNumber===additiveExpected
           ?'repeated_additive_route_candidate':'additive_choice_unresolved');
       setProgress('needs_review','prediction and numerical check need review.');
       feedback.textContent=correctNumbers?numeric.dataset.g9DiagnosticConflict
-        :(nextNumber===additiveExpected?numeric.dataset.g9DiagnosticAdditive:c.dataset.g9FeedbackChoice);
+        :(nextNumber===additiveExpected&&additiveNumber===additiveExpected
+          ?numeric.dataset.g9DiagnosticAdditive:c.dataset.g9FeedbackChoice);
       return
     }
     if(!correctNumbers){
