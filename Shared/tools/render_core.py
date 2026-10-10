@@ -68,9 +68,7 @@ PROTECTION = {
 
 
 class RenderGapError(Exception):
-    """
-[data-g9-m2-probe][hidden]{display:none!important}
-Raised in strict mode when the product cannot be rendered without gaps."""
+    """Raised in strict mode when the product cannot be rendered without gaps."""
 
 
 @dataclass
@@ -2512,6 +2510,8 @@ def units_for(ctx: Ctx, role: str) -> list[dict]:
 # ------------------------------------------------------------------ page
 
 CSS = """
+[data-g9-m2-probe][hidden]{display:none!important}
+
 [hidden]{display:none!important}
 :root{--g9-zoom:1;--g9-content-max:1380px;--g9-touch-min:48px;--g9-space:clamp(16px,2vw,28px);--g9-type-body:17px;--bg:#f6f7fb;--fg:#172033;--card:#fff;--line:#d5dce6;--accent:#1f5fae;--muted:#52627a;
 --soft:#fbfdff;--pill-bg:#eef2ff;--pill-fg:#4338ca;--src-bg:#ecfdf5;--src-fg:#047857;--info-bg:#f8fbff;--info-line:#93c5fd;--info-fg:#455d72;--warn-bg:#fff7f8;--warn-line:#ffc9d3;--warn-fg:#8a2942;--ok-bg:#f0fdf7;--ok-line:#bbf7d0;--ok-fg:#14532d}
