@@ -1,0 +1,83 @@
+name: IMO F04 same-run Chromium provenance (TEST only)
+
+on:
+  pull_request:
+    paths:
+      - "Shared/tools/imo_f04_bound_browser_witness.py"
+      - "tests/test_imo_f04_bound_browser_witness.py"
+      - "Shared/tools/imo_f04_browser_receipt_gate.py"
+      - "Shared/tools/imo_f04_canonical_slice.py"
+      - "Shared/tools/render_core.py"
+      - "tools/site-audit/imo-f02-concept-browser.mjs"
+      - "TEST/imo-research/candidates/**"
+      - ".github/workflows/imo-f04-bound-browser-witness.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bound-browser-observer:
+    name: Exact checked-out SHA + canonical TEST pages + real Chromium
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pinned render verification requirements
+        run: python -m pip install --quiet jsonschema pypdf
+      - name: F04 SHA-chain negative mutation tests
+        run: python -m unittest discover -s tests -p 'test_imo_f04_bound_browser_witness.py' -v
+      - name: Build independent canonical TEST role pages and private audit
+        run: |
+          python - <<'PY'
+          import contextlib
+          import io
+          import os
+          from pathlib import Path
+          from Shared.tools import render_core
+          manifest = Path("TEST/imo-research/candidates/imo-g9-r1-qrt-core2a-core1a.test.manifest.json")
+          folder = Path(os.environ["RUNNER_TEMP"]) / "imo-f04-bound-render"
+          with contextlib.redirect_stdout(io.StringIO()):
+              status = render_core.main(["build", "--manifest", str(manifest),
+                                         "--out", str(folder), "--mode", "PAGES",
+                                         "--reference", "--draft"])
+          assert status == 0 and (folder / "render-receipt.json").is_file(), "RENDER_NOT_PRODUCED"
+          print("CANONICAL_TEST_RENDER_PRODUCED; NO_PRODUCT_ACCEPTANCE")
+          PY
+          mkdir -p build
+          python -m Shared.tools.imo_f04_canonical_slice \
+            --output build/imo-f04-bound-private.json \
+            > "$RUNNER_TEMP/imo-f04-canonical-safe-stdout.json"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install F02 source-owned Chromium witness
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Execute real F02 Chromium on the exact canonical TEST pages
+        run: |
+          node tools/site-audit/imo-f02-concept-browser.mjs \
+            "$RUNNER_TEMP/imo-f04-bound-render" \
+            > "$RUNNER_TEMP/imo-f04-browser-private-stdout.json"
+          echo "CHROMIUM_TEST_JOURNEY_EXECUTED; HUMAN_LEARNER_ACCEPTANCE_NOT_GRANTED"
+      - name: Independently bind test inputs, canonical HTML digests, browser receipt and artifacts
+        run: |
+          python -m Shared.tools.imo_f04_bound_browser_witness \
+            --expected-sha "$GITHUB_SHA" \
+            --render-dir "$RUNNER_TEMP/imo-f04-bound-render" \
+            --canonical-audit build/imo-f04-bound-private.json \
+            --safe-summary build/imo-f04-bound-safe-summary.json
+      - name: Preserve only protected-content-safe digests and fixed denial codes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f04-bound-browser-safe-summary
+          path: build/imo-f04-bound-safe-summary.json
+          if-no-files-found: ignore
+          retention-days: 7
