@@ -38,8 +38,9 @@ jobs:
           import subprocess
           allowed = {
             "tools/data.js", "public/core-learning/data.js",
+            "public/data/data.js", "docs/data/data.js",
             "docs/tools/data.js", "docs/core-learning/data.js",
-            "docs/.pages-manifest.json",
+            "docs/architecture-manifest.json", "docs/.pages-manifest.json",
           }
           dirty = set(subprocess.check_output(
             ["git", "diff", "--name-only"], text=True).splitlines())
@@ -56,7 +57,9 @@ jobs:
         run: |
           set -euo pipefail
           git add -- tools/data.js public/core-learning/data.js \
-            docs/tools/data.js docs/core-learning/data.js docs/.pages-manifest.json
+            public/data/data.js docs/data/data.js \
+            docs/tools/data.js docs/core-learning/data.js \
+            docs/architecture-manifest.json docs/.pages-manifest.json
           if git diff --cached --quiet; then
             echo "No generated updates needed."
             exit 0
