@@ -260,7 +260,7 @@ class TrackAFourRoleTests(unittest.TestCase):
                     )
                 concept = pages["core1a.html"]
                 matrix = re.findall(
-                    r'<div\\b[^>]*data-g9-equation-matrix\\b[^>]*>', concept
+                    r'<div\b[^>]*data-g9-equation-matrix\b[^>]*>', concept
                 )
                 self.assertTrue(matrix, "real Core1A equation matrix must remain")
                 for region in matrix:
