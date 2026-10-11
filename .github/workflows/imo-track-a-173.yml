@@ -131,6 +131,8 @@ jobs:
           python Shared/tools/deploy_test.py product \
             TEST/products/core1b-authored-reconstruction-journey.manifest.json --no-mirror
       - name: Capture exact learner PDF pages including blank-page content streams
+        env:
+          TRACK_A_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           python - <<'PY'
           import hashlib
@@ -169,7 +171,7 @@ jobs:
           blocked=[p['page'] for p in pages if p['text_word_count']<35]
           report={
               'schema':'imo-173-core1b-learner-pdf-geometry/v1',
-              'exact_head':os.environ['GITHUB_SHA'],
+              'exact_head':os.environ['TRACK_A_HEAD_SHA'],
               'source_manifest':'TEST/products/core1b-authored-reconstruction-journey.manifest.json',
               'pdf_sha256':hashlib.sha256(pdf.read_bytes()).hexdigest(),
               'printed_role':'CORE1B',
