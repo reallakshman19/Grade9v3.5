@@ -127,6 +127,18 @@ jobs:
                      for text in learner_pages), (
                          'learner task/givens/boundary orphaned across paper sheets')
           # Same-page factor/figcaption identity, not merely PDF keyword existence.
+          # Safe page-by-page diagnostics: labels/booleans only; never log KEY content.
+          print('CORE1B_SAFE_PRINT_PAGE_FLAGS', json.dumps({
+              mode: [{
+                  'page': i + 1,
+                  'has_diagram': 't − 2 × t − 1 × t' in text,
+                  'has_attempt_caption': 'Given triple only' in text,
+                  'has_reconstruction_caption': 'Present the new reconstruction task' in text,
+                  'has_boundary': 'Boundary test' in text,
+                  'words': len(re.findall(r'[A-Za-z]{2,}', text)),
+              } for i, text in enumerate(pages)]
+              for mode, pages in [('LEARNER_PDF', learner_pages), ('KEY_PDF', key_pages)]
+          }))
           diagram='t − 2 × t − 1 × t'
           assert any(diagram in text and 'Given triple only' in text
                      for text in learner_pages), 'PRE_ATTEMPT figure/caption split in learner print'
