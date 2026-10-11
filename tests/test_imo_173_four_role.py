@@ -140,12 +140,12 @@ class TrackAFourRoleTests(unittest.TestCase):
         source = (ROOT / "TEST/library/figures/core1a-consecutive-divisibility-staged.svg").read_text(
             encoding="utf-8")
         root = ET.fromstring(source)
-        self.assertEqual(root.attrib["viewBox"], "0 0 390 594")
+        self.assertEqual(root.attrib["viewBox"], "0 0 390 424")
         actual = [node.attrib["data-g9-stage-id"] for node in root.iter()
                   if "data-g9-stage-id" in node.attrib]
         self.assertEqual(actual, expected)
         for fact in ("one is even: factor 2.", "n mod 3 = 0", "n mod 3 = 1",
-                     "n mod 3 = 2", "2 and 3 are coprime",
+                     "n mod 3 = 2", "2 and 3 are coprime", "3 · Combine valid factors",
                      "so 6 divides the product", "for every n."):
             self.assertIn(fact, source)
         boundary = (ROOT / "TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg"

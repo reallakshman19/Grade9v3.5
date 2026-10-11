@@ -47,6 +47,13 @@ def check(folder: Path) -> dict:
             assert (folder / f"core1b-{width}-{stage}.png").stat().st_size > 1000
     assert (folder / "core1b-200pct-proxy.png").stat().st_size > 1000
     printed = {role: read_print(folder / filename) for role, filename in FILES.items()}
+    # The original canonical Core1A print gate detects proof text clipped
+    # even when a real PDF and an SVG title are both present. Enforce the
+    # same text-specific test in the additive four-role A/B evidence.
+    proof = printed["core1a"]["text"]
+    for phrase in ("Parity guarantee", "so one is even: factor 2.",
+                   "Remainders modulo 3", "Combine valid factors"):
+        assert phrase in proof, ("CORE1A_PRINTED_PROOF_MISSING", phrase)
     pre = printed["core1b_before"]["text"]
     post = printed["core1b_after"]["text"]
     assert "Boundary test" in pre, "Core1B boundary task not printed before commitment"

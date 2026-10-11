@@ -111,6 +111,39 @@ try {
         role + ' document overflow at ' + width);
       assert.ok(!roleGeometry[role].visible_figures.some(f => f.locallyClipped),
         role + ' safe figure clipping at ' + width);
+      if (role === 'core1a' && width <= 390) {
+        // Real keyboard-only navigation, not a scripted focus() which could
+        // mask an unreachable scroll container. Chrome can make scrollable
+        // divs implicitly tabbable; verify this on the actual built output.
+        const found = await rolePage.evaluate(() => {
+          const table = document.querySelector('[data-g9-equation-matrix]');
+          if (!table) return {exists: false};
+          return {exists: true, scrollWidth: table.scrollWidth,
+            clientWidth: table.clientWidth, declaredTabindex: table.getAttribute('tabindex')};
+        });
+        assert.ok(found.exists, 'Core1A equation matrix missing');
+        const audit = {...found, usedTabNavigation: true, tabReached: false,
+          arrowScrollable: false, status: 'BROWSER_KEYBOARD_ONLY'};
+        if (found.scrollWidth > found.clientWidth + 1) {
+          for (let tab = 0; tab < 200; tab++) {
+            await rolePage.keyboard.press('Tab');
+            audit.tabReached = await rolePage.evaluate(() => (
+              document.activeElement === document.querySelector('[data-g9-equation-matrix]')
+            ));
+            if (audit.tabReached) break;
+          }
+          if (audit.tabReached) {
+            await rolePage.keyboard.press('ArrowRight');
+            await rolePage.waitForTimeout(90);
+            audit.arrowScrollable = await rolePage.evaluate(() =>
+              document.querySelector('[data-g9-equation-matrix]').scrollLeft > 0);
+          }
+          assert.ok(audit.tabReached && audit.arrowScrollable,
+            'Core1A horizontally scrollable table is not arrow-scroll reachable through Tab at ' +
+             width + ': ' + JSON.stringify(audit));
+        }
+        roleGeometry[role].keyboard_table = audit;
+      }
       await rolePage.screenshot({
         path: path.join(folder, role + '-' + width + '-before.png'), fullPage: true
       });
