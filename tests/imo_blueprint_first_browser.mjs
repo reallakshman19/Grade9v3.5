@@ -91,6 +91,11 @@ try {
                   const host = svg?.parentElement;
                   const card = svg?.querySelector('rect[data-g9-final-factor="true"]');
                   const labels = svg ? [...svg.querySelectorAll('text')] : [];
+                   const visibleLabels = labels.filter(t => t.checkVisibility({visibilityProperty:true}));
+                   const projectedPixels = visibleLabels.map(t => {
+                     const m = t.getScreenCTM();
+                     return m ? parseFloat(getComputedStyle(t).fontSize) * Math.hypot(m.c, m.d) : NaN;
+                   }).filter(Number.isFinite);
                   const rect = el => el ? el.getBoundingClientRect().toJSON() : null;
                   return {
                     ...stamp,
@@ -106,14 +111,28 @@ try {
                     computedSvgWidth: svg ? getComputedStyle(svg).width : null,
                     computedFigureOverflowX: getComputedStyle(figure).overflowX,
                     computedHostOverflowX: host ? getComputedStyle(host).overflowX : null,
-                    minimumVisibleLabelPx: labels.length
+                    minimumRenderedVisibleLabelPx: projectedPixels.length ? Math.min(...projectedPixels) : null,
+                     figureTextFloorPx: Number(figure.dataset.g9MinFigureText) || 14,
+                     minimumVisibleLabelPx: labels.length
                       ? Math.min(...labels.filter(t => t.getClientRects().length)
                         .map(t => parseFloat(getComputedStyle(t).fontSize))
                         .filter(Number.isFinite)) : null,
                   };
                 }, { trial, phase });
               };
-              // Eight identical 390px -> 794px print transitions on one page.
+              // Assert the CSS-relative print width and *rendered* SVG label floor.
+               // Keep the original first-frame containment failure and screenshots.
+               const printContractError = sample => {
+                 if (!sample.svgInlineWidth?.startsWith('max(100%, ')) {
+                   return new Error('print SVG retained absolute width: ' + JSON.stringify(sample));
+                 }
+                 if (!Number.isFinite(sample.minimumRenderedVisibleLabelPx) ||
+                     sample.minimumRenderedVisibleLabelPx < sample.figureTextFloorPx - 0.1) {
+                   return new Error('rendered print label below source floor: ' + JSON.stringify(sample));
+                 }
+                 return null;
+               };
+               // Eight identical 390px -> 794px print transitions on one page.
               // Each checks the existing strict first-frame geometry, without
               // waiting away a possible reproducible clipping failure.
               let repeatedFailure = null;
@@ -128,13 +147,17 @@ try {
                 } catch (error) {
                   geometryFailure = error;
                 }
-                printTrace.push(await collectPrintGeometry(trial, 'after-original-immediate-assertion'));
+                const immediateSample = await collectPrintGeometry(trial, 'after-original-immediate-assertion');
+                 printTrace.push(immediateSample);
+                 geometryFailure ||= printContractError(immediateSample);
                 await page.evaluate(async () => {
                   await document.fonts.ready;
                   await new Promise(resolve => requestAnimationFrame(
                     () => requestAnimationFrame(resolve)));
                 });
-                printTrace.push(await collectPrintGeometry(trial, 'fonts-ready-plus-two-frames'));
+                const settledSample = await collectPrintGeometry(trial, 'fonts-ready-plus-two-frames');
+                 printTrace.push(settledSample);
+                 geometryFailure ||= printContractError(settledSample);
                 if (!geometryFailure) {
                   try {
                     await assertLastFactorFits('A4-sized print CSS after two frames');
@@ -194,13 +217,17 @@ try {
               } catch (error) {
                 prewarmFailure = error;
               }
-              printTrace.push(await collectPrintGeometry(9, 'after-prewarm-print-immediate'));
+              const prewarmImmediate = await collectPrintGeometry(9, 'after-prewarm-print-immediate');
+               printTrace.push(prewarmImmediate);
+               prewarmFailure ||= printContractError(prewarmImmediate);
               await page.evaluate(async () => {
                 await document.fonts.ready;
                 await new Promise(resolve => requestAnimationFrame(
                   () => requestAnimationFrame(resolve)));
               });
-              printTrace.push(await collectPrintGeometry(9, 'after-prewarm-print-two-frames'));
+              const prewarmSettled = await collectPrintGeometry(9, 'after-prewarm-print-two-frames');
+               printTrace.push(prewarmSettled);
+               prewarmFailure ||= printContractError(prewarmSettled);
               if (!prewarmFailure) {
                 try {
                   await assertLastFactorFits('A4-sized print CSS after prewarm settled');
