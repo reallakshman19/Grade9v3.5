@@ -231,5 +231,51 @@ class TrackAFourRoleTests(unittest.TestCase):
             self.assertIn("t=2", b)
 
 
+    def test_existing_three_role_test_previews_keep_role_and_attempt_contract(self):
+        # Deliberately outside the new four-role A/B manifests. Shared
+        # subject=TEST renderer changes must not remove routes, the scroll
+        # landmark, attempted-work protection or source-free provenance.
+        # This is a scoped semantic regression, NOT historical byte parity.
+        manifests = (
+            *ORIGINALS,
+            ROOT / "TEST/products/core1b-authored-reconstruction-journey.manifest.json",
+        )
+        for manifest_path in manifests:
+            with self.subTest(manifest=manifest_path.name):
+                manifest = read(manifest_path)
+                self.assertEqual(manifest["subject"], "TEST")
+                self.assertNotEqual(manifest["output_roles"], list(ROLES))
+                pages, _, _, _, _ = render_core.build_report(
+                    manifest_path, "PAGES", held_to="FLOOR"
+                )
+                expected = {"index.html"} | {
+                    role.lower() + ".html" for role in manifest["output_roles"]
+                }
+                self.assertEqual(set(pages), expected)
+                for role in manifest["output_roles"]:
+                    body = pages[role.lower() + ".html"]
+                    self.assertEqual(
+                        re.findall(r'<article[^>]*data-g9-role="([^"]+)"', body),
+                        [role],
+                    )
+                concept = pages["core1a.html"]
+                matrix = re.findall(
+                    r'<div\\b[^>]*data-g9-equation-matrix\\b[^>]*>', concept
+                )
+                self.assertTrue(matrix, "real Core1A equation matrix must remain")
+                for region in matrix:
+                    self.assertIn('tabindex="0"', region)
+                    self.assertIn('role="region"', region)
+                    self.assertIn('aria-label="Equation matrix; use arrow keys to scroll"', region)
+                for role in ("CORE2A", "CORE1B", "CORE2B"):
+                    if role in manifest["output_roles"]:
+                        body = pages[role.lower() + ".html"]
+                        self.assertIn("data-g9-attempt-box", body)
+                        self.assertIn("data-requires-attempt", body)
+                self.assertEqual(manifest["selection"]["core2"], [])
+                self.assertEqual(manifest["bank_refs"], [])
+                self.assertNotIn("SOF-IMO-G09-", " ".join(pages.values()))
+
+
 if __name__ == "__main__":
     unittest.main()
