@@ -202,7 +202,7 @@ try {
                 note: '8 strict width transitions plus 1 naturally prewarmed wide screen transition',
                 samples: printTrace, firstFrameAssertionPreserved: true,
                 failure: prewarmFailure?.message ?? null,
-              }, null, 2) + '\\n');
+              }, null, 2) + '\n');
               if (prewarmFailure) {
                 try {
                   await page.screenshot({
@@ -215,7 +215,7 @@ try {
                   });
                 } catch (captureError) {
                   fs.appendFileSync(geometryPath,
-                    '\\nCapture error: ' + String(captureError) + '\\n');
+                    '\nCapture error: ' + String(captureError) + '\n');
                 }
                 throw prewarmFailure;
               }
