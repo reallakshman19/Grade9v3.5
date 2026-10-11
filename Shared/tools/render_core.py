@@ -1365,9 +1365,12 @@ def _core1a_relation_matrix(ctx: Ctx, m: dict, refs: list[str] | None = None) ->
             f'<td>{para(relation.get("meaning"))}</td>'
             f'<td>{validity}</td></tr>'
         )
+    matrix_access = (
+        ' tabindex="0" role="region" aria-label="Equation matrix; use arrow keys to scroll"'
+        if ctx.manifest.get("subject") == "TEST" else ""
+    )
     return (
-        '<div class="g9-table-scroll" data-g9-equation-matrix '
-        'tabindex="0" role="region" aria-label="Equation matrix; use arrow keys to scroll">'
+        f'<div class="g9-table-scroll" data-g9-equation-matrix{matrix_access}>'
         '<table><thead><tr><th scope="col">Equation</th>'
         '<th scope="col">What it tells you</th><th scope="col">When you can use it</th>'
         f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
@@ -2552,19 +2555,17 @@ input,select{font-size:max(16px,1rem)}
 """
 
 # Print-only Core1B settings: never embed into generic Core/TEST hub pages.
-CORE1B_PRINT_CSS = """@media print{
-/* Core1B-only print flow. The page height and learner text-size floor are unchanged. */
-html[data-g9-role="CORE1B"]{font-size:16px!important;--g9-space:8px!important}
+CORE1B_PRINT_CSS = "@media print{\nhtml[data-g9-role=\"CORE1B\"]{font-size:16px!important;--g9-space:12px!important}\nhtml[data-g9-role=\"CORE1B\"] body{line-height:1.48!important}\nhtml[data-g9-role=\"CORE1B\"] .g9-concept-triad-bar{display:none!important}\nhtml[data-g9-role=\"CORE1B\"] article[data-g9-role=\"CORE1B\"]{margin:4px 0!important;padding:12px!important}\nhtml[data-g9-role=\"CORE1B\"] article[data-g9-role=\"CORE1B\"] .g9-split{display:block!important}\nhtml[data-g9-role=\"CORE1B\"] article[data-g9-role=\"CORE1B\"] figure[data-g9-figure]{break-inside:avoid-page!important;page-break-inside:avoid!important}\nhtml[data-g9-role=\"CORE1B\"] footer{position:static!important;bottom:auto!important;left:auto!important;padding:0!important;break-before:auto!important;font-size:14px!important;background:#fff!important}\n}\n"
+
+CORE1B_TEST_PRINT_CSS = """@media print{
+/* Held TEST products only: reclaim page height without lowering font-size. */
+html[data-g9-role="CORE1B"]{--g9-space:8px!important}
 html[data-g9-role="CORE1B"] body{line-height:1.4!important}
 html[data-g9-role="CORE1B"] main{padding:8px!important}
 html[data-g9-role="CORE1B"] main>h1{margin:0 0 8px!important}
-html[data-g9-role="CORE1B"] .g9-concept-triad-bar{display:none!important}
 html[data-g9-role="CORE1B"] article[data-g9-role="CORE1B"]{margin:0!important;padding:8px!important}
-html[data-g9-role="CORE1B"] article[data-g9-role="CORE1B"] .g9-split{display:block!important}
 html[data-g9-role="CORE1B"] article[data-g9-role="CORE1B"] .g9-component{margin:8px 0!important}
-html[data-g9-role="CORE1B"] article[data-g9-role="CORE1B"] figure[data-g9-figure]{break-inside:avoid-page!important;page-break-inside:avoid!important}
-/* Prefer keeping the footer with the final substantive boundary block. */
-html[data-g9-role="CORE1B"] footer{position:static!important;bottom:auto!important;left:auto!important;padding:0!important;margin:0!important;break-before:avoid-page!important;break-inside:avoid-page!important;font-size:14px!important;background:#fff!important}
+html[data-g9-role="CORE1B"] footer{margin:0!important;break-inside:avoid-page!important}
 }
 """
 
@@ -3028,7 +3029,7 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
             '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<meta name="g9-render" content="{RENDERER_VERSION} {digest}">'
             f'{_shared_head_assets(ctx, mode)}'
-            f'<title>{esc(ROLE_TITLE[role])} · {esc(m["title"])}</title><style>{CSS}{CORE1B_PRINT_CSS if role == "CORE1B" else ""}{COMPONENT_CSS}{learning_repair.CSS}{layout_css(ctx.blueprints)}</style></head>'
+            f'<title>{esc(ROLE_TITLE[role])} · {esc(m["title"])}</title><style>{CSS}{CORE1B_PRINT_CSS if role == "CORE1B" else ""}{CORE1B_TEST_PRINT_CSS if role == "CORE1B" and m["subject"] == "TEST" else ""}{COMPONENT_CSS}{learning_repair.CSS}{layout_css(ctx.blueprints)}</style></head>'
             f'<body data-core="{role}" data-blueprint-ref="{esc(bp["id"])}@{esc(bp["version"])}">'
             f'{header}{crumbs}<noscript>Answers open after you attempt; this page needs JavaScript.</noscript>'
             f'<main><h1>{esc(m["title"])}: {esc(ROLE_TITLE[role])}</h1>'
