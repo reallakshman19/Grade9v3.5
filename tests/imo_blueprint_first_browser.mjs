@@ -163,8 +163,68 @@ try {
                 await page.emulateMedia({ media: 'screen' });
                 await page.setViewportSize({ width, height: 900 });
               }
+              // R13: permit the wide SCREEN render to fit to its natural
+              // 794px column *before* changing to narrower print columns.
+              // This probes whether an old screen inline SVG width can survive
+              // the media switch long enough to clip the final factor.
+              await page.setViewportSize({ width: 794, height: 1123 });
+              await page.evaluate(async () => {
+                await document.fonts.ready;
+                await new Promise(resolve => requestAnimationFrame(
+                  () => requestAnimationFrame(resolve)));
+              });
+              printTrace.push(await collectPrintGeometry(9, 'prewarmed-794px-screen'));
+              await page.emulateMedia({ media: 'print' });
+              let prewarmFailure = null;
+              try {
+                // This is the same existing strict containment assertion, not
+                // a relaxed pixel threshold or a swallowed intermittent fail.
+                await assertLastFactorFits('A4-sized print CSS after prewarmed screen');
+              } catch (error) {
+                prewarmFailure = error;
+              }
+              printTrace.push(await collectPrintGeometry(9, 'after-prewarm-print-immediate'));
+              await page.evaluate(async () => {
+                await document.fonts.ready;
+                await new Promise(resolve => requestAnimationFrame(
+                  () => requestAnimationFrame(resolve)));
+              });
+              printTrace.push(await collectPrintGeometry(9, 'after-prewarm-print-two-frames'));
+              if (!prewarmFailure) {
+                try {
+                  await assertLastFactorFits('A4-sized print CSS after prewarm settled');
+                } catch (error) {
+                  prewarmFailure = error;
+                }
+              }
+              fs.writeFileSync(geometryPath, JSON.stringify({
+                variant, width, trialsCompleted: 9,
+                note: '8 strict width transitions plus 1 naturally prewarmed wide screen transition',
+                samples: printTrace, firstFrameAssertionPreserved: true,
+                failure: prewarmFailure?.message ?? null,
+              }, null, 2) + '\\n');
+              if (prewarmFailure) {
+                try {
+                  await page.screenshot({
+                    path: path.join(evidenceDir, 'core2b-five-print-prewarm-failure.png'),
+                    fullPage: true,
+                  });
+                  await page.pdf({
+                    path: path.join(evidenceDir, 'core2b-five-print-prewarm-failure.pdf'),
+                    format: 'A4', printBackground: true, preferCSSPageSize: false,
+                  });
+                } catch (captureError) {
+                  fs.appendFileSync(geometryPath,
+                    '\\nCapture error: ' + String(captureError) + '\\n');
+                }
+                throw prewarmFailure;
+              }
+              await page.emulateMedia({ media: 'screen' });
+              await page.setViewportSize({ width, height: 900 });
               result.print_geometry_diagnostic = {
-                trials: 8, samples: printTrace.length, status: 'PASS_ON_THIS_RUN_ONLY',
+                repeated_screen_print_trials: 8,
+                wide_screen_prewarm_trials: 1,
+                samples: printTrace.length, status: 'PASS_ON_THIS_RUN_ONLY',
                 evidence: path.basename(geometryPath),
                 human_print: 'NOT_RUN',
               };
