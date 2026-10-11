@@ -2552,7 +2552,21 @@ input,select{font-size:max(16px,1rem)}
 """
 
 # Print-only Core1B settings: never embed into generic Core/TEST hub pages.
-CORE1B_PRINT_CSS = "@media print{\nhtml[data-g9-role=\"CORE1B\"]{font-size:16px!important;--g9-space:12px!important}\nhtml[data-g9-role=\"CORE1B\"] body{line-height:1.48!important}\nhtml[data-g9-role=\"CORE1B\"] .g9-concept-triad-bar{display:none!important}\nhtml[data-g9-role=\"CORE1B\"] article[data-g9-role=\"CORE1B\"]{margin:4px 0!important;padding:12px!important}\nhtml[data-g9-role=\"CORE1B\"] article[data-g9-role=\"CORE1B\"] .g9-split{display:block!important}\nhtml[data-g9-role=\"CORE1B\"] article[data-g9-role=\"CORE1B\"] figure[data-g9-figure]{break-inside:avoid-page!important;page-break-inside:avoid!important}\nhtml[data-g9-role=\"CORE1B\"] footer{position:static!important;bottom:auto!important;left:auto!important;padding:0!important;break-before:auto!important;font-size:14px!important;background:#fff!important}\n}\n"
+CORE1B_PRINT_CSS = """@media print{
+/* Core1B-only print flow. The page height and learner text-size floor are unchanged. */
+html[data-g9-role="CORE1B"]{font-size:16px!important;--g9-space:8px!important}
+html[data-g9-role="CORE1B"] body{line-height:1.4!important}
+html[data-g9-role="CORE1B"] main{padding:8px!important}
+html[data-g9-role="CORE1B"] main>h1{margin:0 0 8px!important}
+html[data-g9-role="CORE1B"] .g9-concept-triad-bar{display:none!important}
+html[data-g9-role="CORE1B"] article[data-g9-role="CORE1B"]{margin:0!important;padding:8px!important}
+html[data-g9-role="CORE1B"] article[data-g9-role="CORE1B"] .g9-split{display:block!important}
+html[data-g9-role="CORE1B"] article[data-g9-role="CORE1B"] .g9-component{margin:8px 0!important}
+html[data-g9-role="CORE1B"] article[data-g9-role="CORE1B"] figure[data-g9-figure]{break-inside:avoid-page!important;page-break-inside:avoid!important}
+/* Prefer keeping the footer with the final substantive boundary block. */
+html[data-g9-role="CORE1B"] footer{position:static!important;bottom:auto!important;left:auto!important;padding:0!important;margin:0!important;break-before:avoid-page!important;break-inside:avoid-page!important;font-size:14px!important;background:#fff!important}
+}
+"""
 
 # Presentation of the blueprint's components. One rule set per presentation archetype the schema allows
 # (Shared/web/interactive-page-blueprint.schema.json, $defs/presentation); a test keeps the two lists equal.
