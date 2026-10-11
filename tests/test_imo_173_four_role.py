@@ -133,6 +133,32 @@ class TrackAFourRoleTests(unittest.TestCase):
                     [stage],
                 )
 
+    def test_staged_figures_preserve_governed_truth_and_safe_boundary(self):
+        addon = read(ADDON)
+        micro = addon["microtopics"][0]
+        expected = micro["construction_units"][0]["reveal_stage_refs"]
+        source = (ROOT / "TEST/library/figures/core1a-consecutive-divisibility-staged.svg").read_text(
+            encoding="utf-8")
+        root = ET.fromstring(source)
+        self.assertEqual(root.attrib["viewBox"], "0 0 390 594")
+        actual = [node.attrib["data-g9-stage-id"] for node in root.iter()
+                  if "data-g9-stage-id" in node.attrib]
+        self.assertEqual(actual, expected)
+        for fact in ("one is even: factor 2.", "n mod 3 = 0", "n mod 3 = 1",
+                     "n mod 3 = 2", "2 and 3 are coprime",
+                     "so 6 divides the product", "for every n."):
+            self.assertIn(fact, source)
+        boundary = (ROOT / "TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg"
+                    ).read_text(encoding="utf-8")
+        figure = ET.fromstring(boundary)
+        self.assertEqual(figure.attrib["viewBox"], "0 0 430 302")
+        stages = [node.attrib["data-g9-stage-id"] for node in figure.iter()
+                  if "data-g9-stage-id" in node.attrib]
+        self.assertEqual(stages, ["BOUNDARY-TRIPLE-FACTORS", "BOUNDARY-TARGET-12"])
+        self.assertIn("12 divides P(n) for every n?", boundary)
+        for answer_leak in ("n mod 4 != 1", "gcd(24,5)", "counterexample n=1"):
+            self.assertNotIn(answer_leak, boundary)
+
     def test_candidate_goldens_are_real_fixtures_not_blessed_authority(self):
         for path in GOLDENS:
             with self.subTest(golden=path.parent.name):
