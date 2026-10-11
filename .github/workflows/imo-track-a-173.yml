@@ -154,7 +154,7 @@ jobs:
           for index,page in enumerate(reader.pages,1):
               text=' '.join((page.extract_text() or '').split())
               streams=page.get_contents()
-              stream_data=streams.get_data() if streams else b''
+              stream_data=streams.get_data() if streams is not None else b''
               ops=(stream_data.count(b' BT')+stream_data.count(b' Tj')+
                    stream_data.count(b' TJ')+stream_data.count(b' Do'))
               page_info={
@@ -176,7 +176,7 @@ jobs:
               'pdf_sha256':hashlib.sha256(pdf.read_bytes()).hexdigest(),
               'printed_role':'CORE1B',
               'pdf_pages':pages,
-              'status':'BLOCKED_BLANK_OR_LOW_CONTENT_PAGE' if blocked else 'MEASUREMENT_ONLY_NO_HUMAN_APPROVAL',
+              'status':('BLOCKED_VECTOR_DRAWING_ORPHAN' if any(\n                  p['page_content_stream_bytes']>1000 for p in pages if p['page'] in blocked\n              ) else 'BLOCKED_BLANK_OR_LOW_CONTENT_PAGE') if blocked else 'MEASUREMENT_ONLY_NO_HUMAN_APPROVAL',
               'suspect_pages':blocked,
               'key_mode':'NEVER_INVOKED',
               'key_uploaded':False,
