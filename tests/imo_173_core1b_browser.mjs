@@ -46,7 +46,7 @@ async function geometry(page) {
       const r = el.getBoundingClientRect();
       return r.width > 0 && r.right > viewport + 1 && r.left < viewport;
     }).map(snapshot).sort((a,b) => b.overhang - a.overhang).slice(0, 15);
-    const figures = [...document.querySelectorAll('figure[data-g9-stage="PRE_ATTEMPT"]')]
+    const figures = [...document.querySelectorAll('figure[data-g9-figure]')]
       .filter(displayed).map(f => {
         const host = f.getBoundingClientRect();
         const svg = f.querySelector('svg');
@@ -57,7 +57,7 @@ async function geometry(page) {
       });
     return {viewport, documentScrollWidth: document.documentElement.scrollWidth,
       overflowing: document.documentElement.scrollWidth > viewport + 1,
-      offending_elements: clipped, safe_figures: figures};
+      offending_elements: clipped, visible_figures: figures};
   });
 }
 
@@ -99,7 +99,7 @@ try {
     // Collect all four actual role geometries and candidate screenshots at every
     // width, including form hitbox/figure boundaries. These are automated only.
     const beforeGeometry = await geometry(page);
-    assert.ok(!beforeGeometry.safe_figures.some(f => f.locallyClipped),
+    assert.ok(!beforeGeometry.visible_figures.some(f => f.locallyClipped),
       'Core1B attempt-safe figure clips within its own wrapper at ' + width);
     const roleGeometry = {core1b: beforeGeometry};
     for (const role of ['core2a', 'core1a', 'core2b']) {
@@ -109,7 +109,7 @@ try {
       roleGeometry[role] = await geometry(rolePage);
       assert.ok(!roleGeometry[role].overflowing,
         role + ' document overflow at ' + width);
-      assert.ok(!roleGeometry[role].safe_figures.some(f => f.locallyClipped),
+      assert.ok(!roleGeometry[role].visible_figures.some(f => f.locallyClipped),
         role + ' safe figure clipping at ' + width);
       await rolePage.screenshot({
         path: path.join(folder, role + '-' + width + '-before.png'), fullPage: true
