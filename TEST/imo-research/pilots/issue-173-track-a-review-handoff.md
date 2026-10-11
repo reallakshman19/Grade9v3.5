@@ -39,7 +39,7 @@ Both new manifests explicitly declare `CORE2A → CORE1A → CORE1B → CORE2B`,
 
 **Candidate golden exemplars only:** `G-MATH-LINEAR-CONSTRAINT` demonstrates T01/T02/T03/T06/T07/T09/T10/T12 across roles; `G-CORE2-R2` informs source-question attempt/hint closure technique T01/T05/T13/T15 but **cannot imply sourced IMO content**. Neither is Owner-blessed. Golden builds use `Shared/tools/build_golden.py` and the one `render_core.py`.
 
-The proposed exact-head [workflow](../../.github/workflows/imo-track-a-173.yml) does the following:
+The proposed exact-head [workflow](../../../.github/workflows/imo-track-a-173.yml) does the following:
 
 - Builds both **actual candidate golden HTML families** using the canonical renderer and records role-page anatomy and output digests, then renders both four-role variants at `REFERENCE` depth.
 - Saves `imo-173-golden-semantic-matrix.json` with per-variant checks and statuses `PASS | FAIL | NOT_RUN`, the current PR HEAD, main pin, manifest/golden/blueprint/renderer digests. It compares semantic criteria, **not** cross-domain HTML byte identities.
