@@ -1,0 +1,241 @@
+name: IMO Track A #173 — held four-role golden and real A4 evidence
+
+on:
+  pull_request:
+    paths:
+      - 'TEST/products/imo-g9-track-a-four-role-*.manifest.json'
+      - 'TEST/library/figures/core1b-three-factor-attempt-safe.svg'
+      - 'TEST/library/figures/core2a-three-consecutive-attempt-safe.svg'
+      - 'TEST/library/figures/core1a-consecutive-divisibility-staged.svg'
+      - 'TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg'
+      - 'tests/test_imo_173_four_role.py'
+      - 'tests/benchmark_imo_173_golden.py'
+      - 'tests/imo_173_core1b_browser.mjs'
+      - 'tests/check_imo_173_a4.py'
+      - 'TEST/imo-research/pilots/issue-173-track-a-review-handoff.md'
+      - '.github/workflows/imo-track-a-173.yml'
+permissions:
+  contents: read
+
+jobs:
+  authored-four-role:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install canonical renderer and real print evidence parsers
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5' 'pypdf>=5,<7'
+      - name: Four-role TEST only, dual variants, source exclusion and canonical record authority
+        run: python -m unittest discover -s tests -p 'test_imo_173_four_role.py' -v
+      - name: Render both actual candidate golden families with the unchanged canonical renderer
+        run: |
+          python Shared/tools/build_golden.py --id G-MATH-LINEAR-CONSTRAINT
+          python Shared/tools/build_golden.py --id G-CORE2-R2
+      - name: Real rendered semantic / technique comparison, SHA bound
+        run: |
+          python tests/benchmark_imo_173_golden.py \
+            "${{ github.event.pull_request.head.sha }}" \
+            "$RUNNER_TEMP/imo-173-golden-semantic-matrix.json"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned Chromium for actual browser and PDFs
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.0
+          npx playwright install --with-deps chromium
+      - name: Build both review-only four-role learner sites through sole renderer
+        run: |
+          site="$RUNNER_TEMP/imo-173-site"
+          mkdir -p "$site/css" "$site/js" "$site/standalone/research/five" "$site/standalone/research/boundary"
+          cp public/css/modern-learner.css public/css/tablet-12-7.css "$site/css/"
+          cp public/js/display-controls.js public/js/site-header.js "$site/js/"
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-g9-track-a-four-role-five-120.manifest.json \
+            --out "$site/standalone/research/five" --draft --reference
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-g9-track-a-four-role-boundary-12.manifest.json \
+            --out "$site/standalone/research/boundary" --draft --reference
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          for v in ('five', 'boundary'):
+              p = Path(os.environ['RUNNER_TEMP'])/'imo-173-site/standalone/research'/v
+              r = json.loads((p/'render-receipt.json').read_text())
+              assert r['output_roles'] == ['CORE2A', 'CORE1A', 'CORE1B', 'CORE2B']
+              assert set(r['pages']) == {'index.html','core2a.html','core1a.html','core1b.html','core2b.html'}
+              assert not r.get('gaps') and not r.get('advisories')
+              print(v, 'TEST CANDIDATE FOUR ROLE', r['digest'])
+          PY
+      - name: A/B real Chromium, both solution states, Core1B gates and responsive screenshots
+        run: |
+          site="$RUNNER_TEMP/imo-173-site/standalone/research"
+          five="$RUNNER_TEMP/imo-173-evidence-five"
+          boundary="$RUNNER_TEMP/imo-173-evidence-boundary"
+          node tests/imo_blueprint_first_browser.mjs "$site/five" "$five" five
+          node tests/imo_173_core1b_browser.mjs "$site/five" "$five" five
+          node tests/imo_blueprint_first_browser.mjs "$site/boundary" "$boundary" boundary
+          node tests/imo_173_core1b_browser.mjs "$site/boundary" "$boundary" boundary
+      - name: Deny transfer and Core1B pre-commit solution leakage in actual A4 PDFs
+        run: |
+          python tests/check_imo_164_print.py \
+            "$RUNNER_TEMP/imo-173-evidence-five" \
+            "$RUNNER_TEMP/imo-173-evidence-boundary"
+          python tests/check_imo_173_a4.py \
+            "$RUNNER_TEMP/imo-173-evidence-five" \
+            "$RUNNER_TEMP/imo-173-evidence-boundary"
+      - name: Hold labelled exact-head evidence for Owner and named independent reviewers
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-173-four-role-candidate-golden-browser-a4
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/imo-173-golden-semantic-matrix.json
+            ${{ runner.temp }}/imo-173-evidence-five/
+            ${{ runner.temp }}/imo-173-evidence-boundary/
+            ${{ runner.temp }}/imo-173-site/standalone/research/five/render-receipt.json
+            ${{ runner.temp }}/imo-173-site/standalone/research/boundary/render-receipt.json
+            golden/units/G-MATH-LINEAR-CONSTRAINT/rendered/
+            golden/units/G-CORE2-R2/rendered/
+
+
+  core1b-offline-print-diagnostic:
+    name: Core1B offline learner PDF geometry (measurement only; HOLD)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing renderer and PDF diagnosis prerequisites
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5' 'pypdf>=5,<7'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install same pinned Chromium as existing TEST prints
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.0
+          npx playwright install --with-deps chromium
+      - name: Generate inherited three-role TEST learner PDFs ONLY, never KEY
+        run: |
+          python Shared/tools/deploy_test.py product \
+            TEST/products/core1b-authored-reconstruction-journey.manifest.json --no-mirror
+      - name: Capture exact learner PDF pages including blank-page content streams
+        env:
+          TRACK_A_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import re
+          from pathlib import Path
+          from pypdf import PdfReader
+
+          root=Path('public/test/products/core1b-authored-reconstruction-journey')
+          pdf=root/'core1b.pdf'
+          receipt=json.loads((root/'deploy-receipt.json').read_text())
+          assert receipt['subject']=='TEST' and receipt['draft'] is True
+          assert receipt['accepted'] is False and receipt['selection_counts']['core2']==0
+          assert not list(root.rglob('*.key.pdf')), 'Key PDF must NEVER be present in uploaded learner artifacts'
+          assert not (root/'core1b-evidence'/'offline-key').exists()
+          reader=PdfReader(pdf)
+          pages=[]
+          for index,page in enumerate(reader.pages,1):
+              text=' '.join((page.extract_text() or '').split())
+              streams=page.get_contents()
+              stream_data=streams.get_data() if streams is not None else b''
+              ops=(stream_data.count(b' BT')+stream_data.count(b' Tj')+
+                   stream_data.count(b' TJ')+stream_data.count(b' Do'))
+              page_info={
+                  'page':index,
+                  'mediabox_pt':[round(float(page.mediabox.width),2),round(float(page.mediabox.height),2)],
+                  'text_word_count':len(re.findall(r'[A-Za-z]{2,}',text)),
+                  'text_char_count':len(text),
+                  'page_content_stream_bytes':len(stream_data),
+                  'content_operator_indicators':ops,
+                  'has_predict':'Predict' in text,
+                  'has_boundary':'Boundary test' in text
+              }
+              pages.append(page_info)
+          blocked=[p['page'] for p in pages if p['text_word_count']<35]
+          report={
+              'schema':'imo-173-core1b-learner-pdf-geometry/v1',
+              'exact_head':os.environ['TRACK_A_HEAD_SHA'],
+              'source_manifest':'TEST/products/core1b-authored-reconstruction-journey.manifest.json',
+              'pdf_sha256':hashlib.sha256(pdf.read_bytes()).hexdigest(),
+              'printed_role':'CORE1B',
+              'pdf_pages':pages,
+              'status':('BLOCKED_VECTOR_DRAWING_ORPHAN' if any(
+                  p['page_content_stream_bytes']>1000 for p in pages if p['page'] in blocked
+              ) else 'BLOCKED_BLANK_OR_LOW_CONTENT_PAGE') if blocked else 'MEASUREMENT_ONLY_NO_HUMAN_APPROVAL',
+              'suspect_pages':blocked,
+              'key_mode':'NEVER_INVOKED',
+              'key_uploaded':False,
+              'human_physical_print':'NOT_RUN',
+              'independent_qrtreview':'NOT_RUN',
+              'release':'HOLD'
+          }
+          out=Path(os.environ['RUNNER_TEMP'])/'imo-173-core1b-offline-report.json'
+          out.write_text(json.dumps(report,indent=2)+'\n')
+          print('CORE1B_LEARNER_OFFLINE_PAGE_DIAG',json.dumps(report))
+          PY
+      - name: Preserve learner-only offline PDF and metadata, never protected key
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-173-core1b-offline-learner-only-diagnostic
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/imo-173-core1b-offline-report.json
+            public/test/products/core1b-authored-reconstruction-journey/core1b.pdf
+
+  pinned-historical-fixture-differential:
+    name: Pinned historical goldens + assurance identity deltas (HOLD-only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Original main fixture baseline
+        uses: actions/checkout@v4
+        with:
+          ref: 778eb35a70517a46108ad0a5dc01dfc89f61c0e3
+          path: baseline
+      - name: Exact proposed Track A commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install unchanged renderer dependencies
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5'
+      - name: Reuse PR 166's baseline comparison and original 21 HTML fixture identities
+        run: |
+          python candidate/tests/check_imo_164_baseline_differential.py \
+            baseline candidate "$RUNNER_TEMP/imo-173-historical-html-diff.json"
+      - name: Reuse PR 166's complete canonical/Pages baseline comparison
+        run: |
+          python candidate/tests/check_imo_164_assurance_baseline.py \
+            baseline candidate "$RUNNER_TEMP/imo-173-historical-assurance-diff.json"
+      - name: Preserve historical comparison independently of absolute native red gates
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: imo-173-historical-21-page-and-assurance-comparison
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/imo-173-historical-html-diff.json
+            ${{ runner.temp }}/imo-173-historical-assurance-diff.json
