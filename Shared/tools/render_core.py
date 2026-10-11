@@ -463,11 +463,12 @@ def para(text) -> str:
     return f"<p>{esc(text)}</p>" if text else ""
 
 
-def secondary_disclosure(summary: str, body: str, kind: str) -> str:
+def secondary_disclosure(summary: str, body: str, kind: str, *, initially_open: bool = False) -> str:
     """Progressive disclosure for useful-but-secondary learner material; closed by default."""
     if not body:
         return ""
-    return (f'<details class="g9-secondary-disclosure" data-g9-secondary="{esc(kind)}">'
+    opened = " open" if initially_open else ""
+    return (f'<details class="g9-secondary-disclosure" data-g9-secondary="{esc(kind)}"{opened}>'
             f'<summary>{esc(summary)}</summary><div class="g9-secondary-body">{body}</div></details>')
 
 
@@ -1604,6 +1605,7 @@ def core1a(ctx: Ctx, m: dict) -> str:
                 "Formula reference · meaning and conditions",
                 block("equation_matrix", relation_matrix, title="Equations and validity"),
                 "core1a-equations",
+                initially_open=ctx.manifest.get("subject") == "TEST",
             )),
             "STAGED_VISUAL": unit_part("STAGED_VISUAL", figure_html, items=_stages_of(figure_html), band=unit_band),
             "MODEL_SCOPE_PROBE": unit_part("MODEL_SCOPE_PROBE", primary_probe),
@@ -2565,6 +2567,8 @@ html[data-g9-role="CORE1B"] main{padding:8px!important}
 html[data-g9-role="CORE1B"] main>h1{margin:0 0 8px!important}
 html[data-g9-role="CORE1B"] article[data-g9-role="CORE1B"]{margin:0!important;padding:8px!important}
 html[data-g9-role="CORE1B"] article[data-g9-role="CORE1B"] .g9-component{margin:8px 0!important}
+/* The attempt-safe SVG uses 29px viewBox labels: at 240/430 scale labels stay 16px+. */
+html[data-g9-role="CORE1B"] figure[data-g9-figure] svg.g9-core1b-print-geometry{width:240px!important;max-width:100%!important;height:auto!important}
 html[data-g9-role="CORE1B"] footer{margin:0!important;break-inside:avoid-page!important}
 }
 """
