@@ -1,7 +1,10 @@
 """Scoped Track B source-reference navigation tests; original SOF text is not copied."""
 from __future__ import annotations
 
+import json
+import re
 import unittest
+from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -100,6 +103,49 @@ class TrackBSourceReferenceEntryTests(unittest.TestCase):
                         self.assertIn(
                             f'id="{source_id}" data-kind="source"', group,
                             "no fabricated or cross-topic question identifier"
+                        )
+
+    def test_topic_document_urls_match_frozen_research_references(self) -> None:
+        """Prevent a real question ID from silently pointing to the wrong paper."""
+        source_index = json.loads((
+            ROOT / "Mathematics" / "research" / "imo-g9-topic-browser.v1.json"
+        ).read_text(encoding="utf-8"))
+        records = {
+            item["id"]: item
+            for item in source_index["records"]
+            if item["kind"] == "SOF_SOURCE_REFERENCE_ONLY"
+        }
+        for mirror in ("public", "docs"):
+            browser = (
+                ROOT / mirror / "mathematics" / "imo-grade9" / "index.html"
+            ).read_text(encoding="utf-8")
+            for workspace_name, topic_anchor, category in TOPICS:
+                with self.subTest(mirror=mirror, topic=workspace_name):
+                    marker = f'id="{topic_anchor}" data-topic="{category}"'
+                    self.assertIn(marker, browser)
+                    group = browser.split(marker, 1)[1].split("</section>", 1)[0]
+                    source_ids = re.findall(
+                        r'<li class="imo-item imo-source" id="([^"]+)"',
+                        group,
+                    )
+                    self.assertGreater(len(source_ids), 0)
+                    self.assertEqual(
+                        set(source_ids),
+                        {id for id, item in records.items() if item["topic_id"] == category},
+                    )
+                    for id in source_ids:
+                        card = group.split(
+                            f'id="{id}" data-kind="source"', 1
+                        )[1].split("</li>", 1)[0]
+                        links = re.findall(r'<a href="([^"]+)"', card)
+                        self.assertEqual(len(links), 1, id)
+                        url = unescape(links[0])
+                        self.assertEqual(url, records[id]["source_pdf_url"], id)
+                        self.assertEqual(urlsplit(url).scheme, "https", id)
+                        self.assertIn(
+                            urlsplit(url).hostname,
+                            {"iswkoman.com", "www.iswkoman.com", "sofworld.org"},
+                            id,
                         )
 
     def test_each_topic_workspace_has_identical_public_and_docs_mirrors(self) -> None:
