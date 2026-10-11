@@ -9,6 +9,7 @@ import importlib.util
 import json
 import re
 import unittest
+from xml.etree import ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -91,6 +92,46 @@ class TrackAFourRoleTests(unittest.TestCase):
                 product_coverage.validate(manifest, product_manifest.derivable([addon], []))
         for original in ORIGINALS:
             self.assertEqual(read(original)["output_roles"], ["CORE2A", "CORE1A", "CORE2B"])
+
+    def test_existing_authored_figures_are_two_row_and_attempt_safe(self):
+        # Historical #164 failure: scrollWidth stayed zero while a figure clipped.
+        # A neutral three-factor representation must fit without weakening CSS
+        # readability constraints or embedding any inference in a preattempt SVG.
+        examples = (
+            ("TEST/library/figures/core1b-three-factor-attempt-safe.svg",
+             "CORE1B-GIVEN-FACTORS", ("t − 2", "t − 1", ">t<")),
+            ("TEST/library/figures/core2a-three-consecutive-attempt-safe.svg",
+             "PRACTICE-FACTORS-ONLY", ("m + 1", "m + 2", "m + 3")),
+        )
+        for filename, stage, symbols in examples:
+            with self.subTest(asset=filename):
+                source = (ROOT / filename).read_text(encoding="utf-8")
+                root = ET.fromstring(source)
+                self.assertEqual(root.attrib["viewBox"], "0 0 430 264")
+                self.assertEqual(root.attrib.get("width"), "100%")
+                self.assertTrue(all(term in source for term in symbols))
+                self.assertNotIn("divisible by", source.lower())
+                self.assertNotIn("remainder", source.lower())
+                self.assertNotIn("coprime", source.lower())
+                rectangles = [
+                    item for item in root.iter()
+                    if item.tag.endswith("rect")
+                ]
+                self.assertEqual(len(rectangles), 3)
+                self.assertEqual(sum("data-g9-final-factor" in item.attrib
+                                     for item in rectangles), 1)
+                for item in rectangles:
+                    x, y, width, height = (float(item.attrib[k])
+                                            for k in ("x", "y", "width", "height"))
+                    self.assertGreaterEqual(x, 0)
+                    self.assertGreaterEqual(y, 0)
+                    self.assertLessEqual(x + width, 430)
+                    self.assertLessEqual(y + height, 264)
+                self.assertEqual(
+                    [item.attrib["data-g9-stage-id"] for item in root.iter()
+                     if "data-g9-stage-id" in item.attrib],
+                    [stage],
+                )
 
     def test_candidate_goldens_are_real_fixtures_not_blessed_authority(self):
         for path in GOLDENS:
