@@ -154,7 +154,7 @@ class TrackAFourRoleTests(unittest.TestCase):
             self.assertIn('data-g9-block="boundary_test"', b)
             self.assertIn("data-g9-attempt-box", b)
             self.assertEqual(len(re.findall(
-                r'<(?:div|details)\\b[^>]*data-g9-attempt-stage="boundary"', b
+                r'<(?:div|details)\b[^>]*data-g9-attempt-stage="boundary"', b
             )), 2)
             self.assertIn("<template data-g9-payload=", b)
             before = VisibleText()
