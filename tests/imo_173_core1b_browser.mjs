@@ -12,6 +12,55 @@ const variant = process.argv[4] || 'five';
 assert.ok(['five', 'boundary'].includes(variant));
 assert.ok(fs.existsSync(path.join(site, 'core1b.html')), 'actual Core1B render required');
 fs.mkdirSync(folder, {recursive: true});
+// Geometry in the real rendered DOM, not merely document scrollWidth. The old
+// #164 five-factor clipping was invisible to a root overflow-only assertion.
+async function geometry(page) {
+  return await page.evaluate(() => {
+    const viewport = document.documentElement.clientWidth;
+    const displayed = el => {
+      for (let p = el; p && p.nodeType === 1; p = p.parentElement) {
+        if (p.tagName === 'TEMPLATE' || getComputedStyle(p).display === 'none') return false;
+      }
+      return true;
+    };
+    const snapshot = el => {
+      const r = el.getBoundingClientRect();
+      const host = el.closest('figure');
+      const h = host?.getBoundingClientRect();
+      return {
+        tag: el.tagName.toLowerCase(), role: el.getAttribute('data-g9-role'),
+        name: (el.getAttribute('class') || '').toString().slice(0, 90),
+        dataStage: el.getAttribute('data-g9-stage'),
+        right: Math.round(r.right * 10) / 10,
+        left: Math.round(r.left * 10) / 10,
+        width: Math.round(r.width * 10) / 10,
+        overhang: Math.max(0, Math.round((r.right - viewport) * 10) / 10),
+        figureRight: h ? Math.round(h.right * 10) / 10 : null,
+        figureOverhang: h ? Math.round((r.right - h.right) * 10) / 10 : null,
+        cssOverflowX: getComputedStyle(el).overflowX,
+        scrollWidth: el.scrollWidth, clientWidth: el.clientWidth,
+      };
+    };
+    const elements = [...document.querySelectorAll('body *')].filter(displayed);
+    const clipped = elements.filter(el => {
+      const r = el.getBoundingClientRect();
+      return r.width > 0 && r.right > viewport + 1 && r.left < viewport;
+    }).map(snapshot).sort((a,b) => b.overhang - a.overhang).slice(0, 15);
+    const figures = [...document.querySelectorAll('figure[data-g9-stage="PRE_ATTEMPT"]')]
+      .filter(displayed).map(f => {
+        const host = f.getBoundingClientRect();
+        const svg = f.querySelector('svg');
+        const shape = svg?.getBoundingClientRect();
+        return {figureRight: host.right, figureWidth: host.width,
+          svgRight: shape?.right ?? null, svgWidth: shape?.width ?? null,
+          locallyClipped: shape ? shape.right > host.right + 2 : null};
+      });
+    return {viewport, documentScrollWidth: document.documentElement.scrollWidth,
+      overflowing: document.documentElement.scrollWidth > viewport + 1,
+      offending_elements: clipped, safe_figures: figures};
+  });
+}
+
 const browser = await chromium.launch({headless: true});
 const report = {variant, status: 'CANDIDATE_AUTOMATED_BROWSER_ONLY',
   widths: [320, 390, 768, 1280], checks: [], human_acceptance: 'NOT_RUN'};
@@ -47,6 +96,28 @@ try {
       'protected prediction answer visible before attempt');
     assert.ok(!visibleBefore.includes('gcd(24,5)=1'));
     assert.ok(!visibleBefore.includes('n mod 4 != 1'));
+    // Collect all four actual role geometries and candidate screenshots at every
+    // width, including form hitbox/figure boundaries. These are automated only.
+    const beforeGeometry = await geometry(page);
+    assert.ok(!beforeGeometry.safe_figures.some(f => f.locallyClipped),
+      'Core1B attempt-safe figure clips within its own wrapper at ' + width);
+    const roleGeometry = {core1b: beforeGeometry};
+    for (const role of ['core2a', 'core1a', 'core2b']) {
+      const rolePage = await context.newPage();
+      await rolePage.goto(pathToFileURL(path.join(site, role + '.html')).href);
+      await rolePage.waitForLoadState('load');
+      roleGeometry[role] = await geometry(rolePage);
+      assert.ok(!roleGeometry[role].overflowing,
+        role + ' document overflow at ' + width);
+      assert.ok(!roleGeometry[role].safe_figures.some(f => f.locallyClipped),
+        role + ' safe figure clipping at ' + width);
+      await rolePage.screenshot({
+        path: path.join(folder, role + '-' + width + '-before.png'), fullPage: true
+      });
+      await rolePage.close();
+    }
+    report.checks.push({width, status: 'PASS_AUTOMATED', geometry: roleGeometry,
+      distinct_boundary_gate: true, downstream_fails_closed: width === 390 ? true : 'NOT_RUN'});
     await page.screenshot({path: path.join(folder, 'core1b-' + width + '-before.png'),
       fullPage: true});
 
@@ -122,19 +193,17 @@ try {
         'Core1B refresh must fail closed');
     }
     assert.deepEqual(errors, [], 'uncaught browser errors');
-    report.checks.push({width, status: 'PASS_AUTOMATED', no_overflow: true,
-      distinct_boundary_gate: true, downstream_fails_closed: width === 390 ? true : 'NOT_RUN'});
     await context.close();
   }
   // Narrow CSS viewport is a zoom stress proxy, NOT a manual 200% browser zoom verdict.
   const context = await browser.newContext({viewport: {width: 195, height: 450}});
   const page = await context.newPage();
   await page.goto(pathToFileURL(path.join(site, 'core1b.html')).href);
+  const reflowGeometry = await geometry(page);
   report.zoom_200_proxy = {
     mode: '195_CSS_PX_WIDTH_PROXY_FOR_390_AT_200_PERCENT',
-    horizontal_overflow: await page.evaluate(
-      () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1),
-    status: 'AUTOMATED_ONLY',
+    horizontal_overflow: reflowGeometry.overflowing,
+    geometry: reflowGeometry, status: 'AUTOMATED_ONLY_NOT_REAL_BROWSER_ZOOM',
   };
   await page.screenshot({path: path.join(folder, 'core1b-200pct-proxy.png'), fullPage: true});
   await context.close();
