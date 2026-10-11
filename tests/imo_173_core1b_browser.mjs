@@ -105,6 +105,14 @@ try {
       } finally {
         await page.emulateMedia({media: 'screen'});
       }
+      // Print the two non-transfer pages as actual A4, without forcing answer unlock.
+      for (const role of ['core2a', 'core1a']) {
+        const printPage = await context.newPage();
+        await printPage.goto(pathToFileURL(path.join(site, role + '.html')).href);
+        await printPage.pdf({path: path.join(folder, role + '-A4-preview.pdf'),
+          format: 'A4', printBackground: true});
+        await printPage.close();
+      }
       // Returning to Core2B must NOT inherit reconstructed/Core1B commitments.
       await page.goto(pathToFileURL(path.join(site, 'core2b.html')).href);
       assert.ok(await page.locator('article[data-g9-role="CORE2B"] details[data-requires-attempt][data-locked]').count() > 0,
