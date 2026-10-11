@@ -106,6 +106,97 @@ jobs:
             golden/units/G-CORE2-R2/rendered/
 
 
+  core1b-offline-print-diagnostic:
+    name: Core1B offline learner PDF geometry (measurement only; HOLD)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing renderer and PDF diagnosis prerequisites
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5' 'pypdf>=5,<7'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install same pinned Chromium as existing TEST prints
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.0
+          npx playwright install --with-deps chromium
+      - name: Generate inherited three-role TEST learner PDFs ONLY, never KEY
+        run: |
+          python Shared/tools/deploy_test.py product \
+            TEST/products/core1b-authored-reconstruction-journey.manifest.json --no-mirror
+      - name: Capture exact learner PDF pages including blank-page content streams
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import re
+          from pathlib import Path
+          from pypdf import PdfReader
+
+          root=Path('public/test/products/core1b-authored-reconstruction-journey')
+          pdf=root/'core1b.pdf'
+          receipt=json.loads((root/'deploy-receipt.json').read_text())
+          assert receipt['subject']=='TEST' and receipt['draft'] is True
+          assert receipt['accepted'] is False and receipt['selection_counts']['core2']==0
+          assert not list(root.rglob('*.key.pdf')), 'Key PDF must NEVER be present in uploaded learner artifacts'
+          assert not (root/'core1b-evidence'/'offline-key').exists()
+          reader=PdfReader(pdf)
+          pages=[]
+          for index,page in enumerate(reader.pages,1):
+              text=' '.join((page.extract_text() or '').split())
+              streams=page.get_contents()
+              stream_data=streams.get_data() if streams else b''
+              ops=(stream_data.count(b' BT')+stream_data.count(b' Tj')+
+                   stream_data.count(b' TJ')+stream_data.count(b' Do'))
+              page_info={
+                  'page':index,
+                  'mediabox_pt':[round(float(page.mediabox.width),2),round(float(page.mediabox.height),2)],
+                  'text_word_count':len(re.findall(r'[A-Za-z]{2,}',text)),
+                  'text_char_count':len(text),
+                  'page_content_stream_bytes':len(stream_data),
+                  'content_operator_indicators':ops,
+                  'has_predict':'Predict' in text,
+                  'has_boundary':'Boundary test' in text
+              }
+              pages.append(page_info)
+          blocked=[p['page'] for p in pages if p['text_word_count']<35]
+          report={
+              'schema':'imo-173-core1b-learner-pdf-geometry/v1',
+              'exact_head':os.environ['GITHUB_SHA'],
+              'source_manifest':'TEST/products/core1b-authored-reconstruction-journey.manifest.json',
+              'pdf_sha256':hashlib.sha256(pdf.read_bytes()).hexdigest(),
+              'printed_role':'CORE1B',
+              'pdf_pages':pages,
+              'status':'BLOCKED_BLANK_OR_LOW_CONTENT_PAGE' if blocked else 'MEASUREMENT_ONLY_NO_HUMAN_APPROVAL',
+              'suspect_pages':blocked,
+              'key_mode':'NEVER_INVOKED',
+              'key_uploaded':False,
+              'human_physical_print':'NOT_RUN',
+              'independent_qrtreview':'NOT_RUN',
+              'release':'HOLD'
+          }
+          out=Path(os.environ['RUNNER_TEMP'])/'imo-173-core1b-offline-report.json'
+          out.write_text(json.dumps(report,indent=2)+'\n')
+          print('CORE1B_LEARNER_OFFLINE_PAGE_DIAG',json.dumps(report))
+          PY
+      - name: Preserve learner-only offline PDF and metadata, never protected key
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-173-core1b-offline-learner-only-diagnostic
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/imo-173-core1b-offline-report.json
+            public/test/products/core1b-authored-reconstruction-journey/core1b.pdf
+
   pinned-historical-fixture-differential:
     name: Pinned historical goldens + assurance identity deltas (HOLD-only)
     runs-on: ubuntu-latest
