@@ -68,6 +68,38 @@ def measure_html(page: str) -> dict:
     }
 
 
+
+# Compare real, rendered candidate anatomy with the features shared by BOTH
+# candidate exemplars; content and exact count equality are not promised.
+# This is a structural crosswalk, not a CSS layout, screenshot or AT verdict.
+GOLDEN_ANATOMY_METRICS = (
+    "articles", "main_regions", "attempt_boxes", "locked_disclosures",
+    "inert_payloads", "figure_instances", "landmark_navs",
+)
+
+
+def golden_role_crosswalk(goldens: dict, role: str, candidate_html: str) -> dict:
+    page = role.lower() + ".html"
+    references = {gid: data["pages"].get(page) for gid, data in goldens.items()}
+    measured = measure_html(candidate_html)
+    unavailable = sorted(gid for gid, features in references.items() if features is None)
+    shared_present = [
+        metric for metric in GOLDEN_ANATOMY_METRICS
+        if not unavailable and all(reference[metric] > 0 for reference in references.values())
+    ]
+    missing = [metric for metric in shared_present if measured[metric] == 0]
+    return {
+        "role": role,
+        "actual": measured,
+        "golden_refs": references,
+        "required_common_present": shared_present,
+        "missing_common_present": missing,
+        "missing_golden_role_pages": unavailable,
+        "passes": not unavailable and bool(shared_present) and not missing,
+        "comparison_limit": "Shared nonzero rendered HTML features only; NOT visual/zoom/AT acceptance",
+    }
+
+
 def score(rows: list, criterion: str, expectation: str, good: bool,
           measured, golden: str = "G-MATH-LINEAR-CONSTRAINT") -> None:
     rows.append({
@@ -116,6 +148,11 @@ def evaluate(head: str) -> dict:
             found = re.findall(r'<article[^>]*data-g9-role="([^"]+)"', body)
             score(rows, "ROLE_" + role, "exact semantic article role in shared renderer",
                   found == [role], {"roles": found, **measure_html(body)})
+            crosswalk = golden_role_crosswalk(goldens, role, body)
+            score(rows, "GOLDEN_RENDERED_ANATOMY_" + role,
+                  "retain nonzero HTML semantic markers shared by both rendered candidate exemplars",
+                  crosswalk["passes"], crosswalk,
+                  "G-MATH-LINEAR-CONSTRAINT + G-CORE2-R2")
         core1b = pages.get("core1b.html", "")
         score(rows, "T01_T06_T10_T12_RECONSTRUCT", "two distinct attempt gates; boundary and misconception repair",
               len(re.findall(r'<div\b[^>]*data-g9-attempt-box', core1b)) == 2
