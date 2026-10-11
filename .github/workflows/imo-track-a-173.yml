@@ -176,7 +176,9 @@ jobs:
               'pdf_sha256':hashlib.sha256(pdf.read_bytes()).hexdigest(),
               'printed_role':'CORE1B',
               'pdf_pages':pages,
-              'status':('BLOCKED_VECTOR_DRAWING_ORPHAN' if any(\n                  p['page_content_stream_bytes']>1000 for p in pages if p['page'] in blocked\n              ) else 'BLOCKED_BLANK_OR_LOW_CONTENT_PAGE') if blocked else 'MEASUREMENT_ONLY_NO_HUMAN_APPROVAL',
+              'status':('BLOCKED_VECTOR_DRAWING_ORPHAN' if any(
+                  p['page_content_stream_bytes']>1000 for p in pages if p['page'] in blocked
+              ) else 'BLOCKED_BLANK_OR_LOW_CONTENT_PAGE') if blocked else 'MEASUREMENT_ONLY_NO_HUMAN_APPROVAL',
               'suspect_pages':blocked,
               'key_mode':'NEVER_INVOKED',
               'key_uploaded':False,
