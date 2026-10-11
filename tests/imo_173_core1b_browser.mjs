@@ -114,6 +114,34 @@ try {
       await rolePage.screenshot({
         path: path.join(folder, role + '-' + width + '-before.png'), fullPage: true
       });
+      // An initial stage alone cannot prove that later Core1A construction
+      // or Core2B safe figure stages remain visible and uncropped.
+      const chips = rolePage.locator('figure[data-g9-figure] [data-g9-stage-goto]');
+      const count = await chips.count();
+      if (role === 'core1a') {
+        assert.equal(count, 3, 'Core1A three construction stages must remain navigable');
+      }
+      if (count) {
+        roleGeometry[role].stages = [];
+        for (let i = 0; i < count; i++) {
+          await chips.nth(i).click();
+          const staged = await geometry(rolePage);
+          assert.ok(!staged.overflowing,
+            role + ' stage ' + (i+1) + ' document overflow at ' + width);
+          assert.ok(!staged.visible_figures.some(f => f.locallyClipped),
+            role + ' stage ' + (i+1) + ' locally cropped at ' + width);
+          assert.equal(await chips.nth(i).getAttribute('aria-pressed'), 'true',
+            role + ' stage ' + (i+1) + ' did not activate');
+          roleGeometry[role].stages.push({index: i + 1, status: 'PASS_AUTOMATED',
+            figures: staged.visible_figures});
+          if (width === 320 || width === 390) {
+            await rolePage.screenshot({
+              path: path.join(folder, role + '-' + width + '-stage-' + (i+1) + '.png'),
+              fullPage: true
+            });
+          }
+        }
+      }
       await rolePage.close();
     }
     report.checks.push({width, status: 'PASS_AUTOMATED', geometry: roleGeometry,
