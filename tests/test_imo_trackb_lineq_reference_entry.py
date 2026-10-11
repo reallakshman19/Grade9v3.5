@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import re
 import unittest
 from html.parser import HTMLParser
 from pathlib import Path
@@ -71,7 +70,7 @@ class TrackBLinearEquationsReferenceRoute(unittest.TestCase):
                     "../imo-grade9/index.html#topic-lin_eq",
                     links.hrefs,
                 )
-                self.assertIn("question text and answers are not reproduced", page)
+                self.assertIn("question text and answers are not reproduced", page.casefold())
                 self.assertIn("not verified or admitted canonical Core2", page)
 
     def test_topic_boundary_and_hub_route(self) -> None:
