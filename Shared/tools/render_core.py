@@ -2770,7 +2770,7 @@ q('[data-g9-theme]').forEach(b=>b.onclick=()=>{store.set('theme',b.dataset.g9The
 q('[data-g9-zoom]').forEach(b=>b.onclick=()=>{let z=parseFloat(store.get('zoom')||'1');z=b.dataset.g9Zoom==='inc'?Math.min(1.6,z+0.1):b.dataset.g9Zoom==='dec'?Math.max(0.8,z-0.1):1;store.set('zoom',z.toFixed(1));apply()});
 q('[data-g9-font]').forEach(b=>b.onclick=()=>q('[data-g9-zoom="'+b.dataset.g9Font+'"]')[0]?.click());
 function fitFigure(f){const svg=q('svg',f)[0];if(!svg||!svg.isConnected)return;const groups=q('[data-g9-stage-id]',svg).filter(g=>getComputedStyle(g).display!=='none');if(groups.length){const boxes=groups.map(g=>g.getBBox()).filter(b=>b.width>0&&b.height>0);if(boxes.length){const x=Math.min(...boxes.map(b=>b.x))-12,y=Math.min(...boxes.map(b=>b.y))-12,r=Math.max(...boxes.map(b=>b.x+b.width))+12,b=Math.max(...boxes.map(b=>b.y+b.height))+12;svg.setAttribute('viewBox',[x,y,r-x,b-y].join(' '));}}
-const host=svg.parentElement;const labels=q('text',svg).filter(t=>t.checkVisibility({visibilityProperty:true}));const min=labels.reduce((v,t)=>Math.min(v,parseFloat(getComputedStyle(t).fontSize)||Infinity),Infinity);const box=svg.viewBox.baseVal;const floor=Number(f.dataset.g9MinFigureText)||14;const needed=Number.isFinite(min)&&min>0?Math.ceil(box.width*floor/min):0;svg.style.width='max(100%, '+needed+'px)';}
+const host=svg.parentElement;const labels=q('text',svg).filter(t=>t.checkVisibility({visibilityProperty:true}));const min=labels.reduce((v,t)=>Math.min(v,parseFloat(getComputedStyle(t).fontSize)||Infinity),Infinity);const box=svg.viewBox.baseVal;const floor=Number(f.dataset.g9MinFigureText)||14;const needed=Number.isFinite(min)&&min>0?Math.ceil(box.width*floor/min):0;svg.style.width=Math.max(host.clientWidth,needed)+'px';}
 function initFigure(f){if(f.dataset.g9Init)return;f.dataset.g9Init='1';const ids=(f.dataset.g9Stages||'').split(' ').filter(Boolean);fitFigure(f);const host=q('.g9-diagram-scroll',f)[0];if(host){let width=host.clientWidth;new ResizeObserver(()=>{const next=host.clientWidth;if(next!==width){width=next;fitFigure(f)}}).observe(host)}if(ids.length<2)return;let i=0;
 const chips=q('[data-g9-stage-goto]',f);const desc=q('[data-g9-stage-desc-text]',f)[0];
 const stageMode=f.dataset.g9StageMode||'cumulative';const cumulative=stageMode!=='replace';
@@ -3027,6 +3027,13 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
     # The blueprint says which theme its page opens in (the Core1A benchmark opens dark); a learner's own choice still wins.
     theme = (bp.get("presentation_policy") or {}).get("default_theme")
     theme_attr = f' data-theme="{esc(theme)}"' if theme in {"light", "dark"} else ""
+    # #173 restricted print repair: preserve non-TEST historical HTML byte parity.
+    runtime_js = core1b_js() if role == "CORE1B" else JS
+    if role == "CORE2B" and m["subject"] == "TEST":
+        old_width = "svg.style.width=Math.max(host.clientWidth,needed)+'px';"
+        relative_width = "svg.style.width='max(100%, '+needed+'px)';"
+        assert runtime_js.count(old_width) == 1, "renderer width hook moved"
+        runtime_js = runtime_js.replace(old_width, relative_width)
     return ("<!doctype html>\n"
             f'<html lang="en"{theme_attr} data-g9-shell data-g9-role="{role}" data-g9-mode="{mode}" '
             f'data-g9-product="{esc(m["product_id"])}" data-g9-render-digest="{esc(digest)}">'
@@ -3039,7 +3046,7 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
             f'<main><h1>{esc(m["title"])}: {esc(ROLE_TITLE[role])}</h1>'
             f'{_core1a_bucket_orientation(ctx) if role == "CORE1A" else ""}{articles}</main>'
             f'<footer data-g9-footer>{esc(m["subject"])} · {esc(m["title"])}</footer>'
-            f"<script>{core1b_js() if role == 'CORE1B' else JS}{learning_repair.JS}</script>{_shared_script_assets(ctx, mode)}</body></html>\n")
+            f"<script>{runtime_js}{learning_repair.JS}</script>{_shared_script_assets(ctx, mode)}</body></html>\n")
 
 
 def index_page(ctx: Ctx, digest: str) -> str:
