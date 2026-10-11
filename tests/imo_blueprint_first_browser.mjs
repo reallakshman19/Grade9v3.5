@@ -79,11 +79,178 @@ try {
             // print CSS on a 320px device viewport is NOT the printed page.
             // Real PDF page images are still inspected separately.
             if (width === 390) {
+              // R12 diagnostic only: retain the original first-frame containment
+              // assertion, then sample timing-sensitive print layout repeatedly.
+              // This writes TEST browser evidence only; no learner/KEY or source assets.
+              const printTrace = [];
+              const geometryPath = path.join(evidenceDir, 'core2b-five-A4-geometry-trace.json');
+              const collectPrintGeometry = async (trial, phase) => {
+                const fig = article.locator('figure[data-g9-stage="PRE_ATTEMPT"]').first();
+                return fig.evaluate((figure, stamp) => {
+                  const svg = figure.querySelector('svg');
+                  const host = svg?.parentElement;
+                  const card = svg?.querySelector('rect[data-g9-final-factor="true"]');
+                  const labels = svg ? [...svg.querySelectorAll('text')] : [];
+                  const rect = el => el ? el.getBoundingClientRect().toJSON() : null;
+                  return {
+                    ...stamp,
+                    isPrint: matchMedia('print').matches,
+                    innerWidth: innerWidth,
+                    documentClientWidth: document.documentElement.clientWidth,
+                    figure: rect(figure), svg: rect(svg), lastCard: rect(card),
+                    hostClientWidth: host?.clientWidth ?? null,
+                    hostScrollWidth: host?.scrollWidth ?? null,
+                    hostScrollLeft: host?.scrollLeft ?? null,
+                    svgInlineWidth: svg?.style.width ?? null,
+                    viewBoxWidth: svg?.viewBox?.baseVal?.width ?? null,
+                    computedSvgWidth: svg ? getComputedStyle(svg).width : null,
+                    computedFigureOverflowX: getComputedStyle(figure).overflowX,
+                    computedHostOverflowX: host ? getComputedStyle(host).overflowX : null,
+                    minimumVisibleLabelPx: labels.length
+                      ? Math.min(...labels.filter(t => t.getClientRects().length)
+                        .map(t => parseFloat(getComputedStyle(t).fontSize))
+                        .filter(Number.isFinite)) : null,
+                  };
+                }, { trial, phase });
+              };
+              // Eight identical 390px -> 794px print transitions on one page.
+              // Each checks the existing strict first-frame geometry, without
+              // waiting away a possible reproducible clipping failure.
+              let repeatedFailure = null;
+              let repeatedTrialsCompleted = 0;
+              for (let trial = 1; trial <= 8; trial++) {
+                repeatedTrialsCompleted = trial;
+                await page.setViewportSize({ width: 794, height: 1123 });
+                await page.emulateMedia({ media: 'print' });
+                let geometryFailure = null;
+                try {
+                  await assertLastFactorFits('A4-sized print CSS');
+                } catch (error) {
+                  geometryFailure = error;
+                }
+                printTrace.push(await collectPrintGeometry(trial, 'after-original-immediate-assertion'));
+                await page.evaluate(async () => {
+                  await document.fonts.ready;
+                  await new Promise(resolve => requestAnimationFrame(
+                    () => requestAnimationFrame(resolve)));
+                });
+                printTrace.push(await collectPrintGeometry(trial, 'fonts-ready-plus-two-frames'));
+                if (!geometryFailure) {
+                  try {
+                    await assertLastFactorFits('A4-sized print CSS after two frames');
+                  } catch (error) {
+                    geometryFailure = error;
+                  }
+                }
+                fs.writeFileSync(geometryPath, JSON.stringify({
+                  variant, width, trialsCompleted: trial, samples: printTrace,
+                  firstFrameAssertionPreserved: true,
+                  failure: geometryFailure?.message ?? null,
+                }, null, 2) + '\n');
+                if (geometryFailure) {
+                  try {
+                    await page.screenshot({
+                      path: path.join(evidenceDir, 'core2b-five-print-geometry-failure.png'),
+                      fullPage: true,
+                    });
+                    await page.pdf({
+                      path: path.join(evidenceDir, 'core2b-five-print-geometry-failure.pdf'),
+                      format: 'A4', printBackground: true, preferCSSPageSize: false,
+                    });
+                  } catch (captureError) {
+                    fs.appendFileSync(geometryPath,
+                      '\nCapture error: ' + String(captureError) + '\n');
+                  }
+                  // Preserve the original strict failure, but run the separate
+                  // prewarmed scenario before failing the overall job.
+                  repeatedFailure = geometryFailure;
+                  break;
+                }
+                await page.emulateMedia({ media: 'screen' });
+                await page.setViewportSize({ width, height: 900 });
+              }
+              // R13: permit the wide SCREEN render to fit to its natural
+              // 794px column *before* changing to narrower print columns.
+              // This probes whether an old screen inline SVG width can survive
+              // the media switch long enough to clip the final factor.
+              // A fresh screen-page load isolates the second scenario from
+              // any failed prior print transition (and any stale SVG width).
+              await page.emulateMedia({ media: 'screen' });
               await page.setViewportSize({ width: 794, height: 1123 });
+              await page.reload();
+              await page.waitForLoadState('load');
+              await page.evaluate(async () => {
+                await document.fonts.ready;
+                await new Promise(resolve => requestAnimationFrame(
+                  () => requestAnimationFrame(resolve)));
+              });
+              printTrace.push(await collectPrintGeometry(9, 'prewarmed-794px-screen'));
               await page.emulateMedia({ media: 'print' });
-              await assertLastFactorFits('A4-sized print CSS');
+              let prewarmFailure = null;
+              try {
+                // This is the same existing strict containment assertion, not
+                // a relaxed pixel threshold or a swallowed intermittent fail.
+                await assertLastFactorFits('A4-sized print CSS after prewarmed screen');
+              } catch (error) {
+                prewarmFailure = error;
+              }
+              printTrace.push(await collectPrintGeometry(9, 'after-prewarm-print-immediate'));
+              await page.evaluate(async () => {
+                await document.fonts.ready;
+                await new Promise(resolve => requestAnimationFrame(
+                  () => requestAnimationFrame(resolve)));
+              });
+              printTrace.push(await collectPrintGeometry(9, 'after-prewarm-print-two-frames'));
+              if (!prewarmFailure) {
+                try {
+                  await assertLastFactorFits('A4-sized print CSS after prewarm settled');
+                } catch (error) {
+                  prewarmFailure = error;
+                }
+              }
+              fs.writeFileSync(geometryPath, JSON.stringify({
+                variant, width, trialsCompleted: repeatedTrialsCompleted,
+                prewarmedTrialExecuted: true,
+                note: 'Independent strict repeated print and fresh-page prewarmed screen scenarios',
+                samples: printTrace, firstFrameAssertionPreserved: true,
+                failures: {
+                  repeated_print: repeatedFailure?.message ?? null,
+                  screen_prewarm: prewarmFailure?.message ?? null,
+                },
+                failure: repeatedFailure?.message ?? prewarmFailure?.message ?? null,
+              }, null, 2) + '\n');
+              if (prewarmFailure) {
+                try {
+                  await page.screenshot({
+                    path: path.join(evidenceDir, 'core2b-five-print-prewarm-failure.png'),
+                    fullPage: true,
+                  });
+                  await page.pdf({
+                    path: path.join(evidenceDir, 'core2b-five-print-prewarm-failure.pdf'),
+                    format: 'A4', printBackground: true, preferCSSPageSize: false,
+                  });
+                } catch (captureError) {
+                  fs.appendFileSync(geometryPath,
+                    '\nCapture error: ' + String(captureError) + '\n');
+                }
+              }
               await page.emulateMedia({ media: 'screen' });
               await page.setViewportSize({ width, height: 900 });
+              result.print_geometry_diagnostic = {
+                repeated_screen_print_trials: repeatedTrialsCompleted,
+                wide_screen_prewarm_trials: 1,
+                samples: printTrace.length,
+                status: repeatedFailure || prewarmFailure ? 'FAIL' : 'PASS_ON_THIS_RUN_ONLY',
+                evidence: path.basename(geometryPath),
+                human_print: 'NOT_RUN',
+              };
+              // Do not waive either strict first-frame/settled assertion:
+              // all observed negative evidence remains a hard failure.
+              if (repeatedFailure || prewarmFailure) {
+                throw new AggregateError(
+                  [repeatedFailure, prewarmFailure].filter(Boolean),
+                  'Strict A4 print geometry failed in one or both independent scenarios');
+              }
             }
           }
           const secret = variant === 'boundary' ? 'n mod 4 != 1' : 'gcd(24,5)=1';
