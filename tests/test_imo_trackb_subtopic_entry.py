@@ -54,6 +54,54 @@ class TrackBSourceReferenceEntryTests(unittest.TestCase):
                     self.assertIn("not reproduced", html)
                     self.assertIn("not official SOF questions", html)
 
+    def test_subtopic_pages_list_only_grounded_original_paper_positions(self) -> None:
+        positions = {
+            "coordinate-geometry": (
+                "SOF-IMO-G09-L1-2023-24-A-Q027",
+                "SOF-IMO-G09-L1-2023-24-A-Q050",
+                "SOF-IMO-G09-L1-2024-25-B-Q020",
+                "SOF-IMO-G09-L1-2025-26-A-Q046",
+            ),
+            "polynomials": (
+                "SOF-IMO-G09-L1-2023-24-A-Q028",
+                "SOF-IMO-G09-L1-2025-26-A-Q045",
+                "SOF-IMO-G09-SAMPLE-2026-27-Q007",
+            ),
+            "euclids-geometry": (
+                "SOF-IMO-G09-L1-2023-24-A-Q033",
+                "SOF-IMO-G09-L1-2024-25-B-Q031",
+                "SOF-IMO-G09-SAMPLE-2026-27-Q006",
+            ),
+        }
+        for mirror in ("public", "docs"):
+            browser = (
+                ROOT / mirror / "mathematics" / "imo-grade9" / "index.html"
+            ).read_text(encoding="utf-8")
+            for workspace_name, topic_anchor, category in TOPICS:
+                with self.subTest(mirror=mirror, topic=workspace_name):
+                    workspace = ROOT / mirror / "mathematics" / workspace_name / "index.html"
+                    page = workspace.read_text(encoding="utf-8")
+                    self.assertIn("question text and answers are not reproduced", page)
+                    parser = AnchorLinks()
+                    parser.feed(page)
+                    item_links = [
+                        href for href, _ in parser.links
+                        if href and href.startswith("../imo-grade9/index.html#SOF-IMO-")
+                    ]
+                    expected = {
+                        "../imo-grade9/index.html#" + item
+                        for item in positions[workspace_name]
+                    }
+                    self.assertEqual(set(item_links), expected)
+                    self.assertEqual(len(item_links), len(expected))
+                    marker = f'id="{topic_anchor}" data-topic="{category}"'
+                    group = browser.split(marker, 1)[1].split("</section>", 1)[0]
+                    for source_id in positions[workspace_name]:
+                        self.assertIn(
+                            f'id="{source_id}" data-kind="source"', group,
+                            "no fabricated or cross-topic question identifier"
+                        )
+
     def test_each_topic_workspace_has_identical_public_and_docs_mirrors(self) -> None:
         for workspace_name, _, _ in TOPICS:
             with self.subTest(topic=workspace_name):
