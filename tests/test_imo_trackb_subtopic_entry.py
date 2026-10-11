@@ -1,4 +1,4 @@
-"""Scoped Track B source-reference navigation checks, without copied SOF questions."""
+"""Scoped Track B source-reference navigation tests; original SOF text is not copied."""
 from __future__ import annotations
 
 import unittest
@@ -7,8 +7,12 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_LINK = "../imo-grade9/index.html#topic-coord"
-TARGET_TOPIC = "topic-coord"
+# These routes expose the already existing research browser, not canonical Core2.
+TOPICS = (
+    ("coordinate-geometry", "topic-coord", "COORD"),
+    ("polynomials", "topic-poly", "POLY"),
+    ("euclids-geometry", "topic-euclid", "EUCLID"),
+)
 
 
 class AnchorLinks(HTMLParser):
@@ -18,39 +22,44 @@ class AnchorLinks(HTMLParser):
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if tag == "a":
-            attributes = dict(attrs)
-            self.links.append((attributes.get("href"), attributes.get("aria-label")))
+            fields = dict(attrs)
+            self.links.append((fields.get("href"), fields.get("aria-label")))
 
 
 class TrackBSourceReferenceEntryTests(unittest.TestCase):
-    def test_coordinate_page_routes_to_real_imo_topic_for_each_mirror(self) -> None:
+    def test_mathematics_topics_route_to_existing_imo_source_references(self) -> None:
         for mirror in ("public", "docs"):
-            with self.subTest(mirror=mirror):
-                workspace = ROOT / mirror / "mathematics" / "coordinate-geometry" / "index.html"
-                text = workspace.read_text(encoding="utf-8")
-                parser = AnchorLinks()
-                parser.feed(text)
-                matches = [(href, label) for href, label in parser.links if href == SOURCE_LINK]
-                self.assertEqual(len(matches), 1, "one explicit source-reference route")
-                self.assertIn("source-paper references", matches[0][1] or "")
+            for workspace_name, anchor, category in TOPICS:
+                with self.subTest(mirror=mirror, topic=workspace_name):
+                    workspace = ROOT / mirror / "mathematics" / workspace_name / "index.html"
+                    parser = AnchorLinks()
+                    parser.feed(workspace.read_text(encoding="utf-8"))
+                    route = f"../imo-grade9/index.html#{anchor}"
+                    matches = [(href, label) for href, label in parser.links if href == route]
+                    self.assertEqual(len(matches), 1, "exactly one source-reference link")
+                    self.assertIn("source-paper references", matches[0][1] or "")
 
-                ref = urlsplit(matches[0][0])
-                target = (workspace.parent / ref.path).resolve()
-                expected = ROOT / mirror / "mathematics" / "imo-grade9" / "index.html"
-                self.assertEqual(target, expected.resolve())
-                html = target.read_text(encoding="utf-8")
-                self.assertEqual(ref.fragment, TARGET_TOPIC)
-                self.assertIn('id="topic-coord"', html)
-                self.assertIn('data-topic="COORD"', html)
-                self.assertEqual(html.count('data-kind="source"'), 68)
-                self.assertEqual(html.count('data-kind="authored"'), 7)
-                self.assertIn("not reproduced", html)
-                self.assertIn("not official SOF questions", html)
+                    parts = urlsplit(matches[0][0])
+                    target = (workspace.parent / parts.path).resolve()
+                    expected = ROOT / mirror / "mathematics" / "imo-grade9" / "index.html"
+                    self.assertEqual(target, expected.resolve())
+                    self.assertEqual(parts.fragment, anchor)
+                    html = target.read_text(encoding="utf-8")
+                    marker = f'id="{anchor}" data-topic="{category}"'
+                    self.assertIn(marker, html, "a real matched research-topic section")
+                    group = html.split(marker, 1)[1].split("</section>", 1)[0]
+                    self.assertIn('data-kind="source"', group, "topic has source references")
+                    self.assertEqual(html.count('data-kind="source"'), 68)
+                    self.assertEqual(html.count('data-kind="authored"'), 7)
+                    self.assertIn("not reproduced", html)
+                    self.assertIn("not official SOF questions", html)
 
-    def test_coordinate_page_mirrors_remain_byte_identical(self) -> None:
-        public = ROOT / "public" / "mathematics" / "coordinate-geometry" / "index.html"
-        docs = ROOT / "docs" / "mathematics" / "coordinate-geometry" / "index.html"
-        self.assertEqual(public.read_bytes(), docs.read_bytes())
+    def test_each_topic_workspace_has_identical_public_and_docs_mirrors(self) -> None:
+        for workspace_name, _, _ in TOPICS:
+            with self.subTest(topic=workspace_name):
+                public = ROOT / "public" / "mathematics" / workspace_name / "index.html"
+                docs = ROOT / "docs" / "mathematics" / workspace_name / "index.html"
+                self.assertEqual(public.read_bytes(), docs.read_bytes())
 
 
 if __name__ == "__main__":
