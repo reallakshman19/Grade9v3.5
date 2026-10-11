@@ -116,7 +116,10 @@ try {
               // Eight identical 390px -> 794px print transitions on one page.
               // Each checks the existing strict first-frame geometry, without
               // waiting away a possible reproducible clipping failure.
+              let repeatedFailure = null;
+              let repeatedTrialsCompleted = 0;
               for (let trial = 1; trial <= 8; trial++) {
+                repeatedTrialsCompleted = trial;
                 await page.setViewportSize({ width: 794, height: 1123 });
                 await page.emulateMedia({ media: 'print' });
                 let geometryFailure = null;
@@ -158,7 +161,10 @@ try {
                     fs.appendFileSync(geometryPath,
                       '\nCapture error: ' + String(captureError) + '\n');
                   }
-                  throw geometryFailure;
+                  // Preserve the original strict failure, but run the separate
+                  // prewarmed scenario before failing the overall job.
+                  repeatedFailure = geometryFailure;
+                  break;
                 }
                 await page.emulateMedia({ media: 'screen' });
                 await page.setViewportSize({ width, height: 900 });
@@ -167,7 +173,12 @@ try {
               // 794px column *before* changing to narrower print columns.
               // This probes whether an old screen inline SVG width can survive
               // the media switch long enough to clip the final factor.
+              // A fresh screen-page load isolates the second scenario from
+              // any failed prior print transition (and any stale SVG width).
+              await page.emulateMedia({ media: 'screen' });
               await page.setViewportSize({ width: 794, height: 1123 });
+              await page.reload();
+              await page.waitForLoadState('load');
               await page.evaluate(async () => {
                 await document.fonts.ready;
                 await new Promise(resolve => requestAnimationFrame(
@@ -198,10 +209,15 @@ try {
                 }
               }
               fs.writeFileSync(geometryPath, JSON.stringify({
-                variant, width, trialsCompleted: 9,
-                note: '8 strict width transitions plus 1 naturally prewarmed wide screen transition',
+                variant, width, trialsCompleted: repeatedTrialsCompleted,
+                prewarmedTrialExecuted: true,
+                note: 'Independent strict repeated print and fresh-page prewarmed screen scenarios',
                 samples: printTrace, firstFrameAssertionPreserved: true,
-                failure: prewarmFailure?.message ?? null,
+                failures: {
+                  repeated_print: repeatedFailure?.message ?? null,
+                  screen_prewarm: prewarmFailure?.message ?? null,
+                },
+                failure: repeatedFailure?.message ?? prewarmFailure?.message ?? null,
               }, null, 2) + '\n');
               if (prewarmFailure) {
                 try {
@@ -217,17 +233,24 @@ try {
                   fs.appendFileSync(geometryPath,
                     '\nCapture error: ' + String(captureError) + '\n');
                 }
-                throw prewarmFailure;
               }
               await page.emulateMedia({ media: 'screen' });
               await page.setViewportSize({ width, height: 900 });
               result.print_geometry_diagnostic = {
-                repeated_screen_print_trials: 8,
+                repeated_screen_print_trials: repeatedTrialsCompleted,
                 wide_screen_prewarm_trials: 1,
-                samples: printTrace.length, status: 'PASS_ON_THIS_RUN_ONLY',
+                samples: printTrace.length,
+                status: repeatedFailure || prewarmFailure ? 'FAIL' : 'PASS_ON_THIS_RUN_ONLY',
                 evidence: path.basename(geometryPath),
                 human_print: 'NOT_RUN',
               };
+              // Do not waive either strict first-frame/settled assertion:
+              // all observed negative evidence remains a hard failure.
+              if (repeatedFailure || prewarmFailure) {
+                throw new AggregateError(
+                  [repeatedFailure, prewarmFailure].filter(Boolean),
+                  'Strict A4 print geometry failed in one or both independent scenarios');
+              }
             }
           }
           const secret = variant === 'boundary' ? 'n mod 4 != 1' : 'gcd(24,5)=1';
