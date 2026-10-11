@@ -55,15 +55,15 @@ def digest(path: Path) -> str:
 
 def measure_html(page: str) -> dict:
     return {
-        "articles": len(re.findall(r"<article\\b", page)),
-        "main_regions": len(re.findall(r"<main\\b", page)),
-        "attempt_boxes": len(re.findall(r"<div\\b[^>]*data-g9-attempt-box", page)),
-        "locked_disclosures": len(re.findall(r"<details\\b[^>]*data-requires-attempt", page)),
+        "articles": len(re.findall(r"<article\b", page)),
+        "main_regions": len(re.findall(r"<main\b", page)),
+        "attempt_boxes": len(re.findall(r"<div\b[^>]*data-g9-attempt-box", page)),
+        "locked_disclosures": len(re.findall(r"<details\b[^>]*data-requires-attempt", page)),
         "pre_attempt_figures": len(re.findall(
-            r'<figure\\b[^>]*data-g9-stage="PRE_ATTEMPT"', page)),
-        "inert_payloads": len(re.findall(r"<template\\b[^>]*data-g9-payload=", page)),
-        "figure_instances": len(re.findall(r"<figure\\b[^>]*data-g9-figure", page)),
-        "landmark_navs": len(re.findall(r"<nav\\b", page)),
+            r'<figure\b[^>]*data-g9-stage="PRE_ATTEMPT"', page)),
+        "inert_payloads": len(re.findall(r"<template\b[^>]*data-g9-payload=", page)),
+        "figure_instances": len(re.findall(r"<figure\b[^>]*data-g9-figure", page)),
+        "landmark_navs": len(re.findall(r"<nav\b", page)),
     }
 
 
@@ -117,8 +117,8 @@ def evaluate(head: str) -> dict:
                   found == [role], {"roles": found, **measure_html(body)})
         core1b = pages.get("core1b.html", "")
         score(rows, "T01_T06_T10_T12_RECONSTRUCT", "two distinct attempt gates; boundary and misconception repair",
-              len(re.findall(r'<div\\b[^>]*data-g9-attempt-box', core1b)) == 2
-              and len(re.findall(r'<details\\b[^>]*data-requires-attempt', core1b)) == 2
+              len(re.findall(r'<div\b[^>]*data-g9-attempt-box', core1b)) == 2
+              and len(re.findall(r'<details\b[^>]*data-requires-attempt', core1b)) == 2
               and "Boundary test" in core1b
               and "Answers that do not yet satisfy the criteria" in core1b,
               measure_html(core1b))
