@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import json
+import re
 import unittest
+from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -72,6 +74,48 @@ class TrackBLinearEquationsReferenceRoute(unittest.TestCase):
                 )
                 self.assertIn("question text and answers are not reproduced", page.casefold())
                 self.assertIn("not verified or admitted canonical Core2", page)
+
+    def test_source_paper_url_matches_frozen_research_card(self) -> None:
+        """A correct source-position ID must also open its recorded source paper."""
+        records = {
+            item["id"]: item
+            for item in json.loads((
+                ROOT / "Mathematics/research/imo-g9-topic-browser.v1.json"
+            ).read_text(encoding="utf-8"))["records"]
+            if item["kind"] == "SOF_SOURCE_REFERENCE_ONLY"
+            and item["topic_id"] == "LIN_EQ"
+        }
+        self.assertEqual(len(records), 7)
+        for mirror in ("public", "docs"):
+            browser_path = ROOT / mirror / "mathematics/imo-grade9/index.html"
+            html = browser_path.read_text(encoding="utf-8")
+            marker = 'id="topic-lin_eq" data-topic="LIN_EQ"'
+            self.assertIn(marker, html)
+            group = html.split(marker, 1)[1].split("</section>", 1)[0]
+            browser_ids = re.findall(
+                r'<li class="imo-item imo-source" id="([^"]+)"',
+                group,
+            )
+            self.assertEqual(set(browser_ids), set(records))
+            self.assertEqual(len(browser_ids), len(records))
+            for source_id in browser_ids:
+                with self.subTest(mirror=mirror, source_id=source_id):
+                    card_marker = f'id="{source_id}" data-kind="source"'
+                    self.assertIn(card_marker, group)
+                    card = group.split(card_marker, 1)[1].split("</li>", 1)[0]
+                    paper_links = re.findall(r'<a href="([^"]+)"', card)
+                    self.assertEqual(len(paper_links), 1, source_id)
+                    paper_url = unescape(paper_links[0])
+                    self.assertEqual(
+                        paper_url, records[source_id]["source_pdf_url"],
+                        "a correct QID must never silently select a different paper",
+                    )
+                    split = urlsplit(paper_url)
+                    self.assertEqual(split.scheme, "https")
+                    self.assertIn(
+                        split.hostname,
+                        {"iswkoman.com", "www.iswkoman.com", "sofworld.org"},
+                    )
 
     def test_topic_boundary_and_hub_route(self) -> None:
         for mirror in ("public", "docs"):
