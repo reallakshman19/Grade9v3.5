@@ -1366,7 +1366,8 @@ def _core1a_relation_matrix(ctx: Ctx, m: dict, refs: list[str] | None = None) ->
             f'<td>{validity}</td></tr>'
         )
     return (
-        '<div class="g9-table-scroll" data-g9-equation-matrix>'
+        '<div class="g9-table-scroll" data-g9-equation-matrix '
+        'tabindex="0" role="region" aria-label="Equation matrix; use arrow keys to scroll">'
         '<table><thead><tr><th scope="col">Equation</th>'
         '<th scope="col">What it tells you</th><th scope="col">When you can use it</th>'
         f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
