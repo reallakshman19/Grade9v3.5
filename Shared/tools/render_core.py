@@ -3027,6 +3027,13 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
     # The blueprint says which theme its page opens in (the Core1A benchmark opens dark); a learner's own choice still wins.
     theme = (bp.get("presentation_policy") or {}).get("default_theme")
     theme_attr = f' data-theme="{esc(theme)}"' if theme in {"light", "dark"} else ""
+    # #173 restricted print repair: preserve non-TEST historical HTML byte parity.
+    runtime_js = core1b_js() if role == "CORE1B" else JS
+    if role == "CORE2B" and m["subject"] == "TEST":
+        old_width = "svg.style.width=Math.max(host.clientWidth,needed)+'px';"
+        relative_width = "svg.style.width='max(100%, '+needed+'px)';"
+        assert runtime_js.count(old_width) == 1, "renderer width hook moved"
+        runtime_js = runtime_js.replace(old_width, relative_width)
     return ("<!doctype html>\n"
             f'<html lang="en"{theme_attr} data-g9-shell data-g9-role="{role}" data-g9-mode="{mode}" '
             f'data-g9-product="{esc(m["product_id"])}" data-g9-render-digest="{esc(digest)}">'
@@ -3039,7 +3046,7 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
             f'<main><h1>{esc(m["title"])}: {esc(ROLE_TITLE[role])}</h1>'
             f'{_core1a_bucket_orientation(ctx) if role == "CORE1A" else ""}{articles}</main>'
             f'<footer data-g9-footer>{esc(m["subject"])} · {esc(m["title"])}</footer>'
-            f"<script>{core1b_js() if role == 'CORE1B' else JS}{learning_repair.JS}</script>{_shared_script_assets(ctx, mode)}</body></html>\n")
+            f"<script>{runtime_js}{learning_repair.JS}</script>{_shared_script_assets(ctx, mode)}</body></html>\n")
 
 
 def index_page(ctx: Ctx, digest: str) -> str:
