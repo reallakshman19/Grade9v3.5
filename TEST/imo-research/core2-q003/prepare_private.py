@@ -198,11 +198,15 @@ def bank(row, expected):
                      "availability":"AFTER_ATTEMPT"}
                 ]
             },
+            # Owner visually verified this exact past-paper item for the private TEST,
+            # not its publication rights or publisher-issued source-file digest.
+            # Keep that limit explicit; learner metadata refuses an omitted class.
+            "grade9v3:provenance_class":"PYQ_VERIFIED",
             "grade9v3:source_custody":{
                 "authority_class":"SCHOOL_MIRROR_TEST_REFERENCE",
                 "exam":"SOF IMO", "year":"2023-24", "paper":"Set A",
                 "question_number":"3", "wording_custody":"VERBATIM_TEST",
-                "source_status":"OWNER_VERIFIED_FOR_DEVELOPMENT",
+                "source_status":"PYQ_VERIFIED_OWNER_INSPECTED_FOR_DEVELOPMENT_ONLY",
                 "rights_status":"NOT_GRANTED",
                 "paper_url":expected["source_url"],
                 "source_item_sha256":expected["source_item_sha256"]},
