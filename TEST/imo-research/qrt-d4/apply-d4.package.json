@@ -802,24 +802,25 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-APPLY-ORIGINAL",
       "original_identifier": "AUTHORED-Q-D4-APPLY-WORKED",
-      "stem": "For decimal digits u and v, compare the modulo11 residues of 10u+v and 10v+u. Explain why exchanging their two places negates the residue, without generalizing to every digit length.",
+      "stem": "Two non-coprime repeating phases require x≡2 (mod6) and x≡5 (mod9). Check the compatibility condition, reduce the congruence and verify the full solution class.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "u,v are digits 0..9; this identity is valid even when a digit is zero."
+        "x is an integer slot.",
+        "Both schedules must be satisfied simultaneously."
       ],
       "figure_refs": [
         "REP-D4-APPLY-CORE1A"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "Swapping two places negates modulo11 residue.",
+        "summary": "Compatible; x≡14 mod18.",
         "reasoning": [
-          "Since 10≡−1 modulo11, 10u+v≡v−u.",
-          "After swapping, 10v+u≡u−v, exactly the negative residue.",
-          "If the original residue is zero, its negative is zero, but this two-place anchor says nothing yet about all digit lengths."
+          "gcd(6,9)=3 divides5−2=3.",
+          "Write x=2+6t, then 6t≡3 modulo9, reducing to 2t≡1 modulo3.",
+          "t≡2 modulo3; x=14+18k, and x=14 checks both phases."
         ],
-        "check": "Compare 37 versus73 (opposite nonzero residues) and22 versus22 (zero residue).",
+        "check": "14%6=2 and14%9=5. Combined period lcm(6,9)=18.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -842,13 +843,13 @@
         "safe_ref": "REP-D4-APPLY-CORE1A",
         "bound_ref": null,
         "stage_refs": [
-          "D4-APP-STAGE-PLACE"
+          "D4-APP-ANCHOR-GIVEN"
         ]
       },
-      "failure_signal": "Unchanged digit sum is not a valid modulo11 explanation; signed positional contributions are the bridge.",
+      "failure_signal": "Blindly multiplying non-coprime periods misses gcd feasibility and correct lcm repetition.",
       "family_exposure": {
         "family_ref": "FAM-D4-APPLY",
-        "closure": "A two-digit worked anchor teaches mechanism but not the Core2A parity explanation."
+        "closure": "Concept anchor cannot substitute for three-period Core2A protected application."
       }
     },
     {
@@ -860,28 +861,28 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D4-QRT-EXPLAIN-D4",
+        "grade9v3:authored_by": "AGENT-D4-QRT-APPLY-D4",
         "grade9v3:cognitive_demand": {
-          "primary": "EXPLAIN",
+          "primary": "APPLY",
           "secondary": [
-            "REPRESENT",
+            "MODEL",
             "JUSTIFY"
           ],
-          "basis": "W is a causal place-value parity mechanism, not a selection from memorized categories."
+          "basis": "Execute a conditional known modular procedure on non-standard triple with compatibility exceptions and bounded output; W is method choice and correct application."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "Explain how changing L reverses leading-digit sign and creates odd-L 2a remainder.",
-          "common_wrong_route": "Digit-sum preservation or only even-length samples used to assert an all-length rule."
+          "stable_crux_move": "At each combination test gcd divisibility, reduce correctly and stop if a changed phase is incompatible.",
+          "common_wrong_route": "Use coprime CRT or product periods blindly, then search an impossible system."
         },
         "grade9v3:core2_support_plan": {
           "protected_move_refs": [
-            "D4-APP-MOVE-CAUSE"
+            "D4-APP-MOVE-DECIDE"
           ],
           "support_completions": [
             {
               "support_ref": "scaffolds[2]",
               "completed_move_refs": [
-                "D4-APP-MOVE-CAUSE"
+                "D4-APP-MOVE-DECIDE"
               ],
               "availability": "AFTER_ATTEMPT"
             }
@@ -891,75 +892,75 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-APPLY-ORIGINAL",
       "original_identifier": "AUTHORED-Q-D4-APPLY-MAIN",
-      "stem": "An L-digit positive integer N is divisible by 11. Move its nonzero FIRST digit to the right end, retaining all original L digit positions, including any new leading zero. Explain WHY divisibility by 11 is preserved whenever L is even but cannot be preserved when L is odd. Make the causal contrast between 1210 → 2101 and 121 → 211; giving only numerical checks is not an explanation.",
+      "stem": "A system admits an integer service slot x only when ALL three repeating phases hold: x≡5 (mod12), x≡11 (mod18), and x≡9 (mod20). The service window is the inclusive interval 200≤x≤600. Apply a VALID compatibility-aware method to find every eligible integer slot. Explicitly check the gcd condition each time you combine constraints, reduce the congruences correctly, give the final repeating class and verify every listed slot. Do not assume pairwise-coprime CRT applies.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Original L≥2 and positive L-digit N is divisible by11.",
-        "Its leading digit a satisfies 1≤a≤9.",
-        "B represents the suffix of length L−1, with zeros permitted.",
-        "After rotation, a new leading zero is retained as a position."
+        "x is an integer with 200≤x≤600 inclusive.",
+        "All three given congruences must hold simultaneously.",
+        "Periods 12,18,20 are positive but not pairwise coprime."
       ],
       "figure_refs": [
         "REP-D4-APPLY-CORE2A"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "For an initial multiple of11, one-leading-digit left rotation preserves divisibility exactly at even original length.",
+        "summary": "All eligible integer slots are 209,389,569; the combined class is x≡29 modulo180.",
         "reasoning": [
-          "Let original N=a10^(L−1)+B, with a in1..9 and suffix B of fixed length L−1. Rotated R=10B+a.",
-          "Because 10≡−1 modulo11, N≡a(-1)^(L−1)+B while R≡a−B.",
-          "If original L is even then N≡B−a and R≡a−B≡−N, so an initial zero remainder remains zero.",
-          "If L is odd and 11|N then 0≡N≡a+B, hence B≡−a and R≡2a, nonzero modulo11 because 1≤a≤9.",
-          "For four-digit 1210, rotation 2101 is divisible by11. For three-digit 121, rotation 211 is not."
+          "First screen gcd(12,18)=6 dividing 11−5=6. The pair is compatible. Write x=5+12t, so 12t≡6 modulo18; divide all terms by6 to get 2t≡1 modulo3 and t≡2 modulo3.",
+          "Therefore x=5+12(2+3k)=29+36k, the first two conditions combined as x≡29 modulo36.",
+          "Second screen gcd(36,20)=4 dividing the third-phase difference 9−29=−20. The third condition is compatible. Substitute 29+36k≡9 modulo20, so 16k≡0 modulo20; divide all terms by4 to get 4k≡0 modulo5, implying k≡0 modulo5.",
+          "Thus x=29+180j, repeating with lcm(36,20)=180. In 200≤x≤600 the admissible j are 1,2,3, producing 209,389,569; j=0 gives29 below and j=4 gives749 above.",
+          "Verify each of 209,389,569 leaves residues5 modulo12,11 modulo18 and9 modulo20."
         ],
         "reasoning_route": [
           {
-            "id": "D4-APP-MOVE-DOMAIN",
+            "id": "D4-APP-MOVE-SETUP",
             "kind": "REPRESENT",
-            "action": "Maintain original L and leading digit a, with suffix B and zero-safe rotation.",
-            "why_valid": "The defined operation has a fixed original number of positions.",
+            "action": "Represent the three phases and the inclusive interval; reject blind coprime CRT.",
+            "why_valid": "The periods share factors and compatibility must precede inverse-based reduction.",
             "inputs": [
-              "L≥2",
-              "1≤a≤9",
-              "11|N"
+              "12,18,20",
+              "phases5,11,9"
             ],
-            "output": "N and R retain comparable positions."
+            "output": "A conditional sequential solve plan."
           },
           {
-            "id": "D4-APP-MOVE-PLACE",
+            "id": "D4-APP-MOVE-FIRST",
             "kind": "CONNECT",
-            "action": "Express N=a10^(L−1)+B and R=10B+a and reduce modulo11.",
-            "why_valid": "Rotation shifts all suffix positions and appends a units digit; 10≡−1 modulo11.",
+            "action": "Check gcd(12,18)=6 divides 11−5; then combine to x≡29 modulo36.",
+            "why_valid": "Substitution x=5+12t yields 2t≡1 mod3; gcd screen establishes feasibility.",
             "inputs": [
-              "original and rotated strings"
+              "x≡5 mod12",
+              "x≡11 mod18"
             ],
-            "output": "N≡a(-1)^(L−1)+B; R≡a−B."
+            "output": "x=29+36k."
           },
           {
-            "id": "D4-APP-MOVE-CAUSE",
+            "id": "D4-APP-MOVE-DECIDE",
             "kind": "DECIDE",
-            "action": "Explain why the exponent's parity makes R either −N or the nonzero 2a residue when 11|N.",
-            "why_valid": "For even L the sign on a is negative; for odd L it is positive, and a is 1..9 so 11∤2a.",
+            "action": "Screen gcd(36,20)=4 and reduce the third condition to k≡0 modulo5, or stop if incompatible.",
+            "why_valid": "9−29=−20 is divisible by4, so compatibility permits the reduction.",
             "inputs": [
-              "two modular expressions",
-              "11|N"
+              "x≡29 mod36",
+              "x≡9 mod20"
             ],
-            "output": "Even original L preserves; odd L cannot."
+            "output": "x≡29 modulo180."
           },
           {
-            "id": "D4-APP-MOVE-VERIFY",
+            "id": "D4-APP-MOVE-WINDOW",
             "kind": "VERIFY",
-            "action": "Compare 1210→2101 and 121→211 as independent changed-length checks.",
-            "why_valid": "Both inputs are divisible by11 but have different original length parity.",
+            "action": "Intersect x=29+180j with inclusive [200,600], then check each original phase.",
+            "why_valid": "Inequalities yield integer j=1,2,3 and substitution confirms all requirements.",
             "inputs": [
-              "explained mechanism"
+              "x≡29 mod180",
+              "200≤x≤600"
             ],
-            "output": "Observed results agree with causal rule."
+            "output": "209,389,569 and no omitted slots."
           }
         ],
-        "crux_move_ref": "D4-APP-MOVE-CAUSE",
-        "check": "1210→2101: 11 divides both; 121→211: only 121 is divisible by11; independently try 110→101 and 1232→2321.",
+        "crux_move_ref": "D4-APP-MOVE-DECIDE",
+        "check": "209%12=5, %18=11, %20=9; 389 and569 repeat with period180. 29 is below interval,749 above.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -978,22 +979,22 @@
       "hints": [],
       "scaffolds": [
         {
-          "text": "Name the original length L and first digit a. When a rotated string has a leading zero, has the original L changed?",
+          "text": "Before solving, write all three phases as simultaneous congruences, and decide whether pairwise-coprime CRT can be used without modification.",
           "support_kind": "REPRESENT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "D4-APP-MOVE-DOMAIN"
+          "supports_move_ref": "D4-APP-MOVE-SETUP"
         },
         {
-          "text": "If 10≡−1 (mod11), what happens to the residue of a digit each time its positional weight is multiplied by ten?",
+          "text": "Combine just the first two conditions using gcd(12,18). Is the residue difference compatible? Use a substitution x=5+12t, then keep the lcm as the new period.",
           "support_kind": "CONNECT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "D4-APP-MOVE-PLACE"
+          "supports_move_ref": "D4-APP-MOVE-FIRST"
         },
         {
-          "text": "After your written attempt is committed, compare N=a10^(L−1)+B and R=10B+a. Trace the sign for even and odd original L and explain the fate of the nonzero first digit.",
+          "text": "Only AFTER your own attempt: audit whether your first combined residue agrees with the third residue modulo the new gcd; reduce the resulting linear congruence and intersect the class with [200,600].",
           "support_kind": "CONNECT",
           "reveals": "METHOD",
-          "supports_move_ref": "D4-APP-MOVE-CAUSE"
+          "supports_move_ref": "D4-APP-MOVE-DECIDE"
         }
       ],
       "hint_ladder": [
@@ -1021,17 +1022,17 @@
         "safe_ref": "REP-D4-APPLY-CORE2A",
         "bound_ref": null,
         "stage_refs": [
-          "D4-APP-MAIN"
+          "D4-APP-MAIN-GIVEN"
         ]
       },
-      "repair_ref": "D4-APP-AUDIT",
-      "failure_signal": "Preserved digit sum is irrelevant to modulo11, and favorable even-length examples do not explain the odd-length obstruction; a leading zero after rotation does not change original L.",
+      "repair_ref": "D4-APP-STEP-GATE",
+      "failure_signal": "Blind product periods, omitted gcd screen on the third phase, incorrect modular division, or missing one interval endpoint indicates a method-selection error.",
       "family_exposure": {
         "family_ref": "FAM-D4-APPLY",
-        "closure": "Independent EXPLAIN-D4 requires explaining the positional sign flip and both length outcomes; H3 help is assisted."
+        "closure": "Independent mastery requires screening both non-coprime combinations, producing the correct class and all bounded slots without post-attempt help."
       },
       "independent_check": {
-        "statement": "Exhaust original 2..4 digit multiples of11 and independently test sampled 5..6 digit lengths with fixed-width rotation and nonzero initial a.",
+        "statement": "Enumerate all x in inclusive [200,600] by direct residues, compare with 29+180k, and independently check all solutions of pair 5 mod12,11 mod18 over a full lcm period.",
         "check_type": "EXHAUSTIVE_MODULAR_CHECK"
       },
       "difficulty": {
@@ -1039,18 +1040,18 @@
         "score": 8,
         "components": {
           "concept_model_selection": 2,
-          "representation_translation": 2,
+          "representation_translation": 1,
           "reasoning_chain_length": 2,
-          "algebra_computational_load": 0,
+          "algebra_computational_load": 1,
           "trap_exception_sensitivity": 2
         },
-        "basis": "A causal explanation of a place-value invariant breaking under changed original length; no long arithmetic.",
+        "basis": "Conditional method selection across three non-coprime periods and interval, with a later changed phase that invalidates applicability.",
         "component_evidence": {
-          "concept_model_selection": "Choose modulo11 positional weights, not digit-sum conservation.",
-          "representation_translation": "Map digit rotation to N=a10^(L−1)+B and R=10B+a.",
-          "reasoning_chain_length": "Explain sign change by length parity, then nonzero 2a obstruction for odd L.",
-          "algebra_computational_load": "Simple modular residues only.",
-          "trap_exception_sensitivity": "Odd original length and rotated leading-zero cases expose a hidden assumption."
+          "concept_model_selection": "Choose compatibility-first generalized CRT, not the coprime formula.",
+          "representation_translation": "Translate repeating constraints and interval to congruence class.",
+          "reasoning_chain_length": "Reduce first pair, test third, reduce again, enumerate bounded arithmetic progression.",
+          "algebra_computational_load": "Small modular arithmetic and three interval outputs.",
+          "trap_exception_sensitivity": "Third condition can become incompatible after a single phase change."
         }
       },
       "learner_question_type": "constructed_response"
@@ -1064,106 +1065,106 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D4-QRT-EXPLAIN-D4",
+        "grade9v3:authored_by": "AGENT-D4-QRT-APPLY-D4",
         "grade9v3:cognitive_demand": {
-          "primary": "EXPLAIN",
+          "primary": "APPLY",
           "secondary": [
             "MODEL",
             "JUSTIFY"
           ],
-          "basis": "Identify changed two-digit prefix mechanism and its odd-length exception."
+          "basis": "Adapt a conditional algorithm to a changed infeasible input then recompute after a valid repair."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "Explain odd-length rotation remainder2A and why prefix divisibility by11 is decisive.",
-          "common_wrong_route": "Copy the one-digit claim that all odd lengths fail."
+          "stable_crux_move": "Check gcd compatibility before every solve; stop when 4∤−19.",
+          "common_wrong_route": "Continue with previous answer class or invent an impossible slot."
         }
       },
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-APPLY-ORIGINAL",
       "original_identifier": "AUTHORED-Q-D4-APPLY-TRANSFER",
-      "stem": "The operation CHANGES: instead of moving ONE leading digit, move the first TWO digits as one block to the right end (original L≥3). An original L-digit integer N is divisible by11. Explain why the new rotation always preserves 11-divisibility at even L, while for odd L it survives exactly when the original two-digit prefix A is itself divisible by11. Account for the contrasting odd-length cases 110 → 011 and 121 → 112.",
+      "stem": "A single schedule is changed. Keep x≡5 (mod12), x≡11 (mod18), and the SAME inclusive interval 200≤x≤600, but replace the third phase with x≡10 (mod20). Apply your compatibility-first procedure to decide whether ANY slot exists; do not blindly search the interval if the gcd screen fails. An engineer then proposes replacing 10 by 13 modulo20. Test that repair and find ALL slots in [200,600] for the repaired system. State the new combined class.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "L≥3 and the original L-digit positive integer is divisible by11.",
-        "Two-digit prefix A is between10 and99 and suffix C uses exactly L−2 digits, with zero padding allowed.",
-        "Rotate the first TWO digits as a block; retain the original width L.",
-        "Leading zeros produced by rotation do not change original L."
+        "x integer; inclusive interval200..600.",
+        "The first two congruences are unchanged.",
+        "Changed third residue10 modulo20 must be evaluated separately.",
+        "A proposed repair replaces residue10 with13 modulo20, not the old residue9."
       ],
       "figure_refs": [
         "REP-D4-APPLY-CORE2B"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "Two-leading-digit rotation preserves 11-divisibility for even L, or for odd L exactly when the original prefix A is divisible by11.",
+        "summary": "Changed residue10 is impossible; corrected residue13 gives x≡173 modulo180 and exactly slots353,533 in [200,600].",
         "reasoning": [
-          "Write N=A10^(L−2)+C and R=100C+A for two-digit prefix A=10a+b and padded suffix C.",
-          "Modulo11, 100≡1 and R≡C+A. If L even, L−2 even, so N≡A+C and the rotated residue equals the original residue, preserving zero.",
-          "If L odd, N≡−A+C=0 gives C≡A; R≡2A. Because 2 and11 are coprime, this is zero iff A is divisible by11.",
-          "For odd length, 110 (A=11) rotates as 011=11 and succeeds; 121 (A=12) rotates to112 and fails."
+          "The unchanged first pair remains x≡29 modulo36.",
+          "With third residue10 modulo20, gcd(36,20)=4 would need to divide 10−29=−19; it does not. Therefore no x can satisfy all constraints, regardless of how large the interval is.",
+          "If the third phase is corrected to13 modulo20, difference13−29=−16 is divisible by4, so the combined system is compatible.",
+          "Set x=29+36k. Require 29+36k≡13 mod20, hence 16k≡4 modulo20, reducing to 4k≡1 modulo5. Since 4 is its own inverse modulo5, k≡4 modulo5.",
+          "Thus x=29+36(4+5j)=173+180j. Within [200,600], j=1,2 yields x=353,533. Check both candidates against phases5 modulo12,11 modulo18 and13 modulo20."
         ],
         "reasoning_route": [
           {
-            "id": "D4-APP-TRANSFER-DOMAIN",
+            "id": "D4-APP-TRANSFER-REUSE",
             "kind": "REPRESENT",
-            "action": "Group first two digits as A and keep the original L−2 suffix C.",
-            "why_valid": "Block rotation means N=A10^(L−2)+C, R=100C+A.",
+            "action": "Keep unchanged first-pair residue29 modulo36 and the interval.",
+            "why_valid": "Only the third phase changes.",
             "inputs": [
-              "L≥3",
-              "A two-digit prefix"
+              "original first two phases"
             ],
-            "output": "Exact new place-value model."
+            "output": "x=29+36k remains the starting class."
           },
           {
-            "id": "D4-APP-TRANSFER-CAUSE",
+            "id": "D4-APP-TRANSFER-STOP",
             "kind": "DECIDE",
-            "action": "Explain the even-length equality of residues and odd-length residue2A when N is divisible by11.",
-            "why_valid": "100≡1 modulo11; sign of 10^(L−2) depends on parity of L.",
+            "action": "Test changed residue10 for gcd compatibility and STOP immediately when it fails.",
+            "why_valid": "4 does not divide10−29=−19; the congruences are globally inconsistent.",
             "inputs": [
-              "new expressions",
-              "11|N"
+              "29 modulo36",
+              "10 modulo20"
             ],
-            "output": "Even L always works; odd L depends on A."
+            "output": "No integer solution, independent of window."
           },
           {
-            "id": "D4-APP-TRANSFER-EXCEPTION",
+            "id": "D4-APP-TRANSFER-REPAIR",
             "kind": "CONNECT",
-            "action": "Identify the odd-length two-digit-prefix exception.",
-            "why_valid": "11|2A iff 11|A because 2 and11 are coprime.",
+            "action": "Retest residue13, reduce 16k≡4 mod20 and recompute combined class.",
+            "why_valid": "Difference13−29=−16 passes divisibility by4, and k≡4 mod5.",
             "inputs": [
-              "odd L",
-              "R≡2A"
+              "29 modulo36",
+              "13 modulo20"
             ],
-            "output": "The original prefix A can equal 11,22,...,99."
+            "output": "x≡173 modulo180."
           },
           {
             "id": "D4-APP-TRANSFER-CHECK",
             "kind": "VERIFY",
-            "action": "Explain the difference between 110→011 and 121→112.",
-            "why_valid": "Both have odd original length but only the first prefix is multiple11.",
+            "action": "Intersect repaired class with window and verify direct residue checks.",
+            "why_valid": "173+180j in[200,600] iff j=1,2.",
             "inputs": [
-              "new exception"
+              "repaired class"
             ],
-            "output": "Changed-operation exception and countercase checked."
+            "output": "353,533 only."
           }
         ],
-        "crux_move_ref": "D4-APP-TRANSFER-CAUSE",
-        "check": "110→011 (11, divisible by11); 121→112 (not divisible); 11220→22011 (both divisible with A=11).",
+        "crux_move_ref": "D4-APP-TRANSFER-STOP",
+        "check": "For x=353 and533, residues (mod12,18,20) are (5,11,13); no x can satisfy old first-pair residue29 mod36 with third residue10 mod20.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR",
         "rubric": [
           {
-            "criterion": "Define two-digit-block rotation in fixed width.",
-            "evidence_of": "Changed operation correctly modeled."
+            "criterion": "Reject changed residue10 with a gcd divisibility obstruction.",
+            "evidence_of": "No futile numerical search or invented slot."
           },
           {
-            "criterion": "Explain why even original L preserves zero residue.",
-            "evidence_of": "R≡N because 100≡1 and L−2 even."
+            "criterion": "Screen repaired residue13 then re-solve correctly.",
+            "evidence_of": "Class x≡173 mod180."
           },
           {
-            "criterion": "Explain odd-L residue2A and exact A multiple11 exception.",
-            "evidence_of": "New necessary/sufficient prefix mechanism and contrasting example."
+            "criterion": "Find exactly the repaired interval solutions and check all phases.",
+            "evidence_of": "353,533 and endpoint completeness."
           }
         ]
       },
@@ -1180,7 +1181,7 @@
       ],
       "hints": [
         {
-          "text": "Compare modulo11 the expressions N=A10^(L−2)+C and R=100C+A. Which power of ten changes with the original length?",
+          "text": "Start from the first-pair combined class and compare its residue to 10 modulo gcd(36,20) BEFORE enumerating. The correction to13 requires a new modular reduction.",
           "reveals": "CONCEPT"
         }
       ],
@@ -1198,17 +1199,17 @@
         "safe_ref": "REP-D4-APPLY-CORE2B",
         "bound_ref": null,
         "stage_refs": [
-          "D4-APP-TRANSFER"
+          "D4-APP-TRANSFER-GIVEN"
         ]
       },
-      "repair_ref": "D4-APP-SPLIT",
-      "failure_signal": "Assuming every odd-length two-digit rotation fails ignores prefix A divisible by11; treating rotated 011 as a two-position input changes the operation.",
+      "repair_ref": "D4-APP-STEP-GATE",
+      "failure_signal": "Finding a numeric slot for incompatible residue10 or recycling 209,389,569 after correction13 is failure to re-run the conditional algorithm.",
       "family_exposure": {
         "family_ref": "FAM-D4-APPLY",
-        "closure": "True changed-demand EXPLAIN transfer requires the new A multiple11 exception and the distinct two-digit positional model."
+        "closure": "Changed-input transfer is independent only if the incompatibility is detected without search and the repaired branch is genuinely recomputed."
       },
       "independent_check": {
-        "statement": "Check all original 3..4 digit multiples11 and sampled longer inputs, including prefix A=11 and A=12 at odd L.",
+        "statement": "Exhaust all integer x over one period180 and [200,600]; changed third residue10 has zero solutions; corrected residue13 yields class173 modulo180 and slots353,533.",
         "check_type": "EXHAUSTIVE_MODULAR_CHECK"
       },
       "difficulty": {
@@ -1216,37 +1217,37 @@
         "score": 8,
         "components": {
           "concept_model_selection": 2,
-          "representation_translation": 2,
+          "representation_translation": 1,
           "reasoning_chain_length": 2,
-          "algebra_computational_load": 0,
+          "algebra_computational_load": 1,
           "trap_exception_sensitivity": 2
         },
-        "basis": "A changed two-digit-prefix rotation has a novel odd-length exception, requiring a fresh causal explanation.",
+        "basis": "Applying the conditional algorithm to a changed infeasible phase, then recomputing a nontrivial corrected phase under the same interval.",
         "component_evidence": {
-          "concept_model_selection": "Choose a two-digit-block decomposition rather than reuse first-digit model.",
-          "representation_translation": "Translate to N=A10^(L−2)+C, R=100C+A.",
-          "reasoning_chain_length": "Explain even-length invariant, odd-length residue2A, and precise prefix exception.",
-          "algebra_computational_load": "Short congruences only.",
-          "trap_exception_sensitivity": "Some odd L succeed when the two-digit prefix is a multiple of11."
+          "concept_model_selection": "Stop at gcd incompatibility without searching, then restart for a compatible correction.",
+          "representation_translation": "Carry first-pair class to two alternative third phases.",
+          "reasoning_chain_length": "Obstruction test, repaired congruence reduction, new interval intersection.",
+          "algebra_computational_load": "Small residues modulo4,5 and bounded class.",
+          "trap_exception_sensitivity": "Changing 9 to10 destroys all solutions, while correction13 creates a different set."
         }
       },
       "learner_question_type": "constructed_response",
       "transfer": {
-        "dimension": "novelty",
+        "dimension": "changed_condition",
         "builds_on": [
           "Q-D4-APPLY-MAIN"
         ],
-        "statement": "Changed rotation by two digits creates a new surviving odd-length case.",
-        "invariant": "Powers of ten change residue sign modulo11.",
+        "statement": "Changed phase causes a genuine impossible branch; proposed correction makes a different feasible class.",
+        "invariant": "The first pair still gives x≡29 mod36, and gcd(36,20)=4 must divide third difference.",
         "novelty": {
           "checked_against": [
             "Q-D4-APPLY-MAIN",
             "MIC-D4-APPLY:exit_task",
             "MIC-D4-APPLY:boundary_test"
           ],
-          "why_new": "Unlike a single digit a in1..9, the two-digit prefix A can be divisible by11 and make odd-length rotation survive."
+          "why_new": "The learner must refuse a previously valid procedure at residue10 then restart it for corrected residue13; neither branch is the former x≡29 mod180."
         },
-        "protected_move_ref": "D4-APP-TRANSFER-CAUSE"
+        "protected_move_ref": "D4-APP-TRANSFER-STOP"
       }
     }
   ],
