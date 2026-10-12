@@ -1,0 +1,486 @@
+#!/usr/bin/env node
+/** #138: TEST-only Chromium witness for neutral Core1A checkpoint, no mastery claim. */
+import fs from 'node:fs';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { chromium } from 'playwright';
+import { createServer } from 'node:http';
+
+const folder = path.resolve(process.argv[2] || '');
+const html = path.join(folder, 'core1a.html');
+const core2aHtml = path.join(folder, 'core2a.html');
+if (!process.argv[2] || !fs.existsSync(html)) throw new Error('Provide rendered core1a.html directory');
+const out = path.join(folder, 'browser-evidence');
+fs.mkdirSync(out, { recursive: true });
+const result = { schema: 'imo-f02-concept-first-chromium/v2', source: 'TEST_CANDIDATE',
+  authentic_core2_admitted: false, mastery_verified: false, human_screen_reader: 'NOT_RUN',
+  viewports: [], failures: [], printed_pdf: null };
+const assert = (ok, label) => { if (!ok) result.failures.push(label); };
+let browser;
+// Only the two generated TEST role pages and four declared static shell
+// dependencies share the temporary origin; never serve arbitrary files.
+const publicRoot=path.resolve(process.cwd(),'public');
+const allowedAssets=new Map([
+  ['/css/modern-learner.css','css/modern-learner.css'],
+  ['/css/tablet-12-7.css','css/tablet-12-7.css'],
+  ['/js/display-controls.js','js/display-controls.js'],
+  ['/js/site-header.js','js/site-header.js'],
+]);
+const assetTargets=new Map([...allowedAssets].map(([url,relative])=>
+  [url,path.join(publicRoot,relative)]));
+const localServer = createServer((req,res)=>{
+  const route=(req.url||'').split(/[?#]/,1)[0];
+  const target=route==='/core1a.html'?html:route==='/core2a.html'?core2aHtml:
+    assetTargets.get(route);
+  if(!target){res.writeHead(404);res.end('not found');return;}
+  const type=route.endsWith('.css')?'text/css; charset=utf-8':
+    route.endsWith('.js')?'application/javascript; charset=utf-8':
+    'text/html; charset=utf-8';
+  res.writeHead(200,{'Content-Type':type,'Cache-Control':'no-store'});
+  const file=fs.createReadStream(target);
+  file.on('error',()=>res.destroy());
+  file.pipe(res);
+});
+try {
+  for(const target of assetTargets.values()){
+    if(!fs.existsSync(target))throw new Error('MissingDeclaredTestAsset');
+  }
+  browser = await chromium.launch({ headless: true });
+  await new Promise((resolve,reject)=>{
+    localServer.once('error',reject);
+    localServer.listen(0,'127.0.0.1',resolve);
+  });
+  const localOrigin='http://127.0.0.1:'+localServer.address().port+'/';
+  for (const width of [320, 390, 768, 1280]) {
+    const page = await browser.newPage({ viewport: { width, height: 900 } });
+    const errors = [];
+    page.on('pageerror', () => errors.push('PAGE_SCRIPT_EXCEPTION'));
+    await page.goto(pathToFileURL(html).href, { waitUntil: 'load' });
+    const check = page.locator('[data-g9-concept-check]');
+    const targets = page.locator('[data-g9-concept-target]');
+    assert(await check.count() === 1, width + ': expected one neutral checkpoint');
+    assert(await targets.count() >= 2, width + ': expected hidden worked/exit targets');
+    assert(await targets.first().isHidden(), width + ': construction revealed before check');
+    const submit = page.locator('[data-g9-concept-commit]');
+    await page.locator('[data-g9-concept-option][value="ADD"]').check();
+    await page.locator('[data-g9-concept-reason]').fill('An exponent increase multiplies the power by a factor of the base.');
+    // Two independent numerical evaluations distinguish *response patterns*,
+    // not a stable misconception or a verified mathematical explanation.
+    await page.locator('[data-g9-diagnostic-next]').fill('56');
+    await page.locator('[data-g9-diagnostic-add]').fill('56');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'repeated_additive_route_candidate',
+      width + ': repeated additive prediction was not marked provisional');
+    assert(await targets.first().isHidden(), width + ': wrong additive law unblocked construction');
+    await page.locator('[data-g9-diagnostic-add]').fill('57');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'additive_choice_unresolved',
+      width + ': inconsistent additive computation was misclassified as repeated pattern');
+    await page.locator('[data-g9-diagnostic-add]').fill('56');
+    await page.locator('[data-g9-diagnostic-next]').fill('343');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'choice_numeric_conflict',
+      width + ': conflicting factor evidence was not distinguished from repeated additive choice');
+    assert(await targets.first().isHidden(), width + ': contradictory choice revealed guided lesson');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_review',
+      width + ': wrong choice not marked as needs review');
+    await page.locator('[data-g9-concept-option][value="FACTOR"]').check();
+    await page.locator('[data-g9-concept-reason]').fill('No');
+    await submit.click();
+    assert(await targets.first().isHidden(), width + ': short reflection unblocked construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_reflection',
+      width + ': missing reflection progress not recorded');
+    // Mathematical wording without the old keyword list must no longer be rejected.
+    await page.locator('[data-g9-concept-reason]').fill(
+      'One extra copy of five is attached to the previous group.');
+    await page.locator('[data-g9-diagnostic-next]').fill('');
+    await submit.click();
+    assert(await targets.first().isHidden(), width + ': missing neutral number falsely unblocked construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'numerical_check_missing',
+      width + ': missing numerical counterexample not recorded as incomplete');
+    await page.locator('[data-g9-diagnostic-next]').fill('56');
+    await submit.click();
+    assert(await targets.first().isHidden(), width + ': factor option and bad arithmetic falsely unblocked construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_counterexample',
+      width + ': factor choice plus wrong numeric evidence was not held for review');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'possible_execution_slip_or_model_error',
+      width + ': single wrong numeric check was falsely declared a proven misconception');
+    await page.locator('[data-g9-diagnostic-next]').fill('343');
+    await submit.click();
+    assert(await targets.first().isHidden(), width + ': correct numerical answers alone bypassed the rule explanation');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'mechanism_check_missing',
+      width + ': missing mathematical explanation was not recorded');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_reasoning',
+      width + ': missing explanation did not hold the guided construction');
+    await page.locator('[data-g9-rule-option][value="ADD_BASE"]').check();
+    await submit.click();
+    assert(await targets.first().isHidden(), width + ': incorrect exponent-law explanation unlocked guided construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'mechanism_route_conflict',
+      width + ': correct arithmetic and false reasoning were misclassified as aligned');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': false mathematical explanation received formative completion');
+    await page.locator('[data-g9-rule-option][value="FACTOR_LAW"]').check();
+    await submit.click();
+    assert(await targets.first().isVisible(), width + ': structured neutral check failed to reveal construction');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'aligned_structured_counterexample',
+      width + ': valid structured check lacks an explicitly formative evidence marker');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
+      width + ': wrong evidence state (must remain formative only)');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'guided_example_open',
+      width + ': guided study progress not recorded');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-aid-exposure') === 'guided_study',
+      width + ': guided reveal did not record assistance exposure');
+    assert((await page.locator('[data-g9-concept-feedback]').innerText()).includes('NOT been graded'),
+      width + ': missing explicit warning that free text was not graded');
+    const focused = await page.evaluate(() => document.activeElement?.tagName || '');
+    assert(['H3', 'H4'].includes(focused), width + ': focus not moved to revealed section heading');
+    // A learner may switch to unverified guided study *after* a format-pass.
+    // The historical marker must not survive this transition.
+    await page.locator('[data-g9-concept-review]').click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'guided_without_check',
+      width + ': successful reflection-to-guided transition not labelled unchecked');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === null,
+      width + ': stale numerical diagnostic evidence survived unchecked guided bypass');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': stale formative status survived unchecked guided-study choice');
+    assert((await page.locator('[data-g9-learning-progress]').innerText()).includes('No independent mastery'),
+      width + ': learner status made a mastery assertion');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
+      width + ': deliberate recheck failed to restore formative-only status');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'aligned_after_guided_exposure',
+      width + ': correct recheck after guided study masqueraded as pre-help evidence');
+    // Subsequent wrong or incomplete submissions cannot retain old evidence.
+    await page.locator('[data-g9-concept-option][value="ADD"]').check();
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': stale formative flag survived a later wrong index law');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_review',
+      width + ': wrong resubmission not labelled needs review');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-aid-exposure') === 'guided_study',
+      width + ': re-submission improperly erased guided exposure');
+    assert((await page.locator('[data-g9-learning-progress]').innerText()).includes('later responses on this page are assisted'),
+      width + ': post-guidance progress did not disclose assisted status');
+    await page.locator('[data-g9-concept-option][value="FACTOR"]').check();
+    await page.locator('[data-g9-concept-reason]').fill('No');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': stale formative flag survived a short later reflection');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'needs_reflection',
+      width + ': short resubmission not labelled needs reflection');
+    await page.locator('[data-g9-concept-reason]').fill('One additional copy of five joins each group.');
+    await page.locator('[data-g9-diagnostic-next]').fill('56');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+      width + ': wrong later neutral computation retained formative flag');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'possible_execution_slip_or_model_error',
+      width + ': later wrong neutral computation not classified as uncertain pattern');
+    await page.locator('[data-g9-diagnostic-next]').fill('343');
+    await submit.click();
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === 'formative_only',
+      width + ': renewed valid reflection and neutral counterexample could not restore formative-only status');
+    assert(await page.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-diagnostic-pattern') === 'aligned_after_guided_exposure',
+      width + ': corrected resubmission cleared its assisted recognition provenance');
+    // Direct repair fragment is not permission to bypass concept-first review.
+    // This is a fresh navigation, not the already-unlocked lesson above.
+    const deep = await browser.newPage({ viewport: { width, height: 900 } });
+    const deepErrors = [];
+    deep.on('pageerror', () => deepErrors.push('PAGE_SCRIPT_EXCEPTION'));
+    await deep.goto(pathToFileURL(html).href + '#TC-02', {waitUntil:'load'});
+    const step = deep.locator('#TC-02');
+    const deepArticle = deep.locator('article[data-g9-role="CORE1A"]');
+    assert(await step.count() === 1, width + ': exact TC-02 fragment is not a unique DOM target');
+    assert(await step.isHidden(), width + ': hash deep-link bypassed hidden concept-first lesson');
+    assert((await deep.locator('[data-g9-concept-feedback]').innerText()).includes('behind this concept-first checkpoint'),
+      width + ': learner was not told why deep-linked TC-02 remains gated');
+    assert(await deepArticle.getAttribute('data-g9-concept-aid-exposure') === null,
+      width + ': deep link silently asserted guided exposure without revealing teaching');
+    assert(await deepArticle.getAttribute('data-g9-concept-check-completed') === null,
+      width + ': deep link silently claimed a completed check');
+    await deep.locator('[data-g9-concept-review]').click();
+    assert(await step.isVisible(), width + ': deliberate guided choice did not reveal exact TC-02');
+    assert(await step.evaluate(el => document.activeElement === el),
+      width + ': focus did not reach the exact TC-02 step after deliberate guided choice');
+    assert(await deepArticle.getAttribute('data-g9-concept-aid-exposure') === 'guided_study',
+      width + ': exact repair revealed without assisted evidence');
+    assert(await deepArticle.getAttribute('data-g9-concept-check-completed') === null,
+      width + ': guided repair falsely recorded independent form completion');
+    assert(deepErrors.length === 0, width + ': TC-02 deep-link JavaScript error count=' + deepErrors.length);
+    await deep.close();
+    // F02 is a Core2A-only TEST manifest: the source repair query must return
+    // to one authored question, with no pretence of independent-credit recovery.
+    assert(fs.existsSync(core2aHtml), width + ': selected Core2A page was not emitted');
+    const questionId = 'Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
+    const conceptId = 'MIC-TEST-IMO-G9-COMMON-BASE-RELATION';
+    const source2a = fs.readFileSync(core2aHtml, 'utf8');
+    const queryHref = 'core1a.html?g9-return=' + questionId
+      + '&g9-concept=' + conceptId + '#TC-02';
+    assert(source2a.includes('href="' + queryHref.replace('&g9-concept=', '&amp;g9-concept=') + '"'),
+      width + ': authored Core2A repair does not carry exact return context');
+    assert(source2a.includes('data-g9-concept-link data-g9-question-ref="' + questionId + '"'),
+      width + ': authored Core2A repair lacks return-context bookkeeping');
+    const journey = await browser.newPage({viewport: {width, height: 900}});
+    const journeyErrors = [];
+    journey.on('pageerror', () => journeyErrors.push('PAGE_SCRIPT_EXCEPTION'));
+    await journey.goto(new URL(queryHref, pathToFileURL(core2aHtml)).href, {waitUntil:'load'});
+    const guideReturn = journey.locator('[data-g9-concept-review]');
+    const authoredReturn = journey.locator('[data-g9-authored-core2a-return]');
+    assert(await authoredReturn.count() === 1, width + ': missing scoped authored Core2A return link');
+    assert(await authoredReturn.getAttribute('data-g9-return-link') !== null,
+      width + ': return query did not mark the scoped authored question as the return target');
+    assert((await authoredReturn.textContent()).includes('Return to question'),
+      width + ': learner does not get a clear return-to-question label');
+    assert(await authoredReturn.isHidden(), width + ': return link available before concept-first guided study');
+    await guideReturn.click();
+    assert(await journey.locator('#TC-02').isVisible(), width + ': returned learner did not see exact TC-02 after guided choice');
+    assert(await journey.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-aid-exposure') === 'guided_study',
+      width + ': round-trip from authored practice lost assisted provenance');
+    assert((await authoredReturn.getAttribute('href')) === 'core2a.html#' + questionId,
+      width + ': link back to selected authored Core2A question is wrong');
+    await authoredReturn.evaluate(el => {
+      let parent = el.closest('details');
+      while(parent){parent.open=true;parent=parent.parentElement?.closest('details');}
+    });
+    await authoredReturn.click();
+    assert(new URL(journey.url()).pathname.endsWith('/core2a.html')
+      && new URL(journey.url()).hash === '#' + questionId,
+      width + ': guided learner was not returned to the exact authored Core2A article');
+    assert(await journey.locator('article[data-g9-role="CORE2A"][id="' + questionId + '"]').count() === 1,
+      width + ': Core2A destination fragment does not identify the authored question article');
+    assert(journeyErrors.length === 0, width + ': guided return JavaScript error count=' + journeyErrors.length);
+    await journey.close();
+    // Local-only, mutable chronology. This is NOT a verified assessment record.
+    // A file:// browser may refuse storage; in that case do not fabricate saved evidence.
+    const tracePage = await browser.newPage({viewport: {width, height: 900}});
+    const traceErrors = [];
+    tracePage.on('pageerror', () => traceErrors.push('PAGE_SCRIPT_EXCEPTION'));
+    // Verify the test is exercising real styles/scripts, not two bare pages.
+    const assetHealth=await Promise.all([...allowedAssets.keys()].map(async route=>{
+      const response=await tracePage.request.get(new URL(route,localOrigin).href);
+      return {route,status:response.status()};
+    }));
+    assert(assetHealth.every(a=>a.status===200),
+      width+': loopback shell CSS/JS unavailable: '+
+      assetHealth.map(a=>a.route+'='+a.status).join(','));
+    const denied=await tracePage.request.get(new URL('/Shared/tools/render_core.py',localOrigin).href);
+    assert(denied.status()===404,
+      width+': TEST browser fixture must not serve arbitrary repository files');
+    await tracePage.goto(new URL('core2a.html',localOrigin).href, {waitUntil:'load'});
+    const scopedQuestion = tracePage.locator('article[data-g9-role="CORE2A"][id="' + questionId + '"]');
+    const traceNote = tracePage.locator('[data-g9-f02-trace-status]');
+    assert(await traceNote.count() === 1, width + ': F02 source question missing local-only trace notice');
+    assert(await traceNote.getAttribute('data-g9-f02-trace-state') === 'NOT_RECORDED',
+      width + ': fresh isolated page incorrectly starts with credit/evidence');
+    const attemptField = scopedQuestion.locator('[data-g9-attempt-box] textarea[data-g9-attempt]');
+    assert(await attemptField.count() === 1, width + ': authored Core2A lacks its open response input');
+    if(await attemptField.count() === 1){
+      await attemptField.fill('Unscored trial reasoning: I will compare the two powers.');
+      await scopedQuestion.locator('[data-g9-commit]').first().click();
+      assert(['UNTRUSTED_LOCAL_ONLY','NOT_SAVED','INVALID_OR_UNAVAILABLE']
+        .includes(await traceNote.getAttribute('data-g9-f02-trace-state')),
+        width + ': local trace was mistaken for trusted assessment after submit');
+      const stored = await tracePage.evaluate(() => {
+        try{
+          const d=document.documentElement;
+          const key='g9-f02-trace:'+d.dataset.g9Product+':'+d.dataset.g9RenderDigest
+            +':Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
+          return localStorage.getItem(key);
+        }catch(_){return null}
+      });
+      if(stored){
+        const evidence = JSON.parse(stored);
+        assert(evidence.events.length === 1 && evidence.events[0].kind === 'ATTEMPT_COMMIT'
+          && !JSON.stringify(evidence).includes('Unscored trial reasoning'),
+          width + ': pre-repair attempt history is not exactly one valid marker');
+      }else{
+        assert(false, width + ': loopback HTTP localStorage must preserve the submitted attempt marker');
+      }
+      // The clicked exact TC-02 repair is behind the attempt-dependent disclosure.
+      await scopedQuestion.evaluate(el => el.querySelectorAll('details').forEach(d => d.open=true));
+      const repairLink = scopedQuestion.locator('a[data-g9-repair-ref="TC-02"]');
+      assert(await repairLink.count() === 1,
+        width + ': selected authored Core2A has no exact repair link after attempt');
+      if(await repairLink.count() === 1){
+        await repairLink.click();
+        assert(new URL(tracePage.url()).pathname.endsWith('/core1a.html')
+          && new URL(tracePage.url()).hash === '#TC-02',
+          width + ': actual repair navigation lost exact step');
+        const routedGate = tracePage.locator('article[data-g9-role="CORE1A"]');
+        assert(await routedGate.getAttribute('data-g9-concept-aid-exposure') === null,
+          width + ': clicked repair URL bypassed learner gate');
+        await tracePage.locator('[data-g9-concept-review]').click();
+        assert(await routedGate.getAttribute('data-g9-concept-aid-exposure') === 'guided_study',
+          width + ': guided repair omitted session assisted marker');
+        const back = tracePage.locator('[data-g9-authored-core2a-return]');
+        await back.click();
+        assert(new URL(tracePage.url()).hash === '#' + questionId,
+          width + ': actual F02 local-trace journey failed to return to question');
+        const persisted = await tracePage.evaluate(() => {
+          try {
+            const d=document.documentElement;
+            const key='g9-f02-trace:'+d.dataset.g9Product+':'+d.dataset.g9RenderDigest
+              +':Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
+            return localStorage.getItem(key);
+          } catch (_) {return null}
+        });
+        if(persisted){
+          const sequence=JSON.parse(persisted);
+          assert(JSON.stringify(sequence.events.map(e=>e.kind)) ===
+            JSON.stringify(['ATTEMPT_COMMIT','REPAIR_NAV','GUIDED_OPEN','RETURN_CLICK'])
+            && sequence.events.every((e,i)=>e.n===i+1)
+            && !JSON.stringify(sequence).includes('Unscored trial reasoning')
+            && sequence.assisted === true,
+            width + ': actual deferred-link journey did not record all four events in order');
+          assert(await scopedQuestion.getAttribute('data-g9-f02-assisted') === '1',
+            width + ': helped learner returned without assisted classification');
+          // A NEW attempt after this return is assisted recognition, even
+          // though its mathematics is ungraded and the input is fresh.
+          const nextAttempt = scopedQuestion.locator('[data-g9-attempt-box] textarea[data-g9-attempt]');
+          await nextAttempt.fill('After guided teaching, attempting another explanation.');
+          await scopedQuestion.locator('[data-g9-commit]').first().click();
+          const postHelp = await tracePage.evaluate(() => {
+            const d=document.documentElement;
+            const key='g9-f02-trace:'+d.dataset.g9Product+':'+d.dataset.g9RenderDigest
+              +':Q-TEST-IMO-G9-COMMON-BASE-SUPPORTED-01';
+            try{return JSON.parse(localStorage.getItem(key)||'null')}catch(_){return null}
+          });
+          assert(postHelp && JSON.stringify(postHelp.events.map(e=>e.kind)) ===
+            JSON.stringify(['ATTEMPT_COMMIT','REPAIR_NAV','GUIDED_OPEN',
+              'RETURN_CLICK','ASSISTED_ATTEMPT_COMMIT'])
+            && postHelp.assisted === true
+            && !JSON.stringify(postHelp).includes('After guided teaching'),
+            width + ': post-help attempt lost assisted provenance or leaked response text');
+          assert((await traceNote.textContent()).includes('remains assisted, not independent transfer'),
+            width + ': assisted reattempt lacks visible caution');
+        }else{
+          assert(false, width + ': loopback HTTP round-trip lost the stored help chronology');
+        }
+      }
+    }
+    assert(traceErrors.length === 0, width + ': local trace browser exception count=' + traceErrors.length);
+    await tracePage.close();
+    if (width === 390) {
+      const access = await browser.newPage({ viewport: {width:390,height:900}, reducedMotion:'reduce' });
+      access.on('pageerror', () => result.failures.push('ACCESSIBILITY_PAGE_SCRIPT_EXCEPTION'));
+      await access.goto(pathToFileURL(html).href, {waitUntil:'load'});
+      assert(await access.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches),
+        '390: reduced-motion media emulation not enabled');
+      const conceptId = await access.locator('[data-g9-concept-check]').getAttribute('data-g9-concept-ref');
+      const reasonInput = access.locator('[data-g9-concept-reason]');
+      assert(await reasonInput.getAttribute('id') === conceptId + '-concept-reason',
+        '390: rationale input does not have microtopic-scoped ID');
+      assert(await reasonInput.getAttribute('aria-describedby') === conceptId + '-concept-scope',
+        '390: rationale input not programmatically described');
+      assert(await access.locator('[data-g9-diagnostic-next]').getAttribute('id') === conceptId + '-diagnostic-next',
+        '390: neutral next-power field is not uniquely identified');
+      assert(await access.locator('[data-g9-diagnostic-add]').getAttribute('id') === conceptId + '-diagnostic-add',
+        '390: neutral additive field is not uniquely identified');
+      assert(await access.locator('[id="' + conceptId + '-concept-scope"]').count() === 1,
+        '390: accessible description missing or duplicated');
+      // CSS zoom is a reflow/keyboard stress test, NOT a claim of native 200% browser zoom.
+      await access.evaluate(() => { document.body.style.zoom = '200%'; });
+      const guide = access.locator('[data-g9-concept-review]');
+      await guide.focus();
+      await access.keyboard.press('Enter');
+      assert(await access.locator('[data-g9-concept-target]').first().isVisible(),
+        '390 CSS 200%: keyboard-guided-study button did not reveal construction');
+      assert(await access.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-progress') === 'guided_without_check',
+        '390 CSS 200%: bypass incorrectly classified as checked');
+      assert(await access.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-check-completed') === null,
+        '390 CSS 200%: bypass falsely marked as completed');
+      assert(['H3','H4'].includes(await access.evaluate(() => document.activeElement?.tagName || '')),
+        '390 CSS 200%: focus not moved after keyboard reveal');
+      await access.screenshot({path:path.join(out,'core1a-390-css-zoom-200.png'),fullPage:true});
+      await access.reload();
+      assert(await access.locator('article[data-g9-role="CORE1A"]').getAttribute('data-g9-concept-aid-exposure') === null,
+        '390: page refresh retained transient guided-exposure state');
+      assert(await access.locator('[data-g9-concept-target]').first().isHidden(),
+        '390: refreshing a page must not retain fake learner progress');
+      assert(await access.locator('[data-g9-learning-progress]').getAttribute('data-g9-progress') === 'not_started',
+        '390: progress not reset on fresh page visit');
+      result.accessibility = {
+        css_zoom_200: 'KEYBOARD_PATH_PASS_WHEN_ASSERTIONS_CLEAR',
+        browser_native_zoom: 'NOT_RUN', human_screen_reader: 'NOT_RUN',
+        reduced_motion_emulated: true, keyboard_enter_guided_bypass: true,
+        no_client_persistence_claim: true
+      };
+      await access.close();
+    }
+    if (width === 1280) {
+      // Real governed learner prints start from a fresh page, with the
+      // lesson gated on screen. Print must include the authored construction
+      // and re-fit the three SVG stages; no learner concept check is performed.
+      const printPage = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+      await printPage.goto(pathToFileURL(html).href, { waitUntil: 'load' });
+      const untouchedTargets = printPage.locator('[data-g9-concept-target]');
+      assert(await untouchedTargets.first().isHidden(),
+        'print: guided lesson unexpectedly exposed on fresh interactive page');
+      await printPage.emulateMedia({ media: 'print' });
+      assert(await untouchedTargets.first().isVisible(),
+        'print: guided Core1A construction missing from fresh learner PDF');
+      assert(await printPage.locator('[data-g9-concept-target] .g9-stage-controls').first().isHidden(),
+        'print: obsolete Stage 1 of 3 interactive controls remain visible with all stages shown');
+      // Media-query change callbacks fire asynchronously in Chromium.
+      // Poll the actual geometry rather than sampling before print refit runs.
+      let printedStages = {found:false};
+      for (let probe = 0; probe < 50; probe++) {
+        printedStages = await printPage.locator('figure[data-g9-stage="TEACHING"]').evaluateAll(figures => {
+        const target = figures.find(f => f.dataset.g9StagesTotal === '3');
+        if (!target) return { found: false };
+        const svg = target.querySelector('svg');
+        const stages = [...svg.querySelectorAll('g[data-g9-stage-id]')];
+        const visible = stages.filter(g => getComputedStyle(g).display !== 'none');
+        const b = svg.viewBox.baseVal;
+        const fits = visible.every(g => {
+          const r = g.getBBox();
+          return r.x >= b.x - 1 && r.y >= b.y - 1 &&
+            r.x + r.width <= b.x + b.width + 1 &&
+            r.y + r.height <= b.y + b.height + 1;
+        });
+        return { found: true, count: stages.length, visible: visible.length,
+          allInsideViewBox: fits, viewBox: [b.x,b.y,b.width,b.height] };
+        });
+        if (printedStages.found && printedStages.count === 3 &&
+            printedStages.visible === 3 && printedStages.allInsideViewBox) break;
+        await printPage.waitForTimeout(20);
+      }
+      assert(printedStages.found && printedStages.count === 3 &&
+        printedStages.visible === 3 && printedStages.allInsideViewBox,
+        'print: authored three SVG stages are not all visible within print viewBox: ' + JSON.stringify(printedStages));
+      result.printed_svg = printedStages;
+      await printPage.pdf({ path: path.join(out, 'core1a-print.pdf'), printBackground: true });
+      const stat = fs.statSync(path.join(out, 'core1a-print.pdf'));
+      result.printed_pdf = { bytes: stat.size, status: stat.size > 1000 ? 'GENERATED_NOT_MANUALLY_INSPECTED' : 'INVALID' };
+      assert(stat.size > 1000, 'print PDF is unexpectedly small');
+      await printPage.close();
+    }
+    await page.screenshot({ path: path.join(out, 'core1a-' + width + '.png'), fullPage: true });
+    result.viewports.push({ width, focus_after_check: focused, page_errors: errors,
+      note: 'TEST-only visible behavior; no learner comprehension claim' });
+    assert(errors.length === 0, width + ': uncaught page error count=' + errors.length);
+    await page.close();
+  }
+} catch (error) {
+  // Record even an unexpected Playwright, launch or loopback failure in the
+  // candidate audit receipt. Never echo page content or learner free text.
+  const safeCategories=new Set(['TimeoutError','TargetClosedError','ProtocolError','Error']);
+  const category=safeCategories.has(error?.name)?error.name:'UnknownError';
+  result.failures.push('UNCAUGHT_BROWSER_AUDIT_EXCEPTION:'+category);
+  process.exitCode=1;
+} finally {
+  if(browser){
+    try{await browser.close()}catch(_){
+      result.failures.push('BROWSER_CLOSE_FAILED');process.exitCode=1;
+    }
+  }
+  if(localServer.listening){
+    try{await new Promise((resolve,reject)=>
+      localServer.close(error=>error?reject(error):resolve()));
+    }catch(_){
+      result.failures.push('AUDIT_SERVER_CLOSE_FAILED');process.exitCode=1;
+    }
+  }
+  fs.writeFileSync(path.join(out, 'result.json'), JSON.stringify(result, null, 2) + '\n');
+}
+console.log(JSON.stringify(result, null, 2));
+if (result.failures.length) process.exitCode = 1;

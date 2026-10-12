@@ -1,0 +1,192 @@
+name: IMO F02 Index Laws authored TEST and golden checks
+
+on:
+  pull_request:
+    paths:
+      - "TEST/imo-research/candidates/**"
+      - "TEST/imo-research/golden/**"
+      - "tests/test_imo_327_*.py"
+      - "tests/test_imo_138_core1a_concept_runtime.py"
+      - "tests/test_imo_138_qrt_blueprint_contract.py"
+      - "tests/test_imo_138_e3_transfer_gate.py"
+      - "tests/test_imo_138_e3_assessor_integrity.py"
+      - "Shared/tools/render_core.py"
+      - "tools/site-audit/imo-f02-concept-browser.mjs"
+      - "Shared/tools/imo_f04_browser_receipt_gate.py"
+      - "tests/test_imo_f04_browser_receipt_gate.py"
+      - ".github/workflows/imo-f02-index-laws-goldens.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+jobs:
+  content-and-goldens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install candidate renderer structure validation dependency
+        run: python -m pip install --quiet jsonschema pypdf
+      - name: Core1A independent math, assumptions and negative mutations
+        run: python -m unittest discover -s tests -p 'test_imo_327_core1a_math_proof.py' -v
+      - name: Enforce concept-first versus question-hint authored modes
+        run: python -m unittest discover -s tests -p 'test_imo_327_help_mode_separation.py' -v
+      - name: Test emitted TEST Core1A lesson concept checkpoint
+        run: python -m unittest discover -s tests -p 'test_imo_138_core1a_concept_runtime.py' -v
+      # E3 preflight is intentionally denial-only: engineering PASS != learner mastery.
+      - name: E3 unseen-transfer claim falsifiers (academic HOLD)
+        run: python -m unittest discover -s tests -p 'test_imo_138_e3_transfer_gate.py' -v
+      - name: Write E3 reviewer gaps without learner responses
+        run: |
+          python TEST/imo-research/candidates/imo_f02_e3_transfer_gate.py --output /tmp/imo-f02-e3-held-transfer.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('/tmp/imo-f02-e3-held-transfer.json').read_text())
+          assert not r['errors'] and not r['credit_eligible'] and not r['new_item_provisioned']
+          assert r['assessment_status']=='REVIEW_ONLY_HOLD_NOT_ACCEPTED'
+          assert len(r['requirements'])==5
+          print('E3_SOURCE_BOUNDS_OK; UNSEEN_UNAIDED_TRANSFER_NOT_PROVEN')
+          PY
+      - name: Preserve E3 held-only reviewer gap ledger
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f02-e3-transfer-gaps-held
+          path: /tmp/imo-f02-e3-held-transfer.json
+          if-no-files-found: error
+          retention-days: 7
+      # E3-B is synthetic metadata verification only: no private witness in CI.
+      - name: E3-B assessor digest integrity negative-control tests (academic HOLD)
+        run: python -m unittest discover -s tests -p 'test_imo_138_e3_assessor_integrity.py' -v
+      - name: Export safe unconfigured E3-B assessor HOLD
+        run: |
+          python TEST/imo-research/candidates/imo_f02_e3_assessor_integrity.py --output /tmp/imo-f02-e3-b-hold.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('/tmp/imo-f02-e3-b-hold.json').read_text())
+          assert r['integrity_status']=='EXTERNAL_INTEGRITY_NOT_ESTABLISHED'
+          assert not r['credit_eligible'] and not r['learner_release_authorized']
+          assert 'E3B_EXTERNAL_KEY_UNAVAILABLE' in r['blocking_codes']
+          print('E3B_ASSSESSOR_PROTOCOL_PRESENT; EXTERNAL_WITNESS_NOT_RUN')
+          PY
+      - name: Preserve safe E3-B no-witness HOLD ledger
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f02-e3-b-no-external-assessor-witness
+          path: /tmp/imo-f02-e3-b-hold.json
+          if-no-files-found: error
+          retention-days: 7
+      - name: Verify 3 SHA-locked QRT goldens and negative mutations
+        run: python -m unittest discover -s tests -p 'test_imo_327_qrt_help_golden.py' -v
+      - name: Matrix-first MODEL-D3 and role-blueprint contract falsifiers
+        run: python -m unittest discover -s tests -p 'test_imo_138_qrt_blueprint_contract.py' -v
+      - name: Export source-bound QRT H/S/P/M and blueprint review ledger (NOT academic approval)
+        run: |
+          python TEST/imo-research/candidates/check_f02_qrt_blueprint_contract.py --output /tmp/imo-f02-qrt-blueprint-evidence.json > /tmp/imo-f02-qrt-blueprint-evidence-stdout.txt
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r = json.loads(Path('/tmp/imo-f02-qrt-blueprint-evidence.json').read_text())
+          assert r['selected_cell'] == 'QRT-MODEL-D3' and r['rendered_coverage_cells'] == ['QRT-MODEL-D3']
+          assert r['academic_status'] == 'HOLD_NOT_ACCEPTED' and r['review_gates']
+          assert not r['errors'], r['errors']
+          print('SOURCE_CONTRACT_PASS; INDEPENDENT_QRT_SEMANTICS_HOLD')
+          PY
+      - name: Preserve source-bound QRT evidence and explicit academic HOLD
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f02-qrt-blueprint-review-ledger
+          path: /tmp/imo-f02-qrt-blueprint-evidence.json
+          if-no-files-found: error
+          retention-days: 7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install fixed Chromium browser harness
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Build TEST role pages into temporary audit directory
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from Shared.tools import render_core
+          manifest = Path('TEST/imo-research/candidates/imo-g9-r1-qrt-core2a-core1a.test.manifest.json')
+          pages, gaps, _, advisories, waivers = render_core.build_report(manifest, "PAGES", held_to="REFERENCE")
+          assert not gaps and not advisories and not waivers, (gaps, advisories, waivers)
+          out = Path('/tmp/imo-f02-concept-browser')
+          out.mkdir(parents=True, exist_ok=True)
+          for name, html in pages.items():
+              (out / name).write_text(html, encoding='utf-8')
+          PY
+      - name: Audit real Chromium viewports, wrong laws, keyboard focus and print PDF
+        run: node tools/site-audit/imo-f02-concept-browser.mjs /tmp/imo-f02-concept-browser
+      # Independent structural preflight for the actual Chromium receipt; this
+      # is not a cryptographic browser witness or academic/release acceptance.
+      - name: Enforce F04 safe browser-receipt preflight (academic HOLD)
+        run: |
+          python -m unittest discover -s tests -p 'test_imo_f04_browser_receipt_gate.py' -v
+          python -m Shared.tools.imo_f04_browser_receipt_gate \
+            --receipt /tmp/imo-f02-concept-browser/browser-evidence/result.json
+      - name: Generate governed TEST learner PDFs without publishing or mirroring
+        run: |
+          python Shared/tools/deploy_test.py product TEST/imo-research/candidates/imo-g9-r1-qrt-core2a-core1a.test.manifest.json --no-mirror
+      - name: Verify print-evidence artifact is wholly authored learner Core1A only
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('public/test/products/imo-r1-q26-authored-qrt-core2a-core1a')
+          receipt = json.loads((root/'deploy-receipt.json').read_text())
+          assert receipt.get('subject')=='TEST' and receipt.get('draft') is True and receipt.get('accepted') is False
+          assert receipt.get('selection_counts',{}).get('core2')==0
+          assert receipt.get('selection_counts',{}).get('core2a')==1
+          pdf = root/'core1a.pdf'
+          assert receipt['pdf']['status']=='PRINTED' and pdf.is_file() and pdf.stat().st_size>1000
+          print('Eligible wholly authored TEST learner Core1A PDF; no key PDF or Core2A PDF uploaded')
+          PY
+      - name: Preserve governed TEST Core1A learner-only PDF for manual print audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f02-governed-learner-core1a-pdf
+          path: public/test/products/imo-r1-q26-authored-qrt-core2a-core1a/core1a.pdf
+          if-no-files-found: error
+          retention-days: 7
+      - name: Verify offline PDF all SVG stages and Core2A attempt safety
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from pypdf import PdfReader
+          from Shared.tools import render_core
+          out = Path('public/test/products/imo-r1-q26-authored-qrt-core2a-core1a')
+          receipt = json.loads((out/'deploy-receipt.json').read_text())
+          assert receipt['subject']=='TEST' and receipt['draft'] is True and receipt['accepted'] is False, receipt
+          assert receipt['selection_counts']['core2']==0 and receipt['selection_counts']['core2a']==1, receipt
+          assert receipt['pdf']['status']=='PRINTED', receipt['pdf']
+          assert not render_core.pdf_publication_problems(out)
+          for role in ('core1a','core2a'):
+              pdf = out/(role+'.pdf')
+              assert pdf.is_file() and pdf.stat().st_size>1000, role
+              txt = ' '.join(page.extract_text() or '' for page in PdfReader(pdf).pages)
+              assert 'TEST' in txt, role
+              if role=='core1a':
+                  for stage in ('Name the positive quantity',
+                                'Keep the multiplicative factor',
+                                'Solve, then return to the exponent'):
+                      assert stage in txt, 'PRINT_MISSING_AUTHOR_SVG_STAGE: '+stage
+                  assert 'Stage 1 of 3' not in txt, 'PRINT_STALE_INTERACTIVE_STAGE_LABEL'
+              else:
+                  assert '4t' not in txt and 'u=3/2' not in txt, 'LEARNER_CORE2A_PDF_ANSWER_LEAK'
+          print('TEST authored Core1A/Core2A governed PDF stages and answer boundary: PASS')
+          PY
+      - name: Preserve candidate browser receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo-f02-browser-evidence
+          path: /tmp/imo-f02-concept-browser/browser-evidence/
+          if-no-files-found: warn
