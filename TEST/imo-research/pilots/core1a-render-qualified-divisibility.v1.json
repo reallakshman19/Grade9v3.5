@@ -694,7 +694,9 @@
             "CORE2B"
           ],
           "question_ref": "Q-TEST-CORE2B-FOUR-FACTOR-48-BOUNDARY",
-          "datum_refs": [],
+          "datum_refs": [
+            "DATUM-TEST-CORE2B-FOUR-FACTOR-PROOF-FREE"
+          ],
           "asset_ref": "TEST/library/figures/core2b-four-consecutive-attempt-safe.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
@@ -1114,13 +1116,16 @@
         "verification_status": "CHECKED_BY_AUTHOR",
         "rubric": [
           {
-            "criterion": "Give an admissible exact counterexample to 48-divisibility."
+            "criterion": "Give an admissible exact counterexample to 48-divisibility.",
+            "evidence_of": "The false universal 48 claim is rejected by an admissible k."
           },
           {
-            "criterion": "Prove every four-factor product contains a factor of 8 and factor of 3."
+            "criterion": "Prove every four-factor product contains a factor of 8 and factor of 3.",
+            "evidence_of": "The statement 24 divides the product is proved for every k using exhaustive residue guarantees."
           },
           {
-            "criterion": "Use coprimality to justify the 24 divisor and the k=1 product to prove maximality."
+            "criterion": "Use coprimality to justify the 24 divisor and the k=1 product to prove maximality.",
+            "evidence_of": "A boundary input proves no larger universally guaranteed divisor is possible."
           }
         ]
       },
@@ -1189,7 +1194,7 @@
       },
       "learner_question_type": "constructed_response",
       "transfer": {
-        "dimension": "changed_divisor_and_countermodel",
+        "dimension": "novelty",
         "builds_on": [
           "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF"
         ],
@@ -1343,6 +1348,23 @@
       "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>(</mo><mi>t</mi><mo>−</mo><mn>2</mn><mo>)</mo><mo>(</mo><mi>t</mi><mo>−</mo><mn>1</mn><mo>)</mo><mi>t</mi></mrow></math>",
       "meaning": "Three consecutive factors that end at an arbitrary positive integer t of at least three; no proof exposed",
       "locator": "AUTHOR_CREATED: TEST Core1B attempting the general product"
+    },
+    {
+      "id": "DATUM-TEST-CORE2B-FOUR-FACTOR-PROOF-FREE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_SAFE_EXPRESSION"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>k</mi><mo>(</mo><mi>k</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>(</mo><mi>k</mi><mo>+</mo><mn>2</mn><mo>)</mo><mo>(</mo><mi>k</mi><mo>+</mo><mn>3</mn><mo>)</mo></mrow></math>",
+      "meaning": "Four unmarked consecutive positive integer factors; no claim or correct divisor shown.",
+      "symbol": "k(k+1)(k+2)(k+3)",
+      "locator": "AUTHOR_CREATED: TEST Core2B safe pre-attempt figure"
     }
   ]
 }
