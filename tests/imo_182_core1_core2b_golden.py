@@ -168,7 +168,10 @@ class BlueprintGoldens(unittest.TestCase):
     def test_selections_and_depth_are_honest(self):
         self.assertFalse(self.gaps1, self.gaps1)
         self.assertFalse(self.gaps2, self.gaps2)
-        self.assertFalse(self.gaps_gold, self.gaps_gold)
+        # The source golden is a multi-role CANDIDATE: its unrelated CORE1A
+        # reference-depth findings remain honest, not silently approved here.
+        self.assertFalse([g for g in self.gaps_gold if g["core"] in ("CORE1", "CORE2B")], self.gaps_gold)
+        self.assertEqual({g["core"] for g in self.gaps_gold}, {"CORE1A"})
         self.assertEqual(set(self.pages1),{"core1.html","index.html"})
         self.assertEqual(set(self.pages2),{"core1.html","core2a.html","core2b.html","index.html"})
         self.assertNotEqual(self.digest1,self.digest2)
