@@ -1080,73 +1080,79 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 original TEST",
+        "grade9v3:authored_by": "AGENT-D1 original EXPLAIN TEST",
         "grade9v3:cognitive_demand": {
-          "primary": "RETRIEVE",
+          "primary": "EXPLAIN",
           "secondary": [],
-          "basis": "Select matching complete divisor card from the prime definition."
+          "basis": "Infer and explain the parity mechanism for a missing subgroup from a fully pairable total and a known odd subgroup; numerical subtraction is an independent check, not the explanation."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "An unmatched counter in the known odd subgroup must meet an unmatched one from the remainder to keep the whole total pairable.",
+          "common_wrong_route": "Simply write 18−7=11 or treat removing an odd subgroup as leaving even."
         }
       },
       "id": "Q-TEST-IMO182-D1-EXP-CORE2B-INVERSE-GROUP-EXPLANATION",
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-EXP-REP-AUTHORED",
-      "original_identifier": "AUTHORED-RET-D1-CATEGORY-TO-CARD",
-      "stem": "CHANGED TASK: You are GIVEN the category PRIME. Exactly one COMPLETE divisor card matches. Select A, B or C and cite the defining property. A: number 1 has {1}. B: number 23 has {1,23}. C: number 25 has {1,5,25}.",
+      "original_identifier": "AUTHORED-EXP-D1-INVERSE-18-7",
+      "stem": "INVERSE explanation: one collection has 18 counters, all arranged in 9 complete pairs. A first subgroup has 7 counters (three pairs and one leftover). The remaining subgroup has 11 counters. Explain WHY the remaining subgroup must also have ONE unmatched counter, using the pair structure of the original 18 counters, not just 18−7=11.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Cards list ALL distinct positive divisors.",
-        "Start from the category and select its matching example.",
-        "Authored TEST item; not an official exam question."
+        "The full collection has 18 counters and is perfectly pairable.",
+        "Seven are put into the first subgroup, leaving eleven in the second.",
+        "An odd count means one unmatched counter in a pairing.",
+        "This is an original TEST mechanism question."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-EXP-CARDS-GIVEN"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "Card B, the unique two-divisor card.",
+        "summary": "The 7-counter subgroup has one leftover. The 18-counter total has no leftover, so the other 11-counter subgroup must also contribute one leftover to pair with it. Therefore the remaining 11 counters are odd.",
         "reasoning": [
-          "A has one; B has two; C has three distinct positive divisors.",
-          "Prime requires exactly two; therefore B."
+          "The full group of 18 has no lone counter.",
+          "The first seven have three pairs plus one lone.",
+          "For the whole collection to have no lone counter, a lone from the remaining subgroup must pair with the first group's lone.",
+          "The remaining 11 has five pairs and one lone, agreeing with the given count."
         ],
         "reasoning_route": [
           {
-            "id": "RET-D1-QB-COUNT",
+            "id": "EXP-D1-QB-GIVEN",
             "kind": "REPRESENT",
-            "action": "Count distinct positive divisors on A, B and C.",
-            "why_valid": "Cards are complete.",
+            "action": "Use the total's pairability and the first subgroup's one leftover.",
+            "why_valid": "The total has 9 whole pairs and the first group of 7 has 3 pairs plus one.",
             "inputs": [
-              "A {1}",
-              "B {1,23}",
-              "C {1,5,25}"
+              "18 all paired",
+              "7 first group"
             ],
-            "output": "1,2,3"
+            "output": "total no leftover, first group one lone"
           },
           {
-            "id": "RET-D1-QB-SELECT",
-            "kind": "DECIDE",
-            "action": "Choose B for PRIME.",
-            "why_valid": "B alone has exactly two distinct positive divisors.",
+            "id": "EXP-D1-QB-INVERSE",
+            "kind": "EXPLAIN",
+            "action": "Explain why the remaining group must have a lone counter to match the first group's leftover.",
+            "why_valid": "A lone from the first subgroup cannot disappear; since 18 has no lone, the other subgroup must supply its partner.",
             "inputs": [
-              "prime criterion",
-              "counts 1,2,3"
+              "one leftover in 7",
+              "no leftover in 18"
             ],
-            "output": "B"
+            "output": "remaining subgroup has one leftover"
           },
           {
-            "id": "RET-D1-QB-CHECK",
+            "id": "EXP-D1-QB-CHECK",
             "kind": "VERIFY",
-            "action": "Reject A singleton and C three-divisor composite.",
-            "why_valid": "Neither alternative has exactly two positive divisors.",
+            "action": "Check remaining eleven as five pairs plus one lone.",
+            "why_valid": "18−7=11 and 11=2×5+1.",
             "inputs": [
-              "A",
-              "C"
+              "18",
+              "7"
             ],
-            "output": "B unique"
+            "output": "11 odd"
           }
         ],
-        "crux_move_ref": "RET-D1-QB-SELECT",
-        "check": "A is neither and C composite, so B is unique.",
+        "crux_move_ref": "EXP-D1-QB-INVERSE",
+        "check": "18−7=11=2×5+1; seven and eleven each leave a lone, and the two lone counters form one complete pair.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -1164,7 +1170,7 @@
       ],
       "hints": [
         {
-          "text": "Count distinct entries in each complete card. Prime means exactly two, not simply odd.",
+          "text": "A group with 18 counters has no lone counter, while 7 counters have exactly one. What must be true of the final pairing after the groups are considered together?",
           "reveals": "CONCEPT"
         }
       ],
@@ -1182,18 +1188,18 @@
         "safe_ref": "REP-TEST-IMO182-D1-EXP-CARDS-GIVEN",
         "bound_ref": null,
         "stage_refs": [
-          "RETR-QB-CARDS"
+          "EXP-D1-QB-GIVENS"
         ]
       },
-      "repair_ref": "EXP-D1-TC-2",
-      "failure_signal": "One is neither; 25 has three positive divisors.",
+      "repair_ref": "EXP-D1-TC-1",
+      "failure_signal": "Explain how one leftover in a subgroup can coexist with zero leftover in the 18-counter total.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS",
-        "closure": "Authored TEST only. This item alone does not establish independent QRT acceptance."
+        "closure": "Inverse explanation after the forward 7+9 task, not simply a new pair of odd addends."
       },
       "independent_check": {
-        "statement": "Exclude one-divisor A and three-divisor C.",
-        "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
+        "statement": "Verify remainder 11 and show 11=2×5+1 while 7=2×3+1; two leftovers together are paired.",
+        "check_type": "PAIR_COMPLETENESS"
       },
       "difficulty": {
         "band": "D1",
@@ -1201,17 +1207,17 @@
         "components": {
           "concept_model_selection": 0,
           "representation_translation": 1,
-          "reasoning_chain_length": 0,
+          "reasoning_chain_length": 1,
           "algebra_computational_load": 0,
-          "trap_exception_sensitivity": 1
+          "trap_exception_sensitivity": 0
         },
-        "basis": "Single criterion-to-card selection. Reading a complete divisor card into a category contributes one representation-translation dimension.",
+        "basis": "Given the 18/7/11 values and the pair model, state one mechanism linking a lone from the first subgroup to the remainder; D1 band is provisional pending reviewer.",
         "component_evidence": {
-          "concept_model_selection": "No governing model choice.",
-          "representation_translation": "Translate the complete positive-divisor card into a category using its distinct-entry count.",
-          "reasoning_chain_length": "One classification.",
-          "algebra_computational_load": "No divisor search needed.",
-          "trap_exception_sensitivity": "Odd composite number traps surface classification."
+          "concept_model_selection": "Explicit paired whole and first subgroup, no choice of strategy.",
+          "representation_translation": "Interpret one full-group pair diagram and one unmatched counter.",
+          "reasoning_chain_length": "One causal complement linking the missing lone counter; full group has none.",
+          "algebra_computational_load": "Remaining quantity already supplied, subtraction merely a check.",
+          "trap_exception_sensitivity": "No hidden condition beyond parity."
         }
       },
       "learner_question_type": "constructed_response",
@@ -1220,17 +1226,17 @@
         "builds_on": [
           "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION"
         ],
-        "statement": "Given PRIME, choose the compatible complete divisor-card example instead of categorizing a given number.",
-        "invariant": "Exact divisor-count criterion.",
+        "statement": "The forward Core2A task combines two known odd groups and explains evenness. Here the even complete group and one odd subgroup are given, and the learner explains why the other subgroup must be odd.",
+        "invariant": "Two lone counters must match to leave zero unpaired in a combined even collection.",
         "novelty": {
           "checked_against": [
             "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION",
             "MIC-TEST-IMO182-D1-EXP-ODD-PAIRING:exit_task",
             "MIC-TEST-IMO182-D1-EXP-ODD-PAIRING:boundary_test"
           ],
-          "why_new": "Given a category rather than a card, choose the eligible complete set from A/B/C; this also tests one-divisor near-neighbour. Distinct from the even-prime 2 boundary task."
+          "why_new": "Inverse explanation from full even group plus an odd component, rather than new odd addends or a restatement of the forward worked example. Both subgroup sizes are given, so one causal link remains."
         },
-        "protected_move_ref": "RET-D1-QB-SELECT"
+        "protected_move_ref": "EXP-D1-QB-INVERSE"
       }
     }
   ],
@@ -1244,7 +1250,7 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "ROUTE-TEST-IMO182-D1-EXP-PAIR-CONSTRUCTION",
-      "title": "Exact divisor-count definition and near-neighbour repair",
+      "title": "Pairing-based odd-group explanation and independent mistake repair",
       "cores": [
         "CORE1A"
       ],
@@ -1252,30 +1258,31 @@
         "MIC-TEST-IMO182-D1-EXP-ODD-PAIRING"
       ],
       "entry_needs": [
-        "Positive divisibility and reading complete factor lists."
+        "Odd groups form complete pairs plus one lone counter.",
+        "Even groups form full pairs with zero leftover."
       ],
       "learner_actions": [
-        "Define exactly-two divisor criterion.",
-        "Work a distinct 13 example.",
-        "Independently classify 25.",
-        "Diagnose false oddness prime heuristic on 9.",
-        "Test the excluded 1 boundary."
+        "Read the odd/even counter-group meaning.",
+        "Inspect a DIFFERENT worked 3+5 pairing.",
+        "Predict wrong-claim outcome for 5+7.",
+        "Explain 7+9 without receiving the two-leftover coupling sentence in hints.",
+        "Test changed odd+even 9+4 and inverse 18/7 group."
       ],
       "help_plan": [
-        "Core1A shows worked 13 but not the 25 category.",
-        "Core2A H1/H2 do not classify 25; H3 only after attempted written answer."
+        "Core1A reveals only worked 3+5, not target 7+9.",
+        "Core2A H1/H2 describe what to examine without performing target mechanism; H3 is after a nonempty independent attempt."
       ],
-      "reveal_plan": "Initial figures contain only givens for 25 and A/B/C; Core1A stages teach distinct 13; attempt gates control outcomes.",
+      "reveal_plan": "Stage only given counter groups before attempted explanation; show worked 3+5 through registered stages; keep full answers after commitment.",
       "source_preferences": [
         {
           "resource_ref": "SRC-TEST-IMO182-D1-EXP-REP-AUTHORED",
-          "purpose": "Original authored classification teaching",
-          "reason": "No copied official sample content."
+          "purpose": "Original counter-pair teaching, no official exam specimen",
+          "reason": "No rights to organizer questions are presumed."
         }
       ],
       "when_not_suitable": [
-        "Incomplete divisor lists do not establish PRIME.",
-        "Independent academic D1 acceptance not given."
+        "Do not claim general algebraic proof or higher-band unseen model selection.",
+        "No qualified academic QRT approval, source-rights expansion, or learner release."
       ],
       "practice_profile_ref": null
     }
