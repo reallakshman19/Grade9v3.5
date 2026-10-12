@@ -103,19 +103,45 @@ class OwnerFiveCoreGolden(unittest.TestCase):
         self.assertIn("D-182-2-H3", l["not_approved"])
         self.assertEqual(l["qrt_accepted"], "0/28")
 
-    def test_source_live_manifest_exactly_regenerates_the_frozen_five(self):
+    def test_live_manifest_keeps_locked_roles_and_limits_delta_to_h3(self):
+        """The Owner's frozen bytes remain exact-locked; live H3 follows D-182-2-H3.
+
+        This test must not pretend that the after-attempt live Core2A is
+        byte-identical to the Owner's original pre-attempt Core2A. A successor
+        exact Core2A golden still requires the Owner's designation (D-182-3).
+        """
         self.assertEqual(self.live["selection"], self.fixture["selection"])
         self.assertEqual(self.live["output_roles"], list(ROLES))
         self.assertEqual(self.fixture["output_roles"], list(ROLES))
         self.assertEqual(self.live["selection"]["core2"], [])
-        self.assertEqual(self.source_digest, self.lock["original_digest"])
         self.assertFalse(self.source_gaps, self.source_gaps)
-        self.assertEqual(set(self.source_pages), {role.lower()+".html" for role in ROLES} | {"index.html"})
+        self.assertEqual(set(self.source_pages),
+                         {role.lower() + ".html" for role in ROLES} | {"index.html"})
+        # Only the Core2A after-attempt support slot may differ. All other
+        # roles must remain byte-exact after normalizing the authority digest.
+        prior = self.lock["original_digest"]
         for row in self.lock["snapshots"]:
-            with self.subTest(role=row["role"]):
-                frozen=(GOLD / row["path"]).read_bytes()
-                rendered=self.source_pages[row["role"].lower()+".html"].encode("utf-8")
-                _compare_bytes(self, frozen, rendered, row["role"] + " exact frozen/sole-renderer")
+            role = row["role"]
+            old = (GOLD / row["path"]).read_text(encoding="utf-8")
+            new = self.source_pages[role.lower() + ".html"]
+            self.assertEqual(_sha(old.encode()), row["sha256"])
+            old = old.replace(prior, "@AUTHORITY_DIGEST@")
+            new = new.replace(self.source_digest, "@AUTHORITY_DIGEST@")
+            if role != "CORE2A":
+                with self.subTest(role=role):
+                    _compare_bytes(self, old.encode(), new.encode(),
+                                   role + " unchanged outside authority digest")
+                continue
+            import re
+            slot = r'<section class="blueprint-slot slot-support"[^>]*>.*?</section>'
+            self.assertEqual(len(re.findall(slot, old, flags=re.S)), 1)
+            self.assertEqual(len(re.findall(slot, new, flags=re.S)), 1)
+            self.assertNotEqual(re.findall(slot, old, flags=re.S)[0],
+                                re.findall(slot, new, flags=re.S)[0])
+            self.assertEqual(re.sub(slot, "<CORE2A_SUPPORT>", old, flags=re.S),
+                             re.sub(slot, "<CORE2A_SUPPORT>", new, flags=re.S))
+            self.assertNotIn("data-g9-after-attempt-hint", old)
+            self.assertIn("data-g9-after-attempt-hint", new)
 
     def test_golden_pinned_copy_rebuilds_only_with_expected_authority_digest_change(self):
         self.assertFalse(self.regen_gaps, self.regen_gaps)
