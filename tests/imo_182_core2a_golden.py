@@ -15,7 +15,10 @@ from pathlib import Path
 
 EXPECTED_ID = "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF"
 EXPECTED_BLUEPRINT = "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0"
-SLOTS = ("identity", "attempt", "support", "reasoning")
+# The responsive renderer places PRIMARY reasoning before SUPPORT in its DOM
+# split, although the blueprint declares the support slot before reasoning.
+# Both candidate and golden must preserve this accessible reading order.
+SLOTS = ("identity", "attempt", "reasoning", "support")
 ESSENTIAL = ("stem", "reasoning_route", "independent_check")
 
 
