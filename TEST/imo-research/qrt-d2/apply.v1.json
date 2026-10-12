@@ -1,0 +1,1201 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-D2-APPLY-SUCCESSIVE-PERCENTAGES",
+  "title": "AUTHORED TEST: APPLY-D2 successive-percent operation and reference base",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Original authored percentage-transformation task for positive numerical prices. APPLY a taught percentage multiplier in a two-step changed-reference context, not prove the rule; reverse transfer has separate decision. No official source text or published learner item.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-QRT-APPLY-D2-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original authored sequential-percentage procedure",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
+      "edition": "Authored TEST 2026-10-12",
+      "section": "Percentage of a changed amount",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Wholly original TEST, no rights to SOF/publisher sources asserted",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "960×(1−25/100)×(1−10/100)=648; net discount 32.5%",
+        "(1000×1.20)×0.90=1080; reverse retrieves 1000"
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Wholly original known-rule procedural D2 item: two connected percent applications with changed base.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-TEST-QRT-APPLY-D2-POWERS",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Apply successive percentages to updated values",
+      "topic": "Arithmetic: percentage changes and their reference values",
+      "intrinsic_badge": "MEDIUM",
+      "badge_reason": "Successive percent calculation with changed base and original-reference reconciliation.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-QRT-APPLY-D2-CONCEPT",
+      "conventions": [
+        {
+          "id": "base",
+          "statement": "Each percentage is applied to the amount then current, unless a statement explicitly says otherwise."
+        },
+        {
+          "id": "discount",
+          "statement": "A discount of p percent multiplies the present amount by 1−p/100."
+        },
+        {
+          "id": "growth",
+          "statement": "An increase of p percent multiplies the present amount by 1+p/100."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-TEST-QRT-APPLY-D2-EXPO-MECHANISM",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "Apply familiar percentage factors twice in sequence, update the reference amount, and reconcile net change to the ORIGINAL amount.",
+      "success_criterion": "For 960 then 25% and 10% discounts, compute 648 and equivalent 32.5% initial-price discount, not 35%; solve a new inverse increase-then-decrease case.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-TEST-QRT-APPLY-D2-EXPO-MECHANISM",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Successive discounts with an updated percentage reference",
+      "bucket_id": "BUCKET-TEST-QRT-APPLY-D2-POWERS",
+      "primary_capability_ref": "CAP-TEST-QRT-APPLY-D2-EXPO-MECHANISM",
+      "intrinsic_badge": "MEDIUM",
+      "badge_reason": "Two dependent percent steps and one original-base reconciliation; taught procedure, not model discovery.",
+      "entry_assumptions": [
+        "Find p% of a stated amount.",
+        "Compute price after a discount with 1−p/100.",
+        "Compare a final amount to its original stated amount."
+      ],
+      "inferential_jump": "After applying the first known percentage operation, identify the changed numerical base for the SECOND operation; only then interpret the net result relative to the original.",
+      "teaching_path": [
+        {
+          "id": "AP-TC1",
+          "role": "DECLARE",
+          "action": "A 20% discount removes 20 per 100 units of the CURRENT starting price.",
+          "why_valid": "Percent means hundredths of a stated base; after the first step the base updates.",
+          "inputs": [],
+          "output": "1000×0.8=800"
+        },
+        {
+          "id": "AP-TC2",
+          "role": "TRANSFORM",
+          "action": "Apply a second 20% discount to 800 rather than to the original 1000.",
+          "why_valid": "The first reduction changed the amount that serves as the reference for the second 20%.",
+          "inputs": [],
+          "output": "800×0.8=640"
+        },
+        {
+          "id": "AP-TC3",
+          "role": "TRANSFORM",
+          "action": "Compare final 640 with original 1000 and compute total loss as a fraction of 1000.",
+          "why_valid": "A single equivalent overall percent change must use the ORIGINAL reference amount.",
+          "inputs": [],
+          "output": "1000−640=360; 360/1000=36%"
+        },
+        {
+          "id": "AP-TC4",
+          "role": "VERIFY",
+          "action": "Check the 40% shortcut against the sequential update.",
+          "why_valid": "The sum 20%+20% uses the original base twice, which is inconsistent with an updated second base.",
+          "inputs": [],
+          "output": "600 differs from 640"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-QRT-APPLY-D2-POWER-STEP"
+      ],
+      "representation_refs": [
+        "REP-TEST-QRT-APPLY-D2-CONCEPT"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-QRT-APPLY-D2-POWERS"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Successive 20% discounts are 40% off the original, so starting 1000 ends at 600.",
+          "diagnostic_prompt": "If the price after the first cut is 800, to which amount does the second 20% refer?",
+          "repair": "The second 20% is 160 (of 800), so the final is 640; the original-base drop is 360, or 36%."
+        }
+      ],
+      "exit_task": {
+        "prompt": "An original notebook price is 500 credits. Take 10% off, then 20% off the discounted price. Find the final credits and equivalent single discount percentage of the original. Show both percentage bases.",
+        "source_ref": "SRC-TEST-QRT-APPLY-D2-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "Final 360 credits; single equivalent discount 28%.",
+          "reasoning": [
+            "First 10% reduces 500 to 450.",
+            "Second 20% is 90 of 450, leaving 360.",
+            "Drop is 500−360=140, which is 140/500=28% of the original."
+          ],
+          "check": "Independent reverse check: 500×0.9×0.8=360; 500×0.72=360.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d2/test_apply.py",
+            "bindings": {
+              "initial": "500",
+              "first_percent": "10",
+              "second_percent": "20",
+              "expected_final": "360",
+              "equivalent_percent": "28"
+            }
+          }
+        }
+      },
+      "research_contribution": "Wholly authored two-step percent application with explicit changing reference; not source-authentic or QRT accepted.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-QRT-APPLY-D2-UPDATED-BASE",
+          "decision": "Treat each given percent as a transformation on the current amount, then reconcile final with original.",
+          "step_refs": [
+            "AP-TC1",
+            "AP-TC2",
+            "AP-TC3",
+            "AP-TC4"
+          ],
+          "representation_ref": "REP-TEST-QRT-APPLY-D2-CONCEPT",
+          "misconception_indexes": [
+            0
+          ],
+          "relation_refs": [
+            "REL-TEST-QRT-APPLY-D2-POWER-STEP"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Compare successive 20% factor result with directly computed 36% reduction of initial 1000.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "AP-ST1",
+            "AP-ST2",
+            "AP-ST3"
+          ],
+          "worked_anchor_ref": "Q-TEST-QRT-APPLY-D2-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "After 20% off 1000 leaves 800, what amount does the next 20% apply to?",
+        "result": "To the new 800 amount, so 20% of 800 is 160.",
+        "representation_ref": "REP-TEST-QRT-APPLY-D2-CONCEPT"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A learner insists that a 20% cut followed by another 20% cut on the reduced amount gives a 40% total cut. Before the repair, choose the correct base for the second step and predict whether 600 is possible.",
+          "defensible_answer": "The second reference is the new 800, so final price is 640, not 600."
+        },
+        "attempt": {
+          "produces": "A written two-step calculation using UPDATED base and original-base comparison for an unfamiliar original amount.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Identify and compute the amount after the FIRST percent operation.",
+              "evidence_of": "Set a new reference rather than merge percentages."
+            },
+            {
+              "criterion": "Apply the second percent to the new amount, NOT original.",
+              "evidence_of": "Uses the central changed-base link."
+            },
+            {
+              "criterion": "Compare final and original to calculate equivalent percent correctly.",
+              "evidence_of": "Net effect uses the original reference and rejects addition."
+            }
+          ],
+          "accepted": [
+            "Apply each multiplier to the current value: 1000×0.8=800, then 800×0.8=640; total loss 360 of original 1000=36%."
+          ],
+          "rejected": [
+            "Two 20% discounts always combine to exactly 40%."
+          ],
+          "task": {
+            "prompt": "A basket costs 200 credits. Apply a 25% cut and a second 25% cut on its REDUCED value. Show the new base for the second cut and final amount; explain whether the shortcut 50% is valid. Attempt independently before revealing.",
+            "givens": [
+              "Original amount 200 credits.",
+              "Each 25% cut applies to the amount then current."
+            ],
+            "representation_ref": "REP-TEST-QRT-APPLY-D2-CONCEPT",
+            "stage_refs": [
+              "AP-ST1"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "What amount does the first 25% of 200 remove, and what remains?",
+              "why_this_ask": "Check that the initial operation is known.",
+              "from_step_ref": "AP-TC1"
+            },
+            {
+              "ask": "What is the base for a second 25% after the amount changed?",
+              "why_this_ask": "Identify the protected bridge in changed-reference application.",
+              "from_step_ref": "AP-TC2"
+            },
+            {
+              "ask": "Find the final amount and compute total loss as a percent of the ORIGINAL 200.",
+              "why_this_ask": "Rebuild two-stage and net-change procedure without taking a shortcut.",
+              "from_step_ref": "AP-TC3"
+            },
+            {
+              "ask": "Contrast the calculated final with a 50% shortcut and identify why the shortcut differs.",
+              "why_this_ask": "Use a falsifier to repair mistaken base.",
+              "from_step_ref": "AP-TC4"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A works 20%+20% from 1000; Core1B first elicits independent 25%+25% of 200 and diagnoses whether the second base was wrongly left fixed."
+        },
+        "boundary_test": {
+          "prompt": "New boundary: starting with 100 credits, increase by 10% then decrease by 10% of the NEW value. Does it return to 100? Compute both stages and explain the second reference before revealing.",
+          "answer": "No: 100×1.10=110, then 110×0.90=99. The second 10% applies to 110, so it subtracts 11 rather than 10.",
+          "confirms": "Applying percent updates to changed amounts works even when the direction switches."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-TEST-QRT-APPLY-D2-POWER-STEP",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "For original x>0, two successive discounts of p% then q% give x(1−p/100)(1−q/100).",
+      "meaning": "The second percent changes the first RESULT, and the net percent change is always computed against the original x.",
+      "symbols": [
+        {
+          "symbol": "x",
+          "meaning": "Original price in credits",
+          "unit_or_domain": "x>0"
+        },
+        {
+          "symbol": "p",
+          "meaning": "First percent discount",
+          "unit_or_domain": "0≤p≤100"
+        },
+        {
+          "symbol": "q",
+          "meaning": "Second percent discount on updated value",
+          "unit_or_domain": "0≤q≤100"
+        }
+      ],
+      "conditions": [
+        "Original x positive.",
+        "Discount percentages between 0 and 100."
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-AP-TC1",
+          "role": "DECLARE",
+          "action": "A 20% discount removes 20 per 100 units of the CURRENT starting price.",
+          "why_valid": "Percent means hundredths of a stated base; after the first step the base updates.",
+          "inputs": [],
+          "output": "1000×0.8=800"
+        },
+        {
+          "id": "DERIV-AP-TC2",
+          "role": "TRANSFORM",
+          "action": "Apply a second 20% discount to 800 rather than to the original 1000.",
+          "why_valid": "The first reduction changed the amount that serves as the reference for the second 20%.",
+          "inputs": [],
+          "output": "800×0.8=640"
+        },
+        {
+          "id": "DERIV-AP-TC3",
+          "role": "TRANSFORM",
+          "action": "Compare final 640 with original 1000 and compute total loss as a fraction of 1000.",
+          "why_valid": "A single equivalent overall percent change must use the ORIGINAL reference amount.",
+          "inputs": [],
+          "output": "1000−640=360; 360/1000=36%"
+        },
+        {
+          "id": "DERIV-AP-TC4",
+          "role": "VERIFY",
+          "action": "Check the 40% shortcut against the sequential update.",
+          "why_valid": "The sum 20%+20% uses the original base twice, which is inconsistent with an updated second base.",
+          "inputs": [],
+          "output": "600 differs from 640"
+        }
+      ],
+      "limits": [
+        "Two changes are not in general added as if both used the initial base.",
+        "Mixed increase/decrease uses one multiplier greater than one and one less than one."
+      ],
+      "checks": [
+        "1000×0.8×0.8=640, not 600.",
+        "960×0.75×0.9=648, which is 67.5% of original."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>x</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo>/</mo><mn>100</mn><mo>)</mo><mo>(</mo><mn>1</mn><mo>−</mo><mi>q</mi><mo>/</mo><mn>100</mn><mo>)</mo></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-TEST-QRT-APPLY-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "BAR_MODEL",
+      "purpose": "CORE1A: an authored updated-percentage sequence, with no pre-attempt computed answer marked.",
+      "required_elements": [
+        "1000 credits",
+        "20% off",
+        "20% of new amount"
+      ],
+      "relation_refs": [
+        "REL-TEST-QRT-APPLY-D2-POWER-STEP"
+      ],
+      "read_order": [
+        "Read original credits and the percentage statements.",
+        "Do not infer the second base from percentage addition; use the learner's calculation."
+      ],
+      "instance_constraints": [
+        "Only author-created credits, not any source exam item.",
+        "No after-discount totals or net answer inside Core2A/Core2B initial SVG."
+      ],
+      "accessibility": [
+        "Each step's percentage is given as accessible readable text.",
+        "The unmarked second input never supplies the protected changed reference value."
+      ],
+      "misleading_alternatives": [
+        "A diagram coloring the correct combined discount before learner attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/apply-d2-stages.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-APPLY-D2-CONCEPT",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-TEST-QRT-APPLY-D2-EXPO-MECHANISM",
+          "datum_refs": [
+            "DATUM-TEST-QRT-APPLY-D2-CONCEPT"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/apply-d2-stages.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Sequential percentage of updated amount",
+            "caption": "The numbers shown are givens. Calculate intermediate and final values yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three separate numeric statement cards",
+          "symbol": "1000 credits; 20% off; 20% of new amount",
+          "in_words": "First amount, first adjustment, and adjustment of the updated amount."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "AP-ST1",
+          "label": "Initial amount",
+          "purpose": "Present 1000 credits before applying any discount.",
+          "visible_elements": [
+            "1000 credits"
+          ]
+        },
+        {
+          "id": "AP-ST2",
+          "label": "Two consecutive steps",
+          "purpose": "Reveal a second 20% cut on changed amount only after learner prediction.",
+          "visible_elements": [
+            "20% discount",
+            "then 20% of current amount"
+          ]
+        },
+        {
+          "id": "AP-ST3",
+          "label": "Original reference",
+          "purpose": "Show post-stage comparison as a concept construction after the second percent operation.",
+          "visible_elements": [
+            "Net change compares final to original"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-QRT-APPLY-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "BAR_MODEL",
+      "purpose": "CORE2A: an authored updated-percentage sequence, with no pre-attempt computed answer marked.",
+      "required_elements": [
+        "960 credits",
+        "25% off",
+        "10% of reduced price"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read original credits and the percentage statements.",
+        "Do not infer the second base from percentage addition; use the learner's calculation."
+      ],
+      "instance_constraints": [
+        "Only author-created credits, not any source exam item.",
+        "No after-discount totals or net answer inside Core2A/Core2B initial SVG."
+      ],
+      "accessibility": [
+        "Each step's percentage is given as accessible readable text.",
+        "The unmarked second input never supplies the protected changed reference value."
+      ],
+      "misleading_alternatives": [
+        "A diagram coloring the correct combined discount before learner attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/apply-d2-primary.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-APPLY-D2-PRIMARY",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-QRT-APPLY-D2-PRIMARY",
+          "datum_refs": [
+            "DATUM-TEST-QRT-APPLY-D2-PRIMARY"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/apply-d2-primary.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Sequential percentage of updated amount",
+            "caption": "The numbers shown are givens. Calculate intermediate and final values yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three separate numeric statement cards",
+          "symbol": "960 credits; 25% off; 10% of reduced price",
+          "in_words": "First amount, first adjustment, and adjustment of the updated amount."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "AP-PRACTICE",
+          "label": "Unmarked primary givens",
+          "purpose": "Give listed price and both percentages only, without intermediate values or net discount.",
+          "visible_elements": [
+            "960 credits",
+            "25% off",
+            "then 10% of reduced price"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-QRT-APPLY-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "BAR_MODEL",
+      "purpose": "CORE2B: an authored updated-percentage sequence, with no pre-attempt computed answer marked.",
+      "required_elements": [
+        "final 1080 credits",
+        "+20% first",
+        "−10% second"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read original credits and the percentage statements.",
+        "Do not infer the second base from percentage addition; use the learner's calculation."
+      ],
+      "instance_constraints": [
+        "Only author-created credits, not any source exam item.",
+        "No after-discount totals or net answer inside Core2A/Core2B initial SVG."
+      ],
+      "accessibility": [
+        "Each step's percentage is given as accessible readable text.",
+        "The unmarked second input never supplies the protected changed reference value."
+      ],
+      "misleading_alternatives": [
+        "A diagram coloring the correct combined discount before learner attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/apply-d2-transfer.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-APPLY-D2-TRANSFER",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-QRT-APPLY-D2-TRANSFER",
+          "datum_refs": [
+            "DATUM-TEST-QRT-APPLY-D2-TRANSFER"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/apply-d2-transfer.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Sequential percentage of updated amount",
+            "caption": "The numbers shown are givens. Calculate intermediate and final values yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three separate numeric statement cards",
+          "symbol": "final 1080 credits; +20% first; −10% second",
+          "in_words": "First amount, first adjustment, and adjustment of the updated amount."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "AP-TRANSFER",
+          "label": "Unmarked reverse givens",
+          "purpose": "Show final observed price and both signed changes with no original price.",
+          "visible_elements": [
+            "Final 1080 credits",
+            "+20% then −10%"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-TEST-QRT-APPLY-D2-POWERS",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Sequential percentage changes with moving and original reference",
+      "capability_refs": [
+        "CAP-TEST-QRT-APPLY-D2-EXPO-MECHANISM"
+      ],
+      "solution_structure": [
+        "Translate each given discount into a remaining fraction.",
+        "Calculate the updated reference after first discount.",
+        "Apply second discount to updated reference, then compare against original.",
+        "For changed inverse transfer, reverse known factors to recover start."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Known percentage-factor procedure, not a novel model.",
+        "representation_translation": "Translate percent language into chained numerical factors.",
+        "reasoning_steps": "Two linked percent updates plus initial-base reconciliation.",
+        "novelty": "Reverse from mixed-sign final change using inverse factors."
+      },
+      "safe_variations": [
+        "Price/credit totals with two admissible percent changes."
+      ],
+      "transfer_boundaries": [
+        "Do not apply the second percent to original unless explicitly instructed.",
+        "The reverse transfer changes direction and given unknown."
+      ],
+      "common_wrong_routes": [
+        "Add both discount percentages.",
+        "Treat opposite 10% changes as cancelling.",
+        "Divide by one net percent without justifying composite factor."
+      ],
+      "item_refs": [
+        "Q-TEST-QRT-APPLY-D2-PRIMARY",
+        "Q-TEST-QRT-APPLY-D2-TRANSFER"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-QRT-APPLY-D2-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-APPLY-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-APPLY-D2-WORKED",
+      "stem": "A basket of 1000 credits is reduced 20%, then a further 20% of its NEW price. Apply the two percent steps; compare with one 40% discount.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Original amount 1000 credits.",
+        "Both reductions apply in order."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-APPLY-D2-CONCEPT"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-APPLY-D2-EXPO-MECHANISM",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-APPLY-D2-POWERS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": null,
+        "safe_ref": null,
+        "bound_ref": "REP-TEST-QRT-APPLY-D2-CONCEPT",
+        "stage_refs": []
+      },
+      "failure_signal": "Keeps the original base for the second percent, treating two successive changes as additive.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Final 640 credits, equivalent discount 36%, not 40%.",
+        "reasoning": [
+          "20% of 1000 removes 200, giving 800.",
+          "20% of the updated 800 removes 160, giving 640.",
+          "Loss 360 of original 1000 gives 36%, not the additive 40%."
+        ],
+        "check": "Check via 1000×0.8×0.8=640.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-APPLY-D2-POWERS",
+        "closure": "Concept worked anchor only; not proof of general target"
+      },
+      "repair_ref": "AP-TC2"
+    },
+    {
+      "id": "Q-TEST-QRT-APPLY-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D2",
+        "grade9v3:cognitive_demand": {
+          "primary": "APPLY",
+          "secondary": [
+            "EXPLAIN"
+          ],
+          "basis": "Known percentage procedure is executed twice with a changed base and original reference; explanation only diagnoses incorrect shortcut."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Choose and use the updated 720 for the second 10% before computing the original-reference reduction.",
+          "common_wrong_route": "Add 25%+10%=35% as if both share the same base."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-TEST-QRT-APPLY-D2-SEQUENTIAL-BASE"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-TEST-QRT-APPLY-D2-SEQUENTIAL-BASE"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-APPLY-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-APPLY-D2-PRIMARY",
+      "stem": "A bag's listed price is 960 credits. It is reduced by 25%, and then a further 10% is taken off the REDUCED price. Apply the two known percentage steps to find the final price. Find the equivalent single discount percent of the ORIGINAL listed price. Show why simply adding 25% and 10% gives a wrong answer.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Original amount 960 credits.",
+        "The second 10% is explicitly a percent of the new reduced price.",
+        "All percentage rates and amounts are exact, not rounded.",
+        "Authored TEST question; no exam source claimed."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-APPLY-D2-PRIMARY"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-APPLY-D2-EXPO-MECHANISM",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-APPLY-D2-POWERS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-QRT-APPLY-D2-PRIMARY",
+        "safe_ref": "REP-TEST-QRT-APPLY-D2-PRIMARY",
+        "bound_ref": null,
+        "stage_refs": [
+          "EX-PRACTICE"
+        ]
+      },
+      "failure_signal": "Uses 960 instead of 720 for second discount, or compares net loss against 720.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Final 648 credits; equivalent single discount 32.5%, not 35%.",
+        "reasoning": [
+          "First discount is 25% of 960=240; updated price is 720.",
+          "Second discount is 10% of UPDATED 720=72; final price is 648.",
+          "Loss from ORIGINAL price is 960−648=312, so net percentage reduction is 312/960×100=32.5%.",
+          "The additive 35% shortcut assumes both percentages refer to the original amount. The second rate actually refers to 720, not 960."
+        ],
+        "check": "Independent verification: 960×0.75×0.9=648=960×0.675; a single discount of 32.5% leaves 67.5%.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-QRT-APPLY-D2-READ",
+            "kind": "REPRESENT",
+            "action": "Represent each stated reduction as a percent of the amount then current.",
+            "why_valid": "The first rate is of 960; the second is explicitly of its reduced result.",
+            "inputs": [],
+            "output": "Second reference must be updated."
+          },
+          {
+            "id": "MOVE-TEST-QRT-APPLY-D2-SEQUENTIAL-BASE",
+            "kind": "APPLY",
+            "action": "First compute 960×0.75=720, then take 10% of 720 and subtract it.",
+            "why_valid": "The second multiplier acts on the updated amount, as the task states.",
+            "inputs": [],
+            "output": "960×0.75×0.9=648"
+          },
+          {
+            "id": "MOVE-TEST-QRT-APPLY-D2-CHECK",
+            "kind": "VERIFY",
+            "action": "Compare 648 with original 960 to find one equivalent discount percentage.",
+            "why_valid": "Net reduction denominator is original 960, so 312/960=0.325.",
+            "inputs": [],
+            "output": "32.5%, not 35%"
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-QRT-APPLY-D2-SEQUENTIAL-BASE",
+        "rubric": [
+          {
+            "criterion": "Find first discounted amount 720 from 960 and 25%.",
+            "evidence_of": "Learner establishes changed base correctly."
+          },
+          {
+            "criterion": "Use 720 as the base for the second 10%, obtaining 648.",
+            "evidence_of": "Protected two-stage W is applied."
+          },
+          {
+            "criterion": "Compute net 32.5% relative to original 960, and reject summing 25+10.",
+            "evidence_of": "Reconciles the two reference values correctly."
+          }
+        ]
+      },
+      "scaffolds": [
+        {
+          "text": "What does each percentage refer to? Identify what the word 'reduced' changes, without working out the new amount.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-QRT-APPLY-D2-READ"
+        },
+        {
+          "text": "Use the familiar remaining-percent rule for a single discount. Decide which quantity would become the base of a later discount.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-QRT-APPLY-D2-SEQUENTIAL-BASE"
+        },
+        {
+          "text": "After your written attempt, carry the first reduction into the second as the new reference; compare final with the original to check the single-discount rate.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-TEST-QRT-APPLY-D2-SEQUENTIAL-BASE"
+        }
+      ],
+      "independent_check": {
+        "statement": "Use multiplier check 960×0.75×0.9=648 and recompute 312/960=32.5%.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Known two-step procedure requiring updated reference plus original-base net percent, a D2 connected application; no new model or D3 branching.",
+        "component_evidence": {
+          "concept_model_selection": "Known percent multiplication identified explicitly.",
+          "representation_translation": "Convert percent discounts to remaining fractions.",
+          "reasoning_chain_length": "First reduction, changed-base second reduction, net original comparison.",
+          "algebra_computational_load": "One clean two-step arithmetic chain.",
+          "trap_exception_sensitivity": "Plausible invalid addition of 25%+10%."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-APPLY-D2-POWERS",
+        "closure": "Two consecutive discounts must update the percent reference each time; completed forward percent-chain, not reverse composition."
+      },
+      "repair_ref": "AP-TC2"
+    },
+    {
+      "id": "Q-TEST-QRT-APPLY-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D2",
+        "grade9v3:cognitive_demand": {
+          "primary": "APPLY",
+          "secondary": [
+            "MODEL"
+          ],
+          "basis": "Apply known percentage factors in an inverse, changed-signed two-step setting."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Undo the multiplicative composite by inverse operations, not subtract rates.",
+          "common_wrong_route": "Take net +10% by adding signed percentages."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-APPLY-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-APPLY-D2-TRANSFER",
+      "stem": "After a 20% INCREASE followed by a 10% DECREASE of the increased amount, the final price is 1080 credits. The original price is unknown. Apply the inverse of the known percentage steps to find the ORIGINAL price, then determine the net percent change from original to final. Justify why +20% and −10% cannot simply be combined as +10%.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Both changes refer to the amount current at that step.",
+        "Final price 1080 credits after both changes.",
+        "Original price positive and unknown.",
+        "Original authored TEST inverse transfer."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-APPLY-D2-TRANSFER"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-APPLY-D2-EXPO-MECHANISM",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-APPLY-D2-POWERS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "What factor corresponds to a 20% increase, and a 10% decrease of the current amount?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-QRT-APPLY-D2-TRANSFER",
+        "safe_ref": "REP-TEST-QRT-APPLY-D2-TRANSFER",
+        "bound_ref": null,
+        "stage_refs": [
+          "EX-TRANSFER"
+        ]
+      },
+      "failure_signal": "Assumes +20−10=+10 or divides 1080 by 1.10 instead of undoing the two multiplicative stages.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Original 1000 credits; net change +8%, not +10%.",
+        "reasoning": [
+          "Let the original be x. The first increase multiplies it by 1.2; the following decrease multiplies the RESULT by 0.9.",
+          "Final factor is 1.2×0.9=1.08; therefore x=1080/1.08=1000.",
+          "Check forward: 1000→1200 after a 20% increase; then 1200×0.9=1080.",
+          "The net increase is 1080−1000=80, or 8% of original 1000. A +20−10=+10 shortcut ignores that the 10% is of 1200."
+        ],
+        "check": "Independent backwards check: reverse the last change first, 1080/0.9=1200; reverse the first, 1200/1.2=1000.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-QRT-APPLY-D2-B-READ",
+            "kind": "REPRESENT",
+            "action": "Identify multiplicative increase 1.2 and decrease 0.9.",
+            "why_valid": "A percentage acts on the current amount.",
+            "inputs": [],
+            "output": "Final factor is 1.2×0.9."
+          },
+          {
+            "id": "MOVE-TEST-QRT-APPLY-D2-REVERSE-COMPOSITION",
+            "kind": "APPLY",
+            "action": "Reverse the two successive factors from final 1080 to find the initial amount.",
+            "why_valid": "Multiplicative updates are invertible here, so 1080/(1.2×0.9)=1000.",
+            "inputs": [],
+            "output": "Original=1000"
+          },
+          {
+            "id": "MOVE-TEST-QRT-APPLY-D2-B-CHECK",
+            "kind": "VERIFY",
+            "action": "Forward-check and compute initial-reference net increase.",
+            "why_valid": "1000×1.2×0.9=1080, and 80/1000=0.08.",
+            "inputs": [],
+            "output": "Net +8%"
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-QRT-APPLY-D2-REVERSE-COMPOSITION",
+        "rubric": [
+          {
+            "criterion": "Translate signed changes to ×1.2 then ×0.9 on updated amounts.",
+            "evidence_of": "Understands the new mixed-sign model."
+          },
+          {
+            "criterion": "Reverse factors correctly from final 1080 to get initial 1000.",
+            "evidence_of": "Learner performs changed-direction inverse chain."
+          },
+          {
+            "criterion": "Compute net +8% relative to original and reject +10%.",
+            "evidence_of": "Checks original-reference interpretation."
+          }
+        ]
+      },
+      "independent_check": {
+        "statement": "1080÷0.9=1200 and 1200÷1.2=1000, with forward 1000×1.2×0.9=1080.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Independent reverse unknown with mixed percentage signs and updated reference; not the forward two-discount calculation.",
+        "component_evidence": {
+          "concept_model_selection": "Known percent multiplication identified explicitly.",
+          "representation_translation": "Convert percent discounts to remaining fractions.",
+          "reasoning_chain_length": "First reduction, changed-base second reduction, net original comparison.",
+          "algebra_computational_load": "One clean two-step arithmetic chain.",
+          "trap_exception_sensitivity": "Plausible invalid addition of 25%+10%."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-QRT-APPLY-D2-PRIMARY"
+        ],
+        "statement": "Instead of forward two discounts with known initial price, start with an observed final after increase-then-decrease and reverse the multipliers to recover the unknown initial price.",
+        "invariant": "Each percent change acts multiplicatively on the currently updated amount; the composite factor maps original to final.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-QRT-APPLY-D2-PRIMARY",
+            "MIC-TEST-QRT-APPLY-D2-EXPO-MECHANISM:exit_task",
+            "MIC-TEST-QRT-APPLY-D2-EXPO-MECHANISM:boundary_test"
+          ],
+          "why_new": "Core2A and concept exit both know starting value and apply two discounts forwards. Core1B boundary demonstrates ±10% on known 100 but does not recover a missing initial amount. This task reverses from observed 1080 and mixes rate signs."
+        },
+        "protected_move_ref": "MOVE-TEST-QRT-APPLY-D2-REVERSE-COMPOSITION"
+      },
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-APPLY-D2-POWERS",
+        "closure": "Different unknown initial price and mixed signed percentage factors require reversing the operations."
+      },
+      "repair_ref": "AP-TC2"
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-TEST-QRT-APPLY-D2-CONSTRUCTION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Core1A staged known-percent update with updated and original bases",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-QRT-APPLY-D2-EXPO-MECHANISM"
+      ],
+      "entry_needs": [
+        "Single percentage of a given amount.",
+        "Difference and ratio for net percentage."
+      ],
+      "learner_actions": [
+        "Predict how a second discount refers to a changed base.",
+        "Reveal stage showing consecutive updates.",
+        "Compute final result for worked example.",
+        "Compare net percent against original.",
+        "Complete fresh 500-credit 10%+20% exit."
+      ],
+      "help_plan": [
+        "Different numerical rates from protected Core2A target.",
+        "Core1B diagnoses additive shortcut with independent 25%+25% on 200."
+      ],
+      "reveal_plan": "Core1A teaches known percent operation and reference updating; Core2A does not show target amounts before attempt.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-QRT-APPLY-D2-ORIGINAL",
+          "purpose": "Original authored concept",
+          "reason": "No real-exam source use."
+        }
+      ],
+      "when_not_suitable": [
+        "Source-authenticated exam promotion forbidden.",
+        "No claim that learner viewing concept is independent mastery."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {},
+  "data": [
+    {
+      "id": "DATUM-TEST-QRT-APPLY-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>1000</mn><mo>×</mo><mn>0.8</mn></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Author-created concept beginning amount and first multiplier."
+    },
+    {
+      "id": "DATUM-TEST-QRT-APPLY-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>960</mn><mo>×</mo><mn>0.75</mn></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Author-created primary given first discount only."
+    },
+    {
+      "id": "DATUM-TEST-QRT-APPLY-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>1080</mn><mo>×</mo><mn>0.9</mn></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Author-created final price and second percentage, with no inverse solution."
+    }
+  ]
+}
