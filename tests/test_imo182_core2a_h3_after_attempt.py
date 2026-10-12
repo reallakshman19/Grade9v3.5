@@ -7,6 +7,8 @@ from __future__ import annotations
 import json
 import re
 import unittest
+import hashlib
+import tempfile
 from pathlib import Path
 
 from Shared.tools import core2_v2, render_core
@@ -98,6 +100,27 @@ class Core2AH3AfterAttempt(unittest.TestCase):
             with self.subTest(role=role):
                 self.assertIn('data-blueprint-ref="'+expected+'"',self.pages[role+".html"])
         self.assertNotIn("core2.html", self.pages)
+
+    def test_cli_receipt_hashes_all_six_actual_written_html_files(self):
+        """The sole renderer receipt must bind each generated output to its bytes."""
+        with tempfile.TemporaryDirectory(prefix="imo182-h3-receipt-") as tmp:
+            out = Path(tmp) / "rendered"
+            rc = render_core.main(["build", "--manifest", str(MANIFEST),
+                                   "--out", str(out), "--draft", "--reference"])
+            self.assertEqual(rc, 0)
+            receipt = json.loads((out / "render-receipt.json").read_text(encoding="utf-8"))
+            self.assertEqual(receipt["renderer"], "render_core/2")
+            self.assertEqual(receipt["gaps"], [])
+            self.assertEqual(receipt["output_roles"],
+                             ["CORE1", "CORE1A", "CORE1B", "CORE2A", "CORE2B"])
+            self.assertEqual(sorted(receipt["page_sha256"]), sorted(self.pages))
+            for name, declared in receipt["page_sha256"].items():
+                with self.subTest(page=name):
+                    self.assertEqual(len(declared), 64)
+                    self.assertEqual(
+                        hashlib.sha256((out / name).read_bytes()).hexdigest(), declared)
+                    self.assertEqual((out / name).read_bytes(),
+                                     self.pages[name].encode("utf-8"))
 
     def test_owner_frozen_golden_remains_unchanged_and_new_h3_needs_successor_review(self):
         # The old frozen HTML remains untouched, including its old 3-rung ladder.

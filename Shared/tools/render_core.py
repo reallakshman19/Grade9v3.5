@@ -3586,6 +3586,7 @@ def main(argv: list[str] | None = None) -> int:
         "semantic_digest": semantic_metadata_digest(pages, args.mode),
         "manifest": manifest_ref, "mode": args.mode, "held_to": held_to,
         "draft": bool(gaps), "gaps": gaps, "pages": sorted(pages),
+        "page_sha256": {name: _file_sha256(out / name) for name in sorted(pages)},
         "output_roles": product_manifest.selected_output_roles(manifest),
         "ledger": json.loads(Path(args.manifest).read_text(encoding="utf-8")).get("ledger", []),
         "diagnostic_min": json.loads(Path(args.manifest).read_text(encoding="utf-8")).get("diagnostic_min", 0)},
