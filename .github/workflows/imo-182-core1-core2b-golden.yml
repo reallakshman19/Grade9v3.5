@@ -6,9 +6,12 @@ on:
       - '.github/workflows/imo-182-core1-core2b-golden.yml'
       - 'TEST/products/imo-182-core1-orientation.manifest.json'
       - 'TEST/products/imo-182-core2b-transfer.manifest.json'
+      - 'TEST/products/imo-182-five-core-integrated-review.manifest.json'
       - 'TEST/imo-research/pilots/core1a-render-qualified-divisibility.v1.json'
       - 'TEST/imo-research/pilots/imo182-core2b-transfer-pilot.v1.json'
       - 'TEST/library/figures/core2b-four-consecutive-attempt-safe.svg'
+      - 'TEST/library/figures/core1a-consecutive-divisibility-staged.svg'
+      - 'tests/test_core1a_renderer_maturity.py'
       - 'tests/imo_182_core1_core2b_golden.py'
   workflow_dispatch:
 
@@ -37,18 +40,25 @@ jobs:
           python Shared/tools/render_core.py build \
             --manifest TEST/products/imo-182-core2b-transfer.manifest.json \
             --out build/imo182-core2b --draft --reference
+      - name: Build integrated TEST five-role learner journey from current single head
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-182-five-core-integrated-review.manifest.json \
+            --out build/imo182-five-core --draft --reference
       - name: Render independent CANDIDATE golden from pinned fixture through sole renderer
         run: python Shared/tools/build_golden.py --id G-MATH-LINEAR-CONSTRAINT
       - name: Compare each actual page with golden technique and independent maths
-        run: python -m unittest tests.imo_182_core1_core2b_golden -v
+        run: python -m unittest tests.imo_182_core1_core2b_golden tests.test_core1a_renderer_maturity -v
       - name: Record explicit receipt and review/authority limits
         run: |
           python - <<'PY'
           from pathlib import Path
           import json, hashlib
-          dirs=[Path('build/imo182-core1'),Path('build/imo182-core2b')]
+          dirs=[Path('build/imo182-core1'),Path('build/imo182-core2b'),Path('build/imo182-five-core')]
           output={'status':'TECHNICAL_CANDIDATE_ONLY','owner_golden_acceptance':'NOT_RUN',
                   'qrt_accepted_numerator':0,'real_learners':'NOT_AVAILABLE',
+                  'owner_preview_approved_exact_original_187':'YES',
+                  'integrated_preview_academic_acceptance':'NOT_REVIEWED',
                   'a4_print_owner_review':'PARKED','subject':'TEST','source_core2_admitted':False,
                   'comparison':'INDEPENDENT_MATH_AND_GOLDEN_TECHNIQUES_NOT_PIXEL_IDENTITY',
                   'artifacts':[]}
@@ -69,6 +79,7 @@ jobs:
           path: |
             build/imo182-core1/
             build/imo182-core2b/
+            build/imo182-five-core/
             build/imo182-evidence.json
             golden/units/G-MATH-LINEAR-CONSTRAINT/rendered/core1.html
             golden/units/G-MATH-LINEAR-CONSTRAINT/rendered/core2b.html
