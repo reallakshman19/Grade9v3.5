@@ -759,10 +759,10 @@
         "After hole move, build a complete matching."
       ],
       "demand_dimensions": {
-        "model_choice": "Decide whether exposed edges are exterior-accessible; introduce cavity correction.",
-        "representation_translation": "Map a square-grid arrangement to variables n,e,c.",
-        "reasoning_steps": "Count components, seams, void-facing inaccessible edges, then validate with outer boundary.",
-        "novelty": "Opening a boundary breaks enclosure and changes which exposed edges are reachable."
+        "model_choice": "Choose whether a global invariant suffices, then independently select a local adjacency obstruction.",
+        "representation_translation": "Grid with removed cells -> parity counts -> bipartite neighbor graph.",
+        "reasoning_steps": "Choose three constrained black squares, enumerate only two white neighbors, apply distinct-partner impossibility.",
+        "novelty": "Moving a same-color hole leaves all global totals unchanged but changes perfect-matching existence."
       },
       "safe_variations": [
         "Move an absent square to another same-color location without changing total parity; verify matching again."
@@ -846,7 +846,7 @@
       "failure_signal": "The parity test is necessary; a real placement proves this positive small example.",
       "family_exposure": {
         "family_ref": "FAM-D4-REPRESENT",
-        "closure": "A small L teaches seam correction but not a sealed-hole accessibility model."
+        "closure": "Small 2x3 anchor establishes necessity and a positive constructive tiling, without revealing Core2A three-cell local shortage."
       }
     },
     {
@@ -1204,13 +1204,13 @@
           "algebra_computational_load": 0,
           "trap_exception_sensitivity": 2
         },
-        "basis": "Changing one table opens an inaccessible cavity and changes exterior connectivity, so the model must be rebuilt.",
+        "basis": "After relocating one white hole, the original obstruction is no longer applicable; a complete positive perfect matching must be constructed.",
         "component_evidence": {
-          "concept_model_selection": "Decide that an open passage makes the former sealed cavity accessible.",
-          "representation_translation": "Relate removed cell to changed graph contacts and accessible perimeter.",
-          "reasoning_chain_length": "Recount n and e, update c from reachability, verify new accessible sides.",
-          "algebra_computational_load": "Small whole-number count only.",
-          "trap_exception_sensitivity": "Assuming the board remains sealed gives a wrong answer."
+          "concept_model_selection": "Switch from old impossibility proof to explicit constructive tiling.",
+          "representation_translation": "Compare new and old adjacency despite equal color totals.",
+          "reasoning_chain_length": "Enumerate fifteen legal domino pairs; prove no reuse and full coverage.",
+          "algebra_computational_load": "Small-cell matching and coordinate checking.",
+          "trap_exception_sensitivity": "Parity alone still does not prove existence; changed local topology reverses result."
         }
       },
       "learner_question_type": "constructed_response",
