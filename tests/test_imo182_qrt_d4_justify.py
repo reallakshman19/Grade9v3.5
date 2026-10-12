@@ -1,5 +1,6 @@
 """Issue #182, Tab7: authored JUSTIFY-D4 candidate; NOT academic acceptance."""
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -53,6 +54,16 @@ class AuthoredJustifyD4(unittest.TestCase):
                 h=pages[role+".html"]
                 self.assertIn('data-blueprint-ref="'+bp+'"',h)
                 self.assertIn('data-g9-render-digest',h)
+        # Golden comparison is role/slot semantics, not byte identity:
+        # different authored questions must not be cloned from the frozen fixture.
+        golden=ROOT / "golden/units/G-IMO-G9-FIVE-CORE-20261012/snapshots"
+        slot_pattern=r'<section class="blueprint-slot (slot-[a-z_]+)"'
+        for role in expected:
+            with self.subTest(golden_role=role):
+                fixture=(golden/(role+".html")).read_text(encoding="utf-8")
+                produced=pages[role+".html"]
+                self.assertEqual(re.findall(slot_pattern,produced),re.findall(slot_pattern,fixture))
+                self.assertNotEqual(produced,fixture,"Author-only D4 must have distinct mathematical content.")
         h=pages["core2a.html"]
         self.assertIn('data-g9-after-attempt-hint',h)
         self.assertIn('data-requires-attempt',h)
