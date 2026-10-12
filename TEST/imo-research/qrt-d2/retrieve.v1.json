@@ -1,0 +1,1219 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-D2-RETRIEVE-RECTANGLE-ROUTES",
+  "title": "AUTHORED TEST: RETRIEVE-D2 right-triangle route decision",
+  "version": "0.1.0",
+  "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+  "subject": "TEST",
+  "scope_summary": "Wholly authored rectangular path challenge; retrieve Pythagoras for the direct distance and sum of edges for another route; two-stage limit decision, inverse changed transfer. No official source.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original authored route comparison and reverse-triangle prompts",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
+      "edition": "Authored TEST on 2026-10-12",
+      "section": "Rectangle diagonal, boundary paths and allowance",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "WHOLLY_AUTHORED_TEST, not a publisher or SOF source",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "9m×12m rectangle direct diagonal=15m, two-side walk=21m; only direct within18m, saving6m.",
+        "Known diagonal13m and leg5m implies other leg12m; boundary17m, direct13m, only direct within15m."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Recall two familiar route rules and connect to a consequential travel-limit decision, with reverse transfer.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Recall a right-triangle rule, choose permitted travel route",
+      "topic": "Rectangular right-triangle distance and comparison",
+      "intrinsic_badge": "MEDIUM",
+      "badge_reason": "Familiar rule retrieval applied to two different paths and an explicit limit.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-QRT-RETRIEVE-D2-CONCEPT",
+      "conventions": [
+        {
+          "id": "perpendicular",
+          "statement": "Rectangular adjacent sides are perpendicular and diagonal is a right-triangle hypotenuse."
+        },
+        {
+          "id": "distance",
+          "statement": "For perpendicular sides a,b, direct diagonal d satisfies d²=a²+b²; choose positive root."
+        },
+        {
+          "id": "edge_route",
+          "statement": "Along two adjacent edges between opposite corners, travel length a+b, not the full perimeter."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "Retrieve Pythagorean distance and boundary side-sum from rectangular geometry, calculate both paths and decide which is under a limit.",
+      "success_criterion": "For 9×12 calculate direct15m, edges21m, compare to18m, saving6m; invert13²−5² to find12m in transfer.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit."
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Retrieve geometry for direct and boundary routes",
+      "bucket_id": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "primary_capability_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "intrinsic_badge": "MEDIUM",
+      "badge_reason": "Two retrieved facts feed a route-limit decision.",
+      "entry_assumptions": [
+        "Read a rectangle and two perpendicular side lengths.",
+        "Recall hypotenuse-square relation.",
+        "Compare routes against a maximum permitted distance."
+      ],
+      "inferential_jump": "Theorem first gives a squared diagonal, not actual metres; recover its square root and separately add the two-edge path before deciding route eligibility.",
+      "teaching_path": [
+        {
+          "id": "RT-TC1",
+          "role": "DECLARE",
+          "action": "Identify a rectangle of side lengths 6m and 8m; distinguish direct diagonal from a walk along two edges.",
+          "why_valid": "Rectangle corner creates a right triangle; diagonal is its hypotenuse.",
+          "inputs": [],
+          "output": "Direct and boundary paths are distinct."
+        },
+        {
+          "id": "RT-TC2",
+          "role": "TRANSFORM",
+          "action": "Retrieve d²=6²+8² and take the positive square root.",
+          "why_valid": "Pythagorean theorem gives the diagonal square, so √100=10m.",
+          "inputs": [],
+          "output": "Direct path10m."
+        },
+        {
+          "id": "RT-TC3",
+          "role": "TRANSFORM",
+          "action": "Retrieve the boundary path as 6+8, not square-root geometry.",
+          "why_valid": "A two-edge walk along adjacent sides joins opposite corners.",
+          "inputs": [],
+          "output": "Boundary path14m."
+        },
+        {
+          "id": "RT-TC4",
+          "role": "VERIFY",
+          "action": "Compare direct10m and boundary14m with a 12m cap, and calculate saving.",
+          "why_valid": "10≤12<14; only shortcut qualifies; saving14−10=4m.",
+          "inputs": [],
+          "output": "Direct only; saving4m."
+        }
+      ],
+      "relation_refs": [
+        "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit."
+      ],
+      "representation_refs": [
+        "REP-TEST-QRT-RETRIEVE-D2-CONCEPT"
+      ],
+      "question_family_refs": [
+        "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit."
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Treat 6²+8²=100 as a 100m direct route.",
+          "diagnostic_prompt": "Why is 100 squared metres and not the distance along a diagonal?",
+          "repair": "Take positive square root: √100=10m. The separate edge walk is6+8=14m. Compare real lengths to route cap."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independent new rectangle: sides 8m and 15m, opposite corners. Find straight diagonal and the two-edge route, then decide which is at most 20m. Explain the result.",
+        "source_ref": "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "Diagonal17m, boundary23m, only direct within20m.",
+          "reasoning": [
+            "d²=8²+15²=289, so d=17m.",
+            "Two-edge walk8+15=23m.",
+            "17≤20<23; direct only."
+          ],
+          "check": "17²=64+225; saving23−17=6m.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d2/test_retrieve.py",
+            "bindings": {
+              "sides": "8,15",
+              "diagonal": "17",
+              "boundary": "23",
+              "limit": "20"
+            }
+          }
+        }
+      },
+      "research_contribution": "Distinct wholly authored route-choice retrieval task with inverse theorem transfer, D2 classification provisional.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-QRT-RETRIEVE-D2-TWO-CHECKS",
+          "decision": "Retrieve right-triangle rule for direct route, add adjacent sides for edge walk, then apply cap.",
+          "step_refs": [
+            "RT-TC1",
+            "RT-TC2",
+            "RT-TC3",
+            "RT-TC4"
+          ],
+          "representation_ref": "REP-TEST-QRT-RETRIEVE-D2-CONCEPT",
+          "misconception_indexes": [
+            0
+          ],
+          "relation_refs": [
+            "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit."
+          ],
+          "independent_checks": [
+            {
+              "statement": "6²+8²=10², border14m, direct only at12m; exit17m vs23m and20m limit.",
+              "check_type": "EXACT_PYTHAGOREAN_AND_LIMIT"
+            }
+          ],
+          "reveal_stage_refs": [
+            "RT-ST1",
+            "RT-ST2",
+            "RT-ST3"
+          ],
+          "worked_anchor_ref": "Q-TEST-QRT-RETRIEVE-D2-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "From 6²+8²=100, have you found metres or squared metres?",
+        "result": "The diagonal is the positive root10m; 100 is squared-distance.",
+        "representation_ref": "REP-TEST-QRT-RETRIEVE-D2-CONCEPT"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A learner claims a 6m-by-8m rectangle has a 100m diagonal because 6²+8²=100. Which step is missing?",
+          "defensible_answer": "That equality gives d²; taking positive √100 gives 10m."
+        },
+        "attempt": {
+          "produces": "Written diagonal, boundary distance, max-route comparison and savings.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Retrieve correct right-triangle theorem and positive root.",
+              "evidence_of": "Direct length not confused with its square."
+            },
+            {
+              "criterion": "Use one width plus one height for two-edge walk.",
+              "evidence_of": "Correctly identifies distinct route."
+            },
+            {
+              "criterion": "Compare both routes against cap and quantify saving.",
+              "evidence_of": "Two-step meaningful decision."
+            }
+          ],
+          "accepted": [
+            "12m×16m rectangle: diagonal20m; two-edge28m; only direct is within23m, saving8m."
+          ],
+          "rejected": [
+            "Use the square of diagonal as the measured length.",
+            "Treat two-edge walk as full rectangle perimeter.",
+            "Choose a route before checking budget."
+          ],
+          "task": {
+            "prompt": "Independently: a rectangle has perpendicular sides 12m and16m. Opposite corners connected by a direct path or two adjacent edges, with maximum route23m. Compute both, choose feasible route, state saving. Write attempt before reconstruction.",
+            "givens": [
+              "Rectangle sides12m and16m.",
+              "Opposite-corner direct or two-edge route.",
+              "Maximum permitted route23m."
+            ],
+            "representation_ref": "REP-TEST-QRT-RETRIEVE-D2-CONCEPT",
+            "stage_refs": [
+              "RT-ST1"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Which two sides form the right triangle and which is its hypotenuse?",
+              "why_this_ask": "Locate the recalled theorem.",
+              "from_step_ref": "RT-TC1"
+            },
+            {
+              "ask": "How do you convert d² into a positive length?",
+              "why_this_ask": "Avoid squared-length wrong route.",
+              "from_step_ref": "RT-TC2"
+            },
+            {
+              "ask": "What distance is walking exactly two edges, not the entire perimeter?",
+              "why_this_ask": "Keep alternative routes separate.",
+              "from_step_ref": "RT-TC3"
+            },
+            {
+              "ask": "How does each route compare to the allowance?",
+              "why_this_ask": "Make the decision after computation.",
+              "from_step_ref": "RT-TC4"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A teaches6×8; Core1B reconstructs after 100m error and independently solves12×16."
+        },
+        "boundary_test": {
+          "prompt": "Changed boundary: 8m-by-15m rectangle, but direct interior shortcut is CLOSED; only two adjacent edges may be used. With a 20m cap, is any allowed route possible? Decide independently.",
+          "answer": "No. Straight diagonal17m would pass20m but is forbidden; permitted boundary walk8+15=23m exceeds cap, so neither eligible.",
+          "confirms": "A valid geometric distance still fails if its route is forbidden, so check access as well as length."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "For perpendicular rectangle sides a,b and opposite-corner diagonal d, d²=a²+b²; direct route d=√(a²+b²). The two-edge route p=a+b. Decide which permitted routes satisfy length ≤ L.",
+      "meaning": "Different recalled formulas govern direct and edge paths, then compare to limit.",
+      "symbols": [
+        {
+          "symbol": "a",
+          "meaning": "First perpendicular side",
+          "unit_or_domain": "positive m"
+        },
+        {
+          "symbol": "b",
+          "meaning": "Other perpendicular side",
+          "unit_or_domain": "positive m"
+        },
+        {
+          "symbol": "d",
+          "meaning": "Diagonal",
+          "unit_or_domain": "positive m"
+        },
+        {
+          "symbol": "p",
+          "meaning": "Two-edge boundary route",
+          "unit_or_domain": "positive m"
+        },
+        {
+          "symbol": "L",
+          "meaning": "Route distance budget",
+          "unit_or_domain": "m"
+        }
+      ],
+      "conditions": [
+        "Opposite rectangle corners connected either directly or along two adjacent sides.",
+        "A rectangular corner is a right angle.",
+        "Paths may have separate access constraints."
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-RT-TC1",
+          "role": "DECLARE",
+          "action": "Identify a rectangle of side lengths 6m and 8m; distinguish direct diagonal from a walk along two edges.",
+          "why_valid": "Rectangle corner creates a right triangle; diagonal is its hypotenuse.",
+          "inputs": [],
+          "output": "Direct and boundary paths are distinct."
+        },
+        {
+          "id": "DERIV-RT-TC2",
+          "role": "TRANSFORM",
+          "action": "Retrieve d²=6²+8² and take the positive square root.",
+          "why_valid": "Pythagorean theorem gives the diagonal square, so √100=10m.",
+          "inputs": [],
+          "output": "Direct path10m."
+        },
+        {
+          "id": "DERIV-RT-TC3",
+          "role": "TRANSFORM",
+          "action": "Retrieve the boundary path as 6+8, not square-root geometry.",
+          "why_valid": "A two-edge walk along adjacent sides joins opposite corners.",
+          "inputs": [],
+          "output": "Boundary path14m."
+        },
+        {
+          "id": "DERIV-RT-TC4",
+          "role": "VERIFY",
+          "action": "Compare direct10m and boundary14m with a 12m cap, and calculate saving.",
+          "why_valid": "10≤12<14; only shortcut qualifies; saving14−10=4m.",
+          "inputs": [],
+          "output": "Direct only; saving4m."
+        }
+      ],
+      "limits": [
+        "Square of length is not length.",
+        "Do not replace two-edge route with full perimeter.",
+        "A closed direct route cannot be chosen even when short."
+      ],
+      "checks": [
+        "6²+8²=10², edge14, only direct within12.",
+        "9²+12²=15², edge21, only direct within18.",
+        "13²−5²=12², edge17, only direct within15."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><msup><mi>d</mi><mn>2</mn></msup><mo>=</mo><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-TEST-QRT-RETRIEVE-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "GEOMETRIC_DIAGRAM",
+      "purpose": "CORE1A: unsolved original rectangle journey givens and path labels",
+      "required_elements": [
+        "Rectangular sides 6m and 8m",
+        "Recall squared-hypotenuse relation",
+        "Compare direct route and two-edge walk"
+      ],
+      "relation_refs": [
+        "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit."
+      ],
+      "read_order": [
+        "Read supplied perpendicular sides and the different path types.",
+        "Retrieve theorem; no solved distance supplied in initial figure."
+      ],
+      "instance_constraints": [
+        "Wholly authored rectangular schematic with readable lengths.",
+        "No answer length, savings, or feasible route in initial svg or its accessible text."
+      ],
+      "accessibility": [
+        "Supplied dimensions and path limits repeated in figure and stem.",
+        "Direct/edge paths distinguishable by textual description."
+      ],
+      "misleading_alternatives": [
+        "Showing protected diagonal or winning route in initial SVG."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/retrieve-d2-stages.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-RETRIEVE-D2-CONCEPT",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+          "datum_refs": [
+            "DATUM-TEST-QRT-RETRIEVE-D2-CONCEPT"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/retrieve-d2-stages.svg",
+          "scene": {
+            "kind": "STAGED_RECTANGLE",
+            "frame": "Unsolved givens only",
+            "caption": "Choose and calculate routes yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Given rectangle journey",
+          "symbol": "Rectangular sides 6m and 8m; Recall squared-hypotenuse relation; Compare direct route and two-edge walk",
+          "in_words": "Written problem and diagram show the same given dimensions, with answers withheld."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RT-ST1",
+          "label": "Given rectangle",
+          "purpose": "Present given perpendicular dimensions.",
+          "visible_elements": [
+            "Rectangular sides 6m and 8m",
+            "Recall squared-hypotenuse relation"
+          ]
+        },
+        {
+          "id": "RT-ST2",
+          "label": "Distance rule",
+          "purpose": "Remind of relation between perpendicular sides and diagonal.",
+          "visible_elements": [
+            "Rectangular sides 6m and 8m",
+            "Recall squared-hypotenuse relation"
+          ]
+        },
+        {
+          "id": "RT-ST3",
+          "label": "Route comparison",
+          "purpose": "Remind of alternative side route and distance limit.",
+          "visible_elements": [
+            "Rectangular sides 6m and 8m",
+            "Recall squared-hypotenuse relation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-QRT-RETRIEVE-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "GEOMETRIC_DIAGRAM",
+      "purpose": "CORE2A: unsolved original rectangle journey givens and path labels",
+      "required_elements": [
+        "Rectangle sides9m and12m",
+        "Direct and two-edge routes,18m limit"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read supplied perpendicular sides and the different path types.",
+        "Retrieve theorem; no solved distance supplied in initial figure."
+      ],
+      "instance_constraints": [
+        "Wholly authored rectangular schematic with readable lengths.",
+        "No answer length, savings, or feasible route in initial svg or its accessible text."
+      ],
+      "accessibility": [
+        "Supplied dimensions and path limits repeated in figure and stem.",
+        "Direct/edge paths distinguishable by textual description."
+      ],
+      "misleading_alternatives": [
+        "Showing protected diagonal or winning route in initial SVG."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/retrieve-d2-primary.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-RETRIEVE-D2-PRIMARY",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-QRT-RETRIEVE-D2-PRIMARY",
+          "datum_refs": [
+            "DATUM-TEST-QRT-RETRIEVE-D2-PRIMARY"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/retrieve-d2-primary.svg",
+          "scene": {
+            "kind": "STAGED_RECTANGLE",
+            "frame": "Unsolved givens only",
+            "caption": "Choose and calculate routes yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Given rectangle journey",
+          "symbol": "Rectangle sides9m and12m; Direct and two-edge routes,18m limit",
+          "in_words": "Written problem and diagram show the same given dimensions, with answers withheld."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RT-PRACTICE",
+          "label": "Given rectangle",
+          "purpose": "Present given perpendicular dimensions.",
+          "visible_elements": [
+            "Rectangle sides9m and12m",
+            "Direct and two-edge routes,18m limit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-QRT-RETRIEVE-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "GEOMETRIC_DIAGRAM",
+      "purpose": "CORE2B: unsolved original rectangle journey givens and path labels",
+      "required_elements": [
+        "Direct diagonal13m, known leg5m",
+        "Other leg unknown, route cap15m"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read supplied perpendicular sides and the different path types.",
+        "Retrieve theorem; no solved distance supplied in initial figure."
+      ],
+      "instance_constraints": [
+        "Wholly authored rectangular schematic with readable lengths.",
+        "No answer length, savings, or feasible route in initial svg or its accessible text."
+      ],
+      "accessibility": [
+        "Supplied dimensions and path limits repeated in figure and stem.",
+        "Direct/edge paths distinguishable by textual description."
+      ],
+      "misleading_alternatives": [
+        "Showing protected diagonal or winning route in initial SVG."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/retrieve-d2-transfer.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-RETRIEVE-D2-TRANSFER",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-QRT-RETRIEVE-D2-TRANSFER",
+          "datum_refs": [
+            "DATUM-TEST-QRT-RETRIEVE-D2-TRANSFER"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/retrieve-d2-transfer.svg",
+          "scene": {
+            "kind": "STAGED_RECTANGLE",
+            "frame": "Unsolved givens only",
+            "caption": "Choose and calculate routes yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Given rectangle journey",
+          "symbol": "Direct diagonal13m, known leg5m; Other leg unknown, route cap15m",
+          "in_words": "Written problem and diagram show the same given dimensions, with answers withheld."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RT-TRANSFER",
+          "label": "Given rectangle",
+          "purpose": "Present given perpendicular dimensions.",
+          "visible_elements": [
+            "Direct diagonal13m, known leg5m",
+            "Other leg unknown, route cap15m"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Right-triangle retrieval and decision between route alternatives",
+      "capability_refs": [
+        "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit."
+      ],
+      "solution_structure": [
+        "Identify hypotenuse and perpendicular legs.",
+        "Retrieve theorem and positive square root or invert it.",
+        "Compute two-edge route separately.",
+        "Compare both with budget/access and saving."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Choose known Pythagoras for diagonal and sum of sides for edge walk.",
+        "representation_translation": "Rectangle to right triangle and two paths.",
+        "reasoning_steps": "Retrieve, calculate lengths, decide under allowance.",
+        "novelty": "Inverse missing-leg transfer with given diagonal instead of two sides."
+      },
+      "safe_variations": [
+        "New wholly authored positive integer right-triangle cases and route allowances."
+      ],
+      "transfer_boundaries": [
+        "Known hypotenuse needs subtraction of squared leg.",
+        "Shortest path may be closed despite satisfying distance cap."
+      ],
+      "common_wrong_routes": [
+        "Treat d² as measured distance.",
+        "Compute a+b instead of diagonal.",
+        "Ignore cap or restriction."
+      ],
+      "item_refs": [
+        "Q-TEST-QRT-RETRIEVE-D2-PRIMARY",
+        "Q-TEST-QRT-RETRIEVE-D2-TRANSFER"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-QRT-RETRIEVE-D2-WORKED",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-RETRIEVE-D2-WORKED",
+      "stem": "Worked rectangle with sides 6m and 8m: between opposite corners, compare straight diagonal and walk along two adjacent sides, then choose any route within12m; calculate the saving.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+        "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+        "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+        "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-RETRIEVE-D2-CONCEPT"
+      ],
+      "primary_capability_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "secondary_capability_refs": [],
+      "family_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": null,
+        "safe_ref": null,
+        "bound_ref": "REP-TEST-QRT-RETRIEVE-D2-CONCEPT",
+        "stage_refs": []
+      },
+      "failure_signal": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Direct10m, boundary14m; only direct within12m; saving4m.",
+        "reasoning": [
+          "d²=6²+8²=100 so d=10m.",
+          "Two sides sum to14m.",
+          "10≤12<14; saving4m."
+        ],
+        "check": "10²=100=36+64;14−10=4.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "family_exposure": {
+        "family_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+        "closure": "Concept worked anchor only; not proof of general target"
+      },
+      "repair_ref": "RT-TC1"
+    },
+    {
+      "id": "Q-TEST-QRT-RETRIEVE-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D2",
+        "grade9v3:cognitive_demand": {
+          "primary": "RETRIEVE",
+          "secondary": [
+            "APPLY",
+            "JUSTIFY"
+          ],
+          "basis": "Retrieve two known geometric relations and use results jointly for a travel-limit decision; independent D2 reviewer pending."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Convert squared hypotenuse to actual length, compare to edge route and cap.",
+          "common_wrong_route": "Use d² as metres or mistake boundary for diagonal."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-RT-COMBINED"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-RT-COMBINED"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-RETRIEVE-D2-PRIMARY",
+      "stem": "A rectangle has perpendicular sides 9m and12m. To get from one corner to the opposite one you may cross the straight diagonal or walk along TWO adjacent edges. Travel allowance is AT MOST18m. Retrieve the right-triangle distance relation and calculate BOTH routes. Which route(s) satisfy the allowance, and how many metres does the shorter route save? Explain why d² is not itself a measured length.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Rectangular sides are9m and12m perpendicular.",
+        "Endpoints are opposite corners; direct diagonal OR two adjacent edges are potential routes.",
+        "Maximum allowed distance18m.",
+        "Wholly original authored TEST, no source admission."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-RETRIEVE-D2-PRIMARY"
+      ],
+      "primary_capability_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "secondary_capability_refs": [],
+      "family_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-QRT-RETRIEVE-D2-PRIMARY",
+        "safe_ref": "REP-TEST-QRT-RETRIEVE-D2-PRIMARY",
+        "bound_ref": null,
+        "stage_refs": [
+          "RT-PRACTICE"
+        ]
+      },
+      "failure_signal": "Confuses d²=225 with225m, uses full perimeter42m, or skips allowance.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Diagonal15m, boundary21m, direct only within18m, saving6m.",
+        "reasoning": [
+          "Use Pythagoras d²=9²+12²=225, hence diagonal d=15m.",
+          "The two-edge route is9+12=21m, not full perimeter.",
+          "15≤18<21, so only direct route qualifies.",
+          "The shortcut saves21−15=6m; d² has squared-length units."
+        ],
+        "check": "15²=9²+12²=225; 15≤18<21; saving6m.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "reasoning_route": [
+          {
+            "id": "MOVE-RT-READ",
+            "kind": "REPRESENT",
+            "action": "Identify diagonal as hypotenuse and other route as sum of two rectangle sides.",
+            "why_valid": "Opposite-corner paths have distinct geometry.",
+            "inputs": [],
+            "output": "Define d and p."
+          },
+          {
+            "id": "MOVE-RT-COMBINED",
+            "kind": "CONNECT",
+            "action": "Retrieve positive square-root Pythagoras for direct route and a+b for edge route.",
+            "why_valid": "d=√225=15m, p=21m.",
+            "inputs": [],
+            "output": "Two real lengths15 and21m."
+          },
+          {
+            "id": "MOVE-RT-DECIDE",
+            "kind": "VERIFY",
+            "action": "Apply18m cap to both distances and calculate saving.",
+            "why_valid": "15≤18<21 and difference6m.",
+            "inputs": [],
+            "output": "Only direct allowed, 6m shorter."
+          }
+        ],
+        "crux_move_ref": "MOVE-RT-COMBINED",
+        "rubric": [
+          {
+            "criterion": "Apply right-triangle relation and take positive square root with metres.",
+            "evidence_of": "Direct15m, not squared value225."
+          },
+          {
+            "criterion": "Compute two-edge journey separately as9+12.",
+            "evidence_of": "Boundary21m is not hypotenuse."
+          },
+          {
+            "criterion": "Test both against18m allowance and saving.",
+            "evidence_of": "Meaningful coupled decision."
+          }
+        ]
+      },
+      "scaffolds": [
+        {
+          "text": "Where is the right angle and which path would be the triangle hypotenuse? Identify both route types without calculation.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-RT-READ"
+        },
+        {
+          "text": "Recall how the squares of two perpendicular sides relate to the squared diagonal; which operation returns a length? Keep numbers unknown.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-RT-COMBINED"
+        },
+        {
+          "text": "After your written attempt, take a positive square root to obtain diagonal, add one width and one height for the two-edge route, then check each against the maximum and subtract for saving.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-RT-COMBINED"
+        }
+      ],
+      "independent_check": {
+        "statement": "9²+12²=225=15²; edge21m; 15≤18<21; saving6m.",
+        "check_type": "EXACT_TRIANGLE_AND_LIMIT"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Two prelearned distance computations followed by a consequential route-allowance decision; REVIEW REQUIRED for D2 versus D1.",
+        "component_evidence": {
+          "concept_model_selection": "Recognize Pythagoras versus edge sum.",
+          "representation_translation": "Rectangle direct route to hypotenuse.",
+          "reasoning_chain_length": "Calculate direct and edge then compare both.",
+          "algebra_computational_load": "Perfect-square triple.",
+          "trap_exception_sensitivity": "Square length and wrong route mix-up."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "family_exposure": {
+        "family_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+        "closure": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit."
+      },
+      "repair_ref": "RT-TC1"
+    },
+    {
+      "id": "Q-TEST-QRT-RETRIEVE-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D2",
+        "grade9v3:cognitive_demand": {
+          "primary": "RETRIEVE",
+          "secondary": [
+            "APPLY"
+          ],
+          "basis": "Known triangle identity inverted with a follow-on independent path constraint, reviewer decision pending."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Subtract known leg-square from hypotenuse-square before computing border route.",
+          "common_wrong_route": "Add squared hypotenuse to known leg-square."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-RETRIEVE-D2-TRANSFER",
+      "stem": "Reverse case: the DIRECT diagonal of a rectangle is13m and one perpendicular side5m; other side unknown. Reach opposite corners either straight across or along TWO adjacent sides. Travel limit15m. Retrieve the right-triangle relation IN REVERSE to find the missing side, calculate both paths, decide which passes limit and saving. Why would adding 13²+5² be incorrect?",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Diagonal13m known, one perpendicular side5m known, other side unknown.",
+        "Straight direct route or exactly two adjacent sides.",
+        "Maximum distance15m.",
+        "Wholly authored independent reverse case."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-RETRIEVE-D2-TRANSFER"
+      ],
+      "primary_capability_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "secondary_capability_refs": [],
+      "family_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Which given segment is hypotenuse and which is a leg? Recall that the hypotenuse has the largest square; decide what to subtract.",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-QRT-RETRIEVE-D2-TRANSFER",
+        "safe_ref": "REP-TEST-QRT-RETRIEVE-D2-TRANSFER",
+        "bound_ref": null,
+        "stage_refs": [
+          "RT-TRANSFER"
+        ]
+      },
+      "failure_signal": "Wrongly add13²+5² as if both were legs, or omit cap.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Missing side12m; direct13m, boundary17m; only direct within15m, saves4m.",
+        "reasoning": [
+          "The hypotenuse13m is known: 13²=5²+b²; b²=169−25=144, b=12m.",
+          "Boundary route5+12=17m; direct=13m.",
+          "13≤15<17: only direct route qualifies and saves4m.",
+          "Adding13² and5² would wrongly treat known hypotenuse as a leg."
+        ],
+        "check": "13²=5²+12²=169; saving17−13=4m.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "reasoning_route": [
+          {
+            "id": "MOVE-RT-B-READ",
+            "kind": "REPRESENT",
+            "action": "Identify13m as hypotenuse and5m as leg.",
+            "why_valid": "Diagonal known and longer than either leg.",
+            "inputs": [],
+            "output": "13²=5²+b²."
+          },
+          {
+            "id": "MOVE-RT-INVERSE",
+            "kind": "CONNECT",
+            "action": "Subtract squared known leg and take root to recover other side.",
+            "why_valid": "√(169−25)=12m.",
+            "inputs": [],
+            "output": "Other side12m."
+          },
+          {
+            "id": "MOVE-RT-B-CHECK",
+            "kind": "VERIFY",
+            "action": "Compute17m boundary and compare with direct13m under15m cap.",
+            "why_valid": "13≤15<17; saves4m.",
+            "inputs": [],
+            "output": "Direct only."
+          }
+        ],
+        "crux_move_ref": "MOVE-RT-INVERSE",
+        "rubric": [
+          {
+            "criterion": "Treat diagonal as known hypotenuse and subtract squares.",
+            "evidence_of": "Other leg12m."
+          },
+          {
+            "criterion": "Use recovered leg for two-edge path.",
+            "evidence_of": "17m boundary."
+          },
+          {
+            "criterion": "Apply cap and saving.",
+            "evidence_of": "Only13m direct fits15m."
+          }
+        ]
+      },
+      "independent_check": {
+        "statement": "13²−5²=144=12², boundary17, direct13, 13≤15<17.",
+        "check_type": "EXACT_TRIANGLE_AND_LIMIT"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Inverse known-hypotenuse retrieval and consequential changed allowance; D2 subject to independent reviewer.",
+        "component_evidence": {
+          "concept_model_selection": "Recognize Pythagoras versus edge sum.",
+          "representation_translation": "Rectangle direct route to hypotenuse.",
+          "reasoning_chain_length": "Calculate direct and edge then compare both.",
+          "algebra_computational_load": "Perfect-square triple.",
+          "trap_exception_sensitivity": "Square length and wrong route mix-up."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-QRT-RETRIEVE-D2-PRIMARY"
+        ],
+        "statement": "Instead of finding diagonal from two known legs, recover a missing perpendicular side from a known diagonal and one leg; then apply an altered route allowance.",
+        "invariant": "Same Pythagorean identity and distinction of direct from two-edge walk.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-QRT-RETRIEVE-D2-PRIMARY",
+            "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.:exit_task",
+            "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.:boundary_test"
+          ],
+          "why_new": "Theorem is used in reverse from hypotenuse to missing leg, unlike forward worked/primary/exit; imposes second comparison."
+        },
+        "protected_move_ref": "MOVE-RT-INVERSE"
+      },
+      "family_exposure": {
+        "family_ref": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+        "closure": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit."
+      },
+      "repair_ref": "RT-TC1"
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-TEST-QRT-RETRIEVE-D2-CONSTRUCTION",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Stage right-triangle distance, distinct route and budget decision",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit."
+      ],
+      "entry_needs": [
+        "Perpendicular rectangle sides and opposite-corner diagonal.",
+        "Pythagorean theorem and positive square root.",
+        "Two-edge route and length budget."
+      ],
+      "learner_actions": [
+        "Identify why squared distance is not measured route.",
+        "Reveal given6m×8m rectangle first.",
+        "Retrieve diagonal relation on later stage.",
+        "Compute boundary and decide route12m cap.",
+        "Complete independent 8m×15m exit."
+      ],
+      "help_plan": [
+        "Worked6×8 and primary9×12 remain separate.",
+        "Core1B repairs squared-length misconception with independent12×16 case."
+      ],
+      "reveal_plan": "Stages reveal only worked6×8, not protected9×12 primary answer; H3 only after nonblank attempt.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL",
+          "purpose": "Original authored concept",
+          "reason": "No real-exam source use."
+        }
+      ],
+      "when_not_suitable": [
+        "No authentic exam source rights, Owner golden approval or QRT acceptance.",
+        "Do not leak primary computed lengths or decision in SVG."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {},
+  "data": [
+    {
+      "id": "DATUM-TEST-QRT-RETRIEVE-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>6</mn><mo>⊥</mo><mn>8</mn></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Worked perpendicular lengths6m,8m, route unsolved in picture."
+    },
+    {
+      "id": "DATUM-TEST-QRT-RETRIEVE-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>9</mn><mo>⊥</mo><mn>12</mn></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Primary perpendicular lengths9m,12m and18m cap, no computed route shown."
+    },
+    {
+      "id": "DATUM-TEST-QRT-RETRIEVE-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "Retrieve the right-triangle distance rule, distinguish diagonal from boundary walk, and compare both lengths with the travel limit.",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>13</mn><mo>=</mo><mi>d</mi><mo>,</mo><mn>5</mn><mo>=</mo><mi>a</mi></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Transfer diagonal13m, known side5m, unknown other side."
+    }
+  ]
+}
