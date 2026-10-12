@@ -1061,76 +1061,73 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 / original TEST",
+        "grade9v3:authored_by": "AGENT-D1 original TEST",
         "grade9v3:cognitive_demand": {
-          "primary": "REPRESENT",
+          "primary": "RETRIEVE",
           "secondary": [],
-          "basis": "The learner's decisive work is a sign- and axis-preserving mapping between spoken directions and ordered pair; the convention is supplied."
-        },
-        "grade9v3:analysis": {
-          "stable_crux_move": "Keep signed axis meaning and first-x/second-y order through representation change.",
-          "common_wrong_route": "Read distance as always positive or swap x and y."
+          "basis": "Select matching complete divisor card from the prime definition."
         }
       },
       "id": "Q-TEST-IMO182-D1-RETR-CORE2B-CATEGORY-TO-CARD",
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED",
-      "original_identifier": "Q-TEST-IMO182-D1-RETR-CORE2B-CATEGORY-TO-CARD",
-      "stem": "A second map report gives the signed displacement (−3,+5) from the origin using the SAME east-positive/north-positive grid convention. This time write a sentence describing the direction and magnitude of each movement, rather than writing another pair. Explain how encoding your sentence back checks it.",
+      "original_identifier": "AUTHORED-RET-D1-CATEGORY-TO-CARD",
+      "stem": "CHANGED TASK: You are GIVEN the category PRIME. Exactly one COMPLETE divisor card matches. Select A, B or C and cite the defining property. A: number 1 has {1}. B: number 23 has {1,23}. C: number 25 has {1,5,25}.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Map origin is fixed; east is positive x and north is positive y.",
-        "Horizontal x is written first, vertical y second.",
-        "Original authored TEST; not an official examination item."
+        "Cards list ALL distinct positive divisors.",
+        "Start from the category and select its matching example.",
+        "Authored TEST item; not an official exam question."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-RETR-CARDS-GIVEN"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "Three units west and five units north.",
+        "summary": "Card B, the unique two-divisor card.",
         "reasoning": [
-          "The first entry −3 is horizontal and means three west.",
-          "The second entry +5 is vertical and means five north.",
-          "The route is three grid units west and five grid units north."
+          "A has one; B has two; C has three distinct positive divisors.",
+          "Prime requires exactly two; therefore B."
         ],
         "reasoning_route": [
           {
-            "id": "MOVE-TEST-IMO182-D1-RETR-QB-READ",
+            "id": "RET-D1-QB-COUNT",
             "kind": "REPRESENT",
-            "action": "Read the first entry of (−3,+5) as horizontal and second as vertical.",
-            "why_valid": "By definition ordered pairs store x then y.",
+            "action": "Count distinct positive divisors on A, B and C.",
+            "why_valid": "Cards are complete.",
             "inputs": [
-              "(−3,+5)"
+              "A {1}",
+              "B {1,23}",
+              "C {1,5,25}"
             ],
-            "output": "x=−3; y=+5"
+            "output": "1,2,3"
           },
           {
-            "id": "MOVE-TEST-IMO182-D1-RETR-QB-DECIDE",
+            "id": "RET-D1-QB-SELECT",
             "kind": "DECIDE",
-            "action": "Translate the signed entries to three west and five north.",
-            "why_valid": "Negative x points west, positive y points north under the fixed map convention.",
+            "action": "Choose B for PRIME.",
+            "why_valid": "B alone has exactly two distinct positive divisors.",
             "inputs": [
-              "x=−3",
-              "y=+5"
+              "prime criterion",
+              "counts 1,2,3"
             ],
-            "output": "3 units west and 5 units north"
+            "output": "B"
           },
           {
-            "id": "MOVE-TEST-IMO182-D1-RETR-QB-CHECK",
+            "id": "RET-D1-QB-CHECK",
             "kind": "VERIFY",
-            "action": "Encode the spoken route to recover (−3,+5).",
-            "why_valid": "The reverse map reproduces the supplied signed ordered pair exactly.",
+            "action": "Reject A singleton and C three-divisor composite.",
+            "why_valid": "Neither alternative has exactly two positive divisors.",
             "inputs": [
-              "3 west",
-              "5 north"
+              "A",
+              "C"
             ],
-            "output": "(−3,+5)"
+            "output": "B unique"
           }
         ],
-        "crux_move_ref": "MOVE-TEST-IMO182-D1-RETR-QB-DECIDE",
-        "check": "Reverse-encode the words to (−3,+5), exactly the supplied pair.",
+        "crux_move_ref": "RET-D1-QB-SELECT",
+        "check": "A is neither and C composite, so B is unique.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -1148,7 +1145,7 @@
       ],
       "hints": [
         {
-          "text": "Read the first entry as horizontal and the second as vertical; do not translate the signs yet.",
+          "text": "Count distinct entries in each complete card. Prime means exactly two, not simply odd.",
           "reveals": "CONCEPT"
         }
       ],
@@ -1166,55 +1163,55 @@
         "safe_ref": "REP-TEST-IMO182-D1-RETR-CARDS-GIVEN",
         "bound_ref": null,
         "stage_refs": [
-          "RETR-D1-PAIR-ONLY"
+          "RETR-QB-CARDS"
         ]
       },
-      "repair_ref": "RETR-D1-TC-1",
-      "failure_signal": "A signed coordinate encodes direction, not just a positive length; reverse the pair into words.",
+      "repair_ref": "RETR-D1-TC-2",
+      "failure_signal": "One is neither; 25 has three positive divisors.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-RETR-WORDS-AND-PAIRS",
         "closure": "Inverse pair-to-words transfer is tested separately from words-to-pair practice."
       },
       "independent_check": {
-        "statement": "Reverse-encode the words to (−3,+5), exactly the supplied pair.",
-        "check_type": "INVERSE_OPERATION"
+        "statement": "Exclude one-divisor A and three-divisor C.",
+        "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
       },
       "difficulty": {
         "band": "D1",
         "score": 2,
         "components": {
           "concept_model_selection": 0,
-          "representation_translation": 1,
+          "representation_translation": 0,
           "reasoning_chain_length": 0,
           "algebra_computational_load": 0,
           "trap_exception_sensitivity": 1
         },
-        "basis": "The axis rule is given; one independent sign-and-axis translation is required, with an accessible inverse check.",
+        "basis": "Single criterion-to-card selection.",
         "component_evidence": {
-          "concept_model_selection": "Fixed east-positive/north-positive convention supplied; no model choice.",
-          "representation_translation": "Learner independently signs and orders the pair or recovers words.",
-          "reasoning_chain_length": "One correspondence with a verification, not a dependent proof chain.",
-          "algebra_computational_load": "No arithmetic beyond sign interpretation.",
-          "trap_exception_sensitivity": "Signed south and swapped pair order create a plausible wrong route."
+          "concept_model_selection": "No governing model choice.",
+          "representation_translation": "Read a complete card.",
+          "reasoning_chain_length": "One classification.",
+          "algebra_computational_load": "No divisor search needed.",
+          "trap_exception_sensitivity": "Odd composite number traps surface classification."
         }
       },
       "learner_question_type": "constructed_response",
       "transfer": {
-        "dimension": "representation_translation",
+        "dimension": "novelty",
         "builds_on": [
           "Q-TEST-IMO182-D1-RETR-CORE2A-DIVISOR-CATEGORY"
         ],
-        "statement": "The original task changed spoken directions to a signed pair. This independent task reverses the representation direction: signed pair to spoken route, then back-encodes as check.",
-        "invariant": "A signed pair retains horizontal-first and vertical-second magnitude/direction semantics under the same axes.",
+        "statement": "Given PRIME, choose the compatible complete divisor-card example instead of categorizing a given number.",
+        "invariant": "Exact divisor-count criterion.",
         "novelty": {
           "checked_against": [
             "Q-TEST-IMO182-D1-RETR-CORE2A-DIVISOR-CATEGORY",
             "MIC-TEST-IMO182-D1-RETR-DIVISOR-COUNT:exit_task",
             "MIC-TEST-IMO182-D1-RETR-DIVISOR-COUNT:boundary_test"
           ],
-          "why_new": "The question gives a preformed signed pair and demands an inverse verbal description, instead of merely changing the numeric lengths in the forward words-to-pair prompt."
+          "why_new": "Reverse input-output decision among distinct divisor cards, including the boundary 1."
         },
-        "protected_move_ref": "MOVE-TEST-IMO182-D1-RETR-QB-DECIDE"
+        "protected_move_ref": "RET-D1-QB-SELECT"
       }
     }
   ],
