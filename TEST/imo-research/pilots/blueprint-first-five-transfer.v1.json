@@ -1,0 +1,1805 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO-164-BLUEPRINT-FIRST-FIVE-TRANSFER",
+  "title": "TEST canonical blueprint-first authored consecutive-factor learning progression",
+  "version": "0.5.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Self-contained, additive qualification fork of the existing Core1A-Render qualified authored pilot; carries original authored Core1A and supported Core2A plus genuinely changed authored five-integer proof transfer Core2B. It does not authenticate or reproduce any SOF original item and grants no academic/QRT/Owner release.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Authored independent integer-divisibility construction",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallaksh19/Grade9v3.5/issues/296",
+      "edition": "Issue #296 TEST mathematical construction draft",
+      "section": "Integer residues, parity, coprimality and universal reasoning",
+      "last_checked": "2026-10-08",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Newly authored teaching prose only; publisher reproduction permissions not inferred",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Proof: product of any three consecutive positive integers divisible by 6",
+        "Proof: product of any four consecutive positive integers divisible by 24"
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Independent mathematical concepts grounded in integer arithmetic, not SOF printed questions or their answer keys.",
+      "fallback": []
+    },
+    {
+      "id": "SRC-TEST-IMO-164-AUTHORED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original authored five-consecutive-integer transfer problem",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/164",
+      "edition": "Issue #164 authored learning candidate, not a publisher original",
+      "section": "Five adjacent integers and coprime divisibility",
+      "last_checked": "2026-10-10",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Original independent authoring only; no publisher rights asserted",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "For all positive integers n, 120 divides n(n+1)(n+2)(n+3)(n+4)"
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Newly authored TEST transfer follows existing worked Core1A and supported Core2A; does not reproduce a source exam.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-TEST-CORE1A-QUAL-G9-NS-DIVISIBILITY",
+      "title": "Universal divisibility with consecutive integers",
+      "topic": "Number Systems; proposed IMO-style divisibility proof enrichment",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "A finite set of examples is not a universal proof; learners must connect parity, exhaustive modular cases and coprime divisibility across an arbitrary starting integer.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-CORE1A-QUAL-G9-RESIDUE-TABLE",
+      "conventions": [
+        {
+          "id": "positive_integer_start",
+          "statement": "n is an arbitrary positive integer, not a chosen sample."
+        },
+        {
+          "id": "divisibility",
+          "statement": "a divides N means there exists an integer k with N=a*k."
+        },
+        {
+          "id": "modulo",
+          "statement": "Every integer has exactly one residue modulo m among 0,...,m-1."
+        },
+        {
+          "id": "factor_ownership",
+          "statement": "A factor of 2 and a factor of 3 in the product may occur in different terms; 2 and 3 are coprime."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY",
+      "action": "Prove a divisibility statement for every allowed starting integer using exhaustive remainder classes and coprime factors.",
+      "success_criterion": "For all positive integers n, justify that 6 divides n(n+1)(n+2), and independently prove 24 divides n(n+1)(n+2)(n+3), without treating finite examples as a proof.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS",
+      "title": "Reasoning from exhaustive residue cases to a universal divisibility claim",
+      "bucket_id": "BUCKET-TEST-CORE1A-QUAL-G9-NS-DIVISIBILITY",
+      "primary_capability_ref": "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "A finite set of examples is not a universal proof; learners must connect parity, exhaustive modular cases and coprime divisibility across an arbitrary starting integer.",
+      "entry_assumptions": [
+        "Positive integer arithmetic and the meaning of a divisor.",
+        "Even and odd integers alternate when moving to the next integer.",
+        "A positive integer modulo 3 has residue 0, 1 or 2.",
+        "If two coprime integers divide a number then so does their product."
+      ],
+      "inferential_jump": "Convert finite observations into a universal argument by establishing a guaranteed factor of 2 and a guaranteed factor of 3 within any three consecutive integers, and then use coprimality to conclude divisibility by 6.",
+      "teaching_path": [
+        {
+          "id": "TC-01",
+          "action": "Let n denote an arbitrary positive starting integer; the three consecutive factors are n, n+1 and n+2.",
+          "why_valid": "This representation includes every eligible triple, not merely three sampled values.",
+          "inputs": [],
+          "output": "n(n+1)(n+2)",
+          "role": "DECLARE",
+          "source_ref": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+        },
+        {
+          "id": "TC-02",
+          "action": "Consider n and n+1: one is even, so the product of the three integers has at least one factor of 2.",
+          "why_valid": "Parity alternates in adjacent integers. The statement holds for both possible parities of n.",
+          "inputs": [],
+          "output": "2 divides n(n+1)(n+2)",
+          "role": "TRANSFORM",
+          "source_ref": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+        },
+        {
+          "id": "TC-03",
+          "action": "Separate n modulo 3 into cases 0, 1 and 2. Identify n, n+2 or n+1 respectively as divisible by 3.",
+          "why_valid": "These three remainder classes are exhaustive and exactly one member of any three consecutive integers has remainder 0 modulo 3.",
+          "inputs": [],
+          "output": "3 divides n(n+1)(n+2)",
+          "role": "TRANSFORM",
+          "source_ref": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+        },
+        {
+          "id": "TC-04",
+          "action": "Combine both divisors: since the whole product is divisible by 2 and 3 and these are coprime, it is divisible by 6.",
+          "why_valid": "When coprime integers 2 and 3 divide the same whole number, their product 6 also divides that number; we have justified both divisibilities for every n.",
+          "inputs": [],
+          "output": "6 divides n(n+1)(n+2)",
+          "role": "VERIFY",
+          "source_ref": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-CORE1A-QUAL-G9-THREE-CONSECUTIVE-FACTORS"
+      ],
+      "representation_refs": [
+        "REP-TEST-CORE1A-QUAL-G9-RESIDUE-TABLE"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-CORE1A-QUAL-G9-AUTHORED-CONSECUTIVE-PRODUCT"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Checking a few starting integers proves the divisibility assertion for all future n.",
+          "diagnostic_prompt": "If the starting integer is far larger than every sample you checked, what property guarantees divisibility without recalculation?",
+          "repair": "Use complete residue cases modulo 2 and 3 to cover all possible starts; identify guaranteed factors and apply the coprime-product rule."
+        },
+        {
+          "wrong_idea": "The ending factor t is always divisible by 3, so checking the other two factors is unnecessary.",
+          "diagnostic_prompt": "Try t=4: is t divisible by 3? Which one of t−2, t−1, t is divisible by 3 instead, and what changes when t leaves remainder 0, 1 or 2 modulo 3?",
+          "repair": "Replace the fixed-factor claim with all three cases: when t mod 3 is 0 use t; when it is 1 use t−1; when it is 2 use t−2. Combine the guaranteed factor of 3 with an even factor using gcd(2,3)=1."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Prove, for every positive integer n, that n(n+1)(n+2)(n+3) is divisible by 24. Give a general proof, not only examples.",
+        "source_ref": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "The product of four consecutive positive integers is divisible by 24.",
+          "reasoning": [
+            "Write the factors as n, n+1, n+2 and n+3, with n arbitrary and positive.",
+            "Exactly one of these four has remainder 0 modulo 4, and another even factor has remainder 2 modulo 4. Their product is divisible by 8.",
+            "Within any four consecutive integers there is a multiple of 3, so the full product is divisible by 3.",
+            "Because 8 and 3 are coprime, the full product is divisible by 24 for every n."
+          ],
+          "check": "For each remainder n modulo 24, verify the four-factor product is a multiple of 24; this is an independent exhaustive modular check, not a replacement for the proof.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/validate_core1a_candidate_package.py",
+            "bindings": {
+              "domain": "positive_integer",
+              "divisor": "24",
+              "residue_classes": "0..23",
+              "symbolic_expression": "n(n+1)(n+2)(n+3)"
+            }
+          }
+        }
+      },
+      "research_contribution": "Authored reasoning construction with explicit case completeness and coprimality. Curriculum placement, diagrams, learner comprehension, formal product acceptance and source exam representation remain pending.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-PROOF",
+          "decision": "Derive divisibility by 6 from parity and modulo 3 as exhaustive guarantees, not finite examples.",
+          "step_refs": [
+            "TC-01",
+            "TC-02",
+            "TC-03",
+            "TC-04"
+          ],
+          "representation_ref": "REP-TEST-CORE1A-QUAL-G9-RESIDUE-TABLE",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-TEST-CORE1A-QUAL-G9-THREE-CONSECUTIVE-FACTORS"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Check the three-factor product modulo 6 for all six integer residue classes.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            },
+            {
+              "statement": "Check the four-factor exit product modulo 24 for all 24 residue classes.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "DIV-STEP-PARITY",
+            "DIV-STEP-RESIDUES",
+            "DIV-STEP-COPRIME"
+          ],
+          "worked_anchor_ref": "Q-TEST-CORE1A-QUAL-G9-WORKED-DIVISIBILITY"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "Why must one of three consecutive integers be divisible by 3?",
+        "result": "Their residues modulo 3 cycle through 0, 1 and 2, so one remainder must be 0.",
+        "representation_ref": "REP-TEST-CORE1A-QUAL-G9-RESIDUE-TABLE"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A student checks t=3,4,5 and claims that (t−2)(t−1)t is divisible by 6 for every integer t≥3. Do those three checks PROVE the word every? Begin your written response with yes or no and explain what would count as evidence for every admissible t; then construct the general proof in the same response. If using a printed handout, write on a separate sheet.",
+          "defensible_answer": "No. Three checks are instances, not an exhaustive proof. A valid argument must establish a guaranteed even factor, a guaranteed multiple-of-three factor and their coprime combination for arbitrary t≥3."
+        },
+        "attempt": {
+          "produces": "A general proof for an arbitrary t≥3, including explicit parity, all three modulo-3 cases, the coprime combination, and an explanation of why these exhaustive claims are stronger than examples.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "State t is an arbitrary integer at least 3 and not just one selected example.",
+              "evidence_of": "The variable ranges over every allowed case rather than one sampled case."
+            },
+            {
+              "criterion": "Prove that one factor is even for any t, naming why adjacent integers suffice.",
+              "evidence_of": "A factor of 2 is guaranteed independently of the parity of t."
+            },
+            {
+              "criterion": "Cover t modulo 3 equal to 0,1,2, showing respectively t, t−1, t−2 divisible by 3.",
+              "evidence_of": "One factor of 3 is guaranteed for every allowed residue class; no case omitted."
+            },
+            {
+              "criterion": "Use gcd(2,3)=1 to conclude 6 divides the whole product, and distinguish proof from examples.",
+              "evidence_of": "The two independently guaranteed divisors combine, giving a universal conclusion."
+            }
+          ],
+          "accepted": [
+            "Let t≥3 be any integer. Among t−1 and t, one is even. If t mod 3 is 0,1,2, then respectively t,t−1,t−2 is divisible by 3. Thus 2 and 3 divide (t−2)(t−1)t; since gcd(2,3)=1, 6 divides it for every allowed t.",
+            "Put n=t−2. For every n≥1, n(n+1)(n+2) contains an even factor and a multiple of three by an exhaustive residue argument; coprimality implies a factor of six. Because every allowed t gives an allowed n, the claim follows for all t≥3."
+          ],
+          "rejected": [
+            "I tested t=3,4,5 and all gave multiples of six, so the statement is proved.",
+            "The factor t is always divisible by 3, so the product is a multiple of 6."
+          ],
+          "task": {
+            "prompt": "With t any integer at least 3, reconstruct a proof that (t−2)(t−1)t is divisible by 6. Do NOT list sample products as your justification. Show what forces a 2, what forces a 3, and why the two facts combine.",
+            "givens": [
+              "t is an arbitrary integer and t≥3.",
+              "The three factors are consecutive and positive.",
+              "A universally quantified statement must cover every admissible start."
+            ],
+            "representation_ref": "REP-TEST-CORE1B-ENDING-AT-T-UNMARKED",
+            "stage_refs": [
+              "CORE1B-GIVEN-FACTORS"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Would proof for three tested t values still cover an untested t? What feature must your answer guarantee instead?",
+              "why_this_ask": "Forces learner to reject empirical sampling before deciding which theorem can be used; not an expert's opening formula.",
+              "from_step_ref": "TC-01"
+            },
+            {
+              "ask": "Among the two adjacent factors t−1 and t, can both be odd? What factor must appear, regardless of t's parity?",
+              "why_this_ask": "Elicits unavoidable factor two with a falsifiable parity question, rather than stating that a factor exists.",
+              "from_step_ref": "TC-02"
+            },
+            {
+              "ask": "Suppose t leaves remainder 0,1 or 2 on division by 3. Which of t, t−1, t−2 is then divisible by 3 in each case?",
+              "why_this_ask": "The learner has to supply all three exclusive cases and choose the matching factor; this is the protected mathematical crux.",
+              "from_step_ref": "TC-03"
+            },
+            {
+              "ask": "If 2 and 3 might divide DIFFERENT factors, what can be concluded about the integer product and why does gcd(2,3)=1 matter?",
+              "why_this_ask": "Prevents invalid demand that a single factor carry both divisors; elicits the coprime multiplication warrant.",
+              "from_step_ref": "TC-04"
+            },
+            {
+              "ask": "Have you exhausted all allowed t? Which part of your reasoning would fail if you had only checked t=3,4,5?",
+              "why_this_ask": "Tests the return from local examples to the universal quantifier, not merely copying the original worked proof."
+            }
+          ],
+          "differs_from_teaching_path": "Core1A directly models n,n+1,n+2 and presents parity, residue cases and coprimality with explanations. This Core1B cycle begins by challenging the validity of finite evidence for an ending-at-t triple, requires a learner-written proof before reveal, then reconstructs each missing guarantee as a question tied to its teaching-step reference."
+        },
+        "boundary_test": {
+          "prompt": "Suppose the claim changes to only TWO consecutive positive factors, (t−1)t, always being divisible by 6 for all integers t≥2. Is this universal claim true? Identify which guarantee from the three-factor proof fails. Record your boundary decision and reason before checking its answer. On a printed handout, write on a separate sheet.",
+          "answer": "False. At t=2 the product is 1×2=2, which is not divisible by 6. Adjacent integers still guarantee an even factor but do NOT guarantee a multiple-of-three factor when there are only two, so the exhaustive three-residue argument no longer applies.",
+          "confirms": "The learner recognizes that the proof depends on three consecutive factors, and can disprove a changed boundary with a specific counterexample rather than repeating the original answer."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-TEST-CORE1A-QUAL-G9-THREE-CONSECUTIVE-FACTORS",
+      "expression": "For every positive integer n, n(n+1)(n+2) ≡ 0 (mod 6).",
+      "meaning": "Consecutive factors include an even factor and a multiple of 3; their coprimality forces a multiple of 6.",
+      "symbols": [
+        {
+          "symbol": "n",
+          "meaning": "Arbitrary positive integer starting value",
+          "unit_or_domain": "Z_{>0}"
+        }
+      ],
+      "conditions": [
+        "n is a positive integer.",
+        "2 and 3 are coprime."
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-TC-02",
+          "action": "Consider n and n+1: one is even, so the product of the three integers has at least one factor of 2.",
+          "why_valid": "Parity alternates in adjacent integers. The statement holds for both possible parities of n.",
+          "inputs": [],
+          "output": "2 divides n(n+1)(n+2)",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "DERIV-TC-03",
+          "action": "Separate n modulo 3 into cases 0, 1 and 2. Identify n, n+2 or n+1 respectively as divisible by 3.",
+          "why_valid": "These three remainder classes are exhaustive and exactly one member of any three consecutive integers has remainder 0 modulo 3.",
+          "inputs": [],
+          "output": "3 divides n(n+1)(n+2)",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "DERIV-TC-04",
+          "action": "Combine both divisors: since the whole product is divisible by 2 and 3 and these are coprime, it is divisible by 6.",
+          "why_valid": "When coprime integers 2 and 3 divide the same whole number, their product 6 also divides that number; we have justified both divisibilities for every n.",
+          "inputs": [],
+          "output": "6 divides n(n+1)(n+2)",
+          "role": "VERIFY"
+        }
+      ],
+      "limits": [
+        "Does not assert every individual factor is divisible by 6.",
+        "Finite sample checks alone are not proof of the universal claim."
+      ],
+      "checks": [
+        "Remainder classes modulo 6 cover all possible n.",
+        "The product of four successive integers is divisible by 24; independently checked by modulo 24 residue cases."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>6</mn><mo>∣</mo><mi>n</mi><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-CORE1A-QUAL-G9-RESIDUE-TABLE",
+      "kind": "TABLE_OF_VALUES",
+      "purpose": "Represent the three exhaustive residue classes modulo 3 while retaining the separate parity guarantee.",
+      "required_elements": [
+        "n modulo 3 has three rows: 0,1,2.",
+        "For residue 0, n is divisible by 3.",
+        "For residue 1, n+2 is divisible by 3.",
+        "For residue 2, n+1 is divisible by 3.",
+        "Parity guarantee shown independently, not blended with the modulo-3 table."
+      ],
+      "relation_refs": [
+        "REL-TEST-CORE1A-QUAL-G9-THREE-CONSECUTIVE-FACTORS"
+      ],
+      "read_order": [
+        "First establish n as arbitrary.",
+        "Read remainder 0, 1, 2 cases for n modulo 3.",
+        "Locate in each row which factor is divisible by 3.",
+        "Reason separately about parity, then combine factors."
+      ],
+      "instance_constraints": [
+        "Use words for residue cells, not color-coded-only labels.",
+        "Do not imply finite numeric examples prove the universal claim."
+      ],
+      "accessibility": [
+        "Table headings announce residue and divisible factor.",
+        "All mathematical rows have text descriptions and ordered reading sequence.",
+        "Any optional SVG must have text equivalent and no answer-bearing alt before an attempt."
+      ],
+      "misleading_alternatives": [
+        "Treating one numerical case as a universal proof.",
+        "Assuming the same term must simultaneously supply the factor 2 and 3."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/core1a-consecutive-divisibility-staged.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-CORE1A-QUAL-G9-FACTOR-PROOF",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS",
+          "datum_refs": [
+            "DATUM-TEST-CORE1A-QUAL-N-MOD3-0",
+            "DATUM-TEST-CORE1A-QUAL-N-MOD3-1",
+            "DATUM-TEST-CORE1A-QUAL-N-MOD3-2"
+          ],
+          "asset_ref": "TEST/library/figures/core1a-consecutive-divisibility-staged.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Arbitrary positive integer n with three consecutive factors",
+            "caption": "The parity argument and the exhaustive modulo-3 table combine through coprimality; neither finite numerical examples nor a single favored start is assumed."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three ordered rows for residues 0,1,2",
+          "symbol": "n mod 3 ∈ {0,1,2}",
+          "in_words": "The residue cases exhaust all integer starts."
+        },
+        {
+          "element": "Highlighted guaranteed factor per row",
+          "symbol": "n, n+2, or n+1",
+          "in_words": "One of the factors is divisible by 3 in every case."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "DIV-STEP-PARITY",
+          "label": "Parity guarantee",
+          "purpose": "Two adjacent positive integers cannot both be odd: the product contains factor 2.",
+          "visible_elements": [
+            "n and n+1 are adjacent",
+            "one is even"
+          ]
+        },
+        {
+          "id": "DIV-STEP-RESIDUES",
+          "label": "All three residue cases",
+          "purpose": "For n modulo 3 equal to 0,1,2, the divisible factor is n,n+2,n+1 respectively.",
+          "visible_elements": [
+            "the full modulo-3 case table"
+          ]
+        },
+        {
+          "id": "DIV-STEP-COPRIME",
+          "label": "Combine coprime divisors",
+          "purpose": "The whole product is divisible by coprime integers 2 and 3, therefore by 6.",
+          "visible_elements": [
+            "factor 2 and factor 3 force a factor 6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-CORE2A-ADJACENT-FACTORS-SAFE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:stage_mode": "REPLACE"
+      },
+      "kind": "ALGEBRA_TILES",
+      "purpose": "Show which three adjacent integer factors appear in the independent authored question, without disclosing a divisor or proof move.",
+      "required_elements": [
+        "Three factor boxes labelled m+1, m+2 and m+3",
+        "Visible multiplication signs and no divisibility hints"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read factors m+1, m+2 and m+3 from left to right.",
+        "Choose your own general argument without a worked method shown."
+      ],
+      "instance_constraints": [
+        "No factor-of-two, modulo-three, or answer-bearing marks in the pre-attempt asset.",
+        "No official source identity implied.",
+        "These are three labelled symbolic factor tiles, not counted unit-area algebra tiles; no area interpretation is asserted."
+      ],
+      "accessibility": [
+        "Each factor and multiplication sign is named in a descriptive text equivalent.",
+        "Do not reveal any proof in the SVG title, description or accessible label."
+      ],
+      "misleading_alternatives": [
+        "A diagram that colors an even factor or a multiple of three in advance"
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/core2a-three-consecutive-attempt-safe.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-TEST-CORE2A-ADJACENT-FACTORS-SAFE",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF",
+          "datum_refs": [
+            "DATUM-TEST-CORE2A-ADJACENT-FACTORS-EQUATION"
+          ],
+          "asset_ref": "TEST/library/figures/core2a-three-consecutive-attempt-safe.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Three consecutive factors beginning at m+1",
+            "caption": "Attempt prompt: three adjacent factors; the required general proof remains yours."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three adjacent factor boxes",
+          "symbol": "(m+1)(m+2)(m+3)",
+          "in_words": "An arbitrary triple begins one position after m."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "PRACTICE-FACTORS-ONLY",
+          "label": "Three factors only",
+          "purpose": "Display the given factors without the protected universal argument.",
+          "visible_elements": [
+            "m+1,m+2,m+3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-CORE1B-ENDING-AT-T-UNMARKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "ALGEBRA_TILES",
+      "purpose": "Present the new reconstruction task's exact symbolic factors, without indicating a divisor or the general argument.",
+      "required_elements": [
+        "Unmarked factor tiles labelled t−2, t−1 and t.",
+        "Multiplication operators, and no arithmetic conclusion in any tile."
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read the three factors ending at t, left to right.",
+        "Decide what general property must be proved, not merely which values to substitute."
+      ],
+      "instance_constraints": [
+        "The pre-attempt accessible label must not contain the proof or parity/residue claims.",
+        "Each card is a symbolic factor label, not a literal counted-unit algebra tile.",
+        "At least three positive integer factors: t is integer and t≥3."
+      ],
+      "accessibility": [
+        "All three symbolic factors and multiplication order have accessible text.",
+        "No stage contains an answer or a highlighted divisor."
+      ],
+      "misleading_alternatives": [
+        "A pre-coloured multiple-of-three tile gives the decisive move away.",
+        "Use of a worked Core1A parity/residue figure before the Core1B attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/core1b-three-factor-attempt-safe.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-TEST-CORE1B-T-FACTORS-PREATTEMPT",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS",
+          "datum_refs": [
+            "DATUM-TEST-CORE1B-ENDING-T-TRIPLE"
+          ],
+          "asset_ref": "TEST/library/figures/core1b-three-factor-attempt-safe.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "t is an arbitrary integer with t≥3",
+            "caption": "Three consecutive unmarked factors ending at t; construct a proof yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three separate symbolic tiles",
+          "symbol": "(t-2)(t-1)t",
+          "in_words": "Three consecutive integers ending at t."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "CORE1B-GIVEN-FACTORS",
+          "label": "Given triple only",
+          "purpose": "Show three abstract factors without marking parity or residue cases.",
+          "visible_elements": [
+            "t−2",
+            "t−1",
+            "t"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-IMO-164-FIVE-NEUTRAL-FACTORS",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:stage_mode": "REPLACE"
+      },
+      "kind": "ALGEBRA_TILES",
+      "purpose": "Neutral pre-attempt sequence of five consecutive integer factors without revealing the guaranteed divisors or proof.",
+      "required_elements": [
+        "Five labelled factor boxes n through n+4 and multiplication signs.",
+        "No marked multiple of five, no factor-24 bracket and no solution."
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read five factors left to right.",
+        "The learner must decide how to prove universal divisibility."
+      ],
+      "instance_constraints": [
+        "Never highlight a factor in advance.",
+        "No official exam source identity.",
+        "Neutral SVG text is original authored material."
+      ],
+      "accessibility": [
+        "Alternative text names five symbolic factors without indicating the protected modulo-five choice."
+      ],
+      "misleading_alternatives": [
+        "A visual that labels n+4 a multiple of five in all cases"
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-TEST-IMO-164-FIVE-NEUTRAL",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-IMO-164-FIVE-CONSECUTIVE-120",
+          "datum_refs": [
+            "DATUM-TEST-IMO-164-FIVE-FACTOR-PRODUCT"
+          ],
+          "asset_ref": "TEST/imo-research/pilots/assets/five-consecutive-attempt-safe.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Five consecutive integer factors from n through n+4",
+            "caption": "Five factors are shown; the protected universal argument is not supplied."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Five consecutive factor boxes",
+          "symbol": "n(n+1)(n+2)(n+3)(n+4)",
+          "in_words": "Five arbitrary consecutive positive integers."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "FIVE-FACTORS-ONLY",
+          "label": "Five symbolic factors only",
+          "purpose": "Present the factor structure without identifying the divisibility strategy.",
+          "visible_elements": [
+            "n,n+1,n+2,n+3,n+4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-IMO-164-TRIPLE-BOUNDARY-12",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:stage_mode": "REPLACE"
+      },
+      "kind": "ALGEBRA_TILES",
+      "purpose": "Proof-free two-stage figure for an undecided triple-product divisibility claim.",
+      "required_elements": [
+        "Neutral three factors n, n+1, n+2.",
+        "12-divisibility shown only as a question."
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read triple factors.",
+        "Compare with target 12 as a question."
+      ],
+      "instance_constraints": [
+        "Never reveal truth or exception.",
+        "No specific factor highlighted."
+      ],
+      "accessibility": [
+        "Both stages pose the given question but withhold classification."
+      ],
+      "misleading_alternatives": [
+        "A visual that marks residue one as failure."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-TEST-IMO-164-BOUNDARY-12",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-IMO-164-TRIPLE-12-IFF-BOUNDARY",
+          "datum_refs": [
+            "DATUM-TEST-IMO-164-TRIPLE-P"
+          ],
+          "asset_ref": "TEST/imo-research/pilots/assets/triple-boundary-12-attempt-safe.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Three factor cards and divisor question",
+            "caption": "The verdict and proof remain to be determined."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three adjacent factor cards",
+          "symbol": "n(n+1)(n+2)",
+          "in_words": "Three consecutive integers."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "BOUNDARY-TRIPLE-FACTORS",
+          "label": "Three factors",
+          "purpose": "State the factors only.",
+          "visible_elements": [
+            "n",
+            "n+1",
+            "n+2"
+          ]
+        },
+        {
+          "id": "BOUNDARY-TARGET-12",
+          "label": "Target twelve?",
+          "purpose": "Rephrase the problem as an undecided question.",
+          "visible_elements": [
+            "P(n)",
+            "12?"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-CORE1A-QUAL-G9-AUTHORED-CONSECUTIVE-PRODUCT",
+      "title": "Authored consecutive-integer universal divisibility reasoning",
+      "capability_refs": [
+        "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY"
+      ],
+      "solution_structure": [
+        "Model arbitrary n and consecutive successors.",
+        "Identify even and divisible-by-3 factors using exhaustive classes.",
+        "Combine guaranteed coprime divisors.",
+        "Verify a changed four-factor extension."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Represent arbitrary n, not finite samples.",
+        "representation_translation": "Move between residue table and algebraic proof.",
+        "reasoning_steps": "Parity plus modulo 3 plus coprimality.",
+        "novelty": "Universal proof instead of pattern extrapolation."
+      },
+      "safe_variations": [
+        "Other counts of consecutive integers with explicitly taught modular prerequisites."
+      ],
+      "transfer_boundaries": [
+        "A new divisor's prime powers require fresh justification; three factors do not imply a multiple of 24.",
+        "No official SOF question source is claimed."
+      ],
+      "common_wrong_routes": [
+        "Checking three values rather than proving all starts.",
+        "Concluding divisibility by 6 from an unproven choice of even and multiple-of-3 factors."
+      ],
+      "item_refs": [
+        "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF"
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-IMO-164-FIVE-PRODUCT",
+      "title": "Authored five-consecutive-factor universal transfer",
+      "capability_refs": [
+        "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY"
+      ],
+      "solution_structure": [
+        "Name five consecutive positive factors from arbitrary n.",
+        "Use the prior four-consecutive factor-24 theorem for n through n+3.",
+        "Prove the existence of a multiple of five among all five factors via exhaustive residues.",
+        "Combine the coprime contributions 24 and 5 into 120, explaining why finite examples are insufficient."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Represent arbitrary n, not finite samples.",
+        "representation_translation": "Move between residue table and algebraic proof.",
+        "reasoning_steps": "Parity plus modulo 3 plus coprimality.",
+        "novelty": "Universal proof instead of pattern extrapolation."
+      },
+      "safe_variations": [],
+      "transfer_boundaries": [
+        "A numerical example is not a universal proof.",
+        "The fifth term need not be the multiple of five.",
+        "The new modulo-five argument must be learned and justified, not revealed in pre-attempt hints."
+      ],
+      "common_wrong_routes": [
+        "Checking three values rather than proving all starts.",
+        "Concluding divisibility by 6 from an unproven choice of even and multiple-of-3 factors."
+      ],
+      "item_refs": [
+        "Q-TEST-IMO-164-FIVE-CONSECUTIVE-120"
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-IMO-164-BOUNDARY-12-CLASSIFICATION",
+      "title": "Authored exact triple-divisibility classification",
+      "capability_refs": [
+        "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY"
+      ],
+      "solution_structure": [
+        "Disprove universal assertion.",
+        "Reduce to extra factor four.",
+        "Prove all residue cases both ways.",
+        "State iff and corroborate with full modulo-twelve cycle."
+      ],
+      "demand_dimensions": {
+        "model_choice": "False universal claim versus iff classification.",
+        "representation_translation": "Use n modulo four.",
+        "reasoning_steps": "Necessary and sufficient conditions.",
+        "novelty": "Complete exception classification."
+      },
+      "safe_variations": [],
+      "transfer_boundaries": [
+        "Counterexample alone not a classification.",
+        "6 cannot imply 12.",
+        "No pre-attempt residue verdict."
+      ],
+      "common_wrong_routes": [
+        "6 implies 12.",
+        "One counterexample classifies.",
+        "Even means divisible by four."
+      ],
+      "item_refs": [
+        "Q-TEST-IMO-164-TRIPLE-12-IFF-BOUNDARY"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-CORE1A-QUAL-G9-WORKED-DIVISIBILITY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "core-architect-qualification-test"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED",
+      "original_identifier": "AUTHOR-CORE1A-QUAL-THREE-CONSECUTIVE",
+      "stem": "For any positive integer n, show that n(n+1)(n+2) is divisible by 6. Explain why a few numerical checks do not establish the claim for every n.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "n is any positive integer.",
+        "The factors are three consecutive integers."
+      ],
+      "figure_refs": [
+        "REP-TEST-CORE1A-QUAL-G9-RESIDUE-TABLE"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The product always contains a factor 2 and a factor 3; because these are coprime, 6 divides the product for every positive integer n.",
+        "reasoning": [
+          "At least one of n and n+1 is even, since they are consecutive. Thus the whole product is divisible by 2.",
+          "For n modulo 3, check exactly the exhaustive cases 0, 1 and 2: the divisible factor is respectively n, n+2, and n+1. Thus the whole product is divisible by 3.",
+          "Since 2 and 3 are coprime and both divide the whole integer product, their product 6 also divides it.",
+          "Every positive integer belongs to one of these exhaustive parity/remainder cases. This proves a universal statement, whereas checking a few particular n only tests examples."
+        ],
+        "check": "For each n modulo 6 from 0 through 5, n(n+1)(n+2) is a multiple of 6; this exhaustive residue check independently corroborates the proof.",
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "acceptable_alternatives": [],
+        "subpart_answers": []
+      },
+      "primary_capability_ref": "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-CORE1A-QUAL-G9-AUTHORED-CONSECUTIVE-PRODUCT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": null,
+        "safe_ref": null,
+        "bound_ref": "REP-TEST-CORE1A-QUAL-G9-RESIDUE-TABLE",
+        "stage_refs": []
+      },
+      "failure_signal": null,
+      "family_exposure": {
+        "family_ref": "FAM-TEST-CORE1A-QUAL-G9-AUTHORED-CONSECUTIVE-PRODUCT",
+        "closure": null
+      }
+    },
+    {
+      "id": "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "core-architect-test-journey",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "REPRESENT"
+          ],
+          "basis": "The decisive task is a universal divisibility warrant for arbitrary integer m, not executing one numerical product."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Guarantee both a factor of two and a factor of three for every permissible starting m, then combine coprime divisors.",
+          "common_wrong_route": "Check three sample m values or assert one chosen factor is always even and divisible by three."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED",
+      "original_identifier": "AUTHORED-CORE2A-CONSECUTIVE-TRIPLE-OFFSET",
+      "stem": "A student checks m = 1, 2 and 3 and claims those examples prove that (m+1)(m+2)(m+3) is divisible by 6 for every positive integer m. Does that reasoning prove the universal claim? Decide, then construct a valid proof or counterexample for arbitrary positive m. Your argument must cover every m, not only tested values.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "m is any positive integer.",
+        "A few tested values are not accepted as a general proof.",
+        "This is original authored practice, not an SOF/NCERT exam item."
+      ],
+      "figure_refs": [
+        "REP-TEST-CORE2A-ADJACENT-FACTORS-SAFE"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The three example checks do not prove the universal claim. However, the product is always divisible by 6: every three consecutive integers contain a factor of 2 and a factor of 3.",
+        "reasoning": [
+          "The student's three checks do not prove a statement about every positive m; a valid argument must cover an arbitrary m.",
+          "Set n=m+1. Then the product is n(n+1)(n+2), and n is a positive integer.",
+          "At least one of n and n+1 is even, so 2 divides the product.",
+          "If n mod 3 is 0, 1 or 2, the factor n, n+2 or n+1 is divisible by 3 respectively, so 3 divides the product in every case.",
+          "The two coprime divisors 2 and 3 both divide the same product; therefore 6 divides it for every m."
+        ],
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-CORE2A-DECLARE",
+            "kind": "REPRESENT",
+            "action": "Reject the inference from three checked examples, then use n=m+1 to represent the factors as an arbitrary consecutive triple.",
+            "why_valid": "A finite collection of checks cannot establish a universal statement; for each positive m the substitution n=m+1 is valid and the consecutive-factor identity holds.",
+            "inputs": [
+              "(m+1)(m+2)(m+3)",
+              "m is positive"
+            ],
+            "output": "n(n+1)(n+2) for n=m+1"
+          },
+          {
+            "id": "MOVE-TEST-CORE2A-PARITY",
+            "kind": "CONNECT",
+            "action": "Establish a factor of two from consecutive parity, not from tested values.",
+            "why_valid": "Adjacent integers have opposite parities, so one of n,n+1 is even for every n.",
+            "inputs": [
+              "n(n+1)(n+2)"
+            ],
+            "output": "2 divides the whole product"
+          },
+          {
+            "id": "MOVE-TEST-CORE2A-WARRANT",
+            "kind": "DECIDE",
+            "action": "Check the exhaustive three possible residues for n modulo 3 and combine the guaranteed coprime divisors.",
+            "why_valid": "The residues 0,1,2 exhaust all starts and ensure one factor divisible by 3, while parity independently gives factor 2. Coprimality licenses the product 6.",
+            "inputs": [
+              "2 divides product",
+              "n mod 3 in {0,1,2}"
+            ],
+            "output": "6 divides (m+1)(m+2)(m+3) for every positive m"
+          },
+          {
+            "id": "MOVE-TEST-CORE2A-VERIFY",
+            "kind": "VERIFY",
+            "action": "Reverse-map n=m+1 and independently inspect each residue class modulo six as a check.",
+            "why_valid": "The identity maps back to the original arbitrary m; six exhaustive classes provide an independent arithmetic verification of the divisibility claim.",
+            "inputs": [
+              "general proof in n"
+            ],
+            "output": "same universal claim in m, with all residue classes checked"
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-CORE2A-WARRANT",
+        "check": "For m congruent to any residue from 0 to 5 modulo 6, at least one of m+1,m+2,m+3 is even and one is divisible by 3. This corroborates, rather than replaces, the general proof.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-CORE1A-QUAL-G9-AUTHORED-CONSECUTIVE-PRODUCT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Keep m arbitrary. Can a few checked examples establish a result for every m? State what a general proof must ensure.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-CORE2A-DECLARE"
+        },
+        {
+          "text": "What would it mean to guarantee divisibility of the whole product by 6? Identify the kind of general warrant you need, without deciding which factor provides it.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-CORE2A-WARRANT"
+        },
+        {
+          "text": "Do not assume one factor supplies every divisor. Can you make separate universal claims about two coprime divisor contributions, and verify that each applies to every start?",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-TEST-CORE2A-WARRANT"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-CORE2A-ADJACENT-FACTORS-SAFE",
+        "safe_ref": "REP-TEST-CORE2A-ADJACENT-FACTORS-SAFE",
+        "bound_ref": null,
+        "stage_refs": [
+          "PRACTICE-FACTORS-ONLY"
+        ]
+      },
+      "repair_ref": "TC-03",
+      "failure_signal": "An answer based on sample values, or a claim that m+1 must be even, has not established a universal proof. Diagnose the difference between an instance and a guaranteed factor.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-CORE1A-QUAL-G9-AUTHORED-CONSECUTIVE-PRODUCT",
+        "closure": "Supported familiar-family proof completed if the learner independently justifies the even factor, all three modulo-3 cases, and coprime combination; no mastery or changed-demand transfer is inferred."
+      },
+      "independent_check": {
+        "statement": "Check all six residue classes for m modulo 6; give the general proof separately.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "The learner must represent the offset triple, justify two independent divisibility guarantees, and avoid finite-example or one-factor misconceptions.",
+        "component_evidence": {
+          "concept_model_selection": "Choose general consecutive-factor structure instead of computing a sample.",
+          "representation_translation": "Map m+1,m+2,m+3 to standard n,n+1,n+2 with n=m+1.",
+          "reasoning_chain_length": "Parity and three residue cases must combine to establish divisibility by six.",
+          "algebra_computational_load": "No significant algebra beyond an offset substitution.",
+          "trap_exception_sensitivity": "An overgeneralization from examples or assuming one factor must carry all factors is plausible."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-IMO-164-FIVE-CONSECUTIVE-120",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "issue-164-blueprint-first",
+        "grade9v3:qrt_status": "PROPOSED_NOT_ACCEPTED",
+        "grade9v3:source_custody": "NO_ORIGINAL_SOURCE_QUESTION",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "SYNTHESIZE"
+          ],
+          "basis": "Unlike the familiar triple proof, learner must combine a four-factor 24-warrant with a five-factor residue warrant and explain coprimality."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Guarantee a factor 5 in every block of five; combine it with the established factor 24 from four by coprimality, without assuming the factors must occur in distinct positions.",
+          "common_wrong_route": "Conclude 120 merely because the first four factors yield 24, or check a few examples, or assume the fifth factor must always be a multiple of five."
+        },
+        "grade9v3:core2b_guided_hints_opt_in": true
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO-164-AUTHORED",
+      "original_identifier": "AUTHORED-IMO-164-TRANSFER-FIVE-FACTOR-PROOF",
+      "stem": "Let n be any positive integer. Prove, without testing only particular numbers, that n(n+1)(n+2)(n+3)(n+4) is always divisible by 120. Explain why a proof using the first four factors alone is incomplete.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "n is an arbitrary positive integer.",
+        "You may use the earlier established result that any four consecutive positive integers have a product divisible by 24.",
+        "You must independently justify the additional factor that makes 120; numerical examples alone are insufficient.",
+        "This is independently authored practice, not an SOF source question."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO-164-FIVE-NEUTRAL-FACTORS"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The first four consecutive factors have product divisible by 24. Of the five factors, one is divisible by 5. As gcd(24,5)=1, the full product is divisible by 120 for every positive integer n.",
+        "reasoning": [
+          "Let P=n(n+1)(n+2)(n+3)(n+4), for an arbitrary positive integer n.",
+          "The four consecutive factors n through n+3 form a product divisible by 24, by the established four-factor result. Therefore 24 divides P.",
+          "Exactly one of n,n+1,n+2,n+3,n+4 is congruent to 0 modulo 5, so 5 divides P for every possible n.",
+          "Because gcd(24,5)=1, the simultaneous divisibility of P by 24 and by 5 implies 120 divides P. The multiple of five may occur among the first four factors; this does not invalidate the conclusion.",
+          "Checking selected n values would not prove the universal statement. The four-factor warrant plus all five residue positions covers every positive integer."
+        ],
+        "reasoning_route": [
+          {
+            "id": "MOVE-IMO-164-REPRESENT",
+            "kind": "REPRESENT",
+            "action": "Name the product P of five consecutive integers with arbitrary positive start n.",
+            "why_valid": "The notation covers every permitted positive integer n.",
+            "inputs": [
+              "n is arbitrary",
+              "five consecutive positive integers"
+            ],
+            "output": "P=n(n+1)(n+2)(n+3)(n+4)"
+          },
+          {
+            "id": "MOVE-IMO-164-24",
+            "kind": "CONNECT",
+            "action": "Apply the previously established 24-divisibility theorem to the first four factors.",
+            "why_valid": "n,n+1,n+2,n+3 are any four consecutive positive integers, so their product and hence P are multiples of 24.",
+            "inputs": [
+              "first four factors",
+              "known 4-factor theorem"
+            ],
+            "output": "24 divides P"
+          },
+          {
+            "id": "MOVE-IMO-164-CRUX",
+            "kind": "DECIDE",
+            "action": "Prove that exactly one of the five consecutive integers is divisible by 5, then combine coprime divisors 24 and 5.",
+            "why_valid": "The residues n mod 5 = 0,1,2,3,4 exhaust all positive starts. In each case one of five consecutive factors is a multiple of 5, and gcd(24,5)=1.",
+            "inputs": [
+              "24 divides P",
+              "n mod 5 covers 0..4"
+            ],
+            "output": "120 divides P"
+          },
+          {
+            "id": "MOVE-IMO-164-VERIFY",
+            "kind": "VERIFY",
+            "action": "Check a complete set of residue classes modulo 120 only as a corroboration, not as isolated examples.",
+            "why_valid": "Each positive integer is represented by one of the 120 residue classes, providing an independent exhaustive check.",
+            "inputs": [
+              "universal proof",
+              "n modulo 120"
+            ],
+            "output": "no remainder class contradicts 120 divisibility"
+          }
+        ],
+        "crux_move_ref": "MOVE-IMO-164-CRUX",
+        "check": "For each residue r from 0 to 119, the integer r(r+1)(r+2)(r+3)(r+4) has remainder zero modulo 120. This is an exhaustive modular check, not a list of sample values.",
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "rubric": [
+          {
+            "criterion": "Establishes the four-consecutive-integer factor 24 for an arbitrary start.",
+            "evidence_of": "Invokes or reconstructs a valid proof, not just an example."
+          },
+          {
+            "criterion": "Establishes a guaranteed factor 5 across every block of five.",
+            "evidence_of": "Covers all residues modulo five without assuming the final factor is always divisible by five."
+          },
+          {
+            "criterion": "Justifies 120 from the simultaneous divisors 24 and 5.",
+            "evidence_of": "States gcd(24,5)=1 and correctly combines coprime divisibility, whether the factor of five appears inside the first four or not."
+          },
+          {
+            "criterion": "Distinguishes universal proof from numeric experimentation.",
+            "evidence_of": "Explains how the argument covers every permitted n."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO-164-FIVE-PRODUCT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "NEW_TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "text": "Before applying a familiar theorem, name what must hold for every starting n. Numerical checks cannot certify every n.",
+          "provenance": "AUTHORED_HINT"
+        },
+        {
+          "order": 2,
+          "purpose": "REPRESENT",
+          "text": "Separate what you already know about a shorter consecutive block from what the five-factor target additionally asks you to justify.",
+          "provenance": "AUTHORED_HINT"
+        },
+        {
+          "order": 3,
+          "purpose": "FIRST_RELATION",
+          "text": "Try describing a general guarantee in words before multiplying numbers; any extra divisor must be warranted for arbitrary n.",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO-164-FIVE-NEUTRAL-FACTORS",
+        "safe_ref": "REP-TEST-IMO-164-FIVE-NEUTRAL-FACTORS",
+        "bound_ref": null,
+        "stage_refs": [
+          "FIVE-FACTORS-ONLY"
+        ]
+      },
+      "repair_ref": "TC-03",
+      "failure_signal": "A proof of divisibility by 24 alone does not establish divisibility by 120. Five checked examples do not establish a universal claim. Locate the missing factor for every possible starting integer, and explain why factors can be combined.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO-164-FIVE-PRODUCT",
+        "closure": "Candidate transfer only: justify a guaranteed 24 from four adjacent factors and a 5 among five; no independent QRT acceptance or learner mastery is inferred."
+      },
+      "independent_check": {
+        "statement": "Check each possible residue of n modulo 120 as a corroborating finite residue-class argument, separately from the general proof.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "PROPOSED ONLY: changed universal divisibility warrant from established 24 result to 120 via modulo-five exhaustion and coprimality; not QRT reviewed.",
+        "component_evidence": {
+          "concept_model_selection": "Select 24×5 coprime structure rather than merely calculating products.",
+          "representation_translation": "Interpret a symbolic product of five terms as residue classes modulo five.",
+          "reasoning_chain_length": "Link previous theorem, modulo-five guarantee and coprime multiplication.",
+          "algebra_computational_load": "Track five symbolic factors and gcd(24,5).",
+          "trap_exception_sensitivity": "Reject unproved claim that the fifth factor must supply the five and unrepresentative numeric examples."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "reasoning_steps",
+        "statement": "Move beyond the previously worked 3-factor 6-warrant and 4-factor 24-exit to a five-factor 120-warrant that requires a new universal modulo-five guarantee and a coprime combination.",
+        "builds_on": [
+          "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF",
+          "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS"
+        ],
+        "protected_move_ref": "MOVE-IMO-164-CRUX",
+        "invariant": "General proof requires exhaustive integer classes and justified combination of coprime divisors, not sampled products.",
+        "novelty": {
+          "checked_against": [
+            "Core1A worked triple-divisibility proof by 6",
+            "Core1A exit four-factor proof by 24",
+            "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF"
+          ],
+          "why_new": "No prior worked or supported task in the selected journey requires proving a factor 5 over five positions and combining it with 24 for a product divisible by 120. Distinct numerical parameters alone would not suffice."
+        }
+      }
+    },
+    {
+      "id": "Q-TEST-IMO-164-TRIPLE-12-IFF-BOUNDARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "issue-164-boundary-review",
+        "grade9v3:qrt_status": "PROPOSED_NOT_ACCEPTED",
+        "grade9v3:source_custody": "NO_ORIGINAL_SOURCE_QUESTION",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "REPRESENT"
+          ],
+          "basis": "False universal claim needs exact necessary-and-sufficient classification, not a variable rename or one extra divisor. Classification is the mathematical task verb, not a canonical demand category; secondarily represents the claim by congruence classes."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Prove n modulo 4 classes 0,2,3 satisfy factor-four and class 1 cannot; combine with always factor-three.",
+          "common_wrong_route": "Assume 6 implies 12, or give n=1 alone without proving all successes."
+        },
+        "grade9v3:core2b_guided_hints_opt_in": true
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO-164-AUTHORED",
+      "original_identifier": "AUTHORED-IMO-164-TRIPLE-12-IFF-BOUNDARY",
+      "stem": "Let n be any positive integer. Define P(n)=n(n+1)(n+2). A student claims P(n) is divisible by 12 for EVERY positive integer n because it is always divisible by 6. Decide whether the claim is true. If false, give a counterexample, then classify EXACTLY which positive n make P(n) divisible by 12. Prove both directions, not just numerical cases.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "n is an arbitrary positive integer.",
+        "The product of any three consecutive positive integers is already known to be divisible by 6.",
+        "A counterexample can refute every, but not prove a complete iff classification.",
+        "Independently authored TEST task, not an SOF source item."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO-164-TRIPLE-BOUNDARY-12"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The claim for every n is false: P(1)=6. Exactly when n mod 4 is not 1 does 12 divide P(n).",
+        "reasoning": [
+          "For n=1 the product is 1·2·3=6, not divisible by 12. This disproves 'every' but does not classify all successes.",
+          "Every triple supplies a multiple of 3. Because gcd(3,4)=1, P(n) is divisible by 12 exactly when P(n) is divisible by 4.",
+          "If n mod 4 equals 0, n is a multiple of 4. If it equals 2, n+2 is a multiple of 4. If it equals 3, n+1 is a multiple of 4. Thus 4 divides P(n) for each of these complete cases.",
+          "If n mod 4 equals 1, n and n+2 are odd while n+1 is 2 modulo 4. The product then has exactly one factor of 2 and is not divisible by 4.",
+          "The four residues exhaust every positive n, proving necessity as well as sufficiency: 12 divides P(n) iff n mod 4 != 1."
+        ],
+        "reasoning_route": [
+          {
+            "id": "MOVE-IMO-164-BOUNDARY-DISPROVE",
+            "kind": "DECIDE",
+            "action": "Find a valid counterexample to the universal assertion and distinguish it from full classification.",
+            "why_valid": "P(1)=6 is not divisible by 12 but leaves all other n undecided.",
+            "inputs": [
+              "n positive",
+              "P(n) triple"
+            ],
+            "output": "Universal claim false; classification still needed."
+          },
+          {
+            "id": "MOVE-IMO-164-BOUNDARY-REDUCE",
+            "kind": "CONNECT",
+            "action": "Use the known factor of 3 and coprimality to identify the remaining factor-four question.",
+            "why_valid": "Three consecutive integers guarantee 3; 3 and 4 are coprime.",
+            "inputs": [
+              "3 divides P(n)",
+              "gcd(3,4)=1"
+            ],
+            "output": "12 divides P iff 4 divides P."
+          },
+          {
+            "id": "MOVE-IMO-164-BOUNDARY-CRUX",
+            "kind": "DECIDE",
+            "action": "Classify all four residues of n modulo 4, proving both the successful cases and the residue-one obstruction.",
+            "why_valid": "Residues 0,2,3 supply a multiple of 4 among three factors; in residue 1 only one factor is even and it is 2 modulo 4.",
+            "inputs": [
+              "n mod 4",
+              "P(n) triple"
+            ],
+            "output": "12 divides P(n) if and only if n mod 4 != 1."
+          },
+          {
+            "id": "MOVE-IMO-164-BOUNDARY-CHECK",
+            "kind": "VERIFY",
+            "action": "Independently check a complete cycle of twelve residues as a falsifier, not as sampled proof.",
+            "why_valid": "P(n) modulo 12 depends only on n modulo 12.",
+            "inputs": [
+              "iff classification"
+            ],
+            "output": "All twelve residue classes agree."
+          }
+        ],
+        "crux_move_ref": "MOVE-IMO-164-BOUNDARY-CRUX",
+        "check": "Check all 12 residues modulo 12 as a corroborating complete congruence cycle; the mathematical proof must independently explain both directions for all n.",
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "rubric": [
+          {
+            "criterion": "Rejects a false universal claim.",
+            "evidence_of": "Gives P(1)=6 and states why this only disproves every."
+          },
+          {
+            "criterion": "Identifies the missing factor of 4.",
+            "evidence_of": "Uses guaranteed 3 and coprimality of 3 and 4."
+          },
+          {
+            "criterion": "Proves both directions for all n modulo 4.",
+            "evidence_of": "Explains residues 0,2,3 succeed and exactly why residue 1 fails."
+          },
+          {
+            "criterion": "States an exact iff, not a list of examples.",
+            "evidence_of": "Concludes n mod 4 != 1 and justifies exhaustive cases."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO-164-BOUNDARY-12-CLASSIFICATION",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "NEW_TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "text": "Distinguish two tasks: one value can challenge 'for every n', but describing exactly when a statement holds needs a general argument.",
+          "provenance": "AUTHORED_HINT"
+        },
+        {
+          "order": 2,
+          "purpose": "REPRESENT",
+          "text": "Compare starting values using an exhaustive repeating remainder pattern, rather than selecting just a few convenient examples.",
+          "provenance": "AUTHORED_HINT"
+        },
+        {
+          "order": 3,
+          "purpose": "FIRST_RELATION",
+          "text": "Decide which divisor requirement is already established and what stronger requirement remains; for a classification, justify successes and failures.",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO-164-TRIPLE-BOUNDARY-12",
+        "safe_ref": "REP-TEST-IMO-164-TRIPLE-BOUNDARY-12",
+        "bound_ref": null,
+        "stage_refs": [
+          "BOUNDARY-TRIPLE-FACTORS",
+          "BOUNDARY-TARGET-12"
+        ]
+      },
+      "repair_ref": "TC-03",
+      "failure_signal": "Knowing 6 divides the triple does not establish 12; n=1 is a counterexample, not a complete classification. Inspect when the product has a guaranteed factor of 4 and prove the successful and failing residue classes.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO-164-BOUNDARY-12-CLASSIFICATION",
+        "closure": "REVIEW CANDIDATE only. Falsify the universal claim and establish exact iff classification; QRT and academic acceptance are still held."
+      },
+      "independent_check": {
+        "statement": "Check all 12 residues modulo 12 against the iff result; distinguish this corroboration from the general proof.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "PROPOSED ONLY: falsify and prove an iff modulo-four classification; independent D3 judgment required.",
+        "component_evidence": {
+          "concept_model_selection": "Decide counterexample versus classification.",
+          "representation_translation": "Move from factors to four residues.",
+          "reasoning_chain_length": "Disprove universal, isolate four, prove iff.",
+          "algebra_computational_load": "Short symbolic factors.",
+          "trap_exception_sensitivity": "Reject 6=>12 and insufficient checked examples."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "model_choice",
+        "statement": "Switch from a true universal proof to a false universal assertion requiring counterexample and exact necessary-and-sufficient exception classification.",
+        "builds_on": [
+          "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF",
+          "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS"
+        ],
+        "protected_move_ref": "MOVE-IMO-164-BOUNDARY-CRUX",
+        "invariant": "Exhaustive residue classes, divisibility and coprimality remain valid.",
+        "novelty": {
+          "checked_against": [
+            "Core1A triple 6 worked theorem",
+            "Core1A four-factor 24 exit",
+            "Core2A finite-example diagnostic",
+            "Unselected five-factor 120 candidate"
+          ],
+          "why_new": "Earlier tasks prove a positive universal property, not an iff exception classification. The four-factor 24 theorem is not disguised as new work."
+        }
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-TEST-CORE1A-QUAL-G9-CORE1A-CONSTRUCTION",
+      "title": "Core1A study of universal divisibility by residue cases",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS"
+      ],
+      "entry_needs": [
+        "Learner can classify even/odd, use modulo 3 and understand a divisor."
+      ],
+      "learner_actions": [
+        "Read the domain and each parity/residue case.",
+        "Reconstruct why coprimality is needed.",
+        "Work through the complete proof and compare each why-valid step.",
+        "Complete the four-consecutive-integer independent exit proof."
+      ],
+      "help_plan": [
+        "Worked conceptual construction revealed in Core1A, not hidden as an assessment answer.",
+        "Use the proposed text-only residue table while a real visual design is unreviewed."
+      ],
+      "reveal_plan": "Core1A exposes completed inferential steps immediately, then offers an independent exit with model closure; no source question or future Core2 protected answer is revealed.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED",
+          "purpose": "Authored mathematical construction",
+          "reason": "No authenticated source Core2 custody is available and exam questions are not concept authority."
+        }
+      ],
+      "when_not_suitable": [
+        "This TEST package is CANDIDATE and not admitted curriculum, QRT, Core, or learner publishing.",
+        "Does not claim a verified official SOF question stem, source answer key, or figure."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "ISSUE_296_AUTHORED_CORE1A_CANDIDATE_NO_SOF_CORE2",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false,
+    "grade9v3:core_maturity": "AUTHORED_TRANSFER_TEST_CANDIDATE"
+  },
+  "data": [
+    {
+      "id": "DATUM-TEST-CORE1A-QUAL-N-MOD3-0",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "residue modulo 3",
+      "symbol": "n mod 3 = 0",
+      "meaning": "Case in which n itself is divisible by 3",
+      "locator": "AUTHOR_CREATED: Core1A modular arithmetic exhaustiveness proof"
+    },
+    {
+      "id": "DATUM-TEST-CORE1A-QUAL-N-MOD3-1",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 1,
+      "unit": "residue modulo 3",
+      "symbol": "n mod 3 = 1",
+      "meaning": "Case in which n+2 is divisible by 3",
+      "locator": "AUTHOR_CREATED: Core1A modular arithmetic exhaustiveness proof"
+    },
+    {
+      "id": "DATUM-TEST-CORE1A-QUAL-N-MOD3-2",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 2,
+      "unit": "residue modulo 3",
+      "symbol": "n mod 3 = 2",
+      "meaning": "Case in which n+1 is divisible by 3",
+      "locator": "AUTHOR_CREATED: Core1A modular arithmetic exhaustiveness proof"
+    },
+    {
+      "id": "DATUM-TEST-CORE2A-ADJACENT-FACTORS-EQUATION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_SAFE_EXPRESSION"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>(</mo><mi>m</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>(</mo><mi>m</mi><mo>+</mo><mn>2</mn><mo>)</mo><mo>(</mo><mi>m</mi><mo>+</mo><mn>3</mn><mo>)</mo></mrow></math>",
+      "meaning": "An arbitrary three-adjacent-factor product with no proof claim encoded",
+      "symbol": "(m+1)(m+2)(m+3)",
+      "locator": "AUTHOR_CREATED: Core2A proof-free practice diagram"
+    },
+    {
+      "id": "DATUM-TEST-CORE1B-ENDING-T-TRIPLE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHOR_CREATED_CORE1B_TASK_GIVEN"
+      },
+      "kind": "EQUATION",
+      "symbol": "(t-2)(t-1)t",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>(</mo><mi>t</mi><mo>−</mo><mn>2</mn><mo>)</mo><mo>(</mo><mi>t</mi><mo>−</mo><mn>1</mn><mo>)</mo><mi>t</mi></mrow></math>",
+      "meaning": "Three consecutive factors that end at an arbitrary positive integer t of at least three; no proof exposed",
+      "locator": "AUTHOR_CREATED: TEST Core1B attempting the general product"
+    },
+    {
+      "id": "DATUM-TEST-IMO-164-FIVE-FACTOR-PRODUCT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_SAFE_EXPRESSION"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>n</mi><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>2</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>3</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>4</mn><mo>)</mo></mrow></math>",
+      "meaning": "Neutral symbolic expression of five consecutive factors; no protected proof step",
+      "symbol": "n(n+1)(n+2)(n+3)(n+4)",
+      "locator": "AUTHORED: issue #164 five-factor attempt-safe visual"
+    },
+    {
+      "id": "DATUM-TEST-IMO-164-TRIPLE-P",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-164-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_SAFE_EXPRESSION"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>n</mi><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow></math>",
+      "meaning": "Neutral triple without verdict.",
+      "symbol": "n(n+1)(n+2)",
+      "locator": "AUTHOR_CREATED: issue 164"
+    }
+  ]
+}
