@@ -192,19 +192,29 @@
           "verification_status": "CHECKED_BY_AUTHOR",
           "acceptable_alternatives": [],
           "subpart_answers": [],
-          "reasoning_route": [],
-          "crux_move_ref": "SYN-D1-WORK-UNIT-2-1"
+          "reasoning_route": [
+            {
+              "id": "SYN-D1-EXIT-ORDER",
+              "kind": "DECIDE",
+              "action": "Combine the circle and stripes in one bookmark before counting four complete bookmarks.",
+              "why_valid": "All bookmark parts repeat in every bookmark.",
+              "inputs": [
+                "4 bookmarks",
+                "1 circle and 2 stripes per bookmark"
+              ],
+              "output": "4×(1+2)=12"
+            }
+          ],
+          "crux_move_ref": "SYN-D1-EXIT-ORDER"
         },
         "oracle": {
           "verification": {
             "validator_id": "TEST/imo-research/qrt-d1/verify_synthesize.py",
             "bindings": {
-              "copies": 4,
-              "first": 1,
-              "second": 2,
-              "groups": "5",
-              "group_size": "2",
-              "expected_total": "10"
+              "copies": "4",
+              "first": "1",
+              "second": "2",
+              "expected_total": "12"
             }
           }
         }
@@ -761,11 +771,10 @@
         "Repeat all units and verify by separate part counts."
       ],
       "demand_dimensions": {
-        "synthesis_bridge": "Choose unit-first grouping 4×(3+2).",
-        "representation_translation": "Keep all components together as a repeat unit.",
-        "reasoning_steps": "One dependency decision; D1 band provisional.",
-        "novelty": "Reverse unknown copies from total and combined unit size.",
-        "synthesis_choice": "Choose repeated equal-groups multiplication from two available operations."
+        "model_choice": "The known motif-repeat family is given; choose a unit-first dependency rather than a new model.",
+        "representation_translation": "Preserve both kinds as one whole unit across repeated copies.",
+        "reasoning_steps": "One ordering bridge: combine both components before multiplying entire units.",
+        "novelty": "Core2B reverses from total and full-unit size to unknown number of blocks."
       },
       "safe_variations": [
         "Change part counts and copy number.",
@@ -887,7 +896,7 @@
           "reasoning_chain_length": 1,
           "algebra_computational_load": 1,
           "trap_exception_sensitivity": 0,
-          "concept_synthesis_selection": 1
+          "concept_synthesis_selection": 0
         },
         "basis": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
         "component_evidence": {
@@ -896,7 +905,7 @@
           "reasoning_chain_length": "Choose one order/dependency.",
           "algebra_computational_load": "Addition and small multiplication.",
           "trap_exception_sensitivity": "False precedence separately diagnosed.",
-          "concept_synthesis_selection": "Choose equal-group product instead of summing quantities."
+          "concept_synthesis_selection": "No independent new governing model family; only unit-first order."
         }
       },
       "learner_question_type": "constructed_response"
@@ -1084,7 +1093,7 @@
           "reasoning_chain_length": 1,
           "algebra_computational_load": 1,
           "trap_exception_sensitivity": 0,
-          "concept_synthesis_selection": 1
+          "concept_synthesis_selection": 0
         },
         "basis": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
         "component_evidence": {
@@ -1093,7 +1102,7 @@
           "reasoning_chain_length": "Choose one order/dependency.",
           "algebra_computational_load": "Addition and small multiplication.",
           "trap_exception_sensitivity": "False precedence separately diagnosed.",
-          "concept_synthesis_selection": "Choose equal-group product instead of summing quantities."
+          "concept_synthesis_selection": "No independent new governing model family; only unit-first order."
         }
       },
       "learner_question_type": "constructed_response"
@@ -1233,7 +1242,7 @@
           "reasoning_chain_length": 1,
           "algebra_computational_load": 1,
           "trap_exception_sensitivity": 0,
-          "concept_synthesis_selection": 1
+          "concept_synthesis_selection": 0
         },
         "basis": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
         "component_evidence": {
@@ -1242,7 +1251,7 @@
           "reasoning_chain_length": "Choose one order/dependency.",
           "algebra_computational_load": "Addition and small multiplication.",
           "trap_exception_sensitivity": "False precedence separately diagnosed.",
-          "concept_synthesis_selection": "Choose equal-group product instead of summing quantities."
+          "concept_synthesis_selection": "No independent new governing model family; only unit-first order."
         }
       },
       "learner_question_type": "constructed_response",
