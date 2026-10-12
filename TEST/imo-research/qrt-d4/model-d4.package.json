@@ -1,7 +1,7 @@
 {
   "schema_version": "0.2.0",
   "package_id": "TEST-IMO182-QRT-MODEL-D4",
-  "title": "Original D4 exterior-accessible square-table modeling",
+  "title": "Original TEST: choose a chair-count model for square-table layouts",
   "version": "0.1.0",
   "status": "CANDIDATE",
   "subject": "TEST",
@@ -51,7 +51,7 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Model chair sites along accessible table borders",
+      "title": "Count physically usable sides in connected table layouts",
       "topic": "Grid geometry and access constraints",
       "intrinsic_badge": "HARD",
       "badge_reason": "Construct model variables n,e,c for square tables, shared seams and sealed cavities; change topology and revise c.",
@@ -70,11 +70,11 @@
         },
         {
           "id": "voids",
-          "statement": "An unshared side facing a fully enclosed vacant courtyard cannot hold a chair approached from outside."
+          "statement": "An edge count is a starting quantity, not evidence that a particular chair position can be approached under every possible layout."
         },
         {
           "id": "open",
-          "statement": "Removing a noncorner outer border table can connect the courtyard to the exterior and make its formerly inaccessible sides available."
+          "statement": "If the occupied-cell arrangement changes, verify the chair-access conditions again rather than copying an old count."
         }
       ]
     }
@@ -107,7 +107,7 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Build an external-access model from table cells and courtyard reachability",
+      "title": "Develop a counting strategy from the layout and seating rules",
       "bucket_id": "BUCKET-D4-MODEL",
       "primary_capability_ref": "CAP-D4-MODEL",
       "intrinsic_badge": "HARD",
@@ -117,7 +117,7 @@
         "Counting shared edges without double counting.",
         "The meaning of an inaccessible enclosed interior courtyard."
       ],
-      "inferential_jump": "Replace a naive exposed-edge count with a model correcting for completely sealed cavities, then adapt after opening the cavity to outside.",
+      "inferential_jump": "Determine which geometric quantities are sufficient to count usable chair positions in the new layout; establish any necessary distinction rather than being told an extra variable.",
       "teaching_path": [
         {
           "id": "D4-MOD-STEP-UNITS",
@@ -142,12 +142,12 @@
         {
           "id": "D4-MOD-STEP-ACCESS",
           "role": "TRANSFORM",
-          "action": "Distinguish outside-connected exposed sides from sides facing a sealed empty courtyard; reserve a count c for the latter.",
-          "why_valid": "Unshared need not mean reachable from outside.",
+          "action": "Check on a three-table L whether counting unshared sides agrees with walking around the outer boundary; leave changed-layout refinements for the learner to discover.",
+          "why_valid": "The taught L shape has no enclosed region and supplies a worked count in a distinct geometry.",
           "inputs": [
             "unit-square table layout"
           ],
-          "output": "A context-valid model needs accessibility classification.",
+          "output": "Verify the L-shape candidate-side count and record what the open shape demonstrates.",
           "source_ref": "SRC-D4-MODEL-ORIGINAL"
         },
         {
@@ -175,7 +175,7 @@
         {
           "wrong_idea": "Every unshared edge on a closed square ring is available for a chair reached from outside.",
           "diagnostic_prompt": "Can a visitor reach the edges facing the sealed center of a 3x3 table ring?",
-          "repair": "Count enclosed-courtyard-facing sides separately and exclude them from outside-accessible sites."
+          "repair": "Inspect how a person would reach each candidate side from outside; test the disputed claim against the pictured layout, without assuming an edge is usable merely because it is not shared."
         },
         {
           "wrong_idea": "Every table-to-table join removes only one possible chair side.",
@@ -184,7 +184,7 @@
         }
       ],
       "exit_task": {
-        "prompt": "Independently model a 3x3 ring of square tables with the middle cell empty and sealed. Determine n, e, inaccessible inward-facing sides c and accessible chair sites. Explain why unshared sides alone overcounts.",
+        "prompt": "Independently model a 3×3 ring of square tables with its central cell empty. Decide which quantities are necessary to count the chair sides usable under exterior-approach rules, justify your choices and calculate a result.",
         "source_ref": "SRC-D4-MODEL-ORIGINAL",
         "answer": {
           "kind": "MODEL_RESPONSE",
@@ -219,7 +219,7 @@
       "construction_units": [
         {
           "id": "CU-D4-MODEL-PERIMETER",
-          "decision": "Develop a no-hole L-shaped perimeter model and introduce an accessibility question, preserving the sealed-ring correction as Core2A's protected act.",
+          "decision": "Develop a worked L-shaped side count and let learners evaluate whether that approach transfers to an altered layout.",
           "step_refs": [
             "D4-MOD-STEP-UNITS",
             "D4-MOD-STEP-SEAMS",
@@ -255,7 +255,7 @@
       },
       "elicitation": {
         "predict": {
-          "prompt": "A student uses 4n−2e for the chair count on every joined-table arrangement. Why is this not enough for a closed ring around an inaccessible empty center?",
+          "prompt": "A classmate claims 4n−2e always counts the chair positions on any arrangement of joined square tables. Is the claim correct for a closed 3×3 ring? Test it and justify a judgment.",
           "defensible_answer": "Unshared inner edges surrounding a sealed courtyard are not accessible to visitors approaching from outside."
         },
         "attempt": {
@@ -352,7 +352,7 @@
       "evidence_refs": [],
       "extensions": {},
       "expression": "Unshared table sides U=4n−2e.",
-      "meaning": "A safe preliminary count: n is occupied square tables and e is distinct shared contacts. U counts ALL unshared table sides without yet judging outside accessibility of a sealed hole.",
+      "meaning": "A preliminary count: n is the number of occupied square tables and e is the number of full shared-side contacts. U counts unshared sides, not necessarily a final chair count for every geometry.",
       "symbols": [
         {
           "symbol": "U",
@@ -447,9 +447,9 @@
         "REL-D4-MODEL"
       ],
       "read_order": [
-        "Observe occupied table cells and vacant cells.",
-        "Count seams and distinguish exterior-connected from sealed inner sides.",
-        "Derive numeric model independently."
+        "Observe the given occupied cells and empty cells.",
+        "Count full-side contacts without doubling shared sides.",
+        "Judge any additional physical-access constraints from the picture independently."
       ],
       "instance_constraints": [
         "Original figure contains no correct chair total in title/desc/aria.",
@@ -480,15 +480,15 @@
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
             "frame": "Unit-square table map with no numeric chair count.",
-            "caption": "Decide side access and construct the counting model."
+            "caption": "Observe the layout; select and justify the quantities in your own chair-count model."
           }
         }
       ],
       "correspondence": [
         {
           "element": "grid cells and their side contacts",
-          "symbol": "n,e,c",
-          "in_words": "Counts of table, seam and inaccessible inner boundary components."
+          "symbol": "cells, full-side joins, candidate edges",
+          "in_words": "Geometric givens only; determine a sufficient counting model yourself."
         }
       ],
       "reveal_stages": [
@@ -537,9 +537,9 @@
         "REL-D4-MODEL"
       ],
       "read_order": [
-        "Observe occupied table cells and vacant cells.",
-        "Count seams and distinguish exterior-connected from sealed inner sides.",
-        "Derive numeric model independently."
+        "Observe the given occupied cells and empty cells.",
+        "Count full-side contacts without doubling shared sides.",
+        "Judge any additional physical-access constraints from the picture independently."
       ],
       "instance_constraints": [
         "Original figure contains no correct chair total in title/desc/aria.",
@@ -570,15 +570,15 @@
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
             "frame": "Unit-square table map with no numeric chair count.",
-            "caption": "Decide side access and construct the counting model."
+            "caption": "Observe the layout; select and justify the quantities in your own chair-count model."
           }
         }
       ],
       "correspondence": [
         {
           "element": "grid cells and their side contacts",
-          "symbol": "n,e,c",
-          "in_words": "Counts of table, seam and inaccessible inner boundary components."
+          "symbol": "cells, full-side joins, candidate edges",
+          "in_words": "Geometric givens only; determine a sufficient counting model yourself."
         }
       ],
       "reveal_stages": [
@@ -611,9 +611,9 @@
         "REL-D4-MODEL"
       ],
       "read_order": [
-        "Observe occupied table cells and vacant cells.",
-        "Count seams and distinguish exterior-connected from sealed inner sides.",
-        "Derive numeric model independently."
+        "Observe the given occupied cells and empty cells.",
+        "Count full-side contacts without doubling shared sides.",
+        "Judge any additional physical-access constraints from the picture independently."
       ],
       "instance_constraints": [
         "Original figure contains no correct chair total in title/desc/aria.",
@@ -644,15 +644,15 @@
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
             "frame": "Unit-square table map with no numeric chair count.",
-            "caption": "Decide side access and construct the counting model."
+            "caption": "Observe the layout; select and justify the quantities in your own chair-count model."
           }
         }
       ],
       "correspondence": [
         {
           "element": "grid cells and their side contacts",
-          "symbol": "n,e,c",
-          "in_words": "Counts of table, seam and inaccessible inner boundary components."
+          "symbol": "cells, full-side joins, candidate edges",
+          "in_words": "Geometric givens only; determine a sufficient counting model yourself."
         }
       ],
       "reveal_stages": [
@@ -685,9 +685,9 @@
         "REL-D4-MODEL"
       ],
       "read_order": [
-        "Observe occupied table cells and vacant cells.",
-        "Count seams and distinguish exterior-connected from sealed inner sides.",
-        "Derive numeric model independently."
+        "Observe the given occupied cells and empty cells.",
+        "Count full-side contacts without doubling shared sides.",
+        "Judge any additional physical-access constraints from the picture independently."
       ],
       "instance_constraints": [
         "Original figure contains no correct chair total in title/desc/aria.",
@@ -718,15 +718,15 @@
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
             "frame": "Unit-square table map with no numeric chair count.",
-            "caption": "Decide side access and construct the counting model."
+            "caption": "Observe the layout; select and justify the quantities in your own chair-count model."
           }
         }
       ],
       "correspondence": [
         {
           "element": "grid cells and their side contacts",
-          "symbol": "n,e,c",
-          "in_words": "Counts of table, seam and inaccessible inner boundary components."
+          "symbol": "cells, full-side joins, candidate edges",
+          "in_words": "Geometric givens only; determine a sufficient counting model yourself."
         }
       ],
       "reveal_stages": [
@@ -751,7 +751,7 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Model exterior chair sites from adjacency and enclosed inner boundaries",
+      "title": "Construct and test a chair-site count for joined square tables",
       "capability_refs": [
         "CAP-D4-MODEL"
       ],
@@ -893,7 +893,7 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-MODEL-ORIGINAL",
       "original_identifier": "AUTHORED-Q-D4-MODEL-MAIN",
-      "stem": "A designer places one square table in EACH occupied border cell of a 4×4 square grid; the middle 2×2 cells form a completely enclosed empty courtyard. One chair may be placed on each table side that can be APPROACHED FROM OUTSIDE the entire arrangement. There are no diagonal passages. You are asked to BUILD the mathematical model, not just report a perimeter. Define appropriate variables for occupied tables, full shared-side contacts and table sides facing inaccessible inner voids; derive a general algebraic count for any such grid arrangement under these rules. Then determine the exact number of outside-accessible chair sites for this closed 4×4 ring and independently cross-check by tracing its outer boundary.",
+      "stem": "A designer places one square table in EACH occupied border cell of a 4×4 square grid; the middle 2×2 cells form a completely enclosed empty courtyard. One chair may be placed on each table side that can be APPROACHED FROM OUTSIDE the entire arrangement. There are no diagonal passages. BUILD a mathematical model for the number of usable chair positions, choosing and defining the quantities you actually need. Derive an expression valid under the stated rules, then calculate the count for the closed 4×4 layout and cross-check it by tracing the physical outside boundary.",
       "subparts": [],
       "options": [],
       "conditions": [
@@ -1262,7 +1262,7 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "title": "From small connected table model to an inaccessible internal courtyard",
+      "title": "From a simple square-table arrangement to independent changed-layout modelling",
       "cores": [
         "CORE1A"
       ],
