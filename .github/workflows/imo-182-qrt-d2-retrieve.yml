@@ -1,0 +1,47 @@
+name: IMO 182 QRT D2 RETRIEVE five-role
+on:
+  pull_request:
+    paths:
+      - 'TEST/imo-research/qrt-d2/retrieve.v1.json'
+      - 'TEST/imo-research/qrt-d2/figures/retrieve-d2-*.svg'
+      - 'TEST/imo-research/qrt-d2/test_retrieve.py'
+      - 'TEST/imo-research/qrt-d2/retrieve-review.md'
+      - 'TEST/products/imo182-qrt-d2-retrieve.manifest.json'
+      - '.github/workflows/imo-182-qrt-d2-retrieve.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  retrieve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet jsonschema
+      - run: python -m unittest discover -s TEST/imo-research/qrt-d2 -p test_retrieve.py -v
+      - run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d2-retrieve.manifest.json \
+            --out build/imo182-qrt/d2/retrieve --draft --reference
+      - run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,hashlib
+          d=Path('build/imo182-qrt/d2/retrieve')
+          r=json.loads((d/'render-receipt.json').read_text())
+          assert not r['gaps'],r['gaps']
+          files={'core1.html','core1a.html','core1b.html','core2a.html','core2b.html','index.html'}
+          assert files<=set(r['pages']),r['pages']
+          hashes={f:hashlib.sha256((d/f).read_bytes()).hexdigest() for f in sorted(files)}
+          (d/'retrieve-sha256.json').write_text(json.dumps({'roles':hashes,'qrt_accepted':'0/28','source':'AUTHORED_TEST'},indent=2)+'\n')
+          print(hashes)
+          PY
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-qrt-d2-retrieve-actual-renderer-html
+          path: build/imo182-qrt/d2/retrieve/
+          if-no-files-found: warn
