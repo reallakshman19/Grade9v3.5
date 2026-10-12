@@ -1,0 +1,1342 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "PKG-QRT-EXPLAIN-D3",
+  "title": "Authored TEST EXPLAIN-D3: lost sign information under squaring",
+  "version": "1.0.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Original authored mathematical EXPLAIN item about non-reversible squaring and sign constraints, provisional D3 until academic and Owner review. No official source.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-QRT-EXPLAIN-D3",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original radical-equation sign-loss explanation TEST",
+      "origin": "AUTHORED",
+      "locator": "TEST/imo-research/qrt-d3/explain.v1.json",
+      "edition": "Authored TEST October 12 2026",
+      "section": "Non-reversible algebraic operations and principal-square-root sign",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Entirely authored original question, mathematics and diagrams; no official exam sources copied.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "sqrt(x+5)=x-1 has squared candidates 4 and -1; only 4 satisfies unsquared equality.",
+        "3²=(-3)² although 3 and -3 differ; squaring loses sign.",
+        "With changed RHS |t-1|, both t=4 and t=-1 satisfy sqrt(t+5)=|t-1|."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "A focused WHY/EXPLAIN demand, not a quadratic-solving task. Independent reviewer band verdict pending.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-QRT-EXPLAIN-D3",
+      "title": "Why squaring may admit a false candidate",
+      "topic": "Principal square roots, one-way implications, extraneous solutions",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Bridge signed radical equality, nonreversible squaring and original verification.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-QRT-EXPLAIN-D3-CONSTRUCTION",
+      "conventions": [
+        {
+          "id": "principal",
+          "statement": "sqrt(T) denotes the nonnegative square root when T>=0."
+        },
+        {
+          "id": "squaring",
+          "statement": "A=B implies A²=B²; equal squares may also come from opposite signed sides."
+        },
+        {
+          "id": "verification",
+          "statement": "Candidates from a squared equation must satisfy the original equality to be solutions."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-QRT-EXPLAIN-D3",
+      "action": "Explain the causal reason an algebraic candidate of a squared radical equation can be extraneous using non-reversibility and principal-root sign.",
+      "success_criterion": "Reject -1 for the correct sign-logic reason, verify 4, and explain why a changed absolute-value right side admits both candidates.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-QRT-EXPLAIN-D3",
+      "title": "Explain candidate generation vs true solutions after squaring",
+      "bucket_id": "BUCKET-QRT-EXPLAIN-D3",
+      "primary_capability_ref": "CAP-QRT-EXPLAIN-D3",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "A multi-idea causal explanation joins one-way implication, root range and direct substitution.",
+      "entry_assumptions": [
+        "Can square both sides and substitute candidate values.",
+        "Can recognize the nonnegative principal square root.",
+        "Can interpret a supplied factored quadratic candidate equation."
+      ],
+      "inferential_jump": "Learner must independently choose the bridge from nonreversible squaring to sign of the whole RHS, and connect this to original-equation truth. Hints before commitment must not give this W.",
+      "teaching_path": [
+        {
+          "id": "STEP-ED3-1",
+          "role": "DECLARE",
+          "action": "Compare 3 and -3: distinct signed values have the same square.",
+          "why_valid": "3²=(-3)²=9, but 3 != -3.",
+          "inputs": [
+            "+3",
+            "-3"
+          ],
+          "output": "Equality of squares need not be equality of original values."
+        },
+        {
+          "id": "STEP-ED3-2",
+          "role": "TRANSFORM",
+          "action": "State the one-way implication A=B implies A²=B² and test the reverse separately.",
+          "why_valid": "A²=B² also permits A=-B.",
+          "inputs": [
+            "Forward equality",
+            "Opposite signed example"
+          ],
+          "output": "Squaring is not automatically reversible."
+        },
+        {
+          "id": "STEP-ED3-3",
+          "role": "TRANSFORM",
+          "action": "Explain principal square-root nonnegativity on a new generic input sqrt(T)=U.",
+          "why_valid": "sqrt(T) is nonnegative for T>=0; equality forces U>=0.",
+          "inputs": [
+            "T>=0",
+            "sqrt(T)=U"
+          ],
+          "output": "An original radical equality has a separate RHS sign requirement."
+        },
+        {
+          "id": "STEP-ED3-4",
+          "role": "VERIFY",
+          "action": "Check generic proposed sqrt(9)=-3 against its squared form.",
+          "why_valid": "Square equality 9=9 is true while original 3=-3 is false.",
+          "inputs": [
+            "sqrt(9)=-3"
+          ],
+          "output": "Original equation is final verification."
+        }
+      ],
+      "relation_refs": [
+        "REL-QRT-EXPLAIN-D3"
+      ],
+      "representation_refs": [
+        "REP-QRT-EXPLAIN-D3-CONSTRUCTION"
+      ],
+      "question_family_refs": [
+        "FAM-QRT-EXPLAIN-D3"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Squaring is reversible, so every root of the factored polynomial solves the original equation.",
+          "diagnostic_prompt": "If sqrt(9)=-3 were true, squaring gives 9=9. Does the squared equality prove sqrt9=-3?",
+          "repair": "Recognize forward-only implication: ±3 square alike, principal sqrt9 is +3, and check unsquared values."
+        },
+        {
+          "wrong_idea": "Reject all negative x or all radicands with negative inputs.",
+          "diagnostic_prompt": "Does x=-1 lie outside the radicand domain x+5>=0? Could changing the RHS to |x-1| make x=-1 valid?",
+          "repair": "Distinguish x+5>=0 from entire RHS x-1>=0; the negative x is permitted as input but not with a negative original RHS."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Fresh independent EXIT: sqrt(z+6)=z. Squaring gives candidate roots z=3 and z=-2. Explain from the sign of the original sides why only one is true, check both, and name the one-way implication.",
+        "source_ref": "SRC-TEST-QRT-EXPLAIN-D3",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "Only z=3 solves original; z=-2 is a squared-only candidate.",
+          "reasoning": [
+            "Squaring gives z²-z-6=(z-3)(z+2)=0.",
+            "sqrt(z+6)>=0, so the original equation needs z>=0; -2 fails.",
+            "Check z=3: sqrt9=3; z=-2: sqrt4=2, not -2."
+          ],
+          "check": "The radicand is defined for both candidates; nonnegative RHS and original equality select z=3.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo182_qrt_d3_explain.py",
+            "bindings": {
+              "domain": "z>=-6; original equality requires z>=0",
+              "expected_solution": "z=3",
+              "extraneous_candidate": "z=-2"
+            }
+          }
+        }
+      },
+      "research_contribution": "Provisional original EXPLAIN D3 case with academic category review pending.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-ED3-LOGIC",
+          "decision": "Compare generic ±3, one-way implication and a principal-root sign ray before the target.",
+          "step_refs": [
+            "STEP-ED3-1",
+            "STEP-ED3-2",
+            "STEP-ED3-3",
+            "STEP-ED3-4"
+          ],
+          "representation_ref": "REP-QRT-EXPLAIN-D3-CONSTRUCTION",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-QRT-EXPLAIN-D3"
+          ],
+          "independent_checks": [
+            {
+              "statement": "sqrt9=-3 is false though it squares to 9=9.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "ED3-SQUARES",
+            "ED3-ARROW",
+            "ED3-SIGN"
+          ],
+          "worked_anchor_ref": "Q-TEST-QRT-EXPLAIN-D3-CONCEPT"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "Can A²=B² hold while A!=B? Explain with signed values.",
+        "result": "Yes: 3²=(-3)²; the signs are different though squares agree.",
+        "representation_ref": "REP-QRT-EXPLAIN-D3-CONSTRUCTION"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "Predict whether squaring can introduce a candidate into an equation's algebraic working that was not a true solution. What can be lost?",
+          "defensible_answer": "Yes: sign information; -3 and +3 have equal squares."
+        },
+        "attempt": {
+          "produces": "A generic counterexample plus a distinction between forward squaring and its unsupported converse.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "One-way implication",
+              "evidence_of": "A=B => A²=B²."
+            },
+            {
+              "criterion": "Opposite-sign counterexample",
+              "evidence_of": "3²=(-3)² but 3!=-3."
+            },
+            {
+              "criterion": "Principal-root necessary condition",
+              "evidence_of": "sqrt(T)=U requires U>=0."
+            }
+          ],
+          "accepted": [
+            "Equal squares can hide opposite signs; verify the original equation."
+          ],
+          "rejected": [
+            "If squares are equal, both original sides must equal."
+          ],
+          "task": {
+            "prompt": "Using only a separate ±3 example, explain why squaring a true equality is safe in one direction but reversing it is not. What sign condition does a principal square root add?",
+            "givens": [
+              "Use +3 and -3 as independent values.",
+              "Do not solve the later target equation."
+            ],
+            "representation_ref": "REP-QRT-EXPLAIN-D3-CONSTRUCTION",
+            "stage_refs": [
+              "ED3-SQUARES",
+              "ED3-ARROW",
+              "ED3-SIGN"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "In which direction does squaring preserve an equality?",
+              "why_this_ask": "Recover valid implication direction.",
+              "from_step_ref": "STEP-ED3-2"
+            },
+            {
+              "ask": "Why can two unequal signed values yield the same square?",
+              "why_this_ask": "Expose what was lost.",
+              "from_step_ref": "STEP-ED3-1"
+            },
+            {
+              "ask": "What range has a principal-square-root expression?",
+              "why_this_ask": "Connect semantic sign requirement.",
+              "from_step_ref": "STEP-ED3-3"
+            },
+            {
+              "ask": "Which equation, squared or original, certifies a solution?",
+              "why_this_ask": "Restore original truth criterion.",
+              "from_step_ref": "STEP-ED3-4"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A constructs three-stage generic sign logic; Core1B starts with the common false reverse-squaring rule, falsifies it with sqrt9=-3 and reconstructs a sign condition after a committed attempt."
+        },
+        "boundary_test": {
+          "prompt": "A learner asserts sqrt(9)=-3 because squaring both sides gives 9=9. Explain which implication fails and what the nonnegative principal-root convention says.",
+          "answer": "sqrt9=3, not -3. Forward squaring is necessary but not sufficient; equal squares lose sign and the original RHS must match the nonnegative root.",
+          "confirms": "Diagnoses logical nonreversibility, not an arithmetic error."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-QRT-EXPLAIN-D3",
+      "expression": "A=B => A²=B²; A²=B² => A=B OR A=-B. If sqrt(T)=U, then T>=0 AND U>=0.",
+      "meaning": "Squaring a radical equality supplies a necessary algebraic condition but is not generally a two-way equivalence.",
+      "symbols": [
+        {
+          "symbol": "T",
+          "meaning": "Radicand",
+          "unit_or_domain": "real >=0"
+        },
+        {
+          "symbol": "U",
+          "meaning": "Other side of radical equality",
+          "unit_or_domain": "real; must be >=0 for equality"
+        }
+      ],
+      "conditions": [
+        "Real inputs and nonnegative principal square root."
+      ],
+      "derivation": [
+        {
+          "id": "DER-ED3-0",
+          "role": "DECLARE",
+          "action": "Compare 3 and -3: distinct signed values have the same square.",
+          "why_valid": "3²=(-3)²=9, but 3 != -3.",
+          "inputs": [
+            "+3",
+            "-3"
+          ],
+          "output": "Equality of squares need not be equality of original values."
+        },
+        {
+          "id": "DER-ED3-1",
+          "role": "TRANSFORM",
+          "action": "State the one-way implication A=B implies A²=B² and test the reverse separately.",
+          "why_valid": "A²=B² also permits A=-B.",
+          "inputs": [
+            "Forward equality",
+            "Opposite signed example"
+          ],
+          "output": "Squaring is not automatically reversible."
+        },
+        {
+          "id": "DER-ED3-2",
+          "role": "TRANSFORM",
+          "action": "Explain principal square-root nonnegativity on a new generic input sqrt(T)=U.",
+          "why_valid": "sqrt(T) is nonnegative for T>=0; equality forces U>=0.",
+          "inputs": [
+            "T>=0",
+            "sqrt(T)=U"
+          ],
+          "output": "An original radical equality has a separate RHS sign requirement."
+        }
+      ],
+      "limits": [
+        "Equal squares do not prove equal signed values.",
+        "Radicand defined does not guarantee equality.",
+        "Sign test applies to entire RHS, not sign of x alone."
+      ],
+      "checks": [
+        "Substitute each squared candidate in unsquared original.",
+        "Check radicand domain separately from sign of whole RHS."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><msup><mi>A</mi><mn>2</mn></msup><mo>=</mo><msup><mi>B</mi><mn>2</mn></msup></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-QRT-EXPLAIN-D3-CONSTRUCTION",
+      "kind": "SCHEMATIC",
+      "purpose": "Three generic sign-loss stages: opposite values, one-way implication arrow, nonnegative principal-root range.",
+      "required_elements": [
+        "Positive/negative values with equal squares.",
+        "One-way forward implication.",
+        "Principal sqrt nonnegative ray."
+      ],
+      "relation_refs": [
+        "REL-QRT-EXPLAIN-D3"
+      ],
+      "read_order": [
+        "Look at unsigned and signed representations.",
+        "Explain rather than guess from an image."
+      ],
+      "instance_constraints": [
+        "Original target solution values are NEVER printed on the initial figure.",
+        "Schematic must not supply protected sign-bridge W."
+      ],
+      "accessibility": [
+        "High contrast thick paths.",
+        "Title and description omit target solution or rejected candidate."
+      ],
+      "misleading_alternatives": [
+        "All squared candidates satisfy the original.",
+        "Negative x values always fail a radical equation."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-explain-construct.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-EXPLAIN-D3-0",
+          "cores": [
+            "CORE1",
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-QRT-EXPLAIN-D3",
+          "datum_refs": [
+            "DATUM-QRT-EXPLAIN-D3-1"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-explain-construct.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Original signed-equation visual",
+            "caption": "Original authored drawing for explanation, not a solution overlay."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two plotted or signed expressions",
+          "symbol": "A,B",
+          "in_words": "Visual representation alone does not prove the original equation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "ED3-SQUARES",
+          "label": "Stage 1",
+          "purpose": "Compare sign and squared equality without the target answer.",
+          "visible_elements": [
+            "Opposite signed values"
+          ]
+        },
+        {
+          "id": "ED3-ARROW",
+          "label": "Stage 2",
+          "purpose": "Compare sign and squared equality without the target answer.",
+          "visible_elements": [
+            "Forward arrow"
+          ]
+        },
+        {
+          "id": "ED3-SIGN",
+          "label": "Stage 3",
+          "purpose": "Compare sign and squared equality without the target answer.",
+          "visible_elements": [
+            "Nonnegative ray"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-EXPLAIN-D3-GRAPH",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "FUNCTION_GRAPH",
+      "purpose": "Graph y=sqrt(x+5) alongside y=x-1 with no roots or intersections labelled.",
+      "required_elements": [
+        "Square-root curve, linear signed RHS, no highlighted solutions."
+      ],
+      "relation_refs": [
+        "REL-QRT-EXPLAIN-D3"
+      ],
+      "read_order": [
+        "Look at unsigned and signed representations.",
+        "Explain rather than guess from an image."
+      ],
+      "instance_constraints": [
+        "Original target solution values are NEVER printed on the initial figure.",
+        "Schematic must not supply protected sign-bridge W."
+      ],
+      "accessibility": [
+        "High contrast thick paths.",
+        "Title and description omit target solution or rejected candidate."
+      ],
+      "misleading_alternatives": [
+        "All squared candidates satisfy the original.",
+        "Negative x values always fail a radical equation."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-explain-attempt.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-EXPLAIN-D3-1",
+          "cores": [
+            "CORE2A"
+          ],
+          "microtopic_ref": "MIC-QRT-EXPLAIN-D3",
+          "datum_refs": [
+            "DATUM-QRT-EXPLAIN-D3-2"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-explain-attempt.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Original signed-equation visual",
+            "caption": "Original authored drawing for explanation, not a solution overlay."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two plotted or signed expressions",
+          "symbol": "A,B",
+          "in_words": "Visual representation alone does not prove the original equation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "ED3-GRAPH",
+          "label": "Stage 1",
+          "purpose": "Compare sign and squared equality without the target answer.",
+          "visible_elements": [
+            "Independent expressions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-EXPLAIN-D3-COUNTER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Separate counterexample ±3 with two equal-area square tiles: sign loss without target solution.",
+      "required_elements": [
+        "±3 on a number line and equal square tiles."
+      ],
+      "relation_refs": [
+        "REL-QRT-EXPLAIN-D3"
+      ],
+      "read_order": [
+        "Look at unsigned and signed representations.",
+        "Explain rather than guess from an image."
+      ],
+      "instance_constraints": [
+        "Original target solution values are NEVER printed on the initial figure.",
+        "Schematic must not supply protected sign-bridge W."
+      ],
+      "accessibility": [
+        "High contrast thick paths.",
+        "Title and description omit target solution or rejected candidate."
+      ],
+      "misleading_alternatives": [
+        "All squared candidates satisfy the original.",
+        "Negative x values always fail a radical equation."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-explain-repair.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-EXPLAIN-D3-2",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-QRT-EXPLAIN-D3",
+          "datum_refs": [
+            "DATUM-QRT-EXPLAIN-D3-3"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-explain-repair.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Original signed-equation visual",
+            "caption": "Original authored drawing for explanation, not a solution overlay."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two plotted or signed expressions",
+          "symbol": "A,B",
+          "in_words": "Visual representation alone does not prove the original equation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "ED3-COUNTER",
+          "label": "Stage 1",
+          "purpose": "Compare sign and squared equality without the target answer.",
+          "visible_elements": [
+            "Independent expressions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-EXPLAIN-D3-ABS-GRAPH",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "FUNCTION_GRAPH",
+      "purpose": "New changed equation graph with y=sqrt(t+5) and y=|t-1|, no roots labelled.",
+      "required_elements": [
+        "Square-root curve, absolute-value V curve, no labelled intersections."
+      ],
+      "relation_refs": [
+        "REL-QRT-EXPLAIN-D3"
+      ],
+      "read_order": [
+        "Look at unsigned and signed representations.",
+        "Explain rather than guess from an image."
+      ],
+      "instance_constraints": [
+        "Original target solution values are NEVER printed on the initial figure.",
+        "Schematic must not supply protected sign-bridge W."
+      ],
+      "accessibility": [
+        "High contrast thick paths.",
+        "Title and description omit target solution or rejected candidate."
+      ],
+      "misleading_alternatives": [
+        "All squared candidates satisfy the original.",
+        "Negative x values always fail a radical equation."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-explain-transfer.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-EXPLAIN-D3-3",
+          "cores": [
+            "CORE2B"
+          ],
+          "microtopic_ref": "MIC-QRT-EXPLAIN-D3",
+          "datum_refs": [
+            "DATUM-QRT-EXPLAIN-D3-4"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-explain-transfer.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Original signed-equation visual",
+            "caption": "Original authored drawing for explanation, not a solution overlay."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two plotted or signed expressions",
+          "symbol": "A,B",
+          "in_words": "Visual representation alone does not prove the original equation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "ED3-ABS",
+          "label": "Stage 1",
+          "purpose": "Compare sign and squared equality without the target answer.",
+          "visible_elements": [
+            "Independent expressions"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-QRT-EXPLAIN-D3",
+      "title": "Explain why squared radical candidates can be extraneous",
+      "capability_refs": [
+        "CAP-QRT-EXPLAIN-D3"
+      ],
+      "solution_structure": [
+        "Distinguish candidate from solution.",
+        "Explain one-way squaring and opposite-sign counterexample.",
+        "Infer nonnegative requirement on whole original RHS.",
+        "Check candidate in original and compare changed RHS."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Explain sign-loss causality, not factor given quadratic.",
+        "representation_translation": "Algebraic squared candidates into original signed equality and function graph.",
+        "reasoning_steps": "Necessary not sufficient, radical nonnegativity, original checks.",
+        "novelty": "Absolute value on RHS restores a formerly invalid candidate."
+      },
+      "safe_variations": [
+        "Other original radical equations with sign obstruction."
+      ],
+      "transfer_boundaries": [
+        "Defined radicand is insufficient.",
+        "An absolute-value RHS changes sign warrant even with same squared equation."
+      ],
+      "common_wrong_routes": [
+        "Squaring is reversible.",
+        "Reject all negative x.",
+        "Reject candidate using radicand-domain test when radicand is valid."
+      ],
+      "item_refs": [
+        "Q-TEST-QRT-EXPLAIN-D3-CLASSIFY",
+        "Q-TEST-QRT-EXPLAIN-D3-BOUNDARY"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-QRT-EXPLAIN-D3-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-EXPLAIN-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-EXPLAIN-D3-CONCEPT",
+      "stem": "Without referring to the next radical equation, explain why two real numbers with equal squares need not themselves be equal. Use +3,-3 and state one extra condition that can recover equivalence.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Explain which direction of implication always holds.",
+        "Do not solve the later target equation."
+      ],
+      "figure_refs": [
+        "REP-QRT-EXPLAIN-D3-CONSTRUCTION"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "3 and -3 have equal squares but are not equal; squaring is one-way without further sign conditions.",
+        "reasoning": [
+          "3²=(-3)²=9, yet 3!=-3.",
+          "A=B implies A²=B², but reversing gives A=B OR A=-B.",
+          "Knowing both A and B nonnegative resolves the sign ambiguity."
+        ],
+        "check": "The explicit example 3 versus -3 refutes the converse.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-QRT-EXPLAIN-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-EXPLAIN-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "CONCEPT_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-EXPLAIN-D3-CONSTRUCTION",
+        "safe_ref": "REP-QRT-EXPLAIN-D3-CONSTRUCTION",
+        "bound_ref": null,
+        "stage_refs": [
+          "ED3-SQUARES",
+          "ED3-ARROW",
+          "ED3-SIGN"
+        ]
+      },
+      "repair_ref": "STEP-ED3-1",
+      "failure_signal": "Wrongly reverses equality of squares.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-EXPLAIN-D3",
+        "closure": "Generic prerequisite, not scored D3 task."
+      },
+      "independent_check": {
+        "statement": "3²=(-3)² but 3!= -3.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "Single generic counterexample prerequisite."
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-QRT-EXPLAIN-D3-CLASSIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3",
+        "grade9v3:cognitive_demand": {
+          "primary": "EXPLAIN",
+          "secondary": [
+            "JUSTIFY",
+            "REPRESENT"
+          ],
+          "basis": "Explain why squaring creates a false candidate, not merely find roots."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Connect sign-losing squaring and principal-root range to necessary original RHS sign, then check original.",
+          "common_wrong_route": "Treat squared candidates as all valid, or reject all negative x for incorrect reason."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-EXPLAIN-D3-SIGN-LOSS"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-EXPLAIN-D3-SIGN-LOSS"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-EXPLAIN-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-EXPLAIN-D3-CLASSIFY",
+      "stem": "A student squares sqrt(x+5)=x-1 to obtain (x-4)(x+1)=0, then declares that BOTH x=4 and x=-1 solve the original equation. EXPLAIN precisely WHY the reasoning fails: discuss the direction of the squaring implication, principal square-root sign and the original unsquared equality. Do more than say 'check answers'; identify the cause of a false candidate.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Real x; principal square root.",
+        "The factorization is given to focus on explanation rather than routine solve.",
+        "Wholly AUTHORED TEST, not official competition provenance."
+      ],
+      "figure_refs": [
+        "REP-QRT-EXPLAIN-D3-GRAPH"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Only x=4 solves the original; x=-1 is extraneous because squaring loses sign.",
+        "reasoning": [
+          "Squaring gives x+5=(x-1)², hence x²-3x-4=(x-4)(x+1)=0 and candidates 4,-1.",
+          "Squaring preserves original equality but reversing squared equality loses sign: u²=v² permits u=-v.",
+          "Principal sqrt(x+5) is nonnegative, so original equality requires WHOLE RHS x-1>=0, which fails at x=-1 though radicand 4 is defined.",
+          "Original checks: 4 gives sqrt9=3 and 4-1=3; -1 gives sqrt4=2 and -1-1=-2."
+        ],
+        "check": "x=4: 3=3 true; x=-1: 2≠-2 false, and x=-1 is in radical domain.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "crux_move_ref": "MOVE-EXPLAIN-D3-SIGN-LOSS",
+        "reasoning_route": [
+          {
+            "id": "MOVE-ED3-POLYNOMIAL",
+            "kind": "TRANSFORM",
+            "action": "Read supplied (x-4)(x+1)=0 as squared candidates.",
+            "why_valid": "Squaring yields the factorization, but only original implies squared.",
+            "inputs": [
+              "sqrt(x+5)=x-1"
+            ],
+            "output": "x=4,-1 are candidates."
+          },
+          {
+            "id": "MOVE-EXPLAIN-D3-SIGN-LOSS",
+            "kind": "DECIDE",
+            "action": "Explain lost sign under squaring and connect principal-root nonnegativity to the sign of whole RHS x-1; diagnose -1 as extraneous.",
+            "why_valid": "Equal squares allow opposite signs but sqrt(x+5)>=0 forces x-1>=0 in the original.",
+            "inputs": [
+              "One-way implication",
+              "Principal-root sign",
+              "Two candidates"
+            ],
+            "output": "-1 is not a true solution; 4 is eligible."
+          },
+          {
+            "id": "MOVE-ED3-CHECK",
+            "kind": "VERIFY",
+            "action": "Evaluate both sides of original for x=-1 and x=4.",
+            "why_valid": "sqrt4=2 != -2; sqrt9=3=3.",
+            "inputs": [
+              "-1",
+              "4"
+            ],
+            "output": "Only 4 qualifies."
+          }
+        ],
+        "rubric": [
+          {
+            "criterion": "Explicit nonreversibility of squaring",
+            "evidence_of": "Opposite-sign equality of squares."
+          },
+          {
+            "criterion": "Connect principal root range to entire RHS",
+            "evidence_of": "x-1>=0, rather than reject all negative x."
+          },
+          {
+            "criterion": "Verify both in original",
+            "evidence_of": "3=3 vs 2!=-2."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-QRT-EXPLAIN-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-EXPLAIN-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Treat roots of the factored equation as candidates for now, not automatically solutions.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-EXPLAIN-D3-SIGN-LOSS"
+        },
+        {
+          "text": "One expression in the ORIGINAL equation has a restricted range. Which expression, and what sign fact follows? Explain without naming a candidate.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-EXPLAIN-D3-SIGN-LOSS"
+        },
+        {
+          "text": "After committing an explanation, compare the forward and reverse directions of squaring; identify the lost signed branch and verify each candidate in the ORIGINAL equation.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-EXPLAIN-D3-SIGN-LOSS"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-EXPLAIN-D3-GRAPH",
+        "safe_ref": "REP-QRT-EXPLAIN-D3-GRAPH",
+        "bound_ref": null,
+        "stage_refs": [
+          "ED3-GRAPH"
+        ]
+      },
+      "repair_ref": "STEP-ED3-2",
+      "failure_signal": "Student keeps both candidates due to false converse, or rejects x=-1 for wrong radicand reason.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-EXPLAIN-D3",
+        "closure": "Supported causal explanation, not independent mastery."
+      },
+      "independent_check": {
+        "statement": "x=-1 radicand 4 defined, but sqrt4=2 differs from x-1=-2; x=4 satisfies 3=3.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "D3 EXPLAIN provisional: learner chooses causal nonreversibility/sign bridge and substantiates it; factorization provided to avoid a routine solve.",
+        "component_evidence": {
+          "concept_model_selection": "Choose why a false algebraic candidate appeared.",
+          "representation_translation": "Polynomial to original signed radical and graph.",
+          "reasoning_chain_length": "One-way implication, radical sign, original check.",
+          "algebra_computational_load": "Given factorization; only simple substitution.",
+          "trap_exception_sensitivity": "-1 in radicand domain but RHS negative."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-QRT-EXPLAIN-D3-BOUNDARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3",
+        "grade9v3:cognitive_demand": {
+          "primary": "EXPLAIN",
+          "secondary": [
+            "JUSTIFY",
+            "REPRESENT"
+          ],
+          "basis": "Explain why RHS absolute value allows both squared candidates."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Both sides nonnegative, reverse squaring is valid on original domain.",
+          "common_wrong_route": "Carry over the original sign rejection."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-EXPLAIN-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-EXPLAIN-D3-BOUNDARY",
+      "stem": "CHANGE THE EQUATION: sqrt(t+5)=|t-1|. A student insists t=-1 must still be discarded because it was false for sqrt(t+5)=t-1. Explain whether this argument is valid, give ALL real solutions and justify what changed in the reverse-squaring logic. Verify both candidates against the changed ORIGINAL equation.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Real t; nonnegative principal square root.",
+        "Absolute-value bars make the whole RHS nonnegative.",
+        "Explain necessity and sufficiency, not just roots."
+      ],
+      "figure_refs": [
+        "REP-QRT-EXPLAIN-D3-ABS-GRAPH"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Both t=-1 and t=4 solve sqrt(t+5)=|t-1|.",
+        "reasoning": [
+          "The squared equality again yields (t-4)(t+1)=0, so -1 and 4 are only possible candidates.",
+          "Unlike t-1, the absolute-value RHS is always nonnegative, so equality of squares between these two nonnegative expressions can be reversed.",
+          "Check t=-1: sqrt4=2 and |-2|=2; t=4: sqrt9=3 and |3|=3.",
+          "The formerly extraneous candidate becomes true because the RHS sign changed; no other candidates exist."
+        ],
+        "check": "Both original checks pass; any solution must be among the squared candidates.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "crux_move_ref": "MOVE-EXPLAIN-D3-ABS-TRANSFER",
+        "reasoning_route": [
+          {
+            "id": "MOVE-ED3-ABS-CANDIDATES",
+            "kind": "TRANSFORM",
+            "action": "Read the unchanged squared candidates.",
+            "why_valid": "Absolute-value squares to same (t-1)².",
+            "inputs": [
+              "sqrt(t+5)=|t-1|"
+            ],
+            "output": "-1 or 4 candidates."
+          },
+          {
+            "id": "MOVE-EXPLAIN-D3-ABS-TRANSFER",
+            "kind": "DECIDE",
+            "action": "Explain why nonnegative absolute value restores reverse implication and previously extraneous -1.",
+            "why_valid": "For nonnegative real A,B, A²=B² entails A=B.",
+            "inputs": [
+              "Both sides nonnegative",
+              "Candidate values"
+            ],
+            "output": "Both possible candidates may be true."
+          },
+          {
+            "id": "MOVE-ED3-ABS-CHECK",
+            "kind": "VERIFY",
+            "action": "Check both in original changed equation.",
+            "why_valid": "At -1, both 2; at 4, both 3.",
+            "inputs": [
+              "-1",
+              "4"
+            ],
+            "output": "Both valid, complete solution set."
+          }
+        ],
+        "rubric": [
+          {
+            "criterion": "Differentiate RHS sign change",
+            "evidence_of": "|t-1|>=0 everywhere."
+          },
+          {
+            "criterion": "Explain why reverse square is valid now",
+            "evidence_of": "Both original sides nonnegative."
+          },
+          {
+            "criterion": "Check both candidates in changed original",
+            "evidence_of": "-1 yields 2=2 and 4 yields 3=3."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-QRT-EXPLAIN-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-EXPLAIN-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "The absolute-value operation changes the RANGE of an entire expression. What sign fact is different now?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-EXPLAIN-D3-ABS-GRAPH",
+        "safe_ref": "REP-QRT-EXPLAIN-D3-ABS-GRAPH",
+        "bound_ref": null,
+        "stage_refs": [
+          "ED3-ABS"
+        ]
+      },
+      "repair_ref": "STEP-ED3-3",
+      "failure_signal": "Learner mechanically reuses false candidate rejection without checking changed RHS.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-EXPLAIN-D3",
+        "closure": "Changed causal explanation needs a fresh admissibility decision."
+      },
+      "independent_check": {
+        "statement": "t=-1 sqrt4=2=|-2|, t=4 sqrt9=3=|3|; both are only squared roots.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Transfer revises original sign condition while keeping polynomial candidates fixed."
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-QRT-EXPLAIN-D3-CLASSIFY"
+        ],
+        "statement": "Explain the changed reversibility of squaring with absolute-value RHS.",
+        "invariant": "Same squared roots {-1,4}.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-QRT-EXPLAIN-D3-CLASSIFY",
+            "MIC-QRT-EXPLAIN-D3:exit_task"
+          ],
+          "why_new": "Sign semantics of RHS change, so the previously rejected candidate becomes a true solution."
+        },
+        "protected_move_ref": "MOVE-EXPLAIN-D3-ABS-TRANSFER"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-QRT-EXPLAIN-D3",
+      "title": "Build signed counterexample and one-way implication, then explain radical extraneous roots",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-QRT-EXPLAIN-D3"
+      ],
+      "entry_needs": [
+        "Can square simple equalities and factor a quadratic.",
+        "Knows principal square roots have nonnegative outputs."
+      ],
+      "learner_actions": [
+        "Predict whether squaring can lose information.",
+        "Use generic ±3 counterexample.",
+        "Contrast one-way implication with converse.",
+        "Explain fresh sqrt(z+6)=z exit."
+      ],
+      "help_plan": [
+        "General stages avoid the later target roots.",
+        "Precommit hints orient but do not supply lost-sign bridge.",
+        "H3 and full model explanation only after committed answer."
+      ],
+      "reveal_plan": "Independent generic three-stage construction, altered sqrt9=-3 misconception and new exit.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-QRT-EXPLAIN-D3",
+          "purpose": "Original authored concept",
+          "reason": "No external source rights claimed."
+        }
+      ],
+      "when_not_suitable": [
+        "Unreviewed academic band, not Owner accepted.",
+        "No official source representation."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "AUTHORED_TEST_D3_EXPLAIN_ISSUE182",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "DATUM-QRT-EXPLAIN-D3-1",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "±3 square equally; forward arrow; nonnegative ray",
+      "meaning": "Generic one-way sign logic",
+      "symbol": "A²=B²",
+      "locator": "TEST/library/figures/qrt-d3-explain-construct.svg"
+    },
+    {
+      "id": "DATUM-QRT-EXPLAIN-D3-2",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Graph of y=sqrt(x+5) and y=x-1",
+      "meaning": "Original unlabelled graph",
+      "symbol": "sqrt(x+5)=x-1",
+      "locator": "TEST/library/figures/qrt-d3-explain-attempt.svg"
+    },
+    {
+      "id": "DATUM-QRT-EXPLAIN-D3-3",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Generic sqrt9=-3 vs equal square",
+      "meaning": "Generic misconception visual",
+      "symbol": "sqrt(9)=-3",
+      "locator": "TEST/library/figures/qrt-d3-explain-repair.svg"
+    },
+    {
+      "id": "DATUM-QRT-EXPLAIN-D3-4",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Graph y=sqrt(t+5) and y=|t-1|",
+      "meaning": "Changed absolute-value graph",
+      "symbol": "sqrt(t+5)=|t-1|",
+      "locator": "TEST/library/figures/qrt-d3-explain-transfer.svg"
+    }
+  ]
+}
