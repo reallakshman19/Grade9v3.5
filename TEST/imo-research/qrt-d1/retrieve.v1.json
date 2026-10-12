@@ -88,7 +88,7 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "id": "CAP-TEST-IMO182-D1-RETR-SIGNED-DIRECTIONS",
+      "id": "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION",
       "action": "Classify a positive integer from a COMPLETE positive-divisor card by the defining divisor-count criterion.",
       "success_criterion": "Choose prime/composite/neither from the count; rule out the oddness heuristic and reverse-select a card satisfying prime.",
       "prerequisite_refs": [],
@@ -109,7 +109,7 @@
       "id": "MIC-TEST-IMO182-D1-RETR-DIVISOR-COUNT",
       "title": "Discriminate prime, composite and one by the exact divisor-count condition",
       "bucket_id": "BUCKET-TEST-IMO182-D1-RETR-GRID",
-      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-SIGNED-DIRECTIONS",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION",
       "intrinsic_badge": "EASY",
       "badge_reason": "One classifying act from a supplied complete factor card.",
       "entry_assumptions": [
@@ -154,13 +154,13 @@
         }
       ],
       "relation_refs": [
-        "REL-TEST-IMO182-D1-RETR-AXIS-SIGNS"
+        "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
       ],
       "representation_refs": [
         "REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES"
       ],
       "question_family_refs": [
-        "FAM-TEST-IMO182-D1-RETR-WORDS-AND-PAIRS"
+        "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS"
       ],
       "misconceptions": [
         {
@@ -218,7 +218,7 @@
             1
           ],
           "relation_refs": [
-            "REL-TEST-IMO182-D1-RETR-AXIS-SIGNS"
+            "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
           ],
           "independent_checks": [
             {
@@ -317,7 +317,7 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "id": "REL-TEST-IMO182-D1-RETR-AXIS-SIGNS",
+      "id": "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT",
       "expression": "A prime has exactly two distinct positive divisors; a composite has more than two; 1 has exactly one.",
       "meaning": "Category depends on the count in a complete distinct-positive-divisor set, not oddness.",
       "symbols": [
@@ -401,7 +401,7 @@
         "13 has {1,13}"
       ],
       "relation_refs": [
-        "REL-TEST-IMO182-D1-RETR-AXIS-SIGNS"
+        "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
       ],
       "read_order": [
         "Read category definition, later a separate worked 13 and the 1 exception."
@@ -431,7 +431,7 @@
           ],
           "microtopic_ref": "MIC-TEST-IMO182-D1-RETR-DIVISOR-COUNT",
           "datum_refs": [
-            "DATUM-TEST-IMO182-D1-RETR-AXIS-MEANING"
+            "DATUM-TEST-IMO182-D1-RETR-COUNT-CRITERION"
           ],
           "asset_ref": "TEST/imo-research/qrt-d1/figures/retrieve-criterion-stages.v1.svg",
           "scene": {
@@ -497,7 +497,7 @@
         "no category marked"
       ],
       "relation_refs": [
-        "REL-TEST-IMO182-D1-RETR-AXIS-SIGNS"
+        "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
       ],
       "read_order": [
         "Read the complete factor list, then classify it independently."
@@ -575,7 +575,7 @@
         "claim: prime?"
       ],
       "relation_refs": [
-        "REL-TEST-IMO182-D1-RETR-AXIS-SIGNS"
+        "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
       ],
       "read_order": [
         "Read disputed oddness rule and count its complete positive-divisor list."
@@ -653,7 +653,7 @@
         "C {1,5,25}"
       ],
       "relation_refs": [
-        "REL-TEST-IMO182-D1-RETR-AXIS-SIGNS"
+        "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
       ],
       "read_order": [
         "Choose the uniquely compatible complete prime card."
@@ -723,10 +723,10 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "id": "FAM-TEST-IMO182-D1-RETR-WORDS-AND-PAIRS",
+      "id": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
       "title": "Defining divisor-count classification and category-to-card selection",
       "capability_refs": [
-        "CAP-TEST-IMO182-D1-RETR-SIGNED-DIRECTIONS"
+        "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION"
       ],
       "solution_structure": [
         "Read a COMPLETE distinct positive-divisor set.",
@@ -816,9 +816,9 @@
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
       },
-      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-SIGNED-DIRECTIONS",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION",
       "secondary_capability_refs": [],
-      "family_ref": "FAM-TEST-IMO182-D1-RETR-WORDS-AND-PAIRS",
+      "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
       "adaptation": null,
       "exposure": [
         {
@@ -843,30 +843,30 @@
       "repair_ref": "RETR-D1-TC-2",
       "failure_signal": "Count all distinct positive divisors rather than choosing from oddness.",
       "family_exposure": {
-        "family_ref": "FAM-TEST-IMO182-D1-RETR-WORDS-AND-PAIRS",
-        "closure": "Successful forward representation is not equivalent to independent inverse transfer."
+        "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
+        "closure": "Authored TEST only. This item alone does not establish independent QRT acceptance."
       },
       "independent_check": {
-        "statement": "Translate (−3,+1) back to three west, one north.",
-        "check_type": "INVERSE_OPERATION"
+        "statement": "Verify 13 has exactly 1 and 13 as its complete distinct positive divisor list.",
+        "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
       },
       "difficulty": {
         "band": "D1",
-        "score": 2,
+        "score": 1,
         "components": {
           "concept_model_selection": 0,
-          "representation_translation": 1,
+          "representation_translation": 0,
           "reasoning_chain_length": 0,
           "algebra_computational_load": 0,
           "trap_exception_sensitivity": 1
         },
-        "basis": "The axis rule is given; one independent sign-and-axis translation is required, with an accessible inverse check.",
+        "basis": "A distinct worked definition-to-category example.",
         "component_evidence": {
-          "concept_model_selection": "Fixed east-positive/north-positive convention supplied; no model choice.",
-          "representation_translation": "Learner independently signs and orders the pair or recovers words.",
-          "reasoning_chain_length": "One correspondence with a verification, not a dependent proof chain.",
-          "algebra_computational_load": "No arithmetic beyond sign interpretation.",
-          "trap_exception_sensitivity": "Signed south and swapped pair order create a plausible wrong route."
+          "concept_model_selection": "None.",
+          "representation_translation": "None.",
+          "reasoning_chain_length": "One criterion.",
+          "algebra_computational_load": "No search.",
+          "trap_exception_sensitivity": "The singleton 1 is an excluded boundary."
         }
       },
       "learner_question_type": "constructed_response"
@@ -968,9 +968,9 @@
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
       },
-      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-SIGNED-DIRECTIONS",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION",
       "secondary_capability_refs": [],
-      "family_ref": "FAM-TEST-IMO182-D1-RETR-WORDS-AND-PAIRS",
+      "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
       "adaptation": null,
       "exposure": [
         {
@@ -1031,8 +1031,8 @@
       "repair_ref": "RETR-D1-TC-2",
       "failure_signal": "The exact number of distinct positive divisors, not oddness, decides prime/composite.",
       "family_exposure": {
-        "family_ref": "FAM-TEST-IMO182-D1-RETR-WORDS-AND-PAIRS",
-        "closure": "Successful forward representation is not equivalent to independent inverse transfer."
+        "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
+        "closure": "Authored TEST only. This item alone does not establish independent QRT acceptance."
       },
       "independent_check": {
         "statement": "5×5=25 is a nontrivial factor; compare it with the complete card.",
@@ -1138,9 +1138,9 @@
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
       },
-      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-SIGNED-DIRECTIONS",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION",
       "secondary_capability_refs": [],
-      "family_ref": "FAM-TEST-IMO182-D1-RETR-WORDS-AND-PAIRS",
+      "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
       "adaptation": null,
       "exposure": [
         {
@@ -1175,8 +1175,8 @@
       "repair_ref": "RETR-D1-TC-2",
       "failure_signal": "One is neither; 25 has three positive divisors.",
       "family_exposure": {
-        "family_ref": "FAM-TEST-IMO182-D1-RETR-WORDS-AND-PAIRS",
-        "closure": "Inverse pair-to-words transfer is tested separately from words-to-pair practice."
+        "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
+        "closure": "Authored TEST only. This item alone does not establish independent QRT acceptance."
       },
       "independent_check": {
         "statement": "Exclude one-divisor A and three-divisor C.",
@@ -1279,7 +1279,7 @@
   },
   "data": [
     {
-      "id": "DATUM-TEST-IMO182-D1-RETR-AXIS-MEANING",
+      "id": "DATUM-TEST-IMO182-D1-RETR-COUNT-CRITERION",
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
