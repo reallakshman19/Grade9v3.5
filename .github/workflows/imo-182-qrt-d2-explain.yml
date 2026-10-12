@@ -1,0 +1,46 @@
+name: IMO 182 QRT D2 EXPLAIN five-role
+on:
+  pull_request:
+    paths:
+      - 'TEST/imo-research/qrt-d2/explain.v1.json'
+      - 'TEST/imo-research/qrt-d2/figures/explain-d2-*.svg'
+      - 'TEST/imo-research/qrt-d2/test_explain.py'
+      - 'TEST/products/imo182-qrt-d2-explain.manifest.json'
+      - '.github/workflows/imo-182-qrt-d2-explain.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  explain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet jsonschema
+      - run: python -m unittest discover -s TEST/imo-research/qrt-d2 -p test_explain.py -v
+      - run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d2-explain.manifest.json \
+            --out build/imo182-qrt/d2/explain --draft --reference
+      - run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,hashlib
+          d=Path('build/imo182-qrt/d2/explain')
+          r=json.loads((d/'render-receipt.json').read_text())
+          assert not r['gaps'],r['gaps']
+          names={'core1.html','core1a.html','core1b.html','core2a.html','core2b.html','index.html'}
+          assert names <= set(r['pages']),r['pages']
+          rows={f:hashlib.sha256((d/f).read_bytes()).hexdigest() for f in sorted(names)}
+          (d/'explain-sha256.json').write_text(json.dumps({'roles':rows,'qrt_accepted':'0/28','source':'AUTHORED_TEST'},indent=2)+'\n')
+          print(rows)
+          PY
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-qrt-d2-explain-actual-renderer-html
+          path: build/imo182-qrt/d2/explain/
+          if-no-files-found: warn
