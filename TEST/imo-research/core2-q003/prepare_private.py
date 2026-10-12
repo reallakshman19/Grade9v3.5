@@ -72,12 +72,69 @@ def package(expected):
         success_criterion="Explain a common rule and its unique exception.",
         prerequisite_refs=[], curriculum_mappings=[], external_provider=None,
         acceptance_status="CANDIDATE")
+    # A package must contain a microtopic even when only CORE2 is selected.
+    # This is an AUTHORED concept candidate, not an original source question
+    # or an admitted CORE1A lesson. Do not select/render CORE1A until authored.
+    authored = base_record("SRC-IMO-Q003-CONCEPT-AUTHORED",
+        title="Authored candidate: checking relations across ordered pairs",
+        origin="AUTHORED", locator="TEST/imo-research/core2-q003/prepare_private.py#package",
+        edition="2026-10-12", section="TEST concept metadata", last_checked="2026-10-12",
+        access_status="FULL_ITEM_INSPECTED", rights_status="AUTHORED_DRAFT_NOT_ACCEPTED",
+        snapshot_ref=None, snapshot_digest=None, role=["AUTHOR_CREATED"],
+        supports_claims=[], entry_capabilities=[], depth=["EXAM"],
+        selection_reason="Separately label test-only concept authoring", fallback=[])
+    mic = base_record("MIC-IMO-NUMERIC-RELATIONSHIPS",
+        title="Test a consistent rule across numerical pairs",
+        bucket_id=bucket["id"], primary_capability_ref=cap["id"],
+        intrinsic_badge="MEDIUM",
+        badge_reason="One matching pair does not establish a relation for every pair.",
+        entry_assumptions=["Can evaluate a numerical expression for a given input."],
+        inferential_jump="A proposed input-output rule must explain every pair; one counterexample refutes it.",
+        teaching_path=[
+            {"id":"IMO-PAIR-M1", "role":"DECLARE",
+             "action":"Label each ordered pair as an input and its output.",
+             "why_valid":"A relation must map consistently from the same input position.",
+             "inputs":[], "output":"Each candidate supplies an input-output check."},
+            {"id":"IMO-PAIR-M2", "role":"TRANSFORM",
+             "action":"Evaluate one candidate rule for each input and compare its output.",
+             "why_valid":"A claimed common rule must hold at every listed pair.",
+             "inputs":[], "output":"A match or mismatch is recorded for every pair."},
+            {"id":"IMO-PAIR-M3", "role":"VERIFY",
+             "action":"Identify whether precisely one pair contradicts the same rule.",
+             "why_valid":"A single mismatching pair is an exception only if the others agree.",
+             "inputs":[], "output":"An explicitly justified exception or a rejected rule."}
+        ],
+        relation_refs=[], representation_refs=[], question_family_refs=[],
+        misconceptions=[{
+            "wrong_idea":"A rule that works for one pair must explain the whole list.",
+            "diagnostic_prompt":"What happens when the same rule is applied to a second pair?",
+            "repair":"Keep the same operation and check all remaining pairs before selecting an exception."
+        }],
+        exit_task={
+            "prompt":"In an authored list of ordered pairs, one pair matches your proposed rule. Is that enough to establish the rule? Explain your next check.",
+            "source_ref":authored["id"],
+            "answer":{
+                "kind":"MODEL_RESPONSE",
+                "summary":"No. Apply the same proposed relation to every ordered pair.",
+                "reasoning":[
+                    "One matching example does not prove that a rule describes all pairs.",
+                    "Evaluate that exact rule on each other input and compare the outputs."
+                ],
+                "check":"A single genuine mismatch refutes the proposed common rule.",
+                "acceptable_alternatives":[], "subpart_answers":[],
+                "verification_status":"CHECKED_BY_AUTHOR"
+            },
+            "oracle":{"no_numeric_claim":"Conceptual rule-consistency decision only; no computed result is asserted."}
+        },
+        research_contribution="Test-only authored prerequisite for Q003 Core2; not a validated Core1A lesson.",
+        prerequisite_refs=[], lineage=[])
+    mic["source_refs"] = [authored["id"]]
     return dict(schema_version="0.2.0", package_id="TEST-IMO-Q003-CORE2-PRIVATE",
         title="Original numerical pair question / private TEST", version="0.1.0",
         status="CANDIDATE", subject="TEST",
         scope_summary="TEST-only. No QRT, rights, print or publication acceptance.",
-        curriculum_mappings=[], resources=[res], buckets=[bucket],
-        capabilities=[cap], microtopics=[], relations=[], representations=[],
+        curriculum_mappings=[], resources=[res, authored], buckets=[bucket],
+        capabilities=[cap], microtopics=[mic], relations=[], representations=[],
         question_families=[], questions=[], teaching_routes=[],
         practice_profiles=[], evidence=[], known_issues=[],
         extensions={"grade9v3:publication":"FORBIDDEN"}, data=[])
