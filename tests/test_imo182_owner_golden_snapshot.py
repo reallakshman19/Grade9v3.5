@@ -129,7 +129,10 @@ class OwnerFiveCoreGolden(unittest.TestCase):
             with self.subTest(role=row["role"]):
                 frozen=(GOLD / row["path"]).read_text(encoding="utf-8")
                 new=self.regen_pages[row["role"].lower()+".html"]
-                old_without_digest=frozen.replace(self.source_digest, "@RENDER_DIGEST@")
+                # Normalize the ORIGINAL locked authority digest, not the newer live
+                # renderer digest.  A changed renderer may produce a new digest;
+                # that is not permission to change frozen golden bytes.
+                old_without_digest=frozen.replace(self.lock["original_digest"], "@RENDER_DIGEST@")
                 new_without_digest=new.replace(self.regen_digest, "@RENDER_DIGEST@")
                 _compare_bytes(self, old_without_digest.encode(), new_without_digest.encode(),
                                row["role"] + " pinned-record semantic HTML")
