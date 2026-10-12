@@ -118,8 +118,15 @@ class ApplyD3(unittest.TestCase):
                 self.assertNotIn(banned,scaffold["text"])
         for fig in (ROOT/"TEST/library/figures").glob("qrt-d3-apply-*.svg"):
             raw=fig.read_text()
+            # Check actual learner-visible SVG text and accessible text; numeric
+            # path/layout coordinates like width="690" must not count as leaks.
+            visible=" ".join(re.findall(
+                r"<(?:text|title|desc)\\b[^>]*>([^<]*)</(?:text|title|desc)>",
+                raw
+            ))
+            aria=" ".join(re.findall(r'aria-label="([^"]*)"',raw))
             for banned in ("60","90","180","1080","v2=2","v3=1","2²·3·5","least n is"):
-                self.assertNotIn(banned,raw,fig)
+                self.assertNotIn(banned,visible+" "+aria,fig)
 
     def test_6_five_governed_roles_and_golden_technique_slots(self):
         receipt=json.loads((OUT/"render-receipt.json").read_text())
