@@ -875,7 +875,8 @@
       "family_exposure": {
         "family_ref": "FAM-TEST-QRT-EXPLAIN-D2-POWERS",
         "closure": "Primary EXPLAIN-D2 repeated-factor grouping for positive-integer increment; not a doubled-exponent model"
-      }
+      },
+      "repair_ref": "EX-TC3"
     },
     {
       "id": "Q-TEST-QRT-EXPLAIN-D2-TRANSFER",
@@ -984,7 +985,21 @@
         "check": "At k=3, 2^6=64=(2^3)^2, not 2×8.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
-        "verification_status": "CHECKED_BY_AUTHOR"
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "rubric": [
+          {
+            "criterion": "Relate 2k to two full groups of k factors, not a single extra factor.",
+            "evidence_of": "Explains changed exponent count rather than guessing a fixed multiplier."
+          },
+          {
+            "criterion": "Use associativity to derive 2^(2k)=(2^k)^2 for every positive integer k.",
+            "evidence_of": "One coherent general explanatory bridge, not just a numerical pattern."
+          },
+          {
+            "criterion": "Reject the fixed-doubling claim at an admissible input such as k=2.",
+            "evidence_of": "2^4=16 but 2×2^2=8; a counterexample refutes the false alternative."
+          }
+        ]
       },
       "independent_check": {
         "statement": "At k=3, 64 equals 8 squared and differs from twice 8.",
@@ -1030,7 +1045,8 @@
       "family_exposure": {
         "family_ref": "FAM-TEST-QRT-EXPLAIN-D2-POWERS",
         "closure": "New two-complete-block grouping decision required independently"
-      }
+      },
+      "repair_ref": "EX-TC3"
     }
   ],
   "teaching_routes": [
