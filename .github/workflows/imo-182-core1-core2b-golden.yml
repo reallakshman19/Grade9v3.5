@@ -13,6 +13,9 @@ on:
       - 'TEST/library/figures/core1a-consecutive-divisibility-staged.svg'
       - 'tests/test_core1a_renderer_maturity.py'
       - 'tests/imo_182_core1_core2b_golden.py'
+      - 'golden/units/G-IMO-G9-FIVE-CORE-20261012/**'
+      - 'golden/INDEX.md'
+      - 'tests/test_imo182_owner_golden_snapshot.py'
   workflow_dispatch:
 
 permissions:
@@ -49,6 +52,10 @@ jobs:
         run: python Shared/tools/build_golden.py --id G-MATH-LINEAR-CONSTRAINT
       - name: Compare each actual page with golden technique and independent maths
         run: python -m unittest tests.imo_182_core1_core2b_golden tests.test_core1a_renderer_maturity -v
+      - name: Validate frozen five-Core owner-designated golden (exact bytes and pinned regeneration)
+        run: |
+          python Shared/tools/build_golden.py --id G-IMO-G9-FIVE-CORE-20261012 --check
+          python -m unittest tests.test_imo182_owner_golden_snapshot -v
       - name: Record explicit receipt and review/authority limits
         run: |
           python - <<'PY'
