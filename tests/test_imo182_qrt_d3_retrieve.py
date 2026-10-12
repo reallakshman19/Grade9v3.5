@@ -171,9 +171,10 @@ class RetrieveD3(unittest.TestCase):
                     h3=box.locator("details[data-requires-attempt]").filter(
                         has=page.locator('summary:text-is("Hint 3 · after your attempt")'))
                     self.assertEqual(h3.count(),1)
-                    self.assertEqual(page.locator("[data-g9-after-attempt-hint]").count(),0)
+                    self.assertFalse(page.locator("[data-g9-after-attempt-hint]").first.is_visible())
                     h3.locator("summary").click()
                     self.assertEqual(page.locator("[data-g9-after-attempt-hint]").count(),1)
+                    self.assertTrue(page.locator("[data-g9-after-attempt-hint]").first.is_visible())
                 page.close()
             browser.close()
 
