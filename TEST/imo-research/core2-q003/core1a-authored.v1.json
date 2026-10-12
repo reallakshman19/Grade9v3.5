@@ -37,6 +37,14 @@
       "why_valid": "A single counterexample falsifies the claim that the same proposed relation fits all displayed pairs; a changed-offset case checks transfer instead of answer memorisation.",
       "inputs": [],
       "output": "A justified exception and a repeatable same-rule check on unfamiliar pairs."
+    },
+    {
+      "id": "IMO-PAIR-M4",
+      "role": "VERIFY",
+      "action": "Run the identical residual procedure on a new, explicitly authored list with a different common offset.",
+      "why_valid": "A transferable test preserves the subtraction procedure while allowing the new examples to determine their own common constant; reusing a remembered exception would not check understanding.",
+      "inputs": [],
+      "output": "For the authored exit list the residuals are 5, 5, 5 and 7: the fourth pair fails the new common offset 5."
     }
   ],
   "misconceptions": [
@@ -73,13 +81,22 @@
           "statement": "For each ordered pair compute output minus (input squared); state the candidate constant before choosing a mismatch.",
           "check_type": "SUBSTITUTION_BACK_CHECK"
         }
+      ],
+      "relation_refs": [
+        "REL-IMO-PAIR-SQUARE-OFFSET"
+      ],
+      "representation_ref": "REP-IMO-PAIR-AUTHORED-RESIDUALS",
+      "reveal_stage_refs": [
+        "VIS-IMO-PAIR-1",
+        "VIS-IMO-PAIR-2"
       ]
     },
     {
       "id": "CU-IMO-PAIR-RESIDUAL-2",
       "decision": "Reject a single inconsistent pair by testing one unchanged relation, then transfer to different authored numbers.",
       "step_refs": [
-        "IMO-PAIR-M3"
+        "IMO-PAIR-M3",
+        "IMO-PAIR-M4"
       ],
       "worked_anchor_ref": "Q-IMO-PAIR-TRANSFER-AUTHORED-01",
       "misconception_indexes": [
@@ -90,6 +107,14 @@
           "statement": "Re-evaluate all displayed pairs with the same candidate offset; exactly one mismatch must be identified and explained.",
           "check_type": "SUBSTITUTION_BACK_CHECK"
         }
+      ],
+      "relation_refs": [
+        "REL-IMO-PAIR-SQUARE-OFFSET"
+      ],
+      "representation_ref": "REP-IMO-PAIR-AUTHORED-RESIDUALS",
+      "reveal_stage_refs": [
+        "VIS-IMO-PAIR-2",
+        "VIS-IMO-PAIR-3"
       ]
     }
   ],
@@ -152,5 +177,141 @@
     "oracle": {
       "held_by": "Grade9v3.5#183"
     }
-  }
+  },
+  "relations": [
+    {
+      "id": "REL-IMO-PAIR-SQUARE-OFFSET",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-IMO-Q003-CONCEPT-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "k = y - x^2",
+      "meaning": "For the proposed relation y = x^2 + k, the residual k is calculated the same way for every ordered pair (x, y); one exception is identified without changing the rule per pair.",
+      "mathml": "<math display=\"block\"><mrow><mi>k</mi><mo>=</mo><mi>y</mi><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></math>",
+      "symbols": [
+        {
+          "symbol": "x",
+          "meaning": "first coordinate, input",
+          "unit_or_domain": "integer in authored practice"
+        },
+        {
+          "symbol": "y",
+          "meaning": "second coordinate, output",
+          "unit_or_domain": "integer in authored practice"
+        },
+        {
+          "symbol": "k",
+          "meaning": "square-offset residual for a matching group",
+          "unit_or_domain": "integer"
+        }
+      ],
+      "conditions": [
+        "Each ordered pair keeps x as its first coordinate and y as its second.",
+        "The hypothesized family is y = x^2 + k, and the same k must be used for all pairs claimed to match.",
+        "Matching a finite collection supports this candidate relation for those displayed observations, not a universal function theorem."
+      ],
+      "derivation": [
+        {
+          "id": "STEP-IMO-REL-REARRANGE",
+          "role": "TRANSFORM",
+          "action": "Subtract x squared from both sides of y = x squared + k.",
+          "why_valid": "Subtracting the same integer from equal quantities preserves equality.",
+          "inputs": [
+            "y = x^2 + k"
+          ],
+          "output": "y - x^2 = k"
+        }
+      ],
+      "limits": [
+        "Other models could also fit a finite collection of points; the item asks for the intended common relation and one differing case.",
+        "Changing the formula or input-output orientation independently for each option does not test one common rule."
+      ],
+      "checks": [
+        "Compute y - x squared for every candidate pair and list each residual.",
+        "Apply the same proposed k to each pair claimed to match, and explain exactly which pair differs."
+      ],
+      "gate_relation_ref": null
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-IMO-PAIR-AUTHORED-RESIDUALS",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-IMO-Q003-CONCEPT-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "NUMBER_PAIR_RESIDUAL_STAGES",
+      "purpose": "Stage an unchanged residual calculation on newly authored pairs: fix the input-output direction, compare two consistent offsets, and show why one later offset differs.",
+      "required_elements": [
+        "Unchanged input-output orientation",
+        "One fixed residual expression for every pair",
+        "Numerical agreement and an explicitly labelled exceptional residual"
+      ],
+      "relation_refs": [
+        "REL-IMO-PAIR-SQUARE-OFFSET"
+      ],
+      "read_order": [
+        "Read the first coordinate as input x and second as output y.",
+        "Compute y - x squared on the same basis for two pairs.",
+        "Compare the other two residuals and isolate the mismatch."
+      ],
+      "instance_constraints": [
+        "Only separately authored transfer pairs appear in this visual; never draw Q003 source options.",
+        "At each stage the original authored pair values and the same residual formula are preserved."
+      ],
+      "accessibility": [
+        "Each computed comparison is written in text and not only conveyed through colour.",
+        "The two-stage learner view has a descriptive SVG title, description, and readable labels."
+      ],
+      "misleading_alternatives": [
+        "Changing k between pairs to force agreement.",
+        "Highlighting one answer without computing comparable residuals."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/core2-q003/assets/core1a-authored-residual-stages.svg"
+      ],
+      "scene_instances": [],
+      "reveal_stages": [
+        {
+          "id": "VIS-IMO-PAIR-1",
+          "label": "Keep ordered pairs",
+          "purpose": "Identify x as input and y as output on wholly authored observations.",
+          "visible_elements": [
+            "First authored input-output pair and fixed orientation"
+          ]
+        },
+        {
+          "id": "VIS-IMO-PAIR-2",
+          "label": "Compute shared residuals",
+          "purpose": "Display the same subtraction for two authored pairs with matching offset.",
+          "visible_elements": [
+            "Two matching calculations of y - x squared"
+          ]
+        },
+        {
+          "id": "VIS-IMO-PAIR-3",
+          "label": "Test the exceptions",
+          "purpose": "Show the remaining authored calculations; one residual differs.",
+          "visible_elements": [
+            "Two additional residuals and the singled-out exception"
+          ]
+        }
+      ]
+    }
+  ],
+  "lesson_anchor_bindings": [
+    {
+      "id": "ANCH-IMO-PAIR-CRUX-AUTHORED-01",
+      "construction_ref": "CU-IMO-PAIR-RESIDUAL-1",
+      "target_question_ref": "SOF-IMO-G09-L1-2023-24-A-Q003",
+      "authored_worked_ref": "Q-IMO-PAIR-TRANSFER-AUTHORED-01",
+      "target_crux_move_ref_source": "SHA_VALIDATED_PRIVATE_BANK"
+    }
+  ]
 }
