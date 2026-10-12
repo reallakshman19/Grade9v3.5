@@ -109,5 +109,26 @@ class Core2AH3AfterAttempt(unittest.TestCase):
         self.assertEqual(self.html.count('data-g9-after-attempt-hint'),1)
         self.assertIn('data-g9-render-digest',self.html)
 
+
+    def test_frozen_golden_delta_is_only_core2a_support_markup_plus_authority_digest(self):
+        lock=json.loads((FROZEN.parent/"snapshot-lock.json").read_text(encoding="utf-8"))
+        prior=lock["original_digest"]
+        for role in ("core1","core1a","core1b","core2b"):
+            with self.subTest(role=role):
+                old=(FROZEN/(role+".html")).read_text(encoding="utf-8")
+                new=self.pages[role+".html"]
+                self.assertEqual(old.replace(prior,"@DIGEST@"),
+                                 new.replace(self.digest,"@DIGEST@"))
+        before=(FROZEN/"core2a.html").read_text(encoding="utf-8").replace(prior,"@DIGEST@")
+        after=self.html.replace(self.digest,"@DIGEST@")
+        # Only the Core2A support slot's hint timing may differ.
+        pattern=r'<section class="blueprint-slot slot-support"[^>]*>.*?</section>'
+        self.assertEqual(len(re.findall(pattern,before,re.S)),1)
+        self.assertEqual(len(re.findall(pattern,after,re.S)),1)
+        self.assertNotEqual(re.findall(pattern,before,re.S)[0],
+                            re.findall(pattern,after,re.S)[0])
+        self.assertEqual(re.sub(pattern,"<CORE2A_SUPPORT>",before,flags=re.S),
+                         re.sub(pattern,"<CORE2A_SUPPORT>",after,flags=re.S))
+
 if __name__ == "__main__":
     unittest.main()
