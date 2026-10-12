@@ -43,6 +43,13 @@ on:
       - ".github/workflows/question-bank-platform.yml"
   workflow_dispatch:
 
+# The current branch's earlier push/PR runs are superseded by the newer
+# same-event commit. Keep PR-specific checks distinct from push checks and
+# NEVER cancel main's runs. All validation jobs remain mandatory.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   contracts:
     runs-on: ubuntu-latest
