@@ -96,8 +96,20 @@ def main():
     matching_pdf = next((row for row in printer["pages"] if row["page"] == "core1a.html"), None)
     pdf = product / "core1a.pdf"
     pdf_pages = []
+    physical_page_sizes_pt = []
     if pdf.is_file():
-        pdf_pages = [" ".join((page.extract_text() or "").split()) for page in PdfReader(pdf).pages]
+        reader = PdfReader(pdf)
+        pdf_pages = [" ".join((page.extract_text() or "").split()) for page in reader.pages]
+        physical_page_sizes_pt = [
+            (round(float(page.mediabox.width), 2), round(float(page.mediabox.height), 2))
+            for page in reader.pages
+        ]
+    # ISO A4 = 595.28 x 841.89 pt (or landscape reverse), with tolerance for PDF rounding.
+    a4_size = bool(physical_page_sizes_pt) and all(
+        (abs(width - 595.28) < 1 and abs(height - 841.89) < 1) or
+        (abs(width - 841.89) < 1 and abs(height - 595.28) < 1)
+        for width, height in physical_page_sizes_pt
+    )
 
     checks = {
         "Existing authored Core1A manifest only (zero authentic Core2)":
@@ -119,7 +131,7 @@ def main():
             and deploy.get("draft") is True and deploy.get("roles") == [EXPECTED_ROLE],
         "No unknown authored reference-depth gaps in candidate or golden":
             deploy.get("gap_count") == 0 and golden_receipt.get("gaps") == [],
-        "Same-page renderer-connected learner A4 print, hash-bound":
+        "Renderer-connected same-page learner PDF, hash-bound (A4 checked separately)":
             printer.get("mode") == "LEARNER_PDF" and matching_pdf is not None
             and pdf.is_file() and pdf.stat().st_size > 1000
             and matching_pdf.get("pdf_digest") == digest(pdf)
@@ -146,6 +158,9 @@ def main():
         "qrt_accepted": False,
         "real_learner_input": "NOT_AVAILABLE",
         "owner_a4_visual_acceptance": "NOT_RUN",
+        "pdf_page_sizes_pt": sorted(set(physical_page_sizes_pt)),
+        "pdf_is_iso_a4": a4_size,
+        "owner_a4_requirement": "PENDING_OWNER_VISUAL" if a4_size else "NOT_MET_NON_A4_PRINT",
         "html_sha256": digest(rendered),
         "golden_html_sha256": digest(fixture),
         "role_pdf_sha256": digest(pdf) if pdf.is_file() else None,
@@ -170,6 +185,7 @@ def main():
     for name, passed in checks.items():
         print(("PASS" if passed else "FAIL") + " | " + name)
     print(f"candidate golden comparison: {output['checks_passed']}/{output['checks_total']}, gaps={output['render_gap_count']}")
+    print("PDF ISO A4:", a4_size, "paper size pt:", sorted(set(physical_page_sizes_pt)))
     print("Owner visual and QRT decision: NOT_RUN / NOT_ACCEPTED")
     if not all(checks.values()):
         raise SystemExit(1)

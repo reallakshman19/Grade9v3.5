@@ -35,14 +35,14 @@ jobs:
           python Shared/tools/render_core.py gaps \
             --manifest TEST/products/core1a-divisibility-render-maturity.manifest.json \
             --reference
-      - name: Build TEST-stamped Core1A learner HTML and same-page A4 PDF receipt (O1)
+      - name: Build TEST-stamped Core1A HTML and attached existing-printer receipt (O1)
         run: |
           python Shared/tools/deploy_test.py product \
             TEST/products/core1a-divisibility-render-maturity.manifest.json --no-mirror
       - name: Render the CANDIDATE golden with the same sole renderer
         run: |
           python Shared/tools/build_golden.py --id G-MATH-LINEAR-CONSTRAINT
-      - name: Compare actual blueprint slots, required components, stages and A4 binding
+      - name: Compare actual blueprint slots, required components, stages and PDF hash binding
         run: |
           python tests/imo_182_core1a_golden.py \
             --product public/test/products/core1a-divisibility-render-maturity \
@@ -52,7 +52,7 @@ jobs:
         run: |
           node tools/site-audit/core1a-render-maturity-audit.mjs \
             public/test/products/core1a-divisibility-render-maturity
-      - name: Verify TEST/A4 statuses without claiming human acceptance
+      - name: Verify TEST/print statuses without claiming ISO A4 or Owner acceptance
         run: |
           python - <<'PY'
           import json
