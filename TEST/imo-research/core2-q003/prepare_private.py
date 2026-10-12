@@ -143,8 +143,10 @@ def write_json(path, obj):
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")
 
-def prepare(private_path):
-    expected = json.loads(META.read_text(encoding="utf-8"))
+def prepare(private_path, custody_receipt=META):
+    # A reconstituted local input must name its own SHA-pinned receipt explicitly.
+    # The default remains the frozen predecessor custody receipt, unchanged.
+    expected = json.loads(custody_receipt.read_text(encoding="utf-8"))
     raw = private_path.read_bytes()
     row = json.loads(raw.decode("utf-8"))
     validate_private(row, expected, raw)
@@ -164,11 +166,15 @@ def prepare(private_path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--private-input", required=True, type=Path)
+    ap.add_argument("--custody-receipt", type=Path, default=META,
+                    help="Explicit local SHA-pinned custody receipt; default is committed frozen receipt")
     ap.add_argument("--prepare-only", action="store_true")
     args = ap.parse_args()
     if not args.private_input.is_file():
         ap.error("private input is required, never committed")
-    expected, row = prepare(args.private_input)
+    if not args.custody_receipt.is_file():
+        ap.error("custody receipt is required for this input; it may be kept locally")
+    expected, row = prepare(args.private_input, args.custody_receipt)
     if args.prepare_only:
         print("PRIVATE_TEST_FIXTURE_PREPARED; renderer not executed")
         return 0
