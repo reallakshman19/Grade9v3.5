@@ -410,7 +410,9 @@
             "CORE1A"
           ],
           "microtopic_ref": "MIC-TEST-QRT-EXPLAIN-D2-EXPO-MECHANISM",
-          "datum_refs": [],
+          "datum_refs": [
+            "DATUM-TEST-QRT-EXPLAIN-D2-CONCEPT"
+          ],
           "asset_ref": "TEST/imo-research/qrt-d2/figures/explain-d2-stages.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
@@ -492,7 +494,9 @@
             "CORE2A"
           ],
           "question_ref": "Q-TEST-QRT-EXPLAIN-D2-PRIMARY",
-          "datum_refs": [],
+          "datum_refs": [
+            "DATUM-TEST-QRT-EXPLAIN-D2-PRIMARY"
+          ],
           "asset_ref": "TEST/imo-research/qrt-d2/figures/explain-d2-primary.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
@@ -559,7 +563,9 @@
             "CORE2B"
           ],
           "question_ref": "Q-TEST-QRT-EXPLAIN-D2-TRANSFER",
-          "datum_refs": [],
+          "datum_refs": [
+            "DATUM-TEST-QRT-EXPLAIN-D2-TRANSFER"
+          ],
           "asset_ref": "TEST/imo-research/qrt-d2/figures/explain-d2-transfer.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
@@ -643,7 +649,7 @@
       "extensions": {},
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-QRT-EXPLAIN-D2-ORIGINAL",
-      "original_identifier": null,
+      "original_identifier": "AUTHORED-QRT-EXPLAIN-D2-WORKED",
       "stem": "Explain why 2^3 is 2×2^2 rather than 2^2+2.",
       "subparts": [],
       "options": [],
@@ -674,7 +680,6 @@
         "stage_refs": []
       },
       "failure_signal": "An exponent count was confused with numerical addition.",
-      "family_exposure": [],
       "answer": {
         "kind": "MODEL_RESPONSE",
         "summary": "One further factor 2 makes 2^3=2×2^2.",
@@ -726,7 +731,7 @@
       },
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-QRT-EXPLAIN-D2-ORIGINAL",
-      "original_identifier": null,
+      "original_identifier": "AUTHORED-QRT-EXPLAIN-D2-PRIMARY",
       "stem": "For every positive integer t, explain WHY 3^(t+1)=3×3^t rather than 3^t+3. Connect the exponent to repeated factors, and give an exact value of t that disproves addition.",
       "subparts": [],
       "options": [],
@@ -779,7 +784,6 @@
         ]
       },
       "failure_signal": "An exponent count was confused with numerical addition.",
-      "family_exposure": [],
       "answer": {
         "kind": "MODEL_RESPONSE",
         "summary": "3^(t+1)=3×3^t for all positive integer t, and not generally 3^t+3.",
@@ -889,7 +893,7 @@
       },
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-QRT-EXPLAIN-D2-ORIGINAL",
-      "original_identifier": null,
+      "original_identifier": "AUTHORED-QRT-EXPLAIN-D2-TRANSFER",
       "stem": "A student claims that doubling the exponent always doubles the power: 2^(2k)=2×2^k for every positive integer k. Explain the correct relationship by grouping repeated factors and give an exact counterexample to the student's rule.",
       "subparts": [],
       "options": [],
@@ -913,9 +917,8 @@
       ],
       "hints": [
         {
-          "order": 1,
-          "text": "What does 2k count?",
-          "provenance": "AUTHORED_HINT"
+          "text": "What does 2k count in a repeated product?",
+          "reveals": "CONCEPT"
         }
       ],
       "hint_ladder": [
@@ -935,7 +938,6 @@
         ]
       },
       "failure_signal": "An exponent count was confused with numerical addition.",
-      "family_exposure": [],
       "answer": {
         "kind": "MODEL_RESPONSE",
         "summary": "2^(2k)=(2^k)^2, not in general 2×2^k.",
@@ -1070,5 +1072,48 @@
   "evidence": [],
   "known_issues": [],
   "extensions": {},
-  "data": []
+  "data": [
+    {
+      "id": "DATUM-TEST-QRT-EXPLAIN-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Concept starting repeated product"
+    },
+    {
+      "id": "DATUM-TEST-QRT-EXPLAIN-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><msup><mn>3</mn><mi>t</mi></msup></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Primary question first power only"
+    },
+    {
+      "id": "DATUM-TEST-QRT-EXPLAIN-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-EXPLAIN-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><msup><mn>2</mn><mi>k</mi></msup></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Transfer question first power only"
+    }
+  ]
 }
