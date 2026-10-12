@@ -66,7 +66,7 @@ class ExplainD1(unittest.TestCase):
         self.assertIn(qa["id"],qb["transfer"]["builds_on"])
         self.assertEqual(qb["transfer"]["protected_move_ref"],"EXP-D1-QB-INVERSE")
         self.assertIn("18 counters",qb["stem"])
-        self.assertIn("remaining 11",qb["answer"]["summary"])
+        self.assertIn("11-counter",qb["answer"]["summary"])
         self.assertIn("EXP-D1-QB-GIVENS",self.pages["core2b.html"])
 
     def test_independent_math_and_owner_frozen_golden(self):
