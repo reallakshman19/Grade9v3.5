@@ -36,8 +36,13 @@ class TestJustifyD2(unittest.TestCase):
     def test_safe_svg(self):
         svg=FIG.read_text()
         self.assertIn('PRACTICE-FACTORS-ONLY',svg)
+        # Inspect learner-readable SVG labels/text, not coordinate and colour numerals.
+        import re
+        labels=re.findall(r'<(?:title|desc|text)[^>]*>([^<]*)</(?:title|desc|text)>',svg)
+        labels+=re.findall(r'aria-label="([^"]*)"',svg)
+        readable=' '.join(labels).lower()
         for forbidden in ('divisible by 6','coprime','parity','residue','m=2','60','factor of 3'):
-            self.assertNotIn(forbidden,svg.lower())
+            self.assertNotIn(forbidden,readable)
     def test_counterexample_and_all_residues(self):
         self.assertEqual((3*4*5)%6,0)
         self.assertTrue(all(x%6 for x in (3,4,5)))
