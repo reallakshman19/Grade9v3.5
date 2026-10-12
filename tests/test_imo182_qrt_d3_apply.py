@@ -1,4 +1,4 @@
-"""QRT APPLY-D3: sole-rendered authored classification / golden / real Chromium gates.
+"""QRT APPLY-D3: sole-rendered authored number-theory application / golden / real Chromium gates.
 
 Reviewer and Owner academic acceptance are explicitly NOT implied by passing these tests.
 """
@@ -169,7 +169,7 @@ class ApplyD3(unittest.TestCase):
                 self.assertFalse(reveal.evaluate("(e)=>e.open"))
                 commit.click()
                 self.assertNotEqual(box.get_attribute("data-attempted"),"1")
-                box.locator("[data-g9-attempt]").first.fill("I wrote a classification with my own coordinate criteria, and justify it.")
+                box.locator("[data-g9-attempt]").first.fill("I applied prime-exponent thresholds independently and wrote a leastness justification.")
                 commit.click()
                 self.assertEqual(box.get_attribute("data-attempted"),"1")
                 self.assertFalse(errors,errors)
