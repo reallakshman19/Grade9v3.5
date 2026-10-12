@@ -1,0 +1,57 @@
+name: IMO 182 QRT EXPLAIN-D1 actual five-role render (TEST)
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-qrt-d1-explain.yml'
+      - 'TEST/imo-research/qrt-d1/explain.v1.json'
+      - 'TEST/imo-research/qrt-d1/verify_explain.py'
+      - 'TEST/imo-research/qrt-d1/figures/explain-*.svg'
+      - 'TEST/products/imo182-qrt-d1-explain.manifest.json'
+      - 'tests/test_imo182_qrt_d1_explain.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  authored-explain-d1:
+    name: Sole-renderer EXPLAIN D1 five Core HTML and frozen golden
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install schema tool
+        run: python -m pip install --quiet jsonschema
+      - name: Original independent odd-counter mechanism verification
+        run: python TEST/imo-research/qrt-d1/verify_explain.py
+      - name: Generate five registered Core learner pages with sole renderer
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d1-explain.manifest.json \
+            --out build/imo182-qrt/d1/explain --draft --reference
+      - name: Schema, protected learner work, role versions and golden integrity
+        run: python -m unittest tests.test_imo182_qrt_d1_explain -v
+      - name: Require zero depth gaps and emit exact HTML SHA256
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          folder=Path("build/imo182-qrt/d1/explain")
+          receipt=json.loads((folder/"render-receipt.json").read_text())
+          assert receipt["gaps"] == [], receipt["gaps"]
+          names=["core1.html","core1a.html","core1b.html","core2a.html","core2b.html"]
+          assert set(names) <= set(receipt["pages"])
+          result={"cell":"QRT-EXPLAIN-D1","source":"AUTHORED_TEST","accepted":"0/28",
+                  "academic_review":"PENDING","status":"RENDERED_TEST_ONLY",
+                  "pages":{n:hashlib.sha256((folder/n).read_bytes()).hexdigest() for n in names}}
+          (folder/"d1-explain-evidence.json").write_text(json.dumps(result,indent=2)+"\n")
+          print(json.dumps(result,indent=2))
+          PY
+      - name: Publish test-only exact rendered pages and receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-qrt-d1-explain-five-core-html
+          path: build/imo182-qrt/d1/explain/
+          if-no-files-found: warn

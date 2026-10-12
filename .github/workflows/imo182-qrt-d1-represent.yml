@@ -1,0 +1,68 @@
+name: IMO 182 QRT REPRESENT-D1 actual five-role render (TEST)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-qrt-d1-represent.yml'
+      - 'TEST/imo-research/qrt-d1/**'
+      - 'TEST/products/imo182-qrt-d1-represent.manifest.json'
+      - 'tests/test_imo182_qrt_d1_represent.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authored-represent-d1:
+    name: Actual sole-renderer five Core pages and frozen golden baseline
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install repository schema dependency
+        run: python -m pip install --quiet jsonschema
+      - name: Run independent signed-coordinate oracle
+        run: python TEST/imo-research/qrt-d1/verify_represent.py
+      - name: Render all five distinct TEST Core roles from registry
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d1-represent.manifest.json \
+            --out build/imo182-qrt/d1/represent --draft --reference
+      - name: Test signed D1 protected work and actual rendered HTML
+        run: python -m unittest tests.test_imo182_qrt_d1_represent -v
+      - name: Frozen golden lock and generated HTML SHA256 receipt
+        run: |
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          base=Path("golden/units/G-IMO-G9-FIVE-CORE-20261012")
+          lock=json.loads((base/"snapshot-lock.json").read_text())
+          assert len(lock["snapshots"]) == 5
+          for row in lock["snapshots"]:
+              p=base/row["path"]
+              assert hashlib.sha256(p.read_bytes()).hexdigest() == row["sha256"],p
+          out=Path("build/imo182-qrt/d1/represent")
+          receipt=json.loads((out/"render-receipt.json").read_text())
+          assert receipt["gaps"] == [],receipt["gaps"]
+          expected={"core1.html","core1a.html","core1b.html","core2a.html","core2b.html"}
+          assert expected <= set(receipt["pages"]), receipt["pages"]
+          pages=[dict(file=n,sha256=hashlib.sha256((out/n).read_bytes()).hexdigest()) for n in sorted(expected)]
+          review={"cell":"QRT-REPRESENT-D1","status":"RENDERED_TEST_ONLY",
+                  "source_type":"AUTHORED","core2_source_rights":"NOT_CLAIMED",
+                  "owner_golden":"FROZEN_UNCHANGED","academic_review":"PENDING",
+                  "owner_decision":"PENDING","accepted":"0/28","pages":pages}
+          (out/"d1-evidence.json").write_text(json.dumps(review,indent=2)+"\n")
+          print(json.dumps(review,indent=2))
+          PY
+      - name: Upload actual five HTML pages with source-bound receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-qrt-d1-represent-five-core-html
+          path: build/imo182-qrt/d1/represent/
+          if-no-files-found: warn
+
+# D1-specific TEST build; not a production Core publication gate.

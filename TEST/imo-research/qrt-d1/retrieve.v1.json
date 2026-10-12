@@ -1,0 +1,1350 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-RETRIEVE-D1-AUTHORED",
+  "title": "Original TEST: prime, composite or neither using exact divisor counts",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Wholly original RETRIEVE-D1 defining-criterion TEST; primary W classify 25 from complete positive divisor set {1,5,25}. Different 13 worked example, odd-number misconception on 9, boundary 1, inverse category-to-card transfer. No source rights, QRT acceptance or release.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED",
+      "title": "Wholly authored positive-divisor classification task",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
+      "edition": "2026-10-12 D1 original TEST",
+      "section": "Prime/composite/neither definition and countercases",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Original authored examples only; no examination-source rights claimed",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Prime exactly two distinct positive divisors",
+        "Composite more than two distinct positive divisors",
+        "The number one is neither"
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Source-rights-safe author-created D1 representation task",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-TEST-IMO182-D1-RETR-GRID",
+      "title": "Prime, composite and neither from complete positive-divisor lists",
+      "topic": "Elementary number classification",
+      "intrinsic_badge": "EASY",
+      "badge_reason": "Single defining-criterion decision, no factoring demanded.",
+      "depth_overlay": "FOUNDATION",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES",
+      "conventions": [
+        {
+          "id": "prime",
+          "statement": "A positive integer is prime exactly when it has two distinct positive divisors."
+        },
+        {
+          "id": "composite",
+          "statement": "A positive integer is composite when it has more than two distinct positive divisors."
+        },
+        {
+          "id": "one",
+          "statement": "The positive integer 1 has one positive divisor and is neither prime nor composite."
+        },
+        {
+          "id": "complete",
+          "statement": "A divisor card is complete and contains no duplicate positive divisors."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION",
+      "action": "Classify a positive integer from a COMPLETE positive-divisor card by the defining divisor-count criterion.",
+      "success_criterion": "Choose prime/composite/neither from the count; rule out the oddness heuristic and reverse-select a card satisfying prime.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-TEST-IMO182-D1-RETR-DIVISOR-COUNT",
+      "title": "Discriminate prime, composite and one by the exact divisor-count condition",
+      "bucket_id": "BUCKET-TEST-IMO182-D1-RETR-GRID",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION",
+      "intrinsic_badge": "EASY",
+      "badge_reason": "One classifying act from a supplied complete factor card.",
+      "entry_assumptions": [
+        "Understand positive divisibility and a list of distinct divisors.",
+        "The displayed list is complete and excludes unseen factors.",
+        "Categories are prime, composite, or neither."
+      ],
+      "inferential_jump": "Retrieve the exact count-of-distinct-divisors criterion, avoiding the superficial 'odd implies prime' heuristic.",
+      "teaching_path": [
+        {
+          "id": "RETR-D1-TC-1",
+          "action": "Recognize a COMPLETE positive-divisor card and count its DISTINCT entries.",
+          "why_valid": "Definition uses the full set of distinct positive divisors, not repeated multiplication factors.",
+          "inputs": [
+            "Complete divisor card"
+          ],
+          "output": "A distinct divisor count",
+          "role": "DECLARE",
+          "source_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+        },
+        {
+          "id": "RETR-D1-TC-2",
+          "action": "Prime means EXACTLY TWO distinct positive divisors; composite means MORE than TWO; 1 has only ONE and is neither.",
+          "why_valid": "The three cases partition positive integers by the defining conditions.",
+          "inputs": [
+            "Distinct divisor count"
+          ],
+          "output": "The appropriate category",
+          "role": "TRANSFORM",
+          "source_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+        },
+        {
+          "id": "RETR-D1-TC-3",
+          "action": "Work a separate example: 13 has the complete list {1,13}, thus has two distinct positive divisors and is prime.",
+          "why_valid": "13 has no other positive divisors; exactly two meets the prime criterion.",
+          "inputs": [
+            "Complete divisor set for 13"
+          ],
+          "output": "13 is prime",
+          "role": "VERIFY",
+          "source_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
+      ],
+      "representation_refs": [
+        "REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "An odd positive integer must be prime.",
+          "diagnostic_prompt": "A learner calls 9 prime solely because it is odd, even though the complete positive-divisor card is {1,3,9}. Which exact count disproves the claim?",
+          "repair": "Oddness is not the defining criterion. Three distinct positive divisors mean 9 is composite."
+        },
+        {
+          "wrong_idea": "If a number is not composite, it must be prime, including 1.",
+          "diagnostic_prompt": "The complete positive-divisor list for 1 is {1}. Does one divisor meet exactly two?",
+          "repair": "One is neither prime nor composite; prime requires exactly two distinct positive divisors."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independent exit: the complete positive-divisor card for 22 is {1,2,11,22}. Classify 22 as prime, composite or neither and cite the exact count.",
+        "source_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "22 is composite.",
+          "reasoning": [
+            "The four numbers 1,2,11,22 are four distinct positive divisors.",
+            "Four is greater than two, which is the composite criterion."
+          ],
+          "check": "2×11=22 gives a nontrivial factor pair; the complete divisor card agrees.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d1/verify_retrieve.py",
+            "bindings": {
+              "number": "22",
+              "complete_divisors": "1,2,11,22",
+              "category": "COMPOSITE"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original D1 exact defining-category task: correctly worked 13, disputed odd composite 9, independent even-prime 2 boundary and inverse category-to-divisor-card transfer; independent review pending.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-IMO182-D1-RETR-COUNT-CRITERION",
+          "decision": "Retrieve and use exact cardinality of complete positive-divisor set.",
+          "step_refs": [
+            "RETR-D1-TC-1",
+            "RETR-D1-TC-2",
+            "RETR-D1-TC-3"
+          ],
+          "representation_ref": "REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Verify the count against a nontrivial factor pair or the singleton set.",
+              "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
+            }
+          ],
+          "reveal_stage_refs": [
+            "RETR-STAGE-DEFINITION",
+            "RETR-STAGE-WORKED",
+            "RETR-STAGE-BOUNDARY"
+          ],
+          "worked_anchor_ref": "Q-TEST-IMO182-D1-RETR-CORE1A-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "What is the exact criterion for PRIME rather than COMPOSITE or NEITHER?",
+        "result": "Prime exactly two distinct positive divisors; composite more than two; 1 with one divisor neither.",
+        "representation_ref": "REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A classmate claims 9 is prime because it is odd. Its complete distinct positive-divisor card is {1,3,9}. Before opening the correction, decide whether oddness proves prime and why.",
+          "defensible_answer": "No. Three distinct positive divisors make 9 composite, despite being odd."
+        },
+        "attempt": {
+          "produces": "An independently written diagnosis of the oddness claim, corrected category and a new boundary decision.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Reject oddness as the classification criterion.",
+              "evidence_of": "Uses count rather than parity."
+            },
+            {
+              "criterion": "Use the definition to identify the correct class.",
+              "evidence_of": "Three distinct divisors, more than two, composite."
+            }
+          ],
+          "accepted": [
+            "9 is composite because 1,3,9 are three distinct positive divisors. Being odd does not imply prime."
+          ],
+          "rejected": [
+            "Odd numbers are prime, so 9 is prime."
+          ],
+          "task": {
+            "prompt": "A learner writes: '9 is prime because it is odd.' The complete positive-divisor set is {1,3,9}. Explain whether this criterion works, and independently name the correct category before revealing the reconstruction.",
+            "givens": [
+              "Divisors displayed are complete.",
+              "Prime requires exactly two distinct positive divisors.",
+              "Composite requires more than two distinct positive divisors."
+            ],
+            "representation_ref": "REP-TEST-IMO182-D1-RETR-ERROR-CLAIM",
+            "stage_refs": [
+              "RETR-ERROR-CARD"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Does the defining condition test oddness, or the exact positive-divisor count?",
+              "why_this_ask": "Separates near-neighbour familiarity from the criterion.",
+              "from_step_ref": "RETR-D1-TC-1"
+            },
+            {
+              "ask": "Count distinct divisors on 9's complete card. Does that match the prime requirement?",
+              "why_this_ask": "Uses a falsifying case instead of announcing the answer.",
+              "from_step_ref": "RETR-D1-TC-2"
+            },
+            {
+              "ask": "Which category contains positive integers with more than two positive divisors?",
+              "why_this_ask": "Learner reconstructs the replacement rule.",
+              "from_step_ref": "RETR-D1-TC-3"
+            }
+          ],
+          "differs_from_teaching_path": "A correct 13 card is explained in Core1A; Core1B starts from a classmate's incorrect oddness shortcut for 9 and asks the learner to falsify it using a complete factor list."
+        },
+        "boundary_test": {
+          "prompt": "Changed case: the positive integer 2 has the COMPLETE distinct-positive-divisor set {1,2}. Is it PRIME, COMPOSITE or NEITHER? Explain why its evenness does not decide the classification. Commit before checking.",
+          "answer": "PRIME. It has exactly two distinct positive divisors, 1 and 2. Although 2 is even, divisor count rather than oddness defines primality.",
+          "confirms": "Checks repaired defining rule on an even prime not previously answered in the worked 13 or odd composite 9."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT",
+      "expression": "A prime has exactly two distinct positive divisors; a composite has more than two; 1 has exactly one.",
+      "meaning": "Category depends on the count in a complete distinct-positive-divisor set, not oddness.",
+      "symbols": [
+        {
+          "symbol": "n",
+          "meaning": "Positive integer being classified",
+          "unit_or_domain": "positive integers"
+        },
+        {
+          "symbol": "d(n)",
+          "meaning": "Count of distinct positive divisors of n",
+          "unit_or_domain": "integer count"
+        }
+      ],
+      "conditions": [
+        "n is a positive integer",
+        "The provided divisor card is complete and distinct"
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-RETR-D1-TC-1",
+          "action": "Recognize a COMPLETE positive-divisor card and count its DISTINCT entries.",
+          "why_valid": "Definition uses the full set of distinct positive divisors, not repeated multiplication factors.",
+          "inputs": [
+            "Complete divisor card"
+          ],
+          "output": "A distinct divisor count",
+          "role": "DECLARE"
+        },
+        {
+          "id": "DERIV-RETR-D1-TC-2",
+          "action": "Prime means EXACTLY TWO distinct positive divisors; composite means MORE than TWO; 1 has only ONE and is neither.",
+          "why_valid": "The three cases partition positive integers by the defining conditions.",
+          "inputs": [
+            "Distinct divisor count"
+          ],
+          "output": "The appropriate category",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "DERIV-RETR-D1-TC-3",
+          "action": "Work a separate example: 13 has the complete list {1,13}, thus has two distinct positive divisors and is prime.",
+          "why_valid": "13 has no other positive divisors; exactly two meets the prime criterion.",
+          "inputs": [
+            "Complete divisor set for 13"
+          ],
+          "output": "13 is prime",
+          "role": "VERIFY"
+        }
+      ],
+      "limits": [
+        "An odd number may be composite, as 9 is.",
+        "One is neither prime nor composite.",
+        "A partial divisor card does not establish primality."
+      ],
+      "checks": [
+        "5 times 5 equals 25.",
+        "9 has proper divisor 3.",
+        "13 has no proper divisor.",
+        "One has only divisor 1."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>d</mi><mo>(</mo><mi>n</mi><mo>)</mo><mo>=</mo><mn>2</mn></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES",
+      "kind": "TABLE_OF_VALUES",
+      "purpose": "Complete divisor-count definition and different 13 example",
+      "required_elements": [
+        "prime exactly two",
+        "composite more than two",
+        "13 has {1,13}"
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
+      ],
+      "read_order": [
+        "Read category definition, later a separate worked 13 and the 1 exception."
+      ],
+      "instance_constraints": [
+        "Complete positive-divisor lists only.",
+        "Do not reveal a protected class choice or highlight the correct card in initial stage.",
+        "No official exam identity."
+      ],
+      "accessibility": [
+        "Each number and divisor is present in visible and readable text.",
+        "SVG title and description contain only the givens, never the protected category choice.",
+        "Color alone never distinguishes alternatives."
+      ],
+      "misleading_alternatives": [
+        "Highlight the correct category or card before commitment.",
+        "Treat parity rather than positive-divisor count as the criterion."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/retrieve-criterion-stages.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-TEST-IMO182-D1-RETR-DIVISOR-COUNT",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-RETR-COUNT-CRITERION"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/retrieve-criterion-stages.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Distinct complete positive divisors",
+            "caption": "Count before classifying; the target remains learner-owned."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Complete positive-divisor card",
+          "symbol": "d(n)",
+          "in_words": "All entries are distinct positive divisors; classification is the task, not visual decoration."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RETR-STAGE-DEFINITION",
+          "label": "Count distinct divisors",
+          "purpose": "Introduce complete divisor cards and count definition, but not the assessment card 25.",
+          "visible_elements": [
+            "COMPLETE positive-divisor card",
+            "distinct count"
+          ]
+        },
+        {
+          "id": "RETR-STAGE-WORKED",
+          "label": "Worked different example",
+          "purpose": "Illustrate two-divisor 13 prime without answering the 25 exercise.",
+          "visible_elements": [
+            "13",
+            "1",
+            "13",
+            "prime"
+          ]
+        },
+        {
+          "id": "RETR-STAGE-BOUNDARY",
+          "label": "One-divisor exception",
+          "purpose": "Teach the excluded singleton 1, not the 25 exercise.",
+          "visible_elements": [
+            "1",
+            "neither"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-RETR-DIVISOR-GIVEN",
+      "kind": "TABLE_OF_VALUES",
+      "purpose": "Unclassified positive-divisor card for 25",
+      "required_elements": [
+        "25",
+        "1,5,25",
+        "no category marked"
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
+      ],
+      "read_order": [
+        "Read the complete factor list, then classify it independently."
+      ],
+      "instance_constraints": [
+        "Complete positive-divisor lists only.",
+        "Do not reveal a protected class choice or highlight the correct card in initial stage.",
+        "No official exam identity."
+      ],
+      "accessibility": [
+        "Each number and divisor is present in visible and readable text.",
+        "SVG title and description contain only the givens, never the protected category choice.",
+        "Color alone never distinguishes alternatives."
+      ],
+      "misleading_alternatives": [
+        "Highlight the correct category or card before commitment.",
+        "Treat parity rather than positive-divisor count as the criterion."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/retrieve-core2a-card-safe.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-RETR-DIVISOR-GIVEN",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-IMO182-D1-RETR-CORE2A-DIVISOR-CATEGORY",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-RETR-DIVISOR-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/retrieve-core2a-card-safe.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Distinct complete positive divisors",
+            "caption": "Count before classifying; the target remains learner-owned."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Complete positive-divisor card",
+          "symbol": "{1,5,25}",
+          "in_words": "All entries are distinct positive divisors; classification is the task, not visual decoration."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RETR-QA-CARD",
+          "label": "Unclassified 25 card",
+          "purpose": "Display the complete divisor-card givens for 25 with no category chosen.",
+          "visible_elements": [
+            "25",
+            "1",
+            "5",
+            "25"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-RETR-ERROR-CLAIM",
+      "kind": "TABLE_OF_VALUES",
+      "purpose": "Classmate wrong prime claim for 9",
+      "required_elements": [
+        "odd 9",
+        "{1,3,9}",
+        "claim: prime?"
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
+      ],
+      "read_order": [
+        "Read disputed oddness rule and count its complete positive-divisor list."
+      ],
+      "instance_constraints": [
+        "Complete positive-divisor lists only.",
+        "Do not reveal a protected class choice or highlight the correct card in initial stage.",
+        "No official exam identity."
+      ],
+      "accessibility": [
+        "Each number and divisor is present in visible and readable text.",
+        "SVG title and description contain only the givens, never the protected category choice.",
+        "Color alone never distinguishes alternatives."
+      ],
+      "misleading_alternatives": [
+        "Highlight the correct category or card before commitment.",
+        "Treat parity rather than positive-divisor count as the criterion."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/retrieve-core1b-claim-safe.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-RETR-ERROR-CLAIM",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-TEST-IMO182-D1-RETR-DIVISOR-COUNT",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-RETR-ERROR-CLAIM"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/retrieve-core1b-claim-safe.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Distinct complete positive divisors",
+            "caption": "Count before classifying; the target remains learner-owned."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Complete positive-divisor card",
+          "symbol": "{1,3,9}",
+          "in_words": "All entries are distinct positive divisors; classification is the task, not visual decoration."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RETR-ERROR-CARD",
+          "label": "Disputed 9 claim",
+          "purpose": "Present the classmate's oddness claim and complete divisor data with no correction.",
+          "visible_elements": [
+            "9",
+            "1",
+            "3",
+            "9"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-RETR-CARDS-GIVEN",
+      "kind": "TABLE_OF_VALUES",
+      "purpose": "Three unmarked complete divisor cards",
+      "required_elements": [
+        "A {1}",
+        "B {1,23}",
+        "C {1,5,25}"
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
+      ],
+      "read_order": [
+        "Choose the uniquely compatible complete prime card."
+      ],
+      "instance_constraints": [
+        "Complete positive-divisor lists only.",
+        "Do not reveal a protected class choice or highlight the correct card in initial stage.",
+        "No official exam identity."
+      ],
+      "accessibility": [
+        "Each number and divisor is present in visible and readable text.",
+        "SVG title and description contain only the givens, never the protected category choice.",
+        "Color alone never distinguishes alternatives."
+      ],
+      "misleading_alternatives": [
+        "Highlight the correct category or card before commitment.",
+        "Treat parity rather than positive-divisor count as the criterion."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/retrieve-core2b-cards-safe.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-RETR-CARDS-GIVEN",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-IMO182-D1-RETR-CORE2B-CATEGORY-TO-CARD",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-RETR-CARDS-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/retrieve-core2b-cards-safe.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Distinct complete positive divisors",
+            "caption": "Count before classifying; the target remains learner-owned."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Complete positive-divisor card",
+          "symbol": "A/B/C",
+          "in_words": "All entries are distinct positive divisors; classification is the task, not visual decoration."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RETR-QB-CARDS",
+          "label": "Three candidate divisor cards",
+          "purpose": "Present A, B and C unmarked so learner chooses the one matching PRIME.",
+          "visible_elements": [
+            "A {1}",
+            "B {1,23}",
+            "C {1,5,25}"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
+      "title": "Defining divisor-count classification and category-to-card selection",
+      "capability_refs": [
+        "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION"
+      ],
+      "solution_structure": [
+        "Read a COMPLETE distinct positive-divisor set.",
+        "Count distinct entries.",
+        "Recall exactly-two versus more-than-two versus one.",
+        "Choose category and verify with a factor if needed."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Criterion supplied.",
+        "representation_translation": "Read full divisor cards.",
+        "reasoning_steps": "One defining-criterion decision.",
+        "novelty": "Inverse category-to-card selection."
+      },
+      "safe_variations": [
+        "Different complete positive-divisor cards.",
+        "Given class, choose compatible card."
+      ],
+      "transfer_boundaries": [
+        "No incomplete divisor list proves primality.",
+        "One is neither category."
+      ],
+      "common_wrong_routes": [
+        "Odd implies prime.",
+        "One is prime.",
+        "Divisor repetitions count more than once."
+      ],
+      "item_refs": [
+        "Q-TEST-IMO182-D1-RETR-CORE1A-WORKED",
+        "Q-TEST-IMO182-D1-RETR-CORE2A-DIVISOR-CATEGORY",
+        "Q-TEST-IMO182-D1-RETR-CORE2B-CATEGORY-TO-CARD"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 original RETRIEVE TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "RETRIEVE",
+          "secondary": [],
+          "basis": "A worked category from the exact defining condition."
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-RETR-CORE1A-WORKED",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED",
+      "original_identifier": "AUTHORED-D1-RETR-13-WORKED",
+      "stem": "Worked example: the COMPLETE distinct-positive-divisor set of 13 is {1,13}. Identify the category and why.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "The divisor card is complete.",
+        "Prime has exactly two distinct positive divisors.",
+        "This worked 13 is not the assessment number 25."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "13 is PRIME.",
+        "reasoning": [
+          "13 has the two distinct positive divisors 1 and 13.",
+          "Exactly two satisfies the definition of prime."
+        ],
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-IMO182-D1-RETR-WORKED-13",
+            "kind": "DECIDE",
+            "action": "Classify the complete two-divisor set of 13 as prime.",
+            "why_valid": "Exactly two distinct positive divisors is the prime criterion.",
+            "inputs": [
+              "{1,13}"
+            ],
+            "output": "PRIME"
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-IMO182-D1-RETR-WORKED-13",
+        "check": "No integer from 2 through 12 divides 13.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES",
+        "safe_ref": "REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES",
+        "bound_ref": "REP-TEST-IMO182-D1-RETR-DIVISOR-STAGES",
+        "stage_refs": [
+          "RETR-STAGE-DEFINITION",
+          "RETR-STAGE-WORKED",
+          "RETR-STAGE-BOUNDARY"
+        ]
+      },
+      "repair_ref": "RETR-D1-TC-2",
+      "failure_signal": "Count all distinct positive divisors rather than choosing from oddness.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
+        "closure": "Authored TEST only. This item alone does not establish independent QRT acceptance."
+      },
+      "independent_check": {
+        "statement": "Verify 13 has exactly 1 and 13 as its complete distinct positive divisor list.",
+        "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 1,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 0,
+          "reasoning_chain_length": 0,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "A distinct worked definition-to-category example.",
+        "component_evidence": {
+          "concept_model_selection": "None.",
+          "representation_translation": "None.",
+          "reasoning_chain_length": "One criterion.",
+          "algebra_computational_load": "No search.",
+          "trap_exception_sensitivity": "The singleton 1 is an excluded boundary."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 original RETRIEVE TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "RETRIEVE",
+          "secondary": [],
+          "basis": "Recall and use the defining condition from complete set; only one classification."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Use count of distinct positive divisors to choose COMPOSITE.",
+          "common_wrong_route": "Odd 25 is mistaken for prime."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "RET-D1-QA-DECIDE"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "RET-D1-QA-DECIDE"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-RETR-CORE2A-DIVISOR-CATEGORY",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED",
+      "original_identifier": "AUTHORED-RET-D1-25-COMPLETE-CARD",
+      "stem": "The COMPLETE list of DISTINCT POSITIVE divisors of 25 is {1, 5, 25}. Choose PRIME, COMPOSITE or NEITHER. Cite the exact defining divisor-count criterion; do not decide by oddness.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "25 is positive and the list is complete.",
+        "All listed divisors are distinct.",
+        "Do not use parity as the classification rule.",
+        "Wholly AUTHORED TEST; no official exam source."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-RETR-DIVISOR-GIVEN"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "25 is COMPOSITE.",
+        "reasoning": [
+          "There are three distinct positive divisors: 1,5,25.",
+          "Exactly two means prime; more than two means composite.",
+          "Three is more than two, so 25 is composite."
+        ],
+        "reasoning_route": [
+          {
+            "id": "RET-D1-QA-COUNT",
+            "kind": "REPRESENT",
+            "action": "Count distinct divisors 1,5,25.",
+            "why_valid": "The supplied list is explicitly complete and distinct.",
+            "inputs": [
+              "{1,5,25}"
+            ],
+            "output": "Three distinct positive divisors."
+          },
+          {
+            "id": "RET-D1-QA-DECIDE",
+            "kind": "DECIDE",
+            "action": "Classify 25 as composite from its count of three.",
+            "why_valid": "More than two positive divisors is precisely the composite condition.",
+            "inputs": [
+              "Count=3",
+              "Prime count=2",
+              "Composite count>2"
+            ],
+            "output": "COMPOSITE"
+          },
+          {
+            "id": "RET-D1-QA-CHECK",
+            "kind": "VERIFY",
+            "action": "Check 5×5=25 gives a nontrivial divisor.",
+            "why_valid": "The divisor 5 is distinct from both 1 and 25.",
+            "inputs": [
+              "25"
+            ],
+            "output": "5×5=25"
+          }
+        ],
+        "crux_move_ref": "RET-D1-QA-DECIDE",
+        "check": "5×5=25 shows a nontrivial factor, independently confirming composite.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "The full positive-divisor card is provided. Count DISTINCT entries before selecting a category; do not use oddness.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "RET-D1-QA-COUNT"
+        },
+        {
+          "text": "Compare the count with exactly two for prime, more than two for composite and one for neither. Choose the category yourself.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "RET-D1-QA-DECIDE"
+        },
+        {
+          "text": "After your written attempt, recheck the threshold and whether a proper positive factor of the number exists.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "RET-D1-QA-DECIDE"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-RETR-DIVISOR-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-RETR-DIVISOR-GIVEN",
+        "bound_ref": null,
+        "stage_refs": [
+          "RETR-QA-CARD"
+        ]
+      },
+      "repair_ref": "RETR-D1-TC-2",
+      "failure_signal": "The exact number of distinct positive divisors, not oddness, decides prime/composite.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
+        "closure": "Authored TEST only. This item alone does not establish independent QRT acceptance."
+      },
+      "independent_check": {
+        "statement": "5×5=25 is a nontrivial factor; compare it with the complete card.",
+        "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 0,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Complete divisor set and category definitions supplied, leaving one meaningful classification. Reading a complete divisor card into a category contributes one representation-translation dimension.",
+        "component_evidence": {
+          "concept_model_selection": "No governing model choice.",
+          "representation_translation": "Translate the complete positive-divisor card into a category using its distinct-entry count.",
+          "reasoning_chain_length": "One classification.",
+          "algebra_computational_load": "No divisor search needed.",
+          "trap_exception_sensitivity": "Odd composite number traps surface classification."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 original TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "RETRIEVE",
+          "secondary": [],
+          "basis": "Select matching complete divisor card from the prime definition."
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-RETR-CORE2B-CATEGORY-TO-CARD",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED",
+      "original_identifier": "AUTHORED-RET-D1-CATEGORY-TO-CARD",
+      "stem": "CHANGED TASK: You are GIVEN the category PRIME. Exactly one COMPLETE divisor card matches. Select A, B or C and cite the defining property. A: number 1 has {1}. B: number 23 has {1,23}. C: number 25 has {1,5,25}.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Cards list ALL distinct positive divisors.",
+        "Start from the category and select its matching example.",
+        "Authored TEST item; not an official exam question."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-RETR-CARDS-GIVEN"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Card B, the unique two-divisor card.",
+        "reasoning": [
+          "A has one; B has two; C has three distinct positive divisors.",
+          "Prime requires exactly two; therefore B."
+        ],
+        "reasoning_route": [
+          {
+            "id": "RET-D1-QB-COUNT",
+            "kind": "REPRESENT",
+            "action": "Count distinct positive divisors on A, B and C.",
+            "why_valid": "Cards are complete.",
+            "inputs": [
+              "A {1}",
+              "B {1,23}",
+              "C {1,5,25}"
+            ],
+            "output": "1,2,3"
+          },
+          {
+            "id": "RET-D1-QB-SELECT",
+            "kind": "DECIDE",
+            "action": "Choose B for PRIME.",
+            "why_valid": "B alone has exactly two distinct positive divisors.",
+            "inputs": [
+              "prime criterion",
+              "counts 1,2,3"
+            ],
+            "output": "B"
+          },
+          {
+            "id": "RET-D1-QB-CHECK",
+            "kind": "VERIFY",
+            "action": "Reject A singleton and C three-divisor composite.",
+            "why_valid": "Neither alternative has exactly two positive divisors.",
+            "inputs": [
+              "A",
+              "C"
+            ],
+            "output": "B unique"
+          }
+        ],
+        "crux_move_ref": "RET-D1-QB-SELECT",
+        "check": "A is neither and C composite, so B is unique.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-DIVISOR-CLASSIFICATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Count distinct entries in each complete card. Prime means exactly two, not simply odd.",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-RETR-CARDS-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-RETR-CARDS-GIVEN",
+        "bound_ref": null,
+        "stage_refs": [
+          "RETR-QB-CARDS"
+        ]
+      },
+      "repair_ref": "RETR-D1-TC-2",
+      "failure_signal": "One is neither; 25 has three positive divisors.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-RETR-DIVISOR-CARDS",
+        "closure": "Authored TEST only. This item alone does not establish independent QRT acceptance."
+      },
+      "independent_check": {
+        "statement": "Exclude one-divisor A and three-divisor C.",
+        "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 0,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Single criterion-to-card selection. Reading a complete divisor card into a category contributes one representation-translation dimension.",
+        "component_evidence": {
+          "concept_model_selection": "No governing model choice.",
+          "representation_translation": "Translate the complete positive-divisor card into a category using its distinct-entry count.",
+          "reasoning_chain_length": "One classification.",
+          "algebra_computational_load": "No divisor search needed.",
+          "trap_exception_sensitivity": "Odd composite number traps surface classification."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-IMO182-D1-RETR-CORE2A-DIVISOR-CATEGORY"
+        ],
+        "statement": "Given PRIME, choose the compatible complete divisor-card example instead of categorizing a given number.",
+        "invariant": "Exact divisor-count criterion.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-IMO182-D1-RETR-CORE2A-DIVISOR-CATEGORY",
+            "MIC-TEST-IMO182-D1-RETR-DIVISOR-COUNT:exit_task",
+            "MIC-TEST-IMO182-D1-RETR-DIVISOR-COUNT:boundary_test"
+          ],
+          "why_new": "Given a category rather than a card, choose the eligible complete set from A/B/C; this also tests one-divisor near-neighbour. Distinct from the even-prime 2 boundary task."
+        },
+        "protected_move_ref": "RET-D1-QB-SELECT"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-TEST-IMO182-D1-RETR-PAIR-CONSTRUCTION",
+      "title": "Exact divisor-count definition and near-neighbour repair",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-IMO182-D1-RETR-DIVISOR-COUNT"
+      ],
+      "entry_needs": [
+        "Positive divisibility and reading complete factor lists."
+      ],
+      "learner_actions": [
+        "Define exactly-two divisor criterion.",
+        "Work a distinct 13 example.",
+        "Independently classify 25.",
+        "Diagnose false oddness prime heuristic on 9.",
+        "Test the excluded 1 boundary."
+      ],
+      "help_plan": [
+        "Core1A shows worked 13 but not the 25 category.",
+        "Core2A H1/H2 do not classify 25; H3 only after attempted written answer."
+      ],
+      "reveal_plan": "Initial figures contain only givens for 25 and A/B/C; Core1A stages teach distinct 13; attempt gates control outcomes.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED",
+          "purpose": "Original authored classification teaching",
+          "reason": "No copied official sample content."
+        }
+      ],
+      "when_not_suitable": [
+        "Incomplete divisor lists do not establish PRIME.",
+        "Independent academic D1 acceptance not given."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "AUTHORED_TEST",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false,
+    "grade9v3:core_maturity": "TEST_CANDIDATE"
+  },
+  "data": [
+    {
+      "id": "DATUM-TEST-IMO182-D1-RETR-COUNT-CRITERION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>d</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></math>",
+      "symbol": "d(n)",
+      "meaning": "Complete divisor-count definition and different 13 example",
+      "locator": "AUTHOR_CREATED: IMO182 RETRIEVE D1 original divisor-count cards"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-RETR-DIVISOR-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>d</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></math>",
+      "symbol": "25",
+      "meaning": "Unclassified positive-divisor card for 25",
+      "locator": "AUTHOR_CREATED: IMO182 RETRIEVE D1 original divisor-count cards"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-RETR-ERROR-CLAIM",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>d</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></math>",
+      "symbol": "9",
+      "meaning": "Classmate wrong prime claim for 9",
+      "locator": "AUTHOR_CREATED: IMO182 RETRIEVE D1 original divisor-count cards"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-RETR-CARDS-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>d</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></math>",
+      "symbol": "A/B/C",
+      "meaning": "Three unmarked complete divisor cards",
+      "locator": "AUTHOR_CREATED: IMO182 RETRIEVE D1 original divisor-count cards"
+    }
+  ]
+}

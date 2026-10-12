@@ -1,0 +1,1400 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-SYNTHESIZE-D1-AUTHORED",
+  "title": "Original TEST: choose unit-first dependent order for repeated mixed motifs",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "One meaningful learner-owned dependency: calculate both parts of a whole repeated motif before multiplying all copies. Primary four units, three blue plus two red = 4×(3+2)=20; distinct worked three badges 3×(2+1)=9; wrong two motifs 4+2×2=8 vs 2×(4+2)=12; boundary 2×(1+3)=8; inverse 20÷(3+2)=4 blocks. D1 band provisional; no Owner QRT acceptance or source rights.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+      "title": "Original complete mixed-motif dependency ordering",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
+      "edition": "12 October 2026 original D1 SYNTHESIZE TEST",
+      "section": "Join all parts of a repeated motif before counting copies",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Wholly authored item and original dot diagrams; no official exam source rights",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "n complete copies with a+b parts per copy produce n×(a+b) pieces.",
+        "a+n×b repeats only the b component and misses first-part copies.",
+        "Given total T and unit components a,b, whole copy count is T÷(a+b) if divisible."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Wholly authored one-dependency D1 proposal, not official mathematics-olympiad source.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-TEST-IMO182-D1-SYN-GRID",
+      "title": "Whole unit must precede repeat count",
+      "topic": "Dependency of addition and multiplication for identical two-part motifs",
+      "intrinsic_badge": "EASY",
+      "badge_reason": "One protected dependency/ordering W; academic band review pending",
+      "depth_overlay": "FOUNDATION",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-IMO182-D1-SYN-GROUP-STAGES",
+      "conventions": [
+        {
+          "statement": "One complete motif includes both stated component types.",
+          "id": "n"
+        },
+        {
+          "statement": "Every part of a complete unit repeats in every identical copy.",
+          "id": "k"
+        },
+        {
+          "statement": "Total across copies is n×(a+b), not a+n×b.",
+          "id": "total"
+        },
+        {
+          "statement": "Inverse block count uses size of the entire mixed unit.",
+          "id": "inverse"
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-TEST-IMO182-D1-SYN-EQUAL-GROUPS-APPLICATION",
+      "action": "Synthesize a correct order: join two component counts into a complete motif and then repeat the entire unit.",
+      "success_criterion": "Select 4×(3+2)=20 for four two-part units; reject 3+2×4 as counting only one type repeatedly; check 12 blue+8 red.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+      "title": "Determine dependency between completing one motif and repeating all of it",
+      "bucket_id": "BUCKET-TEST-IMO182-D1-SYN-GRID",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-SYN-EQUAL-GROUPS-APPLICATION",
+      "intrinsic_badge": "EASY",
+      "badge_reason": "Provisional one-decision D1 SYNTHESIZE; independent reviewer may reclassify if actual W requires D2.",
+      "entry_assumptions": [
+        "Can add two small whole numbers.",
+        "Can multiply repeated identical units.",
+        "Every repeated complete unit contains both component kinds."
+      ],
+      "inferential_jump": "Choose to combine three blue plus two red as a whole unit before multiplying by four; not only multiply red.",
+      "teaching_path": [
+        {
+          "action": "Identify both components that belong to a whole motif.",
+          "why_valid": "Both kinds recur in every exact copy.",
+          "output": "one full mixed motif",
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "SYN-D1-TC-1",
+          "inputs": [
+            "n identical containers",
+            "k items per container"
+          ],
+          "role": "DECLARE"
+        },
+        {
+          "action": "Work a DIFFERENT example: three badges each with two circles and one triangle; count the whole badge before repeating three times.",
+          "why_valid": "A full badge is 2+1=3 pieces.",
+          "output": "3×(2+1)=9 pieces",
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "SYN-D1-TC-2",
+          "inputs": [
+            "3 badges",
+            "2 circles and 1 triangle in each badge"
+          ],
+          "role": "TRANSFORM"
+        },
+        {
+          "action": "Check three complete badges contain six circles plus three triangles.",
+          "why_valid": "Separate part-counts sum to the same nine pieces.",
+          "inputs": [
+            "3 badges",
+            "2 circles+1 triangle each"
+          ],
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "SYN-D1-TC-3",
+          "output": "9 badge pieces",
+          "role": "VERIFY"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-SYN-EQUAL-GROUPS"
+      ],
+      "representation_refs": [
+        "REP-TEST-IMO182-D1-SYN-GROUP-STAGES"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-IMO182-D1-SYN-EQUAL-GROUPS"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Count the first kind once, multiply only the second kind.",
+          "diagnostic_prompt": "Two motifs each have four stars and two crescents. A peer wrote 4+2×2=8. Which stars did they miss?",
+          "repair": "A whole motif has 4+2 pieces; two complete motifs have 2×(4+2)=12, not eight."
+        },
+        {
+          "wrong_idea": "A singleton component is not repeated with the rest.",
+          "diagnostic_prompt": "Two complete motifs each have one square and three triangles. Does 1+3×2 count both squares?",
+          "repair": "Full motif 1+3=4, repeated twice gives 2×(1+3)=8, not seven."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independent exit: FOUR bookmarks each contain ONE circle AND TWO stripes. Choose the expression that counts every bookmark part, then give a total.",
+        "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "4×(1+2)=12 bookmark pieces.",
+          "reasoning": [
+            "One bookmark has one circle and two stripes.",
+            "All three parts repeat four times.",
+            "Four circles and eight stripes make 12."
+          ],
+          "check": "4+8=12 total.",
+          "verification_status": "CHECKED_BY_AUTHOR",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "reasoning_route": [
+            {
+              "id": "SYN-D1-EXIT-ORDER",
+              "kind": "DECIDE",
+              "action": "Combine the circle and stripes in one bookmark before counting four complete bookmarks.",
+              "why_valid": "All bookmark parts repeat in every bookmark.",
+              "inputs": [
+                "4 bookmarks",
+                "1 circle and 2 stripes per bookmark"
+              ],
+              "output": "4×(1+2)=12"
+            }
+          ],
+          "crux_move_ref": "SYN-D1-EXIT-ORDER"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d1/verify_synthesize.py",
+            "bindings": {
+              "copies": "4",
+              "first": "1",
+              "second": "2",
+              "expected_total": "12"
+            }
+          }
+        }
+      },
+      "research_contribution": "Novel authored operation-order SYNTHESIZE-D1 proposed one-decision W, separate stages/false claim, singleton boundary, reverse block-count transfer; independent academic review mandatory.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+          "decision": "Determine which unit-size decision must precede multiplying complete motifs.",
+          "step_refs": [
+            "SYN-D1-TC-1",
+            "SYN-D1-TC-2",
+            "SYN-D1-TC-3"
+          ],
+          "representation_ref": "REP-TEST-IMO182-D1-SYN-GROUP-STAGES",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-TEST-IMO182-D1-SYN-EQUAL-GROUPS"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Count both component types across all full copies and compare with grouped total.",
+              "check_type": "MOTIF_COMPONENT_COUNT"
+            }
+          ],
+          "reveal_stage_refs": [
+            "SYN-STAGE-UNIT-IDEA",
+            "SYN-STAGE-WORKED-2-1",
+            "SYN-STAGE-WORKED-CHECK"
+          ],
+          "worked_anchor_ref": "Q-TEST-IMO182-D1-SYN-CORE1A-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "What should be counted before repeating an identical two-part motif?",
+        "result": "Join BOTH parts into a full unit, then repeat that unit.",
+        "representation_ref": "REP-TEST-IMO182-D1-SYN-GROUP-STAGES"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "Two complete motifs each with four stars and two crescents: would 4+2×2=8 include both star sets?",
+          "defensible_answer": "No; it counts four stars once and twice the crescents."
+        },
+        "attempt": {
+          "produces": "Learner identifies an omitted repeated component, repairs full-unit-first grouping and checks singleton boundary.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Notice missed repeats of first kind.",
+              "evidence_of": "All four stars should appear in each motif."
+            },
+            {
+              "criterion": "Choose correct whole-unit grouping.",
+              "evidence_of": "2×(4+2)=12."
+            }
+          ],
+          "accepted": [
+            "2×(4+2)=12 because all six shapes repeat in each motif."
+          ],
+          "rejected": [
+            "There are 4+2×2=8 shapes across the two complete mixed motifs."
+          ],
+          "task": {
+            "prompt": "Two identical motifs each have FOUR stars and TWO crescents. A student wrote 4+(2×2)=8 shapes. Decide whether all parts recur; write a corrected expression and explain it. Commit before checking.",
+            "givens": [
+              "2 identical complete motifs",
+              "4 stars and 2 crescents in EACH"
+            ],
+            "representation_ref": "REP-TEST-IMO182-D1-SYN-ERROR-CLAIM",
+            "stage_refs": [
+              "SYN-D1-WRONG-CLAIM"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Which two part-kinds occur in EACH motif?",
+              "why_this_ask": "Identifies the complete repeated unit.",
+              "from_step_ref": "SYN-D1-TC-1"
+            },
+            {
+              "ask": "How do you count one entire motif?",
+              "why_this_ask": "Establishes dependency quantity.",
+              "from_step_ref": "SYN-D1-TC-2"
+            },
+            {
+              "ask": "How many whole motifs recur, and does the expression show it?",
+              "why_this_ask": "Repairs precedence.",
+              "from_step_ref": "SYN-D1-TC-3"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A teaches 3 badges of 2 circles and 1 triangle; Core1B challenges false 2-motif precedence and distinct boundary."
+        },
+        "boundary_test": {
+          "prompt": "CHANGED: TWO motifs each have ONE square and THREE triangles. Write the total expression; explain why 1+3×2 omits a square.",
+          "answer": "2×(1+3)=8, not 1+3×2=7.",
+          "confirms": "Singleton first part still repeats in each complete motif."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+      "expression": "T=n×k",
+      "meaning": "n repeated complete motifs each have a+b parts; T=n×(a+b).",
+      "symbols": [
+        {
+          "symbol": "T",
+          "meaning": "Total number of objects",
+          "unit_or_domain": "whole objects"
+        },
+        {
+          "symbol": "n",
+          "meaning": "Number of equally filled groups",
+          "unit_or_domain": "positive integer count of complete repeated units"
+        },
+        {
+          "symbol": "k",
+          "meaning": "Number of objects per group",
+          "unit_or_domain": "positive integer parts-per-full-unit"
+        }
+      ],
+      "conditions": [
+        "All motifs reproduce both types exactly.",
+        "Part counts are nonnegative integers with a+b positive.",
+        "Inverse count is whole if total divisible by a+b."
+      ],
+      "derivation": [
+        {
+          "action": "Identify both components that belong to a whole motif.",
+          "why_valid": "Both kinds recur in every exact copy.",
+          "output": "one full mixed motif",
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "DERIV-SYN-D1-TC-1",
+          "inputs": [
+            "n identical containers",
+            "k items per container"
+          ],
+          "role": "DECLARE"
+        },
+        {
+          "action": "Work a DIFFERENT example: three badges each with two circles and one triangle; count the whole badge before repeating three times.",
+          "why_valid": "A full badge is 2+1=3 pieces.",
+          "output": "3×(2+1)=9 pieces",
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "DERIV-SYN-D1-TC-2",
+          "inputs": [
+            "3 badges",
+            "2 circles and one triangle per badge"
+          ],
+          "role": "TRANSFORM"
+        },
+        {
+          "action": "Check three complete badges contain six circles plus three triangles.",
+          "why_valid": "Separate part-counts sum to the same nine pieces.",
+          "inputs": [
+            "3 badges",
+            "2 circles+1 triangle each"
+          ],
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "DERIV-SYN-D1-TC-3",
+          "output": "9 badge pieces",
+          "role": "VERIFY"
+        }
+      ],
+      "limits": [
+        "Mixed-unit structure must be identical in every repeat.",
+        "Zero full-unit size cannot be inverted.",
+        "All component types of the unit must repeat together."
+      ],
+      "checks": [
+        "Three badges each of 2 circles+1 triangle give 3×(2+1)=9.",
+        "Four banner units each of 3 blue+2 red give 4×(3+2)=20.",
+        "Two motifs each of 4 stars+2 crescents give 2×(4+2)=12, not eight.",
+        "Unknown full blocks of 3+2 parts from 20 marks give 20÷5=4."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>T</mi><mo>=</mo><mi>n</mi><mo>×</mo><mi>k</mi></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-SYN-GROUP-STAGES",
+      "kind": "STAGED_SYMBOLIC_FACTORS",
+      "purpose": "Staged different example: three mixed badges with two circles and one triangle.",
+      "required_elements": [
+        "Introduce all pieces of one badge.",
+        "Worked one badge then three badges.",
+        "Count 6 circles plus 3 triangles."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-SYN-EQUAL-GROUPS"
+      ],
+      "read_order": [
+        "Read all given parts.",
+        "Construct complete unit.",
+        "Use or check unit count."
+      ],
+      "instance_constraints": [
+        "Initial SVG shows no target whole-unit grouping.",
+        "No target numeric answer before attempt.",
+        "Original source-safe drawing."
+      ],
+      "accessibility": [
+        "SVG title and desc restate givens safely.",
+        "Text labels as well as color.",
+        "Visible text 28 SVG units at viewBox 760."
+      ],
+      "misleading_alternatives": [
+        "Precomputed answer.",
+        "One component counted while others omitted."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/synthesize-unit-staged.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-SYN-GROUP-STAGES",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-SYN-GROUP-SYNTHESIZE"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/synthesize-unit-staged.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Original mixed-motif learner stage",
+            "caption": "Read given components; decide operation order yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Whole mixed motif parts",
+          "symbol": "3×(2+1)",
+          "in_words": "Staged different example: three mixed badges with two circles and one triangle."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SYN-STAGE-UNIT-IDEA",
+          "label": "Identify group roles",
+          "purpose": "Staged different example: three mixed badges with two circles and one triangle.",
+          "visible_elements": [
+            "Introduce all pieces of one badge.",
+            "Worked one badge then three badges.",
+            "Count 6 circles plus 3 triangles."
+          ]
+        },
+        {
+          "id": "SYN-STAGE-WORKED-2-1",
+          "label": "Different worked synthesis",
+          "purpose": "Staged different example: three mixed badges with two circles and one triangle.",
+          "visible_elements": [
+            "Introduce all pieces of one badge.",
+            "Worked one badge then three badges.",
+            "Count 6 circles plus 3 triangles."
+          ]
+        },
+        {
+          "id": "SYN-STAGE-WORKED-CHECK",
+          "label": "Check worked total",
+          "purpose": "Staged different example: three mixed badges with two circles and one triangle.",
+          "visible_elements": [
+            "Introduce all pieces of one badge.",
+            "Worked one badge then three badges.",
+            "Count 6 circles plus 3 triangles."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-SYN-GROUP-COUNTS-GIVEN",
+      "kind": "GIVEN_CARDS",
+      "purpose": "Safe target givens only: four banner units, 3 blue and 2 red in each.",
+      "required_elements": [
+        "Four complete copies.",
+        "3 blue and 2 red in each copy.",
+        "No parentheses, total or chosen expression."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-SYN-EQUAL-GROUPS"
+      ],
+      "read_order": [
+        "Read all given parts.",
+        "Construct complete unit.",
+        "Use or check unit count."
+      ],
+      "instance_constraints": [
+        "Initial SVG shows no target whole-unit grouping.",
+        "No target numeric answer before attempt.",
+        "Original source-safe drawing."
+      ],
+      "accessibility": [
+        "SVG title and desc restate givens safely.",
+        "Text labels as well as color.",
+        "Visible text 28 SVG units at viewBox 760."
+      ],
+      "misleading_alternatives": [
+        "Precomputed answer.",
+        "One component counted while others omitted."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/synthesize-core2a-banner.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-SYN-GROUP-COUNTS-GIVEN",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-SYN-GROUP-COUNTS-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/synthesize-core2a-banner.v1.svg",
+          "scene": {
+            "kind": "GIVEN_CARDS",
+            "frame": "Original mixed-motif learner stage",
+            "caption": "Read given components; decide operation order yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Whole mixed motif parts",
+          "symbol": "4 units of 3 blue+2 red",
+          "in_words": "Safe target givens only: four banner units, 3 blue and 2 red in each."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SYN-D1-QA-BANNER",
+          "label": "Inspect unsolved complete banner unit",
+          "purpose": "Safe target givens only: four banner units, 3 blue and 2 red in each.",
+          "visible_elements": [
+            "Four complete copies.",
+            "3 blue and 2 red in each copy.",
+            "No parentheses, total or chosen expression."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-SYN-ERROR-CLAIM",
+      "kind": "DIAGNOSTIC_PROMPT",
+      "purpose": "Unrepaired false precedence claim: two motifs, 4 stars and 2 crescents each.",
+      "required_elements": [
+        "Two complete motifs.",
+        "False 4+2×2=8 expression.",
+        "No corrected twelve revealed."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-SYN-EQUAL-GROUPS"
+      ],
+      "read_order": [
+        "Read all given parts.",
+        "Construct complete unit.",
+        "Use or check unit count."
+      ],
+      "instance_constraints": [
+        "Initial SVG shows no target whole-unit grouping.",
+        "No target numeric answer before attempt.",
+        "Original source-safe drawing."
+      ],
+      "accessibility": [
+        "SVG title and desc restate givens safely.",
+        "Text labels as well as color.",
+        "Visible text 28 SVG units at viewBox 760."
+      ],
+      "misleading_alternatives": [
+        "Precomputed answer.",
+        "One component counted while others omitted."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/synthesize-core1b-precedence.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-SYN-ERROR-CLAIM",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-SYN-ERROR-CLAIM"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/synthesize-core1b-precedence.v1.svg",
+          "scene": {
+            "kind": "DIAGNOSTIC_PROMPT",
+            "frame": "Original mixed-motif learner stage",
+            "caption": "Read given components; decide operation order yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Whole mixed motif parts",
+          "symbol": "2 motifs of 4 stars+2 crescents",
+          "in_words": "Unrepaired false precedence claim: two motifs, 4 stars and 2 crescents each."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SYN-D1-WRONG-CLAIM",
+          "label": "Disputed add-the-counts claim",
+          "purpose": "Unrepaired false precedence claim: two motifs, 4 stars and 2 crescents each.",
+          "visible_elements": [
+            "Two complete motifs.",
+            "False 4+2×2=8 expression.",
+            "No corrected twelve revealed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-SYN-INVERSE-GROUPS-GIVEN",
+      "kind": "GIVEN_CARDS",
+      "purpose": "New inverse givens only: twenty marks, 3 dots and 2 strokes per unknown block.",
+      "required_elements": [
+        "Total twenty marks.",
+        "Each block two part types.",
+        "Unknown number of blocks."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-SYN-EQUAL-GROUPS"
+      ],
+      "read_order": [
+        "Read all given parts.",
+        "Construct complete unit.",
+        "Use or check unit count."
+      ],
+      "instance_constraints": [
+        "Initial SVG shows no target whole-unit grouping.",
+        "No target numeric answer before attempt.",
+        "Original source-safe drawing."
+      ],
+      "accessibility": [
+        "SVG title and desc restate givens safely.",
+        "Text labels as well as color.",
+        "Visible text 28 SVG units at viewBox 760."
+      ],
+      "misleading_alternatives": [
+        "Precomputed answer.",
+        "One component counted while others omitted."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/synthesize-core2b-inverse.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-SYN-INVERSE-GROUPS-GIVEN",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-IMO182-D1-SYN-CORE2B-INVERSE-TRAY-COUNT",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-SYN-INVERSE-GROUPS-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/synthesize-core2b-inverse.v1.svg",
+          "scene": {
+            "kind": "GIVEN_CARDS",
+            "frame": "Original mixed-motif learner stage",
+            "caption": "Read given components; decide operation order yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Whole mixed motif parts",
+          "symbol": "20 marks; 3+2 each block",
+          "in_words": "New inverse givens only: twenty marks, 3 dots and 2 strokes per unknown block."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SYN-D1-QB-REVERSE",
+          "label": "Unknown groups",
+          "purpose": "New inverse givens only: twenty marks, 3 dots and 2 strokes per unknown block.",
+          "visible_elements": [
+            "Total twenty marks.",
+            "Each block two part types.",
+            "Unknown number of blocks."
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+      "title": "Dependent operations in repeated two-part motif",
+      "capability_refs": [
+        "CAP-TEST-IMO182-D1-SYN-EQUAL-GROUPS-APPLICATION"
+      ],
+      "solution_structure": [
+        "Identify one WHOLE motif with two parts.",
+        "Choose operation order that completes entire unit.",
+        "Repeat all units and verify by separate part counts."
+      ],
+      "demand_dimensions": {
+        "model_choice": "The known motif-repeat family is given; choose a unit-first dependency rather than a new model.",
+        "representation_translation": "Preserve both kinds as one whole unit across repeated copies.",
+        "reasoning_steps": "One ordering bridge: combine both components before multiplying entire units.",
+        "novelty": "Core2B reverses from total and full-unit size to unknown number of blocks."
+      },
+      "safe_variations": [
+        "Change part counts and copy number.",
+        "Reverse unknown number of blocks."
+      ],
+      "transfer_boundaries": [
+        "Changes in component structure between copies invalidate a constant full-unit size.",
+        "Zero complete-unit size makes reverse division undefined."
+      ],
+      "common_wrong_routes": [
+        "Count first part once plus repeated second part."
+      ],
+      "item_refs": [
+        "Q-TEST-IMO182-D1-SYN-CORE1A-WORKED",
+        "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
+        "Q-TEST-IMO182-D1-SYN-CORE2B-INVERSE-TRAY-COUNT"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 original SYNTHESIZE TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "SYNTHESIZE",
+          "secondary": [],
+          "basis": "One ordering/dependency bridge before elementary computation; reviewer adjudicates D1 vs D2."
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-SYN-CORE1A-WORKED",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-SYN-CORE1A-WORKED",
+      "stem": "DIFFERENT worked example: THREE badges each have TWO circles AND ONE triangle. Complete a badge unit, then repeat it three times and check the count.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Every mentioned group contains exactly the stated number of whole objects.",
+        "Each identical repeated unit contains BOTH stated part kinds.",
+        "Original TEST context and diagrams; no examination source."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-SYN-GROUP-STAGES"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "3×(2+1)=9 badge pieces.",
+        "reasoning": [
+          "Each whole badge has 2 circles plus 1 triangle.",
+          "Repeat all 3 pieces in each of 3 badges.",
+          "Nine total pieces."
+        ],
+        "reasoning_route": [
+          {
+            "id": "SYN-D1-WORK-UNIT-2-1",
+            "kind": "DECIDE",
+            "action": "Combine both badge parts then repeat whole badge.",
+            "why_valid": "Every component of one whole unit must be included per copy.",
+            "inputs": [
+              "whole unit parts",
+              "number of copies"
+            ],
+            "output": "3×(2+1)=9",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          }
+        ],
+        "crux_move_ref": "SYN-D1-WORK-UNIT-2-1",
+        "check": "6 circles+3 triangles=9.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-SYN-EQUAL-GROUPS-APPLICATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-SYN-GROUP-STAGES",
+        "safe_ref": "REP-TEST-IMO182-D1-SYN-GROUP-STAGES",
+        "bound_ref": "REP-TEST-IMO182-D1-SYN-GROUP-STAGES",
+        "stage_refs": [
+          "SYN-STAGE-UNIT-IDEA",
+          "SYN-STAGE-WORKED-2-1",
+          "SYN-STAGE-WORKED-CHECK"
+        ]
+      },
+      "repair_ref": "SYN-D1-TC-2",
+      "failure_signal": "Make one group for each container and count its members, not add count-of-groups plus members-per-group.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+        "closure": "AUTHORED TEST candidate, not independent academic acceptance."
+      },
+      "independent_check": {
+        "statement": "Count all dots and verify a repeated addition of the stated number per group.",
+        "check_type": "EQUAL_GROUP_COUNT"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
+        "component_evidence": {
+          "concept_model_selection": "Known repeat motif.",
+          "representation_translation": "No separate translation bridge.",
+          "reasoning_chain_length": "Choose one order/dependency.",
+          "algebra_computational_load": "Addition and small multiplication.",
+          "trap_exception_sensitivity": "False precedence separately diagnosed."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 original SYNTHESIZE TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "SYNTHESIZE",
+          "secondary": [],
+          "basis": "One ordering/dependency bridge before elementary computation; reviewer adjudicates D1 vs D2."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Select 4×(3+2) whole-unit-first dependency, not just compute twenty.",
+          "common_wrong_route": "3+2×4=11 repeats only red components."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "SYN-D1-QA-ORDER"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "SYN-D1-QA-ORDER"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
+      "stem": "A classroom banner repeats an identical tile unit FOUR times. Each unit contains THREE blue squares AND TWO red squares. Write an expression counting ALL tiles. Decide the operation order, explain why and calculate the total.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Every mentioned group contains exactly the stated number of whole objects.",
+        "Each identical repeated unit contains BOTH stated part kinds.",
+        "Original TEST context and diagrams; no examination source."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-SYN-GROUP-COUNTS-GIVEN"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "4×(3+2)=20 banner tiles.",
+        "reasoning": [
+          "The one complete unit has BOTH 3 blue and 2 red squares.",
+          "Choose to combine full-unit parts before repeating all units.",
+          "Four full units give 4×(3+2)=20 tiles.",
+          "The wrong 3+2×4=11 repeats only the red part."
+        ],
+        "reasoning_route": [
+          {
+            "id": "SYN-D1-QA-READ",
+            "kind": "REPRESENT",
+            "action": "Read both parts of each unit.",
+            "why_valid": "Every component of one whole unit must be included per copy.",
+            "inputs": [
+              "whole unit parts",
+              "number of copies"
+            ],
+            "output": "one unit",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          },
+          {
+            "id": "SYN-D1-QA-ORDER",
+            "kind": "DECIDE",
+            "action": "Choose unit-first operation order, preserving both component types.",
+            "why_valid": "Every component of one whole unit must be included per copy.",
+            "inputs": [
+              "whole unit parts",
+              "number of copies"
+            ],
+            "output": "4×(3+2)=20",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          },
+          {
+            "id": "SYN-D1-QA-CHECK",
+            "kind": "VERIFY",
+            "action": "Count 12 blue and 8 red tiles independently.",
+            "why_valid": "Every component of one whole unit must be included per copy.",
+            "inputs": [
+              "whole unit parts",
+              "number of copies"
+            ],
+            "output": "20",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          }
+        ],
+        "crux_move_ref": "SYN-D1-QA-ORDER",
+        "check": "4×3+4×2=12+8=20.",
+        "acceptable_alternatives": [
+          "(3+2)×4=20",
+          "4×3+4×2=20"
+        ],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-SYN-EQUAL-GROUPS-APPLICATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Which two kinds belong to ONE complete unit? Name both, without a total yet.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "SYN-D1-QA-READ"
+        },
+        {
+          "text": "When a whole unit repeats, are both component kinds copied each time? Decide how your expression accounts for them.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "SYN-D1-QA-ORDER"
+        },
+        {
+          "text": "After attempting the ordering, count each part kind separately to check.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "SYN-D1-QA-ORDER"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-SYN-GROUP-COUNTS-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-SYN-GROUP-COUNTS-GIVEN",
+        "bound_ref": null,
+        "stage_refs": [
+          "SYN-D1-QA-BANNER"
+        ]
+      },
+      "repair_ref": "SYN-D1-TC-2",
+      "failure_signal": "Make one group for each container and count its members, not add count-of-groups plus members-per-group.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+        "closure": "AUTHORED TEST candidate, not independent academic acceptance."
+      },
+      "independent_check": {
+        "statement": "Count all dots and verify a repeated addition of the stated number per group.",
+        "check_type": "EQUAL_GROUP_COUNT"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
+        "component_evidence": {
+          "concept_model_selection": "Known repeat motif.",
+          "representation_translation": "No separate translation bridge.",
+          "reasoning_chain_length": "Choose one order/dependency.",
+          "algebra_computational_load": "Addition and small multiplication.",
+          "trap_exception_sensitivity": "False precedence separately diagnosed."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 original SYNTHESIZE TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "SYNTHESIZE",
+          "secondary": [],
+          "basis": "One ordering/dependency bridge before elementary computation; reviewer adjudicates D1 vs D2."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Compute whole two-part size before dividing the total by that complete unit.",
+          "common_wrong_route": "Divide twenty marks by only three dots or two strokes, omitting part of each whole block."
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-SYN-CORE2B-INVERSE-TRAY-COUNT",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-SYN-CORE2B-INVERSE-TRAY-COUNT",
+      "stem": "CHANGED INVERSE: A wall artwork uses TWENTY marks total in identical full blocks. Every block has THREE blue dots AND TWO red strokes. The NUMBER OF BLOCKS is unknown. Decide the order needed to recover that number, write an equation and check all parts.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Every mentioned group contains exactly the stated number of whole objects.",
+        "Each identical repeated unit contains BOTH stated part kinds.",
+        "Original TEST context and diagrams; no examination source."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-SYN-INVERSE-GROUPS-GIVEN"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "One full block contains 3+2=5 marks; 20÷(3+2)=4 whole blocks.",
+        "reasoning": [
+          "Complete-unit size is 3+2=5 marks.",
+          "Unknown number of full blocks must partition total into identical whole units.",
+          "20÷5=4 blocks.",
+          "Four blocks with 3 blue and 2 red give 20."
+        ],
+        "reasoning_route": [
+          {
+            "id": "SYN-D1-QB-GIVEN",
+            "kind": "REPRESENT",
+            "action": "Read whole total and component counts.",
+            "why_valid": "Every component of one whole unit must be included per copy.",
+            "inputs": [
+              "whole unit parts",
+              "number of copies"
+            ],
+            "output": "unknown complete blocks",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          },
+          {
+            "id": "SYN-D1-QB-REVERSE",
+            "kind": "DECIDE",
+            "action": "Build full two-part unit size before dividing total.",
+            "why_valid": "Every component of one whole unit must be included per copy.",
+            "inputs": [
+              "whole unit parts",
+              "number of copies"
+            ],
+            "output": "20÷(3+2)=4",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          },
+          {
+            "id": "SYN-D1-QB-CHECK",
+            "kind": "VERIFY",
+            "action": "Rebuild four complete units.",
+            "why_valid": "Every component of one whole unit must be included per copy.",
+            "inputs": [
+              "whole unit parts",
+              "number of copies"
+            ],
+            "output": "4×5=20",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          }
+        ],
+        "crux_move_ref": "SYN-D1-QB-REVERSE",
+        "check": "4×(3+2)=20 marks.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-SYN-EQUAL-GROUPS-APPLICATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "What is known about one COMPLETE block, and what must you count before finding the unknown number of blocks?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-SYN-INVERSE-GROUPS-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-SYN-INVERSE-GROUPS-GIVEN",
+        "bound_ref": null,
+        "stage_refs": [
+          "SYN-D1-QB-REVERSE"
+        ]
+      },
+      "repair_ref": "SYN-D1-TC-2",
+      "failure_signal": "Make one group for each container and count its members, not add count-of-groups plus members-per-group.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-SYN-EQUAL-GROUPS",
+        "closure": "AUTHORED TEST candidate, not independent academic acceptance."
+      },
+      "independent_check": {
+        "statement": "Recover 4 whole blocks using 20÷(3+2), then count twelve blue dots and eight red strokes to verify twenty.",
+        "check_type": "INVERSE_GROUP_COUNT"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
+        "component_evidence": {
+          "concept_model_selection": "Known repeat motif.",
+          "representation_translation": "No separate translation bridge.",
+          "reasoning_chain_length": "Choose one order/dependency.",
+          "algebra_computational_load": "Addition and small multiplication.",
+          "trap_exception_sensitivity": "False precedence separately diagnosed."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION"
+        ],
+        "protected_move_ref": "SYN-D1-QB-REVERSE",
+        "statement": "Forward: known number of complete mixed motifs, each with two parts, find total. Reverse: known total and both part counts, find unknown number of complete repeat blocks.",
+        "invariant": "Whole-unit relation T=n×(a+b), not a+n×b.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
+            "MIC-TEST-IMO182-D1-SYN-EQUAL-GROUPS:exit_task",
+            "MIC-TEST-IMO182-D1-SYN-EQUAL-GROUPS:boundary_test"
+          ],
+          "why_new": "The unknown changes from total number of parts to number of full mixed-part blocks. One whole-unit size must be assembled before reverse division."
+        }
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-TEST-IMO182-D1-SYN-PAIR-CONSTRUCTION",
+      "title": "Separate badge worked, motif repair, full-unit application and reverse block count",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-IMO182-D1-SYN-EQUAL-GROUPS"
+      ],
+      "entry_needs": [
+        "Add and multiply small whole numbers."
+      ],
+      "learner_actions": [
+        "Construct a distinct whole-unit badge.",
+        "Repair a false repeated-part expression.",
+        "Independently order two operations for a new banner.",
+        "Recover unknown repeat count from a fixed total."
+      ],
+      "help_plan": [
+        "Core1A teaches a DIFFERENT 3×(2+1)=9 badge construction, not the assessed banner.",
+        "Core2A H1/H2 orient whole-unit composition but leave the grouped expression/order W; H3 AFTER_ATTEMPT."
+      ],
+      "reveal_plan": "Primary initial SVG prints only four units, three blue and two red parts per unit; no parentheses, operation or result. Core1A shows separate worked three-badge stages.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "purpose": "Wholly original equal-group scenario",
+          "reason": "No official source text or graphics copied."
+        }
+      ],
+      "when_not_suitable": [
+        "If a fair W cannot fit D1, request academic RECLASSIFY rather than count acceptance."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "AUTHORED_TEST",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false,
+    "grade9v3:core_maturity": "TEST_CANDIDATE"
+  },
+  "data": [
+    {
+      "id": "DATUM-TEST-IMO182-D1-SYN-GROUP-SYNTHESIZE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>T</mi><mo>=</mo><mi>n</mi><mo>×</mo><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>)</mo></mrow></math>",
+      "symbol": "3×(2+1)",
+      "meaning": "Staged different example: three mixed badges with two circles and one triangle.",
+      "locator": "ORIGINAL_AUTHOR_TEST_D1_SYNTHESIZE"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-SYN-GROUP-COUNTS-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "Four units; three blue plus two red in each",
+      "symbol": "4 units; 3+2 tiles each",
+      "meaning": "Safe target givens only: four banner units, 3 blue and 2 red in each.",
+      "locator": "ORIGINAL_AUTHOR_TEST_D1_SYNTHESIZE"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-SYN-ERROR-CLAIM",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "Peer's false arithmetic: 4+2×2=8",
+      "symbol": "FALSE 4+2×2=8",
+      "meaning": "Unrepaired false precedence claim: two motifs, 4 stars and 2 crescents each.",
+      "locator": "ORIGINAL_AUTHOR_TEST_D1_SYNTHESIZE"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-SYN-INVERSE-GROUPS-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "20 marks; 3+2 in each block",
+      "symbol": "20 marks, 3+2 per block",
+      "meaning": "New inverse givens only: twenty marks, 3 dots and 2 strokes per unknown block.",
+      "locator": "ORIGINAL_AUTHOR_TEST_D1_SYNTHESIZE"
+    }
+  ]
+}

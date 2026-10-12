@@ -1,0 +1,1373 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-EXPLAIN-D1-AUTHORED",
+  "title": "Original TEST: explain why two odd groups together have even cardinality",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Original AUTHORED TEST explanation of odd-plus-odd parity by counter pairing. Target is explanation, not mere classification. Separate worked 3+5, Core1B wrong odd-preservation rule on 5+7, independent exit 11+13, Core2A 7+9, and changed inverse Core2B even 18 with odd group 7. No official exam source, QRT admission or release.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED",
+      "title": "Original authored odd-group counter-pair explanation",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
+      "edition": "2026-10-12 independent D1 explanation TEST",
+      "section": "Counters in pairs and leftover units",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Original author-created arithmetic explanations and diagrams; no official examination stem or figure copied",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "An odd number consists of full pairs plus one unpaired unit.",
+        "Two odd groups each contribute one unpaired unit, which form one new complete pair.",
+        "An even group has all counters arranged in complete pairs."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Source-rights-safe author-created D1 representation task",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-TEST-IMO182-D1-EXP-GRID",
+      "title": "Why combining two odd groups makes an even group",
+      "topic": "Parity explained through pairs and leftovers",
+      "intrinsic_badge": "EASY",
+      "badge_reason": "The learner explains a single causal pairing mechanism from supplied counter structure.",
+      "depth_overlay": "FOUNDATION",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-IMO182-D1-EXP-ODD-PAIR-STAGES",
+      "conventions": [
+        {
+          "id": "even",
+          "statement": "An even collection can be partitioned into pairs with no counter left over."
+        },
+        {
+          "id": "odd",
+          "statement": "An odd collection can be partitioned into pairs with exactly one counter remaining."
+        },
+        {
+          "id": "joining",
+          "statement": "When two collections are joined, none of their counters disappear."
+        },
+        {
+          "id": "independent_reason",
+          "statement": "The learner must say what happens to the two leftover counters, not merely add the numbers."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-TEST-IMO182-D1-EXP-ODD-PAIR-EXPLANATION",
+      "action": "Explain the mechanism that combines two single leftovers into one complete pair when odd groups are joined.",
+      "success_criterion": "State that each odd group consists of complete pairs and one leftover, show the two leftovers pair together, and therefore justify an even combined group without relying only on arithmetic result.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-TEST-IMO182-D1-EXP-ODD-PAIRING",
+      "title": "Explain the pairing mechanism behind an even total from two odd groups",
+      "bucket_id": "BUCKET-TEST-IMO182-D1-EXP-GRID",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-EXP-ODD-PAIR-EXPLANATION",
+      "intrinsic_badge": "EASY",
+      "badge_reason": "One causal sentence about the two leftovers, supported by a pair diagram.",
+      "entry_assumptions": [
+        "An even group divides into pairs with no leftover.",
+        "An odd group divides into pairs with exactly one leftover.",
+        "Joining collections preserves counter quantity."
+      ],
+      "inferential_jump": "Explain that the one leftover from EACH odd group combines into a new pair, so every combined counter belongs to a pair.",
+      "teaching_path": [
+        {
+          "id": "EXP-D1-TC-1",
+          "action": "Describe odd groups by complete pairs plus one leftover counter, without classifying a target sum.",
+          "why_valid": "This is the counter-pair definition of odd cardinality.",
+          "inputs": [
+            "Odd collection"
+          ],
+          "output": "Complete pairs and one lone counter",
+          "role": "DECLARE",
+          "source_ref": "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+        },
+        {
+          "id": "EXP-D1-TC-2",
+          "action": "Join a different worked set of 3 and 5 counters and place their two lone counters together.",
+          "why_valid": "The worked groups each have one remainder, which forms a complete new pair.",
+          "inputs": [
+            "3 = one pair and one leftover",
+            "5 = two pairs and one leftover"
+          ],
+          "output": "Four complete pairs, no leftover",
+          "role": "TRANSFORM",
+          "source_ref": "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+        },
+        {
+          "id": "EXP-D1-TC-3",
+          "action": "Check the worked result by listing the four complete pairs and explaining why none is unpaired.",
+          "why_valid": "Three plus five has eight counters forming four whole pairs; this illustrates the mechanism without answering the 7+9 task.",
+          "inputs": [
+            "3+5"
+          ],
+          "output": "8 even from four pairs",
+          "role": "VERIFY",
+          "source_ref": "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-EXP-ODD-PAIRING"
+      ],
+      "representation_refs": [
+        "REP-TEST-IMO182-D1-EXP-ODD-PAIR-STAGES"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Odd plus odd must be odd because both starting groups are odd.",
+          "diagnostic_prompt": "A student claims 5+7 is odd because each group has one lone counter. What happens to the two lone counters after joining?",
+          "repair": "The two lone counters pair with each other. No lone counter remains; 5+7 is even."
+        },
+        {
+          "wrong_idea": "An even result only needs a numerical sum; no explanation of grouping is necessary.",
+          "diagnostic_prompt": "If you write 7+9=16, what counter structure establishes WHY sixteen is even?",
+          "repair": "Identify three pairs plus one lone in seven, four pairs plus one lone in nine, then the lone pair. All eight final pairs are complete."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independent exit: explain why combining groups of 11 and 13 counters gives an even group, describing the fate of both unpaired counters (not merely computing the sum).",
+        "source_ref": "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "Each odd group leaves one counter; those two become another pair, so 11+13 forms 12 complete pairs, an even total.",
+          "reasoning": [
+            "11 counters form five pairs plus one lone.",
+            "13 counters form six pairs plus one lone.",
+            "The lone counters join to make the twelfth pair.",
+            "All 24 counters now belong to complete pairs; 24 is even."
+          ],
+          "check": "11+13=24 and 24=2×12 validates the count after the pairing explanation.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d1/verify_explain.py",
+            "bindings": {
+              "left_group": "11",
+              "right_group": "13",
+              "expected_total": "24",
+              "expected_pairs": "12"
+            }
+          }
+        }
+      },
+      "research_contribution": "D1 mechanism explanation via counter-pair remainders, mistaken odd+odd reasoning, independent 11+13 exit and inverse 18/7 completion; no QRT acceptance claimed.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-IMO182-D1-EXP-PAIR-MECHANISM",
+          "decision": "Explain why two unpaired odd-group counters become a complete pair when groups join.",
+          "step_refs": [
+            "EXP-D1-TC-1",
+            "EXP-D1-TC-2",
+            "EXP-D1-TC-3"
+          ],
+          "representation_ref": "REP-TEST-IMO182-D1-EXP-ODD-PAIR-STAGES",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-TEST-IMO182-D1-EXP-ODD-PAIRING"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Account for every counter as a whole pair and check 3+5=8 in the worked example.",
+              "check_type": "PAIR_COMPLETENESS"
+            }
+          ],
+          "reveal_stage_refs": [
+            "EXP-STAGE-PAIR-RULE",
+            "EXP-STAGE-WORKED-3-5",
+            "EXP-STAGE-GENERAL-CHECK"
+          ],
+          "worked_anchor_ref": "Q-TEST-IMO182-D1-EXP-CORE1A-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "What single event explains an even total from joining two odd groups?",
+        "result": "Each odd group has one leftover counter and the two leftovers make a complete new pair.",
+        "representation_ref": "REP-TEST-IMO182-D1-EXP-ODD-PAIR-STAGES"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A classmate says 5+7 must be odd because both groups start odd. Predict what happens to the two lone counters if both groups are joined.",
+          "defensible_answer": "One leftover from each group makes a pair, so no lone counter remains."
+        },
+        "attempt": {
+          "produces": "A written diagnosis of the false oddness claim, pair-based replacement explanation, and distinct changed-givens boundary.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Locate one lone counter in each odd group.",
+              "evidence_of": "5 has two pairs+one and 7 has three pairs+one."
+            },
+            {
+              "criterion": "State what happens after groups join.",
+              "evidence_of": "Two lone counters form an extra pair, leaving an even group."
+            }
+          ],
+          "accepted": [
+            "5+7 is even because two odd groups contribute two leftover counters that pair together."
+          ],
+          "rejected": [
+            "Odd plus odd is odd just because both terms are odd.",
+            "The answer is 12 so explanation unnecessary."
+          ],
+          "task": {
+            "prompt": "A learner argues '5 plus 7 must be odd because both groups are odd'. Each odd group has complete pairs and one lone counter. Explain whether the reasoning is right and trace the two lone counters after joining. Write before opening the reconstruction.",
+            "givens": [
+              "5 is two complete pairs plus one lone.",
+              "7 is three complete pairs plus one lone.",
+              "Only completed pairs make an even group."
+            ],
+            "representation_ref": "REP-TEST-IMO182-D1-EXP-ERROR-CLAIM",
+            "stage_refs": [
+              "EXP-D1-WRONG-CLAIM"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "How many lone counters remain within each odd group before joining?",
+              "why_this_ask": "Separates the remembered word 'odd' from actual remainder structure.",
+              "from_step_ref": "EXP-D1-TC-1"
+            },
+            {
+              "ask": "When the two lone counters are together, can they complete a pair?",
+              "why_this_ask": "Tests mechanism rather than numerical calculation.",
+              "from_step_ref": "EXP-D1-TC-2"
+            },
+            {
+              "ask": "Does any counter remain unpaired after all groups are joined?",
+              "why_this_ask": "Rebuilds the rule from what is left, not from the initial categories.",
+              "from_step_ref": "EXP-D1-TC-3"
+            }
+          ],
+          "differs_from_teaching_path": "The teaching model uses correct 3+5; reconstruction starts from a false explanation about 5+7 and asks the learner to correct what happens to the unpaired counters."
+        },
+        "boundary_test": {
+          "prompt": "Changed case: combine 9 counters (four pairs plus one) with 4 counters (two whole pairs). Explain why the result is ODD using leftovers; do not merely compute 13.",
+          "answer": "The nine-counter group leaves one lone; the four-counter group contributes no lone. That single counter stays unpaired, so the joined group is odd.",
+          "confirms": "Differentiates two-odd leftovers from odd-plus-even with exactly one leftover; not a memorized 5+7 explanation."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-TEST-IMO182-D1-EXP-ODD-PAIRING",
+      "expression": "(2a+1)+(2b+1)=2(a+b+1)",
+      "meaning": "Each odd group contributes full pairs and one leftover. The two leftovers create one more pair, leaving zero unpaired counters.",
+      "symbols": [
+        {
+          "symbol": "a",
+          "meaning": "Number of complete pairs in the first odd group",
+          "unit_or_domain": "nonnegative integer"
+        },
+        {
+          "symbol": "b",
+          "meaning": "Number of complete pairs in the second odd group",
+          "unit_or_domain": "nonnegative integer"
+        }
+      ],
+      "conditions": [
+        "Each group contains an odd positive number of counters.",
+        "The counters are arranged into distinct pairs and one leftover in each group.",
+        "Joining preserves all counters."
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-EXP-D1-TC-1",
+          "action": "Describe odd groups by complete pairs plus one leftover counter, without classifying a target sum.",
+          "why_valid": "This is the counter-pair definition of odd cardinality.",
+          "inputs": [
+            "Odd collection"
+          ],
+          "output": "Complete pairs and one lone counter",
+          "role": "DECLARE"
+        },
+        {
+          "id": "DERIV-EXP-D1-TC-2",
+          "action": "Join a different worked set of 3 and 5 counters and place their two lone counters together.",
+          "why_valid": "The worked groups each have one remainder, which forms a complete new pair.",
+          "inputs": [
+            "3 = one pair and one leftover",
+            "5 = two pairs and one leftover"
+          ],
+          "output": "Four complete pairs, no leftover",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "DERIV-EXP-D1-TC-3",
+          "action": "Check the worked result by listing the four complete pairs and explaining why none is unpaired.",
+          "why_valid": "Three plus five has eight counters forming four whole pairs; this illustrates the mechanism without answering the 7+9 task.",
+          "inputs": [
+            "3+5"
+          ],
+          "output": "8 even from four pairs",
+          "role": "VERIFY"
+        }
+      ],
+      "limits": [
+        "If only one group is odd, one unpaired counter remains and the result is odd.",
+        "A numerical sum being even does not by itself explain the pairing mechanism.",
+        "The theorem is for integer counter collections, not fractions."
+      ],
+      "checks": [
+        "3+5=8 in the worked example.",
+        "7+9=16 in supported practice.",
+        "11+13=24 on the independent exit.",
+        "18 split with one group of 7 leaves 11 in an inverse test."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>(</mo><mn>2</mn><mi>a</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>+</mo><mo>(</mo><mn>2</mn><mi>b</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>=</mo><mn>2</mn><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-EXP-ODD-PAIR-STAGES",
+      "kind": "DOT_ARRAY",
+      "purpose": "Staged counter-pair mechanism using a DIFFERENT 3+5 worked example.",
+      "required_elements": [
+        "Initial meaning of odd and even via pairing.",
+        "Three and five worked groups with their lone counters in later stage.",
+        "Check complete pairs for 3+5, not 7+9."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-EXP-ODD-PAIRING"
+      ],
+      "read_order": [
+        "Read pairing rule.",
+        "Watch a different 3+5 example.",
+        "Check all eight are paired."
+      ],
+      "instance_constraints": [
+        "No pre-attempt SVG, title, alt, description or stage discloses the target explanation for seven and nine.",
+        "No learner's correct missing-subgroup mechanism is premarked in Core2B.",
+        "No copied official diagram."
+      ],
+      "accessibility": [
+        "The figure title and description identify only the givens and stage purpose.",
+        "Red/blue groups are also labeled in text, so color alone never carries meaning.",
+        "Counters are described in read order."
+      ],
+      "misleading_alternatives": [
+        "Showing the complete 7+9 final pairing before the learner's attempt.",
+        "Displaying the correct 18/7 inverse lone mechanism as a mark."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/explain-odd-pairs-staged.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-EXP-ODD-PAIR-STAGES",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-TEST-IMO182-D1-EXP-ODD-PAIRING",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-EXP-PAIR-CRITERION"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/explain-odd-pairs-staged.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Small counter groups to reason about complete pairs and lone counters",
+            "caption": "Inspect only givens; explain the pairing mechanism yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Counter groups",
+          "symbol": "P",
+          "in_words": "An odd group has one leftover; in the worked 3+5 the two leftovers pair."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "EXP-STAGE-PAIR-RULE",
+          "label": "Pairing structure",
+          "purpose": "Show the odd-group concept and unpaired counter without 7+9.",
+          "visible_elements": [
+            "odd = whole pairs + one lone",
+            "even = no lone"
+          ]
+        },
+        {
+          "id": "EXP-STAGE-WORKED-3-5",
+          "label": "Different worked example",
+          "purpose": "Show how the two leftovers in 3 and 5 form a fourth pair, never revealing the 7+9 mechanism.",
+          "visible_elements": [
+            "3 counters",
+            "5 counters",
+            "two lone markers",
+            "four pairs"
+          ]
+        },
+        {
+          "id": "EXP-STAGE-GENERAL-CHECK",
+          "label": "Worked-example check",
+          "purpose": "Check 3+5=8 consists of four complete pairs.",
+          "visible_elements": [
+            "3+5=8",
+            "4 full pairs"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-EXP-ODD-GROUPS-GIVEN",
+      "kind": "DOT_ARRAY",
+      "purpose": "Two UNSOLVED odd counter groups, red seven and blue nine, without any pairing across groups.",
+      "required_elements": [
+        "Seven distinct red counters, one group.",
+        "Nine distinct blue counters, second group.",
+        "No pair marks, target total or answer sentence."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-EXP-ODD-PAIRING"
+      ],
+      "read_order": [
+        "Count groups as given.",
+        "Commit mechanism yourself before target solution."
+      ],
+      "instance_constraints": [
+        "No pre-attempt SVG, title, alt, description or stage discloses the target explanation for seven and nine.",
+        "No learner's correct missing-subgroup mechanism is premarked in Core2B.",
+        "No copied official diagram."
+      ],
+      "accessibility": [
+        "The figure title and description identify only the givens and stage purpose.",
+        "Red/blue groups are also labeled in text, so color alone never carries meaning.",
+        "Counters are described in read order."
+      ],
+      "misleading_alternatives": [
+        "Showing the complete 7+9 final pairing before the learner's attempt.",
+        "Displaying the correct 18/7 inverse lone mechanism as a mark."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/explain-core2a-odd-sets.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-EXP-ODD-GROUPS-GIVEN",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-EXP-ODD-GROUPS-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/explain-core2a-odd-sets.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Small counter groups to reason about complete pairs and lone counters",
+            "caption": "Inspect only givens; explain the pairing mechanism yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Counter groups",
+          "symbol": "R",
+          "in_words": "The two odd groups have different colors for counting only, not an answer cue."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "EXP-D1-QA-GIVENS",
+          "label": "Two odd groups before combining",
+          "purpose": "Display ONLY the two original counter groups, before matching their lone counters or showing the final total.",
+          "visible_elements": [
+            "7 red counters",
+            "9 blue counters"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-EXP-ERROR-CLAIM",
+      "kind": "DOT_ARRAY",
+      "purpose": "Present wrong 5+7 parity reasoning as a disputed learner claim.",
+      "required_elements": [
+        "Five counters and seven counters.",
+        "A classmate's claim that odd plus odd remains odd.",
+        "No corrected answer or paired leftovers."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-EXP-ODD-PAIRING"
+      ],
+      "read_order": [
+        "Read the learner claim.",
+        "Independently decide what happens to leftovers."
+      ],
+      "instance_constraints": [
+        "No pre-attempt SVG, title, alt, description or stage discloses the target explanation for seven and nine.",
+        "No learner's correct missing-subgroup mechanism is premarked in Core2B.",
+        "No copied official diagram."
+      ],
+      "accessibility": [
+        "The figure title and description identify only the givens and stage purpose.",
+        "Red/blue groups are also labeled in text, so color alone never carries meaning.",
+        "Counters are described in read order."
+      ],
+      "misleading_alternatives": [
+        "Showing the complete 7+9 final pairing before the learner's attempt.",
+        "Displaying the correct 18/7 inverse lone mechanism as a mark."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/explain-core1b-wrong-rule.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-EXP-ERROR-CLAIM",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-TEST-IMO182-D1-EXP-ODD-PAIRING",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-EXP-ERROR-CLAIM"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/explain-core1b-wrong-rule.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Small counter groups to reason about complete pairs and lone counters",
+            "caption": "Inspect only givens; explain the pairing mechanism yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Counter groups",
+          "symbol": "?",
+          "in_words": "The student claim is intentionally unverified and must be challenged."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "EXP-D1-WRONG-CLAIM",
+          "label": "Classmate's wrong rule",
+          "purpose": "Display a disputed 5+7 claim without its corrected outcome.",
+          "visible_elements": [
+            "5 counter group",
+            "7 counter group",
+            "student says result stays odd"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-EXP-INVERSE-GROUPS-GIVEN",
+      "kind": "DOT_ARRAY",
+      "purpose": "Present inverse 18-total and 7-known 11-remaining groups without a causal answer.",
+      "required_elements": [
+        "18 total counters, all pairable.",
+        "7 counters in first group.",
+        "11 counters left in second group.",
+        "No pre-marked lone pairing between subgroups."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-EXP-ODD-PAIRING"
+      ],
+      "read_order": [
+        "Read entire-group parity and given partition.",
+        "Explain why the other subgroup must have a lone."
+      ],
+      "instance_constraints": [
+        "No pre-attempt SVG, title, alt, description or stage discloses the target explanation for seven and nine.",
+        "No learner's correct missing-subgroup mechanism is premarked in Core2B.",
+        "No copied official diagram."
+      ],
+      "accessibility": [
+        "The figure title and description identify only the givens and stage purpose.",
+        "Red/blue groups are also labeled in text, so color alone never carries meaning.",
+        "Counters are described in read order."
+      ],
+      "misleading_alternatives": [
+        "Showing the complete 7+9 final pairing before the learner's attempt.",
+        "Displaying the correct 18/7 inverse lone mechanism as a mark."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/explain-core2b-inverse.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-EXP-INVERSE-GROUPS-GIVEN",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-IMO182-D1-EXP-CORE2B-INVERSE-GROUP-EXPLANATION",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-EXP-INVERSE-GROUPS-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/explain-core2b-inverse.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Small counter groups to reason about complete pairs and lone counters",
+            "caption": "Inspect only givens; explain the pairing mechanism yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Counter groups",
+          "symbol": "T",
+          "in_words": "Given count and total pairing, not the reason for missing-subgroup parity."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "EXP-D1-QB-GIVENS",
+          "label": "Inverse group givens",
+          "purpose": "Show 18 total paired counters, 7 known in first subgroup, 11 in the remainder, without visually pairing lone counters between groups.",
+          "visible_elements": [
+            "18 total counters",
+            "7 known subgroup",
+            "11 remaining subgroup"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS",
+      "title": "Parity explanations from pairing leftover counters",
+      "capability_refs": [
+        "CAP-TEST-IMO182-D1-EXP-ODD-PAIR-EXPLANATION"
+      ],
+      "solution_structure": [
+        "Recognize complete pairs plus one leftover in each odd group.",
+        "Combine groups without losing counters.",
+        "Pair the two leftover counters.",
+        "Explain that zero lone counters remain; optionally check numeric total."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Pairing model provided.",
+        "representation_translation": "Map spoken groups to pairs/leftovers then to parity.",
+        "reasoning_steps": "One causal mechanism: two single leftovers pair.",
+        "novelty": "Core2B starts from a given even total and one odd group, infers leftover structure of the second."
+      },
+      "safe_variations": [
+        "Different small odd counter groups with explicit pairing semantics.",
+        "Odd plus even as an independent changed boundary.",
+        "Inverse parity explanation of a missing group in a fixed total."
+      ],
+      "transfer_boundaries": [
+        "The mechanistic explanation must mention the two lone counters, not only state a computed even total.",
+        "The second group in inverse transfer is constrained by a fixed total and the known group."
+      ],
+      "common_wrong_routes": [
+        "Odd plus odd stays odd.",
+        "Arithmetic equality replaces causal explanation.",
+        "Assume a lone counter survives after joining two odd groups."
+      ],
+      "item_refs": [
+        "Q-TEST-IMO182-D1-EXP-CORE1A-WORKED",
+        "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION",
+        "Q-TEST-IMO182-D1-EXP-CORE2B-INVERSE-GROUP-EXPLANATION"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 original EXPLAIN TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "EXPLAIN",
+          "secondary": [],
+          "basis": "Justify parity by describing what happens to the two leftover counters, not just state an even sum."
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-EXP-CORE1A-WORKED",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-EXP-CORE1A-WORKED",
+      "stem": "Worked DIFFERENT example: one group has 3 counters, another 5. Explain why joining them makes an even group by tracking complete pairs and their two leftover counters.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Counters are distinct objects; groups can be arranged into pairs.",
+        "Even means no lone counter; odd means exactly one lone counter.",
+        "The question is original AUTHORED TEST, no organizer source."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-EXP-ODD-PAIR-STAGES"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "3 is one pair plus one lone; 5 is two pairs plus one lone. The two lone counters pair up, leaving four pairs and an even total 8.",
+        "reasoning": [
+          "Three has one pair and one lone counter.",
+          "Five has two pairs and one lone counter.",
+          "The two lone counters become a fourth pair, leaving none unpaired.",
+          "Therefore the joined set is even."
+        ],
+        "reasoning_route": [
+          {
+            "id": "EXP-D1-WORK-3-5",
+            "kind": "CONNECT",
+            "action": "Combine the two leftovers into one new pair.",
+            "why_valid": "Three and five each leave one when paired.",
+            "inputs": [
+              "3 = 2+1",
+              "5 = 4+1"
+            ],
+            "output": "Four complete pairs"
+          }
+        ],
+        "crux_move_ref": "EXP-D1-WORK-3-5",
+        "check": "3+5=8=4×2.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-EXP-ODD-PAIR-EXPLANATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-EXP-ODD-PAIR-STAGES",
+        "safe_ref": "REP-TEST-IMO182-D1-EXP-ODD-PAIR-STAGES",
+        "bound_ref": "REP-TEST-IMO182-D1-EXP-ODD-PAIR-STAGES",
+        "stage_refs": [
+          "EXP-STAGE-PAIR-RULE",
+          "EXP-STAGE-WORKED-3-5",
+          "EXP-STAGE-GENERAL-CHECK"
+        ]
+      },
+      "repair_ref": "EXP-D1-TC-2",
+      "failure_signal": "A numerical even answer is not enough: explain why the lone counters from each group become a pair.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS",
+        "closure": "Distinct taught 3+5 example is not the 7+9 assessment mechanism."
+      },
+      "independent_check": {
+        "statement": "Verify numeric total equals two times the count of complete pairs after showing the causal grouping.",
+        "check_type": "PAIR_COMPLETENESS"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "One directed causal explanation from a supplied pair model; not a multi-stage general proof.",
+        "component_evidence": {
+          "concept_model_selection": "Pair-group model and meaning supplied.",
+          "representation_translation": "Read groups into complete pairs plus one lone.",
+          "reasoning_chain_length": "Explain one linking event: two lone counters make an extra complete pair.",
+          "algebra_computational_load": "Only small whole-number counting used as optional check.",
+          "trap_exception_sensitivity": "Wrong odd+odd intuition diagnosed separately."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 original EXPLAIN TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "EXPLAIN",
+          "secondary": [],
+          "basis": "Justify parity by describing what happens to the two leftover counters, not just state an even sum."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Explain what happens to both lone counters when two odd groups are joined.",
+          "common_wrong_route": "State 7+9=16 without causal pairing or suppose both odd groups leave separate singles."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "EXP-D1-QA-MECHANISM"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "EXP-D1-QA-MECHANISM"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION",
+      "stem": "An organizer places 7 red counters and 9 blue counters into ONE collection. Without relying only on the arithmetic total, EXPLAIN why the combined collection can be arranged into complete PAIRS with NO leftover counter. Name what happens to the one unmatched counter from EACH original odd group.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Counters are distinct objects; groups can be arranged into pairs.",
+        "Even means no lone counter; odd means exactly one lone counter.",
+        "The question is original AUTHORED TEST, no organizer source."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-EXP-ODD-GROUPS-GIVEN"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Seven gives three complete pairs and one lone; nine gives four pairs and one lone. The two lone counters pair together, so eight pairs contain all 16 counters, making the total even.",
+        "reasoning": [
+          "Seven red counters can be grouped as three pairs and one lone.",
+          "Nine blue counters can be grouped as four pairs and one lone.",
+          "Pair the two leftover counters together, creating an eighth pair.",
+          "Every counter now has a partner, so the combined 16-counter group is even."
+        ],
+        "reasoning_route": [
+          {
+            "id": "EXP-D1-QA-STRUCTURE",
+            "kind": "REPRESENT",
+            "action": "Partition each odd group into full pairs and one lone.",
+            "why_valid": "Odd collections always have exactly one unmatched counter.",
+            "inputs": [
+              "7 red",
+              "9 blue"
+            ],
+            "output": "3 pairs + one; 4 pairs + one"
+          },
+          {
+            "id": "EXP-D1-QA-MECHANISM",
+            "kind": "CONNECT",
+            "action": "Explain that the two lone counters form a new complete pair, leaving zero leftovers.",
+            "why_valid": "The combination preserves both counters; they can be matched with each other.",
+            "inputs": [
+              "one lone red",
+              "one lone blue"
+            ],
+            "output": "no lone counter; complete pairs"
+          },
+          {
+            "id": "EXP-D1-QA-CHECK",
+            "kind": "VERIFY",
+            "action": "Check eight pairs account for all 16 counters.",
+            "why_valid": "Three plus four existing pairs plus the new pair equals eight.",
+            "inputs": [
+              "3 pairs",
+              "4 pairs",
+              "one new pair"
+            ],
+            "output": "8 pairs=16"
+          }
+        ],
+        "crux_move_ref": "EXP-D1-QA-MECHANISM",
+        "check": "Three plus four plus one pairs equals eight; 7+9=16 equals 2×8.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-EXP-ODD-PAIR-EXPLANATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Arrange EACH original odd group into whole pairs and identify any leftover counter; do not yet describe the combined groups.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "EXP-D1-QA-STRUCTURE"
+        },
+        {
+          "text": "The meaning of 'even' concerns whether counters can all be paired. Identify what must be established after the two groups join, without finishing the explanation.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "EXP-D1-QA-MECHANISM"
+        },
+        {
+          "text": "After recording your own mechanism, compare the two original leftover counters with the final leftover count, then verify using the total number of pairs.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "EXP-D1-QA-MECHANISM"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-EXP-ODD-GROUPS-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-EXP-ODD-GROUPS-GIVEN",
+        "bound_ref": null,
+        "stage_refs": [
+          "EXP-D1-QA-GIVENS"
+        ]
+      },
+      "repair_ref": "EXP-D1-TC-2",
+      "failure_signal": "A numerical even answer is not enough: explain why the lone counters from each group become a pair.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS",
+        "closure": "Distinct taught 3+5 example is not the 7+9 assessment mechanism."
+      },
+      "independent_check": {
+        "statement": "Verify numeric total equals two times the count of complete pairs after showing the causal grouping.",
+        "check_type": "PAIR_COMPLETENESS"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "One directed causal explanation from a supplied pair model; not a multi-stage general proof.",
+        "component_evidence": {
+          "concept_model_selection": "Pair-group model and meaning supplied.",
+          "representation_translation": "Read groups into complete pairs plus one lone.",
+          "reasoning_chain_length": "Explain one linking event: two lone counters make an extra complete pair.",
+          "algebra_computational_load": "Only small whole-number counting used as optional check.",
+          "trap_exception_sensitivity": "Wrong odd+odd intuition diagnosed separately."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 original EXPLAIN TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "EXPLAIN",
+          "secondary": [],
+          "basis": "Infer and explain the parity mechanism for a missing subgroup from a fully pairable total and a known odd subgroup; numerical subtraction is an independent check, not the explanation."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "An unmatched counter in the known odd subgroup must meet an unmatched one from the remainder to keep the whole total pairable.",
+          "common_wrong_route": "Simply write 18−7=11 or treat removing an odd subgroup as leaving even."
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-EXP-CORE2B-INVERSE-GROUP-EXPLANATION",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED",
+      "original_identifier": "AUTHORED-EXP-D1-INVERSE-18-7",
+      "stem": "INVERSE explanation: one collection has 18 counters, all arranged in 9 complete pairs. A first subgroup has 7 counters (three pairs and one leftover). The remaining subgroup has 11 counters. Explain WHY the remaining subgroup must also have ONE unmatched counter, using the pair structure of the original 18 counters, not just 18−7=11.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "The full collection has 18 counters and is perfectly pairable.",
+        "Seven are put into the first subgroup, leaving eleven in the second.",
+        "An odd count means one unmatched counter in a pairing.",
+        "This is an original TEST mechanism question."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-EXP-INVERSE-GROUPS-GIVEN"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The 7-counter subgroup has one leftover. The 18-counter total has no leftover, so the other 11-counter subgroup must also contribute one leftover to pair with it. Therefore the remaining 11 counters are odd.",
+        "reasoning": [
+          "The full group of 18 has no lone counter.",
+          "The first seven have three pairs plus one lone.",
+          "For the whole collection to have no lone counter, a lone from the remaining subgroup must pair with the first group's lone.",
+          "The remaining 11 has five pairs and one lone, agreeing with the given count."
+        ],
+        "reasoning_route": [
+          {
+            "id": "EXP-D1-QB-GIVEN",
+            "kind": "REPRESENT",
+            "action": "Use the total's pairability and the first subgroup's one leftover.",
+            "why_valid": "The total has 9 whole pairs and the first group of 7 has 3 pairs plus one.",
+            "inputs": [
+              "18 all paired",
+              "7 first group"
+            ],
+            "output": "total no leftover, first group one lone"
+          },
+          {
+            "id": "EXP-D1-QB-INVERSE",
+            "kind": "CONNECT",
+            "action": "Explain why the remaining group must have a lone counter to match the first group's leftover.",
+            "why_valid": "A lone from the first subgroup cannot disappear; since 18 has no lone, the other subgroup must supply its partner.",
+            "inputs": [
+              "one leftover in 7",
+              "no leftover in 18"
+            ],
+            "output": "remaining subgroup has one leftover"
+          },
+          {
+            "id": "EXP-D1-QB-CHECK",
+            "kind": "VERIFY",
+            "action": "Check remaining eleven as five pairs plus one lone.",
+            "why_valid": "18−7=11 and 11=2×5+1.",
+            "inputs": [
+              "18",
+              "7"
+            ],
+            "output": "11 odd"
+          }
+        ],
+        "crux_move_ref": "EXP-D1-QB-INVERSE",
+        "check": "18−7=11=2×5+1; seven and eleven each leave a lone, and the two lone counters form one complete pair.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-EXP-ODD-PAIR-EXPLANATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "A group with 18 counters has no lone counter, while 7 counters have exactly one. What must be true of the final pairing after the groups are considered together?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-EXP-INVERSE-GROUPS-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-EXP-INVERSE-GROUPS-GIVEN",
+        "bound_ref": null,
+        "stage_refs": [
+          "EXP-D1-QB-GIVENS"
+        ]
+      },
+      "repair_ref": "EXP-D1-TC-1",
+      "failure_signal": "Explain how one leftover in a subgroup can coexist with zero leftover in the 18-counter total.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS",
+        "closure": "Inverse explanation after the forward 7+9 task, not simply a new pair of odd addends."
+      },
+      "independent_check": {
+        "statement": "Verify remainder 11 and show 11=2×5+1 while 7=2×3+1; two leftovers together are paired.",
+        "check_type": "PAIR_COMPLETENESS"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "Given the 18/7/11 values and the pair model, state one mechanism linking a lone from the first subgroup to the remainder; D1 band is provisional pending reviewer.",
+        "component_evidence": {
+          "concept_model_selection": "Explicit paired whole and first subgroup, no choice of strategy.",
+          "representation_translation": "Interpret one full-group pair diagram and one unmatched counter.",
+          "reasoning_chain_length": "One causal complement linking the missing lone counter; full group has none.",
+          "algebra_computational_load": "Remaining quantity already supplied, subtraction merely a check.",
+          "trap_exception_sensitivity": "No hidden condition beyond parity."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION"
+        ],
+        "statement": "The forward Core2A task combines two known odd groups and explains evenness. Here the even complete group and one odd subgroup are given, and the learner explains why the other subgroup must be odd.",
+        "invariant": "Two lone counters must match to leave zero unpaired in a combined even collection.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION",
+            "MIC-TEST-IMO182-D1-EXP-ODD-PAIRING:exit_task",
+            "MIC-TEST-IMO182-D1-EXP-ODD-PAIRING:boundary_test"
+          ],
+          "why_new": "Inverse explanation from full even group plus an odd component, rather than new odd addends or a restatement of the forward worked example. Both subgroup sizes are given, so one causal link remains."
+        },
+        "protected_move_ref": "EXP-D1-QB-INVERSE"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-TEST-IMO182-D1-EXP-PAIR-CONSTRUCTION",
+      "title": "Pairing-based odd-group explanation and independent mistake repair",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-IMO182-D1-EXP-ODD-PAIRING"
+      ],
+      "entry_needs": [
+        "Odd groups form complete pairs plus one lone counter.",
+        "Even groups form full pairs with zero leftover."
+      ],
+      "learner_actions": [
+        "Read the odd/even counter-group meaning.",
+        "Inspect a DIFFERENT worked 3+5 pairing.",
+        "Predict wrong-claim outcome for 5+7.",
+        "Explain 7+9 without receiving the two-leftover coupling sentence in hints.",
+        "Test changed odd+even 9+4 and inverse 18/7 group."
+      ],
+      "help_plan": [
+        "Core1A reveals only worked 3+5, not target 7+9.",
+        "Core2A H1/H2 describe what to examine without performing target mechanism; H3 is after a nonempty independent attempt."
+      ],
+      "reveal_plan": "Stage only given counter groups before attempted explanation; show worked 3+5 through registered stages; keep full answers after commitment.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED",
+          "purpose": "Original counter-pair teaching, no official exam specimen",
+          "reason": "No rights to organizer questions are presumed."
+        }
+      ],
+      "when_not_suitable": [
+        "Do not claim general algebraic proof or higher-band unseen model selection.",
+        "No qualified academic QRT approval, source-rights expansion, or learner release."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "AUTHORED_TEST",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false,
+    "grade9v3:core_maturity": "TEST_CANDIDATE"
+  },
+  "data": [
+    {
+      "id": "DATUM-TEST-IMO182-D1-EXP-PAIR-CRITERION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>2</mn><mi>k</mi><mo>+</mo><mn>1</mn></mrow></math>",
+      "symbol": "2k+1",
+      "meaning": "A given odd group consists of complete pairs plus one lone counter.",
+      "locator": "AUTHOR_CREATED: IMO182 QRT EXPLAIN D1 original counter-pair task"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-EXP-ODD-GROUPS-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>2</mn><mi>k</mi><mo>+</mo><mn>1</mn></mrow></math>",
+      "symbol": "7 and 9",
+      "meaning": "Seven red counters and nine blue counters are uncombined givens.",
+      "locator": "AUTHOR_CREATED: IMO182 QRT EXPLAIN D1 original counter-pair task"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-EXP-ERROR-CLAIM",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>2</mn><mi>k</mi><mo>+</mo><mn>1</mn></mrow></math>",
+      "symbol": "5 and 7",
+      "meaning": "Wrong claim that 5 and 7 remain odd after joining.",
+      "locator": "AUTHOR_CREATED: IMO182 QRT EXPLAIN D1 original counter-pair task"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-EXP-INVERSE-GROUPS-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-EXP-PARITY-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>2</mn><mi>k</mi><mo>+</mo><mn>1</mn></mrow></math>",
+      "symbol": "18=7+11",
+      "meaning": "Inverse givens: eighteen paired total, seven in known group and eleven in remainder.",
+      "locator": "AUTHOR_CREATED: IMO182 QRT EXPLAIN D1 original counter-pair task"
+    }
+  ]
+}

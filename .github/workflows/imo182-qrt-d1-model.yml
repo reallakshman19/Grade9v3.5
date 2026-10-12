@@ -1,0 +1,55 @@
+name: IMO 182 QRT MODEL-D1 actual five-role render (TEST)
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-qrt-d1-model.yml'
+      - 'TEST/imo-research/qrt-d1/model.v1.json'
+      - 'TEST/imo-research/qrt-d1/verify_model.py'
+      - 'TEST/imo-research/qrt-d1/figures/model-*.svg'
+      - 'TEST/products/imo182-qrt-d1-model.manifest.json'
+      - 'tests/test_imo182_qrt_d1_model.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  authored-model-d1:
+    name: Sole renderer MODEL-D1 five roles and frozen golden
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet jsonschema
+      - name: Independently prove equal-groups model
+        run: python TEST/imo-research/qrt-d1/verify_model.py
+      - name: Generate registered Core roles using sole renderer
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d1-model.manifest.json \
+            --out build/imo182-qrt/d1/model --draft --reference
+      - name: Schema, protected W, role versions, immutable golden
+        run: python -m unittest tests.test_imo182_qrt_d1_model -v
+      - name: Zero depth gaps and exact HTML SHA256 receipt
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          out=Path('build/imo182-qrt/d1/model')
+          receipt=json.loads((out/'render-receipt.json').read_text())
+          assert receipt['gaps']==[],receipt['gaps']
+          roles=['core1.html','core1a.html','core1b.html','core2a.html','core2b.html']
+          assert set(roles)<=set(receipt['pages'])
+          j={'cell':'QRT-MODEL-D1','status':'RENDERED_TEST_ONLY','source':'AUTHORED_TEST',
+             'accepted':'0/28','academic_review':'PENDING',
+             'pages':{x:hashlib.sha256((out/x).read_bytes()).hexdigest() for x in roles}}
+          (out/'d1-model-evidence.json').write_text(json.dumps(j,indent=2)+'\n')
+          print(json.dumps(j,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: imo182-qrt-d1-model-five-core-html
+          path: build/imo182-qrt/d1/model/
+          if-no-files-found: warn

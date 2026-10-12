@@ -1,0 +1,1356 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-REPRESENT-D1-ORIGINAL",
+  "title": "Original TEST: signed directional displacement to ordered-pair representation",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Wholly AUTHORED TEST D1 representation task. Three distinct learning decisions: initial words-to-pair route, Core1B signed-y diagnostic, and inverse Core2B pair-to-words transfer. No official examination content, Core2 rights, accepted QRT or public learner route.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "SRC-TEST-IMO182-D1-REP-AUTHORED",
+      "title": "Original authored D1 signed-coordinate translation TEST",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
+      "edition": "2026-10-12 authored original TEST pilot",
+      "section": "Ordered-pair displacement and directions",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Original authored content; no official exam/publisher stem or artwork used",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Horizontal coordinate represents east or west signed movement",
+        "Vertical coordinate represents north or south signed movement"
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Source-rights-safe author-created D1 representation task",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-TEST-IMO182-D1-GRID",
+      "title": "Signed coordinate movement on a square grid",
+      "topic": "Ordered pairs, directional representation and inverse checks",
+      "intrinsic_badge": "EASY",
+      "badge_reason": "Single-step translation with a required sign and axis-order decision.",
+      "depth_overlay": "FOUNDATION",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-IMO182-D1-AXIS-STAGES",
+      "conventions": [
+        {
+          "id": "east_x_positive",
+          "statement": "East is positive x and west is negative x."
+        },
+        {
+          "id": "north_y_positive",
+          "statement": "North is positive y and south is negative y."
+        },
+        {
+          "id": "pair_order",
+          "statement": "The first ordered-pair entry is horizontal and the second is vertical."
+        },
+        {
+          "id": "origin",
+          "statement": "All displacement pairs are measured from the origin, not a separate starting coordinate."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-TEST-IMO182-D1-SIGNED-DIRECTIONS",
+      "action": "Translate a spoken horizontal/vertical displacement into a signed (x,y) pair and translate back while keeping the same route.",
+      "success_criterion": "Independently map directions, magnitudes and x-before-y order, and use a back-translation to verify the result.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-TEST-IMO182-D1-ORDERED-PAIR",
+      "title": "Preserve movement while translating words and signed coordinate pairs",
+      "bucket_id": "BUCKET-TEST-IMO182-D1-GRID",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-SIGNED-DIRECTIONS",
+      "intrinsic_badge": "EASY",
+      "badge_reason": "One meaningful independent sign-and-axis correspondence remains in each exercise.",
+      "entry_assumptions": [
+        "The learner can distinguish north, south, east, and west.",
+        "The learner knows that negative numbers lie opposite positive directions.",
+        "The learner reads an ordered pair as first entry followed by second entry."
+      ],
+      "inferential_jump": "Translate both directional magnitudes into the designated signed axes without treating all distances as positive or swapping coordinates.",
+      "teaching_path": [
+        {
+          "id": "REP-D1-TC-1",
+          "action": "Fix the convention: the first entry x measures east (+) or west (−), and the second entry y measures north (+) or south (−).",
+          "why_valid": "The ordered-pair definition assigns horizontal movement to x and vertical movement to y; sign records direction.",
+          "inputs": [
+            "A named origin",
+            "An east-positive and north-positive map"
+          ],
+          "output": "The rule (x,y) stores horizontal then vertical signed movement.",
+          "role": "DECLARE",
+          "source_ref": "SRC-TEST-IMO182-D1-REP-AUTHORED"
+        },
+        {
+          "id": "REP-D1-TC-2",
+          "action": "Test the convention on a DIFFERENT route: three west and one north is (−3,+1).",
+          "why_valid": "West opposes positive east and therefore has negative x; north is positive y.",
+          "inputs": [
+            "3 west",
+            "1 north"
+          ],
+          "output": "(−3,+1)",
+          "role": "TRANSFORM",
+          "source_ref": "SRC-TEST-IMO182-D1-REP-AUTHORED"
+        },
+        {
+          "id": "REP-D1-TC-3",
+          "action": "Translate the sample ordered pair (−3,+1) back into words, checking axis order and both signs.",
+          "why_valid": "The original west and north movements are recovered exactly, so the source and target preserve the same route.",
+          "inputs": [
+            "(−3,+1)"
+          ],
+          "output": "Three west and one north.",
+          "role": "VERIFY",
+          "source_ref": "SRC-TEST-IMO182-D1-REP-AUTHORED"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-AXIS-SIGNS"
+      ],
+      "representation_refs": [
+        "REP-TEST-IMO182-D1-AXIS-STAGES"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-IMO182-D1-WORDS-AND-PAIRS"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "South is a positive y entry because the distance travelled is a positive number.",
+          "diagnostic_prompt": "If (−2,+3) is used for two west and three south, what direction does the second entry actually mean on this map?",
+          "repair": "A distance magnitude is nonnegative but a signed coordinate also encodes orientation: south is negative y. Preserve horizontal x then vertical y and translate back."
+        },
+        {
+          "wrong_idea": "The larger magnitude belongs first in the ordered pair.",
+          "diagnostic_prompt": "Would three north and one east be (3,1) merely because three is larger?",
+          "repair": "Order is fixed by the axes, not magnitude: x first, y second."
+        }
+      ],
+      "exit_task": {
+        "prompt": "From the origin, a walker moves 1 grid unit west and 4 grid units south. Write the ordered-pair displacement and translate it back into words to check.",
+        "source_ref": "SRC-TEST-IMO182-D1-REP-AUTHORED",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "(−1,−4).",
+          "reasoning": [
+            "One unit west gives x=−1.",
+            "Four units south gives y=−4.",
+            "Using horizontal then vertical order gives (−1,−4)."
+          ],
+          "check": "Read (−1,−4) back: one west and four south.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d1/verify_represent.py",
+            "bindings": {
+              "axis_convention": "east_positive_north_positive",
+              "route": "1 west 4 south",
+              "expected_pair": "(-1,-4)"
+            }
+          }
+        }
+      },
+      "research_contribution": "One signed correspondence and independent back-translation tested under D1 with distinct wrong-sign reconstruction and inverse transfer; academic band review still required.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-IMO182-D1-AXES",
+          "decision": "Establish positive axes and coordinate order, then supply signed entries for a new route.",
+          "step_refs": [
+            "REP-D1-TC-1",
+            "REP-D1-TC-2",
+            "REP-D1-TC-3"
+          ],
+          "representation_ref": "REP-TEST-IMO182-D1-AXIS-STAGES",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-TEST-IMO182-D1-AXIS-SIGNS"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Reverse-translate the new pair to the original directions and magnitudes.",
+              "check_type": "INVERSE_OPERATION"
+            }
+          ],
+          "reveal_stage_refs": [
+            "GRID-ORIENTATION",
+            "GRID-SAMPLE-STEP",
+            "GRID-REVERSE-CHECK"
+          ],
+          "worked_anchor_ref": "Q-TEST-IMO182-D1-CORE1A-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "For a map with east = +x and north = +y, which coordinate entry represents west/east movement?",
+        "result": "The first entry x encodes horizontal movement; the second entry y encodes north/south movement.",
+        "representation_ref": "REP-TEST-IMO182-D1-AXIS-STAGES"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A classmate writes (−2,+3) for a displacement of two west and three south. Before seeing a model, write whether this describes the intended route. Explain the sign of the second entry.",
+          "defensible_answer": "No. Positive y means north on this map, so the proposed pair travels three north, not three south."
+        },
+        "attempt": {
+          "produces": "A written diagnosis of the signed-y error, a corrected pair, and a changed-route independent exit.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Explain the error using the fixed y-axis convention.",
+              "evidence_of": "Recognizes +y is north, not south, regardless of distance magnitude."
+            },
+            {
+              "criterion": "Provide signed components in horizontal-then-vertical order.",
+              "evidence_of": "Corrects two west and three south to (−2,−3)."
+            }
+          ],
+          "accepted": [
+            "The second entry should be negative because south opposes positive north; the intended pair is (−2,−3)."
+          ],
+          "rejected": [
+            "Both entries should be positive because distance is positive.",
+            "The correct answer is (−3,−2) because the longer distance comes first."
+          ],
+          "task": {
+            "prompt": "A route is two west and three south from the origin. A learner recorded (−2,+3). Explain what route their pair actually depicts and reconstruct the correct signed pair. Record your own answer before revealing the reconstruction.",
+            "givens": [
+              "East is +x; north is +y.",
+              "The route is measured from the origin.",
+              "Pair order is horizontal x, then vertical y."
+            ],
+            "representation_ref": "REP-TEST-IMO182-D1-ERROR-GIVEN",
+            "stage_refs": [
+              "REP-D1-WRONG-ROUTE"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Which direction does the sign + on the vertical axis represent here?",
+              "why_this_ask": "Forces use of stated sign convention rather than generic positive distance.",
+              "from_step_ref": "REP-D1-TC-1"
+            },
+            {
+              "ask": "Translate the classmate's second entry +3 back into a direction. Does that match the spoken route?",
+              "why_this_ask": "Falsifies the wrong route by inverse interpretation.",
+              "from_step_ref": "REP-D1-TC-3"
+            },
+            {
+              "ask": "Keeping horizontal first, how must the sign of the second entry change to describe south?",
+              "why_this_ask": "Learner reconstructs the corrected pair rather than copying a displayed target.",
+              "from_step_ref": "REP-D1-TC-2"
+            }
+          ],
+          "differs_from_teaching_path": "Teaching starts with a correct west/north example; reconstruction begins from an incorrect west/south inscription and forces learner to falsify the vertical sign before correcting it."
+        },
+        "boundary_test": {
+          "prompt": "Changed givens: now the route is two EAST and three SOUTH. With the SAME map convention, write the new ordered pair and explain which entry changed compared with the reconstructed west/south route. Commit before checking.",
+          "answer": "(+2,−3). The horizontal direction switched west to east, so x changed sign; south remains negative y.",
+          "confirms": "Repairs the sign rule on a new displacement rather than memorizing the prior corrected pair."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-TEST-IMO182-D1-AXIS-SIGNS",
+      "expression": "(x, y) records signed horizontal movement first and signed vertical movement second.",
+      "meaning": "East/west is the first coordinate with east positive; north/south is second with north positive. A round-trip translation must reproduce the original spoken movement.",
+      "symbols": [
+        {
+          "symbol": "x",
+          "meaning": "Signed east-west displacement",
+          "unit_or_domain": "integer grid units"
+        },
+        {
+          "symbol": "y",
+          "meaning": "Signed north-south displacement",
+          "unit_or_domain": "integer grid units"
+        }
+      ],
+      "conditions": [
+        "The origin is fixed.",
+        "East is +x; north is +y.",
+        "Each route contains a horizontal and a vertical displacement."
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-REP-D1-TC-1",
+          "action": "Fix the convention: the first entry x measures east (+) or west (−), and the second entry y measures north (+) or south (−).",
+          "why_valid": "The ordered-pair definition assigns horizontal movement to x and vertical movement to y; sign records direction.",
+          "inputs": [
+            "A named origin",
+            "An east-positive and north-positive map"
+          ],
+          "output": "The rule (x,y) stores horizontal then vertical signed movement.",
+          "role": "DECLARE"
+        },
+        {
+          "id": "DERIV-REP-D1-TC-2",
+          "action": "Test the convention on a DIFFERENT route: three west and one north is (−3,+1).",
+          "why_valid": "West opposes positive east and therefore has negative x; north is positive y.",
+          "inputs": [
+            "3 west",
+            "1 north"
+          ],
+          "output": "(−3,+1)",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "DERIV-REP-D1-TC-3",
+          "action": "Translate the sample ordered pair (−3,+1) back into words, checking axis order and both signs.",
+          "why_valid": "The original west and north movements are recovered exactly, so the source and target preserve the same route.",
+          "inputs": [
+            "(−3,+1)"
+          ],
+          "output": "Three west and one north.",
+          "role": "VERIFY"
+        }
+      ],
+      "limits": [
+        "Do not order entries by magnitude.",
+        "With a different axis convention, the signs would need to be reinterpreted."
+      ],
+      "checks": [
+        "Translate back using the same axis convention to recover each original direction."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>)</mo></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-AXIS-STAGES",
+      "kind": "COORDINATE_GRID",
+      "purpose": "Progressive axis convention with a worked route different from the assessment exercise.",
+      "required_elements": [
+        "Axes labelled east +x and north +y.",
+        "Distinct three-west one-north example in later stage."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-AXIS-SIGNS"
+      ],
+      "read_order": [
+        "Read axis order before the example.",
+        "Later compare the example with the reversed description."
+      ],
+      "instance_constraints": [
+        "No target exercise answer is marked in initial visuals.",
+        "No official examination source identity, logo or KEY material."
+      ],
+      "accessibility": [
+        "Screen-reader accessible title and description name only givens, not the target answer.",
+        "Color is never the sole carrier of direction or sign."
+      ],
+      "misleading_alternatives": [
+        "Pre-marking the correct answer or printing a worked target pair before commitment."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/represent-grid-construction.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-AXIS-STAGES",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-TEST-IMO182-D1-ORDERED-PAIR",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-AXIS-MEANING"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/represent-grid-construction.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "An origin-based square map with east-positive x and north-positive y",
+            "caption": "Inspect the givens, then make the representation decision yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Horizontal east-west axis",
+          "symbol": "x",
+          "in_words": "First coordinate; east positive."
+        },
+        {
+          "element": "Vertical north-south axis",
+          "symbol": "y",
+          "in_words": "Second coordinate; north positive."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "GRID-ORIENTATION",
+          "label": "Unmarked map axes",
+          "purpose": "Show east/west horizontal and north/south vertical without solving the exercise.",
+          "visible_elements": [
+            "east +x",
+            "west −x",
+            "north +y",
+            "south −y"
+          ]
+        },
+        {
+          "id": "GRID-SAMPLE-STEP",
+          "label": "Different worked example",
+          "purpose": "Show three west and one north on the grid as (−3,+1).",
+          "visible_elements": [
+            "3 west",
+            "1 north",
+            "(−3,+1)"
+          ]
+        },
+        {
+          "id": "GRID-REVERSE-CHECK",
+          "label": "Translate example back",
+          "purpose": "Reverse the different sample for an independent route check.",
+          "visible_elements": [
+            "west 3",
+            "north 1"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-ROUTE-GIVEN",
+      "kind": "COORDINATE_GRID",
+      "purpose": "Give only the stated four-east two-south route, with answer pair absent.",
+      "required_elements": [
+        "Two movement descriptions: 4 east then 2 south.",
+        "No signed endpoint or completed ordered pair."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-AXIS-SIGNS"
+      ],
+      "read_order": [
+        "Read east and south magnitudes.",
+        "Independently decide their coordinate signs."
+      ],
+      "instance_constraints": [
+        "No target exercise answer is marked in initial visuals.",
+        "No official examination source identity, logo or KEY material."
+      ],
+      "accessibility": [
+        "Screen-reader accessible title and description name only givens, not the target answer.",
+        "Color is never the sole carrier of direction or sign."
+      ],
+      "misleading_alternatives": [
+        "Pre-marking the correct answer or printing a worked target pair before commitment."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/represent-core2a-route-safe.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-ROUTE-GIVEN",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-IMO182-D1-CORE2A-WORDS-TO-PAIR",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-ROUTE-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/represent-core2a-route-safe.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "An origin-based square map with east-positive x and north-positive y",
+            "caption": "Inspect the givens, then make the representation decision yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "4 east movement",
+          "symbol": "4 E",
+          "in_words": "Horizontal component given in words, sign not printed."
+        },
+        {
+          "element": "2 south movement",
+          "symbol": "2 S",
+          "in_words": "Vertical component given in words, sign not printed."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "REP-D1-ROUTE-ONLY",
+          "label": "Route description only",
+          "purpose": "Display the directional givens without signed pair or endpoint.",
+          "visible_elements": [
+            "4 units east",
+            "2 units south"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-ERROR-GIVEN",
+      "kind": "COORDINATE_GRID",
+      "purpose": "Show stated misconception as an unmarked wrong candidate for the learner to falsify.",
+      "required_elements": [
+        "Spoken route: two west and three south.",
+        "Classmate's uncorrected (−2,+3) claim."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-AXIS-SIGNS"
+      ],
+      "read_order": [
+        "Read spoken directions.",
+        "Check whether the classmate's signs match the axis convention."
+      ],
+      "instance_constraints": [
+        "No target exercise answer is marked in initial visuals.",
+        "No official examination source identity, logo or KEY material."
+      ],
+      "accessibility": [
+        "Screen-reader accessible title and description name only givens, not the target answer.",
+        "Color is never the sole carrier of direction or sign."
+      ],
+      "misleading_alternatives": [
+        "Pre-marking the correct answer or printing a worked target pair before commitment."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/represent-core1b-error-safe.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-ERROR-GIVEN",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-TEST-IMO182-D1-ORDERED-PAIR",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-ERROR-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/represent-core1b-error-safe.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "An origin-based square map with east-positive x and north-positive y",
+            "caption": "Inspect the givens, then make the representation decision yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Claimed +3 second entry",
+          "symbol": "+3",
+          "in_words": "Disputed vertical entry; learner must test the direction."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "REP-D1-WRONG-ROUTE",
+          "label": "Learner's disputed claim",
+          "purpose": "Show west/south givens and the classmate's pair without a correction.",
+          "visible_elements": [
+            "2 west",
+            "3 south",
+            "student wrote (−2,+3)"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-PAIR-GIVEN",
+      "kind": "COORDINATE_GRID",
+      "purpose": "Show a signed coordinate pair only for inverse translation to words.",
+      "required_elements": [
+        "The input displacement pair is (−3,+5).",
+        "No words spelling out the corresponding route."
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-AXIS-SIGNS"
+      ],
+      "read_order": [
+        "Read first x entry and second y entry.",
+        "Translate each sign to a cardinal direction independently."
+      ],
+      "instance_constraints": [
+        "No target exercise answer is marked in initial visuals.",
+        "No official examination source identity, logo or KEY material."
+      ],
+      "accessibility": [
+        "Screen-reader accessible title and description name only givens, not the target answer.",
+        "Color is never the sole carrier of direction or sign."
+      ],
+      "misleading_alternatives": [
+        "Pre-marking the correct answer or printing a worked target pair before commitment."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/represent-core2b-pair-safe.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-PAIR-GIVEN",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-IMO182-D1-CORE2B-PAIR-TO-WORDS",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-PAIR-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/represent-core2b-pair-safe.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "An origin-based square map with east-positive x and north-positive y",
+            "caption": "Inspect the givens, then make the representation decision yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Input signed pair",
+          "symbol": "(−3,+5)",
+          "in_words": "Signed horizontal and vertical displacement waiting for an inverse translation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "REP-D1-PAIR-ONLY",
+          "label": "Pair to decode",
+          "purpose": "Display input (−3,+5) with no cardinal-direction answer.",
+          "visible_elements": [
+            "(−3,+5)"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-IMO182-D1-WORDS-AND-PAIRS",
+      "title": "Cardinal directions and signed ordered-pair displacement",
+      "capability_refs": [
+        "CAP-TEST-IMO182-D1-SIGNED-DIRECTIONS"
+      ],
+      "solution_structure": [
+        "Locate the horizontal and vertical spoken components.",
+        "Apply east/west and north/south signs.",
+        "Order horizontal before vertical, without sorting by distance.",
+        "Reverse the translation as an independent check."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Axis convention given, not selected by student.",
+        "representation_translation": "One decisive mapping from spoken directions to signed x,y or vice versa.",
+        "reasoning_steps": "One signed correspondence; no multi-step route design.",
+        "novelty": "Core2B reverses the direction of translation instead of changing only the magnitudes."
+      },
+      "safe_variations": [
+        "Different signs and magnitudes on the fixed grid.",
+        "Inverse pair-to-words translation under the same convention."
+      ],
+      "transfer_boundaries": [
+        "If the axis convention changes, the signs must be recalculated.",
+        "This package is an authored D1 TEST, not an official IMO item."
+      ],
+      "common_wrong_routes": [
+        "Treat every distance as a positive coordinate.",
+        "Sort magnitudes rather than obeying fixed x,y order."
+      ],
+      "item_refs": [
+        "Q-TEST-IMO182-D1-CORE1A-WORKED",
+        "Q-TEST-IMO182-D1-CORE2A-WORDS-TO-PAIR",
+        "Q-TEST-IMO182-D1-CORE2B-PAIR-TO-WORDS"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 / original TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "REPRESENT",
+          "secondary": [],
+          "basis": "The learner's decisive work is a sign- and axis-preserving mapping between spoken directions and ordered pair; the convention is supplied."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Keep signed axis meaning and first-x/second-y order through representation change.",
+          "common_wrong_route": "Read distance as always positive or swap x and y."
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-CORE1A-WORKED",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-REP-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-CORE1A-WORKED",
+      "stem": "Worked teaching example: from an origin, a walker travels three grid units west and one north. Write a signed (x,y) displacement and check by translating back.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Map origin is fixed; east is positive x and north is positive y.",
+        "Horizontal x is written first, vertical y second.",
+        "Original authored TEST; not an official examination item."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-AXIS-STAGES"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "(−3,+1).",
+        "reasoning": [
+          "Three west means horizontal x is −3.",
+          "One north means vertical y is +1.",
+          "With x first, the pair is (−3,+1).",
+          "The reverse translation gives three west and one north."
+        ],
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-IMO182-D1-WORK-EXAMPLE",
+            "kind": "REPRESENT",
+            "action": "Translate three west and one north into (−3,+1).",
+            "why_valid": "Negative x is west and positive y is north; order is x then y.",
+            "inputs": [
+              "3 west",
+              "1 north"
+            ],
+            "output": "(−3,+1)"
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-IMO182-D1-WORK-EXAMPLE",
+        "check": "Translate (−3,+1) back to three west, one north.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-SIGNED-DIRECTIONS",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-WORDS-AND-PAIRS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-AXIS-STAGES",
+        "safe_ref": "REP-TEST-IMO182-D1-AXIS-STAGES",
+        "bound_ref": null,
+        "stage_refs": [
+          "GRID-ORIENTATION",
+          "GRID-SAMPLE-STEP",
+          "GRID-REVERSE-CHECK"
+        ]
+      },
+      "repair_ref": "REP-D1-TC-1",
+      "failure_signal": "A signed coordinate encodes direction, not just a positive length; reverse the pair into words.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-WORDS-AND-PAIRS",
+        "closure": "Successful forward representation is not equivalent to independent inverse transfer."
+      },
+      "independent_check": {
+        "statement": "Translate (−3,+1) back to three west, one north.",
+        "check_type": "INVERSE_OPERATION"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 0,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "The axis rule is given; one independent sign-and-axis translation is required, with an accessible inverse check.",
+        "component_evidence": {
+          "concept_model_selection": "Fixed east-positive/north-positive convention supplied; no model choice.",
+          "representation_translation": "Learner independently signs and orders the pair or recovers words.",
+          "reasoning_chain_length": "One correspondence with a verification, not a dependent proof chain.",
+          "algebra_computational_load": "No arithmetic beyond sign interpretation.",
+          "trap_exception_sensitivity": "Signed south and swapped pair order create a plausible wrong route."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 / original TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "REPRESENT",
+          "secondary": [],
+          "basis": "The learner's decisive work is a sign- and axis-preserving mapping between spoken directions and ordered pair; the convention is supplied."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Keep signed axis meaning and first-x/second-y order through representation change.",
+          "common_wrong_route": "Read distance as always positive or swap x and y."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-TEST-IMO182-D1-QA-DECIDE"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-TEST-IMO182-D1-QA-DECIDE"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-CORE2A-WORDS-TO-PAIR",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-REP-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-CORE2A-WORDS-TO-PAIR",
+      "stem": "A surveyor starts at the origin of an east-positive/north-positive square grid. She records a displacement of 4 grid units EAST and 2 grid units SOUTH. Write the displacement as a signed ordered pair (x,y), with horizontal first. Explain the sign of its second entry.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Map origin is fixed; east is positive x and north is positive y.",
+        "Horizontal x is written first, vertical y second.",
+        "Original authored TEST; not an official examination item."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-ROUTE-GIVEN"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "(4,−2); y is negative because south is opposite positive north.",
+        "reasoning": [
+          "Four units east gives horizontal x=+4.",
+          "Two units south gives vertical y=−2 because north is positive.",
+          "Write x then y: (4,−2)."
+        ],
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-IMO182-D1-QA-READ",
+            "kind": "REPRESENT",
+            "action": "Identify four east as the horizontal component and two south as the vertical component.",
+            "why_valid": "This map declares horizontal east-west as x and vertical north-south as y.",
+            "inputs": [
+              "4 east",
+              "2 south"
+            ],
+            "output": "x component comes from east; y component comes from south."
+          },
+          {
+            "id": "MOVE-TEST-IMO182-D1-QA-DECIDE",
+            "kind": "DECIDE",
+            "action": "Assign the correct signs and order the components as (4,−2).",
+            "why_valid": "East is positive x, south opposes positive north and is negative y, and x precedes y.",
+            "inputs": [
+              "4 east",
+              "2 south",
+              "east=+x",
+              "north=+y"
+            ],
+            "output": "(4,−2)"
+          },
+          {
+            "id": "MOVE-TEST-IMO182-D1-QA-CHECK",
+            "kind": "VERIFY",
+            "action": "Read (4,−2) backward as four east and two south.",
+            "why_valid": "The reverse meaning equals both given movements, so no direction or magnitude was lost.",
+            "inputs": [
+              "(4,−2)"
+            ],
+            "output": "4 east, 2 south"
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-IMO182-D1-QA-DECIDE",
+        "check": "Read (4,−2) as four east and two south; both givens match.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-SIGNED-DIRECTIONS",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-WORDS-AND-PAIRS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Which part of the description belongs to the first, horizontal entry, and which to the second, vertical entry? Do not sign either for the learner.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-IMO182-D1-QA-READ"
+        },
+        {
+          "text": "Compare each named movement to the positive direction of its own axis. A magnitude alone does not determine the sign.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-IMO182-D1-QA-DECIDE"
+        },
+        {
+          "text": "After recording your attempt, review x-before-y and translate both signs back to directions to see whether the route is preserved.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-TEST-IMO182-D1-QA-DECIDE"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-ROUTE-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-ROUTE-GIVEN",
+        "bound_ref": null,
+        "stage_refs": [
+          "REP-D1-ROUTE-ONLY"
+        ]
+      },
+      "repair_ref": "REP-D1-TC-1",
+      "failure_signal": "A signed coordinate encodes direction, not just a positive length; reverse the pair into words.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-WORDS-AND-PAIRS",
+        "closure": "Successful forward representation is not equivalent to independent inverse transfer."
+      },
+      "independent_check": {
+        "statement": "Read (4,−2) as four east and two south; both givens match.",
+        "check_type": "INVERSE_OPERATION"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 0,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "The axis rule is given; one independent sign-and-axis translation is required, with an accessible inverse check.",
+        "component_evidence": {
+          "concept_model_selection": "Fixed east-positive/north-positive convention supplied; no model choice.",
+          "representation_translation": "Learner independently signs and orders the pair or recovers words.",
+          "reasoning_chain_length": "One correspondence with a verification, not a dependent proof chain.",
+          "algebra_computational_load": "No arithmetic beyond sign interpretation.",
+          "trap_exception_sensitivity": "Signed south and swapped pair order create a plausible wrong route."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D1 / original TEST",
+        "grade9v3:cognitive_demand": {
+          "primary": "REPRESENT",
+          "secondary": [],
+          "basis": "The learner's decisive work is a sign- and axis-preserving mapping between spoken directions and ordered pair; the convention is supplied."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Keep signed axis meaning and first-x/second-y order through representation change.",
+          "common_wrong_route": "Read distance as always positive or swap x and y."
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-CORE2B-PAIR-TO-WORDS",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-REP-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-CORE2B-PAIR-TO-WORDS",
+      "stem": "A second map report gives the signed displacement (−3,+5) from the origin using the SAME east-positive/north-positive grid convention. This time write a sentence describing the direction and magnitude of each movement, rather than writing another pair. Explain how encoding your sentence back checks it.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Map origin is fixed; east is positive x and north is positive y.",
+        "Horizontal x is written first, vertical y second.",
+        "Original authored TEST; not an official examination item."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-PAIR-GIVEN"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Three units west and five units north.",
+        "reasoning": [
+          "The first entry −3 is horizontal and means three west.",
+          "The second entry +5 is vertical and means five north.",
+          "The route is three grid units west and five grid units north."
+        ],
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-IMO182-D1-QB-READ",
+            "kind": "REPRESENT",
+            "action": "Read the first entry of (−3,+5) as horizontal and second as vertical.",
+            "why_valid": "By definition ordered pairs store x then y.",
+            "inputs": [
+              "(−3,+5)"
+            ],
+            "output": "x=−3; y=+5"
+          },
+          {
+            "id": "MOVE-TEST-IMO182-D1-QB-DECIDE",
+            "kind": "DECIDE",
+            "action": "Translate the signed entries to three west and five north.",
+            "why_valid": "Negative x points west, positive y points north under the fixed map convention.",
+            "inputs": [
+              "x=−3",
+              "y=+5"
+            ],
+            "output": "3 units west and 5 units north"
+          },
+          {
+            "id": "MOVE-TEST-IMO182-D1-QB-CHECK",
+            "kind": "VERIFY",
+            "action": "Encode the spoken route to recover (−3,+5).",
+            "why_valid": "The reverse map reproduces the supplied signed ordered pair exactly.",
+            "inputs": [
+              "3 west",
+              "5 north"
+            ],
+            "output": "(−3,+5)"
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-IMO182-D1-QB-DECIDE",
+        "check": "Reverse-encode the words to (−3,+5), exactly the supplied pair.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-SIGNED-DIRECTIONS",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-WORDS-AND-PAIRS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Read the first entry as horizontal and the second as vertical; do not translate the signs yet.",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-PAIR-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-PAIR-GIVEN",
+        "bound_ref": null,
+        "stage_refs": [
+          "REP-D1-PAIR-ONLY"
+        ]
+      },
+      "repair_ref": "REP-D1-TC-1",
+      "failure_signal": "A signed coordinate encodes direction, not just a positive length; reverse the pair into words.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-WORDS-AND-PAIRS",
+        "closure": "Inverse pair-to-words transfer is tested separately from words-to-pair practice."
+      },
+      "independent_check": {
+        "statement": "Reverse-encode the words to (−3,+5), exactly the supplied pair.",
+        "check_type": "INVERSE_OPERATION"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 0,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "The axis rule is given; one independent sign-and-axis translation is required, with an accessible inverse check.",
+        "component_evidence": {
+          "concept_model_selection": "Fixed east-positive/north-positive convention supplied; no model choice.",
+          "representation_translation": "Learner independently signs and orders the pair or recovers words.",
+          "reasoning_chain_length": "One correspondence with a verification, not a dependent proof chain.",
+          "algebra_computational_load": "No arithmetic beyond sign interpretation.",
+          "trap_exception_sensitivity": "Signed south and swapped pair order create a plausible wrong route."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "representation_translation",
+        "builds_on": [
+          "Q-TEST-IMO182-D1-CORE2A-WORDS-TO-PAIR"
+        ],
+        "statement": "The original task changed spoken directions to a signed pair. This independent task reverses the representation direction: signed pair to spoken route, then back-encodes as check.",
+        "invariant": "A signed pair retains horizontal-first and vertical-second magnitude/direction semantics under the same axes.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-IMO182-D1-CORE2A-WORDS-TO-PAIR",
+            "MIC-TEST-IMO182-D1-ORDERED-PAIR:exit_task",
+            "MIC-TEST-IMO182-D1-ORDERED-PAIR:boundary_test"
+          ],
+          "why_new": "The question gives a preformed signed pair and demands an inverse verbal description, instead of merely changing the numeric lengths in the forward words-to-pair prompt."
+        },
+        "protected_move_ref": "MOVE-TEST-IMO182-D1-QB-DECIDE"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-TEST-IMO182-D1-PAIR-CONSTRUCTION",
+      "title": "Construct an axis-sign meaning, then test the inverse translation",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-IMO182-D1-ORDERED-PAIR"
+      ],
+      "entry_needs": [
+        "Cardinal directions and signed integers.",
+        "Read a pair in first-then-second order."
+      ],
+      "learner_actions": [
+        "Predict what the two entries represent.",
+        "Reveal a different west/north example without viewing the independent east/south item.",
+        "Translate the worked example back in words.",
+        "Complete a west/south independent exit and compare a changed south-sign error."
+      ],
+      "help_plan": [
+        "Pre-exercise stages teach axes without printing the CORE2A answer.",
+        "The final exit uses a different quadrant and remains an independent commitment."
+      ],
+      "reveal_plan": "Show meaning and a distinct sample; gate the Core1B correction/exit and the Core2A answer until learner attempts.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-IMO182-D1-REP-AUTHORED",
+          "purpose": "Wholly authored signed-axis construction",
+          "reason": "No official sample source rights or copied diagram."
+        }
+      ],
+      "when_not_suitable": [
+        "No claim of exam authenticity or independent D1 acceptance.",
+        "Avoid claiming multiple-stage algebra reasoning when only a signed translation is required."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "AUTHORED_TEST",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false,
+    "grade9v3:core_maturity": "TEST_CANDIDATE"
+  },
+  "data": [
+    {
+      "id": "DATUM-TEST-IMO182-D1-AXIS-MEANING",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>x</mi><mo>,</mo><mi>y</mi></mrow></math>",
+      "symbol": "(x,y)",
+      "meaning": "Ordered pair names signed horizontal then signed vertical movement.",
+      "locator": "AUTHOR_CREATED: IMO182 REPRESENT D1 signed-displacement route"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-ROUTE-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>x</mi><mo>,</mo><mi>y</mi></mrow></math>",
+      "symbol": "4 east; 2 south",
+      "meaning": "Original directional route input without a signed pair.",
+      "locator": "AUTHOR_CREATED: IMO182 REPRESENT D1 signed-displacement route"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-ERROR-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>x</mi><mo>,</mo><mi>y</mi></mrow></math>",
+      "symbol": "(-2,+3) candidate",
+      "meaning": "A classmate's disputed pair; not the correct route answer.",
+      "locator": "AUTHOR_CREATED: IMO182 REPRESENT D1 signed-displacement route"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-PAIR-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>x</mi><mo>,</mo><mi>y</mi></mrow></math>",
+      "symbol": "(-3,+5)",
+      "meaning": "Input signed pair; translation to words is withheld.",
+      "locator": "AUTHOR_CREATED: IMO182 REPRESENT D1 signed-displacement route"
+    }
+  ]
+}
