@@ -777,49 +777,52 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 original RETRIEVE TEST",
+        "grade9v3:authored_by": "AGENT-D1 original EXPLAIN TEST",
         "grade9v3:cognitive_demand": {
-          "primary": "RETRIEVE",
+          "primary": "EXPLAIN",
           "secondary": [],
-          "basis": "A worked category from the exact defining condition."
+          "basis": "Justify parity by describing what happens to the two leftover counters, not just state an even sum."
         }
       },
       "id": "Q-TEST-IMO182-D1-EXP-CORE1A-WORKED",
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-EXP-REP-AUTHORED",
-      "original_identifier": "AUTHORED-D1-RETR-13-WORKED",
-      "stem": "Worked example: the COMPLETE distinct-positive-divisor set of 13 is {1,13}. Identify the category and why.",
+      "original_identifier": "Q-TEST-IMO182-D1-EXP-CORE1A-WORKED",
+      "stem": "Worked DIFFERENT example: one group has 3 counters, another 5. Explain why joining them makes an even group by tracking complete pairs and their two leftover counters.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "The divisor card is complete.",
-        "Prime has exactly two distinct positive divisors.",
-        "This worked 13 is not the assessment number 25."
+        "Counters are distinct objects; groups can be arranged into pairs.",
+        "Even means no lone counter; odd means exactly one lone counter.",
+        "The question is original AUTHORED TEST, no organizer source."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-EXP-DIVISOR-STAGES"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "13 is PRIME.",
+        "summary": "3 is one pair plus one lone; 5 is two pairs plus one lone. The two lone counters pair up, leaving four pairs and an even total 8.",
         "reasoning": [
-          "13 has the two distinct positive divisors 1 and 13.",
-          "Exactly two satisfies the definition of prime."
+          "Three has one pair and one lone counter.",
+          "Five has two pairs and one lone counter.",
+          "The two lone counters become a fourth pair, leaving none unpaired.",
+          "Therefore the joined set is even."
         ],
         "reasoning_route": [
           {
-            "id": "MOVE-TEST-IMO182-D1-EXP-WORKED-13",
-            "kind": "DECIDE",
-            "action": "Classify the complete two-divisor set of 13 as prime.",
-            "why_valid": "Exactly two distinct positive divisors is the prime criterion.",
+            "id": "EXP-D1-WORK-3-5",
+            "kind": "EXPLAIN",
+            "action": "Combine the two leftovers into one new pair.",
+            "why_valid": "Three and five each leave one when paired.",
             "inputs": [
-              "{1,13}"
+              "3 = 2+1",
+              "5 = 4+1"
             ],
-            "output": "PRIME"
+            "output": "Four complete pairs"
           }
         ],
-        "crux_move_ref": "MOVE-TEST-IMO182-D1-EXP-WORKED-13",
-        "check": "No integer from 2 through 12 divides 13.",
+        "crux_move_ref": "EXP-D1-WORK-3-5",
+        "check": "3+5=8=4×2.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -843,38 +846,38 @@
         "safe_ref": "REP-TEST-IMO182-D1-EXP-DIVISOR-STAGES",
         "bound_ref": "REP-TEST-IMO182-D1-EXP-DIVISOR-STAGES",
         "stage_refs": [
-          "RETR-STAGE-DEFINITION",
-          "RETR-STAGE-WORKED",
-          "RETR-STAGE-BOUNDARY"
+          "EXP-STAGE-PAIR-RULE",
+          "EXP-STAGE-WORKED-3-5",
+          "EXP-STAGE-GENERAL-CHECK"
         ]
       },
       "repair_ref": "EXP-D1-TC-2",
-      "failure_signal": "Count all distinct positive divisors rather than choosing from oddness.",
+      "failure_signal": "A numerical even answer is not enough: explain why the lone counters from each group become a pair.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS",
-        "closure": "Authored TEST only. This item alone does not establish independent QRT acceptance."
+        "closure": "Distinct taught 3+5 example is not the 7+9 assessment mechanism."
       },
       "independent_check": {
-        "statement": "Verify 13 has exactly 1 and 13 as its complete distinct positive divisor list.",
-        "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
+        "statement": "Verify numeric total equals two times the count of complete pairs after showing the causal grouping.",
+        "check_type": "PAIR_COMPLETENESS"
       },
       "difficulty": {
         "band": "D1",
-        "score": 1,
+        "score": 2,
         "components": {
           "concept_model_selection": 0,
-          "representation_translation": 0,
-          "reasoning_chain_length": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
           "algebra_computational_load": 0,
-          "trap_exception_sensitivity": 1
+          "trap_exception_sensitivity": 0
         },
-        "basis": "A distinct worked definition-to-category example.",
+        "basis": "One directed causal explanation from a supplied pair model; not a multi-stage general proof.",
         "component_evidence": {
-          "concept_model_selection": "None.",
-          "representation_translation": "None.",
-          "reasoning_chain_length": "One criterion.",
-          "algebra_computational_load": "No search.",
-          "trap_exception_sensitivity": "The singleton 1 is an excluded boundary."
+          "concept_model_selection": "Pair-group model and meaning supplied.",
+          "representation_translation": "Read groups into complete pairs plus one lone.",
+          "reasoning_chain_length": "Explain one linking event: two lone counters make an extra complete pair.",
+          "algebra_computational_load": "Only small whole-number counting used as optional check.",
+          "trap_exception_sensitivity": "Wrong odd+odd intuition diagnosed separately."
         }
       },
       "learner_question_type": "constructed_response"
@@ -887,25 +890,25 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 original RETRIEVE TEST",
+        "grade9v3:authored_by": "AGENT-D1 original EXPLAIN TEST",
         "grade9v3:cognitive_demand": {
-          "primary": "RETRIEVE",
+          "primary": "EXPLAIN",
           "secondary": [],
-          "basis": "Recall and use the defining condition from complete set; only one classification."
+          "basis": "Justify parity by describing what happens to the two leftover counters, not just state an even sum."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "Use count of distinct positive divisors to choose COMPOSITE.",
-          "common_wrong_route": "Odd 25 is mistaken for prime."
+          "stable_crux_move": "Explain what happens to both lone counters when two odd groups are joined.",
+          "common_wrong_route": "State 7+9=16 without causal pairing or suppose both odd groups leave separate singles."
         },
         "grade9v3:core2_support_plan": {
           "protected_move_refs": [
-            "RET-D1-QA-DECIDE"
+            "EXP-D1-QA-MECHANISM"
           ],
           "support_completions": [
             {
               "support_ref": "scaffolds[2]",
               "completed_move_refs": [
-                "RET-D1-QA-DECIDE"
+                "EXP-D1-QA-MECHANISM"
               ],
               "availability": "AFTER_ATTEMPT"
             }
@@ -915,63 +918,65 @@
       "id": "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION",
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-EXP-REP-AUTHORED",
-      "original_identifier": "AUTHORED-RET-D1-25-COMPLETE-CARD",
-      "stem": "The COMPLETE list of DISTINCT POSITIVE divisors of 25 is {1, 5, 25}. Choose PRIME, COMPOSITE or NEITHER. Cite the exact defining divisor-count criterion; do not decide by oddness.",
+      "original_identifier": "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION",
+      "stem": "An organizer places 7 red counters and 9 blue counters into ONE collection. Without relying only on the arithmetic total, EXPLAIN why the combined collection can be arranged into complete PAIRS with NO leftover counter. Name what happens to the one unmatched counter from EACH original odd group.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "25 is positive and the list is complete.",
-        "All listed divisors are distinct.",
-        "Do not use parity as the classification rule.",
-        "Wholly AUTHORED TEST; no official exam source."
+        "Counters are distinct objects; groups can be arranged into pairs.",
+        "Even means no lone counter; odd means exactly one lone counter.",
+        "The question is original AUTHORED TEST, no organizer source."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-EXP-DIVISOR-GIVEN"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "25 is COMPOSITE.",
+        "summary": "Seven gives three complete pairs and one lone; nine gives four pairs and one lone. The two lone counters pair together, so eight pairs contain all 16 counters, making the total even.",
         "reasoning": [
-          "There are three distinct positive divisors: 1,5,25.",
-          "Exactly two means prime; more than two means composite.",
-          "Three is more than two, so 25 is composite."
+          "Seven red counters can be grouped as three pairs and one lone.",
+          "Nine blue counters can be grouped as four pairs and one lone.",
+          "Pair the two leftover counters together, creating an eighth pair.",
+          "Every counter now has a partner, so the combined 16-counter group is even."
         ],
         "reasoning_route": [
           {
-            "id": "RET-D1-QA-COUNT",
+            "id": "EXP-D1-QA-STRUCTURE",
             "kind": "REPRESENT",
-            "action": "Count distinct divisors 1,5,25.",
-            "why_valid": "The supplied list is explicitly complete and distinct.",
+            "action": "Partition each odd group into full pairs and one lone.",
+            "why_valid": "Odd collections always have exactly one unmatched counter.",
             "inputs": [
-              "{1,5,25}"
+              "7 red",
+              "9 blue"
             ],
-            "output": "Three distinct positive divisors."
+            "output": "3 pairs + one; 4 pairs + one"
           },
           {
-            "id": "RET-D1-QA-DECIDE",
-            "kind": "DECIDE",
-            "action": "Classify 25 as composite from its count of three.",
-            "why_valid": "More than two positive divisors is precisely the composite condition.",
+            "id": "EXP-D1-QA-MECHANISM",
+            "kind": "EXPLAIN",
+            "action": "Explain that the two lone counters form a new complete pair, leaving zero leftovers.",
+            "why_valid": "The combination preserves both counters; they can be matched with each other.",
             "inputs": [
-              "Count=3",
-              "Prime count=2",
-              "Composite count>2"
+              "one lone red",
+              "one lone blue"
             ],
-            "output": "COMPOSITE"
+            "output": "no lone counter; complete pairs"
           },
           {
-            "id": "RET-D1-QA-CHECK",
+            "id": "EXP-D1-QA-CHECK",
             "kind": "VERIFY",
-            "action": "Check 5×5=25 gives a nontrivial divisor.",
-            "why_valid": "The divisor 5 is distinct from both 1 and 25.",
+            "action": "Check eight pairs account for all 16 counters.",
+            "why_valid": "Three plus four existing pairs plus the new pair equals eight.",
             "inputs": [
-              "25"
+              "3 pairs",
+              "4 pairs",
+              "one new pair"
             ],
-            "output": "5×5=25"
+            "output": "8 pairs=16"
           }
         ],
-        "crux_move_ref": "RET-D1-QA-DECIDE",
-        "check": "5×5=25 shows a nontrivial factor, independently confirming composite.",
+        "crux_move_ref": "EXP-D1-QA-MECHANISM",
+        "check": "Three plus four plus one pairs equals eight; 7+9=16 equals 2×8.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -990,22 +995,22 @@
       "hints": [],
       "scaffolds": [
         {
-          "text": "The full positive-divisor card is provided. Count DISTINCT entries before selecting a category; do not use oddness.",
+          "text": "Arrange EACH original odd group into whole pairs and identify any leftover counter; do not yet describe the combined groups.",
           "support_kind": "REPRESENT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "RET-D1-QA-COUNT"
+          "supports_move_ref": "EXP-D1-QA-STRUCTURE"
         },
         {
-          "text": "Compare the count with exactly two for prime, more than two for composite and one for neither. Choose the category yourself.",
+          "text": "The meaning of 'even' concerns whether counters can all be paired. Identify what must be established after the two groups join, without finishing the explanation.",
           "support_kind": "CONNECT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "RET-D1-QA-DECIDE"
+          "supports_move_ref": "EXP-D1-QA-MECHANISM"
         },
         {
-          "text": "After your written attempt, recheck the threshold and whether a proper positive factor of the number exists.",
+          "text": "After recording your own mechanism, compare the two original leftover counters with the final leftover count, then verify using the total number of pairs.",
           "support_kind": "CONNECT",
           "reveals": "METHOD",
-          "supports_move_ref": "RET-D1-QA-DECIDE"
+          "supports_move_ref": "EXP-D1-QA-MECHANISM"
         }
       ],
       "hint_ladder": [
@@ -1033,18 +1038,18 @@
         "safe_ref": "REP-TEST-IMO182-D1-EXP-DIVISOR-GIVEN",
         "bound_ref": null,
         "stage_refs": [
-          "RETR-QA-CARD"
+          "EXP-D1-QA-GIVENS"
         ]
       },
       "repair_ref": "EXP-D1-TC-2",
-      "failure_signal": "The exact number of distinct positive divisors, not oddness, decides prime/composite.",
+      "failure_signal": "A numerical even answer is not enough: explain why the lone counters from each group become a pair.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-EXP-COUNTER-GROUPS",
-        "closure": "Authored TEST only. This item alone does not establish independent QRT acceptance."
+        "closure": "Distinct taught 3+5 example is not the 7+9 assessment mechanism."
       },
       "independent_check": {
-        "statement": "5×5=25 is a nontrivial factor; compare it with the complete card.",
-        "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
+        "statement": "Verify numeric total equals two times the count of complete pairs after showing the causal grouping.",
+        "check_type": "PAIR_COMPLETENESS"
       },
       "difficulty": {
         "band": "D1",
@@ -1052,17 +1057,17 @@
         "components": {
           "concept_model_selection": 0,
           "representation_translation": 1,
-          "reasoning_chain_length": 0,
+          "reasoning_chain_length": 1,
           "algebra_computational_load": 0,
-          "trap_exception_sensitivity": 1
+          "trap_exception_sensitivity": 0
         },
-        "basis": "Complete divisor set and category definitions supplied, leaving one meaningful classification. Reading a complete divisor card into a category contributes one representation-translation dimension.",
+        "basis": "One directed causal explanation from a supplied pair model; not a multi-stage general proof.",
         "component_evidence": {
-          "concept_model_selection": "No governing model choice.",
-          "representation_translation": "Translate the complete positive-divisor card into a category using its distinct-entry count.",
-          "reasoning_chain_length": "One classification.",
-          "algebra_computational_load": "No divisor search needed.",
-          "trap_exception_sensitivity": "Odd composite number traps surface classification."
+          "concept_model_selection": "Pair-group model and meaning supplied.",
+          "representation_translation": "Read groups into complete pairs plus one lone.",
+          "reasoning_chain_length": "Explain one linking event: two lone counters make an extra complete pair.",
+          "algebra_computational_load": "Only small whole-number counting used as optional check.",
+          "trap_exception_sensitivity": "Wrong odd+odd intuition diagnosed separately."
         }
       },
       "learner_question_type": "constructed_response"
