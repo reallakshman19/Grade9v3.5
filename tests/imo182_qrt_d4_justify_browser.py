@@ -28,6 +28,18 @@ with sync_playwright() as p:
             assert not any(loc.is_visible() for loc in page.get_by_text("After recording your first attempt",exact=False).all()),"H3 text visible preattempt"
             # Before a committed answer the complete proof still belongs in gated post-attempt markup.
             assert page.locator("[data-requires-attempt]").count()>0
+            # A recorded written attempt must unlock H3; just visiting or requesting H1/H2 must not.
+            attempt=page.locator('[data-g9-attempt-box] textarea[data-g9-attempt]').first
+            attempt.fill("I considered every integer and need to prove both the necessary and sufficient directions. I have begun by factoring the difference of squares and will test the exceptional residues.")
+            page.locator('[data-g9-attempt-box] button[data-g9-commit]').first.click()
+            article=page.locator('article[data-g9-unit]').first
+            assert article.get_attribute("data-attempted")=="1","Written attempt was not committed"
+            after=page.locator('details[data-g9-payload-ref="CORE2A-Q-D4-JUSTIFY-24-after-attempt-hint-3"]')
+            assert after.count()==1,"H3 gated details absent"
+            after.locator("summary").click()
+            assert after.locator("[data-g9-after-attempt-hint]").count()==1,"H3 not materialized after attempt"
+            assert after.locator("[data-g9-after-attempt-hint]").is_visible(),"H3 still hidden after attempt"
+            page.screenshot(path=str(screens/"core2a-after-attempt.png"),full_page=True)
         page.close()
     browser.close()
 print("CHROMIUM_FIVE_ROLES_AND_INITIAL_H3_GUARD_PASS")
