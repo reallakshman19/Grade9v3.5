@@ -111,7 +111,7 @@ class ModelD3(unittest.TestCase):
             self.assertNotEqual(page.locator('article[data-g9-unit]').get_attribute("data-attempted"),"true")
             page.locator('[data-g9-attempt]').fill("I choose a common positive power and will derive the multiplier.")
             page.locator('[data-g9-commit]').click()
-            self.assertEqual(page.locator('[data-g9-attempt-box]').get_attribute("data-attempted"),"true")
+            self.assertEqual(page.locator('article[data-g9-unit]').get_attribute("data-attempted"),"1")
             hint = page.locator('details[data-requires-attempt]').filter(has=page.locator('summary:text-is("Hint 3 · after your attempt")'))
             self.assertGreater(hint.count(),0)
             hint.locator("summary").click()

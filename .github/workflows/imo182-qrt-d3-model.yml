@@ -41,12 +41,12 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-          import hashlib,json
+          import hashlib,json,os
           p=Path("build/imo182-qrt/d3/model")
           if (p/"render-receipt.json").exists():
               receipt=json.loads((p/"render-receipt.json").read_text())
               rows={n:hashlib.sha256((p/n).read_bytes()).hexdigest() for n in receipt.get("pages",[]) if (p/n).exists()}
-              (p/"d3-model-sha256.json").write_text(json.dumps({"cell":"QRT-MODEL-D3","head":"CI_GITHUB_SHA","pages":rows,"accepted":"0/28","reviewer":"PENDING","owner":"PENDING"},indent=2)+"\n")
+              (p/"d3-model-sha256.json").write_text(json.dumps({"cell":"QRT-MODEL-D3","head":os.environ.get("GITHUB_SHA","UNKNOWN"),"pages":rows,"accepted":"0/28","reviewer":"PENDING","owner":"PENDING"},indent=2)+"\n")
               print(json.dumps(rows,indent=2))
           PY
       - name: Upload ONLY actual sole-renderer five-role HTML and receipts
