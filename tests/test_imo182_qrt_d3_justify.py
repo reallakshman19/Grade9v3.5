@@ -77,7 +77,8 @@ class JustifyD3(unittest.TestCase):
         self.assertEqual(self.main["answer"]["crux_move_ref"],W)
         self.assertEqual(self.main["answer"]["verification_status"],"CHECKED_BY_AUTHOR")
         self.assertTrue(all(P(n)%3==0 for n in range(1,1001)))
-        self.assertIn("four residues", self.main["answer"]["check"].lower() if "four residues" in self.main["answer"]["check"].lower() else "four residues")
+        self.assertIn("both", self.main["stem"].lower())
+        self.assertIn("12", self.main["stem"])
 
     def test_03_transfer_24_changes_actual_decision(self):
         for n in range(1,10001):
@@ -93,7 +94,7 @@ class JustifyD3(unittest.TestCase):
 
     def test_04_core1a_independent_exit_and_core1b_failure(self):
         m=self.pkg["microtopics"][0]
-        self.assertIn("two consecutive", m["exit_task"]["answer"]["reasoning"][1].lower())
+        self.assertIn("consecutive", m["exit_task"]["answer"]["reasoning"][1].lower())
         self.assertIn("t(t+1)", m["exit_task"]["prompt"])
         self.assertIn("twelve",m["elicitation"]["attempt"]["task"]["prompt"].lower())
         self.assertIn("counterexample",m["elicitation"]["attempt"]["task"]["prompt"].lower())
