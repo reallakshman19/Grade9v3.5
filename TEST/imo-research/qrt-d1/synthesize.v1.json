@@ -61,16 +61,20 @@
       "primary_representation_ref": "REP-TEST-IMO182-D1-SYN-GROUP-STAGES",
       "conventions": [
         {
-          "statement": "One complete motif includes both stated component types."
+          "statement": "One complete motif includes both stated component types.",
+          "id": "n"
         },
         {
-          "statement": "Every part of a complete unit repeats in every identical copy."
+          "statement": "Every part of a complete unit repeats in every identical copy.",
+          "id": "k"
         },
         {
-          "statement": "Total across copies is n×(a+b), not a+n×b."
+          "statement": "Total across copies is n×(a+b), not a+n×b.",
+          "id": "total"
         },
         {
-          "statement": "Inverse block count uses size of the entire mixed unit."
+          "statement": "Inverse block count uses size of the entire mixed unit.",
+          "id": "inverse"
         }
       ]
     }
@@ -119,13 +123,25 @@
           "action": "Identify both components that belong to a whole motif.",
           "why_valid": "Both kinds recur in every exact copy.",
           "output": "one full mixed motif",
-          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "SYN-D1-TC-1",
+          "inputs": [
+            "n identical containers",
+            "k items per container"
+          ],
+          "role": "DECLARE"
         },
         {
           "action": "Work a DIFFERENT example: three badges each with two circles and one triangle; count the whole badge before repeating three times.",
           "why_valid": "A full badge is 2+1=3 pieces.",
           "output": "3×(2+1)=9 pieces",
-          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "SYN-D1-TC-2",
+          "inputs": [
+            "3 packs",
+            "5 beads in every pack"
+          ],
+          "role": "TRANSFORM"
         },
         {
           "action": "Check three complete badges contain six circles plus three triangles.",
@@ -134,7 +150,10 @@
             "3 badges",
             "2 circles+1 triangle each"
           ],
-          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "SYN-D1-TC-3",
+          "output": "15 beads",
+          "role": "VERIFY"
         }
       ],
       "relation_refs": [
@@ -170,7 +189,11 @@
             "Four circles and eight stripes make 12."
           ],
           "check": "4+8=12 total.",
-          "verification_status": "CHECKED_BY_AUTHOR"
+          "verification_status": "CHECKED_BY_AUTHOR",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "reasoning_route": [],
+          "crux_move_ref": "SYN-D1-WORK-UNIT-2-1"
         },
         "oracle": {
           "verification": {
@@ -178,7 +201,10 @@
             "bindings": {
               "copies": 4,
               "first": 1,
-              "second": 2
+              "second": 2,
+              "groups": "5",
+              "group_size": "2",
+              "expected_total": "10"
             }
           }
         }
@@ -266,15 +292,18 @@
           "route": [
             {
               "ask": "Which two part-kinds occur in EACH motif?",
-              "why_this_ask": "Identifies the complete repeated unit."
+              "why_this_ask": "Identifies the complete repeated unit.",
+              "from_step_ref": "SYN-D1-TC-1"
             },
             {
               "ask": "How do you count one entire motif?",
-              "why_this_ask": "Establishes dependency quantity."
+              "why_this_ask": "Establishes dependency quantity.",
+              "from_step_ref": "SYN-D1-TC-2"
             },
             {
               "ask": "How many whole motifs recur, and does the expression show it?",
-              "why_this_ask": "Repairs precedence."
+              "why_this_ask": "Repairs precedence.",
+              "from_step_ref": "SYN-D1-TC-3"
             }
           ],
           "differs_from_teaching_path": "Core1A teaches 3 badges of 2 circles and 1 triangle; Core1B challenges false 2-motif precedence and distinct boundary."
@@ -326,13 +355,25 @@
           "action": "Identify both components that belong to a whole motif.",
           "why_valid": "Both kinds recur in every exact copy.",
           "output": "one full mixed motif",
-          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "DERIV-SYN-D1-TC-1",
+          "inputs": [
+            "n identical containers",
+            "k items per container"
+          ],
+          "role": "DECLARE"
         },
         {
           "action": "Work a DIFFERENT example: three badges each with two circles and one triangle; count the whole badge before repeating three times.",
           "why_valid": "A full badge is 2+1=3 pieces.",
           "output": "3×(2+1)=9 pieces",
-          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "DERIV-SYN-D1-TC-2",
+          "inputs": [
+            "3 packs",
+            "5 beads in every pack"
+          ],
+          "role": "TRANSFORM"
         },
         {
           "action": "Check three complete badges contain six circles plus three triangles.",
@@ -341,7 +382,10 @@
             "3 badges",
             "2 circles+1 triangle each"
           ],
-          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
+          "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
+          "id": "DERIV-SYN-D1-TC-3",
+          "output": "15 beads",
+          "role": "VERIFY"
         }
       ],
       "limits": [
@@ -720,7 +764,8 @@
         "synthesis_bridge": "Choose unit-first grouping 4×(3+2).",
         "representation_translation": "Keep all components together as a repeat unit.",
         "reasoning_steps": "One dependency decision; D1 band provisional.",
-        "novelty": "Reverse unknown copies from total and combined unit size."
+        "novelty": "Reverse unknown copies from total and combined unit size.",
+        "synthesis_choice": "Choose repeated equal-groups multiplication from two available operations."
       },
       "safe_variations": [
         "Change part counts and copy number.",
@@ -789,7 +834,8 @@
               "whole unit parts",
               "number of copies"
             ],
-            "output": "3×(2+1)=9"
+            "output": "3×(2+1)=9",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
           }
         ],
         "crux_move_ref": "SYN-D1-WORK-UNIT-2-1",
@@ -840,7 +886,8 @@
           "representation_translation": 0,
           "reasoning_chain_length": 1,
           "algebra_computational_load": 1,
-          "trap_exception_sensitivity": 0
+          "trap_exception_sensitivity": 0,
+          "concept_synthesis_selection": 1
         },
         "basis": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
         "component_evidence": {
@@ -848,7 +895,8 @@
           "representation_translation": "No separate translation bridge.",
           "reasoning_chain_length": "Choose one order/dependency.",
           "algebra_computational_load": "Addition and small multiplication.",
-          "trap_exception_sensitivity": "False precedence separately diagnosed."
+          "trap_exception_sensitivity": "False precedence separately diagnosed.",
+          "concept_synthesis_selection": "Choose equal-group product instead of summing quantities."
         }
       },
       "learner_question_type": "constructed_response"
@@ -920,7 +968,8 @@
               "whole unit parts",
               "number of copies"
             ],
-            "output": "one unit"
+            "output": "one unit",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
           },
           {
             "id": "SYN-D1-QA-ORDER",
@@ -931,7 +980,8 @@
               "whole unit parts",
               "number of copies"
             ],
-            "output": "4×(3+2)=20"
+            "output": "4×(3+2)=20",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
           },
           {
             "id": "SYN-D1-QA-CHECK",
@@ -942,12 +992,16 @@
               "whole unit parts",
               "number of copies"
             ],
-            "output": "20"
+            "output": "20",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
           }
         ],
         "crux_move_ref": "SYN-D1-QA-ORDER",
         "check": "4×3+4×2=12+8=20.",
-        "acceptable_alternatives": [],
+        "acceptable_alternatives": [
+          "(3+2)×4=20",
+          "4×3+4×2=20"
+        ],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
       },
@@ -1029,7 +1083,8 @@
           "representation_translation": 0,
           "reasoning_chain_length": 1,
           "algebra_computational_load": 1,
-          "trap_exception_sensitivity": 0
+          "trap_exception_sensitivity": 0,
+          "concept_synthesis_selection": 1
         },
         "basis": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
         "component_evidence": {
@@ -1037,7 +1092,8 @@
           "representation_translation": "No separate translation bridge.",
           "reasoning_chain_length": "Choose one order/dependency.",
           "algebra_computational_load": "Addition and small multiplication.",
-          "trap_exception_sensitivity": "False precedence separately diagnosed."
+          "trap_exception_sensitivity": "False precedence separately diagnosed.",
+          "concept_synthesis_selection": "Choose equal-group product instead of summing quantities."
         }
       },
       "learner_question_type": "constructed_response"
@@ -1095,7 +1151,8 @@
               "whole unit parts",
               "number of copies"
             ],
-            "output": "unknown complete blocks"
+            "output": "unknown complete blocks",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
           },
           {
             "id": "SYN-D1-QB-REVERSE",
@@ -1106,7 +1163,8 @@
               "whole unit parts",
               "number of copies"
             ],
-            "output": "20÷(3+2)=4"
+            "output": "20÷(3+2)=4",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
           },
           {
             "id": "SYN-D1-QB-CHECK",
@@ -1117,7 +1175,8 @@
               "whole unit parts",
               "number of copies"
             ],
-            "output": "4×5=20"
+            "output": "4×5=20",
+            "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
           }
         ],
         "crux_move_ref": "SYN-D1-QB-REVERSE",
@@ -1137,12 +1196,7 @@
           "artifact_ref": null
         }
       ],
-      "hints": [
-        {
-          "text": "The total objects and objects-per-tray are known; which quantity is missing? Choose an operation that reverses repeated groups of that size.",
-          "reveals": "CONCEPT"
-        }
-      ],
+      "hints": [],
       "scaffolds": [],
       "hint_ladder": [
         {
@@ -1178,7 +1232,8 @@
           "representation_translation": 0,
           "reasoning_chain_length": 1,
           "algebra_computational_load": 1,
-          "trap_exception_sensitivity": 0
+          "trap_exception_sensitivity": 0,
+          "concept_synthesis_selection": 1
         },
         "basis": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
         "component_evidence": {
@@ -1186,7 +1241,8 @@
           "representation_translation": "No separate translation bridge.",
           "reasoning_chain_length": "Choose one order/dependency.",
           "algebra_computational_load": "Addition and small multiplication.",
-          "trap_exception_sensitivity": "False precedence separately diagnosed."
+          "trap_exception_sensitivity": "False precedence separately diagnosed.",
+          "concept_synthesis_selection": "Choose equal-group product instead of summing quantities."
         }
       },
       "learner_question_type": "constructed_response",
@@ -1196,7 +1252,17 @@
           "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION"
         ],
         "protected_move_ref": "SYN-D1-QB-REVERSE",
-        "description": "Reverse the known/unknown: total fixed, full two-part unit first, unknown copies."
+        "description": "Reverse the known/unknown: total fixed, full two-part unit first, unknown copies.",
+        "statement": "Forward: given number of equal trays and per-tray count, synthesis total. Reverse: given total and per-tray count, synthesis missing tray number.",
+        "invariant": "The equal-groups relation T=n×k.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
+            "MIC-TEST-IMO182-D1-SYN-EQUAL-GROUPS:exit_task",
+            "MIC-TEST-IMO182-D1-SYN-EQUAL-GROUPS:boundary_test"
+          ],
+          "why_new": "Unknown shifts from total to number of groups and mathematical operation changes to division; not merely a fresh group-count substitution."
+        }
       }
     }
   ],
