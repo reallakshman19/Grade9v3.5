@@ -1,0 +1,46 @@
+name: IMO 182 QRT D2 REPRESENT five-role
+on:
+  pull_request:
+    paths:
+      - 'TEST/imo-research/qrt-d2/represent.v1.json'
+      - 'TEST/imo-research/qrt-d2/figures/represent-d2-*.svg'
+      - 'TEST/imo-research/qrt-d2/test_represent.py'
+      - 'TEST/products/imo182-qrt-d2-represent.manifest.json'
+      - '.github/workflows/imo-182-qrt-d2-represent.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  represent:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet jsonschema
+      - run: python -m unittest discover -s TEST/imo-research/qrt-d2 -p test_represent.py -v
+      - run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d2-represent.manifest.json \
+            --out build/imo182-qrt/d2/represent --draft --reference
+      - run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,hashlib
+          d=Path('build/imo182-qrt/d2/represent')
+          r=json.loads((d/'render-receipt.json').read_text())
+          assert not r['gaps'],r['gaps']
+          files={'core1.html','core1a.html','core1b.html','core2a.html','core2b.html','index.html'}
+          assert files<=set(r['pages']),r['pages']
+          hashes={f:hashlib.sha256((d/f).read_bytes()).hexdigest() for f in sorted(files)}
+          (d/'represent-sha256.json').write_text(json.dumps({'roles':hashes,'qrt_accepted':'0/28','source':'AUTHORED_TEST'},indent=2)+'\n')
+          print(hashes)
+          PY
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-qrt-d2-represent-actual-renderer-html
+          path: build/imo182-qrt/d2/represent/
+          if-no-files-found: warn
