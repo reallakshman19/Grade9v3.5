@@ -2258,6 +2258,33 @@ def core2(ctx: Ctx, q: dict) -> str:
 
 def _ladder(ctx: Ctx, q: dict, role: str, source: bool = False) -> str:
     rungs = sorted(q.get("hint_ladder") or [], key=lambda r: r["order"])
+    # The mature Core2 typed support plan is reused by Core2A only when a
+    # question opts in. It protects question-specific W without changing
+    # legacy Core2A hints or altering blueprint roles/slots.
+    after_attempt_rungs = []
+    if role == "CORE2A" and not source and (q.get("extensions") or {}).get("grade9v3:core2_support_plan"):
+        try:
+            release = {row["source"]: row["availability"] for row in core2_v2.project_support(q)}
+        except core2_v2.Core2SupportProjectionError as exc:
+            ctx.gap("AUTHOR_HINT_RELEASE_POLICY", q["id"], str(exc), "CORE2A")
+            return ""  # fail closed on a broken policy, never leak H3
+        pre_attempt = []
+        for r in rungs:
+            source_ref = r.get("from")
+            if not source_ref and r.get("text"):
+                # Inline rung refs are indexed in the original authored array.
+                source_ref = f"hint_ladder[{next(i for i, row in enumerate(q.get('hint_ladder') or []) if row is r)}]"
+            lane = release.get(source_ref)
+            if lane == core2_v2.AFTER_ATTEMPT:
+                after_attempt_rungs.append(r)
+            elif lane == core2_v2.POST_SOLUTION:
+                ctx.gap("AUTHOR_HINT_RELEASE_POLICY", q["id"],
+                        f"{source_ref} requires POST_SOLUTION; do not project as a pre-attempt hint", "CORE2A")
+            elif lane == core2_v2.PRE_ATTEMPT_SAFE:
+                pre_attempt.append(r)
+            else:
+                ctx.gap("AUTHOR_HINT_RELEASE_POLICY", q["id"], f"unbound hint {source_ref}", "CORE2A")
+        rungs = pre_attempt
     texts = []
     visuals = []
     targets = []
@@ -2287,8 +2314,9 @@ def _ladder(ctx: Ctx, q: dict, role: str, source: bool = False) -> str:
                               f'{q["id"]}-hint-{n}', allowed=[s["visual_stage_ref"]]
                               if s.get("visual_stage_ref") else None)
                        for n, s in enumerate(q.get("scaffolds") or [], 1)]
-    if not source and role != "CORE2" and len(texts) < 3:
-        ctx.gap("AUTHOR_HINT_LADDER", q["id"], f"{len(texts)} rung(s); need 3", role)
+    if not source and role != "CORE2" and len(texts) + len(after_attempt_rungs) < 3:
+        ctx.gap("AUTHOR_HINT_LADDER", q["id"],
+                f"{len(texts)} pre-attempt + {len(after_attempt_rungs)} gated rung(s); need 3 authored rungs", role)
     if not texts:
         return ""
     ref = f'{role}-{q["id"]}' + ("-source" if source else "-authored")
@@ -2297,10 +2325,34 @@ def _ladder(ctx: Ctx, q: dict, role: str, source: bool = False) -> str:
     later = "".join(f'<template data-g9-rung-payload="{esc(ref)}-{n}">'
                     f'<li data-g9-rung="{n}">{t}</li></template>'
                     for n, t in enumerate(payloads[1:], 2))
-    return (f'<div class="g9-ladder" data-g9-ladder-ref="{esc(ref)}">'
-            f'<ol data-g9-ladder><li data-g9-rung="1">{payloads[0]}</li></ol>'
-            f'{later}<button type="button" data-g9-next-rung{" disabled" if len(texts) == 1 else ""}>'
-            'Next hint</button></div>')
+    pre_commit_ladder = (f'<div class="g9-ladder" data-g9-ladder-ref="{esc(ref)}">'
+                         f'<ol data-g9-ladder><li data-g9-rung="1">{payloads[0]}</li></ol>'
+                         f'{later}<button type="button" data-g9-next-rung{" disabled" if len(texts) == 1 else ""}>'
+                         'Next hint</button></div>')
+    delayed = []
+    for rung in after_attempt_rungs:
+        if rung.get("text"):
+            text = rung["text"]
+            target = ""
+            support = {}
+        else:
+            matched = re.fullmatch(r"(hints|scaffolds)\[(\d+)\]", rung["from"])
+            if matched is None:
+                ctx.gap("AUTHOR_HINT_RELEASE_POLICY", q["id"],
+                        "invalid after-attempt hint source", "CORE2A")
+                continue
+            kind, index = matched.groups()
+            support = (q.get(kind) or [])[int(index)]
+            text = support["text"]
+            target = f'{"source_hint" if kind == "hints" else "scaffold"}:{index}'
+        visual = figure(ctx, support.get("visual_ref"), "POST_ATTEMPT", role,
+                        f'{q["id"]}-hint-after-{rung["order"]}',
+                        allowed=[support["visual_stage_ref"]] if support.get("visual_stage_ref") else None)
+        body = (f'<div data-g9-after-attempt-hint data-g9-hint-order="{rung["order"]}">'
+                + question_text(ctx, q, target, text, role) + visual + '</div>')
+        delayed.append(reveal(f'Hint {rung["order"]} · after your attempt', body,
+                              ref=f'CORE2A-{q["id"]}-after-attempt-hint-{rung["order"]}'))
+    return pre_commit_ladder + "".join(delayed)
 
 
 def _family_title(ctx: Ctx, ref: str | None) -> str:
