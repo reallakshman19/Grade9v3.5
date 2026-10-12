@@ -1,0 +1,1362 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "PKG-QRT-SYNTHESIZE-D3",
+  "title": "Original authored SYNTHESIZE-D3 three-digit progression/divisibility counting",
+  "version": "1.0.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Entirely original SYNTHESIZE-D3 TEST joins arithmetic progression, decimal divisibility and digit-bound restrictions in a disjoint count. No official source or academic acceptance.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-QRT-SYNTHESIZE-D3",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original digit-progression/divisibility synthesis",
+      "origin": "AUTHORED",
+      "locator": "TEST/imo-research/qrt-d3/synthesize.v1.json",
+      "edition": "Authored TEST October 12 2026",
+      "section": "Three-digit progression/divisibility constraint counting",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Wholly original authored question, working and four SVGs.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Original AP and divisible9 count14.",
+        "Changed divisor6 count20.",
+        "Independent odd-units exit count8."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Learner must integrate multiple familiar rules, not mechanically apply a single digit-sum formula.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-QRT-SYNTHESIZE-D3",
+      "title": "Integrate digit progression, divisibility and position-specific bounds",
+      "topic": "Three-digit arithmetic progression and modular counting",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Disjoint integer-gap counts require joining three independent constraints.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-QRT-SYNTHESIZE-D3-CONSTRUCTION",
+      "conventions": [
+        {
+          "id": "digits",
+          "statement": "Hundreds H in1..9, tens T and units U in0..9."
+        },
+        {
+          "id": "progression",
+          "statement": "Equal consecutive differences T-H=U-T, including zero/negative common difference."
+        },
+        {
+          "id": "nine",
+          "statement": "Nine divides the whole integer iff nine divides its digit sum."
+        },
+        {
+          "id": "complete",
+          "statement": "Count all distinct three-digit triples once."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-QRT-SYNTHESIZE-D3",
+      "action": "Synthesize digit AP, divisibility9 and legal leading-digit/units bounds into an exhaustive count.",
+      "success_criterion": "Prove 14 originals, independent8-exit and changed-divisor6 count20, with full valid-digit checking.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-QRT-SYNTHESIZE-D3",
+      "title": "Synthesize modular/sequence/place-value constraints",
+      "bucket_id": "BUCKET-QRT-SYNTHESIZE-D3",
+      "primary_capability_ref": "CAP-QRT-SYNTHESIZE-D3",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Only reading the two checkpoint coordinates reveals whether the two forbidden path families share paths.",
+      "entry_assumptions": [
+        "Know arithmetic progression and digit sums.",
+        "Know divisibility tests for3 and9.",
+        "Can impose separate decimal digit bounds.",
+        "Can count integer gaps."
+      ],
+      "inferential_jump": "Combine AP sum3T with9-divisibility and asymmetric H=T-k, U=T+k digit ranges to select allowed T and count legal k. Safe H1/H2 do not select target T cases or counts.",
+      "teaching_path": [
+        {
+          "id": "STEP-SD3-1",
+          "role": "DECLARE",
+          "action": "Model an integer by ordered hundreds H, tens T and units U and their equal AP differences.",
+          "why_valid": "T-H=U-T means H+U=2T.",
+          "inputs": [
+            "H",
+            "T",
+            "U"
+          ],
+          "output": "H+U=2T."
+        },
+        {
+          "id": "STEP-SD3-2",
+          "role": "TRANSFORM",
+          "action": "Apply the AP identity to the digit sum in a generic, unrelated example.",
+          "why_valid": "H+T+U=3T.",
+          "inputs": [
+            "H+U=2T"
+          ],
+          "output": "Digit sum3T."
+        },
+        {
+          "id": "STEP-SD3-3",
+          "role": "TRANSFORM",
+          "action": "Write H=T-k,U=T+k for a signed integer gap and distinguish two digit-bound intervals.",
+          "why_valid": "Hundreds must be1..9 while units may0..9.",
+          "inputs": [
+            "T",
+            "k"
+          ],
+          "output": "Two bounds constrain k."
+        },
+        {
+          "id": "STEP-SD3-4",
+          "role": "VERIFY",
+          "action": "Partition a finite count by middle-digit value, then check each integer against original conditions.",
+          "why_valid": "A three-digit integer has a unique middle digit and signed difference.",
+          "inputs": [
+            "Digit ranges",
+            "Middle-digit cases"
+          ],
+          "output": "A complete disjoint count."
+        }
+      ],
+      "relation_refs": [
+        "REL-QRT-SYNTHESIZE-D3"
+      ],
+      "representation_refs": [
+        "REP-QRT-SYNTHESIZE-D3-CONSTRUCTION"
+      ],
+      "question_family_refs": [
+        "FAM-QRT-SYNTHESIZE-D3"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Three digits in AP always make a multiple9.",
+          "diagnostic_prompt": "Check progression 246 and its digit sum12.",
+          "repair": "AP sum3T is always multiple3, not necessarily9."
+        },
+        {
+          "wrong_idea": "Leading-zero word036 is an eligible three-digit integer.",
+          "diagnostic_prompt": "Does 036 lie from100 to999?",
+          "repair": "H must be nonzero while U can be0."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independent EXIT: Among three-digit AP-digit integers divisible9, how many have ODD units digit? Prove by cases and check the list.",
+        "source_ref": "SRC-TEST-QRT-SYNTHESIZE-D3",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "8 qualifying odd-units numbers.",
+          "reasoning": [
+            "AP and9-divisibility require T=3,6,9 with H>=1.",
+            "Add U odd to the signed-gap bounds.",
+            "The complete list is 135,333,369,531,567,765,963,999."
+          ],
+          "check": "Exhaustive scan100..999 confirms8.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo182_qrt_d3_synthesize.py",
+            "bindings": {
+              "domain": "integers100..999",
+              "expected_count": "8"
+            }
+          }
+        }
+      },
+      "research_contribution": "Provisional original SYNTHESIZE D3 test pending independent academic/Owner decision.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-SD3-THREE",
+          "decision": "Build generic digit cards, AP arrows and leading-digit/units bounds independently.",
+          "step_refs": [
+            "STEP-SD3-1",
+            "STEP-SD3-2",
+            "STEP-SD3-3",
+            "STEP-SD3-4"
+          ],
+          "representation_ref": "REP-QRT-SYNTHESIZE-D3-CONSTRUCTION",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-QRT-SYNTHESIZE-D3"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Generic AP has digit sum3T and nonzero H for three-digit.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "SD3-DIGITS",
+            "SD3-GAPS",
+            "SD3-BOUNDS"
+          ],
+          "worked_anchor_ref": "Q-TEST-QRT-SYNTHESIZE-D3-CONCEPT"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "What is the digit sum of generic AP digits H,T,U?",
+        "result": "H+U=2T, hence sum3T, with a separate nonzero hundreds rule.",
+        "representation_ref": "REP-QRT-SYNTHESIZE-D3-CONSTRUCTION"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "Does three-digit AP automatically imply divisibility9? Test 246.",
+          "defensible_answer": "No, 246 is AP but digit sum12."
+        },
+        "attempt": {
+          "produces": "Generic AP, digit sum and legal place-value bounds without main target cases.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "AP equation",
+              "evidence_of": "H+U=2T."
+            },
+            {
+              "criterion": "Digit sum",
+              "evidence_of": "H+T+U=3T."
+            },
+            {
+              "criterion": "Leading zero",
+              "evidence_of": "H≥1, U≥0."
+            }
+          ],
+          "accepted": [
+            "AP implies divisible3 but not automatically9."
+          ],
+          "rejected": [
+            "AP guarantees divisible9."
+          ],
+          "task": {
+            "prompt": "Draw generic H/T/U AP positions, derive their sum and contrast H versus U bounds; test 246. Do not count the original set.",
+            "givens": [
+              "H hundreds, T tens, U units.",
+              "Do not use target values."
+            ],
+            "representation_ref": "REP-QRT-SYNTHESIZE-D3-CONSTRUCTION",
+            "stage_refs": [
+              "SD3-DIGITS",
+              "SD3-GAPS",
+              "SD3-BOUNDS"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "What equation encodes AP of three digits?",
+              "why_this_ask": "Recover AP model.",
+              "from_step_ref": "STEP-SD3-1"
+            },
+            {
+              "ask": "What follows for sum?",
+              "why_this_ask": "Recover divisibility connection.",
+              "from_step_ref": "STEP-SD3-2"
+            },
+            {
+              "ask": "Why is H=0 invalid but U=0 permitted?",
+              "why_this_ask": "Restore place constraints.",
+              "from_step_ref": "STEP-SD3-3"
+            },
+            {
+              "ask": "How can cases be exhaustive but not duplicated?",
+              "why_this_ask": "Reconstruct joined count.",
+              "from_step_ref": "STEP-SD3-4"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A builds three generic digit stages; Core1B starts with false progression-implies9 shortcut and repairs using 246 and036 after attempted explanation."
+        },
+        "boundary_test": {
+          "prompt": "A student asserts any AP-digit word is a three-digit multiple9. Test 246 and leading-zero036 to diagnose two distinct failures.",
+          "answer": "246 forms AP but sum12 not multiple9; 036 starts with0, so not a three-digit integer.",
+          "confirms": "Divisibility strength and leading-zero exception."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-QRT-SYNTHESIZE-D3",
+      "expression": "AP H+U=2T => sum3T; nine-divisibility requires3|T; H=T-k in1..9 and U=T+k in0..9.",
+      "meaning": "All constraints must hold on one ordered decimal triple.",
+      "symbols": [
+        {
+          "symbol": "H",
+          "meaning": "Hundreds digit",
+          "unit_or_domain": "1..9"
+        },
+        {
+          "symbol": "T",
+          "meaning": "Tens digit",
+          "unit_or_domain": "0..9"
+        },
+        {
+          "symbol": "U",
+          "meaning": "Units digit",
+          "unit_or_domain": "0..9"
+        },
+        {
+          "symbol": "k",
+          "meaning": "Signed AP step",
+          "unit_or_domain": "integer"
+        }
+      ],
+      "conditions": [
+        "No leading zero.",
+        "Progression difference any sign.",
+        "Divisible6 transfer needs even final digit."
+      ],
+      "derivation": [
+        {
+          "id": "DER-SD3-0",
+          "role": "DECLARE",
+          "action": "Model an integer by ordered hundreds H, tens T and units U and their equal AP differences.",
+          "why_valid": "T-H=U-T means H+U=2T.",
+          "inputs": [
+            "H",
+            "T",
+            "U"
+          ],
+          "output": "H+U=2T."
+        },
+        {
+          "id": "DER-SD3-1",
+          "role": "TRANSFORM",
+          "action": "Apply the AP identity to the digit sum in a generic, unrelated example.",
+          "why_valid": "H+T+U=3T.",
+          "inputs": [
+            "H+U=2T"
+          ],
+          "output": "Digit sum3T."
+        },
+        {
+          "id": "DER-SD3-2",
+          "role": "TRANSFORM",
+          "action": "Write H=T-k,U=T+k for a signed integer gap and distinguish two digit-bound intervals.",
+          "why_valid": "Hundreds must be1..9 while units may0..9.",
+          "inputs": [
+            "T",
+            "k"
+          ],
+          "output": "Two bounds constrain k."
+        }
+      ],
+      "limits": [
+        "AP does not force9-divisibility.",
+        "036 is not a three-digit integer.",
+        "Divisible6 requires even units."
+      ],
+      "checks": [
+        "Exhaustively enumerate100..999.",
+        "Verify legal H/U bounds."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>H</mi><mo>+</mo><mi>U</mi><mo>=</mo><mn>2</mn><mi>T</mi></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-QRT-SYNTHESIZE-D3-CONSTRUCTION",
+      "kind": "SCHEMATIC",
+      "purpose": "Three stages generic decimal digit positions, equal AP gap and nonzero hundreds bounds.",
+      "required_elements": [
+        "H/T/U digit cards",
+        "Equal-gap arrows",
+        "H nonzero vs U zero permitted"
+      ],
+      "relation_refs": [
+        "REL-QRT-SYNTHESIZE-D3"
+      ],
+      "read_order": [
+        "Read decimal places.",
+        "Compare equal gaps and digit-sum condition.",
+        "Respect distinct H/U bounds."
+      ],
+      "instance_constraints": [
+        "No complete target enumeration on preattempt visual.",
+        "Stage IDs unique to this SVG."
+      ],
+      "accessibility": [
+        "Large contrasting labels.",
+        "SVG descriptions do not reveal solution."
+      ],
+      "misleading_alternatives": [
+        "AP always multiple9.",
+        "Leading-zero word counts as three-digit."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-synthesize-construct.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-SYNTHESIZE-D3-0",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-QRT-SYNTHESIZE-D3",
+          "datum_refs": [
+            "DATUM-QRT-SYNTHESIZE-D3-1"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-synthesize-construct.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Digit cards, divisibility and equal gaps",
+            "caption": "Original learner-owned synthesis."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Digit cards H/T/U and equal gap arrows",
+          "symbol": "H,T,U",
+          "in_words": "Progression, divisibility and digit bounds constrain the same word."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SD3-DIGITS",
+          "label": "Digit stage 1",
+          "purpose": "Generic concept or unsolved original question.",
+          "visible_elements": [
+            "SD3-DIGITS"
+          ]
+        },
+        {
+          "id": "SD3-GAPS",
+          "label": "Digit stage 2",
+          "purpose": "Generic concept or unsolved original question.",
+          "visible_elements": [
+            "SD3-GAPS"
+          ]
+        },
+        {
+          "id": "SD3-BOUNDS",
+          "label": "Digit stage 3",
+          "purpose": "Generic concept or unsolved original question.",
+          "visible_elements": [
+            "SD3-BOUNDS"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-SYNTHESIZE-D3-TARGET",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Original unsolved three-digit AP and divisible9 digit cards.",
+      "required_elements": [
+        "H/T/U cards and AP plus9-divisibility condition"
+      ],
+      "relation_refs": [
+        "REL-QRT-SYNTHESIZE-D3"
+      ],
+      "read_order": [
+        "Read decimal places.",
+        "Compare equal gaps and digit-sum condition.",
+        "Respect distinct H/U bounds."
+      ],
+      "instance_constraints": [
+        "No complete target enumeration on preattempt visual.",
+        "Stage IDs unique to this SVG."
+      ],
+      "accessibility": [
+        "Large contrasting labels.",
+        "SVG descriptions do not reveal solution."
+      ],
+      "misleading_alternatives": [
+        "AP always multiple9.",
+        "Leading-zero word counts as three-digit."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-synthesize-attempt.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-SYNTHESIZE-D3-1",
+          "cores": [
+            "CORE2A"
+          ],
+          "microtopic_ref": "MIC-QRT-SYNTHESIZE-D3",
+          "datum_refs": [
+            "DATUM-QRT-SYNTHESIZE-D3-2"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-synthesize-attempt.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Digit cards, divisibility and equal gaps",
+            "caption": "Original learner-owned synthesis."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Digit cards H/T/U and equal gap arrows",
+          "symbol": "H,T,U",
+          "in_words": "Progression, divisibility and digit bounds constrain the same word."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SD3-TARGET",
+          "label": "Digit stage 1",
+          "purpose": "Generic concept or unsolved original question.",
+          "visible_elements": [
+            "SD3-TARGET"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-SYNTHESIZE-D3-MISCONCEPTION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Independent graphical counterexamples 246 AP not multiple9, 036 leading-zero.",
+      "required_elements": [
+        "246 and036 example cards"
+      ],
+      "relation_refs": [
+        "REL-QRT-SYNTHESIZE-D3"
+      ],
+      "read_order": [
+        "Read decimal places.",
+        "Compare equal gaps and digit-sum condition.",
+        "Respect distinct H/U bounds."
+      ],
+      "instance_constraints": [
+        "No complete target enumeration on preattempt visual.",
+        "Stage IDs unique to this SVG."
+      ],
+      "accessibility": [
+        "Large contrasting labels.",
+        "SVG descriptions do not reveal solution."
+      ],
+      "misleading_alternatives": [
+        "AP always multiple9.",
+        "Leading-zero word counts as three-digit."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-synthesize-repair.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-SYNTHESIZE-D3-2",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-QRT-SYNTHESIZE-D3",
+          "datum_refs": [
+            "DATUM-QRT-SYNTHESIZE-D3-3"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-synthesize-repair.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Digit cards, divisibility and equal gaps",
+            "caption": "Original learner-owned synthesis."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Digit cards H/T/U and equal gap arrows",
+          "symbol": "H,T,U",
+          "in_words": "Progression, divisibility and digit bounds constrain the same word."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SD3-COUNTER",
+          "label": "Digit stage 1",
+          "purpose": "Generic concept or unsolved original question.",
+          "visible_elements": [
+            "SD3-COUNTER"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-SYNTHESIZE-D3-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Changed divisor6 original unsolved digit-card diagram.",
+      "required_elements": [
+        "H/T/U cards and AP plus6-divisibility condition"
+      ],
+      "relation_refs": [
+        "REL-QRT-SYNTHESIZE-D3"
+      ],
+      "read_order": [
+        "Read decimal places.",
+        "Compare equal gaps and digit-sum condition.",
+        "Respect distinct H/U bounds."
+      ],
+      "instance_constraints": [
+        "No complete target enumeration on preattempt visual.",
+        "Stage IDs unique to this SVG."
+      ],
+      "accessibility": [
+        "Large contrasting labels.",
+        "SVG descriptions do not reveal solution."
+      ],
+      "misleading_alternatives": [
+        "AP always multiple9.",
+        "Leading-zero word counts as three-digit."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-synthesize-transfer.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-SYNTHESIZE-D3-3",
+          "cores": [
+            "CORE2B"
+          ],
+          "microtopic_ref": "MIC-QRT-SYNTHESIZE-D3",
+          "datum_refs": [
+            "DATUM-QRT-SYNTHESIZE-D3-4"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-synthesize-transfer.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Digit cards, divisibility and equal gaps",
+            "caption": "Original learner-owned synthesis."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Digit cards H/T/U and equal gap arrows",
+          "symbol": "H,T,U",
+          "in_words": "Progression, divisibility and digit bounds constrain the same word."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SD3-TRANSFER",
+          "label": "Digit stage 1",
+          "purpose": "Generic concept or unsolved original question.",
+          "visible_elements": [
+            "SD3-TRANSFER"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-QRT-SYNTHESIZE-D3",
+      "title": "Synthesize digit AP and divisor filters",
+      "capability_refs": [
+        "CAP-QRT-SYNTHESIZE-D3"
+      ],
+      "solution_structure": [
+        "Translate AP into H+U=2T and sum3T.",
+        "Use nine-divisibility to constrain T.",
+        "Use legal H=T-k,U=T+k digit bounds.",
+        "Sum disjoint middle cases and check.",
+        "Change divisor6 requires even units instead."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Combine independent AP, divisibility and place constraints.",
+        "representation_translation": "Three digit cards to AP/digit gap algebra.",
+        "reasoning_steps": "T filter, k intervals, disjoint counting.",
+        "novelty": "Six divisor changes constraint to even units."
+      },
+      "safe_variations": [
+        "Original digit-pattern modular questions."
+      ],
+      "transfer_boundaries": [
+        "Nine-divisibility restricts middle digit.",
+        "Six-divisibility requires even units."
+      ],
+      "common_wrong_routes": [
+        "Progression always multiple9.",
+        "Allow hundreds zero or omit descending cases."
+      ],
+      "item_refs": [
+        "Q-TEST-QRT-SYNTHESIZE-D3-CLASSIFY",
+        "Q-TEST-QRT-SYNTHESIZE-D3-BOUNDARY"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-QRT-SYNTHESIZE-D3-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-SYNTHESIZE-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-SYNTHESIZE-D3-CONCEPT",
+      "stem": "On generic ordered digits H,T,U forming an AP, derive equal-gap and digit sum identities, explain why 246 need not be divisible9 and why H cannot be0.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Original generic example, not target count.",
+        "Hundreds digit positive."
+      ],
+      "figure_refs": [
+        "REP-QRT-SYNTHESIZE-D3-CONSTRUCTION"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "H+U=2T and digit sum3T; AP alone does not force9-divisibility.",
+        "reasoning": [
+          "Equal differences give H+U=2T.",
+          "Sum H+T+U=3T.",
+          "246 has AP digits but sum12 not divisible9; H must be1..9."
+        ],
+        "check": "246%9=3.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-QRT-SYNTHESIZE-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-SYNTHESIZE-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "CONCEPT_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-SYNTHESIZE-D3-CONSTRUCTION",
+        "safe_ref": "REP-QRT-SYNTHESIZE-D3-CONSTRUCTION",
+        "bound_ref": null,
+        "stage_refs": [
+          "SD3-DIGITS",
+          "SD3-GAPS",
+          "SD3-BOUNDS"
+        ]
+      },
+      "repair_ref": "STEP-SD3-2",
+      "failure_signal": "Confuses automatic div3 with div9.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-SYNTHESIZE-D3",
+        "closure": "Generic prerequisite, not target."
+      },
+      "independent_check": {
+        "statement": "246 is AP, not multiple9.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "Generic concept prerequisite."
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-QRT-SYNTHESIZE-D3-CLASSIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3",
+        "grade9v3:cognitive_demand": {
+          "primary": "SYNTHESIZE",
+          "secondary": [
+            "APPLY",
+            "JUSTIFY"
+          ],
+          "basis": "Three-condition join drives case selection."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Filter T using9|3T, then intersect H/T/U bounds for signed k.",
+          "common_wrong_route": "AP implies div9 or leading zeros permitted."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-SYNTHESIZE-D3-JOINT-COUNT"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-SYNTHESIZE-D3-JOINT-COUNT"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-SYNTHESIZE-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-SYNTHESIZE-D3-CLASSIFY",
+      "stem": "Count ALL THREE-DIGIT positive integers whose ordered H,T,U digits form an arithmetic progression (constant and decreasing allowed) AND the integer is divisible by9. SYNTHESIZE both algebraic relations and the valid decimal bounds into an exhaustive nonoverlapping count. Justify completeness.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "H1..9; T/U0..9.",
+        "Any signed AP difference allowed.",
+        "Original authored TEST."
+      ],
+      "figure_refs": [
+        "REP-QRT-SYNTHESIZE-D3-TARGET"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "14 three-digit arithmetic-progression numbers are divisible by9.",
+        "reasoning": [
+          "AP gives H+U=2T, digit sum3T; 9|3T forces T multiple3.",
+          "T=0 would require H=U=0, not three-digit; T in3,6,9.",
+          "Write H=T-k,U=T+k with H in1..9,U in0..9. At T3, k=-3..2 gives6; T6, k=-3..3 gives7; T9, k0 gives1.",
+          "All nonoverlapping cases total6+7+1=14, including valid630 and999."
+        ],
+        "check": "Independently enumerate n100..999:14.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "crux_move_ref": "MOVE-SYNTHESIZE-D3-JOINT-COUNT",
+        "reasoning_route": [
+          {
+            "id": "MOVE-SD3-STRUCT",
+            "kind": "REPRESENT",
+            "action": "Model AP H+U=2T and sum3T with digit bounds.",
+            "why_valid": "Digit equality and base-ten rules.",
+            "inputs": [
+              "AP",
+              "Three-digit status"
+            ],
+            "output": "Joint digit model."
+          },
+          {
+            "id": "MOVE-SYNTHESIZE-D3-JOINT-COUNT",
+            "kind": "DECIDE",
+            "action": "Combine nine-divisibility with legal signed k bounds to filter T and count disjoint cases.",
+            "why_valid": "T3 six, T6 seven, T9 one.",
+            "inputs": [
+              "9|3T",
+              "H in1..9",
+              "U in0..9"
+            ],
+            "output": "14."
+          },
+          {
+            "id": "MOVE-SD3-VALIDATE",
+            "kind": "VERIFY",
+            "action": "Enumerate integers100..999 and test AP/divisibility.",
+            "why_valid": "Unique digit triple per integer.",
+            "inputs": [
+              "All 3-digit numbers"
+            ],
+            "output": "14."
+          }
+        ],
+        "rubric": [
+          {
+            "criterion": "Select T from joint constraints",
+            "evidence_of": "T in3,6,9 excluding0."
+          },
+          {
+            "criterion": "Intersect asymmetric digit bounds",
+            "evidence_of": "6,7,1 signed gaps."
+          },
+          {
+            "criterion": "Prove complete count",
+            "evidence_of": "14, unique cases and independent check."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-QRT-SYNTHESIZE-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-SYNTHESIZE-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Name the three digit positions and state the equal-step condition, separately noting the number has three digits.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-SYNTHESIZE-D3-JOINT-COUNT"
+        },
+        {
+          "text": "There are simultaneous restrictions from digit pattern, divisibility and place-value limits. Organize them before deciding which cases count.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-SYNTHESIZE-D3-JOINT-COUNT"
+        },
+        {
+          "text": "After your written attempt, use H+U=2T, sum3T and 9|3T; then set H=T-k,U=T+k and intersect separate digit bounds for each eligible T. Sum the disjoint cases.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-SYNTHESIZE-D3-JOINT-COUNT"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-SYNTHESIZE-D3-TARGET",
+        "safe_ref": "REP-QRT-SYNTHESIZE-D3-TARGET",
+        "bound_ref": null,
+        "stage_refs": [
+          "SD3-TARGET"
+        ]
+      },
+      "repair_ref": "STEP-SD3-3",
+      "failure_signal": "Counts all AP values, permits leading-zero, or omits descending/constant patterns.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-SYNTHESIZE-D3",
+        "closure": "Assisted REPRESENT question, academic acceptance pending."
+      },
+      "independent_check": {
+        "statement": "Exactly14 n100..999 have AP digits and n%9=0.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Provisional SYNTHESIZE-D3, multiple familiar constraints independently joined into exhaustive count.",
+        "component_evidence": {
+          "concept_model_selection": "Coordinate AP/div9/bounds.",
+          "representation_translation": "Digits to signed step k and middle T.",
+          "reasoning_chain_length": "Filter T, count gaps, sum and check.",
+          "algebra_computational_load": "Small integer cases.",
+          "trap_exception_sensitivity": "H0 invalid, U0 permitted, negative gaps valid."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-QRT-SYNTHESIZE-D3-BOUNDARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3",
+        "grade9v3:cognitive_demand": {
+          "primary": "SYNTHESIZE",
+          "secondary": [
+            "APPLY",
+            "JUSTIFY"
+          ],
+          "basis": "Redesign digit constraint conjunction under divisor6."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Swap nine's T restriction for even units U.",
+          "common_wrong_route": "Copy14 or T=3,6,9."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-SYNTHESIZE-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-SYNTHESIZE-D3-BOUNDARY",
+      "stem": "TRANSFER: Keep three-digit ordered AP digits, but CHANGE the integer divisibility requirement to SIX instead of nine. Explain what changes in your synthesis, derive and verify a complete count. Include constant and decreasing progressions.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "H1..9, T/U0..9.",
+        "Six-divisibility requires factors2 and3.",
+        "Do not retain original T filter automatically."
+      ],
+      "figure_refs": [
+        "REP-QRT-SYNTHESIZE-D3-TRANSFER"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "20 three-digit AP-digit numbers are divisible by6.",
+        "reasoning": [
+          "AP sum3T is always divisible3.",
+          "Six divisibility now requires even units U, not the old middle-digit restriction.",
+          "Count all valid H=T-k,U=T+k with U even. Values: 210,222,234,246,258,420,432,444,456,468,630,642,654,666,678,840,852,864,876,888."
+        ],
+        "check": "Independent enumeration n100..999 gives20.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "crux_move_ref": "MOVE-SYNTHESIZE-D3-SIX-TRANSFER",
+        "reasoning_route": [
+          {
+            "id": "MOVE-SD3-SIX",
+            "kind": "REPRESENT",
+            "action": "Combine divisor6 with AP sum3T.",
+            "why_valid": "AP guarantees3-divisibility, six also requires2.",
+            "inputs": [
+              "AP",
+              "Divisor6"
+            ],
+            "output": "Even U condition."
+          },
+          {
+            "id": "MOVE-SYNTHESIZE-D3-SIX-TRANSFER",
+            "kind": "DECIDE",
+            "action": "Recount valid H/T/U digit gaps with U even and no original T multiple3 filter.",
+            "why_valid": "Even units necessary and sufficient for six given AP.",
+            "inputs": [
+              "Digit bounds",
+              "Units parity"
+            ],
+            "output": "20."
+          },
+          {
+            "id": "MOVE-SD3-SIX-CHECK",
+            "kind": "VERIFY",
+            "action": "Enumerate100..999.",
+            "why_valid": "All three-digit candidates checked.",
+            "inputs": [
+              "Numbers100..999"
+            ],
+            "output": "20."
+          }
+        ],
+        "rubric": [
+          {
+            "criterion": "New condition identified",
+            "evidence_of": "Even units; 3-divisibility automatic."
+          },
+          {
+            "criterion": "Fresh count",
+            "evidence_of": "No old T=3,6,9 filter."
+          },
+          {
+            "criterion": "Complete proof",
+            "evidence_of": "20 verified values."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-QRT-SYNTHESIZE-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-SYNTHESIZE-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Six has factors two and three; which is automatic from AP digit sum, and which adds a new condition?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-SYNTHESIZE-D3-TRANSFER",
+        "safe_ref": "REP-QRT-SYNTHESIZE-D3-TRANSFER",
+        "bound_ref": null,
+        "stage_refs": [
+          "SD3-TRANSFER"
+        ]
+      },
+      "repair_ref": "STEP-SD3-4",
+      "failure_signal": "Keeps original T restriction or ignores parity.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-SYNTHESIZE-D3",
+        "closure": "Changed marker order, fresh set intersection decision."
+      },
+      "independent_check": {
+        "statement": "Exactly20 AP-digit integers100..999 are divisible6.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Changed divisor changes binding digit condition."
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-QRT-SYNTHESIZE-D3-CLASSIFY"
+        ],
+        "statement": "Six replaces nine, imposing even units instead of middle-digit divisibility.",
+        "invariant": "AP and valid decimal positions remain.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-QRT-SYNTHESIZE-D3-CLASSIFY",
+            "MIC-QRT-SYNTHESIZE-D3:exit_task"
+          ],
+          "why_new": "Divisible3 automatic under AP; even U required, answer20."
+        },
+        "protected_move_ref": "MOVE-SYNTHESIZE-D3-SIX-TRANSFER"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-QRT-SYNTHESIZE-D3",
+      "title": "Digit cards and three generic conditions for exhaustive synthesis",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-QRT-SYNTHESIZE-D3"
+      ],
+      "entry_needs": [
+        "AP equal gaps.",
+        "Decimal divisibility rules.",
+        "Nonzero hundreds."
+      ],
+      "learner_actions": [
+        "Diagnose 246 not divisible9 though AP.",
+        "Construct generic H/T/U cards and gap arrows.",
+        "Contrast leading-zero036.",
+        "Solve independent odd-units exit."
+      ],
+      "help_plan": [
+        "Generic aids do not select target T values.",
+        "H1/H2 orient separate constraints only.",
+        "H3 postattempt completes combined W."
+      ],
+      "reveal_plan": "Three generic digit stages, 246/036 misconception, independent exit.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-QRT-SYNTHESIZE-D3",
+          "purpose": "Original authored TEST",
+          "reason": "No official exam source rights."
+        }
+      ],
+      "when_not_suitable": [
+        "Academic D3 SYNTHESIZE band not adjudicated.",
+        "Not official IMO item."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "AUTHORED_TEST_D3_SYNTHESIZE_ISSUE182",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "DATUM-QRT-SYNTHESIZE-D3-1",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Generic H/T/U cards, gaps, bound positions",
+      "meaning": "Generic prerequisite",
+      "symbol": "H,T,U",
+      "locator": "TEST/library/figures/qrt-d3-synthesize-construct.svg"
+    },
+    {
+      "id": "DATUM-QRT-SYNTHESIZE-D3-2",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Original AP digits and divisible9",
+      "meaning": "Main unsolved task",
+      "symbol": "AP+9",
+      "locator": "TEST/library/figures/qrt-d3-synthesize-attempt.svg"
+    },
+    {
+      "id": "DATUM-QRT-SYNTHESIZE-D3-3",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "246 AP sum12, 036 leading zero",
+      "meaning": "Independent misconception",
+      "symbol": "246,036",
+      "locator": "TEST/library/figures/qrt-d3-synthesize-repair.svg"
+    },
+    {
+      "id": "DATUM-QRT-SYNTHESIZE-D3-4",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Original AP digits and divisible6",
+      "meaning": "Changed transfer",
+      "symbol": "AP+6",
+      "locator": "TEST/library/figures/qrt-d3-synthesize-transfer.svg"
+    }
+  ]
+}
