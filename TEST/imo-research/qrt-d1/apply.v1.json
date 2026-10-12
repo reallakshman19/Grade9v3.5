@@ -14,7 +14,7 @@
       "source_refs": [],
       "evidence_refs": [],
       "extensions": {},
-      "id": "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED",
+      "id": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED",
       "title": "Original authored rectangular area application",
       "origin": "AUTHORED",
       "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
@@ -46,7 +46,7 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {},
@@ -58,7 +58,7 @@
       "depth_overlay": "FOUNDATION",
       "curriculum_mappings": [],
       "prerequisite_refs": [],
-      "primary_representation_ref": "REP-TEST-IMO182-D1-APP-ODD-PAIR-STAGES",
+      "primary_representation_ref": "REP-TEST-IMO182-D1-APP-AREA-STAGES",
       "conventions": [
         {
           "id": "area",
@@ -84,11 +84,11 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {},
-      "id": "CAP-TEST-IMO182-D1-APP-ODD-PAIR-EXPLANATION",
+      "id": "CAP-TEST-IMO182-D1-APP-RECTANGLE-AREA-APPLICATION",
       "action": "Apply a provided rectangle area rule to numerical dimensions and report a square-unit quantity; use inverse for an independently changed task.",
       "success_criterion": "Substitute supplied length and width into A=l×w without adding or doubling them, compute an area and state correct square units.",
       "prerequisite_refs": [],
@@ -102,92 +102,93 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {},
-      "id": "MIC-TEST-IMO182-D1-APP-ODD-PAIRING",
-      "title": "Explain the pairing mechanism behind an even total from two odd groups",
+      "id": "MIC-TEST-IMO182-D1-APP-RECTANGLE-AREA",
+      "title": "Apply length-times-width to a rectangle with measured dimensions",
       "bucket_id": "BUCKET-TEST-IMO182-D1-APP-GRID",
-      "primary_capability_ref": "CAP-TEST-IMO182-D1-APP-ODD-PAIR-EXPLANATION",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-APP-RECTANGLE-AREA-APPLICATION",
       "intrinsic_badge": "EASY",
-      "badge_reason": "One causal sentence about the two leftovers, supported by a pair diagram.",
+      "badge_reason": "Known rectangle model and formula supplied; substitute two measurements and use squared units.",
       "entry_assumptions": [
-        "An even group divides into pairs with no leftover.",
-        "An odd group divides into pairs with exactly one leftover.",
-        "Joining collections preserves counter quantity."
+        "The learner knows whole-number multiplication and division.",
+        "The diagram identifies the two perpendicular sides.",
+        "A one-centimetre square has area one cm²."
       ],
-      "inferential_jump": "Explain that the one leftover from EACH odd group combines into a new pair, so every combined counter belongs to a pair.",
+      "inferential_jump": "Apply A=length×width to the stated 7 by 4 rectangular mat, not a length sum; express the 28-unit-square result as 28 cm².",
       "teaching_path": [
         {
           "id": "APP-D1-TC-1",
-          "action": "Describe odd groups by complete pairs plus one leftover counter, without classifying a target sum.",
-          "why_valid": "This is the counter-pair definition of odd cardinality.",
+          "action": "Treat area as the number of unit squares filling a rectangle without gaps.",
+          "why_valid": "A row of l squares repeated w times contains l×w squares.",
           "inputs": [
-            "Odd collection"
+            "A rectangular grid",
+            "length and width in centimetres"
           ],
-          "output": "Complete pairs and one lone counter",
+          "output": "A=l×w square centimetres",
           "role": "DECLARE",
-          "source_ref": "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+          "source_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
         },
         {
           "id": "APP-D1-TC-2",
-          "action": "Join a different worked set of 3 and 5 counters and place their two lone counters together.",
-          "why_valid": "The worked groups each have one remainder, which forms a complete new pair.",
+          "action": "Use a DIFFERENT rectangle, 3 cm by 5 cm: count 3×5=15 unit squares.",
+          "why_valid": "Five rows of three square tiles give exactly fifteen.",
           "inputs": [
-            "3 = one pair and one leftover",
-            "5 = two pairs and one leftover"
+            "length 3 cm",
+            "width 5 cm"
           ],
-          "output": "Four complete pairs, no leftover",
+          "output": "15 cm²",
           "role": "TRANSFORM",
-          "source_ref": "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+          "source_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
         },
         {
           "id": "APP-D1-TC-3",
-          "action": "Check the worked result by listing the four complete pairs and explaining why none is unpaired.",
-          "why_valid": "Three plus five has eight counters forming four whole pairs; this illustrates the mechanism without answering the 7+9 task.",
+          "action": "Check the 3×5 worked example by counting rows and columns, and distinguish this from adding 3+5.",
+          "why_valid": "The number of tiles is a product, whereas adding side lengths is a distance expression.",
           "inputs": [
+            "3×5",
             "3+5"
           ],
-          "output": "8 even from four pairs",
+          "output": "Fifteen unit squares, not eight",
           "role": "VERIFY",
-          "source_ref": "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+          "source_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
         }
       ],
       "relation_refs": [
-        "REL-TEST-IMO182-D1-APP-ODD-PAIRING"
+        "REL-TEST-IMO182-D1-APP-RECTANGLE-AREA"
       ],
       "representation_refs": [
-        "REP-TEST-IMO182-D1-APP-ODD-PAIR-STAGES"
+        "REP-TEST-IMO182-D1-APP-AREA-STAGES"
       ],
       "question_family_refs": [
         "FAM-TEST-IMO182-D1-APP-COUNTER-GROUPS"
       ],
       "misconceptions": [
         {
-          "wrong_idea": "Odd plus odd must be odd because both starting groups are odd.",
-          "diagnostic_prompt": "A student claims 5+7 is odd because each group has one lone counter. What happens to the two lone counters after joining?",
-          "repair": "The two lone counters pair with each other. No lone counter remains; 5+7 is even."
+          "wrong_idea": "The area of a rectangle is length plus width.",
+          "diagnostic_prompt": "A student writes area 5+3=8 cm² for a 5 cm by 3 cm rectangle. What does the tile count show?",
+          "repair": "A grid has five rows of three squares, so 5×3=15 cm². Adding two side lengths does not count the enclosed unit squares."
         },
         {
-          "wrong_idea": "An even result only needs a numerical sum; no explanation of grouping is necessary.",
-          "diagnostic_prompt": "If you write 7+9=16, what counter structure establishes WHY sixteen is even?",
-          "repair": "Identify three pairs plus one lone in seven, four pairs plus one lone in nine, then the lone pair. All eight final pairs are complete."
+          "wrong_idea": "Area should be measured in centimetres, the same as the sides.",
+          "diagnostic_prompt": "A 4 cm by 4 cm mat has sixteen tiles each 1 cm by 1 cm. Which unit reports the covered surface?",
+          "repair": "Sixteen unit squares are 16 cm²; a linear centimetre measures length, not surface."
         }
       ],
       "exit_task": {
-        "prompt": "Independent exit: explain why combining groups of 11 and 13 counters gives an even group, describing the fate of both unpaired counters (not merely computing the sum).",
-        "source_ref": "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED",
+        "prompt": "Independent exit: a rectangular noticeboard is 8 cm long and 2 cm wide. Apply A=l×w and explain the square-unit label.",
+        "source_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED",
         "answer": {
           "kind": "MODEL_RESPONSE",
-          "summary": "Each odd group leaves one counter; those two become another pair, so 11+13 forms 12 complete pairs, an even total.",
+          "summary": "8×2=16 cm².",
           "reasoning": [
-            "11 counters form five pairs plus one lone.",
-            "13 counters form six pairs plus one lone.",
-            "The lone counters join to make the twelfth pair.",
-            "All 24 counters now belong to complete pairs; 24 is even."
+            "The board is rectangular and both dimensions are in centimetres.",
+            "Substitute length 8 and width 2 into A=l×w.",
+            "The product counts sixteen 1 cm² unit squares."
           ],
-          "check": "11+13=24 and 24=2×12 validates the count after the pairing explanation.",
+          "check": "Two rows of eight 1 cm² tiles give sixteen squares.",
           "acceptable_alternatives": [],
           "subpart_answers": [],
           "verification_status": "CHECKED_BY_AUTHOR"
@@ -196,88 +197,86 @@
           "verification": {
             "validator_id": "TEST/imo-research/qrt-d1/verify_apply.py",
             "bindings": {
-              "left_group": "11",
-              "right_group": "13",
-              "expected_total": "24",
-              "expected_pairs": "12"
+              "length": "8",
+              "width": "2",
+              "expected_area": "16"
             }
           }
         }
       },
-      "research_contribution": "D1 mechanism explanation via counter-pair remainders, mistaken odd+odd reasoning, independent 11+13 exit and inverse 18/7 completion; no QRT acceptance claimed.",
+      "research_contribution": "D1 direct formula application with row-count model, addition misconception and inverse transfer, all original TEST; no academic acceptance.",
       "prerequisite_refs": [],
       "lineage": [],
       "construction_units": [
         {
-          "id": "CU-TEST-IMO182-D1-APP-PAIR-MECHANISM",
-          "decision": "Explain why two unpaired odd-group counters become a complete pair when groups join.",
+          "id": "CU-TEST-IMO182-D1-APP-AREA-SUBSTITUTION",
+          "decision": "Apply the supplied multiplication formula and distinguish area units from linear units.",
           "step_refs": [
             "APP-D1-TC-1",
             "APP-D1-TC-2",
             "APP-D1-TC-3"
           ],
-          "representation_ref": "REP-TEST-IMO182-D1-APP-ODD-PAIR-STAGES",
+          "representation_ref": "REP-TEST-IMO182-D1-APP-AREA-STAGES",
           "misconception_indexes": [
             0,
             1
           ],
           "relation_refs": [
-            "REL-TEST-IMO182-D1-APP-ODD-PAIRING"
+            "REL-TEST-IMO182-D1-APP-RECTANGLE-AREA"
           ],
           "independent_checks": [
             {
-              "statement": "Account for every counter as a whole pair and check 3+5=8 in the worked example.",
-              "check_type": "PAIR_COMPLETENESS"
+              "statement": "Check product using equal rows of unit-square tiles.",
+              "check_type": "EQUAL_ARRAY_COUNT"
             }
           ],
           "reveal_stage_refs": [
-            "EXP-STAGE-PAIR-RULE",
-            "EXP-STAGE-WORKED-3-5",
-            "EXP-STAGE-GENERAL-CHECK"
+            "APP-STAGE-AREA-MEANING",
+            "APP-STAGE-WORKED-3-5",
+            "APP-STAGE-WORKED-CHECK"
           ],
           "worked_anchor_ref": "Q-TEST-IMO182-D1-APP-CORE1A-WORKED"
         }
       ],
       "compact_anchor": {
-        "prompt": "What single event explains an even total from joining two odd groups?",
-        "result": "Each odd group has one leftover counter and the two leftovers make a complete new pair.",
-        "representation_ref": "REP-TEST-IMO182-D1-APP-ODD-PAIR-STAGES"
+        "prompt": "How does the area rule use two perpendicular side measurements?",
+        "result": "Multiply length by width to count unit-square tiles; use cm² for centimetre measurements.",
+        "representation_ref": "REP-TEST-IMO182-D1-APP-AREA-STAGES"
       },
       "elicitation": {
         "predict": {
-          "prompt": "A classmate says 5+7 must be odd because both groups start odd. Predict what happens to the two lone counters if both groups are joined.",
-          "defensible_answer": "One leftover from each group makes a pair, so no lone counter remains."
+          "prompt": "A learner writes area=5+3=8 cm² for a rectangle 5 cm by 3 cm. Predict whether that counts all 1 cm square tiles.",
+          "defensible_answer": "No. There are fifteen tiles, from 5×3, not eight."
         },
         "attempt": {
-          "produces": "A written diagnosis of the false oddness claim, pair-based replacement explanation, and distinct changed-givens boundary.",
+          "produces": "Written diagnosis of addition instead of tile counting and an independently changed area result.",
           "closure": "RUBRIC",
           "rubric": [
             {
-              "criterion": "Locate one lone counter in each odd group.",
-              "evidence_of": "5 has two pairs+one and 7 has three pairs+one."
+              "criterion": "Identify rule confusion.",
+              "evidence_of": "Explains why 5+3 is not tile count."
             },
             {
-              "criterion": "State what happens after groups join.",
-              "evidence_of": "Two lone counters form an extra pair, leaving an even group."
+              "criterion": "Apply multiplication and square-unit label.",
+              "evidence_of": "Writes 5×3=15 cm²."
             }
           ],
           "accepted": [
-            "5+7 is even because two odd groups contribute two leftover counters that pair together."
+            "A rectangle 5 cm by 3 cm holds 15 one-centimetre squares because area is length×width."
           ],
           "rejected": [
-            "Odd plus odd is odd just because both terms are odd.",
-            "The answer is 12 so explanation unnecessary."
+            "Area is 8 cm² because 5+3=8."
           ],
           "task": {
-            "prompt": "A learner argues '5 plus 7 must be odd because both groups are odd'. Each odd group has complete pairs and one lone counter. Explain whether the reasoning is right and trace the two lone counters after joining. Write before opening the reconstruction.",
+            "prompt": "A learner calculated 'area = 5+3 = 8 cm²' for a 5 cm by 3 cm rectangle. Explain what the rule should count and repair the calculation before revealing the model.",
             "givens": [
-              "5 is two complete pairs plus one lone.",
-              "7 is three complete pairs plus one lone.",
-              "Only completed pairs make an even group."
+              "The region is a rectangle.",
+              "Length 5 cm, width 3 cm.",
+              "Each 1 cm by 1 cm square covers 1 cm²."
             ],
             "representation_ref": "REP-TEST-IMO182-D1-APP-ERROR-CLAIM",
             "stage_refs": [
-              "APP-D1-WRONG-CLAIM"
+              "APP-ERROR-CLAIM"
             ],
             "response": {
               "type": "free_response",
@@ -288,27 +287,27 @@
         "reconstruct": {
           "route": [
             {
-              "ask": "How many lone counters remain within each odd group before joining?",
-              "why_this_ask": "Separates the remembered word 'odd' from actual remainder structure.",
+              "ask": "Does adding two lengths count all 1 cm² tiles in a rectangle?",
+              "why_this_ask": "Exposes mistaken sum model.",
               "from_step_ref": "APP-D1-TC-1"
             },
             {
-              "ask": "When the two lone counters are together, can they complete a pair?",
-              "why_this_ask": "Tests mechanism rather than numerical calculation.",
+              "ask": "How many tiles are in one row and how many equally sized rows?",
+              "why_this_ask": "Builds direct multiplicative relation.",
               "from_step_ref": "APP-D1-TC-2"
             },
             {
-              "ask": "Does any counter remain unpaired after all groups are joined?",
-              "why_this_ask": "Rebuilds the rule from what is left, not from the initial categories.",
+              "ask": "What result and squared units describe all the tiles?",
+              "why_this_ask": "Reconstructs valid application with correct units.",
               "from_step_ref": "APP-D1-TC-3"
             }
           ],
-          "differs_from_teaching_path": "The teaching model uses correct 3+5; reconstruction starts from a false explanation about 5+7 and asks the learner to correct what happens to the unpaired counters."
+          "differs_from_teaching_path": "Worked 3×5 teaches direct tile counting. Reconstruction starts from incorrect 5+3 addition and forces a different tile-count explanation."
         },
         "boundary_test": {
-          "prompt": "Changed case: combine 9 counters (four pairs plus one) with 4 counters (two whole pairs). Explain why the result is ODD using leftovers; do not merely compute 13.",
-          "answer": "The nine-counter group leaves one lone; the four-counter group contributes no lone. That single counter stays unpaired, so the joined group is odd.",
-          "confirms": "Differentiates two-odd leftovers from odd-plus-even with exactly one leftover; not a memorized 5+7 explanation."
+          "prompt": "Changed case: a 4 cm by 4 cm square mat has four rows of four 1 cm² tiles. Apply the rectangle rule and write the correct AREA UNIT. Commit before opening the answer.",
+          "answer": "4×4=16 cm². It is sixteen square centimetres, not sixteen centimetres.",
+          "confirms": "Checks rule transfer to square case and independent area-versus-length unit discrimination."
         }
       }
     }
@@ -318,11 +317,11 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {},
-      "id": "REL-TEST-IMO182-D1-APP-ODD-PAIRING",
+      "id": "REL-TEST-IMO182-D1-APP-RECTANGLE-AREA",
       "expression": "A=l×w",
       "meaning": "The count of equal unit-square tiles in a rectangular grid equals the number of columns times number of rows.",
       "symbols": [
@@ -350,33 +349,35 @@
       "derivation": [
         {
           "id": "DERIV-APP-D1-TC-1",
-          "action": "Describe odd groups by complete pairs plus one leftover counter, without classifying a target sum.",
-          "why_valid": "This is the counter-pair definition of odd cardinality.",
+          "action": "Treat area as the number of unit squares filling a rectangle without gaps.",
+          "why_valid": "A row of l squares repeated w times contains l×w squares.",
           "inputs": [
-            "Odd collection"
+            "A rectangular grid",
+            "length and width in centimetres"
           ],
-          "output": "Complete pairs and one lone counter",
+          "output": "A=l×w square centimetres",
           "role": "DECLARE"
         },
         {
           "id": "DERIV-APP-D1-TC-2",
-          "action": "Join a different worked set of 3 and 5 counters and place their two lone counters together.",
-          "why_valid": "The worked groups each have one remainder, which forms a complete new pair.",
+          "action": "Use a DIFFERENT rectangle, 3 cm by 5 cm: count 3×5=15 unit squares.",
+          "why_valid": "Five rows of three square tiles give exactly fifteen.",
           "inputs": [
-            "3 = one pair and one leftover",
-            "5 = two pairs and one leftover"
+            "length 3 cm",
+            "width 5 cm"
           ],
-          "output": "Four complete pairs, no leftover",
+          "output": "15 cm²",
           "role": "TRANSFORM"
         },
         {
           "id": "DERIV-APP-D1-TC-3",
-          "action": "Check the worked result by listing the four complete pairs and explaining why none is unpaired.",
-          "why_valid": "Three plus five has eight counters forming four whole pairs; this illustrates the mechanism without answering the 7+9 task.",
+          "action": "Check the 3×5 worked example by counting rows and columns, and distinguish this from adding 3+5.",
+          "why_valid": "The number of tiles is a product, whereas adding side lengths is a distance expression.",
           "inputs": [
+            "3×5",
             "3+5"
           ],
-          "output": "8 even from four pairs",
+          "output": "Fifteen unit squares, not eight",
           "role": "VERIFY"
         }
       ],
@@ -400,11 +401,11 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {},
-      "id": "REP-TEST-IMO182-D1-APP-ODD-PAIR-STAGES",
+      "id": "REP-TEST-IMO182-D1-APP-AREA-STAGES",
       "kind": "DOT_ARRAY",
       "purpose": "Staged counter-pair mechanism using a DIFFERENT 3+5 worked example.",
       "required_elements": [
@@ -413,7 +414,7 @@
         "Check complete pairs for 3+5, not 7+9."
       ],
       "relation_refs": [
-        "REL-TEST-IMO182-D1-APP-ODD-PAIRING"
+        "REL-TEST-IMO182-D1-APP-RECTANGLE-AREA"
       ],
       "read_order": [
         "Read pairing rule.",
@@ -439,13 +440,13 @@
       ],
       "scene_instances": [
         {
-          "id": "SCENE-REP-TEST-IMO182-D1-APP-ODD-PAIR-STAGES",
+          "id": "SCENE-REP-TEST-IMO182-D1-APP-AREA-STAGES",
           "cores": [
             "CORE1A"
           ],
-          "microtopic_ref": "MIC-TEST-IMO182-D1-APP-ODD-PAIRING",
+          "microtopic_ref": "MIC-TEST-IMO182-D1-APP-RECTANGLE-AREA",
           "datum_refs": [
-            "DATUM-TEST-IMO182-D1-APP-PAIR-CRITERION"
+            "DATUM-TEST-IMO182-D1-APP-AREA-RULE"
           ],
           "asset_ref": "TEST/imo-research/qrt-d1/figures/apply-area-stages.v1.svg",
           "scene": {
@@ -498,11 +499,11 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {},
-      "id": "REP-TEST-IMO182-D1-APP-ODD-GROUPS-GIVEN",
+      "id": "REP-TEST-IMO182-D1-APP-AREA-DIMENSIONS-GIVEN",
       "kind": "DOT_ARRAY",
       "purpose": "Two UNSOLVED odd counter groups, red seven and blue nine, without any pairing across groups.",
       "required_elements": [
@@ -511,7 +512,7 @@
         "No pair marks, target total or answer sentence."
       ],
       "relation_refs": [
-        "REL-TEST-IMO182-D1-APP-ODD-PAIRING"
+        "REL-TEST-IMO182-D1-APP-RECTANGLE-AREA"
       ],
       "read_order": [
         "Count groups as given.",
@@ -536,13 +537,13 @@
       ],
       "scene_instances": [
         {
-          "id": "SCENE-REP-TEST-IMO182-D1-APP-ODD-GROUPS-GIVEN",
+          "id": "SCENE-REP-TEST-IMO182-D1-APP-AREA-DIMENSIONS-GIVEN",
           "cores": [
             "CORE2A"
           ],
-          "question_ref": "Q-TEST-IMO182-D1-APP-CORE2A-ODD-PAIR-EXPLANATION",
+          "question_ref": "Q-TEST-IMO182-D1-APP-CORE2A-RECTANGLE-AREA-APPLICATION",
           "datum_refs": [
-            "DATUM-TEST-IMO182-D1-APP-ODD-GROUPS-GIVEN"
+            "DATUM-TEST-IMO182-D1-APP-AREA-DIMENSIONS-GIVEN"
           ],
           "asset_ref": "TEST/imo-research/qrt-d1/figures/apply-core2a-mat.v1.svg",
           "scene": {
@@ -575,7 +576,7 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {},
@@ -588,7 +589,7 @@
         "No corrected answer or paired leftovers."
       ],
       "relation_refs": [
-        "REL-TEST-IMO182-D1-APP-ODD-PAIRING"
+        "REL-TEST-IMO182-D1-APP-RECTANGLE-AREA"
       ],
       "read_order": [
         "Read the learner claim.",
@@ -617,7 +618,7 @@
           "cores": [
             "CORE1B"
           ],
-          "microtopic_ref": "MIC-TEST-IMO182-D1-APP-ODD-PAIRING",
+          "microtopic_ref": "MIC-TEST-IMO182-D1-APP-RECTANGLE-AREA",
           "datum_refs": [
             "DATUM-TEST-IMO182-D1-APP-ERROR-CLAIM"
           ],
@@ -653,11 +654,11 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {},
-      "id": "REP-TEST-IMO182-D1-APP-INVERSE-GROUPS-GIVEN",
+      "id": "REP-TEST-IMO182-D1-APP-INVERSE-AREA-GIVEN",
       "kind": "DOT_ARRAY",
       "purpose": "Present inverse 18-total and 7-known 11-remaining groups without a causal answer.",
       "required_elements": [
@@ -667,7 +668,7 @@
         "No pre-marked lone pairing between subgroups."
       ],
       "relation_refs": [
-        "REL-TEST-IMO182-D1-APP-ODD-PAIRING"
+        "REL-TEST-IMO182-D1-APP-RECTANGLE-AREA"
       ],
       "read_order": [
         "Read entire-group parity and given partition.",
@@ -692,13 +693,13 @@
       ],
       "scene_instances": [
         {
-          "id": "SCENE-REP-TEST-IMO182-D1-APP-INVERSE-GROUPS-GIVEN",
+          "id": "SCENE-REP-TEST-IMO182-D1-APP-INVERSE-AREA-GIVEN",
           "cores": [
             "CORE2B"
           ],
-          "question_ref": "Q-TEST-IMO182-D1-APP-CORE2B-INVERSE-GROUP-EXPLANATION",
+          "question_ref": "Q-TEST-IMO182-D1-APP-CORE2B-INVERSE-RECTANGLE-LENGTH",
           "datum_refs": [
-            "DATUM-TEST-IMO182-D1-APP-INVERSE-GROUPS-GIVEN"
+            "DATUM-TEST-IMO182-D1-APP-INVERSE-AREA-GIVEN"
           ],
           "asset_ref": "TEST/imo-research/qrt-d1/figures/apply-core2b-inverse.v1.svg",
           "scene": {
@@ -734,45 +735,44 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {},
       "id": "FAM-TEST-IMO182-D1-APP-COUNTER-GROUPS",
-      "title": "Parity explanations from pairing leftover counters",
+      "title": "Apply A=length×width to rectangular surface measurements",
       "capability_refs": [
-        "CAP-TEST-IMO182-D1-APP-ODD-PAIR-EXPLANATION"
+        "CAP-TEST-IMO182-D1-APP-RECTANGLE-AREA-APPLICATION"
       ],
       "solution_structure": [
-        "Recognize complete pairs plus one leftover in each odd group.",
-        "Combine groups without losing counters.",
-        "Pair the two leftover counters.",
-        "Explain that zero lone counters remain; optionally check numeric total."
+        "Identify two supplied perpendicular measurements.",
+        "Substitute them in the fixed area rule.",
+        "Multiply to count equal unit-square tiles.",
+        "State cm² and check by rows."
       ],
       "demand_dimensions": {
-        "model_choice": "Pairing model provided.",
-        "representation_translation": "Map spoken groups to pairs/leftovers then to parity.",
-        "reasoning_steps": "One causal mechanism: two single leftovers pair.",
-        "novelty": "Core2B starts from a given even total and one odd group, infers leftover structure of the second."
+        "model_choice": "The rectangle and formula are explicitly supplied, no model choice.",
+        "representation_translation": "Dimension labels to given l and w slots.",
+        "reasoning_steps": "Direct one-rule substitution, one multiplication.",
+        "novelty": "Core2B reverses application from given area and width to missing length."
       },
       "safe_variations": [
-        "Different small odd counter groups with explicit pairing semantics.",
-        "Odd plus even as an independent changed boundary.",
-        "Inverse parity explanation of a missing group in a fixed total."
+        "New rectangle dimensions with whole-number centimetres.",
+        "Given area and one nonzero dimension, find the other."
       ],
       "transfer_boundaries": [
-        "The mechanistic explanation must mention the two lone counters, not only state a computed even total.",
-        "The second group in inverse transfer is constrained by a fixed total and the known group."
+        "Nonrectangles require another area rule.",
+        "Division inversion only with nonzero known width."
       ],
       "common_wrong_routes": [
-        "Odd plus odd stays odd.",
-        "Arithmetic equality replaces causal explanation.",
-        "Assume a lone counter survives after joining two odd groups."
+        "Add length and width to compute area.",
+        "Forget squared units.",
+        "Treat a missing side as the same quantity as area."
       ],
       "item_refs": [
         "Q-TEST-IMO182-D1-APP-CORE1A-WORKED",
-        "Q-TEST-IMO182-D1-APP-CORE2A-ODD-PAIR-EXPLANATION",
-        "Q-TEST-IMO182-D1-APP-CORE2B-INVERSE-GROUP-EXPLANATION"
+        "Q-TEST-IMO182-D1-APP-CORE2A-RECTANGLE-AREA-APPLICATION",
+        "Q-TEST-IMO182-D1-APP-CORE2B-INVERSE-RECTANGLE-LENGTH"
       ]
     }
   ],
@@ -781,7 +781,7 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {
@@ -794,7 +794,7 @@
       },
       "id": "Q-TEST-IMO182-D1-APP-CORE1A-WORKED",
       "origin": "AUTHORED",
-      "origin_ref": "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED",
       "original_identifier": "Q-TEST-IMO182-D1-APP-CORE1A-WORKED",
       "stem": "Worked DIFFERENT example: one group has 3 counters, another 5. Explain why joining them makes an even group by tracking complete pairs and their two leftover counters.",
       "subparts": [],
@@ -805,7 +805,7 @@
         "The question is original AUTHORED TEST, no organizer source."
       ],
       "figure_refs": [
-        "REP-TEST-IMO182-D1-APP-ODD-PAIR-STAGES"
+        "REP-TEST-IMO182-D1-APP-AREA-STAGES"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
@@ -835,7 +835,7 @@
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
       },
-      "primary_capability_ref": "CAP-TEST-IMO182-D1-APP-ODD-PAIR-EXPLANATION",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-APP-RECTANGLE-AREA-APPLICATION",
       "secondary_capability_refs": [],
       "family_ref": "FAM-TEST-IMO182-D1-APP-COUNTER-GROUPS",
       "adaptation": null,
@@ -850,9 +850,9 @@
       "scaffolds": [],
       "hint_ladder": [],
       "representation_roles": {
-        "initial_ref": "REP-TEST-IMO182-D1-APP-ODD-PAIR-STAGES",
-        "safe_ref": "REP-TEST-IMO182-D1-APP-ODD-PAIR-STAGES",
-        "bound_ref": "REP-TEST-IMO182-D1-APP-ODD-PAIR-STAGES",
+        "initial_ref": "REP-TEST-IMO182-D1-APP-AREA-STAGES",
+        "safe_ref": "REP-TEST-IMO182-D1-APP-AREA-STAGES",
+        "bound_ref": "REP-TEST-IMO182-D1-APP-AREA-STAGES",
         "stage_refs": [
           "EXP-STAGE-PAIR-RULE",
           "EXP-STAGE-WORKED-3-5",
@@ -894,7 +894,7 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {
@@ -923,10 +923,10 @@
           ]
         }
       },
-      "id": "Q-TEST-IMO182-D1-APP-CORE2A-ODD-PAIR-EXPLANATION",
+      "id": "Q-TEST-IMO182-D1-APP-CORE2A-RECTANGLE-AREA-APPLICATION",
       "origin": "AUTHORED",
-      "origin_ref": "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED",
-      "original_identifier": "Q-TEST-IMO182-D1-APP-CORE2A-ODD-PAIR-EXPLANATION",
+      "origin_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-APP-CORE2A-RECTANGLE-AREA-APPLICATION",
       "stem": "An organizer places 7 red counters and 9 blue counters into ONE collection. Without relying only on the arithmetic total, EXPLAIN why the combined collection can be arranged into complete PAIRS with NO leftover counter. Name what happens to the one unmatched counter from EACH original odd group.",
       "subparts": [],
       "options": [],
@@ -936,7 +936,7 @@
         "The question is original AUTHORED TEST, no organizer source."
       ],
       "figure_refs": [
-        "REP-TEST-IMO182-D1-APP-ODD-GROUPS-GIVEN"
+        "REP-TEST-IMO182-D1-APP-AREA-DIMENSIONS-GIVEN"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
@@ -989,7 +989,7 @@
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
       },
-      "primary_capability_ref": "CAP-TEST-IMO182-D1-APP-ODD-PAIR-EXPLANATION",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-APP-RECTANGLE-AREA-APPLICATION",
       "secondary_capability_refs": [],
       "family_ref": "FAM-TEST-IMO182-D1-APP-COUNTER-GROUPS",
       "adaptation": null,
@@ -1042,8 +1042,8 @@
         }
       ],
       "representation_roles": {
-        "initial_ref": "REP-TEST-IMO182-D1-APP-ODD-GROUPS-GIVEN",
-        "safe_ref": "REP-TEST-IMO182-D1-APP-ODD-GROUPS-GIVEN",
+        "initial_ref": "REP-TEST-IMO182-D1-APP-AREA-DIMENSIONS-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-APP-AREA-DIMENSIONS-GIVEN",
         "bound_ref": null,
         "stage_refs": [
           "APP-D1-QA-GIVENS"
@@ -1084,7 +1084,7 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {
@@ -1099,9 +1099,9 @@
           "common_wrong_route": "Simply write 18−7=11 or treat removing an odd subgroup as leaving even."
         }
       },
-      "id": "Q-TEST-IMO182-D1-APP-CORE2B-INVERSE-GROUP-EXPLANATION",
+      "id": "Q-TEST-IMO182-D1-APP-CORE2B-INVERSE-RECTANGLE-LENGTH",
       "origin": "AUTHORED",
-      "origin_ref": "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED",
       "original_identifier": "AUTHORED-APP-D1-INVERSE-18-7",
       "stem": "INVERSE explanation: one collection has 18 counters, all arranged in 9 complete pairs. A first subgroup has 7 counters (three pairs and one leftover). The remaining subgroup has 11 counters. Explain WHY the remaining subgroup must also have ONE unmatched counter, using the pair structure of the original 18 counters, not just 18−7=11.",
       "subparts": [],
@@ -1113,7 +1113,7 @@
         "This is an original TEST mechanism question."
       ],
       "figure_refs": [
-        "REP-TEST-IMO182-D1-APP-INVERSE-GROUPS-GIVEN"
+        "REP-TEST-IMO182-D1-APP-INVERSE-AREA-GIVEN"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
@@ -1165,7 +1165,7 @@
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
       },
-      "primary_capability_ref": "CAP-TEST-IMO182-D1-APP-ODD-PAIR-EXPLANATION",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-APP-RECTANGLE-AREA-APPLICATION",
       "secondary_capability_refs": [],
       "family_ref": "FAM-TEST-IMO182-D1-APP-COUNTER-GROUPS",
       "adaptation": null,
@@ -1192,8 +1192,8 @@
         }
       ],
       "representation_roles": {
-        "initial_ref": "REP-TEST-IMO182-D1-APP-INVERSE-GROUPS-GIVEN",
-        "safe_ref": "REP-TEST-IMO182-D1-APP-INVERSE-GROUPS-GIVEN",
+        "initial_ref": "REP-TEST-IMO182-D1-APP-INVERSE-AREA-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-APP-INVERSE-AREA-GIVEN",
         "bound_ref": null,
         "stage_refs": [
           "APP-D1-QB-GIVENS"
@@ -1232,15 +1232,15 @@
       "transfer": {
         "dimension": "novelty",
         "builds_on": [
-          "Q-TEST-IMO182-D1-APP-CORE2A-ODD-PAIR-EXPLANATION"
+          "Q-TEST-IMO182-D1-APP-CORE2A-RECTANGLE-AREA-APPLICATION"
         ],
         "statement": "The forward Core2A task combines two known odd groups and explains evenness. Here the even complete group and one odd subgroup are given, and the learner explains why the other subgroup must be odd.",
         "invariant": "Two lone counters must match to leave zero unpaired in a combined even collection.",
         "novelty": {
           "checked_against": [
-            "Q-TEST-IMO182-D1-APP-CORE2A-ODD-PAIR-EXPLANATION",
-            "MIC-TEST-IMO182-D1-APP-ODD-PAIRING:exit_task",
-            "MIC-TEST-IMO182-D1-APP-ODD-PAIRING:boundary_test"
+            "Q-TEST-IMO182-D1-APP-CORE2A-RECTANGLE-AREA-APPLICATION",
+            "MIC-TEST-IMO182-D1-APP-RECTANGLE-AREA:exit_task",
+            "MIC-TEST-IMO182-D1-APP-RECTANGLE-AREA:boundary_test"
           ],
           "why_new": "Inverse explanation from full even group plus an odd component, rather than new odd addends or a restatement of the forward worked example. Both subgroup sizes are given, so one causal link remains."
         },
@@ -1253,7 +1253,7 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {},
@@ -1263,7 +1263,7 @@
         "CORE1A"
       ],
       "microtopic_refs": [
-        "MIC-TEST-IMO182-D1-APP-ODD-PAIRING"
+        "MIC-TEST-IMO182-D1-APP-RECTANGLE-AREA"
       ],
       "entry_needs": [
         "Odd groups form complete pairs plus one lone counter.",
@@ -1283,7 +1283,7 @@
       "reveal_plan": "Stage only given counter groups before attempted explanation; show worked 3+5 through registered stages; keep full answers after commitment.",
       "source_preferences": [
         {
-          "resource_ref": "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED",
+          "resource_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED",
           "purpose": "Original counter-pair teaching, no official exam specimen",
           "reason": "No rights to organizer questions are presumed."
         }
@@ -1307,11 +1307,11 @@
   },
   "data": [
     {
-      "id": "DATUM-TEST-IMO182-D1-APP-PAIR-CRITERION",
+      "id": "DATUM-TEST-IMO182-D1-APP-AREA-RULE",
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {
@@ -1324,11 +1324,11 @@
       "locator": "AUTHOR_CREATED: IMO182 QRT EXPLAIN D1 original counter-pair task"
     },
     {
-      "id": "DATUM-TEST-IMO182-D1-APP-ODD-GROUPS-GIVEN",
+      "id": "DATUM-TEST-IMO182-D1-APP-AREA-DIMENSIONS-GIVEN",
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {
@@ -1345,7 +1345,7 @@
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {
@@ -1358,11 +1358,11 @@
       "locator": "AUTHOR_CREATED: IMO182 QRT EXPLAIN D1 original counter-pair task"
     },
     {
-      "id": "DATUM-TEST-IMO182-D1-APP-INVERSE-GROUPS-GIVEN",
+      "id": "DATUM-TEST-IMO182-D1-APP-INVERSE-AREA-GIVEN",
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
-        "SRC-TEST-IMO182-D1-APP-PARITY-AUTHORED"
+        "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED"
       ],
       "evidence_refs": [],
       "extensions": {
