@@ -794,24 +794,24 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-EXPLAIN-ORIGINAL",
       "original_identifier": "AUTHORED-Q-D4-EXPLAIN-WORKED",
-      "stem": "Verify q²−1=(q−1)(q+1). Explain how parity and modulo3 each affect the factorization, using q=3 as a conceptual boundary.",
+      "stem": "For decimal digits u and v, compare the modulo11 residues of 10u+v and 10v+u. Explain why exchanging their two places negates the residue, without generalizing to every digit length.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "n is any integer, including negative integers and zero."
+        "u,v are digits 0..9; this identity is valid even when a digit is zero."
       ],
       "figure_refs": [
         "REP-D4-EXPLAIN-CORE1A"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "The two modular conditions are distinct.",
+        "summary": "Swapping two places negates modulo11 residue.",
         "reasoning": [
-          "Expand (q−1)(q+1)=q²−1.",
-          "For odd q, two even neighbors spaced by2 supply factor8.",
-          "For q≡0 mod3 the expression is 2 mod3, while otherwise one neighbor supplies3."
+          "Since 10≡−1 modulo11, 10u+v≡v−u.",
+          "After swapping, 10v+u≡u−v, exactly the negative residue.",
+          "If the original residue is zero, its negative is zero, but this two-place anchor says nothing yet about all digit lengths."
         ],
-        "check": "Contrast q=3 andq=5.",
+        "check": "Compare 37 versus73 (opposite nonzero residues) and22 versus22 (zero residue).",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -834,13 +834,13 @@
         "safe_ref": "REP-D4-EXPLAIN-CORE1A",
         "bound_ref": null,
         "stage_refs": [
-          "D4-IDENTITY"
+          "D4-EXP-STAGE-PLACE"
         ]
       },
-      "failure_signal": "Oddness may not guarantee factor3.",
+      "failure_signal": "Unchanged digit sum is not a valid modulo11 explanation; signed positional contributions are the bridge.",
       "family_exposure": {
         "family_ref": "FAM-D4-EXPLAIN",
-        "closure": "The concept worked anchor is not an independent QRT proof."
+        "closure": "A two-digit worked anchor teaches mechanism but not the Core2A parity explanation."
       }
     },
     {
@@ -852,28 +852,28 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY",
+        "grade9v3:authored_by": "AGENT-D4-QRT-EXPLAIN-D4",
         "grade9v3:cognitive_demand": {
-          "primary": "JUSTIFY",
+          "primary": "EXPLAIN",
           "secondary": [
-            "MODEL",
-            "SYNTHESIZE"
+            "REPRESENT",
+            "JUSTIFY"
           ],
-          "basis": "Prove a nontrivial iff with exact exceptions."
+          "basis": "W is a causal place-value parity mechanism, not a selection from memorized categories."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "Establish both necessary exclusions and constructive sufficiency.",
-          "common_wrong_route": "All odd n suffice, based on favorable examples."
+          "stable_crux_move": "Explain how changing L reverses leading-digit sign and creates odd-L 2a remainder.",
+          "common_wrong_route": "Digit-sum preservation or only even-length samples used to assert an all-length rule."
         },
         "grade9v3:core2_support_plan": {
           "protected_move_refs": [
-            "D4-MOVE-IFF"
+            "D4-EXP-MOVE-CAUSE"
           ],
           "support_completions": [
             {
               "support_ref": "scaffolds[2]",
               "completed_move_refs": [
-                "D4-MOVE-IFF"
+                "D4-EXP-MOVE-CAUSE"
               ],
               "availability": "AFTER_ATTEMPT"
             }
@@ -883,69 +883,75 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-EXPLAIN-ORIGINAL",
       "original_identifier": "AUTHORED-Q-D4-EXPLAIN-ROTATE1",
-      "stem": "For all integers n, prove the exact necessary-and-sufficient criterion for 24 to divide n²−1. State all allowed residue classes modulo6 and prove both directions, including exceptions and a negative boundary.",
+      "stem": "An L-digit positive integer N is divisible by 11. Move its nonzero FIRST digit to the right end, retaining all original L digit positions, including any new leading zero. Explain WHY divisibility by 11 is preserved whenever L is even but cannot be preserved when L is odd. Make the causal contrast between 1210 → 2101 and 121 → 211; giving only numerical checks is not an explanation.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "n is any integer, including negative integers and zero."
+        "Original L≥2 and positive L-digit N is divisible by11.",
+        "Its leading digit a satisfies 1≤a≤9.",
+        "B represents the suffix of length L−1, with zeros permitted.",
+        "After rotation, a new leading zero is retained as a position."
       ],
       "figure_refs": [
         "REP-D4-EXPLAIN-CORE2A"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "24|(n²−1) iff n≡1,5 modulo6.",
+        "summary": "For an initial multiple of11, one-leading-digit left rotation preserves divisibility exactly at even original length.",
         "reasoning": [
-          "Factor n²−1=(n−1)(n+1).",
-          "Sufficiency: for odd n, two even neighbors differ by2, giving factor8; if 3∤n a neighbor supplies factor3; coprimality yields24.",
-          "Necessity: even n has odd n²−1; a multiple of3 gives n²−1≡2 modulo3. Either cannot be divisible by24.",
-          "Thus n is odd and not divisible by3: exactly residues1 or5 modulo6."
+          "Let original N=a10^(L−1)+B, with a in1..9 and suffix B of fixed length L−1. Rotated R=10B+a.",
+          "Because 10≡−1 modulo11, N≡a(-1)^(L−1)+B while R≡a−B.",
+          "If original L is even then N≡B−a and R≡a−B≡−N, so an initial zero remainder remains zero.",
+          "If L is odd and 11|N then 0≡N≡a+B, hence B≡−a and R≡2a, nonzero modulo11 because 1≤a≤9.",
+          "For four-digit 1210, rotation 2101 is divisible by11. For three-digit 121, rotation 211 is not."
         ],
         "reasoning_route": [
           {
-            "id": "D4-MOVE-DOMAIN",
+            "id": "D4-EXP-MOVE-DOMAIN",
             "kind": "REPRESENT",
-            "action": "State integer domain and the two proof directions.",
-            "why_valid": "An iff assertion needs necessity and sufficiency.",
+            "action": "Maintain original L and leading digit a, with suffix B and zero-safe rotation.",
+            "why_valid": "The defined operation has a fixed original number of positions.",
             "inputs": [
-              "n in integers"
+              "L≥2",
+              "1≤a≤9",
+              "11|N"
             ],
-            "output": "Two quantified obligations."
+            "output": "N and R retain comparable positions."
           },
           {
-            "id": "D4-MOVE-FACTOR",
+            "id": "D4-EXP-MOVE-PLACE",
             "kind": "CONNECT",
-            "action": "Factor n²−1 into neighboring integers.",
-            "why_valid": "Difference of squares.",
+            "action": "Express N=a10^(L−1)+B and R=10B+a and reduce modulo11.",
+            "why_valid": "Rotation shifts all suffix positions and appends a units digit; 10≡−1 modulo11.",
             "inputs": [
-              "n²−1"
+              "original and rotated strings"
             ],
-            "output": "(n−1)(n+1)."
+            "output": "N≡a(-1)^(L−1)+B; R≡a−B."
           },
           {
-            "id": "D4-MOVE-IFF",
+            "id": "D4-EXP-MOVE-CAUSE",
             "kind": "DECIDE",
-            "action": "Prove both condition families and both converses.",
-            "why_valid": "Odd n forces factor8, nonmultiples of3 force factor3; even n or multiples of3 give universal obstructions.",
+            "action": "Explain why the exponent's parity makes R either −N or the nonzero 2a residue when 11|N.",
+            "why_valid": "For even L the sign on a is negative; for odd L it is positive, and a is 1..9 so 11∤2a.",
             "inputs": [
-              "24=8×3",
-              "n arbitrary"
+              "two modular expressions",
+              "11|N"
             ],
-            "output": "Exactly n≡1,5 modulo6."
+            "output": "Even original L preserves; odd L cannot."
           },
           {
-            "id": "D4-MOVE-CHECK",
+            "id": "D4-EXP-MOVE-VERIFY",
             "kind": "VERIFY",
-            "action": "Independently inspect modulo24 residues and negative/zero cases.",
-            "why_valid": "All residue classes of integers are exhausted.",
+            "action": "Compare 1210→2101 and 121→211 as independent changed-length checks.",
+            "why_valid": "Both inputs are divisible by11 but have different original length parity.",
             "inputs": [
-              "iff proof"
+              "explained mechanism"
             ],
-            "output": "Complete exception audit."
+            "output": "Observed results agree with causal rule."
           }
         ],
-        "crux_move_ref": "D4-MOVE-IFF",
-        "check": "n=-1 yields0 (yes); n=0 yields -1 (no); n=3 yields8 (no); n=5 yields24 (yes). Enumerate residues modulo24.",
+        "crux_move_ref": "D4-EXP-MOVE-CAUSE",
+        "check": "1210→2101: 11 divides both; 121→211: only 121 is divisible by11; independently try 110→101 and 1232→2321.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -964,22 +970,22 @@
       "hints": [],
       "scaffolds": [
         {
-          "text": "State precisely what an iff claim requires of an arbitrary integer. Separate the two directions.",
+          "text": "Name the original length L and first digit a. When a rotated string has a leading zero, has the original L changed?",
           "support_kind": "REPRESENT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "D4-MOVE-DOMAIN"
+          "supports_move_ref": "D4-EXP-MOVE-DOMAIN"
         },
         {
-          "text": "Can you factor n²−1 into two neighbors? What kinds of prime-power factors would matter?",
+          "text": "If 10≡−1 (mod11), what happens to the residue of a digit each time its positional weight is multiplied by ten?",
           "support_kind": "CONNECT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "D4-MOVE-FACTOR"
+          "supports_move_ref": "D4-EXP-MOVE-PLACE"
         },
         {
-          "text": "After recording your first attempt, audit factor8 and factor3 separately and use the excluded families to check necessity.",
+          "text": "After your written attempt is committed, compare N=a10^(L−1)+B and R=10B+a. Trace the sign for even and odd original L and explain the fate of the nonzero first digit.",
           "support_kind": "CONNECT",
           "reveals": "METHOD",
-          "supports_move_ref": "D4-MOVE-IFF"
+          "supports_move_ref": "D4-EXP-MOVE-CAUSE"
         }
       ],
       "hint_ladder": [
@@ -1007,17 +1013,17 @@
         "safe_ref": "REP-D4-EXPLAIN-CORE2A",
         "bound_ref": null,
         "stage_refs": [
-          "D4-24-GIVEN"
+          "D4-EXP-ROTATE1"
         ]
       },
-      "repair_ref": "D4-STEP-THREE",
-      "failure_signal": "A missing factor3 or proving only examples does not establish iff.",
+      "repair_ref": "D4-EXP-AUDIT",
+      "failure_signal": "Preserved digit sum is irrelevant to modulo11, and favorable even-length examples do not explain the odd-length obstruction; a leading zero after rotation does not change original L.",
       "family_exposure": {
         "family_ref": "FAM-D4-EXPLAIN",
-        "closure": "No independent credit without both quantified proof directions."
+        "closure": "Independent EXPLAIN-D4 requires explaining the positional sign flip and both length outcomes; H3 help is assisted."
       },
       "independent_check": {
-        "statement": "Exhaust residues modulo24; test n=-1,0,3,5.",
+        "statement": "Exhaust original 2..4 digit multiples of11 and independently test sampled 5..6 digit lengths with fixed-width rotation and nonzero initial a.",
         "check_type": "EXHAUSTIVE_MODULAR_CHECK"
       },
       "difficulty": {
@@ -1025,18 +1031,18 @@
         "score": 8,
         "components": {
           "concept_model_selection": 2,
-          "representation_translation": 1,
+          "representation_translation": 2,
           "reasoning_chain_length": 2,
-          "algebra_computational_load": 1,
+          "algebra_computational_load": 0,
           "trap_exception_sensitivity": 2
         },
-        "basis": "Two-way universal iff with non-obvious exceptional families.",
+        "basis": "A causal explanation of a place-value invariant breaking under changed original length; no long arithmetic.",
         "component_evidence": {
-          "concept_model_selection": "Select prime powers8 and3.",
-          "representation_translation": "Factor to neighboring integers.",
-          "reasoning_chain_length": "Prove sufficiency and necessity separately.",
-          "algebra_computational_load": "Simple arithmetic and congruences.",
-          "trap_exception_sensitivity": "Odd multiple of3 fails the near-miss condition."
+          "concept_model_selection": "Choose modulo11 positional weights, not digit-sum conservation.",
+          "representation_translation": "Map digit rotation to N=a10^(L−1)+B and R=10B+a.",
+          "reasoning_chain_length": "Explain sign change by length parity, then nonzero 2a obstruction for odd L.",
+          "algebra_computational_load": "Simple modular residues only.",
+          "trap_exception_sensitivity": "Odd original length and rotated leading-zero cases expose a hidden assumption."
         }
       },
       "learner_question_type": "constructed_response"
@@ -1050,101 +1056,106 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY",
+        "grade9v3:authored_by": "AGENT-D4-QRT-EXPLAIN-D4",
         "grade9v3:cognitive_demand": {
-          "primary": "JUSTIFY",
+          "primary": "EXPLAIN",
           "secondary": [
-            "MODEL"
+            "MODEL",
+            "JUSTIFY"
           ],
-          "basis": "Prove the exception-sensitive changed criterion universally."
+          "basis": "Identify changed two-digit prefix mechanism and its odd-length exception."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "Derive factor16 iff by residues modulo8.",
-          "common_wrong_route": "Reuse old 24 condition unchanged."
+          "stable_crux_move": "Explain odd-length rotation remainder2A and why prefix divisibility by11 is decisive.",
+          "common_wrong_route": "Copy the one-digit claim that all odd lengths fail."
         }
       },
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-EXPLAIN-ORIGINAL",
       "original_identifier": "AUTHORED-Q-D4-EXPLAIN-ROTATE2",
-      "stem": "The divisor changes to 48. Prove exactly which residue classes modulo24 give 48|(n²−1) for arbitrary integers n. Show why the earlier 24-rule fails on a permitted input.",
+      "stem": "The operation CHANGES: instead of moving ONE leading digit, move the first TWO digits as one block to the right end (original L≥3). An original L-digit integer N is divisible by11. Explain why the new rotation always preserves 11-divisibility at even L, while for odd L it survives exactly when the original two-digit prefix A is itself divisible by11. Account for the contrasting odd-length cases 110 → 011 and 121 → 112.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "n is any integer, including negative integers and zero."
+        "L≥3 and the original L-digit positive integer is divisible by11.",
+        "Two-digit prefix A is between10 and99 and suffix C uses exactly L−2 digits, with zero padding allowed.",
+        "Rotate the first TWO digits as a block; retain the original width L.",
+        "Leading zeros produced by rotation do not change original L."
       ],
       "figure_refs": [
         "REP-D4-EXPLAIN-CORE2B"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "48|(n²−1) iff n≡1,7,17,23 modulo24.",
+        "summary": "Two-leading-digit rotation preserves 11-divisibility for even L, or for odd L exactly when the original prefix A is divisible by11.",
         "reasoning": [
-          "48=16×3 with coprime factors.",
-          "For odd n modulo8, residues1,3,5,7 square modulo16 to1,9,9,1. Even n cannot work. Thus 16 divides exactly when n mod8 is1 or7.",
-          "3 divides the expression exactly when n is not divisible by3. Combining the two restrictions gives n mod24 in {1,7,17,23}.",
-          "n=5 gives n²−1=24, invalidating naive reuse of the earlier rule."
+          "Write N=A10^(L−2)+C and R=100C+A for two-digit prefix A=10a+b and padded suffix C.",
+          "Modulo11, 100≡1 and R≡C+A. If L even, L−2 even, so N≡A+C and the rotated residue equals the original residue, preserving zero.",
+          "If L odd, N≡−A+C=0 gives C≡A; R≡2A. Because 2 and11 are coprime, this is zero iff A is divisible by11.",
+          "For odd length, 110 (A=11) rotates as 011=11 and succeeds; 121 (A=12) rotates to112 and fails."
         ],
         "reasoning_route": [
           {
-            "id": "D4-MOVE-48-READ",
+            "id": "D4-EXP-TRANSFER-DOMAIN",
             "kind": "REPRESENT",
-            "action": "Compare target prime powers.",
-            "why_valid": "48 requires 16 whereas24 requires8.",
+            "action": "Group first two digits as A and keep the original L−2 suffix C.",
+            "why_valid": "Block rotation means N=A10^(L−2)+C, R=100C+A.",
             "inputs": [
-              "24",
-              "48"
+              "L≥3",
+              "A two-digit prefix"
             ],
-            "output": "New stronger factor of two."
+            "output": "Exact new place-value model."
           },
           {
-            "id": "D4-MOVE-48",
+            "id": "D4-EXP-TRANSFER-CAUSE",
             "kind": "DECIDE",
-            "action": "Classify when 16 divides n²−1 via odd residues mod8.",
-            "why_valid": "The four odd classes square modulo16 to1,9,9,1.",
+            "action": "Explain the even-length equality of residues and odd-length residue2A when N is divisible by11.",
+            "why_valid": "100≡1 modulo11; sign of 10^(L−2) depends on parity of L.",
             "inputs": [
-              "n integer"
+              "new expressions",
+              "11|N"
             ],
-            "output": "n mod8 in{1,7}."
+            "output": "Even L always works; odd L depends on A."
           },
           {
-            "id": "D4-MOVE-48-COMBINE",
+            "id": "D4-EXP-TRANSFER-EXCEPTION",
             "kind": "CONNECT",
-            "action": "Combine factor16 and factor3 and list modulo24 classes.",
-            "why_valid": "gcd(16,3)=1 and mod24 encodes both residue conditions.",
+            "action": "Identify the odd-length two-digit-prefix exception.",
+            "why_valid": "11|2A iff 11|A because 2 and11 are coprime.",
             "inputs": [
-              "mod8 rule",
-              "3∤n"
+              "odd L",
+              "R≡2A"
             ],
-            "output": "n mod24 in{1,7,17,23}."
+            "output": "The original prefix A can equal 11,22,...,99."
           },
           {
-            "id": "D4-MOVE-48-CHECK",
+            "id": "D4-EXP-TRANSFER-CHECK",
             "kind": "VERIFY",
-            "action": "Exhaust all modulo24 classes and falsify old rule using n=5.",
-            "why_valid": "Every integer has one class, and n=5 is admissible.",
+            "action": "Explain the difference between 110→011 and 121→112.",
+            "why_valid": "Both have odd original length but only the first prefix is multiple11.",
             "inputs": [
-              "new criterion"
+              "new exception"
             ],
-            "output": "Changed condition verified."
+            "output": "Changed-operation exception and countercase checked."
           }
         ],
-        "crux_move_ref": "D4-MOVE-48",
-        "check": "Check classes1,7,17,23 modulo24 and n=5 as old-rule false positive.",
+        "crux_move_ref": "D4-EXP-TRANSFER-CAUSE",
+        "check": "110→011 (11, divisible by11); 121→112 (not divisible); 11220→22011 (both divisible with A=11).",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR",
         "rubric": [
           {
-            "criterion": "Recognize factor16 requirement.",
-            "evidence_of": "New requirement selected."
+            "criterion": "Define two-digit-block rotation in fixed width.",
+            "evidence_of": "Changed operation correctly modeled."
           },
           {
-            "criterion": "Prove mod8 restriction and exclusions.",
-            "evidence_of": "Correct new necessity/sufficiency."
+            "criterion": "Explain why even original L preserves zero residue.",
+            "evidence_of": "R≡N because 100≡1 and L−2 even."
           },
           {
-            "criterion": "Combine with mod3 to get four mod24 classes.",
-            "evidence_of": "Complete transfer."
+            "criterion": "Explain odd-L residue2A and exact A multiple11 exception.",
+            "evidence_of": "New necessary/sufficient prefix mechanism and contrasting example."
           }
         ]
       },
@@ -1161,7 +1172,7 @@
       ],
       "hints": [
         {
-          "text": "Compare prime powers of 24 and48. Which extra factor2 is required?",
+          "text": "Compare modulo11 the expressions N=A10^(L−2)+C and R=100C+A. Which power of ten changes with the original length?",
           "reveals": "CONCEPT"
         }
       ],
@@ -1179,17 +1190,17 @@
         "safe_ref": "REP-D4-EXPLAIN-CORE2B",
         "bound_ref": null,
         "stage_refs": [
-          "D4-48-GIVEN"
+          "D4-EXP-ROTATE2"
         ]
       },
-      "repair_ref": "D4-STEP-EIGHT",
-      "failure_signal": "The earlier 24 rule incorrectly admits n=5.",
+      "repair_ref": "D4-EXP-SPLIT",
+      "failure_signal": "Assuming every odd-length two-digit rotation fails ignores prefix A divisible by11; treating rotated 011 as a two-position input changes the operation.",
       "family_exposure": {
         "family_ref": "FAM-D4-EXPLAIN",
-        "closure": "The changed factor16 test requires an independent iff argument."
+        "closure": "True changed-demand EXPLAIN transfer requires the new A multiple11 exception and the distinct two-digit positional model."
       },
       "independent_check": {
-        "statement": "Exhaust 24 residues; test n=5,7,17,-1.",
+        "statement": "Check all original 3..4 digit multiples11 and sampled longer inputs, including prefix A=11 and A=12 at odd L.",
         "check_type": "EXHAUSTIVE_MODULAR_CHECK"
       },
       "difficulty": {
@@ -1197,18 +1208,18 @@
         "score": 8,
         "components": {
           "concept_model_selection": 2,
-          "representation_translation": 1,
+          "representation_translation": 2,
           "reasoning_chain_length": 2,
-          "algebra_computational_load": 1,
+          "algebra_computational_load": 0,
           "trap_exception_sensitivity": 2
         },
-        "basis": "A stronger power-of-two requirement changes the valid residue families.",
+        "basis": "A changed two-digit-prefix rotation has a novel odd-length exception, requiring a fresh causal explanation.",
         "component_evidence": {
-          "concept_model_selection": "Select prime powers8 and3.",
-          "representation_translation": "Factor to neighboring integers.",
-          "reasoning_chain_length": "Prove sufficiency and necessity separately.",
-          "algebra_computational_load": "Simple arithmetic and congruences.",
-          "trap_exception_sensitivity": "Odd multiple of3 fails the near-miss condition."
+          "concept_model_selection": "Choose a two-digit-block decomposition rather than reuse first-digit model.",
+          "representation_translation": "Translate to N=A10^(L−2)+C, R=100C+A.",
+          "reasoning_chain_length": "Explain even-length invariant, odd-length residue2A, and precise prefix exception.",
+          "algebra_computational_load": "Short congruences only.",
+          "trap_exception_sensitivity": "Some odd L succeed when the two-digit prefix is a multiple of11."
         }
       },
       "learner_question_type": "constructed_response",
@@ -1217,17 +1228,17 @@
         "builds_on": [
           "Q-D4-EXPLAIN-ROTATE1"
         ],
-        "statement": "Derive a new higher-power necessity and sufficiency criterion.",
-        "invariant": "Difference-of-squares factorization and factor3 requirement remain unchanged.",
+        "statement": "Changed rotation by two digits creates a new surviving odd-length case.",
+        "invariant": "Powers of ten change residue sign modulo11.",
         "novelty": {
           "checked_against": [
             "Q-D4-EXPLAIN-ROTATE1",
             "MIC-D4-EXPLAIN:exit_task",
             "MIC-D4-EXPLAIN:boundary_test"
           ],
-          "why_new": "Factor16 requires n mod8 in {1,7}; factor8 criterion accepted n=5 but 48 does not."
+          "why_new": "Unlike a single digit a in1..9, the two-digit prefix A can be divisible by11 and make odd-length rotation survive."
         },
-        "protected_move_ref": "D4-MOVE-48"
+        "protected_move_ref": "D4-EXP-TRANSFER-CAUSE"
       }
     }
   ],
