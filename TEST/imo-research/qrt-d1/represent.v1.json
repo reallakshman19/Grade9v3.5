@@ -52,7 +52,7 @@
       "id": "BUCKET-TEST-IMO182-D1-GRID",
       "title": "Signed coordinate movement on a square grid",
       "topic": "Ordered pairs, directional representation and inverse checks",
-      "intrinsic_badge": "FOUNDATION",
+      "intrinsic_badge": "EASY",
       "badge_reason": "Single-step translation with a required sign and axis-order decision.",
       "depth_overlay": "FOUNDATION",
       "curriculum_mappings": [],
@@ -109,7 +109,7 @@
       "title": "Preserve movement while translating words and signed coordinate pairs",
       "bucket_id": "BUCKET-TEST-IMO182-D1-GRID",
       "primary_capability_ref": "CAP-TEST-IMO182-D1-SIGNED-DIRECTIONS",
-      "intrinsic_badge": "FOUNDATION",
+      "intrinsic_badge": "EASY",
       "badge_reason": "One meaningful independent sign-and-axis correspondence remains in each exercise.",
       "entry_assumptions": [
         "The learner can distinguish north, south, east, and west.",
@@ -190,6 +190,16 @@
           "acceptable_alternatives": [],
           "subpart_answers": [],
           "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d1/verify_represent.py",
+            "bindings": {
+              "axis_convention": "east_positive_north_positive",
+              "route": "1 west 4 south",
+              "expected_pair": "(-1,-4)"
+            }
+          }
         }
       },
       "research_contribution": "One signed correspondence and independent back-translation tested under D1 with distinct wrong-sign reconstruction and inverse transfer; academic band review still required.",
@@ -419,7 +429,9 @@
             "CORE1A"
           ],
           "microtopic_ref": "MIC-TEST-IMO182-D1-ORDERED-PAIR",
-          "datum_refs": [],
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-AXIS-MEANING"
+          ],
           "asset_ref": "TEST/imo-research/qrt-d1/figures/represent-grid-construction.v1.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
@@ -516,7 +528,9 @@
             "CORE2A"
           ],
           "question_ref": "Q-TEST-IMO182-D1-CORE2A-WORDS-TO-PAIR",
-          "datum_refs": [],
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-ROUTE-GIVEN"
+          ],
           "asset_ref": "TEST/imo-research/qrt-d1/figures/represent-core2a-route-safe.v1.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
@@ -592,7 +606,9 @@
             "CORE1B"
           ],
           "microtopic_ref": "MIC-TEST-IMO182-D1-ORDERED-PAIR",
-          "datum_refs": [],
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-ERROR-GIVEN"
+          ],
           "asset_ref": "TEST/imo-research/qrt-d1/figures/represent-core1b-error-safe.v1.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
@@ -664,7 +680,9 @@
             "CORE2B"
           ],
           "question_ref": "Q-TEST-IMO182-D1-CORE2B-PAIR-TO-WORDS",
-          "datum_refs": [],
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-PAIR-GIVEN"
+          ],
           "asset_ref": "TEST/imo-research/qrt-d1/figures/represent-core2b-pair-safe.v1.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
@@ -1191,7 +1209,7 @@
       },
       "learner_question_type": "constructed_response",
       "transfer": {
-        "dimension": "reverse_representation",
+        "dimension": "representation_translation",
         "builds_on": [
           "Q-TEST-IMO182-D1-CORE2A-WORDS-TO-PAIR"
         ],
@@ -1265,5 +1283,74 @@
     "grade9v3:learner_published": false,
     "grade9v3:core_maturity": "TEST_CANDIDATE"
   },
-  "data": []
+  "data": [
+    {
+      "id": "DATUM-TEST-IMO182-D1-AXIS-MEANING",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>x</mi><mo>,</mo><mi>y</mi></mrow></math>",
+      "symbol": "(x,y)",
+      "meaning": "Ordered pair names signed horizontal then signed vertical movement.",
+      "locator": "AUTHOR_CREATED: IMO182 REPRESENT D1 signed-displacement route"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-ROUTE-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>x</mi><mo>,</mo><mi>y</mi></mrow></math>",
+      "symbol": "4 east; 2 south",
+      "meaning": "Original directional route input without a signed pair.",
+      "locator": "AUTHOR_CREATED: IMO182 REPRESENT D1 signed-displacement route"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-ERROR-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>x</mi><mo>,</mo><mi>y</mi></mrow></math>",
+      "symbol": "(-2,+3) candidate",
+      "meaning": "A classmate's disputed pair; not the correct route answer.",
+      "locator": "AUTHOR_CREATED: IMO182 REPRESENT D1 signed-displacement route"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-PAIR-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-REP-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>x</mi><mo>,</mo><mi>y</mi></mrow></math>",
+      "symbol": "(-3,+5)",
+      "meaning": "Input signed pair; translation to words is withheld.",
+      "locator": "AUTHOR_CREATED: IMO182 REPRESENT D1 signed-displacement route"
+    }
+  ]
 }
