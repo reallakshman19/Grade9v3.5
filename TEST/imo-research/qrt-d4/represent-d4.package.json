@@ -253,43 +253,44 @@
       },
       "elicitation": {
         "predict": {
-          "prompt": "A student uses 4n−2e for the chair count on every joined-table arrangement. Why is this not enough for a closed ring around an inaccessible empty center?",
-          "defensible_answer": "Unshared inner edges surrounding a sealed courtyard are not accessible to visitors approaching from outside."
+          "prompt": "A learner claims equal black/white totals guarantee a domino tiling. What else should be checked?",
+          "defensible_answer": "Global equality is only necessary; a complete legal pairing or a decisive shortage of eligible neighbors is needed."
         },
         "attempt": {
-          "produces": "A physical edge-counting model with distinct table, shared-contact and inaccessible-inner-boundary variables; corrected under an opening.",
+          "produces": "A learner-chosen board-to-adjacency graph and a local three-black-versus-two-white-neighbor shortage certificate.",
           "closure": "RUBRIC",
           "rubric": [
             {
-              "criterion": "Define n occupied squares and e shared full-edge joins.",
-              "evidence_of": "Counts each seam once and removes two sides."
+              "criterion": "Correct global necessary test",
+              "evidence_of": "Every domino pairs one black and one white cell."
             },
             {
-              "criterion": "Explain why exposed does not always mean exterior-accessible.",
-              "evidence_of": "Detects sealed courtyard boundary."
+              "criterion": "Independently choose a stronger representation",
+              "evidence_of": "Convert board to allowed adjacency graph without being shown witness cells."
             },
             {
-              "criterion": "Model inaccessible sealed-hole sides separately by c.",
-              "evidence_of": "Explains A=4n−2e−c without assuming every unshared side is reachable."
+              "criterion": "Prove decisive local obstruction",
+              "evidence_of": "Three black cells share only two distinct white neighbors."
             },
             {
-              "criterion": "Revise c when an opening connects courtyard to exterior.",
-              "evidence_of": "The changed case is recomputed rather than copied."
+              "criterion": "Novel transfer",
+              "evidence_of": "Construct fifteen disjoint dominoes on changed board, not parity alone."
             }
           ],
           "accepted": [
-            "Start from 4n table sides; subtract 2e for two sides consumed per shared seam. If c additional unshared edges face sealed inaccessible voids, outside-accessible chairs A=4n−2e−c."
+            "The three surviving black squares r1c1,r2c2,r1c3 have only white neighbors r2c1,r1c2; no three distinct domino partners exist."
           ],
           "rejected": [
-            "Every exposed inner cavity edge can hold an outside-reachable chair.",
-            "Each shared seam removes one seat."
+            "Equal global black/white counts are sufficient.",
+            "Dominoes can reuse a neighbor.",
+            "Diagonal cells count as adjacent."
           ],
           "task": {
-            "prompt": "A learner says the chair model 4n−2e works for ANY joined square-table shape. Test that claim on a closed grid ring with an unreachable center, build the corrected model and consider an opening to the outside.",
+            "prompt": "A student says equal checkerboard populations always prove tileability. Decide whether that is valid by changing representation from totals to allowed pairs and providing your own proof.",
             "givens": [
-              "One square table occupies each marked unit cell.",
-              "Each shared full side makes two chair sites unavailable.",
-              "A chair site must be reachable from outside."
+              "Dominoes cover edge-adjacent surviving squares.",
+              "No square may be covered twice.",
+              "A necessary condition may be insufficient."
             ],
             "representation_ref": "REP-D4-REPRESENT-CORE1B",
             "stage_refs": [
@@ -304,37 +305,27 @@
         "reconstruct": {
           "route": [
             {
-              "ask": "How many possible unit-edge chairs are there before joining tables?",
-              "why_this_ask": "Elicits n as physical count.",
+              "ask": "Why does each domino affect both colors once?",
+              "why_this_ask": "Recover necessary color test.",
               "from_step_ref": "D4-REP-STEP-UNITS"
             },
             {
-              "ask": "Why does one shared edge remove two sites?",
-              "why_this_ask": "Repairs double-counting.",
+              "ask": "Could two black squares have just one possible white neighbor?",
+              "why_this_ask": "Refute sufficiency without pre-identifying main three-cell witness.",
+              "from_step_ref": "D4-REP-STEP-ACCESS"
+            },
+            {
+              "ask": "What mathematical picture encodes exactly which pairs are legal?",
+              "why_this_ask": "Encourage graph translation while preserving protected selection.",
               "from_step_ref": "D4-REP-STEP-SEAMS"
-            },
-            {
-              "ask": "Can all unshared sides be approached from outside a sealed ring?",
-              "why_this_ask": "Exposes the missing condition.",
-              "from_step_ref": "D4-REP-STEP-ACCESS"
-            },
-            {
-              "ask": "What does c represent in a corrected exterior-access model?",
-              "why_this_ask": "Requires an explicit physically meaningful variable.",
-              "from_step_ref": "D4-REP-STEP-ACCESS"
-            },
-            {
-              "ask": "When one boundary table is removed, which assumptions about the center are different?",
-              "why_this_ask": "Transfers access logic to changed layout.",
-              "from_step_ref": "D4-REP-STEP-CHECK"
             }
           ],
-          "differs_from_teaching_path": "Core1A builds candidate and shared-edge counts on an L; Core1B falsifies the unshared-side generalization using a sealed ring and an opened boundary."
+          "differs_from_teaching_path": "Core1A builds constructive tileability for intact 2x3; Core1B studies an isolated single cell under balanced totals; Core2A requires a non-isolated three-black-versus-two-white-neighbor cluster."
         },
         "boundary_test": {
-          "prompt": "On a closed 3x3 table ring n=8,e=8,c=4. Remove the top-middle table, opening its center: verify new n=7,e=6,c=0 and find the outside-accessible chair sites.",
-          "answer": "Closed A=4×8−2×8−4=12; opened A=4×7−2×6=16, because the center is now exterior-connected.",
-          "confirms": "Revised model handles a new cavity opening without retaining obsolete c."
+          "prompt": "A 4x4 board loses (r1,c2),(r2,c1),(r3,c3),(r4,c4); color totals still match. Why is top-left (r1,c1) impossible to pair? If r1c2 is restored, what claim remains unproved?",
+          "answer": "Both neighbors of r1c1 were removed; it cannot be covered. Restoring r1c2 removes this simple obstruction but is not itself a full-board tiling proof.",
+          "confirms": "Balanced totals plus removal of one local obstruction do not certify a complete tiling."
         }
       }
     }
@@ -804,26 +795,26 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-REPRESENT-ORIGINAL",
       "original_identifier": "AUTHORED-Q-D4-REPRESENT-WORKED",
-      "stem": "A three-table L shape uses three unit-square tables, joined along two full sides and with no enclosed courtyard. Build a candidate-side count, remove chair sites on shared seams and check the outer boundary.",
+      "stem": "For an unbroken 2×3 checkerboard, place one vertical domino in each column. Explain why each domino covers opposite colors and show that all six cells are covered.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Unit tables join only along full unit sides.",
-        "One outside chair could be placed at every externally reachable unshared side.",
-        "The L has no sealed interior void."
+        "One 1×2 domino covers adjacent horizontal or vertical squares.",
+        "No squares are removed.",
+        "Every surviving square is used once."
       ],
       "figure_refs": [
         "REP-D4-REPRESENT-CORE1A"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "The L has eight outside-accessible unit chair sides.",
+        "summary": "Three vertical dominoes exactly cover three black and three white squares.",
         "reasoning": [
-          "Each of three tables has four sides, giving twelve candidates.",
-          "Two distinct full-side contacts each consume two candidate sides, leaving 12−2×2=8.",
-          "All remaining sides are exterior-accessible because the L has no sealed courtyard."
+          "The 2×3 grid has three black and three white squares.",
+          "Vertical pairs (r1c1,r2c1),(r1c2,r2c2),(r1c3,r2c3) cover all cells exactly once.",
+          "Every vertical domino spans one black and one white square."
         ],
-        "check": "Trace around the L's three occupied cells to count eight outside edges.",
+        "check": "Each of six coordinates appears exactly once in the three pairs.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -849,7 +840,7 @@
           "D4-REP-ANCHOR-CELLS"
         ]
       },
-      "failure_signal": "Subtracting only one side per contact overcounts the L boundary.",
+      "failure_signal": "The parity test is necessary; a real placement proves this positive small example.",
       "family_exposure": {
         "family_ref": "FAM-D4-REPRESENT",
         "closure": "A small L teaches seam correction but not a sealed-hole accessibility model."
@@ -864,28 +855,28 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D4-QRT-MODEL-D4",
+        "grade9v3:authored_by": "AGENT-D4-QRT-REPRESENT-D4",
         "grade9v3:cognitive_demand": {
-          "primary": "MODEL",
+          "primary": "REPRESENT",
           "secondary": [
-            "REPRESENT",
-            "JUSTIFY"
+            "JUSTIFY",
+            "MODEL"
           ],
-          "basis": "W is choosing variables and an exterior-access condition that makes a physically valid mathematical model, then validating against geometry."
+          "basis": "Decisive W: select local bipartite-neighborhood view and a nontrivial 3-versus-2 shortage witness, instead of accepting global color parity."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "Distinguish unshared from outside-accessible edges; introduce a sealed-hole term c.",
-          "common_wrong_route": "4n−2e overcounts inaccessible inner courtyard sides."
+          "stable_crux_move": "Three black cells with only two distinct white neighbors certify impossibility.",
+          "common_wrong_route": "Equal global populations imply a domino tiling."
         },
         "grade9v3:core2_support_plan": {
           "protected_move_refs": [
-            "D4-REP-MOVE-CAVITY"
+            "D4-REP-MOVE-LOCAL"
           ],
           "support_completions": [
             {
               "support_ref": "scaffolds[2]",
               "completed_move_refs": [
-                "D4-REP-MOVE-CAVITY"
+                "D4-REP-MOVE-LOCAL"
               ],
               "availability": "AFTER_ATTEMPT"
             }
@@ -895,75 +886,73 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-REPRESENT-ORIGINAL",
       "original_identifier": "AUTHORED-Q-D4-REPRESENT-MAIN",
-      "stem": "A designer places one square table in EACH occupied border cell of a 4×4 square grid; the middle 2×2 cells form a completely enclosed empty courtyard. One chair may be placed on each table side that can be APPROACHED FROM OUTSIDE the entire arrangement. There are no diagonal passages. You are asked to BUILD the mathematical model, not just report a perimeter. Define appropriate variables for occupied tables, full shared-side contacts and table sides facing inaccessible inner voids; derive a general algebraic count for any such grid arrangement under these rules. Then determine the exact number of outside-accessible chair sites for this closed 4×4 ring and independently cross-check by tracing its outer boundary.",
+      "stem": "A 6×6 checkerboard has (r1,c1) black. Remove exactly six cells: (r1,c4), (r2,c3), (r3,c2), (r3,c3), (r4,c6), (r5,c1). You may place 1×2 dominoes only on two full-edge adjacent surviving cells; each surviving cell must be covered once, without overlap. A classmate sees equal black and white totals and concludes a complete tiling MUST exist. For this particular board, decide whether complete tiling exists. Choose and justify a stronger representation if needed: an allowed-pair graph, a decisive local obstruction, or a complete constructive tiling. Explain why your evidence settles the case; a global color total by itself is not an answer.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Each occupied unit cell contains one square table and every table has four candidate sides.",
-        "Adjacent occupied cells share a whole side; neither side can hold a chair.",
-        "Only a table side adjacent to empty space connected orthogonally to the exterior can hold a chair.",
-        "The 2×2 central courtyard has no opening to the exterior.",
-        "All cells of the 4×4 border are occupied; no diagonal access."
+        "Rows and columns from 1 through 6, top-left black.",
+        "Exactly the six named coordinates are removed.",
+        "All other grid cells are available.",
+        "Dominoes are horizontal or vertical, never diagonal.",
+        "Dominoes may not overlap or reuse any cell."
       ],
       "figure_refs": [
         "REP-D4-REPRESENT-CORE2A"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "A=4n−2e−c; for closed 4×4 ring n=12,e=12,c=8, so exactly 16 outside-accessible chair sites.",
+        "summary": "No tiling although 15 black and 15 white cells remain: three black cells (r1c1,r2c2,r1c3) can use only two white neighbors (r2c1,r1c2).",
         "reasoning": [
-          "Define n as the number of occupied table cells. Before joins there are 4n candidate chair sides.",
-          "Define e as the number of distinct full-side contacts between occupied tables. Each such join removes TWO candidate sides, leaving 4n−2e unshared boundary sides.",
-          "Let c count unshared table sides bordering empty spaces completely enclosed by tables, inaccessible from outside. The context requires an exterior-accessible model A=4n−2e−c.",
-          "The 4×4 border has 16 cells minus four empty central cells, so n=12. The occupied cells form a continuous one-cell-wide cycle, with 12 distinct shared contacts, hence e=12.",
-          "The enclosed 2×2 central courtyard has perimeter eight unit sides, so c=8. Thus A=4×12−2×12−8=16.",
-          "Independently, an outside visitor sees precisely the 4×4 outer boundary of length4 per side; its 16 unit sides agree with the model."
+          "The three removed black cells are (r3,c3),(r4,c6),(r5,c1), and three removed white cells are (r1,c4),(r2,c3),(r3,c2): remaining black:white is 15:15.",
+          "Represent possible dominoes by a bipartite adjacency graph between surviving opposite-color neighbors.",
+          "Choose S={(r1,c1),(r2,c2),(r1,c3)} of three black squares. Their only surviving neighboring white squares are N(S)={(r2,c1),(r1,c2)}.",
+          "Every black square of S requires a DIFFERENT white partner. Three distinct partners cannot be drawn from two white squares.",
+          "Therefore a full domino tiling is impossible despite global balance."
         ],
         "reasoning_route": [
           {
-            "id": "D4-REP-MOVE-UNITS",
+            "id": "D4-REP-MOVE-COUNT",
             "kind": "REPRESENT",
-            "action": "Select n as occupied unit-square tables, with four candidate chair sides per table.",
-            "why_valid": "Each unit square has four sides before joins.",
+            "action": "Translate removed coordinates into a global checkerboard count.",
+            "why_valid": "Dominoes must join opposite colors.",
             "inputs": [
-              "unit-grid arrangement"
+              "6x6 holes"
             ],
-            "output": "4n candidate sites."
+            "output": "15 black and 15 white remain, not decisive."
           },
           {
-            "id": "D4-REP-MOVE-SEAMS",
+            "id": "D4-REP-MOVE-GRAPH",
             "kind": "CONNECT",
-            "action": "Introduce e, the count of distinct shared full-edge joins, and subtract two candidate sides per join.",
-            "why_valid": "Two sides meet at each join and both chair sites become unavailable.",
+            "action": "Represent possible dominoes as edges of a bipartite graph.",
+            "why_valid": "Only orthogonally adjacent surviving squares can be paired.",
             "inputs": [
-              "occupied-adjacent table pairs"
+              "surviving cells"
             ],
-            "output": "4n−2e unshared boundary sides."
+            "output": "Graph of legal domino pairs."
           },
           {
-            "id": "D4-REP-MOVE-CAVITY",
+            "id": "D4-REP-MOVE-LOCAL",
             "kind": "DECIDE",
-            "action": "Introduce c to exclude unshared sides that border inaccessible sealed inner empty space.",
-            "why_valid": "The problem allows only exterior-connected chair approach, not sites facing the sealed central courtyard.",
+            "action": "Select S={(r1,c1),(r2,c2),(r1,c3)} and show N(S)={(r2,c1),(r1,c2)}.",
+            "why_valid": "Three distinct black cells need three distinct white partners but only two exist.",
             "inputs": [
-              "grid exterior access rule",
-              "2×2 sealed courtyard"
+              "board adjacency"
             ],
-            "output": "Context model A=4n−2e−c."
+            "output": "Local shortage proves no full tiling."
           },
           {
             "id": "D4-REP-MOVE-CHECK",
             "kind": "VERIFY",
-            "action": "Count n12,e12,c8, find A16 and cross-check the 4×4 outside perimeter.",
-            "why_valid": "The ring has twelve occupied cells, twelve shared seams and eight enclosed inner edges.",
+            "action": "Independently list every legal neighbor of those three black cells.",
+            "why_valid": "Other candidates are holes or outside grid.",
             "inputs": [
-              "4×4 border"
+              "S and N(S)"
             ],
-            "output": "Sixteen outside-accessible chair positions."
+            "output": "Rigorous counterexample to sufficiency."
           }
         ],
-        "crux_move_ref": "D4-REP-MOVE-CAVITY",
-        "check": "Trace exterior side of the square: four unit edges per outside side, hence 16. Unshared-only count4×12−2×12=24 incorrectly includes eight inner courtyard edges.",
+        "crux_move_ref": "D4-REP-MOVE-LOCAL",
+        "check": "r1c1 has neighbors r1c2,r2c1; r2c2 has r1c2,r2c1 (r2c3,r3c2 removed); r1c3 has r1c2 (r1c4,r2c3 removed).",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -982,22 +971,22 @@
       "hints": [],
       "scaffolds": [
         {
-          "text": "Before counting chairs, define your unit (table or table side). What would four sides per occupied table count if none touched?",
+          "text": "Start with one domino: which two checkerboard colors does it cover? Is equality of totals necessary or sufficient?",
           "support_kind": "REPRESENT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "D4-REP-MOVE-UNITS"
+          "supports_move_ref": "D4-REP-MOVE-COUNT"
         },
         {
-          "text": "If two table squares share a complete side, how many of the original candidate chair sites disappear? Are all remaining unshared edges necessarily reachable?",
+          "text": "A color tally does not describe WHICH squares can pair. Try a graph with an edge for every legal neighboring pair.",
           "support_kind": "CONNECT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "D4-REP-MOVE-SEAMS"
+          "supports_move_ref": "D4-REP-MOVE-GRAPH"
         },
         {
-          "text": "Only AFTER a written attempt, separate edges facing exterior-connected space from those facing the sealed 2×2 courtyard; check your modeled count against the visible outside border.",
+          "text": "Only AFTER recording an attempt: find a small group of same-color squares that must each have a DIFFERENT opposite-color partner. Compare the group size to the number of distinct possible neighbors.",
           "support_kind": "CONNECT",
           "reveals": "METHOD",
-          "supports_move_ref": "D4-REP-MOVE-CAVITY"
+          "supports_move_ref": "D4-REP-MOVE-LOCAL"
         }
       ],
       "hint_ladder": [
@@ -1029,13 +1018,13 @@
         ]
       },
       "repair_ref": "D4-REP-STEP-ACCESS",
-      "failure_signal": "Using only 4n−2e counts inaccessible inner-hole edges; subtracting one per join also corrupts the model. A picture-only answer without defined variables is incomplete.",
+      "failure_signal": "Whole-board parity alone cannot prove tilability; the actual shortage certificate or full matching must be justified.",
       "family_exposure": {
         "family_ref": "FAM-D4-REPRESENT",
-        "closure": "Independent MODEL-D4 evidence requires a context-based general model and correct interpretation of the sealed cavity; assisted H3 result alone is insufficient."
+        "closure": "Reviewer must test learner ownership of S and N(S) before academic D4 decision."
       },
       "independent_check": {
-        "statement": "Flood-fill empty grid cells from outside the 4×4 arrangement and count table sides adjacent to reachable cells; compare with 4n−2e−c and outer square perimeter.",
+        "statement": "Independent maximum matching size 14 of required 15 plus explicit local S size3 and N(S) size2.",
         "check_type": "EXHAUSTIVE_MODULAR_CHECK"
       },
       "difficulty": {
@@ -1048,13 +1037,13 @@
           "algebra_computational_load": 0,
           "trap_exception_sensitivity": 2
         },
-        "basis": "Select and derive an appropriately conditioned geometric model; sealed versus opened courtyard changes the meaning of exposed edges.",
+        "basis": "Global parity passes but a hidden local adjacency shortage must be independently found and proven.",
         "component_evidence": {
-          "concept_model_selection": "Choose n,e,c rather than raw total unshared sides.",
-          "representation_translation": "Convert a 4x4 ring diagram to table count, shared-edge graph, and enclosed boundary.",
-          "reasoning_chain_length": "Derive formula and use exact geometry to evaluate and independently verify.",
-          "algebra_computational_load": "Small integer arithmetic only.",
-          "trap_exception_sensitivity": "Closed hole makes 4n−2e overcount accessible sites."
+          "concept_model_selection": "Choose stronger local pairing criterion.",
+          "representation_translation": "Grid -> coloring -> bipartite adjacency.",
+          "reasoning_chain_length": "Select S, enumerate N(S), apply no-reuse argument.",
+          "algebra_computational_load": "Small integer counts.",
+          "trap_exception_sensitivity": "Misleading global parity equality."
         }
       },
       "learner_question_type": "constructed_response"
