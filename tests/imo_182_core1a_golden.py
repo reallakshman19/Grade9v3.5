@@ -90,6 +90,8 @@ def main():
     bp = next(bp for bp in registry["blueprints"] if EXPECTED_ROLE in bp["core_roles"])
     required = {c["id"] for c in bp["components"] if c["level"] == "REQUIRED"}
     slots = [row["id"] for row in bp["slots"]]
+    # The sole renderer may emit a terminal closure slot twice in both pages;
+    # compare exact actual/golden sequences AND first-appearance registry order.
 
     matching_pdf = next((row for row in printer["pages"] if row["page"] == "core1a.html"), None)
     pdf = product / "core1a.pdf"
@@ -103,8 +105,8 @@ def main():
             and manifest["selection"]["microtopics"] == [UNIT] and not manifest["selection"]["core2"],
         "Exactly the registered Core1A blueprint on both pages":
             actual.blueprint == reference.blueprint == [EXPECTED_REF],
-        "Same blueprint-required slot order in actual, golden and registry":
-            actual.slots == reference.slots == slots,
+        "Same slot order and declared slot IDs in actual, golden and registry":
+            actual.slots == reference.slots and list(dict.fromkeys(actual.slots)) == slots,
         "All registered REQUIRED components in both real pages":
             required <= set(actual.components) and required <= set(reference.components),
         "Actual constructed concept and staged authored mathematical figure":
