@@ -1,0 +1,156 @@
+{
+  "schema": "q003-core1a-authored-input/v1",
+  "issue": 183,
+  "task": "183-T4-G2-W1",
+  "aim": "v3.1.0",
+  "origin": "AUTHORED",
+  "note": "All instructional text and numeric transfer pairs are authored, NOT the printed original Q003. Exact original remains private and SHA-gated by prepare_private.py.",
+  "microtopic_id": "MIC-IMO-NUMERIC-RELATIONSHIPS",
+  "question_ref": "SOF-IMO-G09-L1-2023-24-A-Q003",
+  "title": "One consistent square-offset rule across pairs",
+  "inferential_jump": "For each ordered pair (x, y), compute the same residual y - x^2. A claimed square-offset rule is coherent only when the residual stays constant; one dissenting pair is the exception.",
+  "entry_assumptions": [
+    "Can square a small positive integer and subtract it from another integer.",
+    "Can keep ordered-pair input and output positions fixed."
+  ],
+  "teaching_path": [
+    {
+      "id": "IMO-PAIR-M1",
+      "role": "DECLARE",
+      "action": "For every ordered pair, keep the first coordinate as input x and the second as output y.",
+      "why_valid": "Reversing or relabelling an input-output pair changes the relation being tested.",
+      "inputs": [],
+      "output": "A fixed list of (x, y) observations, with source option order unchanged."
+    },
+    {
+      "id": "IMO-PAIR-M2",
+      "role": "TRANSFORM",
+      "action": "Compute y - x^2 for each pair without changing the formula between pairs.",
+      "why_valid": "If one relation is y = x^2 + k, algebraically the same constant k must equal y - x^2 for every member of the matching group.",
+      "inputs": [],
+      "output": "One numerical offset for every pair and a candidate common k."
+    },
+    {
+      "id": "IMO-PAIR-M3",
+      "role": "VERIFY",
+      "action": "Compare every offset, explain the lone mismatch, then try the same procedure on new authored pairs.",
+      "why_valid": "A single counterexample falsifies the claim that the same proposed relation fits all displayed pairs; a changed-offset case checks transfer instead of answer memorisation.",
+      "inputs": [],
+      "output": "A justified exception and a repeatable same-rule check on unfamiliar pairs."
+    }
+  ],
+  "misconceptions": [
+    {
+      "wrong_idea": "Choose a different offset or operation for each option until every pair appears to fit.",
+      "diagnostic_prompt": "Which exact formula, unchanged, did you use for every pair? Write the four residuals.",
+      "repair": "Choose one candidate form, compute y - x^2 for each input-output pair and reject a single mismatch without altering the form."
+    },
+    {
+      "wrong_idea": "One matching input-output pair proves a universal rule.",
+      "diagnostic_prompt": "Can the same offset be checked against each other pair before selecting an exception?",
+      "repair": "One example suggests a candidate; all displayed cases must be tested, and a different list may require a fresh candidate."
+    }
+  ],
+  "construction_units": [
+    {
+      "id": "CU-IMO-PAIR-RESIDUAL-1",
+      "decision": "Compute the same square-offset residual for every pair instead of guessing from one example.",
+      "step_refs": [
+        "IMO-PAIR-M1",
+        "IMO-PAIR-M2"
+      ],
+      "worked_anchor_ref": "Q-IMO-PAIR-TRANSFER-AUTHORED-01",
+      "crux_question_refs": [
+        "SOF-IMO-G09-L1-2023-24-A-Q003"
+      ],
+      "crux_step_ref": "IMO-PAIR-M2",
+      "misconception_indexes": [
+        0,
+        1
+      ],
+      "independent_checks": [
+        {
+          "statement": "For each ordered pair compute output minus (input squared); state the candidate constant before choosing a mismatch.",
+          "check_type": "SUBSTITUTION_BACK_CHECK"
+        }
+      ]
+    },
+    {
+      "id": "CU-IMO-PAIR-RESIDUAL-2",
+      "decision": "Reject a single inconsistent pair by testing one unchanged relation, then transfer to different authored numbers.",
+      "step_refs": [
+        "IMO-PAIR-M3"
+      ],
+      "worked_anchor_ref": "Q-IMO-PAIR-TRANSFER-AUTHORED-01",
+      "misconception_indexes": [
+        0
+      ],
+      "independent_checks": [
+        {
+          "statement": "Re-evaluate all displayed pairs with the same candidate offset; exactly one mismatch must be identified and explained.",
+          "check_type": "SUBSTITUTION_BACK_CHECK"
+        }
+      ]
+    }
+  ],
+  "authored_transfer": {
+    "id": "Q-IMO-PAIR-TRANSFER-AUTHORED-01",
+    "origin": "AUTHORED",
+    "title": "Authored changed-offset transfer — not an original IMO question",
+    "pairs": [
+      [
+        4,
+        23
+      ],
+      [
+        6,
+        43
+      ],
+      [
+        7,
+        58
+      ],
+      [
+        9,
+        88
+      ]
+    ],
+    "common_offset": 7,
+    "expected_residuals": [
+      7,
+      7,
+      9,
+      7
+    ],
+    "exception_zero_based": 2,
+    "stem": "AUTHORED TRANSFER (not the original Q003). For the ordered pairs (4, 23), (6, 43), (7, 58), and (9, 88), test whether a single rule y = x^2 + k fits three of the four pairs. Find k, identify the exceptional pair, and show the residual for every pair.",
+    "answer_summary": "The common rule is y = x^2 + 7; the authored pair (7, 58) is the exception.",
+    "reasoning": [
+      "Compute 23 - 4^2 = 7 and 43 - 6^2 = 7.",
+      "Check 58 - 7^2 = 9, which disagrees with the same offset.",
+      "Compute 88 - 9^2 = 7. Three offsets equal 7; precisely one equals 9."
+    ],
+    "independent_check": "Substitute each input in y = x^2 + 7. For x = 7 it predicts 56, not the authored output 58; the remaining three outputs agree.",
+    "check_type": "SUBSTITUTION_BACK_CHECK"
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT (not Q003). A learner sees the ordered pairs (2, 9), (3, 14), (5, 30), (6, 43). Compute y - x^2 for each pair without changing the formula. Which pair fails the common rule? Explain why checking only the first pair would be insufficient.",
+    "source_ref": "SRC-IMO-Q003-CONCEPT-AUTHORED",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "The common residual is +5; (6, 43) is the exception because 43 - 6^2 = 7 rather than 5.",
+      "reasoning": [
+        "9 - 2^2 = 5, 14 - 3^2 = 5, and 30 - 5^2 = 5.",
+        "43 - 6^2 = 7, so the same y = x^2 + 5 rule fails only there.",
+        "One successful pair cannot establish a pattern; each given pair must be checked."
+      ],
+      "check": "For input 6, y = 6^2 + 5 predicts 41, not 43.",
+      "acceptable_alternatives": [],
+      "subpart_answers": [],
+      "verification_status": "CHECKED_BY_AUTHOR"
+    },
+    "oracle": {
+      "authored_case": "Independent source-free arithmetic, not a printed answer key."
+    }
+  }
+}
