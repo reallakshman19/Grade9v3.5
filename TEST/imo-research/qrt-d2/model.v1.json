@@ -1,0 +1,1236 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-D2-MODEL-TWO-CONSTRAINT-INTEGERS",
+  "title": "AUTHORED TEST: MODEL-D2 translating a ticket count and revenue into one-variable equation",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Wholly original positive whole-count two-condition linear modelling task. No official Q008 source text or examined figure. Primary learner selects a variable and connects item count with total revenue; Core2B independently tests integer feasibility of a proposed receipt.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-QRT-MODEL-D2-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original authored two-constraint counting and cost model",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
+      "edition": "Created 2026-10-12 for TEST",
+      "section": "Integer linear models from mixed counts",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "WHOLLY_AUTHORED TEST no exam or publisher rights claimed",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "9 cups at 4/7 credits totalling 48 implies 4 large 5 small",
+        "11 tickets at 5/9 credits have possible totals 55+4n, n whole 0..11; 74 impossible, bracketing 71/75"
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "D2 protected choice is connecting count and cost in a one-variable model, with subsequent execution.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-TEST-QRT-MODEL-D2-MIXED-COUNT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Model mixed whole-item counts using total count and revenue",
+      "topic": "Elementary one-variable algebra: interpreting two connected conditions",
+      "intrinsic_badge": "MEDIUM",
+      "badge_reason": "Choose a count variable, express its complement and satisfy revenue as a second condition.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-QRT-MODEL-D2-CONCEPT",
+      "conventions": [
+        {
+          "id": "units",
+          "statement": "Prices and totals are fictional credits; counts of sold items are nonnegative integers."
+        },
+        {
+          "id": "complement",
+          "statement": "When exactly N items exist, if x are one type, N−x are the other."
+        },
+        {
+          "id": "cost",
+          "statement": "Total cost equals unit cost times number of each kind, added across the kinds."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-TEST-QRT-MODEL-D2-TWO-CONSTRAINT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "MODEL a mixed whole-count transaction by identifying two quantities linked through a count equation and a cost equation, then solve and validate.",
+      "success_criterion": "From exactly nine 4-credit or 7-credit drinks totalling 48, model x large and 9−x small, obtain 4(9−x)+7x=48, then check x=4; independently reject an infeasible 11-ticket receipt.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-TEST-QRT-MODEL-D2-TWO-CONSTRAINT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "From total count and distinct unit prices to one variable",
+      "bucket_id": "BUCKET-TEST-QRT-MODEL-D2-MIXED-COUNT",
+      "primary_capability_ref": "CAP-TEST-QRT-MODEL-D2-TWO-CONSTRAINT",
+      "intrinsic_badge": "MEDIUM",
+      "badge_reason": "Two given relationships need a learner-owned variable-and-complement connection; equation solving remains short.",
+      "entry_assumptions": [
+        "Use a variable for an unknown whole count.",
+        "Compute a subtotal as unit cost times item count.",
+        "Solve a simple linear equation and check a whole-number constraint."
+      ],
+      "inferential_jump": "Connect the complement count N−x to a second condition on revenue before solving, rather than treating a mixed total as N identical items.",
+      "teaching_path": [
+        {
+          "id": "MO-TC1",
+          "role": "DECLARE",
+          "action": "Let x be the number of premium cards in a fixed group of six cards.",
+          "why_valid": "Count constraints require six minus x basic cards.",
+          "inputs": [],
+          "output": "Premium x, basic 6−x"
+        },
+        {
+          "id": "MO-TC2",
+          "role": "TRANSFORM",
+          "action": "Use 3 credits for each basic and 8 for each premium to express a total cost.",
+          "why_valid": "Each type contributes unit cost times its count.",
+          "inputs": [],
+          "output": "3(6−x)+8x=33"
+        },
+        {
+          "id": "MO-TC3",
+          "role": "TRANSFORM",
+          "action": "Simplify 18+5x=33 and solve x=3.",
+          "why_valid": "Subtract the known base total, then divide by the 5-credit extra for each premium.",
+          "inputs": [],
+          "output": "Premium 3; basic 3"
+        },
+        {
+          "id": "MO-TC4",
+          "role": "VERIFY",
+          "action": "Check quantity 3+3=6 and cost 3×3+8×3=33.",
+          "why_valid": "Both constraints must hold and counts be whole nonnegative numbers.",
+          "inputs": [],
+          "output": "The solution is feasible"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-QRT-MODEL-D2-COUNT-COST-RELATION"
+      ],
+      "representation_refs": [
+        "REP-TEST-QRT-MODEL-D2-CONCEPT"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-QRT-MODEL-D2-MIXED-COUNT"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "If x premium and N total, add N basic items as well (double-count the premium ones).",
+          "diagnostic_prompt": "If six cards include x premium, how many of those same six are basic? Check whether the proposed counts still add to six.",
+          "repair": "Set basic=6−x, not 6, then use per-type subtotals 3(6−x)+8x. Count and cost must both agree."
+        }
+      ],
+      "exit_task": {
+        "prompt": "A stall sells exactly seven badges, plain at 5 credits and decorated at 9 credits, taking 47 credits. Choose x as decorated badges, write a count-and-cost equation, solve both whole counts, and verify each condition.",
+        "source_ref": "SRC-TEST-QRT-MODEL-D2-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "Three decorated and four plain badges.",
+          "reasoning": [
+            "Let x decorated, so 7−x plain.",
+            "5(7−x)+9x=47; 35+4x=47, x=3.",
+            "The complement is 4 plain, and 3×9+4×5=47."
+          ],
+          "check": "Count: 3+4=7; amount: 27+20=47.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d2/test_model.py",
+            "bindings": {
+              "count": "7",
+              "plain_price": "5",
+              "decorated_price": "9",
+              "revenue": "47",
+              "decorated": "3",
+              "plain": "4"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original small count-and-revenue model and discrete infeasibility transfer; QRT academic review pending.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-QRT-MODEL-D2-TWO-EQUATIONS",
+          "decision": "Choose one count variable, use N−x for the remaining items, then map prices to a second equation.",
+          "step_refs": [
+            "MO-TC1",
+            "MO-TC2",
+            "MO-TC3",
+            "MO-TC4"
+          ],
+          "representation_ref": "REP-TEST-QRT-MODEL-D2-CONCEPT",
+          "misconception_indexes": [
+            0
+          ],
+          "relation_refs": [
+            "REL-TEST-QRT-MODEL-D2-COUNT-COST-RELATION"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Check chosen whole counts against BOTH total number and total revenue.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "MO-ST1",
+            "MO-ST2",
+            "MO-ST3"
+          ],
+          "worked_anchor_ref": "Q-TEST-QRT-MODEL-D2-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "There are six cards altogether. If x are premium, how many are basic?",
+        "result": "6−x basic; the two counts must sum to six.",
+        "representation_ref": "REP-TEST-QRT-MODEL-D2-CONCEPT"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A learner models six cards as x premium and six basic cards. Predict whether that can satisfy the exactly-six constraint before any arithmetic.",
+          "defensible_answer": "No: the basic count is six minus x; otherwise premium cards are counted twice."
+        },
+        "attempt": {
+          "produces": "A written variable-and-complement model for an independently changed count/cost pair, with solved integer counts checked against two conditions.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Represent one of two counts as x and other as N−x.",
+              "evidence_of": "Accounts for the shared total without double counting."
+            },
+            {
+              "criterion": "Build cost relation using both per-item prices and counts.",
+              "evidence_of": "Connects two givens in one equation."
+            },
+            {
+              "criterion": "Solve and verify counts are whole and both totals match.",
+              "evidence_of": "Legitimate situation, not a fractional item solution."
+            }
+          ],
+          "accepted": [
+            "Let x premium, 8−x basic; 5(8−x)+9x=56, so 40+4x=56, x=4, basic=4; both count and cost check."
+          ],
+          "rejected": [
+            "Take eight basic plus premium x.",
+            "Any fractional solution counts as physical whole items."
+          ],
+          "task": {
+            "prompt": "Exactly eight snack boxes were sold, regular at 5 credits and deluxe at 9, producing 56 credits. Set a single count variable and construct the cost equation; find both whole numbers. Write a full attempt before opening the model.",
+            "givens": [
+              "8 boxes total",
+              "Regular 5 credits; deluxe 9 credits",
+              "56 credits total"
+            ],
+            "representation_ref": "REP-TEST-QRT-MODEL-D2-CONCEPT",
+            "stage_refs": [
+              "MO-ST1"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "If x of six cards are premium, what count remains basic?",
+              "why_this_ask": "Falsifies double counting and elicits complement.",
+              "from_step_ref": "MO-TC1"
+            },
+            {
+              "ask": "How does each kind contribute to the total 33 credits?",
+              "why_this_ask": "Builds two linked terms, not one averaged amount.",
+              "from_step_ref": "MO-TC2"
+            },
+            {
+              "ask": "After combining terms, what x makes the total exactly 33?",
+              "why_this_ask": "Works the familiar linear equation.",
+              "from_step_ref": "MO-TC3"
+            },
+            {
+              "ask": "Do both the count and cost checks pass with nonnegative whole counts?",
+              "why_this_ask": "Validates model as meaningful for a transaction.",
+              "from_step_ref": "MO-TC4"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A explicitly demonstrates the complement model; Core1B begins with a double-counting misconception and requires an eight-box independent model before closure."
+        },
+        "boundary_test": {
+          "prompt": "A new claim: exactly seven badges cost 5 or 9 credits each and total 49 credits. Is there a possible whole-number mixture? Set up the equation and use integrality to decide; write before revealing.",
+          "answer": "No: let x be 9-credit, so 5(7−x)+9x=49 gives 35+4x=49 and x=3.5, not a whole count; no such sale.",
+          "confirms": "A model must satisfy nonnegative integer conditions, even if an algebraic value exists."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-TEST-QRT-MODEL-D2-COUNT-COST-RELATION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "For N whole items with low unit price a and high unit price b, total T=a(N−x)+bx, where x is high-price count.",
+      "meaning": "The count constraint supplies the complementary number; the cost constraint supplies a weighted sum, and integer admissibility checks the answer.",
+      "symbols": [
+        {
+          "symbol": "N",
+          "meaning": "Known total item count",
+          "unit_or_domain": "nonnegative integer"
+        },
+        {
+          "symbol": "x",
+          "meaning": "Unknown higher-price item count",
+          "unit_or_domain": "integer 0≤x≤N"
+        },
+        {
+          "symbol": "a",
+          "meaning": "Lower unit price",
+          "unit_or_domain": "positive credits"
+        },
+        {
+          "symbol": "b",
+          "meaning": "Higher unit price",
+          "unit_or_domain": "b>a"
+        },
+        {
+          "symbol": "T",
+          "meaning": "Known overall revenue",
+          "unit_or_domain": "credits"
+        }
+      ],
+      "conditions": [
+        "0≤x≤N integer.",
+        "Unit costs a,b are fixed for the question."
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-MO-TC1",
+          "role": "DECLARE",
+          "action": "Let x be the number of premium cards in a fixed group of six cards.",
+          "why_valid": "Count constraints require six minus x basic cards.",
+          "inputs": [],
+          "output": "Premium x, basic 6−x"
+        },
+        {
+          "id": "DERIV-MO-TC2",
+          "role": "TRANSFORM",
+          "action": "Use 3 credits for each basic and 8 for each premium to express a total cost.",
+          "why_valid": "Each type contributes unit cost times its count.",
+          "inputs": [],
+          "output": "3(6−x)+8x=33"
+        },
+        {
+          "id": "DERIV-MO-TC3",
+          "role": "TRANSFORM",
+          "action": "Simplify 18+5x=33 and solve x=3.",
+          "why_valid": "Subtract the known base total, then divide by the 5-credit extra for each premium.",
+          "inputs": [],
+          "output": "Premium 3; basic 3"
+        },
+        {
+          "id": "DERIV-MO-TC4",
+          "role": "VERIFY",
+          "action": "Check quantity 3+3=6 and cost 3×3+8×3=33.",
+          "why_valid": "Both constraints must hold and counts be whole nonnegative numbers.",
+          "inputs": [],
+          "output": "The solution is feasible"
+        }
+      ],
+      "limits": [
+        "Do not add N low items alongside x high: that exceeds the known total.",
+        "An algebraic fractional x does not model a whole-item sale."
+      ],
+      "checks": [
+        "6 cards at 3/8, T=33 produces x=3.",
+        "9 drinks at 4/7, T=48 gives x=4."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>T</mi><mo>=</mo><mi>a</mi><mo>(</mo><mi>N</mi><mo>−</mo><mi>x</mi><mo>)</mo><mo>+</mo><mi>b</mi><mi>x</mi></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-TEST-QRT-MODEL-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "BAR_MODEL",
+      "purpose": "CORE1A: show separate count and price givens without marking unknown counts or solving the combined equation.",
+      "required_elements": [
+        "Six cards total",
+        "Basic 3 credits",
+        "Premium 8 credits"
+      ],
+      "relation_refs": [
+        "REL-TEST-QRT-MODEL-D2-COUNT-COST-RELATION"
+      ],
+      "read_order": [
+        "Read the fixed total item count and two item prices.",
+        "Use the independent stated total revenue when deciding a model; no split is premarked."
+      ],
+      "instance_constraints": [
+        "Givens only, no claimed source artwork.",
+        "No solved count or feasibility verdict in pre-attempt figures."
+      ],
+      "accessibility": [
+        "Each givens card has readable text equivalent.",
+        "No correct number of either kind is encoded by colour or size."
+      ],
+      "misleading_alternatives": [
+        "Drawing the exact correct number of each item before learners choose the split."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/model-d2-stages.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-MODEL-D2-CONCEPT",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-TEST-QRT-MODEL-D2-TWO-CONSTRAINT",
+          "datum_refs": [
+            "DATUM-TEST-QRT-MODEL-D2-CONCEPT"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/model-d2-stages.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Count and revenue as distinct givens",
+            "caption": "Only given quantities, no solution or validated model pre-shown."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three unmarked givens cards",
+          "symbol": "Six cards total / Basic 3 credits / Premium 8 credits",
+          "in_words": "The counts and prices are data for learner-owned modeling."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "MO-ST1",
+          "label": "Count constraint",
+          "purpose": "Show six cards as total before deciding count split.",
+          "visible_elements": [
+            "Six cards total"
+          ]
+        },
+        {
+          "id": "MO-ST2",
+          "label": "Price constraint",
+          "purpose": "Reveal both per-kind costs and given 33 credits only after prediction.",
+          "visible_elements": [
+            "Basic 3 credits",
+            "Premium 8 credits",
+            "Total 33 credits"
+          ]
+        },
+        {
+          "id": "MO-ST3",
+          "label": "Validate whole counts",
+          "purpose": "In concept construction, explain checking both totals after learner model.",
+          "visible_elements": [
+            "Check total count and cost"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-QRT-MODEL-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "BAR_MODEL",
+      "purpose": "CORE2A: show separate count and price givens without marking unknown counts or solving the combined equation.",
+      "required_elements": [
+        "9 cups total",
+        "Small 4 credits",
+        "Large 7 credits"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read the fixed total item count and two item prices.",
+        "Use the independent stated total revenue when deciding a model; no split is premarked."
+      ],
+      "instance_constraints": [
+        "Givens only, no claimed source artwork.",
+        "No solved count or feasibility verdict in pre-attempt figures."
+      ],
+      "accessibility": [
+        "Each givens card has readable text equivalent.",
+        "No correct number of either kind is encoded by colour or size."
+      ],
+      "misleading_alternatives": [
+        "Drawing the exact correct number of each item before learners choose the split."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/model-d2-primary.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-MODEL-D2-PRIMARY",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-QRT-MODEL-D2-PRIMARY",
+          "datum_refs": [
+            "DATUM-TEST-QRT-MODEL-D2-PRIMARY"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/model-d2-primary.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Count and revenue as distinct givens",
+            "caption": "Only given quantities, no solution or validated model pre-shown."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three unmarked givens cards",
+          "symbol": "9 cups total / Small 4 credits / Large 7 credits",
+          "in_words": "The counts and prices are data for learner-owned modeling."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "MO-PRACTICE",
+          "label": "Input givens only",
+          "purpose": "Given count and two prices; no winning model or count split supplied.",
+          "visible_elements": [
+            "9 cups",
+            "Small 4",
+            "Large 7",
+            "Total 48"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-QRT-MODEL-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "BAR_MODEL",
+      "purpose": "CORE2B: show separate count and price givens without marking unknown counts or solving the combined equation.",
+      "required_elements": [
+        "11 tickets",
+        "Ordinary 5 credits",
+        "Premium 9 credits"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read the fixed total item count and two item prices.",
+        "Use the independent stated total revenue when deciding a model; no split is premarked."
+      ],
+      "instance_constraints": [
+        "Givens only, no claimed source artwork.",
+        "No solved count or feasibility verdict in pre-attempt figures."
+      ],
+      "accessibility": [
+        "Each givens card has readable text equivalent.",
+        "No correct number of either kind is encoded by colour or size."
+      ],
+      "misleading_alternatives": [
+        "Drawing the exact correct number of each item before learners choose the split."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/model-d2-transfer.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-MODEL-D2-TRANSFER",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-QRT-MODEL-D2-TRANSFER",
+          "datum_refs": [
+            "DATUM-TEST-QRT-MODEL-D2-TRANSFER"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/model-d2-transfer.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Count and revenue as distinct givens",
+            "caption": "Only given quantities, no solution or validated model pre-shown."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Three unmarked givens cards",
+          "symbol": "11 tickets / Ordinary 5 credits / Premium 9 credits",
+          "in_words": "The counts and prices are data for learner-owned modeling."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "MO-TRANSFER",
+          "label": "Receipt to assess",
+          "purpose": "Read two prices and a claimed total, without a feasible verdict or nearest receipts.",
+          "visible_elements": [
+            "11 tickets",
+            "Ordinary 5",
+            "Premium 9",
+            "Claimed 74"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-TEST-QRT-MODEL-D2-MIXED-COUNT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "One-variable models for fixed mixed counts with given revenue",
+      "capability_refs": [
+        "CAP-TEST-QRT-MODEL-D2-TWO-CONSTRAINT"
+      ],
+      "solution_structure": [
+        "Select high-cost item count x.",
+        "Express remaining count as N−x using a whole-count constraint.",
+        "Translate two unit costs into one revenue equation and solve.",
+        "Check integer counts or reject an impossible specified total."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Use two linked given constraints rather than one incorrect total.",
+        "representation_translation": "Convert verbal count/cost data into N−x and a(N−x)+bx.",
+        "reasoning_steps": "Model then execute a short single-variable linear equation.",
+        "novelty": "Changed transfer judges feasible receipts and adjacent attainable totals."
+      },
+      "safe_variations": [
+        "Two fixed prices, a known whole total count and revenue."
+      ],
+      "transfer_boundaries": [
+        "A numeric root must be whole and within [0,N] to represent real quantities.",
+        "Transfer judges impossible totals, not just exact counts."
+      ],
+      "common_wrong_routes": [
+        "Double-count N of the cheaper items plus x premium.",
+        "Ignore the integer-range feasibility boundary.",
+        "Select any nearest price without deriving a step size."
+      ],
+      "item_refs": [
+        "Q-TEST-QRT-MODEL-D2-PRIMARY",
+        "Q-TEST-QRT-MODEL-D2-TRANSFER"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-QRT-MODEL-D2-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-MODEL-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-MODEL-D2-WORKED",
+      "stem": "Exactly six cards are sold, basic at 3 credits and premium at 8, for 33 credits total. Choose the premium count x, model using both the count and revenue, then solve.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "6 cards exactly",
+        "Basic 3 credits",
+        "Premium 8 credits",
+        "Revenue 33 credits"
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-MODEL-D2-CONCEPT"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-MODEL-D2-TWO-CONSTRAINT",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-MODEL-D2-MIXED-COUNT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": null,
+        "safe_ref": null,
+        "bound_ref": "REP-TEST-QRT-MODEL-D2-CONCEPT",
+        "stage_refs": []
+      },
+      "failure_signal": "Counts all six as basic in addition to an unknown number of premium.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Three premium and three basic cards.",
+        "reasoning": [
+          "Let x premium; there must be 6−x basic.",
+          "3(6−x)+8x=33 implies 18+5x=33 and x=3.",
+          "Count 3+3=6; cost 3×3+8×3=33."
+        ],
+        "check": "Check nonnegative whole counts and both givens.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-MODEL-D2-MIXED-COUNT",
+        "closure": "Concept worked anchor only; not proof of general target"
+      },
+      "repair_ref": "MO-TC1"
+    },
+    {
+      "id": "Q-TEST-QRT-MODEL-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D2",
+        "grade9v3:cognitive_demand": {
+          "primary": "MODEL",
+          "secondary": [
+            "APPLY"
+          ],
+          "basis": "Protected move is choosing the complement and mapping two givens into one cost equation, not only solving it."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Select x large, 9−x small, then combine both prices into one revenue relation.",
+          "common_wrong_route": "Add 9 cheap cups alongside x expensive cups."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-TEST-QRT-MODEL-D2-COUNT-TO-COST"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-TEST-QRT-MODEL-D2-COUNT-TO-COST"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-MODEL-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-MODEL-D2-PRIMARY",
+      "stem": "At a school stall exactly 9 drinks were sold: small cups cost 4 credits each and large cups 7 credits each. The stall collected exactly 48 credits. Choose a variable for the LARGE-cup count, form a one-variable model that links the number sold with the amount collected, solve both counts, and check they are whole and meet both givens.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Exactly nine cups; each is either small at 4 or large at 7 credits.",
+        "Total takings 48 credits.",
+        "Counts must be nonnegative whole numbers.",
+        "Wholly AUTHORED TEST item, not an organizer question."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-MODEL-D2-PRIMARY"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-MODEL-D2-TWO-CONSTRAINT",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-MODEL-D2-MIXED-COUNT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-QRT-MODEL-D2-PRIMARY",
+        "safe_ref": "REP-TEST-QRT-MODEL-D2-PRIMARY",
+        "bound_ref": null,
+        "stage_refs": [
+          "MO-PRACTICE"
+        ]
+      },
+      "failure_signal": "Adds nine small cups to an unknown number of large, or writes one average price without modeling count.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Four large cups and five small cups.",
+        "reasoning": [
+          "Let x be large cups; the total count makes small cups 9−x.",
+          "Total revenue model is 4(9−x)+7x=48; rearrange 36+3x=48, so x=4.",
+          "Then 9−x=5; count check 4+5=9; revenue check 4×7+5×4=48."
+        ],
+        "check": "Alternative independent check: each cup at 4 would collect 36; the remaining 12 is four increments of 3 credits, so four cups are large.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-QRT-MODEL-D2-A-READ",
+            "kind": "REPRESENT",
+            "action": "Interpret the problem as a fixed whole count with two possible prices.",
+            "why_valid": "Every one of nine drinks is in exactly one size.",
+            "inputs": [],
+            "output": "Nine split into x and 9−x."
+          },
+          {
+            "id": "MOVE-TEST-QRT-MODEL-D2-COUNT-TO-COST",
+            "kind": "DECIDE",
+            "action": "Choose x large, 9−x small, and build the total revenue model.",
+            "why_valid": "The two types partition nine cups, so multiply each count by its price and add.",
+            "inputs": [],
+            "output": "4(9−x)+7x=48"
+          },
+          {
+            "id": "MOVE-TEST-QRT-MODEL-D2-A-SOLVE",
+            "kind": "TRANSFORM",
+            "action": "Solve 36+3x=48 and verify x is a valid whole count.",
+            "why_valid": "Algebra gives x=4, which satisfies 0≤x≤9.",
+            "inputs": [],
+            "output": "x=4 large; 5 small."
+          },
+          {
+            "id": "MOVE-TEST-QRT-MODEL-D2-A-VERIFY",
+            "kind": "VERIFY",
+            "action": "Substitute in both original conditions.",
+            "why_valid": "4+5=9 and 4×7+5×4=48.",
+            "inputs": [],
+            "output": "Both numerical constraints hold."
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-QRT-MODEL-D2-COUNT-TO-COST",
+        "rubric": [
+          {
+            "criterion": "Choose x large and derive 9−x small from the total.",
+            "evidence_of": "The learner makes the protected count-to-complement decision."
+          },
+          {
+            "criterion": "Use prices to build 4(9−x)+7x=48 and solve x=4.",
+            "evidence_of": "The second relation is modeled and executed."
+          },
+          {
+            "criterion": "Check x is a whole count and both totals agree.",
+            "evidence_of": "Model solution respects real question."
+          }
+        ]
+      },
+      "scaffolds": [
+        {
+          "text": "What two types of counts must together equal the stated number sold? Name the unknown, but do not yet solve it.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-QRT-MODEL-D2-A-READ"
+        },
+        {
+          "text": "Recall that each type contributes unit price times number of items. What total must the two contributions meet?",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-QRT-MODEL-D2-COUNT-TO-COST"
+        },
+        {
+          "text": "After a written attempt, use the total count to express the unchosen type as a complement; then build and solve the weighted total-cost equation.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-TEST-QRT-MODEL-D2-COUNT-TO-COST"
+        }
+      ],
+      "independent_check": {
+        "statement": "Substitute 4 large, 5 small; count=9, takings=4×7+5×4=48.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "Known two constraint count/cost setting; learner must select a variable, connect complement to weighted total, and solve one linear equation, without D3 model ambiguity.",
+        "component_evidence": {
+          "concept_model_selection": "Decide x stands for one of two item types and complement accounts for other.",
+          "representation_translation": "Translate nine total and two unit costs into one revenue equation.",
+          "reasoning_chain_length": "Count constraint feeds into money relation; then solve and check.",
+          "algebra_computational_load": "Simple 36+3x=48.",
+          "trap_exception_sensitivity": "No exceptional values in primary."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-MODEL-D2-MIXED-COUNT",
+        "closure": "Connected whole-count complement to revenue and solved an exact integer pair. Does not address unreachable revenue or nearest attainable totals."
+      },
+      "repair_ref": "MO-TC1"
+    },
+    {
+      "id": "Q-TEST-QRT-MODEL-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D2",
+        "grade9v3:cognitive_demand": {
+          "primary": "MODEL",
+          "secondary": [
+            "JUSTIFY"
+          ],
+          "basis": "A known count/revenue model must include integer feasibility, not merely solve for an amount."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Test integer admissibility of 55+4x=74 then bracket receipt by neighboring whole counts.",
+          "common_wrong_route": "Round a fractional number of tickets and declare 74 achievable."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-MODEL-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-MODEL-D2-TRANSFER",
+      "stem": "A clerk reports selling exactly 11 tickets, either ordinary at 5 credits or premium at 9 credits, for a total of 74 credits. Build a whole-number count-and-revenue model and DECIDE whether this reported total is possible. If impossible, find the greatest possible revenue BELOW 74 and the least possible revenue ABOVE 74, with their valid ticket counts.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Eleven tickets exactly, all either ordinary at 5 or premium at 9 credits.",
+        "The total 74 credits is a claim to evaluate, not guaranteed true.",
+        "Ticket counts must be nonnegative integers.",
+        "Original authored TEST changed transfer: feasibility and closest attainable receipts."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-MODEL-D2-TRANSFER"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-MODEL-D2-TWO-CONSTRAINT",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-MODEL-D2-MIXED-COUNT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "What is the cheapest possible total for eleven ordinary tickets, before any replacements?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-QRT-MODEL-D2-TRANSFER",
+        "safe_ref": "REP-TEST-QRT-MODEL-D2-TRANSFER",
+        "bound_ref": null,
+        "stage_refs": [
+          "MO-TRANSFER"
+        ]
+      },
+      "failure_signal": "Accepts 4.75 premium tickets or rounds without testing resulting receipt.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "74 is impossible; closest valid totals are 71 below and 75 above.",
+        "reasoning": [
+          "Let x premium and 11−x ordinary, with integer x in [0,11].",
+          "Revenue is 5(11−x)+9x=55+4x. A reported 74 would require x=(74−55)/4=19/4=4.75, impossible for ticket count.",
+          "Every valid receipt is 55 plus a multiple of 4. For x=4 revenue is 71 (4 premium, 7 ordinary); for x=5 it is 75 (5 premium, 6 ordinary).",
+          "Because all feasible revenues differ by steps of exactly four credits, there is no attainable receipt strictly between 71 and 75."
+        ],
+        "check": "Check: 4×9+7×5=71 and 5×9+6×5=75; either option sells 11 whole tickets.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-QRT-MODEL-D2-B-REPRESENT",
+            "kind": "REPRESENT",
+            "action": "Use x premium and 11−x ordinary, respecting integer range.",
+            "why_valid": "A fixed total is partitioned into two kinds.",
+            "inputs": [],
+            "output": "x integer 0..11."
+          },
+          {
+            "id": "MOVE-TEST-QRT-MODEL-D2-INTEGER-FEASIBILITY",
+            "kind": "DECIDE",
+            "action": "Create 55+4x=74 and test whether a valid whole ticket count satisfies it.",
+            "why_valid": "x=4.75 is not a whole number, so the proposed receipt is unreachable.",
+            "inputs": [],
+            "output": "74 impossible."
+          },
+          {
+            "id": "MOVE-TEST-QRT-MODEL-D2-B-ADJACENT",
+            "kind": "TRANSFORM",
+            "action": "Examine neighboring valid x=4 and x=5 to bound the claim.",
+            "why_valid": "Revenue increases in steps of four per exchanged ticket, and no intermediate integer exists.",
+            "inputs": [],
+            "output": "71 and 75 are adjacent attainable totals."
+          },
+          {
+            "id": "MOVE-TEST-QRT-MODEL-D2-B-VERIFY",
+            "kind": "VERIFY",
+            "action": "Check two whole count pairs against the full constraints.",
+            "why_valid": "Each pair totals eleven tickets, and their subtotals equal listed receipts.",
+            "inputs": [],
+            "output": "(4 premium,7 ordinary)=71; (5 premium,6 ordinary)=75."
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-QRT-MODEL-D2-INTEGER-FEASIBILITY",
+        "rubric": [
+          {
+            "criterion": "Model 55+4x with integer x between 0 and 11.",
+            "evidence_of": "Recognizes count-revenue structure and physical domain."
+          },
+          {
+            "criterion": "Reject 74 using nonintegral x=19/4.",
+            "evidence_of": "Selects a feasibility decision, not an arbitrary rounded count."
+          },
+          {
+            "criterion": "Derive adjacent valid receipts 71 and 75 and verify ticket counts.",
+            "evidence_of": "Connects integer steps and constrained closest amounts."
+          }
+        ]
+      },
+      "independent_check": {
+        "statement": "Enumerate x=0..11; all receipts equal 55+4x and 74 is absent. Check x=4→71 and x=5→75.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Distinct feasibility and bracketing transfer using known count/cost model plus integer condition; reviewer to adjudicate D2 vs D3.",
+        "component_evidence": {
+          "concept_model_selection": "Choose the familiar fixed total count cost model.",
+          "representation_translation": "Map 11 tickets and 5/9 costs to 55+4x.",
+          "reasoning_chain_length": "Interpret nonintegral solution and use adjacent whole numbers.",
+          "algebra_computational_load": "Simple 19/4 and neighboring totals.",
+          "trap_exception_sensitivity": "Reject a plausible but impossible receipt."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-QRT-MODEL-D2-PRIMARY"
+        ],
+        "statement": "Primary finds an exact feasible number of items; transfer receives a possibly false total and must model whole-count admissibility and find closest valid revenues.",
+        "invariant": "A fixed count N splits into x and N−x; revenue is a(N−x)+bx with integer x.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-QRT-MODEL-D2-PRIMARY",
+            "MIC-TEST-QRT-MODEL-D2-TWO-CONSTRAINT:exit_task",
+            "MIC-TEST-QRT-MODEL-D2-TWO-CONSTRAINT:boundary_test"
+          ],
+          "why_new": "Core2A and Core1A exit solve attainable receipts; Core1B only rejects an impossible receipt. Core2B additionally computes BOTH nearest attainable totals and their concrete whole-number ticket pairs."
+        },
+        "protected_move_ref": "MOVE-TEST-QRT-MODEL-D2-INTEGER-FEASIBILITY"
+      },
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-MODEL-D2-MIXED-COUNT",
+        "closure": "A feasibility rather than exact-solve task; identifies integer-grid receipt gap and nearest valid totals."
+      },
+      "repair_ref": "MO-TC4"
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-TEST-QRT-MODEL-D2-CONSTRUCTION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Core1A construct one-variable count + revenue model",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-QRT-MODEL-D2-TWO-CONSTRAINT"
+      ],
+      "entry_needs": [
+        "Ability to express a complement N−x.",
+        "Unit cost times quantity.",
+        "Simple linear equation and nonnegative integer check."
+      ],
+      "learner_actions": [
+        "Predict missing item count from known total.",
+        "Stage reveal of separate unit prices and received amount.",
+        "Choose one-variable revenue model and solve.",
+        "Check two conditions.",
+        "Complete fresh independent seven-badge 47-credit exit."
+      ],
+      "help_plan": [
+        "Concept worked six-card task deliberately different from nine-drink Core2A.",
+        "Core1B diagnoses double counting on eight snack boxes."
+      ],
+      "reveal_plan": "Core1A gives guided model construction; Core2A protects variable/complement combination until learner attempt.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-QRT-MODEL-D2-ORIGINAL",
+          "purpose": "Original authored concept",
+          "reason": "No real-exam source use."
+        }
+      ],
+      "when_not_suitable": [
+        "Not an authenticated exam item.",
+        "Fractional model roots must be rejected for whole objects."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {},
+  "data": [
+    {
+      "id": "DATUM-TEST-QRT-MODEL-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>6</mn><mtext> cards</mtext></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Six total cards is a concept given, with no count split disclosed."
+    },
+    {
+      "id": "DATUM-TEST-QRT-MODEL-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>9</mn><mtext> cups</mtext></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Nine total cups is a primary task given, with no large/small split disclosed."
+    },
+    {
+      "id": "DATUM-TEST-QRT-MODEL-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-MODEL-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>11</mn><mtext> tickets</mtext></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Eleven tickets is a transfer given, without feasibility answer."
+    }
+  ]
+}
