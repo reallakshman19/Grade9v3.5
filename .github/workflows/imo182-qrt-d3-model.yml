@@ -1,0 +1,55 @@
+name: IMO182 QRT MODEL D3 authored TEST renderer and browser
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-qrt-d3-model.yml'
+      - 'TEST/imo-research/qrt-d3/**'
+      - 'TEST/library/figures/qrt-d3-model-*.svg'
+      - 'TEST/products/imo182-qrt-d3-model.manifest.json'
+      - 'tests/test_imo182_qrt_d3_model.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  five-registered-roles:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install QA dependencies
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Sole renderer: five blueprint roles, authored TEST only
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d3-model.manifest.json \
+            --out build/imo182-qrt/d3/model --draft --reference
+      - name: Validate source, independent maths, H3, frozen golden and real Chromium
+        run: python -m unittest tests.test_imo182_qrt_d3_model -v
+      - name: Exact SHA receipt for all learner files
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          p=Path("build/imo182-qrt/d3/model")
+          if (p/"render-receipt.json").exists():
+              receipt=json.loads((p/"render-receipt.json").read_text())
+              rows={n:hashlib.sha256((p/n).read_bytes()).hexdigest() for n in receipt.get("pages",[]) if (p/n).exists()}
+              (p/"d3-model-sha256.json").write_text(json.dumps({"cell":"QRT-MODEL-D3","head":"CI_GITHUB_SHA","pages":rows,"accepted":"0/28","reviewer":"PENDING","owner":"PENDING"},indent=2)+"\n")
+              print(json.dumps(rows,indent=2))
+          PY
+      - name: Upload ONLY actual sole-renderer five-role HTML and receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-qrt-d3-model-actual-html
+          path: build/imo182-qrt/d3/model/
+          if-no-files-found: warn
