@@ -1,0 +1,1349 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "PKG-QRT-RETRIEVE-D3",
+  "title": "AUTHORED TEST D3 retrieve precise quadrilateral class",
+  "version": "1.0.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Wholly AUTHORED TEST nontrivial category retrieval from coordinate-diagonal criteria; no exam source or QRT acceptance.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-QRT-RETRIEVE-D3",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original coordinate quadrilateral-classification TEST",
+      "origin": "AUTHORED",
+      "locator": "TEST/imo-research/qrt-d3/retrieve.v1.json",
+      "edition": "Authored TEST October 12 2026",
+      "section": "Coordinate geometry, diagonal evidence, definition hierarchy",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Wholly authored diagrams, questions and maths. No borrowed official exam source.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "A(-4,0),B(0,3),C(4,0),D(0,-3) is a non-square rhombus.",
+        "Diagonals with same midpoint imply parallelogram, with perpendicularity imply rhombus, and equal lengths would distinguish square.",
+        "Changing symmetric ordinate to p>0 gives square only at p=4."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Original authored TEST to examine retrieval/classification requiring coordinate-to-hierarchy bridge. Independent curriculum/academic decision pending.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-QRT-RETRIEVE-D3",
+      "title": "Coordinate evidence for the most specific quadrilateral name",
+      "topic": "Quadrilateral properties, diagonal tests, coordinate geometry",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Combine multiple diagonal invariants and a hierarchy exclusion to choose a precise category.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-QRT-RETRIEVE-D3-CONSTRUCTION",
+      "conventions": [
+        {
+          "id": "order",
+          "statement": "Vertices A,B,C,D are connected in that cyclic order and form a nondegenerate convex quadrilateral."
+        },
+        {
+          "id": "length",
+          "statement": "A segment length is the Euclidean distance between endpoints."
+        },
+        {
+          "id": "midpoints",
+          "statement": "Diagonals of a parallelogram bisect one another; conversely, two diagonals that bisect each other make a parallelogram."
+        },
+        {
+          "id": "classification",
+          "statement": "Use the most specific quadrilateral name whose defining properties are guaranteed; a square is both a rectangle and a rhombus."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-QRT-RETRIEVE-D3",
+      "action": "Reconstruct quadrilateral class criteria from coordinate evidence across midpoint, orientation and length representations.",
+      "success_criterion": "Correctly classify the target as a rhombus but not a square, justify both inclusion and exclusion, and diagnose why perpendicular diagonals alone are insufficient.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-QRT-RETRIEVE-D3",
+      "title": "Recover a quadrilateral class from independent diagonal certificates",
+      "bucket_id": "BUCKET-QRT-RETRIEVE-D3",
+      "primary_capability_ref": "CAP-QRT-RETRIEVE-D3",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Combine multiple diagonal invariants and a hierarchy exclusion to choose a precise category.",
+      "entry_assumptions": [
+        "Learner can find a midpoint and distance from two coordinate endpoints.",
+        "Learner can recognize perpendicular horizontal and vertical segments.",
+        "Learner knows parallelogram, rhombus, rectangle and square are overlapping classification families."
+      ],
+      "inferential_jump": "Learner must decide that the common midpoint, right angle and length inequality belong together in a category hierarchy; no target labels or pre-chosen criterion order appear before the Core2A attempt.",
+      "teaching_path": [
+        {
+          "id": "STEP-RD3-1",
+          "role": "DECLARE",
+          "action": "Inspect diagonals of a separate generic quadrilateral by comparing each pair of endpoint midpoints.",
+          "why_valid": "The midpoint of endpoints (x1,y1),(x2,y2) is their coordinate average.",
+          "inputs": [],
+          "output": "Shared diagonal midpoint is evidence that diagonals bisect each other."
+        },
+        {
+          "id": "STEP-RD3-2",
+          "role": "TRANSFORM",
+          "action": "Relate shared diagonal midpoint to the parallelogram class on a non-target coordinate example.",
+          "why_valid": "A quadrilateral is a parallelogram if its diagonals bisect each other.",
+          "inputs": [
+            "Two diagonal midpoint expressions"
+          ],
+          "output": "Common midpoint implies parallelogram."
+        },
+        {
+          "id": "STEP-RD3-3",
+          "role": "TRANSFORM",
+          "action": "Distinguish perpendicular and equal-length diagonal tests inside the parallelogram family.",
+          "why_valid": "A parallelogram with perpendicular diagonals is a rhombus; a rhombus with equal diagonals is a square.",
+          "inputs": [
+            "Shared midpoint",
+            "Diagonal directions",
+            "Diagonal lengths"
+          ],
+          "output": "Different diagonal evidence discriminates rhombus from the smaller square class."
+        },
+        {
+          "id": "STEP-RD3-4",
+          "role": "VERIFY",
+          "action": "On a changed non-target pair of perpendicular diagonals, ask whether common midpoint is guaranteed by perpendicularity.",
+          "why_valid": "A line may cross another at a right angle away from its midpoint; perpendicular does not imply bisecting.",
+          "inputs": [
+            "One horizontal segment",
+            "One vertical segment"
+          ],
+          "output": "Perpendicular alone cannot certify a rhombus."
+        }
+      ],
+      "relation_refs": [
+        "REL-QRT-RETRIEVE-D3"
+      ],
+      "representation_refs": [
+        "REP-QRT-RETRIEVE-D3-CONSTRUCTION"
+      ],
+      "question_family_refs": [
+        "FAM-QRT-RETRIEVE-D3"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Two perpendicular diagonals automatically prove a square or rhombus.",
+          "diagnostic_prompt": "Given diagonals from (-3,0) to (3,0), and (0,3) to (0,-1), compare their intersection and midpoint: do they bisect?",
+          "repair": "Perpendicularity is one condition; first verify the diagonals share a midpoint to secure a parallelogram, and then test equal lengths to decide square."
+        },
+        {
+          "wrong_idea": "Every rhombus has equal-length diagonals.",
+          "diagnostic_prompt": "Can perpendicular diagonals bisect each other while one is longer? What extra diagonal evidence makes a rhombus a square?",
+          "repair": "A rhombus needs perpendicular bisecting diagonals; to classify the narrower square class, also require equal diagonal lengths."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independent exit: A(-5,0), B(0,5), C(5,0), D(0,-5) in cyclic order. Name the MOST specific quadrilateral class by checking both diagonal midpoints, perpendicularity and lengths. Do not rely on the sketch.",
+        "source_ref": "SRC-TEST-QRT-RETRIEVE-D3",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "Square (not merely rhombus).",
+          "reasoning": [
+            "AC and BD both have midpoint (0,0).",
+            "AC is horizontal and BD vertical, hence perpendicular.",
+            "AC and BD both have length 10.",
+            "Parallelogram + perpendicular bisecting diagonals yields rhombus; equal diagonals make it a square."
+          ],
+          "check": "All four sides have length 5√2, and adjacent vectors (-5,5),(-5,-5) are perpendicular.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo182_qrt_d3_retrieve.py",
+            "bindings": {
+              "domain": "four planar ordered points",
+              "expected_class": "square",
+              "diagonal_lengths": "10,10",
+              "diagonal_midpoints": "(0,0),(0,0)"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original authored RETRIEVE-D3 classification hypothesis. Not an accepted difficulty-band judgment or official exam source.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-RD3-CRITERIA",
+          "decision": "Connect midpoint, perpendicularity and length certificates without naming the target quadrilateral.",
+          "step_refs": [
+            "STEP-RD3-1",
+            "STEP-RD3-2",
+            "STEP-RD3-3",
+            "STEP-RD3-4"
+          ],
+          "representation_ref": "REP-QRT-RETRIEVE-D3-CONSTRUCTION",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-QRT-RETRIEVE-D3"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Use an unconnected set of four vertices to verify lengths and midpoints algebraically.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "RD3-CRIT-MID",
+            "RD3-CRIT-ORTHO",
+            "RD3-CRIT-HIER"
+          ],
+          "worked_anchor_ref": "Q-TEST-QRT-RETRIEVE-D3-CONCEPT"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "What first test makes a common diagonal intersection evidence of a parallelogram?",
+        "result": "Show both diagonals share that point as their midpoint; crossing alone is insufficient.",
+        "representation_ref": "REP-QRT-RETRIEVE-D3-CONSTRUCTION"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "Can one right-angle crossing, without midpoint evidence, guarantee a rhombus? Write a prediction and what additional certificate would be necessary.",
+          "defensible_answer": "No. Perpendicularity without mutual bisection can occur in a kite. A shared diagonal midpoint is necessary for the parallelogram-to-rhombus route."
+        },
+        "attempt": {
+          "produces": "A criterion hierarchy reconstructed by the learner on separate non-target points; distinguishes perpendicular, bisection and equal-length claims.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Distinguish right-angle intersection from bisection.",
+              "evidence_of": "Compute/compare both midpoint coordinates."
+            },
+            {
+              "criterion": "Identify a class only after sufficient conditions.",
+              "evidence_of": "Require shared midpoint before rhombus classification."
+            },
+            {
+              "criterion": "Distinguish rhombus from square.",
+              "evidence_of": "Check whether diagonal lengths agree."
+            }
+          ],
+          "accepted": [
+            "Perpendicular diagonals by themselves can describe a kite. To certify a rhombus using diagonals, verify the two midpoints agree and the diagonals are perpendicular; equal length is an additional square criterion."
+          ],
+          "rejected": [
+            "Perpendicular means all sides equal, so rhombus or square immediately."
+          ],
+          "task": {
+            "prompt": "Explain which diagonal evidence is needed to separate a parallelogram, rhombus and square. Your evidence must rule out an unequal-bisection kite.",
+            "givens": [
+              "The quadrilateral is convex.",
+              "You may use coordinates of diagonal endpoints."
+            ],
+            "representation_ref": "REP-QRT-RETRIEVE-D3-KITE",
+            "stage_refs": [
+              "RD3-KITE"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Do the perpendicular lines cross at the midpoint of BOTH segments?",
+              "why_this_ask": "The learner must distinguish crossing from bisection.",
+              "from_step_ref": "STEP-RD3-1"
+            },
+            {
+              "ask": "What named class is certified by mutual bisection?",
+              "why_this_ask": "Retrieve defining criterion, not visual familiarity.",
+              "from_step_ref": "STEP-RD3-2"
+            },
+            {
+              "ask": "Within that family, what does perpendicularity certify, and what extra condition is required for square?",
+              "why_this_ask": "Test the hierarchical distinction.",
+              "from_step_ref": "STEP-RD3-3"
+            },
+            {
+              "ask": "Which changed boundary shows perpendicularity alone is not a complete warrant?",
+              "why_this_ask": "Demand independent falsifier.",
+              "from_step_ref": "STEP-RD3-4"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A exposes general independent property hierarchy in staged construction. Core1B starts with the plausible but invalid perpendicular-alone rule, tests an actual kite and reconstructs the missing bisection and length conditions after learner commitment."
+        },
+        "boundary_test": {
+          "prompt": "Changed-givens boundary: A(-3,0), B(0,3), C(3,0), D(0,-1), cyclic. The diagonals still meet at 90 degrees. Are they BOTH bisected? Can you still call this a rhombus? Find the two diagonal midpoints before revealing the answer.",
+          "answer": "AC midpoint (0,0), BD midpoint (0,1): different. The diagonals are perpendicular but do not bisect one another. It is a kite, not a parallelogram/rhombus. This falsifies the proposed shortcut.",
+          "confirms": "Repairs the exact missing midpoint condition rather than silently relying on the visual diamond."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-QRT-RETRIEVE-D3",
+      "expression": "Both diagonal midpoints equal => parallelogram; with perpendicular diagonals => rhombus; with equal lengths too => square.",
+      "meaning": "A class follows only after the required diagonal certificates are jointly satisfied.",
+      "symbols": [
+        {
+          "symbol": "AC",
+          "meaning": "First diagonal",
+          "unit_or_domain": "segment"
+        },
+        {
+          "symbol": "BD",
+          "meaning": "Second diagonal",
+          "unit_or_domain": "segment"
+        }
+      ],
+      "conditions": [
+        "Quadrilateral is simple, convex and nondegenerate.",
+        "Endpoints are in cyclic order A,B,C,D."
+      ],
+      "derivation": [
+        {
+          "id": "DER-RD3-0",
+          "role": "DECLARE",
+          "action": "Inspect diagonals of a separate generic quadrilateral by comparing each pair of endpoint midpoints.",
+          "why_valid": "The midpoint of endpoints (x1,y1),(x2,y2) is their coordinate average.",
+          "inputs": [],
+          "output": "Shared diagonal midpoint is evidence that diagonals bisect each other."
+        },
+        {
+          "id": "DER-RD3-1",
+          "role": "TRANSFORM",
+          "action": "Relate shared diagonal midpoint to the parallelogram class on a non-target coordinate example.",
+          "why_valid": "A quadrilateral is a parallelogram if its diagonals bisect each other.",
+          "inputs": [
+            "Two diagonal midpoint expressions"
+          ],
+          "output": "Common midpoint implies parallelogram."
+        },
+        {
+          "id": "DER-RD3-2",
+          "role": "TRANSFORM",
+          "action": "Distinguish perpendicular and equal-length diagonal tests inside the parallelogram family.",
+          "why_valid": "A parallelogram with perpendicular diagonals is a rhombus; a rhombus with equal diagonals is a square.",
+          "inputs": [
+            "Shared midpoint",
+            "Diagonal directions",
+            "Diagonal lengths"
+          ],
+          "output": "Different diagonal evidence discriminates rhombus from the smaller square class."
+        }
+      ],
+      "limits": [
+        "Perpendicular without bisection can describe a kite.",
+        "Equal diagonal lengths without the other relevant evidence do not prove square.",
+        "The sketch's apparent angles are not certified by coordinate givens."
+      ],
+      "checks": [
+        "Verify all four side lengths or compare adjacent side vectors as an independent classification check."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>M</mi><mo>(</mo><mi>A</mi><mi>C</mi><mo>)</mo><mo>=</mo><mi>M</mi><mo>(</mo><mi>B</mi><mi>D</mi><mo>)</mo></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-QRT-RETRIEVE-D3-CONSTRUCTION",
+      "kind": "SCHEMATIC",
+      "purpose": "Non-target abstract diagonal criteria and classification hierarchy, no target coordinates.",
+      "required_elements": [
+        "Two midpoint calculations: are they equal?",
+        "Crossing angle and segment lengths are distinct tests",
+        "Most specific class requires all its conditions"
+      ],
+      "relation_refs": [
+        "REL-QRT-RETRIEVE-D3"
+      ],
+      "read_order": [
+        "Read each neutral coordinate/criterion card in order.",
+        "Choose and verify which criteria apply before naming the classification."
+      ],
+      "instance_constraints": [
+        "No solution class, qualifying target midpoints/lengths, or parameter value in the preattempt visual.",
+        "All text is dark high contrast at >= 26 SVG units."
+      ],
+      "accessibility": [
+        "All figures carry accessible title/description with no answer.",
+        "Stage-specific text has no color-only meaning."
+      ],
+      "misleading_alternatives": [
+        "A perpendicular crossing alone is a square certificate.",
+        "Visual diamond appearance guarantees algebraic properties."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-retrieve-construct.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-RETRIEVE-D3-0",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-QRT-RETRIEVE-D3",
+          "datum_refs": [
+            "DATUM-QRT-RETRIEVE-D3-1"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-retrieve-construct.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "CORE1A diagonal/property coordinates",
+            "caption": "Non-target abstract diagonal criteria and classification hierarchy, no target coordinates."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two separately labelled endpoint/criterion cards",
+          "symbol": "AC and BD",
+          "in_words": "Learner reconstructs which diagonal certificates jointly apply."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RD3-CRIT-MID",
+          "label": "Evidence stage 1",
+          "purpose": "Non-target abstract diagonal criteria and classification hierarchy, no target coordinates.",
+          "visible_elements": [
+            "Two midpoint calculations: are they equal?"
+          ]
+        },
+        {
+          "id": "RD3-CRIT-ORTHO",
+          "label": "Evidence stage 2",
+          "purpose": "Non-target abstract diagonal criteria and classification hierarchy, no target coordinates.",
+          "visible_elements": [
+            "Crossing angle and segment lengths are distinct tests"
+          ]
+        },
+        {
+          "id": "RD3-CRIT-HIER",
+          "label": "Evidence stage 3",
+          "purpose": "Non-target abstract diagonal criteria and classification hierarchy, no target coordinates.",
+          "visible_elements": [
+            "Most specific class requires all its conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-RETRIEVE-D3-COORDINATES",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Four unconnected coordinate points, no diagonals, category label or solution.",
+      "required_elements": [
+        "A(-4,0)        B(0,3)",
+        "C(4,0)          D(0,-3)"
+      ],
+      "relation_refs": [
+        "REL-QRT-RETRIEVE-D3"
+      ],
+      "read_order": [
+        "Read each neutral coordinate/criterion card in order.",
+        "Choose and verify which criteria apply before naming the classification."
+      ],
+      "instance_constraints": [
+        "No solution class, qualifying target midpoints/lengths, or parameter value in the preattempt visual.",
+        "All text is dark high contrast at >= 26 SVG units."
+      ],
+      "accessibility": [
+        "All figures carry accessible title/description with no answer.",
+        "Stage-specific text has no color-only meaning."
+      ],
+      "misleading_alternatives": [
+        "A perpendicular crossing alone is a square certificate.",
+        "Visual diamond appearance guarantees algebraic properties."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-retrieve-attempt.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-RETRIEVE-D3-1",
+          "cores": [
+            "CORE2A"
+          ],
+          "microtopic_ref": "MIC-QRT-RETRIEVE-D3",
+          "datum_refs": [
+            "DATUM-QRT-RETRIEVE-D3-2"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-retrieve-attempt.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "CORE2A diagonal/property coordinates",
+            "caption": "Four unconnected coordinate points, no diagonals, category label or solution."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two separately labelled endpoint/criterion cards",
+          "symbol": "AC and BD",
+          "in_words": "Learner reconstructs which diagonal certificates jointly apply."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RD3-POINTS",
+          "label": "Evidence stage 1",
+          "purpose": "Four unconnected coordinate points, no diagonals, category label or solution.",
+          "visible_elements": [
+            "A(-4,0)        B(0,3)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-RETRIEVE-D3-KITE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "A changed perpendicular pair only; no midpoint comparison or verdict.",
+      "required_elements": [
+        "AC: (-3,0) to (3,0)",
+        "BD: (0,3) to (0,-1)"
+      ],
+      "relation_refs": [
+        "REL-QRT-RETRIEVE-D3"
+      ],
+      "read_order": [
+        "Read each neutral coordinate/criterion card in order.",
+        "Choose and verify which criteria apply before naming the classification."
+      ],
+      "instance_constraints": [
+        "No solution class, qualifying target midpoints/lengths, or parameter value in the preattempt visual.",
+        "All text is dark high contrast at >= 26 SVG units."
+      ],
+      "accessibility": [
+        "All figures carry accessible title/description with no answer.",
+        "Stage-specific text has no color-only meaning."
+      ],
+      "misleading_alternatives": [
+        "A perpendicular crossing alone is a square certificate.",
+        "Visual diamond appearance guarantees algebraic properties."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-retrieve-repair.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-RETRIEVE-D3-2",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-QRT-RETRIEVE-D3",
+          "datum_refs": [
+            "DATUM-QRT-RETRIEVE-D3-3"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-retrieve-repair.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "CORE1B diagonal/property coordinates",
+            "caption": "A changed perpendicular pair only; no midpoint comparison or verdict."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two separately labelled endpoint/criterion cards",
+          "symbol": "AC and BD",
+          "in_words": "Learner reconstructs which diagonal certificates jointly apply."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RD3-KITE",
+          "label": "Evidence stage 1",
+          "purpose": "A changed perpendicular pair only; no midpoint comparison or verdict.",
+          "visible_elements": [
+            "AC: (-3,0) to (3,0)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-RETRIEVE-D3-PARAMETER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Four point-coordinate cards with a symbolic positive parameter, no p criterion.",
+      "required_elements": [
+        "A(-4,0)        B(0,p)",
+        "C(4,0)          D(0,-p), p>0"
+      ],
+      "relation_refs": [
+        "REL-QRT-RETRIEVE-D3"
+      ],
+      "read_order": [
+        "Read each neutral coordinate/criterion card in order.",
+        "Choose and verify which criteria apply before naming the classification."
+      ],
+      "instance_constraints": [
+        "No solution class, qualifying target midpoints/lengths, or parameter value in the preattempt visual.",
+        "All text is dark high contrast at >= 26 SVG units."
+      ],
+      "accessibility": [
+        "All figures carry accessible title/description with no answer.",
+        "Stage-specific text has no color-only meaning."
+      ],
+      "misleading_alternatives": [
+        "A perpendicular crossing alone is a square certificate.",
+        "Visual diamond appearance guarantees algebraic properties."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-retrieve-transfer.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-RETRIEVE-D3-3",
+          "cores": [
+            "CORE2B"
+          ],
+          "microtopic_ref": "MIC-QRT-RETRIEVE-D3",
+          "datum_refs": [
+            "DATUM-QRT-RETRIEVE-D3-4"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-retrieve-transfer.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "CORE2B diagonal/property coordinates",
+            "caption": "Four point-coordinate cards with a symbolic positive parameter, no p criterion."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two separately labelled endpoint/criterion cards",
+          "symbol": "AC and BD",
+          "in_words": "Learner reconstructs which diagonal certificates jointly apply."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RD3-PARAMETER",
+          "label": "Evidence stage 1",
+          "purpose": "Four point-coordinate cards with a symbolic positive parameter, no p criterion.",
+          "visible_elements": [
+            "A(-4,0)        B(0,p)"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-QRT-RETRIEVE-D3",
+      "title": "Most-specific quadrilateral classification from diagonals",
+      "capability_refs": [
+        "CAP-QRT-RETRIEVE-D3"
+      ],
+      "solution_structure": [
+        "Find both diagonal midpoints.",
+        "Confirm whether the diagonals are perpendicular and identify relevant family.",
+        "Compare lengths to exclude narrower square category.",
+        "Make one most-specific classification with a coordinate-based countercriterion."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Choose appropriate diagonal certificates, not a named answer from the sketch.",
+        "representation_translation": "Coordinates -> midpoint/direction/length -> hierarchy.",
+        "reasoning_steps": "Jointly apply bisection, perpendicularity and length distinction.",
+        "novelty": "Symbolic positive parameter changes existence of a narrower named category."
+      },
+      "safe_variations": [
+        "Distinct original convex quadrilaterals with coordinate endpoints."
+      ],
+      "transfer_boundaries": [
+        "Perpendicular alone does not imply common midpoint.",
+        "Rhombus does not always entail equal diagonals."
+      ],
+      "common_wrong_routes": [
+        "Perpendicular diagonals imply square.",
+        "Unmeasured apparent symmetry implies equal diagonals."
+      ],
+      "item_refs": [
+        "Q-TEST-QRT-RETRIEVE-D3-CLASSIFY",
+        "Q-TEST-QRT-RETRIEVE-D3-BOUNDARY"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-QRT-RETRIEVE-D3-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-RETRIEVE-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-RETRIEVE-D3-CONCEPT",
+      "stem": "On a generic convex quadrilateral, explain why a shared diagonal midpoint is a stronger certificate than a perpendicular crossing alone. Explain how equal diagonal lengths refine rhombus into square.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Do not classify the later coordinate task.",
+        "This is concept practice using independent examples."
+      ],
+      "figure_refs": [
+        "REP-QRT-RETRIEVE-D3-CONSTRUCTION"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Shared midpoint certifies parallelogram; perpendicular within it certifies rhombus; equal lengths further yield square.",
+        "reasoning": [
+          "Compute diagonal midpoints to test bisection; perpendicularity by itself is insufficient.",
+          "Mutually bisecting diagonals define a parallelogram.",
+          "If they are perpendicular, the parallelogram is a rhombus.",
+          "If these diagonals are also equal length, the rhombus is a square."
+        ],
+        "check": "A kite with perpendicular but non-bisecting diagonals disproves the shortcut.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-QRT-RETRIEVE-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-RETRIEVE-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "CONCEPT_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-RETRIEVE-D3-CONSTRUCTION",
+        "safe_ref": "REP-QRT-RETRIEVE-D3-CONSTRUCTION",
+        "bound_ref": null,
+        "stage_refs": [
+          "RD3-CRIT-MID",
+          "RD3-CRIT-ORTHO",
+          "RD3-CRIT-HIER"
+        ]
+      },
+      "repair_ref": "STEP-RD3-1",
+      "failure_signal": "Mistakes crossing with mutual bisection.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-RETRIEVE-D3",
+        "closure": "Concept only; not D3 QRT assessment."
+      },
+      "independent_check": {
+        "statement": "Check a kite with nonidentical diagonal midpoints.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "Noncounting prerequisite concept."
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-QRT-RETRIEVE-D3-CLASSIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3",
+        "grade9v3:cognitive_demand": {
+          "primary": "RETRIEVE",
+          "secondary": [
+            "REPRESENT",
+            "JUSTIFY"
+          ],
+          "basis": "Final decisive act is reconstructing the most-specific quadrilateral CATEGORY from a hierarchy of defining properties; arithmetic only certifies conditions."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Choose and order mutual bisection and perpendicularity, then exclude square by unequal diagonal lengths.",
+          "common_wrong_route": "Perpendicular crossing proves square; miss length distinction."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-RETRIEVE-D3-HIERARCHY"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-RETRIEVE-D3-HIERARCHY"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-RETRIEVE-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-RETRIEVE-D3-CLASSIFY",
+      "stem": "Four points are joined in order A(-4,0), B(0,3), C(4,0), D(0,-3). What is the MOST SPECIFIC standard quadrilateral classification guaranteed by these coordinates? Certify it using diagonal midpoints and directions, and rule out the next narrower class using a DIFFERENT diagonal property. State the class, not a vague 'diamond'.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "The points are vertices of a nondegenerate convex quadrilateral in cyclic order.",
+        "Do not infer exact angles or lengths from the appearance of the picture.",
+        "Use a class that is true and as specific as the evidence allows.",
+        "Wholly original AUTHORED TEST, not a source exam question."
+      ],
+      "figure_refs": [
+        "REP-QRT-RETRIEVE-D3-COORDINATES"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Most specific: RHOMBUS (not a square).",
+        "reasoning": [
+          "AC runs from (-4,0) to (4,0), so its midpoint is (0,0) and length is 8.",
+          "BD runs from (0,3) to (0,-3), so its midpoint is (0,0) and length is 6.",
+          "Shared midpoint means diagonals bisect one another and ABCD is a parallelogram; AC horizontal and BD vertical make them perpendicular, so the parallelogram is a rhombus.",
+          "Since the diagonal lengths 8 and 6 differ, the rhombus is not a square; name the most specific guaranteed class rhombus."
+        ],
+        "check": "All sides are length sqrt(4^2+3^2)=5. Adjacent side vectors are not perpendicular: (4,3) dot (4,-3)=7, so no square.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "crux_move_ref": "MOVE-RETRIEVE-D3-HIERARCHY",
+        "reasoning_route": [
+          {
+            "id": "MOVE-RD3-MID",
+            "kind": "REPRESENT",
+            "action": "Compare both diagonal midpoint pairs, not only crossing.",
+            "why_valid": "Midpoint formula gives (0,0) for AC and BD; diagonals mutually bisect.",
+            "inputs": [
+              "AC endpoints",
+              "BD endpoints"
+            ],
+            "output": "Parallelogram family established."
+          },
+          {
+            "id": "MOVE-RETRIEVE-D3-HIERARCHY",
+            "kind": "DECIDE",
+            "action": "Connect midpoint certificate and perpendicular diagonals to retrieve the rhombus category, then check the square exclusion.",
+            "why_valid": "Mutual bisection implies parallelogram; perpendicularity makes it a rhombus; unequal diagonals exclude square.",
+            "inputs": [
+              "midpoints both (0,0)",
+              "AC horizontal; BD vertical",
+              "diagonal lengths 8 and 6"
+            ],
+            "output": "RHOMBUS, not square"
+          },
+          {
+            "id": "MOVE-RD3-CHECK",
+            "kind": "VERIFY",
+            "action": "Check all four side lengths and adjacent angle using dot product.",
+            "why_valid": "All side lengths are 5 but adjacent vectors (4,3),(4,-3) have dot 7, not zero.",
+            "inputs": [
+              "A,B,C,D coordinates"
+            ],
+            "output": "Equal sides and non-right adjacent angle independently corroborate rhombus, non-square."
+          }
+        ],
+        "rubric": [
+          {
+            "criterion": "Find both diagonal midpoints and confirm bisection.",
+            "evidence_of": "Both midpoints (0,0)."
+          },
+          {
+            "criterion": "Identify perpendicularity and joint diagonal criteria.",
+            "evidence_of": "One diagonal horizontal, other vertical; parallelogram + perpendicular ⇒ rhombus."
+          },
+          {
+            "criterion": "Exclude narrower square with a valid contrast.",
+            "evidence_of": "Diagonals have lengths 8 and 6, so not square."
+          },
+          {
+            "criterion": "Supply the most-specific class and independent check.",
+            "evidence_of": "Rhombus, all sides length 5."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-QRT-RETRIEVE-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-RETRIEVE-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "The word MOST SPECIFIC asks for one exact class in an overlapping hierarchy, not a list of possible labels. Which certificates do you need?",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-RETRIEVE-D3-HIERARCHY"
+        },
+        {
+          "text": "Coordinates permit midpoint, direction and length comparisons. Decide WHICH tests to connect first before choosing a name; a right-angle crossing alone is insufficient.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-RETRIEVE-D3-HIERARCHY"
+        },
+        {
+          "text": "After your committed attempt, check that both diagonal midpoint calculations certify mutual bisection, then re-check the additional condition that distinguishes the narrower class.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-RETRIEVE-D3-HIERARCHY"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-RETRIEVE-D3-COORDINATES",
+        "safe_ref": "REP-QRT-RETRIEVE-D3-COORDINATES",
+        "bound_ref": null,
+        "stage_refs": [
+          "RD3-POINTS"
+        ]
+      },
+      "repair_ref": "STEP-RD3-2",
+      "failure_signal": "Perpendicular diagonals alone incorrectly used to name square, or rhombus is assumed to imply equal diagonals.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-RETRIEVE-D3",
+        "closure": "Supported category recognition only if learner independently connects certificates and excludes square. Hints are assisted."
+      },
+      "independent_check": {
+        "statement": "Verify four sides each measure 5 and adjacent edge dot product 7 differs from 0.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Provisional D3 RETRIEVE/classify: learner independently translates coordinate data into three distinct diagonal certificates, synthesizes the category hierarchy and excludes a tempting narrower class; reviewer must validate whether this is D3 rather than APPLY-D2.",
+        "component_evidence": {
+          "concept_model_selection": "Choose which diagonal criteria are sufficient, not explicitly supplied as route.",
+          "representation_translation": "Coordinates to midpoints, orthogonality, lengths and named class.",
+          "reasoning_chain_length": "Bisection -> parallelogram -> rhombus -> exclude square.",
+          "algebra_computational_load": "Only midpoint and integer lengths; complexity is criterion bridge.",
+          "trap_exception_sensitivity": "Perpendicularity alone doesn't ensure bisection and unequal diagonals exclude square."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-QRT-RETRIEVE-D3-BOUNDARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3",
+        "grade9v3:cognitive_demand": {
+          "primary": "RETRIEVE",
+          "secondary": [
+            "MODEL",
+            "JUSTIFY"
+          ],
+          "basis": "Retrieve boundary for the narrower category using a changed symbolic representation."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Square iff the invariant rhombus gains equal diagonals, 8=2p.",
+          "common_wrong_route": "Treat any p>0 rhombus as square."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-RETRIEVE-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-RETRIEVE-D3-BOUNDARY",
+      "stem": "Change only the vertical vertices to B(0,p), D(0,-p), while A(-4,0), C(4,0) stay fixed and p>0. Classify the quadrilateral for all allowed p: exactly which p makes it a SQUARE, and what is the most-specific class for all other positive p? Explain what property stays invariant and which new boundary controls the smaller class.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "p is a strictly positive real number, so all four vertices remain distinct and convex.",
+        "This is a parameter classification, not the previous fixed-shape classification.",
+        "Give a necessary and sufficient condition and a changed numerical verification."
+      ],
+      "figure_refs": [
+        "REP-QRT-RETRIEVE-D3-PARAMETER"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "For p>0, square exactly at p=4; otherwise rhombus but not square.",
+        "reasoning": [
+          "AC has midpoint (0,0), length 8, horizontal direction.",
+          "BD has midpoint (0,0), length 2p, vertical direction for every p>0.",
+          "Thus for every p>0 the diagonals bisect and are perpendicular, so the quadrilateral is a rhombus.",
+          "It is square exactly when 8=2p, i.e. p=4; for any other positive p unequal diagonals exclude square."
+        ],
+        "check": "For p=4 all side lengths are √32 and adjacent vectors (4,4),(4,-4) have dot 0. For p=3, lengths are 8 and 6 and adjacent dot product 7.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "crux_move_ref": "MOVE-RETRIEVE-D3-PARAMETER",
+        "reasoning_route": [
+          {
+            "id": "MOVE-RD3-TRANSFER-INV",
+            "kind": "REPRESENT",
+            "action": "Identify unchanged diagonal bisection and perpendicularity for p>0.",
+            "why_valid": "Symmetric endpoints keep both midpoints at zero and axes are perpendicular.",
+            "inputs": [
+              "A,C unchanged",
+              "B(0,p),D(0,-p),p>0"
+            ],
+            "output": "Rhombus for all p>0."
+          },
+          {
+            "id": "MOVE-RETRIEVE-D3-PARAMETER",
+            "kind": "DECIDE",
+            "action": "Retrieve square's extra diagonal-equality condition and determine p.",
+            "why_valid": "The two lengths are 8 and 2p; both positive so equality iff p=4.",
+            "inputs": [
+              "AC length 8",
+              "BD length 2p"
+            ],
+            "output": "square iff p=4; otherwise non-square rhombus"
+          },
+          {
+            "id": "MOVE-RD3-TRANSFER-CHECK",
+            "kind": "VERIFY",
+            "action": "Test boundary p=4 and familiar p=3 via dot products.",
+            "why_valid": "For p=4 adjacent edge dot 16-16=0; for p=3 dot 16-9=7.",
+            "inputs": [
+              "p=4",
+              "p=3"
+            ],
+            "output": "Right angles only for p=4."
+          }
+        ],
+        "rubric": [
+          {
+            "criterion": "Retain invariant class over all allowed p.",
+            "evidence_of": "Bisection and perpendicularity imply rhombus for all p>0."
+          },
+          {
+            "criterion": "Determine exact stricter boundary.",
+            "evidence_of": "Equality of diagonal lengths gives p=4."
+          },
+          {
+            "criterion": "Independently check changed case.",
+            "evidence_of": "p=4 dot 0, p=3 dot 7."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-QRT-RETRIEVE-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-RETRIEVE-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Which diagonal evidence remains unchanged while only one length can vary with p? Make the new classification decision yourself.",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-RETRIEVE-D3-PARAMETER",
+        "safe_ref": "REP-QRT-RETRIEVE-D3-PARAMETER",
+        "bound_ref": null,
+        "stage_refs": [
+          "RD3-PARAMETER"
+        ]
+      },
+      "repair_ref": "STEP-RD3-3",
+      "failure_signal": "A rhombus need not be square; p=3 cannot be classified as square when diagonal lengths differ.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-RETRIEVE-D3",
+        "closure": "Transfer: invariance of rhombus class, but a new exact p boundary for square; no claim of mastery."
+      },
+      "independent_check": {
+        "statement": "Verify p=4 yields perpendicular adjacent edges, p=3 gives adjacent dot product 7, while all have equal sides.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Transfer requires parameter boundary, not mere rewording; independent verdict pending."
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-QRT-RETRIEVE-D3-CLASSIFY"
+        ],
+        "statement": "New decision: classify a parameterized family and find exact square boundary, not merely classify fixed coordinates.",
+        "invariant": "Shared midpoint and perpendicular diagonals continue to certify rhombus for every p>0.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-QRT-RETRIEVE-D3-CLASSIFY",
+            "MIC-QRT-RETRIEVE-D3:exit_task"
+          ],
+          "why_new": "Fixed input demanded exclusion of square. Transfer changes what is asked to a necessary/sufficient parameter boundary and all-case classification."
+        },
+        "protected_move_ref": "MOVE-RETRIEVE-D3-PARAMETER"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-QRT-RETRIEVE-D3",
+      "title": "Build distinct diagonal criteria, then classify without labels supplied",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-QRT-RETRIEVE-D3"
+      ],
+      "entry_needs": [
+        "Coordinate midpoint and segment length.",
+        "Horizontal/vertical perpendicular axes.",
+        "Quadrilateral families and overlapping class names."
+      ],
+      "learner_actions": [
+        "Predict whether perpendicular guarantees rhombus.",
+        "Compare shared midpoints vs crossing on an unrelated example.",
+        "Distinguish diagonal perpendicularity from equal length.",
+        "Classify a new square example without hints."
+      ],
+      "help_plan": [
+        "Stages teach coordinate/property bridge, not the target coordinate answer.",
+        "Hints orient but don't select class or prove the target before commitment."
+      ],
+      "reveal_plan": "Stepwise construction of general criteria, then an independent non-target square exit; no target rhombus name pre-selected.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-QRT-RETRIEVE-D3",
+          "purpose": "Original authored concept",
+          "reason": "No official source rights required for original TEST item."
+        }
+      ],
+      "when_not_suitable": [
+        "Not an approved Grade 9 syllabus qualification or source exam item.",
+        "Do not treat a technical renderer check as academic QRT acceptance."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "AUTHORED_TEST_D3_RETRIEVE_ISSUE182",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "DATUM-QRT-RETRIEVE-D3-1",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Two midpoint calculations: are they equal? ; Crossing angle and segment lengths are distinct tests ; Most specific class requires all its conditions",
+      "meaning": "Non-target abstract diagonal criteria and classification hierarchy, no target coordinates.",
+      "symbol": "AC,BD",
+      "locator": "TEST/library/figures/qrt-d3-retrieve-construct.svg"
+    },
+    {
+      "id": "DATUM-QRT-RETRIEVE-D3-2",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "A(-4,0)        B(0,3) ; C(4,0)          D(0,-3)",
+      "meaning": "Four unconnected coordinate points, no diagonals, category label or solution.",
+      "symbol": "A,B,C,D",
+      "locator": "TEST/library/figures/qrt-d3-retrieve-attempt.svg"
+    },
+    {
+      "id": "DATUM-QRT-RETRIEVE-D3-3",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "AC: (-3,0) to (3,0) ; BD: (0,3) to (0,-1)",
+      "meaning": "A changed perpendicular pair only; no midpoint comparison or verdict.",
+      "symbol": "AC,BD",
+      "locator": "TEST/library/figures/qrt-d3-retrieve-repair.svg"
+    },
+    {
+      "id": "DATUM-QRT-RETRIEVE-D3-4",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-RETRIEVE-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "A(-4,0)        B(0,p) ; C(4,0)          D(0,-p), p>0",
+      "meaning": "Four point-coordinate cards with a symbolic positive parameter, no p criterion.",
+      "symbol": "p",
+      "locator": "TEST/library/figures/qrt-d3-retrieve-transfer.svg"
+    }
+  ]
+}
