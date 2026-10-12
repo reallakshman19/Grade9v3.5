@@ -1,0 +1,1234 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-D2-REPRESENT-GRID-REGION-INVARIANT",
+  "title": "AUTHORED TEST: REPRESENT-D2 two-step area-preserving grid translations",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Wholly original unit-grid representation task: map a fully specified colored grid into disjoint rectangles, then a row-count/product representation while preserving the set of cells. Changed transfer reverses numerical row-length representation into a notch geometry. No official Q002 question or diagram used.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original authored region and row-length representation translation",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
+      "edition": "Created 2026-10-12 for TEST",
+      "section": "Unit-area grids, disjoint partitions and invariant cell count",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "WHOLLY_AUTHORED TEST, no publisher/competition source rights claimed",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Primary five rows seven columns, left two columns shaded plus top two rows of remaining five shaded, leave 15 square units.",
+        "Six row lengths 8,8,5,5,5,5 reconstruct a 6×8 full rectangle minus lower-right 3×4 notch, leaving 36 squares."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Learner preserves an invariant cell count across two representations, with learner-owned non-overlapping partition and independent row/product cross-check.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-TEST-QRT-REPRESENT-D2-GRID-CELLS",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Translate colored unit grids into disjoint area formulas and row profiles",
+      "topic": "Visualizing whole-number area as non-overlapping grid cell count",
+      "intrinsic_badge": "MEDIUM",
+      "badge_reason": "Two-step representation: choose disjoint remaining/removed regions and translate into rows or products, conserving exact cell counts.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-QRT-REPRESENT-D2-CONCEPT",
+      "conventions": [
+        {
+          "id": "grid",
+          "statement": "Every drawn grid cell is a 1-by-1 square with unit area; a rows-by-columns rectangle has the product number of cells."
+        },
+        {
+          "id": "disjoint",
+          "statement": "Regions in a subtraction decomposition must have no overlapping counted cells."
+        },
+        {
+          "id": "row_profile",
+          "statement": "A left-aligned row-length list states which cells belong to each row, but does not itself hand over a surrounding-rectangle decomposition."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "REPRESENT the same visible unit cells using a nonoverlapping rectangular partition and a row-count/product view, with a check that total cell count is invariant.",
+      "success_criterion": "For a 5×7 grid shaded in a left strip of width 2 and a top right band of height 2, map to both 35−10−10 and three rows of five, giving 15; transfer reconstruct from row lengths 8,8,5,5,5,5 into 6×8 minus 3×4.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Preserve cell count through grid, disjoint rectangle and row-length mappings",
+      "bucket_id": "BUCKET-TEST-QRT-REPRESENT-D2-GRID-CELLS",
+      "primary_capability_ref": "CAP-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING",
+      "intrinsic_badge": "MEDIUM",
+      "badge_reason": "Coordinate two representation choices and a nonoverlap check; arithmetic itself is routine.",
+      "entry_assumptions": [
+        "Read rows and columns of an equal-unit grid.",
+        "Use rectangle area as row count times column count.",
+        "Distinguish cells being removed from cells remaining."
+      ],
+      "inferential_jump": "Convert visually overlapping shade descriptions into a pair of DISJOINT removed rectangles, then independently represent the SAME remaining cells with row counts or a rectangular product.",
+      "teaching_path": [
+        {
+          "id": "RE-TC1",
+          "role": "DECLARE",
+          "action": "Read a 6-by-6 grid of unit squares and locate the top two rows.",
+          "why_valid": "An equal-unit grid has 6×6=36 squares; the top two rows cover 2×6.",
+          "inputs": [],
+          "output": "Full 36; top band 12"
+        },
+        {
+          "id": "RE-TC2",
+          "role": "TRANSFORM",
+          "action": "After marking the complete top two rows, mark the right two columns ONLY in the four remaining rows.",
+          "why_valid": "Disjoint-region accounting prevents counting any top-right square in two removed areas.",
+          "inputs": [],
+          "output": "Second band 2×4=8, not 2×6"
+        },
+        {
+          "id": "RE-TC3",
+          "role": "TRANSFORM",
+          "action": "Match unmarked squares to a bottom-left 4-by-4 rectangle.",
+          "why_valid": "The unaffected rows/columns meet to form exactly 4×4 surviving equal cells.",
+          "inputs": [],
+          "output": "Unmarked 16"
+        },
+        {
+          "id": "RE-TC4",
+          "role": "VERIFY",
+          "action": "Count in two independent representations: difference 36−12−8 and 4-by-4 product.",
+          "why_valid": "Every cell belongs to exactly one of top band, lower-right band and the remaining region.",
+          "inputs": [],
+          "output": "36−12−8=16=4×4"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-QRT-REPRESENT-D2-NONOVERLAP-CELL-COVERAGE"
+      ],
+      "representation_refs": [
+        "REP-TEST-QRT-REPRESENT-D2-CONCEPT"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-QRT-REPRESENT-D2-GRID-CELLS"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Subtract the full area of the top two rows and then also the full area of the right two columns of a 6×6 grid, counting four corner cells twice.",
+          "diagnostic_prompt": "Point to the four top-right cells. Are they removed once or included in both parts of your subtraction?",
+          "repair": "After removing two entire top rows, the right strip has height four, not six. Check 36−12−8=16 against the remaining 4×4 grid."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independently: a 4-row, 7-column unit grid has its entire leftmost column shaded and the bottom row of the remaining 6 columns shaded. Translate into TWO cell-count representations: a non-overlapping subtraction from the full grid and a product for the remaining unshaded rectangle. Give the common number of unshaded cells and justify that no shaded cell was removed twice.",
+        "source_ref": "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "Eighteen unshaded squares in both representations.",
+          "reasoning": [
+            "There are 4×7=28 equal cells.",
+            "Left strip has 1×4=4, and bottom-right band has 1×6=6; these are disjoint.",
+            "Remaining 28−4−6=18; it also forms 3 rows of 6 columns, or 3×6=18."
+          ],
+          "check": "Independent check: 4+6+18=28; each of the three groups uses distinct cells.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d2/test_represent.py",
+            "bindings": {
+              "rows": "4",
+              "cols": "7",
+              "left_strip": "1",
+              "bottom_right_height": "1",
+              "unshaded": "18"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original D2 visual-to-symbolic grid translation, a separate false-overlap reconstruction and true reverse row-length transfer, all as TEST-only authored content.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-QRT-REPRESENT-D2-DISJOINT-MAPPING",
+          "decision": "Map whole-grid shading into non-overlapping subregions, then count the same remaining cells through a row profile or product.",
+          "step_refs": [
+            "RE-TC1",
+            "RE-TC2",
+            "RE-TC3",
+            "RE-TC4"
+          ],
+          "representation_ref": "REP-TEST-QRT-REPRESENT-D2-CONCEPT",
+          "misconception_indexes": [
+            0
+          ],
+          "relation_refs": [
+            "REL-TEST-QRT-REPRESENT-D2-NONOVERLAP-CELL-COVERAGE"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Compare non-overlap subtraction and independent rectangle/row-count computation, and verify all regions partition original grid.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "RE-ST1",
+            "RE-ST2",
+            "RE-ST3"
+          ],
+          "worked_anchor_ref": "Q-TEST-QRT-REPRESENT-D2-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "After covering the top two of six rows, how many rows are still available to the right-column shade?",
+        "result": "Only four bottom rows remain, preventing the top-right cells from being subtracted twice.",
+        "representation_ref": "REP-TEST-QRT-REPRESENT-D2-CONCEPT"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A learner tries to shade the top two rows AND the rightmost two columns across the entire grid, then subtract both full areas. Which corner cells would the arithmetic mistakenly count twice?",
+          "defensible_answer": "The four top-right cells lie in both full strips, so a correct disjoint decomposition changes the right-strip height to four."
+        },
+        "attempt": {
+          "produces": "A new independent two-representation square count, with explicit check that the subtracted regions are disjoint.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Represent the full grid and the first shaded region with correct row/column counts.",
+              "evidence_of": "Reads the grid without confusing rows and columns."
+            },
+            {
+              "criterion": "Translate the SECOND shade into a nonoverlapping remaining-region rectangle.",
+              "evidence_of": "Preserves the count invariant by excluding the already shaded intersection."
+            },
+            {
+              "criterion": "Check remaining count by a second row/product representation.",
+              "evidence_of": "Different view produces the identical surviving cell count."
+            }
+          ],
+          "accepted": [
+            "For 5 rows ×8 columns: top row across 8 shaded; rightmost 3 columns in remaining four rows shaded; 40−8−12=20, and 4×5=20."
+          ],
+          "rejected": [
+            "Subtract the top row and 3 columns of ALL five rows: 40−8−15=17.",
+            "Write an unverified answer without a separate representation."
+          ],
+          "task": {
+            "prompt": "A 5-row ×8-column array of equal tiles has its ENTIRE top row shaded and its rightmost 3 columns shaded in the other four rows. With no solution yet provided, independently write a nonoverlap subtraction and a remaining-rectangle product that count the SAME unshaded cells. State the common count, then justify no double subtraction.",
+            "givens": [
+              "Five rows, eight columns, unit square tiles.",
+              "Top row shaded across full width.",
+              "Rightmost three columns shaded in the other four rows."
+            ],
+            "representation_ref": "REP-TEST-QRT-REPRESENT-D2-CONCEPT",
+            "stage_refs": [
+              "RE-ST1"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Which rows and columns belong to the first complete shaded strip?",
+              "why_this_ask": "Locate a precise set of cells before counting.",
+              "from_step_ref": "RE-TC1"
+            },
+            {
+              "ask": "After that first strip, what cells remain eligible for the SECOND shaded strip?",
+              "why_this_ask": "Eliminate overlap with cells already counted as removed.",
+              "from_step_ref": "RE-TC2"
+            },
+            {
+              "ask": "Can the untouched cells be represented as one rectangle or a row-length list?",
+              "why_this_ask": "Require a second way of viewing the same invariant set.",
+              "from_step_ref": "RE-TC3"
+            },
+            {
+              "ask": "Do the disjoint parts and leftover cells add to the original full grid?",
+              "why_this_ask": "Verify the correspondence is reversible and conserves cell counts.",
+              "from_step_ref": "RE-TC4"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A stages 6×6 top/right marking and constructs a 4×4 remainder; Core1B starts from learner's invalid full-height subtraction and requires a new 5×8 independent two-view attempt."
+        },
+        "boundary_test": {
+          "prompt": "Boundary with changed orientation: a 7-column ×4-row grid has its bottom TWO complete rows shaded, and the left TWO columns shaded only in the remaining TOP TWO rows. Give a disjoint subtraction, a product for remaining cells, and explain why subtracting the full-height left strip would duplicate cells. Attempt before disclosure.",
+          "answer": "28 cells total, bottom 2×7=14 shaded and upper-left 2×2=4 shaded; untouched top-right 2×5=10, confirmed 28−14−4=10. Subtracting 2×4 for the left strip instead would count the bottom-left 4 cells twice.",
+          "confirms": "Even when both strip directions change, the intersection must be removed once; the untouched product matches disjoint subtraction."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-TEST-QRT-REPRESENT-D2-NONOVERLAP-CELL-COVERAGE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "For r×c equal unit cells, shade a full-height left strip of width a and a top strip of height b only across the c−a remaining columns: surviving cells = rc−ar−b(c−a)=(r−b)(c−a).",
+      "meaning": "Both a nonoverlap subtraction and a residual rectangle name exactly the same unshaded cells; the correspondence preserves unit area.",
+      "symbols": [
+        {
+          "symbol": "r",
+          "meaning": "Grid rows",
+          "unit_or_domain": "positive integer"
+        },
+        {
+          "symbol": "c",
+          "meaning": "Grid columns",
+          "unit_or_domain": "positive integer"
+        },
+        {
+          "symbol": "a",
+          "meaning": "Shaded left strip width",
+          "unit_or_domain": "integer 0≤a≤c"
+        },
+        {
+          "symbol": "b",
+          "meaning": "Shaded top band height in right remainder",
+          "unit_or_domain": "integer 0≤b≤r"
+        }
+      ],
+      "conditions": [
+        "Grid consists of equal unit squares.",
+        "Left shading covers its full height; second shading covers top b rows of the c−a columns not in left strip."
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-RE-TC1",
+          "role": "DECLARE",
+          "action": "Read a 6-by-6 grid of unit squares and locate the top two rows.",
+          "why_valid": "An equal-unit grid has 6×6=36 squares; the top two rows cover 2×6.",
+          "inputs": [],
+          "output": "Full 36; top band 12"
+        },
+        {
+          "id": "DERIV-RE-TC2",
+          "role": "TRANSFORM",
+          "action": "After marking the complete top two rows, mark the right two columns ONLY in the four remaining rows.",
+          "why_valid": "Disjoint-region accounting prevents counting any top-right square in two removed areas.",
+          "inputs": [],
+          "output": "Second band 2×4=8, not 2×6"
+        },
+        {
+          "id": "DERIV-RE-TC3",
+          "role": "TRANSFORM",
+          "action": "Match unmarked squares to a bottom-left 4-by-4 rectangle.",
+          "why_valid": "The unaffected rows/columns meet to form exactly 4×4 surviving equal cells.",
+          "inputs": [],
+          "output": "Unmarked 16"
+        },
+        {
+          "id": "DERIV-RE-TC4",
+          "role": "VERIFY",
+          "action": "Count in two independent representations: difference 36−12−8 and 4-by-4 product.",
+          "why_valid": "Every cell belongs to exactly one of top band, lower-right band and the remaining region.",
+          "inputs": [],
+          "output": "36−12−8=16=4×4"
+        }
+      ],
+      "limits": [
+        "Using b×c for second band would count b×a already-left cells twice.",
+        "Row-length transfer can start without a figure; first reconstruct the geometry."
+      ],
+      "checks": [
+        "6×6−2×6−2×4=16=(6−2)(6−2).",
+        "5×7−2×5−2×5=15=(5−2)(7−2)."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>r</mi><mi>c</mi><mo>−</mo><mi>a</mi><mi>r</mi><mo>−</mo><mi>b</mi><mo>(</mo><mi>c</mi><mo>−</mo><mi>a</mi><mo>)</mo><mo>=</mo><mo>(</mo><mi>r</mi><mo>−</mo><mi>b</mi><mo>)</mo><mo>(</mo><mi>c</mi><mo>−</mo><mi>a</mi><mo>)</mo></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-TEST-QRT-REPRESENT-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "GRID_DIAGRAM",
+      "purpose": "CORE1A: author-made equal-unit grid or row-count data, with no pre-attempt arithmetic conclusion.",
+      "required_elements": [
+        "6 rows, 6 columns",
+        "top 2 rows shaded",
+        "right 2 columns in remaining 4 rows shaded"
+      ],
+      "relation_refs": [
+        "REL-TEST-QRT-REPRESENT-D2-NONOVERLAP-CELL-COVERAGE"
+      ],
+      "read_order": [
+        "Identify the full grid or original row-list givens.",
+        "Learner must choose and justify disjoint groups; no count or formula is supplied as a visual conclusion."
+      ],
+      "instance_constraints": [
+        "Only original unit-grid artworks are used.",
+        "All unit squares have equal apparent size, correct row/column coordinates.",
+        "No protected area expression or result in title, desc, accessible text or initial stage."
+      ],
+      "accessibility": [
+        "Readable row/column labels and region legend without solved total.",
+        "The unit-grid figure is equally represented by the explicit stem to avoid color-only reliance."
+      ],
+      "misleading_alternatives": [
+        "Drawing the answer as a marked product or including the final number of unshaded cells before an attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/represent-d2-stages.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-REPRESENT-D2-CONCEPT",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING",
+          "datum_refs": [
+            "DATUM-TEST-QRT-REPRESENT-D2-CONCEPT"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/represent-d2-stages.svg",
+          "scene": {
+            "kind": "STAGED_UNIT_GRID",
+            "frame": "Given equal-unit squares and row labels; no solved result",
+            "caption": "Only stated shaded positions are shown. Learner must choose the area partition and map to another representation."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Given equal-unit grid cells or row-length statement",
+          "symbol": "6 rows, 6 columns / top 2 rows shaded / right 2 columns in remaining 4 rows shaded",
+          "in_words": "The visual and written givens identify the same row and column positions, without resolving the learner-owned transformation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RE-ST1",
+          "label": "Full equal-unit grid",
+          "purpose": "Present the unmarked 6×6 unit grid to orient counting.",
+          "visible_elements": [
+            "6 rows",
+            "6 columns"
+          ]
+        },
+        {
+          "id": "RE-ST2",
+          "label": "First complete band",
+          "purpose": "Shade exactly top two complete rows after prediction; do not count other cells yet.",
+          "visible_elements": [
+            "top two rows shaded"
+          ]
+        },
+        {
+          "id": "RE-ST3",
+          "label": "Second disjoint band",
+          "purpose": "Shade rightmost two columns only in the remaining bottom four rows; invite a product check.",
+          "visible_elements": [
+            "lower-right two columns shaded"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-QRT-REPRESENT-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "GRID_DIAGRAM",
+      "purpose": "CORE2A: author-made equal-unit grid or row-count data, with no pre-attempt arithmetic conclusion.",
+      "required_elements": [
+        "5 rows,7 columns",
+        "leftmost 2 columns shaded",
+        "top 2 rows in remaining 5 columns shaded"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Identify the full grid or original row-list givens.",
+        "Learner must choose and justify disjoint groups; no count or formula is supplied as a visual conclusion."
+      ],
+      "instance_constraints": [
+        "Only original unit-grid artworks are used.",
+        "All unit squares have equal apparent size, correct row/column coordinates.",
+        "No protected area expression or result in title, desc, accessible text or initial stage."
+      ],
+      "accessibility": [
+        "Readable row/column labels and region legend without solved total.",
+        "The unit-grid figure is equally represented by the explicit stem to avoid color-only reliance."
+      ],
+      "misleading_alternatives": [
+        "Drawing the answer as a marked product or including the final number of unshaded cells before an attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/represent-d2-primary.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-REPRESENT-D2-PRIMARY",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-QRT-REPRESENT-D2-PRIMARY",
+          "datum_refs": [
+            "DATUM-TEST-QRT-REPRESENT-D2-PRIMARY"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/represent-d2-primary.svg",
+          "scene": {
+            "kind": "STAGED_UNIT_GRID",
+            "frame": "Given equal-unit squares and row labels; no solved result",
+            "caption": "Only stated shaded positions are shown. Learner must choose the area partition and map to another representation."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Given equal-unit grid cells or row-length statement",
+          "symbol": "5 rows,7 columns / leftmost 2 columns shaded / top 2 rows in remaining 5 columns shaded",
+          "in_words": "The visual and written givens identify the same row and column positions, without resolving the learner-owned transformation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RE-PRACTICE",
+          "label": "Unmarked primary given grid",
+          "purpose": "Show only the given shading in a 5×7 unit grid; no subtraction, product, or counted answer.",
+          "visible_elements": [
+            "5 rows",
+            "7 columns",
+            "left shading",
+            "upper-right shading"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-QRT-REPRESENT-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "GRID_DIAGRAM",
+      "purpose": "CORE2B: author-made equal-unit grid or row-count data, with no pre-attempt arithmetic conclusion.",
+      "required_elements": [
+        "6 row-length entries",
+        "row 1,2: 8 cells",
+        "row 3-6: 5 cells",
+        "left aligned"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Identify the full grid or original row-list givens.",
+        "Learner must choose and justify disjoint groups; no count or formula is supplied as a visual conclusion."
+      ],
+      "instance_constraints": [
+        "Only original unit-grid artworks are used.",
+        "All unit squares have equal apparent size, correct row/column coordinates.",
+        "No protected area expression or result in title, desc, accessible text or initial stage."
+      ],
+      "accessibility": [
+        "Readable row/column labels and region legend without solved total.",
+        "The unit-grid figure is equally represented by the explicit stem to avoid color-only reliance."
+      ],
+      "misleading_alternatives": [
+        "Drawing the answer as a marked product or including the final number of unshaded cells before an attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/represent-d2-transfer.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-REPRESENT-D2-TRANSFER",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-QRT-REPRESENT-D2-TRANSFER",
+          "datum_refs": [
+            "DATUM-TEST-QRT-REPRESENT-D2-TRANSFER"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/represent-d2-transfer.svg",
+          "scene": {
+            "kind": "STAGED_UNIT_GRID",
+            "frame": "Given equal-unit squares and row labels; no solved result",
+            "caption": "Only stated shaded positions are shown. Learner must choose the area partition and map to another representation."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Given equal-unit grid cells or row-length statement",
+          "symbol": "6 row-length entries / row 1,2: 8 cells / row 3-6: 5 cells / left aligned",
+          "in_words": "The visual and written givens identify the same row and column positions, without resolving the learner-owned transformation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "RE-TRANSFER",
+          "label": "Row-length data only",
+          "purpose": "State which rows have 8 or 5 consecutive squares; learner must infer full rectangle and cutout.",
+          "visible_elements": [
+            "rows 1,2 eight cells",
+            "rows 3,4,5,6 five cells"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-TEST-QRT-REPRESENT-D2-GRID-CELLS",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Equal-area representation changes via disjoint grid partitions",
+      "capability_refs": [
+        "CAP-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING"
+      ],
+      "solution_structure": [
+        "Read which original unit squares are covered or stated.",
+        "Choose a nonoverlapping rectangular decomposition of their complement.",
+        "Write matching subtraction and independent row-count/product representations.",
+        "Check all tiles belong to exactly one counted region."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Known unit-grid count rule, but learner chooses a disjoint partition.",
+        "representation_translation": "Two-step grid shading -> disjoint rectangle equation -> row/product invariant.",
+        "reasoning_steps": "Correspondence, arithmetic and verification across views.",
+        "novelty": "Reverse row-length list into geometric cutout, prove the same invariant count."
+      },
+      "safe_variations": [
+        "Original authored grid sizes and disjoint strips/row-length lists."
+      ],
+      "transfer_boundaries": [
+        "Never count overlapped cells twice.",
+        "Row-length data must be mapped to specific rows before inferring missing rectangle."
+      ],
+      "common_wrong_routes": [
+        "Subtract full intersecting strips as if disjoint.",
+        "Reverse the order of short and long rows.",
+        "Confuse shaded area with surviving cell count."
+      ],
+      "item_refs": [
+        "Q-TEST-QRT-REPRESENT-D2-PRIMARY",
+        "Q-TEST-QRT-REPRESENT-D2-TRANSFER"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-QRT-REPRESENT-D2-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-REPRESENT-D2-WORKED",
+      "stem": "In a 6×6 equal-unit square grid, shade the entire top 2 rows, and shade the rightmost 2 columns ONLY in the remaining 4 rows. Represent the unshaded count as (i) full grid minus disjoint bands and (ii) a remaining rectangle.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "6 rows by 6 columns of equal unit squares.",
+        "Top two complete rows shaded.",
+        "Right two columns shaded only in lower four rows."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-REPRESENT-D2-CONCEPT"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-REPRESENT-D2-GRID-CELLS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": null,
+        "safe_ref": null,
+        "bound_ref": "REP-TEST-QRT-REPRESENT-D2-CONCEPT",
+        "stage_refs": []
+      },
+      "failure_signal": "Subtracts the right two columns over all six rows as well as the top two rows; loses the shared top-right corner twice.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Sixteen untouched squares, by both descriptions.",
+        "reasoning": [
+          "Full 6×6=36 unit cells; top region 2×6=12.",
+          "Lower-right shading is 2×4=8, and it does not overlap the top region.",
+          "Untouched 36−12−8=16; the same remaining cells form a 4×4 rectangle=16."
+        ],
+        "check": "Check 12+8+16=36 and 4×4=16.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-REPRESENT-D2-GRID-CELLS",
+        "closure": "Concept worked anchor only; not proof of general target"
+      },
+      "repair_ref": "RE-TC2"
+    },
+    {
+      "id": "Q-TEST-QRT-REPRESENT-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D2",
+        "grade9v3:cognitive_demand": {
+          "primary": "REPRESENT",
+          "secondary": [
+            "VERIFY"
+          ],
+          "basis": "The protected cognitive move is preserving the same tiles across diagram -> disjoint partition -> row/product rather than selecting a new numeric equation."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Do not subtract overlapping full strips; choose left 2×5 and upper-right 5×2 and compare to bottom-right row/product.",
+          "common_wrong_route": "Treat left strip and top full rows as disjoint, subtract four top-left cells twice."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-TEST-QRT-REPRESENT-D2-GRID-TO-DISJOINT"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-TEST-QRT-REPRESENT-D2-GRID-TO-DISJOINT"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-REPRESENT-D2-PRIMARY",
+      "stem": "The diagram shows a 5-ROW ×7-COLUMN grid of identical unit-square tiles. ALL cells in the leftmost 2 columns are shaded; among the 5 columns to their right, ONLY the topmost 2 rows are shaded. You must represent the same number of UNSHADED cells in TWO ways: (1) subtract a pair of nonoverlapping shaded rectangles from the whole grid, and (2) read the remaining row-lengths and show an equivalent rectangle product. Write both expressions, the common value, and explain why subtracting 2 full columns plus 2 FULL rows from 35 would double-count.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Five equal-height rows, seven equal-width columns.",
+        "Left two columns shaded in every row.",
+        "Top two rows shaded among only the five rightmost columns.",
+        "Each unit square may be counted once in the complement.",
+        "Authored TEST geometry, not an official question."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-REPRESENT-D2-PRIMARY"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-REPRESENT-D2-GRID-CELLS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-QRT-REPRESENT-D2-PRIMARY",
+        "safe_ref": "REP-TEST-QRT-REPRESENT-D2-PRIMARY",
+        "bound_ref": null,
+        "stage_refs": [
+          "RE-PRACTICE"
+        ]
+      },
+      "failure_signal": "Writes 35−2×5−2×7=11 and fails to notice 4 duplicated top-left cells, or presents one expression without correspondence.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "15 unshaded unit squares; 35−(2×5)−(2×5)=15, which equals 3×5.",
+        "reasoning": [
+          "The grid has 5×7=35 equal cells.",
+          "Shaded left strip covers 2×5=10 cells. The separate upper-right block has 5×2=10 cells; these blocks are disjoint.",
+          "Subtract the two disjoint shaded blocks: 35−10−10=15.",
+          "Read unshaded row lengths: top two rows contain zero unshaded cells; each of the remaining three rows has five, giving 0+0+5+5+5=15=3×5.",
+          "Subtracting the top TWO FULL rows (2×7) as well as the left strip (2×5) double-counts the 2×2 top-left corner, falsely giving 11."
+        ],
+        "check": "Independent enumerative check: classify each cell as left shade, upper-right shade or lower-right unshaded; counts 10+10+15=35.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-QRT-REPRESENT-D2-A-READ",
+            "kind": "REPRESENT",
+            "action": "Interpret all 35 cells and the two stated shade rules as sets of grid coordinates.",
+            "why_valid": "The two rules locate shading by columns then by rows in the remaining columns.",
+            "inputs": [],
+            "output": "35 initial; two stated shading regions."
+          },
+          {
+            "id": "MOVE-TEST-QRT-REPRESENT-D2-GRID-TO-DISJOINT",
+            "kind": "DECIDE",
+            "action": "Partition the shaded cells into left 2×5 and upper-right 5×2, excluding any intersection.",
+            "why_valid": "A chosen decomposition must be disjoint to preserve the original set of grid tiles.",
+            "inputs": [],
+            "output": "2×5 left and 5×2 upper-right"
+          },
+          {
+            "id": "MOVE-TEST-QRT-REPRESENT-D2-A-SWITCH",
+            "kind": "CONNECT",
+            "action": "Translate the same remaining cells into row lengths or lower-right rectangle.",
+            "why_valid": "Upper two rows have no unshaded tiles; bottom three rows have five each.",
+            "inputs": [],
+            "output": "3×5 unshaded"
+          },
+          {
+            "id": "MOVE-TEST-QRT-REPRESENT-D2-A-VERIFY",
+            "kind": "VERIFY",
+            "action": "Compare both expressions and reconcile the entire grid.",
+            "why_valid": "35−10−10=15 and 3×5=15; all cells counted exactly once.",
+            "inputs": [],
+            "output": "15 equal in both views."
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-QRT-REPRESENT-D2-GRID-TO-DISJOINT",
+        "rubric": [
+          {
+            "criterion": "Correctly read the full 5×7 equal-unit grid and two shaded positions.",
+            "evidence_of": "Understands the initial spatial representation."
+          },
+          {
+            "criterion": "Choose TWO disjoint shaded blocks 2×5 and 5×2, not two overlapping full strips.",
+            "evidence_of": "Executes the protected representation boundary."
+          },
+          {
+            "criterion": "Transform remaining cells into 3×5 or [0,0,5,5,5] row lengths and verify count 15.",
+            "evidence_of": "Preserves cell-count invariant under two-step representation."
+          }
+        ]
+      },
+      "scaffolds": [
+        {
+          "text": "How many full rows and columns does the given unit grid show, and which colors or positions were marked by the instructions? Do not yet partition.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-QRT-REPRESENT-D2-A-READ"
+        },
+        {
+          "text": "If two shaded descriptions meet in a corner, do you subtract the shared cells twice? Sketch boundaries WITHOUT naming the sizes of the shaded pieces.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-QRT-REPRESENT-D2-GRID-TO-DISJOINT"
+        },
+        {
+          "text": "After your own attempt, make the removed blocks disjoint by counting the second band only outside the first strip, then compare the surviving rows with a rectangle product.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-TEST-QRT-REPRESENT-D2-GRID-TO-DISJOINT"
+        }
+      ],
+      "independent_check": {
+        "statement": "Classify all 35 unit squares into exactly one of left 10, upper-right 10, unshaded lower-right 15; enumerate rows [0,0,5,5,5].",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 2,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "A familiar area count with two learner-owned representation links: spatial grid to nonoverlap subtraction to independent row/product invariant, with overlap trap.",
+        "component_evidence": {
+          "concept_model_selection": "No unfamiliar area law selected.",
+          "representation_translation": "Must map shaded coordinates to two disjoint rectangular blocks, then map surviving cells to a row/product representation.",
+          "reasoning_chain_length": "Mapping 1 disjoint subtraction feeds into Mapping 2 row/product cross-check.",
+          "algebra_computational_load": "Small exact integer multiplications.",
+          "trap_exception_sensitivity": "Two full shade strips would overlap in 2×2 corner."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-REPRESENT-D2-GRID-CELLS",
+        "closure": "Forward from a shaded unit grid to disjoint shaded rectangles and independent surviving row/product count; NOT reverse row list reconstruction."
+      },
+      "repair_ref": "RE-TC2"
+    },
+    {
+      "id": "Q-TEST-QRT-REPRESENT-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D2",
+        "grade9v3:cognitive_demand": {
+          "primary": "REPRESENT",
+          "secondary": [
+            "JUSTIFY"
+          ],
+          "basis": "Reverse-construct geometry from row numbers and reconcile two independently drawn counts."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Place the missing 4×3 notch specifically in lower-right of 6×8 grid from row profile.",
+          "common_wrong_route": "Subtract 3 columns in all rows, forgetting upper two are full width."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-REPRESENT-D2-TRANSFER",
+      "stem": "There is NO drawing. A shape is built from unit squares, with all rows LEFT-ALIGNED. Reading from TOP to BOTTOM, its six row lengths are: 8, 8, 5, 5, 5, 5. Reconstruct a six-row grid description and represent its area in TWO genuinely different ways: first by grouping complete row bands, then as one surrounding rectangle with ONE rectangular corner cut out. Identify EXACTLY which rows and columns are missing; prove both expressions count the same squares. Explain why removing three columns from ALL six rows would be wrong.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Exactly six rows; row lengths top-to-bottom 8,8,5,5,5,5.",
+        "Each occupied cell is a 1×1 square and all rows begin at the same left edge.",
+        "Use a complete surrounding 6×8 rectangle for the second view.",
+        "No diagram provided: learner reconstructs its location and cutout."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-REPRESENT-D2-TRANSFER"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-REPRESENT-D2-GRID-CELLS",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Which two of the six rows are longest? Begin with their stated lengths and avoid deciding the missing region before decoding each row.",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-QRT-REPRESENT-D2-TRANSFER",
+        "safe_ref": "REP-TEST-QRT-REPRESENT-D2-TRANSFER",
+        "bound_ref": null,
+        "stage_refs": [
+          "RE-TRANSFER"
+        ]
+      },
+      "failure_signal": "Treats missing 3 cells as absent in every row, or draws the notch in upper rather than lower rows.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "36 squares: 2×8+4×5=36 and 6×8−4×3=36; missing lower-right 3 columns in rows 3 through 6.",
+        "reasoning": [
+          "Represent the top TWO rows as an 8-column by 2-row band: 2×8=16 cells.",
+          "Represent the lower FOUR rows as 5-column by 4-row band: 4×5=20 cells; row grouping total=36.",
+          "Enclose the left-aligned shape in 6×8=48 cells. Its absent cells are the rightmost 3 columns ONLY of the bottom four rows, a 4×3 cutout=12.",
+          "Hence complement count 48−12=36, equal to the row-band count.",
+          "Cutting three columns from all SIX rows removes cells that are actually present in the first two full rows; false 48−18=30."
+        ],
+        "check": "Independent row enumeration 8+8+5+5+5+5=36; complement 48−12=36 and top band 16 plus lower band 20.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-QRT-REPRESENT-D2-B-READ",
+            "kind": "REPRESENT",
+            "action": "Interpret row-length data as six left-aligned rows with top two longer.",
+            "why_valid": "The list defines exact occupied cells by row.",
+            "inputs": [],
+            "output": "Two rows of 8, four rows of 5."
+          },
+          {
+            "id": "MOVE-TEST-QRT-REPRESENT-D2-ROWS-TO-NOTCH",
+            "kind": "DECIDE",
+            "action": "Reconstruct an enclosing 6×8 grid and locate a lower-right missing 4×3 rectangle.",
+            "why_valid": "Short lower four rows omit three rightmost cells each; first two rows omit none.",
+            "inputs": [],
+            "output": "Notch at rows 3–6 and columns 6–8."
+          },
+          {
+            "id": "MOVE-TEST-QRT-REPRESENT-D2-B-SWITCH",
+            "kind": "CONNECT",
+            "action": "Translate row bands and enclosing rectangle-with-notch into expressions.",
+            "why_valid": "Disjoint occupied row bands and a subtractive bounding rectangle count identical cells.",
+            "inputs": [],
+            "output": "2×8+4×5=6×8−4×3."
+          },
+          {
+            "id": "MOVE-TEST-QRT-REPRESENT-D2-B-VERIFY",
+            "kind": "VERIFY",
+            "action": "Compute both as 36 and explain why cutting all six rows is false.",
+            "why_valid": "No absent cells in the first two rows; full-height 3-column cut would discard legitimate squares.",
+            "inputs": [],
+            "output": "36 and 36; not 30."
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-QRT-REPRESENT-D2-ROWS-TO-NOTCH",
+        "rubric": [
+          {
+            "criterion": "Decode row profile into top two full-width rows and four short rows.",
+            "evidence_of": "Reconstructs geometry from symbolic list."
+          },
+          {
+            "criterion": "Locate missing lower-right 4×3 notch in 6×8 frame and not a 6×3 cut.",
+            "evidence_of": "Protects reverse representation mapping."
+          },
+          {
+            "criterion": "Provide 2×8+4×5=36 and 6×8−4×3=36, reject full-height subtraction.",
+            "evidence_of": "Conserves unit-cell count in changed representation."
+          }
+        ]
+      },
+      "independent_check": {
+        "statement": "Enumerate [8,8,5,5,5,5] ->36; use 2×8+4×5=36 and 6×8−4×3=36.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 2,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Reverse row-list to spatial notch reconstruction, with two equivalent expressions and a false full-height cutout; D2 proposal pending academic review.",
+        "component_evidence": {
+          "concept_model_selection": "Same familiar equal-cell area and row count.",
+          "representation_translation": "First construct row bands from numeric list, then infer enclosing rectangle and precisely located cutout.",
+          "reasoning_chain_length": "Decoded row groups guide missing-corner location and invariant match.",
+          "algebra_computational_load": "Small products; no algebraic selection.",
+          "trap_exception_sensitivity": "Full-height 3-column notch is geometrically invalid."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-QRT-REPRESENT-D2-PRIMARY"
+        ],
+        "statement": "Unlike a supplied shaded picture (Core2A), transfer starts with NO drawing, only a six-entry row-length profile. Learner reconstructs geometry, then maps to row-band and enclosing-rectangle-minus-notch expressions.",
+        "invariant": "Unit-cell cardinality unchanged by converting a row-length list into a geometric union or complement.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-QRT-REPRESENT-D2-PRIMARY",
+            "MIC-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING:exit_task",
+            "MIC-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING:boundary_test"
+          ],
+          "why_new": "Primary is given grid shading and partitions removed vs surviving; Core1B boundary also starts with a stated grid. Transfer instead has only row-length data and must invent geometry and identify a lower-right missing 4×3 notch, then reconcile two expressions."
+        },
+        "protected_move_ref": "MOVE-TEST-QRT-REPRESENT-D2-ROWS-TO-NOTCH"
+      },
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-REPRESENT-D2-GRID-CELLS",
+        "closure": "Reverse from row-length data without a drawing to an occupied shape and its complement in a bounding rectangle, unlike shaded-grid forward primary."
+      },
+      "repair_ref": "RE-TC2"
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-TEST-QRT-REPRESENT-D2-CONSTRUCTION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Core1A staged square-grid partition to equal two representations",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-QRT-REPRESENT-D2-GRID-REGION-MAPPING"
+      ],
+      "entry_needs": [
+        "Rows, columns and unit squares.",
+        "Basic rectangular area products.",
+        "Distinguish shaded from unshaded sets."
+      ],
+      "learner_actions": [
+        "Predict whether intersecting full strips would double count.",
+        "Reveal full grid then top marked rows, then lower-right marked region.",
+        "Use disjoint subtraction and residual product.",
+        "Check total partition invariant.",
+        "Complete an independent 4×7 grid with left strip and bottom-right band."
+      ],
+      "help_plan": [
+        "Core1A 6×6 with top/right bands, not protected 5×7 left/top Core2A arrangement.",
+        "Core1B starts with genuine erroneous overlapping subtraction and fresh orientation-boundary."
+      ],
+      "reveal_plan": "Concept construction can teach nonoverlap using six-row grid, but Core2A figure and early hints never calculate the 5×7 partition or its result.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL",
+          "purpose": "Original authored concept",
+          "reason": "No real-exam source use."
+        }
+      ],
+      "when_not_suitable": [
+        "Source-authentic competition promotion is out of scope.",
+        "Final answers must not be placed inside initial Core2A visual/alt/description."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {},
+  "data": [
+    {
+      "id": "DATUM-TEST-QRT-REPRESENT-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>6</mn><mo>×</mo><mn>6</mn></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Concept given full grid, not a solved area."
+    },
+    {
+      "id": "DATUM-TEST-QRT-REPRESENT-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>5</mn><mo>×</mo><mn>7</mn></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Primary grid dimensions only."
+    },
+    {
+      "id": "DATUM-TEST-QRT-REPRESENT-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>8</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>5</mn></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Transfer row-length list only; no marked cutout or area."
+    }
+  ]
+}
