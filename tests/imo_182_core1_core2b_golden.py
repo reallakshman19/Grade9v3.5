@@ -19,6 +19,7 @@ P1 = ROOT / "TEST/products/imo-182-core1-orientation.manifest.json"
 P2B = ROOT / "TEST/products/imo-182-core2b-transfer.manifest.json"
 GOLD = ROOT / "golden/units/G-MATH-LINEAR-CONSTRAINT/manifest.json"
 PKG = ROOT / "TEST/imo-research/pilots/core1a-render-qualified-divisibility.v1.json"
+TRANSFER_PKG = ROOT / "TEST/imo-research/pilots/imo182-core2b-transfer-pilot.v1.json"
 REGISTRY = ROOT / "Shared/web/interactive-page-blueprints.v1.json"
 QID = "Q-TEST-CORE2B-FOUR-FACTOR-48-BOUNDARY"
 MICRO = "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS"
@@ -54,6 +55,7 @@ class BlueprintGoldens(unittest.TestCase):
     def setUpClass(cls):
         cls.m1 = load(P1); cls.m2 = load(P2B)
         cls.pkg = load(PKG)
+        cls.transfer_pkg = load(TRANSFER_PKG)
         cls.registry = load(REGISTRY)
         cls.golden = load(ROOT / "golden/units/G-MATH-LINEAR-CONSTRAINT/records.json")
         cls.pages1, cls.gaps1, cls.digest1, _, _ = render_core.build_report(P1, "PAGES", held_to="REFERENCE")
@@ -109,7 +111,7 @@ class BlueprintGoldens(unittest.TestCase):
 
     def test_core2b_t09_invariant_changed_decision_and_t08_closure(self):
         golden = next(q for q in self.golden["questions"] if q["id"]=="Q-MATH-LINEAR-2B-FIXTURE")
-        q = next(q for q in self.pkg["questions"] if q["id"]==QID)
+        q = next(q for q in self.transfer_pkg["questions"] if q["id"]==QID)
         for key in ("invariant", "statement", "novelty"):
             self.assertTrue(golden["transfer"][key])
             self.assertTrue(q["transfer"][key])
@@ -128,9 +130,9 @@ class BlueprintGoldens(unittest.TestCase):
         self.assertNotEqual(q["stem"], golden["stem"])
 
     def test_core2b_safe_figure_and_attempt_before_answer(self):
-        q = next(q for q in self.pkg["questions"] if q["id"]==QID)
+        q = next(q for q in self.transfer_pkg["questions"] if q["id"]==QID)
         ref = q["representation_roles"]["safe_ref"]
-        rep = next(x for x in self.pkg["representations"] if x["id"]==ref)
+        rep = next(x for x in self.transfer_pkg["representations"] if x["id"]==ref)
         self.assertEqual(q["figure_refs"], [ref])
         self.assertEqual(rep["reveal_stages"][0]["id"], "CORE2B-FOUR-FACTORS-ONLY")
         svg = (ROOT / rep["rendered_asset_refs"][0]).read_text(encoding="utf-8")
@@ -147,7 +149,7 @@ class BlueprintGoldens(unittest.TestCase):
         self.assertNotIn("SOF-IMO-G09-", h)
 
     def test_exact_integer_oracle_for_new_transfer_and_earlier_24_exit(self):
-        q = next(q for q in self.pkg["questions"] if q["id"]==QID)
+        q = next(q for q in self.transfer_pkg["questions"] if q["id"]==QID)
         self.assertEqual(q["origin"], "AUTHORED")
         self.assertEqual(q["answer"]["crux_move_ref"], "MOVE-TEST-CORE2B-COUNTERMODEL")
         self.assertEqual(1*2*3*4, 24)
@@ -177,7 +179,7 @@ class BlueprintGoldens(unittest.TestCase):
         self.assertNotEqual(self.digest1,self.digest2)
         self.assertEqual(self.m1["subject"],"TEST")
         self.assertEqual(self.m2["subject"],"TEST")
-        self.assertTrue(all(q["origin"]=="AUTHORED" for q in self.pkg["questions"]))
+        self.assertEqual(len(self.pkg["questions"]), 2)  # do not regress original Core1A pilot\n        self.assertTrue(all(q["origin"]=="AUTHORED" for q in self.pkg["questions"]))\n        self.assertTrue(all(q["origin"]=="AUTHORED" for q in self.transfer_pkg["questions"]))
         # No fake 68-question source, Owner-accepted QRT or production assertion.
 
 if __name__ == "__main__":
