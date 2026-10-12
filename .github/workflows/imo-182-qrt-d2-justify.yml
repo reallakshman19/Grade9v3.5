@@ -1,0 +1,48 @@
+name: IMO 182 QRT D2 JUSTIFY five-role artifact
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo-182-qrt-d2-justify.yml'
+      - 'TEST/imo-research/qrt-d2/**'
+      - 'TEST/products/imo182-qrt-d2-justify.manifest.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  justify-five-role:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet jsonschema
+      - name: Validate authored D2 source, H3, safe SVG and independent arithmetic
+        run: python -m unittest discover -s TEST/imo-research/qrt-d2 -p test_justify.py -v
+      - name: Render sole blueprint-based five-role learner experience
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d2-justify.manifest.json \
+            --out build/imo182-qrt/d2/justify --draft --reference
+      - name: Validate receipt roles, no reference gaps, write exact SHA256
+        run: |
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          d=Path('build/imo182-qrt/d2/justify')
+          r=json.loads((d/'render-receipt.json').read_text())
+          assert not r['gaps'],r['gaps']
+          names=set(r['pages'])
+          assert {'core1.html','core1a.html','core1b.html','core2a.html','core2b.html','index.html'}<=names, names
+          rows={name:hashlib.sha256((d/name).read_bytes()).hexdigest() for name in sorted(names)}
+          (d/'qrt-d2-justify-sha256.json').write_text(json.dumps({'input_manifest':'TEST/products/imo182-qrt-d2-justify.manifest.json','roles':rows,'accepted':'0/28','reviewer_verdict':'PENDING','golden':'OLD_FROZEN_UNCHANGED'},indent=2)+'\n')
+          print(rows)
+          PY
+      - name: Upload actual generated learner HTML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-qrt-d2-justify-actual-renderer-html
+          path: build/imo182-qrt/d2/justify/
+          if-no-files-found: warn
