@@ -107,50 +107,48 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "MIC-TEST-IMO182-D1-RETR-ORDERED-PAIR",
-      "title": "Preserve movement while translating words and signed coordinate pairs",
+      "title": "Discriminate prime, composite and one by the exact divisor-count condition",
       "bucket_id": "BUCKET-TEST-IMO182-D1-RETR-GRID",
       "primary_capability_ref": "CAP-TEST-IMO182-D1-RETR-SIGNED-DIRECTIONS",
       "intrinsic_badge": "EASY",
-      "badge_reason": "One meaningful independent sign-and-axis correspondence remains in each exercise.",
+      "badge_reason": "One classifying act from a supplied complete factor card.",
       "entry_assumptions": [
-        "The learner can distinguish north, south, east, and west.",
-        "The learner knows that negative numbers lie opposite positive directions.",
-        "The learner reads an ordered pair as first entry followed by second entry."
+        "Understand positive divisibility and a list of distinct divisors.",
+        "The displayed list is complete and excludes unseen factors.",
+        "Categories are prime, composite, or neither."
       ],
-      "inferential_jump": "Translate both directional magnitudes into the designated signed axes without treating all distances as positive or swapping coordinates.",
+      "inferential_jump": "Retrieve the exact count-of-distinct-divisors criterion, avoiding the superficial 'odd implies prime' heuristic.",
       "teaching_path": [
         {
           "id": "RETR-D1-TC-1",
-          "action": "Fix the convention: the first entry x measures east (+) or west (−), and the second entry y measures north (+) or south (−).",
-          "why_valid": "The ordered-pair definition assigns horizontal movement to x and vertical movement to y; sign records direction.",
+          "action": "Recognize a COMPLETE positive-divisor card and count its DISTINCT entries.",
+          "why_valid": "Definition uses the full set of distinct positive divisors, not repeated multiplication factors.",
           "inputs": [
-            "A named origin",
-            "An east-positive and north-positive map"
+            "Complete divisor card"
           ],
-          "output": "The rule (x,y) stores horizontal then vertical signed movement.",
+          "output": "A distinct divisor count",
           "role": "DECLARE",
           "source_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
         },
         {
           "id": "RETR-D1-TC-2",
-          "action": "Test the convention on a DIFFERENT route: three west and one north is (−3,+1).",
-          "why_valid": "West opposes positive east and therefore has negative x; north is positive y.",
+          "action": "Prime means EXACTLY TWO distinct positive divisors; composite means MORE than TWO; 1 has only ONE and is neither.",
+          "why_valid": "The three cases partition positive integers by the defining conditions.",
           "inputs": [
-            "3 west",
-            "1 north"
+            "Distinct divisor count"
           ],
-          "output": "(−3,+1)",
+          "output": "The appropriate category",
           "role": "TRANSFORM",
           "source_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
         },
         {
           "id": "RETR-D1-TC-3",
-          "action": "Translate the sample ordered pair (−3,+1) back into words, checking axis order and both signs.",
-          "why_valid": "The original west and north movements are recovered exactly, so the source and target preserve the same route.",
+          "action": "Work a separate example: 13 has the complete list {1,13}, thus has two distinct positive divisors and is prime.",
+          "why_valid": "13 has no other positive divisors; exactly two meets the prime criterion.",
           "inputs": [
-            "(−3,+1)"
+            "Complete divisor set for 13"
           ],
-          "output": "Three west and one north.",
+          "output": "13 is prime",
           "role": "VERIFY",
           "source_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED"
         }
@@ -166,50 +164,49 @@
       ],
       "misconceptions": [
         {
-          "wrong_idea": "South is a positive y entry because the distance travelled is a positive number.",
-          "diagnostic_prompt": "If (−2,+3) is used for two west and three south, what direction does the second entry actually mean on this map?",
-          "repair": "A distance magnitude is nonnegative but a signed coordinate also encodes orientation: south is negative y. Preserve horizontal x then vertical y and translate back."
+          "wrong_idea": "An odd positive integer must be prime.",
+          "diagnostic_prompt": "A learner calls 9 prime solely because it is odd, even though the complete positive-divisor card is {1,3,9}. Which exact count disproves the claim?",
+          "repair": "Oddness is not the defining criterion. Three distinct positive divisors mean 9 is composite."
         },
         {
-          "wrong_idea": "The larger magnitude belongs first in the ordered pair.",
-          "diagnostic_prompt": "Would three north and one east be (3,1) merely because three is larger?",
-          "repair": "Order is fixed by the axes, not magnitude: x first, y second."
+          "wrong_idea": "If a number is not composite, it must be prime, including 1.",
+          "diagnostic_prompt": "The complete positive-divisor list for 1 is {1}. Does one divisor meet exactly two?",
+          "repair": "One is neither prime nor composite; prime requires exactly two distinct positive divisors."
         }
       ],
       "exit_task": {
-        "prompt": "From the origin, a walker moves 1 grid unit west and 4 grid units south. Write the ordered-pair displacement and translate it back into words to check.",
+        "prompt": "Independent exit: the complete positive-divisor card for 22 is {1,2,11,22}. Classify 22 as prime, composite or neither and cite the exact count.",
         "source_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED",
         "answer": {
           "kind": "MODEL_RESPONSE",
-          "summary": "(−1,−4).",
+          "summary": "22 is composite.",
           "reasoning": [
-            "One unit west gives x=−1.",
-            "Four units south gives y=−4.",
-            "Using horizontal then vertical order gives (−1,−4)."
+            "The four numbers 1,2,11,22 are four distinct positive divisors.",
+            "Four is greater than two, which is the composite criterion."
           ],
-          "check": "Read (−1,−4) back: one west and four south.",
+          "check": "2×11=22 gives a nontrivial factor pair; the complete divisor card agrees.",
           "acceptable_alternatives": [],
           "subpart_answers": [],
           "verification_status": "CHECKED_BY_AUTHOR"
         },
         "oracle": {
           "verification": {
-            "validator_id": "TEST/imo-research/qrt-d1/verify_represent.py",
+            "validator_id": "TEST/imo-research/qrt-d1/verify_retrieve.py",
             "bindings": {
-              "axis_convention": "east_positive_north_positive",
-              "route": "1 west 4 south",
-              "expected_pair": "(-1,-4)"
+              "number": "22",
+              "complete_divisors": "1,2,11,22",
+              "category": "COMPOSITE"
             }
           }
         }
       },
-      "research_contribution": "One signed correspondence and independent back-translation tested under D1 with distinct wrong-sign reconstruction and inverse transfer; academic band review still required.",
+      "research_contribution": "Original D1 defining-category task with an odd-composite near neighbour, exclusion of 1 and reversed category-to-card transfer; academic review pending.",
       "prerequisite_refs": [],
       "lineage": [],
       "construction_units": [
         {
-          "id": "CU-TEST-IMO182-D1-RETR-AXES",
-          "decision": "Establish positive axes and coordinate order, then supply signed entries for a new route.",
+          "id": "CU-TEST-IMO182-D1-RETR-COUNT-CRITERION",
+          "decision": "Retrieve and use exact cardinality of complete positive-divisor set.",
           "step_refs": [
             "RETR-D1-TC-1",
             "RETR-D1-TC-2",
@@ -225,58 +222,57 @@
           ],
           "independent_checks": [
             {
-              "statement": "Reverse-translate the new pair to the original directions and magnitudes.",
-              "check_type": "INVERSE_OPERATION"
+              "statement": "Verify the count against a nontrivial factor pair or the singleton set.",
+              "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
             }
           ],
           "reveal_stage_refs": [
-            "GRID-ORIENTATION",
-            "GRID-SAMPLE-STEP",
-            "GRID-REVERSE-CHECK"
+            "RETR-STAGE-DEFINITION",
+            "RETR-STAGE-WORKED",
+            "RETR-STAGE-BOUNDARY"
           ],
           "worked_anchor_ref": "Q-TEST-IMO182-D1-RETR-CORE1A-WORKED"
         }
       ],
       "compact_anchor": {
-        "prompt": "For a map with east = +x and north = +y, which coordinate entry represents west/east movement?",
-        "result": "The first entry x encodes horizontal movement; the second entry y encodes north/south movement.",
+        "prompt": "What is the exact criterion for PRIME rather than COMPOSITE or NEITHER?",
+        "result": "Prime exactly two distinct positive divisors; composite more than two; 1 with one divisor neither.",
         "representation_ref": "REP-TEST-IMO182-D1-RETR-AXIS-STAGES"
       },
       "elicitation": {
         "predict": {
-          "prompt": "A classmate writes (−2,+3) for a displacement of two west and three south. Before seeing a model, write whether this describes the intended route. Explain the sign of the second entry.",
-          "defensible_answer": "No. Positive y means north on this map, so the proposed pair travels three north, not three south."
+          "prompt": "A classmate claims 9 is prime because it is odd. Its complete distinct positive-divisor card is {1,3,9}. Before opening the correction, decide whether oddness proves prime and why.",
+          "defensible_answer": "No. Three distinct positive divisors make 9 composite, despite being odd."
         },
         "attempt": {
-          "produces": "A written diagnosis of the signed-y error, a corrected pair, and a changed-route independent exit.",
+          "produces": "An independently written diagnosis of the oddness claim, corrected category and a new boundary decision.",
           "closure": "RUBRIC",
           "rubric": [
             {
-              "criterion": "Explain the error using the fixed y-axis convention.",
-              "evidence_of": "Recognizes +y is north, not south, regardless of distance magnitude."
+              "criterion": "Reject oddness as the classification criterion.",
+              "evidence_of": "Uses count rather than parity."
             },
             {
-              "criterion": "Provide signed components in horizontal-then-vertical order.",
-              "evidence_of": "Corrects two west and three south to (−2,−3)."
+              "criterion": "Use the definition to identify the correct class.",
+              "evidence_of": "Three distinct divisors, more than two, composite."
             }
           ],
           "accepted": [
-            "The second entry should be negative because south opposes positive north; the intended pair is (−2,−3)."
+            "9 is composite because 1,3,9 are three distinct positive divisors. Being odd does not imply prime."
           ],
           "rejected": [
-            "Both entries should be positive because distance is positive.",
-            "The correct answer is (−3,−2) because the longer distance comes first."
+            "Odd numbers are prime, so 9 is prime."
           ],
           "task": {
-            "prompt": "A route is two west and three south from the origin. A learner recorded (−2,+3). Explain what route their pair actually depicts and reconstruct the correct signed pair. Record your own answer before revealing the reconstruction.",
+            "prompt": "A learner writes: '9 is prime because it is odd.' The complete positive-divisor set is {1,3,9}. Explain whether this criterion works, and independently name the correct category before revealing the reconstruction.",
             "givens": [
-              "East is +x; north is +y.",
-              "The route is measured from the origin.",
-              "Pair order is horizontal x, then vertical y."
+              "Divisors displayed are complete.",
+              "Prime requires exactly two distinct positive divisors.",
+              "Composite requires more than two distinct positive divisors."
             ],
             "representation_ref": "REP-TEST-IMO182-D1-RETR-ERROR-GIVEN",
             "stage_refs": [
-              "RETR-D1-WRONG-ROUTE"
+              "RETR-ERROR-CARD"
             ],
             "response": {
               "type": "free_response",
@@ -287,27 +283,27 @@
         "reconstruct": {
           "route": [
             {
-              "ask": "Which direction does the sign + on the vertical axis represent here?",
-              "why_this_ask": "Forces use of stated sign convention rather than generic positive distance.",
+              "ask": "Does the defining condition test oddness, or the exact positive-divisor count?",
+              "why_this_ask": "Separates near-neighbour familiarity from the criterion.",
               "from_step_ref": "RETR-D1-TC-1"
             },
             {
-              "ask": "Translate the classmate's second entry +3 back into a direction. Does that match the spoken route?",
-              "why_this_ask": "Falsifies the wrong route by inverse interpretation.",
-              "from_step_ref": "RETR-D1-TC-3"
+              "ask": "Count distinct divisors on 9's complete card. Does that match the prime requirement?",
+              "why_this_ask": "Uses a falsifying case instead of announcing the answer.",
+              "from_step_ref": "RETR-D1-TC-2"
             },
             {
-              "ask": "Keeping horizontal first, how must the sign of the second entry change to describe south?",
-              "why_this_ask": "Learner reconstructs the corrected pair rather than copying a displayed target.",
-              "from_step_ref": "RETR-D1-TC-2"
+              "ask": "Which category contains positive integers with more than two positive divisors?",
+              "why_this_ask": "Learner reconstructs the replacement rule.",
+              "from_step_ref": "RETR-D1-TC-3"
             }
           ],
-          "differs_from_teaching_path": "Teaching starts with a correct west/north example; reconstruction begins from an incorrect west/south inscription and forces learner to falsify the vertical sign before correcting it."
+          "differs_from_teaching_path": "A correct 13 card is explained in Core1A; Core1B starts from a classmate's incorrect oddness shortcut for 9 and asks the learner to falsify it using a complete factor list."
         },
         "boundary_test": {
-          "prompt": "Changed givens: now the route is two EAST and three SOUTH. With the SAME map convention, write the new ordered pair and explain which entry changed compared with the reconstructed west/south route. Commit before checking.",
-          "answer": "(+2,−3). The horizontal direction switched west to east, so x changed sign; south remains negative y.",
-          "confirms": "Repairs the sign rule on a new displacement rather than memorizing the prior corrected pair."
+          "prompt": "Changed case: the positive integer 1 has complete positive-divisor list {1}. Choose prime, composite or neither using the exact count; commit your answer before checking.",
+          "answer": "Neither. One has only one distinct positive divisor and meets neither the exactly-two nor the greater-than-two criterion.",
+          "confirms": "The repaired concept works on the excluded singleton boundary, not only on odd composite 9."
         }
       }
     }
@@ -343,34 +339,32 @@
       "derivation": [
         {
           "id": "DERIV-RETR-D1-TC-1",
-          "action": "Fix the convention: the first entry x measures east (+) or west (−), and the second entry y measures north (+) or south (−).",
-          "why_valid": "The ordered-pair definition assigns horizontal movement to x and vertical movement to y; sign records direction.",
+          "action": "Recognize a COMPLETE positive-divisor card and count its DISTINCT entries.",
+          "why_valid": "Definition uses the full set of distinct positive divisors, not repeated multiplication factors.",
           "inputs": [
-            "A named origin",
-            "An east-positive and north-positive map"
+            "Complete divisor card"
           ],
-          "output": "The rule (x,y) stores horizontal then vertical signed movement.",
+          "output": "A distinct divisor count",
           "role": "DECLARE"
         },
         {
           "id": "DERIV-RETR-D1-TC-2",
-          "action": "Test the convention on a DIFFERENT route: three west and one north is (−3,+1).",
-          "why_valid": "West opposes positive east and therefore has negative x; north is positive y.",
+          "action": "Prime means EXACTLY TWO distinct positive divisors; composite means MORE than TWO; 1 has only ONE and is neither.",
+          "why_valid": "The three cases partition positive integers by the defining conditions.",
           "inputs": [
-            "3 west",
-            "1 north"
+            "Distinct divisor count"
           ],
-          "output": "(−3,+1)",
+          "output": "The appropriate category",
           "role": "TRANSFORM"
         },
         {
           "id": "DERIV-RETR-D1-TC-3",
-          "action": "Translate the sample ordered pair (−3,+1) back into words, checking axis order and both signs.",
-          "why_valid": "The original west and north movements are recovered exactly, so the source and target preserve the same route.",
+          "action": "Work a separate example: 13 has the complete list {1,13}, thus has two distinct positive divisors and is prime.",
+          "why_valid": "13 has no other positive divisors; exactly two meets the prime criterion.",
           "inputs": [
-            "(−3,+1)"
+            "Complete divisor set for 13"
           ],
-          "output": "Three west and one north.",
+          "output": "13 is prime",
           "role": "VERIFY"
         }
       ],
