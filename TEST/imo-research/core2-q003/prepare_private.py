@@ -96,6 +96,23 @@ def bank(row, expected):
         primary_capability_ref="CAP-IMO-NUMERIC-RELATIONSHIPS",
         secondary_capability_refs=[], family_ref=None,
         adaptation=None, exposure=[], extensions={
+            # The square-offset model is the learner-owned crux; only neutral
+            # option-pair orientation can be shown before commitment.
+            # Rungs 1 and 2 materially narrow/complete the protected move.
+            "grade9v3:core2_support_plan":{
+                "protected_move_refs":[answer["crux_move_ref"]],
+                "support_completions":[
+                    {"support_ref":"scaffolds[0]",
+                     "completed_move_refs":[],
+                     "availability":"PRE_ATTEMPT_SAFE"},
+                    {"support_ref":"scaffolds[1]",
+                     "completed_move_refs":[answer["crux_move_ref"]],
+                     "availability":"AFTER_ATTEMPT"},
+                    {"support_ref":"scaffolds[2]",
+                     "completed_move_refs":[answer["crux_move_ref"]],
+                     "availability":"AFTER_ATTEMPT"}
+                ]
+            },
             "grade9v3:source_custody":{
                 "authority_class":"SCHOOL_MIRROR_TEST_REFERENCE",
                 "exam":"SOF IMO", "year":"2023-24", "paper":"Set A",
