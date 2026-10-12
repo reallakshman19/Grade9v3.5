@@ -38,7 +38,7 @@ with sync_playwright() as p:
             assert blank_article.get_attribute("data-attempted")!="1","Blank attempt improperly accepted"
             # A recorded written attempt must unlock H3; just visiting or requesting H1/H2 must not.
             attempt=page.locator('[data-g9-attempt-box] textarea[data-g9-attempt]').first
-            attempt.fill("I compared an L-digit starting value with a one-digit rotation. I think the change in sign of powers of ten may depend on the original length; I still need to apply why odd length differs.")
+            attempt.fill("I noticed 12,18,20 share factors so I need a gcd compatibility check before choosing a CRT reduction. I will combine the first pair, check the third phase, then intersect the class with the inclusive interval.")
             page.locator('[data-g9-attempt-box] button[data-g9-commit]').first.click()
             article=page.locator('article[data-g9-unit]').first
             assert article.get_attribute("data-attempted")=="1","Written attempt was not committed"
