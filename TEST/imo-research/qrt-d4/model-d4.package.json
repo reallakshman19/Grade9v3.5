@@ -29,9 +29,9 @@
         "AUTHOR_CREATED"
       ],
       "supports_claims": [
-        "4n−2e counts unshared table sides.",
-        "If c such sides face a sealed inaccessible courtyard, outside-accessible chairs A=4n−2e−c.",
-        "4x4 sealed border gives A16; opening top row second position gives A24."
+        "Each occupied unit-square table contributes four candidate chair sides.",
+        "Every shared full-side contact consumes two candidates.",
+        "A sealed courtyard may make an otherwise unshared side inaccessible; the learner must model which boundaries are eligible."
       ],
       "entry_capabilities": [],
       "depth": [
@@ -90,7 +90,7 @@
       "evidence_refs": [],
       "extensions": {},
       "action": "Formulate, evaluate and revise a counting model for square-table perimeter seating with shared seams and a completely enclosed courtyard.",
-      "success_criterion": "Learner derives A=4n−2e−c, identifies closed 4x4 ring n12,e12,c8 and16 accessible chair sites, then changed open ring n11,e10,c0 and24 sites.",
+      "success_criterion": "Learner builds a physically meaningful model of outside-accessible chair sides from n occupied squares, e shared contacts and a separately justified accessibility correction, then independently validates a closed courtyard and rebuilds the model after opening it.",
       "prerequisite_refs": [],
       "curriculum_mappings": [],
       "external_provider": null,
@@ -351,12 +351,12 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "expression": "Outside-accessible chair sites A=4n−2e−c.",
-      "meaning": "n counts table cells; e counts distinct full shared-side joins; c counts unshared sides facing sealed inaccessible interior voids. Only external-connected exposed edges can hold chairs.",
+      "expression": "Unshared table sides U=4n−2e.",
+      "meaning": "A safe preliminary count: n is occupied square tables and e is distinct shared contacts. U counts ALL unshared table sides without yet judging outside accessibility of a sealed hole.",
       "symbols": [
         {
-          "symbol": "A",
-          "meaning": "Chairs on externally reachable table sides",
+          "symbol": "U",
+          "meaning": "Unshared table sides before access is considered",
           "unit_or_domain": "nonnegative integer"
         },
         {
@@ -366,19 +366,14 @@
         },
         {
           "symbol": "e",
-          "meaning": "Full shared-side contacts, each counted once",
-          "unit_or_domain": "integer ≥0"
-        },
-        {
-          "symbol": "c",
-          "meaning": "Unshared sides facing sealed inaccessible internal voids",
+          "meaning": "Full shared-side contacts counted once",
           "unit_or_domain": "integer ≥0"
         }
       ],
       "conditions": [
-        "One chair site per exterior-reachable unit side.",
-        "Each table fills one grid cell, joins are on full sides.",
-        "No chairs on seams or sealed-courtyard borders."
+        "One candidate side on each edge of every table.",
+        "Two candidate sides removed by each shared full-edge contact.",
+        "This identity alone does not assert chair-site eligibility or solve the protected task."
       ],
       "derivation": [
         {
@@ -421,15 +416,14 @@
         }
       ],
       "limits": [
-        "4n−2e alone includes sealed-inner-boundary edges.",
-        "An opening changes outside-connectivity and may set c to zero."
+        "Unshared sides may face inaccessible empty space; a physical eligibility model requires additional reasoning.",
+        "Opening a gap changes the outside-connectivity condition."
       ],
       "checks": [
-        "L-shaped 3-table anchor: A=8.",
-        "Closed 4x4 border outer perimeter is 16."
+        "The three-table L anchor has U=4×3−2×2=8."
       ],
       "gate_relation_ref": null,
-      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mn>4</mn><mi>n</mi><mo>−</mo><mn>2</mn><mi>e</mi><mo>−</mo><mi>c</mi></mrow></math>"
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>U</mi><mo>=</mo><mn>4</mn><mi>n</mi><mo>−</mo><mn>2</mn><mi>e</mi></mrow></math>"
     }
   ],
   "representations": [

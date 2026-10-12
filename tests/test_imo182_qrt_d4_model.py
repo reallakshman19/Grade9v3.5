@@ -55,6 +55,10 @@ class ModelD4(unittest.TestCase):
         self.assertEqual(self.q["extensions"]["grade9v3:cognitive_demand"]["primary"],"MODEL")
         self.assertFalse(self.p["extensions"]["grade9v3:qrt_admitted"])
         self.assertFalse(self.p["extensions"]["grade9v3:core2_source_custody_granted"])
+        self.assertEqual(self.p["relations"][0]["expression"],"Unshared table sides U=4n−2e.")
+        self.assertNotIn("A=4n−2e−c",self.p["relations"][0]["expression"])
+        self.assertNotIn("A=16",self.p["capabilities"][0]["success_criterion"])
+        self.assertNotIn("A=24",self.p["capabilities"][0]["success_criterion"])
         plan=self.q["extensions"]["grade9v3:core2_support_plan"]
         self.assertEqual(plan["protected_move_refs"],["D4-MOD-MOVE-CAVITY"])
         self.assertEqual(plan["support_completions"][0]["availability"],"AFTER_ATTEMPT")
