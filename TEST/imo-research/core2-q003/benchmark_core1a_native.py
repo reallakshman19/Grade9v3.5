@@ -78,6 +78,7 @@ def main() -> int:
     private_dir, golden_dir = STAGE / "rendered", GOLDEN
     private = snapshot(private_dir / "core1a.html")
     golden = snapshot(golden_dir / "core1a.html")
+    input_receipt = json.loads((STAGE / "source-safe-core1a-receipt.json").read_text(encoding="utf-8"))
     native_receipts = {
         "Q003_CORE1A": json.loads((private_dir / "render-receipt.json").read_text(encoding="utf-8")),
         "G_MATH_LINEAR_CONSTRAINT": json.loads((golden_dir / "render-receipt.json").read_text(encoding="utf-8"))
@@ -97,7 +98,7 @@ def main() -> int:
         "golden": "G-MATH-LINEAR-CONSTRAINT",
         "golden_status": "CANDIDATE_NOT_OWNER_BLESSED",
         "original_question_id": "SOF-IMO-G09-L1-2023-24-A-Q003",
-        "original_input_sha256": "b263644cd1dd8aca689582232c9b8495f05ec07f3ffeaff3a18f414e6e1227f9",
+        "original_input_sha256": input_receipt["original_input_sha256"],
         "author_input_sha256": sha256((HERE / "core1a-authored.v1.json").read_bytes()).hexdigest(),
         "renderer_digest": {k: v.get("digest") for k, v in native_receipts.items()},
         "renderer_version": {k: v.get("renderer") for k, v in native_receipts.items()},
