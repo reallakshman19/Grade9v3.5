@@ -1,0 +1,1355 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "PKG-QRT-REPRESENT-D3",
+  "title": "AUTHORED TEST: diagram representations of overlapping forbidden lattice-path families",
+  "version": "1.0.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Original D3 REPRESENT hypothesis: use a grid to map shortest paths to overlapping forbidden sets and their intersection. Academically unreviewed; no official exam provenance.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-QRT-REPRESENT-D3",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original monotone-grid forbidden path family TEST",
+      "origin": "AUTHORED",
+      "locator": "TEST/imo-research/qrt-d3/represent.v1.json",
+      "edition": "Authored TEST October 12 2026",
+      "section": "Represent shortest lattice paths and intersecting forbidden checkpoint sets",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "All problems, SVG grids and explanations are wholly AUTHORED TEST with no third-party exam provenance.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "4x4 E/N grid with forbidden P(1,2),Q(3,2) yields 19 avoiding paths.",
+        "Incomparable moved Q(2,1) yields 10 avoiding paths.",
+        "Independent 3x3 grid with U(1,1),V(2,2) yields four avoiding paths."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Use an original diagram-to-set intersection decision as the protected W, not a routine path formula supplied in the question.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-QRT-REPRESENT-D3",
+      "title": "Forbidden checkpoints as overlapping path sets",
+      "topic": "Lattice path diagrams, monotone coordinates and inclusion-exclusion",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Must see when two forbidden route families share paths, then count the shared three-piece routes.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-QRT-REPRESENT-D3-CONSTRUCTION",
+      "conventions": [
+        {
+          "id": "shortest",
+          "statement": "A shortest route on the lattice uses only unit East and North moves."
+        },
+        {
+          "id": "target",
+          "statement": "S=(0,0), T=(4,4) for target; the 4x4 diagram includes all grid vertices."
+        },
+        {
+          "id": "forbidden",
+          "statement": "Avoiding a checkpoint means never visiting its vertex, although a path can visit two checkpoints."
+        },
+        {
+          "id": "count",
+          "statement": "Distinct ordered E/N words are distinct paths."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-QRT-REPRESENT-D3",
+      "action": "Represent shortest East/North paths by lattice, step words and intersecting through-checkpoint path families.",
+      "success_criterion": "Derive 19 avoiding paths for ordered checkpoint pair and 10 for incomparable moved pair with path-family intersection justification and independent enumeration.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-QRT-REPRESENT-D3",
+      "title": "Represent path-family overlap from a marked lattice",
+      "bucket_id": "BUCKET-QRT-REPRESENT-D3",
+      "primary_capability_ref": "CAP-QRT-REPRESENT-D3",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Only reading the two checkpoint coordinates reveals whether the two forbidden path families share paths.",
+      "entry_assumptions": [
+        "Can draw a square 4x4 lattice.",
+        "Can count a sequence of E and N using binomial coefficients.",
+        "Can multiply route counts through a specified vertex.",
+        "Can distinguish union and intersection of finite sets."
+      ],
+      "inferential_jump": "From an initially unmarked route diagram, learner must build through-P, through-Q and through-both sets, recognize comparable markers, and choose the intersection correction. H1/H2 do not supply the add-back or target shared-path count.",
+      "teaching_path": [
+        {
+          "id": "STEP-PD3-1",
+          "role": "DECLARE",
+          "action": "Translate a shortest East/North lattice route into an ordered word of E and N.",
+          "why_valid": "A shortest (a,b) path has a E and b N moves, with unique step word.",
+          "inputs": [
+            "Grid start and end"
+          ],
+          "output": "C(a+b,a) route words."
+        },
+        {
+          "id": "STEP-PD3-2",
+          "role": "TRANSFORM",
+          "action": "On a fresh small grid, count paths via a fixed marked vertex as a product of independent prefix and suffix counts.",
+          "why_valid": "The split at a specified vertex is unique.",
+          "inputs": [
+            "A generic marked grid vertex"
+          ],
+          "output": "Through-mark path counts multiply."
+        },
+        {
+          "id": "STEP-PD3-3",
+          "role": "TRANSFORM",
+          "action": "On an unrelated tiny grid mark two vertices in order and explore a path visiting both.",
+          "why_valid": "A monotone path can visit both ordered vertices, yielding two forbidden events sharing paths.",
+          "inputs": [
+            "Two comparable marked vertices"
+          ],
+          "output": "An intersection through both may exist."
+        },
+        {
+          "id": "STEP-PD3-4",
+          "role": "VERIFY",
+          "action": "Compare two incomparable vertices and decide whether a monotone E/N route can reach both in any order.",
+          "why_valid": "One direction would need South and the reverse would need West.",
+          "inputs": [
+            "Crossed marker coordinates"
+          ],
+          "output": "Not every pair of through-point sets overlaps."
+        }
+      ],
+      "relation_refs": [
+        "REL-QRT-REPRESENT-D3"
+      ],
+      "representation_refs": [
+        "REP-QRT-REPRESENT-D3-CONSTRUCTION"
+      ],
+      "question_family_refs": [
+        "FAM-QRT-REPRESENT-D3"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Subtract the two forbidden checkpoint counts independently with no add-back.",
+          "diagnostic_prompt": "On a small lattice with U(1,1) and V(2,2), can one E/N route pass through both?",
+          "repair": "A route visiting both is removed once for each forbidden set. Restore paths through both by counting three consecutive segments."
+        },
+        {
+          "wrong_idea": "Any two forbidden vertices can lie on the same monotone path.",
+          "diagnostic_prompt": "Can an E/N path visit (1,2) and (2,1) in either order without moving backward?",
+          "repair": "The two marker coordinates must be comparable componentwise; otherwise the intersection is empty."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independent exit: In a 3x3 E/N grid from S(0,0) to T(3,3), avoid BOTH U(1,1) and V(2,2). Map route families on the grid, count their intersection and verify.",
+        "source_ref": "SRC-TEST-QRT-REPRESENT-D3",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "Exactly 4 shortest paths avoid both.",
+          "reasoning": [
+            "Total C(6,3)=20.",
+            "Through U: C(2,1)C(4,2)=12; through V: C(4,2)C(2,1)=12.",
+            "Through BOTH: C(2,1)C(2,1)C(2,1)=8.",
+            "Avoid both 20-12-12+8=4."
+          ],
+          "check": "Enumerate 20 E/N words; exactly four avoid both marked vertices.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo182_qrt_d3_represent.py",
+            "bindings": {
+              "domain": "3x3 monotone E/N paths",
+              "expected_count": "4",
+              "points": "U(1,1),V(2,2)"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original authored REPRESENT-D3 hypothesis only; external academic reviewer and Owner band decision pending.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-PD3-FAMILIES",
+          "decision": "Represent route sets through distinct marks and their possible shared membership on a generic lattice.",
+          "step_refs": [
+            "STEP-PD3-1",
+            "STEP-PD3-2",
+            "STEP-PD3-3",
+            "STEP-PD3-4"
+          ],
+          "representation_ref": "REP-QRT-REPRESENT-D3-CONSTRUCTION",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-QRT-REPRESENT-D3"
+          ],
+          "independent_checks": [
+            {
+              "statement": "On small grids enumerate all E/N step words and path vertex visits.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "PD3-GRID",
+            "PD3-ONE",
+            "PD3-TWO"
+          ],
+          "worked_anchor_ref": "Q-TEST-QRT-REPRESENT-D3-CONCEPT"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "How can an E/N path passing a marked point be counted using two smaller diagrams?",
+        "result": "Split the path at the point into before and after independent route choices, then multiply counts.",
+        "representation_ref": "REP-QRT-REPRESENT-D3-CONSTRUCTION"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "On a 2x2 E/N grid can one shortest path pass two marked vertices? Draw an example and explain when the order is possible.",
+          "defensible_answer": "Yes for an ordered pair, such as U(1,0) then V(1,1); no when one mark is northeast in x but southwest in y."
+        },
+        "attempt": {
+          "produces": "An E/N word and a generic diagram showing a shared path belonging to both through-point sets.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Grid to word map",
+              "evidence_of": "All shortest routes use E and N in fixed quantities."
+            },
+            {
+              "criterion": "One checkpoint decomposition",
+              "evidence_of": "Prefix and suffix choices multiply."
+            },
+            {
+              "criterion": "Two marked set overlap",
+              "evidence_of": "One route can pass both comparable marks."
+            }
+          ],
+          "accepted": [
+            "A route through two ordered marks belongs to both sets; count its three segments before correcting double subtraction."
+          ],
+          "rejected": [
+            "The two through-mark sets must be disjoint because the marked vertices differ."
+          ],
+          "task": {
+            "prompt": "On a separate tiny 2x2 grid, mark U(1,0) and V(1,1), draw a shortest route through both, and explain its three segments. Do not solve the target 4x4 case.",
+            "givens": [
+              "Move only E/N.",
+              "Explain geometric order."
+            ],
+            "representation_ref": "REP-QRT-REPRESENT-D3-CONSTRUCTION",
+            "stage_refs": [
+              "PD3-GRID",
+              "PD3-ONE",
+              "PD3-TWO"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "What ordered E/N words correspond to shortest routes?",
+              "why_this_ask": "Recover path representation.",
+              "from_step_ref": "STEP-PD3-1"
+            },
+            {
+              "ask": "How does a checkpoint divide route choices?",
+              "why_this_ask": "Recover product count.",
+              "from_step_ref": "STEP-PD3-2"
+            },
+            {
+              "ask": "Can one path be in both forbidden groups?",
+              "why_this_ask": "Identify overlap misconception.",
+              "from_step_ref": "STEP-PD3-3"
+            },
+            {
+              "ask": "How many times was a shared path removed by two separate subtractions?",
+              "why_this_ask": "Recover intersection correction.",
+              "from_step_ref": "STEP-PD3-4"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A creates generic word/grid/ordered marker stages; Core1B begins with subtract-only wrong route on fresh 3x3 grid and reconstructs intersection after written commitment."
+        },
+        "boundary_test": {
+          "prompt": "In a 3x3 E/N grid with U(1,1) and V(2,2), a student calculates 20-12-12 and calls this final. Explain why that is impossible, count through-both and correct it.",
+          "answer": "Twenty total, 12 through each; eight through both (2×2×2). Avoid both 20-12-12+8=4; direct subtract-only is negative.",
+          "confirms": "Fix double subtraction of paths belonging to both forbidden families."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-QRT-REPRESENT-D3",
+      "expression": "Avoid(P,Q)=Total-Through(P)-Through(Q)+Through(P and Q); Through(P and Q)=paths(S,P)×paths(P,Q)×paths(Q,T) if the marker order permits.",
+      "meaning": "A grid diagram supplies the geometry for set intersection before applying a numerical overlap correction.",
+      "symbols": [
+        {
+          "symbol": "P",
+          "meaning": "Set of paths through first marked vertex",
+          "unit_or_domain": "finite set"
+        },
+        {
+          "symbol": "Q",
+          "meaning": "Set of paths through second marked vertex",
+          "unit_or_domain": "finite set"
+        },
+        {
+          "symbol": "S,T",
+          "meaning": "Start/end vertices",
+          "unit_or_domain": "grid coordinates"
+        }
+      ],
+      "conditions": [
+        "Monotone E/N shortest routes only.",
+        "Shared-path product requires comparable marker coordinates."
+      ],
+      "derivation": [
+        {
+          "id": "DER-PD3-0",
+          "role": "DECLARE",
+          "action": "Translate a shortest East/North lattice route into an ordered word of E and N.",
+          "why_valid": "A shortest (a,b) path has a E and b N moves, with unique step word.",
+          "inputs": [
+            "Grid start and end"
+          ],
+          "output": "C(a+b,a) route words."
+        },
+        {
+          "id": "DER-PD3-1",
+          "role": "TRANSFORM",
+          "action": "On a fresh small grid, count paths via a fixed marked vertex as a product of independent prefix and suffix counts.",
+          "why_valid": "The split at a specified vertex is unique.",
+          "inputs": [
+            "A generic marked grid vertex"
+          ],
+          "output": "Through-mark path counts multiply."
+        },
+        {
+          "id": "DER-PD3-2",
+          "role": "TRANSFORM",
+          "action": "On an unrelated tiny grid mark two vertices in order and explore a path visiting both.",
+          "why_valid": "A monotone path can visit both ordered vertices, yielding two forbidden events sharing paths.",
+          "inputs": [
+            "Two comparable marked vertices"
+          ],
+          "output": "An intersection through both may exist."
+        }
+      ],
+      "limits": [
+        "Subtracting through-P and through-Q removes joint paths twice.",
+        "Incomparable coordinates yield no jointly visiting path.",
+        "A path count without a diagram or step constraint lacks a valid representation."
+      ],
+      "checks": [
+        "Enumerate all E/N words and detect point visits.",
+        "Change checkpoint position and recompute whether intersection exists."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>N</mi><mo>=</mo><mi>T</mi><mo>-</mo><mi>P</mi><mo>-</mo><mi>Q</mi><mo>+</mo><mi>I</mi></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-QRT-REPRESENT-D3-CONSTRUCTION",
+      "kind": "SCHEMATIC",
+      "purpose": "Three-stage generic 2x2 lattice with one and two ordered markers, no target results.",
+      "required_elements": [
+        "Unmarked E/N grid",
+        "One generic marked vertex",
+        "Two generic ordered marks"
+      ],
+      "relation_refs": [
+        "REL-QRT-REPRESENT-D3"
+      ],
+      "read_order": [
+        "Read from S to T.",
+        "Paths use only E/N unit moves.",
+        "Determine whether a route can visit both marks from their positions."
+      ],
+      "instance_constraints": [
+        "No 19,10,9 or path-count result printed in SVG text.",
+        "No highlighted solved target route or intersection formula.",
+        "Figure labels identify only source-stated vertices."
+      ],
+      "accessibility": [
+        "Descriptive SVG titles and labels, no answer.",
+        "High contrast geometry and marked circles."
+      ],
+      "misleading_alternatives": [
+        "Forbidden families never overlap.",
+        "Every pair of forbidden markers is jointly visitable."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-represent-construct.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-REPRESENT-D3-0",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-QRT-REPRESENT-D3",
+          "datum_refs": [
+            "DATUM-QRT-REPRESENT-D3-1"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-represent-construct.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Lattice forbidden vertex representation",
+            "caption": "Original authored lattice diagram; result is learner-owned."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Marked lattice vertices and E/N edges",
+          "symbol": "S,T,P,Q",
+          "in_words": "An allowed E/N step word visits a specified subset of marked grid vertices."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "PD3-GRID",
+          "label": "Grid stage 1",
+          "purpose": "See graph geometry without the numeric answer.",
+          "visible_elements": [
+            "PD3-GRID"
+          ]
+        },
+        {
+          "id": "PD3-ONE",
+          "label": "Grid stage 2",
+          "purpose": "See graph geometry without the numeric answer.",
+          "visible_elements": [
+            "PD3-ONE"
+          ]
+        },
+        {
+          "id": "PD3-TWO",
+          "label": "Grid stage 3",
+          "purpose": "See graph geometry without the numeric answer.",
+          "visible_elements": [
+            "PD3-TWO"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-REPRESENT-D3-TARGET",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Original 4x4 lattice S/T and forbidden P(1,2),Q(3,2) with no path counts.",
+      "required_elements": [
+        "4x4 grid S,T,P,Q, no displayed counts"
+      ],
+      "relation_refs": [
+        "REL-QRT-REPRESENT-D3"
+      ],
+      "read_order": [
+        "Read from S to T.",
+        "Paths use only E/N unit moves.",
+        "Determine whether a route can visit both marks from their positions."
+      ],
+      "instance_constraints": [
+        "No 19,10,9 or path-count result printed in SVG text.",
+        "No highlighted solved target route or intersection formula.",
+        "Figure labels identify only source-stated vertices."
+      ],
+      "accessibility": [
+        "Descriptive SVG titles and labels, no answer.",
+        "High contrast geometry and marked circles."
+      ],
+      "misleading_alternatives": [
+        "Forbidden families never overlap.",
+        "Every pair of forbidden markers is jointly visitable."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-represent-attempt.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-REPRESENT-D3-1",
+          "cores": [
+            "CORE2A"
+          ],
+          "microtopic_ref": "MIC-QRT-REPRESENT-D3",
+          "datum_refs": [
+            "DATUM-QRT-REPRESENT-D3-2"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-represent-attempt.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Lattice forbidden vertex representation",
+            "caption": "Original authored lattice diagram; result is learner-owned."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Marked lattice vertices and E/N edges",
+          "symbol": "S,T,P,Q",
+          "in_words": "An allowed E/N step word visits a specified subset of marked grid vertices."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "PD3-TARGET",
+          "label": "Grid stage 1",
+          "purpose": "See graph geometry without the numeric answer.",
+          "visible_elements": [
+            "PD3-TARGET"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-REPRESENT-D3-MISCONCEPTION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Fresh 3x3 lattice with U(1,1),V(2,2), no counted route shown.",
+      "required_elements": [
+        "3x3 grid U,V and no answer"
+      ],
+      "relation_refs": [
+        "REL-QRT-REPRESENT-D3"
+      ],
+      "read_order": [
+        "Read from S to T.",
+        "Paths use only E/N unit moves.",
+        "Determine whether a route can visit both marks from their positions."
+      ],
+      "instance_constraints": [
+        "No 19,10,9 or path-count result printed in SVG text.",
+        "No highlighted solved target route or intersection formula.",
+        "Figure labels identify only source-stated vertices."
+      ],
+      "accessibility": [
+        "Descriptive SVG titles and labels, no answer.",
+        "High contrast geometry and marked circles."
+      ],
+      "misleading_alternatives": [
+        "Forbidden families never overlap.",
+        "Every pair of forbidden markers is jointly visitable."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-represent-repair.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-REPRESENT-D3-2",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-QRT-REPRESENT-D3",
+          "datum_refs": [
+            "DATUM-QRT-REPRESENT-D3-3"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-represent-repair.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Lattice forbidden vertex representation",
+            "caption": "Original authored lattice diagram; result is learner-owned."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Marked lattice vertices and E/N edges",
+          "symbol": "S,T,P,Q",
+          "in_words": "An allowed E/N step word visits a specified subset of marked grid vertices."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "PD3-DIAG",
+          "label": "Grid stage 1",
+          "purpose": "See graph geometry without the numeric answer.",
+          "visible_elements": [
+            "PD3-DIAG"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-REPRESENT-D3-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Changed 4x4 lattice P(1,2),Q(2,1), no disjointness verdict.",
+      "required_elements": [
+        "4x4 grid with moved marker Q, no answer"
+      ],
+      "relation_refs": [
+        "REL-QRT-REPRESENT-D3"
+      ],
+      "read_order": [
+        "Read from S to T.",
+        "Paths use only E/N unit moves.",
+        "Determine whether a route can visit both marks from their positions."
+      ],
+      "instance_constraints": [
+        "No 19,10,9 or path-count result printed in SVG text.",
+        "No highlighted solved target route or intersection formula.",
+        "Figure labels identify only source-stated vertices."
+      ],
+      "accessibility": [
+        "Descriptive SVG titles and labels, no answer.",
+        "High contrast geometry and marked circles."
+      ],
+      "misleading_alternatives": [
+        "Forbidden families never overlap.",
+        "Every pair of forbidden markers is jointly visitable."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-represent-transfer.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-REPRESENT-D3-3",
+          "cores": [
+            "CORE2B"
+          ],
+          "microtopic_ref": "MIC-QRT-REPRESENT-D3",
+          "datum_refs": [
+            "DATUM-QRT-REPRESENT-D3-4"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-represent-transfer.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Lattice forbidden vertex representation",
+            "caption": "Original authored lattice diagram; result is learner-owned."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Marked lattice vertices and E/N edges",
+          "symbol": "S,T,P,Q",
+          "in_words": "An allowed E/N step word visits a specified subset of marked grid vertices."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "PD3-TRANSFER",
+          "label": "Grid stage 1",
+          "purpose": "See graph geometry without the numeric answer.",
+          "visible_elements": [
+            "PD3-TRANSFER"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-QRT-REPRESENT-D3",
+      "title": "Represent overlapping marked path sets on a lattice",
+      "capability_refs": [
+        "CAP-QRT-REPRESENT-D3"
+      ],
+      "solution_structure": [
+        "Map grid to E/N step words and count all paths.",
+        "Count through each forbidden marker via prefix/suffix segments.",
+        "Check geometry to determine possible through-both intersection.",
+        "Count intersection and complement, independently enumerate."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Represent path-family sets and their overlap rather than just computing C(8,4).",
+        "representation_translation": "2D grid into E/N words, point-visit path families and set intersections.",
+        "reasoning_steps": "Total, through each, shared paths, complement.",
+        "novelty": "Move one marker to an incomparable coordinate position and prove intersection empty."
+      },
+      "safe_variations": [
+        "Original marked lattice configurations in 3x3 or 4x4 grids."
+      ],
+      "transfer_boundaries": [
+        "Comparable markers admit shared paths.",
+        "Incomparable markers cannot both be visited by E/N routes."
+      ],
+      "common_wrong_routes": [
+        "Subtract both family counts without add-back.",
+        "Reuse intersection when moved marker is not order-comparable."
+      ],
+      "item_refs": [
+        "Q-TEST-QRT-REPRESENT-D3-CLASSIFY",
+        "Q-TEST-QRT-REPRESENT-D3-BOUNDARY"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-QRT-REPRESENT-D3-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-REPRESENT-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-REPRESENT-D3-CONCEPT",
+      "stem": "On a separate generic 2x2 E/N lattice, map shortest paths to E/N step words, mark U(1,0),V(1,1), and explain how a path through BOTH belongs to two through-point families.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Generic prerequisite, not target 4x4 task.",
+        "Draw one monotone route passing the ordered marks."
+      ],
+      "figure_refs": [
+        "REP-QRT-REPRESENT-D3-CONSTRUCTION"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "A path through two comparable marks has three segments and belongs to both forbidden path sets.",
+        "reasoning": [
+          "Each shortest route is an E/N word.",
+          "A checkpoint divides a path into independent prefix/suffix choices.",
+          "Two ordered checkpoints divide a shared route into three consecutive segments."
+        ],
+        "check": "E,N,E,N runs from (0,0) through U(1,0),V(1,1) to (2,2).",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-QRT-REPRESENT-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-REPRESENT-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "CONCEPT_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-REPRESENT-D3-CONSTRUCTION",
+        "safe_ref": "REP-QRT-REPRESENT-D3-CONSTRUCTION",
+        "bound_ref": null,
+        "stage_refs": [
+          "PD3-GRID",
+          "PD3-ONE",
+          "PD3-TWO"
+        ]
+      },
+      "repair_ref": "STEP-PD3-2",
+      "failure_signal": "Cannot distinguish through-one from through-both path group.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-REPRESENT-D3",
+        "closure": "Generic prerequisite, not target."
+      },
+      "independent_check": {
+        "statement": "Enumerate 6 two-east/two-north words on generic 2x2 grid.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "Concept anchor with provided small grid."
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-QRT-REPRESENT-D3-CLASSIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3",
+        "grade9v3:cognitive_demand": {
+          "primary": "REPRESENT",
+          "secondary": [
+            "APPLY",
+            "JUSTIFY"
+          ],
+          "basis": "The central move is representing spatially comparable checkpoints as non-disjoint path subsets."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Diagram shows S->P->Q->T feasible; count shared paths and add back.",
+          "common_wrong_route": "Simple two subtractions incorrectly treat overlapping event sets as disjoint."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-REPRESENT-D3-OVERLAP"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-REPRESENT-D3-OVERLAP"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-REPRESENT-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-REPRESENT-D3-CLASSIFY",
+      "stem": "In a 4-by-4 square lattice, S=(0,0) to T=(4,4), a shortest path uses only East and North unit edges. Two vertices are forbidden: P=(1,2) and Q=(3,2). How many shortest paths avoid BOTH? Construct and use a representation of paths through each marked vertex; decide from the diagram whether a path may visit both, and justify the total. A bare binomial calculation is insufficient.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Exactly 4 East and 4 North steps.",
+        "Forbidden vertices may lie on one shared route; determine this yourself.",
+        "Original authored TEST, no official source provenance."
+      ],
+      "figure_refs": [
+        "REP-QRT-REPRESENT-D3-TARGET"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "19 shortest E/N paths avoid both P(1,2) and Q(3,2).",
+        "reasoning": [
+          "All shortest 4x4 paths: C(8,4)=70.",
+          "Through P(1,2): C(3,1)×C(5,3)=3×10=30.",
+          "Through Q(3,2): C(5,3)×C(3,1)=10×3=30.",
+          "P is southwest of Q, so shared E/N paths exist. S->P 3 routes, P->Q 1 (two East), Q->T 3, yielding 9 through BOTH.",
+          "By complement with correct overlap: 70-30-30+9=19."
+        ],
+        "check": "Independent exhaustive enumeration over all 70 E/N words confirms 19 avoid both and 9 visit both.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "crux_move_ref": "MOVE-REPRESENT-D3-OVERLAP",
+        "reasoning_route": [
+          {
+            "id": "MOVE-PD3-GROUPS",
+            "kind": "REPRESENT",
+            "action": "Map target grid to 70 E/N words, and through-P and through-Q families.",
+            "why_valid": "Four E/four N give C(8,4); one marker splits path counts.",
+            "inputs": [
+              "4x4 grid",
+              "P,Q"
+            ],
+            "output": "Total 70, through-P 30, through-Q 30."
+          },
+          {
+            "id": "MOVE-REPRESENT-D3-OVERLAP",
+            "kind": "DECIDE",
+            "action": "Recognize order-comparable marker geometry, build three-segment path through both and correct double-removal.",
+            "why_valid": "S->P->Q->T monotone, so shared path count3×1×3=9; inclusion-exclusion restores it.",
+            "inputs": [
+              "P=(1,2)",
+              "Q=(3,2)",
+              "E/N only"
+            ],
+            "output": "19 avoiding."
+          },
+          {
+            "id": "MOVE-PD3-CHECK",
+            "kind": "VERIFY",
+            "action": "Enumerate 70 words independently and filter visits.",
+            "why_valid": "Exactly 19 fail to visit either mark.",
+            "inputs": [
+              "All E/N words"
+            ],
+            "output": "19."
+          }
+        ],
+        "rubric": [
+          {
+            "criterion": "Represent count of all and each through-marker group",
+            "evidence_of": "70,30,30 correctly justified."
+          },
+          {
+            "criterion": "Choose and count shared paths geometrically",
+            "evidence_of": "P->Q possible, shared9."
+          },
+          {
+            "criterion": "Correct complement plus independent check",
+            "evidence_of": "70-30-30+9=19."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-QRT-REPRESENT-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-REPRESENT-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "A shortest grid route is an ordered E/N word; how can the marked vertices define collections of such words?",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-REPRESENT-D3-OVERLAP"
+        },
+        {
+          "text": "Use the relative positions of the two marked vertices to decide what kinds of through-point sets you should examine. Do not assume disjointness.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-REPRESENT-D3-OVERLAP"
+        },
+        {
+          "text": "After your attempted answer, check whether one path can pass P then Q, count three segments S->P->Q->T, and restore paths subtracted twice.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-REPRESENT-D3-OVERLAP"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-REPRESENT-D3-TARGET",
+        "safe_ref": "REP-QRT-REPRESENT-D3-TARGET",
+        "bound_ref": null,
+        "stage_refs": [
+          "PD3-TARGET"
+        ]
+      },
+      "repair_ref": "STEP-PD3-3",
+      "failure_signal": "Subtract 30+30 from70 but fail to count paths through BOTH.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-REPRESENT-D3",
+        "closure": "Assisted REPRESENT question, academic acceptance pending."
+      },
+      "independent_check": {
+        "statement": "Enumerate all C(8,4)=70 monotone words; 19 avoid both and 9 hit both.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Provisional REPRESENT D3 because learner maps spatial checkpoint order to overlapping event sets; not merely execute a listed counting formula.",
+        "component_evidence": {
+          "concept_model_selection": "Choose path-family event model.",
+          "representation_translation": "Grid geometry to words and intersecting route sets.",
+          "reasoning_chain_length": "Total, two events, intersection, complement.",
+          "algebra_computational_load": "Small binomial products.",
+          "trap_exception_sensitivity": "Shared routes subtracted twice if unrepresented."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-QRT-REPRESENT-D3-BOUNDARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3",
+        "grade9v3:cognitive_demand": {
+          "primary": "REPRESENT",
+          "secondary": [
+            "JUSTIFY",
+            "APPLY"
+          ],
+          "basis": "Use changed grid geometry to prove event sets are disjoint."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Geometric coordinate comparability, not arithmetic, decides shared count0.",
+          "common_wrong_route": "Carry over previous intersection nine."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-REPRESENT-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-REPRESENT-D3-BOUNDARY",
+      "stem": "TRANSFER: Keep the 4x4 E/N grid and P=(1,2), but MOVE the second forbidden vertex to Q=(2,1). Reconsider whether one shortest path can visit BOTH in either order. How many shortest paths avoid both? Explain the changed diagram-to-set relationship rather than copying the earlier intersection count.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Only unit East/North moves.",
+        "P=(1,2), moved Q=(2,1).",
+        "Show a geometric order proof."
+      ],
+      "figure_refs": [
+        "REP-QRT-REPRESENT-D3-TRANSFER"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "10 shortest paths avoid P(1,2) and moved Q(2,1).",
+        "reasoning": [
+          "Total C(8,4)=70.",
+          "Through P: 30. Through Q(2,1): C(3,2)C(5,2)=3×10=30.",
+          "P to Q would move South and Q to P would move West, both disallowed; shared set is empty.",
+          "Avoid both=70-30-30=10."
+        ],
+        "check": "Independent enumeration confirms 10 avoiding and zero through BOTH.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "crux_move_ref": "MOVE-REPRESENT-D3-DISJOINT",
+        "reasoning_route": [
+          {
+            "id": "MOVE-PD3-MOVED-PLOT",
+            "kind": "REPRESENT",
+            "action": "Plot moved Q(2,1) against P(1,2).",
+            "why_valid": "Relative order of coordinates determines possible shared visits.",
+            "inputs": [
+              "Moved marker Q",
+              "P"
+            ],
+            "output": "Incomparable coordinates."
+          },
+          {
+            "id": "MOVE-REPRESENT-D3-DISJOINT",
+            "kind": "DECIDE",
+            "action": "Demonstrate no E/N path can contain both marks in either order.",
+            "why_valid": "P->Q requires South, Q->P West.",
+            "inputs": [
+              "E/N only"
+            ],
+            "output": "Intersection empty."
+          },
+          {
+            "id": "MOVE-PD3-MOVED-CHECK",
+            "kind": "VERIFY",
+            "action": "Count 30 paths through each mark and independently enumerate.",
+            "why_valid": "70-30-30=10, verified.",
+            "inputs": [
+              "Total70"
+            ],
+            "output": "10."
+          }
+        ],
+        "rubric": [
+          {
+            "criterion": "Recognize coordinate-incomparable markers",
+            "evidence_of": "P->Q needs South, Q->P needs West."
+          },
+          {
+            "criterion": "Adjust intersection instead of copying previous9",
+            "evidence_of": "Shared0."
+          },
+          {
+            "criterion": "Independently count and check",
+            "evidence_of": "70-30-30=10."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-QRT-REPRESENT-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-REPRESENT-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Can one marker be reached from the other using only East/North unit steps? Try BOTH coordinate orders.",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-REPRESENT-D3-TRANSFER",
+        "safe_ref": "REP-QRT-REPRESENT-D3-TRANSFER",
+        "bound_ref": null,
+        "stage_refs": [
+          "PD3-TRANSFER"
+        ]
+      },
+      "repair_ref": "STEP-PD3-4",
+      "failure_signal": "Reuses the earlier nine-shared-path correction after moving marker.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-REPRESENT-D3",
+        "closure": "Changed marker order, fresh set intersection decision."
+      },
+      "independent_check": {
+        "statement": "Enumerate 70 E/N words; 10 avoid both P,Q and none pass both.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Representation transfer changes whether event sets intersect."
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-QRT-REPRESENT-D3-CLASSIFY"
+        ],
+        "statement": "Move one forbidden marker and change the path-set overlap criterion.",
+        "invariant": "Total70 and each through-marker family30.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-QRT-REPRESENT-D3-CLASSIFY",
+            "MIC-QRT-REPRESENT-D3:exit_task"
+          ],
+          "why_new": "Crossed coordinates make shared path impossible, so previous add-back9 becomes zero."
+        },
+        "protected_move_ref": "MOVE-REPRESENT-D3-DISJOINT"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-QRT-REPRESENT-D3",
+      "title": "Use grid representation for E/N word and overlapping through-marker sets",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-QRT-REPRESENT-D3"
+      ],
+      "entry_needs": [
+        "Read coordinates on a square lattice.",
+        "Count ordered E/N steps.",
+        "Multiply independent path segments."
+      ],
+      "learner_actions": [
+        "Predict whether a path can pass two ordered marks.",
+        "Work on generic 2x2 path words.",
+        "Repair subtract-only shortcut on independent 3x3 grid.",
+        "Solve new 3x3 exit with intersection correction."
+      ],
+      "help_plan": [
+        "Initial 4x4 visual contains only given vertices, no solved route.",
+        "H1/H2 ask for event representations, not complete target intersection.",
+        "H3 only after committed attempt supplies overlap strategy."
+      ],
+      "reveal_plan": "Three generic stages then original target route diagram without solution labels.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-QRT-REPRESENT-D3",
+          "purpose": "Original authored teaching",
+          "reason": "No external source rights."
+        }
+      ],
+      "when_not_suitable": [
+        "Academic D3 REPRESENT grade not confirmed.",
+        "Not official competition material."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "AUTHORED_TEST_D3_REPRESENT_ISSUE182",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "DATUM-QRT-REPRESENT-D3-1",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Generic 2x2 E/N route and comparable markers",
+      "meaning": "Generic three stage path representation",
+      "symbol": "E,N",
+      "locator": "TEST/library/figures/qrt-d3-represent-construct.svg"
+    },
+    {
+      "id": "DATUM-QRT-REPRESENT-D3-2",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Grid4x4 S(0,0),T(4,4),P(1,2),Q(3,2)",
+      "meaning": "Target unsolved grid",
+      "symbol": "P,Q",
+      "locator": "TEST/library/figures/qrt-d3-represent-attempt.svg"
+    },
+    {
+      "id": "DATUM-QRT-REPRESENT-D3-3",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Grid3x3 U(1,1),V(2,2)",
+      "meaning": "Independent misconception grid",
+      "symbol": "U,V",
+      "locator": "TEST/library/figures/qrt-d3-represent-repair.svg"
+    },
+    {
+      "id": "DATUM-QRT-REPRESENT-D3-4",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-REPRESENT-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "Grid4x4 P(1,2),Q(2,1)",
+      "meaning": "Moved marker transfer grid",
+      "symbol": "P,Q",
+      "locator": "TEST/library/figures/qrt-d3-represent-transfer.svg"
+    }
+  ]
+}
