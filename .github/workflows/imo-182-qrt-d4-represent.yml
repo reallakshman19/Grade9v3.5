@@ -1,0 +1,57 @@
+name: IMO 182 QRT REPRESENT D4 authored TEST (sole renderer)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo-182-qrt-d4-represent.yml'
+      - 'TEST/imo-research/qrt-d4/represent-d4.*'
+      - 'TEST/imo-research/qrt-d4/figures/represent-*.svg'
+      - 'TEST/products/imo182-qrt-d4-represent.manifest.json'
+      - 'tests/test_imo182_qrt_d4_represent.py'
+      - 'tests/imo182_qrt_d4_represent_browser.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  represent-d4-five-role:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validator and browser package
+        run: python -m pip install --quiet jsonschema playwright
+      - name: Sole registered TEST renderer
+        run: python Shared/tools/render_core.py build --manifest TEST/products/imo182-qrt-d4-represent.manifest.json --out build/imo182-qrt/d4/represent --draft --reference
+      - name: Schema, independent bipartite matching, golden slots and H3
+        run: python -m unittest tests.test_imo182_qrt_d4_represent -v
+      - name: Install Chromium
+        run: python -m playwright install --with-deps chromium
+      - name: Actual browser five roles, separate boundary, blank attempt and H3
+        run: python tests/imo182_qrt_d4_represent_browser.py
+      - name: SHA256 per exact actual HTML file
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,hashlib
+          folder=Path('build/imo182-qrt/d4/represent')
+          if folder.exists():
+              evidence={'cell':'QRT-REPRESENT-D4','qrt_accepted':False,'source_rights':'AUTHORED_TEST_ONLY','renderer':'Shared/tools/render_core.py',
+                        'html':[{'role':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(folder.glob('*.html'))]}
+              (folder/'represent-d4-evidence.json').write_text(json.dumps(evidence,indent=2)+'\n')
+              print(json.dumps(evidence,indent=2))
+          else:
+              print('BLOCKED_RENDER: no actual HTML')
+          PY
+      - name: Preserve real HTML, receipt and six browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-qrt-represent-d4-actual-html
+          path: build/imo182-qrt/d4/represent/
+          if-no-files-found: warn
