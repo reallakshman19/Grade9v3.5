@@ -785,52 +785,52 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 original EXPLAIN TEST",
+        "grade9v3:authored_by": "AGENT-D1 original APPLY TEST",
         "grade9v3:cognitive_demand": {
-          "primary": "EXPLAIN",
+          "primary": "APPLY",
           "secondary": [],
-          "basis": "Justify parity by describing what happens to the two leftover counters, not just state an even sum."
+          "basis": "Given relevant dimensions and area rule, substitute, compute and label square units."
         }
       },
       "id": "Q-TEST-IMO182-D1-APP-CORE1A-WORKED",
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED",
       "original_identifier": "Q-TEST-IMO182-D1-APP-CORE1A-WORKED",
-      "stem": "Worked DIFFERENT example: one group has 3 counters, another 5. Explain why joining them makes an even group by tracking complete pairs and their two leftover counters.",
+      "stem": "Worked DIFFERENT rectangle: a display card is 3 cm long and 5 cm wide. Apply the given A=length×width rule. How many 1 cm² tiles cover it, and what area unit should be written?",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Counters are distinct objects; groups can be arranged into pairs.",
-        "Even means no lone counter; odd means exactly one lone counter.",
-        "The question is original AUTHORED TEST, no organizer source."
+        "Region is rectangular.",
+        "Dimensions are in centimetres.",
+        "The area rule A=length×width is provided.",
+        "Wholly authored TEST item, no official source."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-APP-AREA-STAGES"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "3 is one pair plus one lone; 5 is two pairs plus one lone. The two lone counters pair up, leaving four pairs and an even total 8.",
+        "summary": "3×5=15 cm².",
         "reasoning": [
-          "Three has one pair and one lone counter.",
-          "Five has two pairs and one lone counter.",
-          "The two lone counters become a fourth pair, leaving none unpaired.",
-          "Therefore the joined set is even."
+          "Three tiles across each of five rows give fifteen.",
+          "Apply A=l×w with 3 cm and 5 cm.",
+          "The covered area is 15 square centimetres."
         ],
         "reasoning_route": [
           {
             "id": "APP-D1-WORK-3-5",
-            "kind": "CONNECT",
-            "action": "Combine the two leftovers into one new pair.",
-            "why_valid": "Three and five each leave one when paired.",
+            "kind": "DECIDE",
+            "action": "Multiply 3 and 5 for fifteen 1 cm² tiles.",
+            "why_valid": "The grid has 5 rows of 3 unit squares.",
             "inputs": [
-              "3 = 2+1",
-              "5 = 4+1"
+              "l=3 cm",
+              "w=5 cm"
             ],
-            "output": "Four complete pairs"
+            "output": "15 cm²"
           }
         ],
         "crux_move_ref": "APP-D1-WORK-3-5",
-        "check": "3+5=8=4×2.",
+        "check": "Count 5 rows of 3 one-centimetre squares.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -854,20 +854,20 @@
         "safe_ref": "REP-TEST-IMO182-D1-APP-AREA-STAGES",
         "bound_ref": "REP-TEST-IMO182-D1-APP-AREA-STAGES",
         "stage_refs": [
-          "EXP-STAGE-PAIR-RULE",
-          "EXP-STAGE-WORKED-3-5",
-          "EXP-STAGE-GENERAL-CHECK"
+          "APP-STAGE-AREA-MEANING",
+          "APP-STAGE-WORKED-3-5",
+          "APP-STAGE-WORKED-CHECK"
         ]
       },
       "repair_ref": "APP-D1-TC-2",
-      "failure_signal": "A numerical even answer is not enough: explain why the lone counters from each group become a pair.",
+      "failure_signal": "Area counts square tiles, so multiply length and width rather than add.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-APP-COUNTER-GROUPS",
-        "closure": "Distinct taught 3+5 example is not the 7+9 assessment mechanism."
+        "closure": "Correct substitution on one item does not establish independent transfer or academic acceptance."
       },
       "independent_check": {
-        "statement": "Verify numeric total equals two times the count of complete pairs after showing the causal grouping.",
-        "check_type": "PAIR_COMPLETENESS"
+        "statement": "Count repeated rows of unit squares to verify numeric area.",
+        "check_type": "EQUAL_ARRAY_COUNT"
       },
       "difficulty": {
         "band": "D1",
@@ -875,17 +875,17 @@
         "components": {
           "concept_model_selection": 0,
           "representation_translation": 1,
-          "reasoning_chain_length": 1,
-          "algebra_computational_load": 0,
+          "reasoning_chain_length": 0,
+          "algebra_computational_load": 1,
           "trap_exception_sensitivity": 0
         },
-        "basis": "One directed causal explanation from a supplied pair model; not a multi-stage general proof.",
+        "basis": "The specific area rule is given, one substitution with whole-number multiplication and square units.",
         "component_evidence": {
-          "concept_model_selection": "Pair-group model and meaning supplied.",
-          "representation_translation": "Read groups into complete pairs plus one lone.",
-          "reasoning_chain_length": "Explain one linking event: two lone counters make an extra complete pair.",
-          "algebra_computational_load": "Only small whole-number counting used as optional check.",
-          "trap_exception_sensitivity": "Wrong odd+odd intuition diagnosed separately."
+          "concept_model_selection": "No rule selection required; rectangle and A=l×w given.",
+          "representation_translation": "Map measured length/width into stated formula.",
+          "reasoning_chain_length": "Single application with independent numeric check.",
+          "algebra_computational_load": "One whole-number multiplication or one exact division for inverse.",
+          "trap_exception_sensitivity": "Confusing area with addition is diagnosed separately."
         }
       },
       "learner_question_type": "constructed_response"
@@ -898,25 +898,25 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 original EXPLAIN TEST",
+        "grade9v3:authored_by": "AGENT-D1 original APPLY TEST",
         "grade9v3:cognitive_demand": {
-          "primary": "EXPLAIN",
+          "primary": "APPLY",
           "secondary": [],
-          "basis": "Justify parity by describing what happens to the two leftover counters, not just state an even sum."
+          "basis": "Given relevant dimensions and area rule, substitute, compute and label square units."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "Explain what happens to both lone counters when two odd groups are joined.",
-          "common_wrong_route": "State 7+9=16 without causal pairing or suppose both odd groups leave separate singles."
+          "stable_crux_move": "Substitute measured rectangle dimensions into area=l×w and give 28 cm².",
+          "common_wrong_route": "Add 7+4 or label answer as linear cm."
         },
         "grade9v3:core2_support_plan": {
           "protected_move_refs": [
-            "APP-D1-QA-MECHANISM"
+            "APP-D1-QA-SUBSTITUTE"
           ],
           "support_completions": [
             {
               "support_ref": "scaffolds[2]",
               "completed_move_refs": [
-                "APP-D1-QA-MECHANISM"
+                "APP-D1-QA-SUBSTITUTE"
               ],
               "availability": "AFTER_ATTEMPT"
             }
@@ -927,64 +927,63 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED",
       "original_identifier": "Q-TEST-IMO182-D1-APP-CORE2A-RECTANGLE-AREA-APPLICATION",
-      "stem": "An organizer places 7 red counters and 9 blue counters into ONE collection. Without relying only on the arithmetic total, EXPLAIN why the combined collection can be arranged into complete PAIRS with NO leftover counter. Name what happens to the one unmatched counter from EACH original odd group.",
+      "stem": "A school has a RECTANGULAR display mat measuring 7 cm along its length and 4 cm along its perpendicular width. Use the supplied rule A = length × width to calculate the area covered. Show your substitution and write the correct square-area unit.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Counters are distinct objects; groups can be arranged into pairs.",
-        "Even means no lone counter; odd means exactly one lone counter.",
-        "The question is original AUTHORED TEST, no organizer source."
+        "Region is rectangular.",
+        "Dimensions are in centimetres.",
+        "The area rule A=length×width is provided.",
+        "Wholly authored TEST item, no official source."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-APP-AREA-DIMENSIONS-GIVEN"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "Seven gives three complete pairs and one lone; nine gives four pairs and one lone. The two lone counters pair together, so eight pairs contain all 16 counters, making the total even.",
+        "summary": "A = 7×4 = 28 cm².",
         "reasoning": [
-          "Seven red counters can be grouped as three pairs and one lone.",
-          "Nine blue counters can be grouped as four pairs and one lone.",
-          "Pair the two leftover counters together, creating an eighth pair.",
-          "Every counter now has a partner, so the combined 16-counter group is even."
+          "The shape is a rectangle, and length 7 cm and width 4 cm are supplied.",
+          "Substitute into the area rule A=l×w: 7×4.",
+          "The mat covers 28 unit squares of 1 cm² each, so its area is 28 cm²."
         ],
         "reasoning_route": [
           {
-            "id": "APP-D1-QA-STRUCTURE",
+            "id": "APP-D1-QA-GIVENS",
             "kind": "REPRESENT",
-            "action": "Partition each odd group into full pairs and one lone.",
-            "why_valid": "Odd collections always have exactly one unmatched counter.",
+            "action": "Read length 7 cm and width 4 cm as the two rule slots.",
+            "why_valid": "The dimensions are perpendicular side measurements of the rectangle.",
             "inputs": [
-              "7 red",
-              "9 blue"
+              "7 cm long",
+              "4 cm wide"
             ],
-            "output": "3 pairs + one; 4 pairs + one"
+            "output": "l=7,w=4"
           },
           {
-            "id": "APP-D1-QA-MECHANISM",
-            "kind": "CONNECT",
-            "action": "Explain that the two lone counters form a new complete pair, leaving zero leftovers.",
-            "why_valid": "The combination preserves both counters; they can be matched with each other.",
+            "id": "APP-D1-QA-SUBSTITUTE",
+            "kind": "DECIDE",
+            "action": "Apply the supplied area rule and calculate 7×4 = 28 cm².",
+            "why_valid": "A rectangular grid has width rows of length unit squares, so 7 times 4 is its area.",
             "inputs": [
-              "one lone red",
-              "one lone blue"
+              "A=l×w",
+              "l=7",
+              "w=4"
             ],
-            "output": "no lone counter; complete pairs"
+            "output": "28 cm²"
           },
           {
             "id": "APP-D1-QA-CHECK",
             "kind": "VERIFY",
-            "action": "Check eight pairs account for all 16 counters.",
-            "why_valid": "Three plus four existing pairs plus the new pair equals eight.",
+            "action": "Check four rows of seven squares give 28.",
+            "why_valid": "The tile count matches 7×4, with area in squared units.",
             "inputs": [
-              "3 pairs",
-              "4 pairs",
-              "one new pair"
+              "four rows of seven"
             ],
-            "output": "8 pairs=16"
+            "output": "28 unit squares"
           }
         ],
-        "crux_move_ref": "APP-D1-QA-MECHANISM",
-        "check": "Three plus four plus one pairs equals eight; 7+9=16 equals 2×8.",
+        "crux_move_ref": "APP-D1-QA-SUBSTITUTE",
+        "check": "Count 4 rows × 7 tiles = 28 unit squares.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -1003,22 +1002,22 @@
       "hints": [],
       "scaffolds": [
         {
-          "text": "Arrange EACH original odd group into whole pairs and identify any leftover counter; do not yet describe the combined groups.",
+          "text": "The mat is rectangular. Identify which given number is its LENGTH and which is its WIDTH; do not perform the calculation yet.",
           "support_kind": "REPRESENT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "APP-D1-QA-STRUCTURE"
+          "supports_move_ref": "APP-D1-QA-GIVENS"
         },
         {
-          "text": "The meaning of 'even' concerns whether counters can all be paired. Identify what must be established after the two groups join, without finishing the explanation.",
+          "text": "Use the displayed AREA rule, not a sum of two edges. What kind of area unit will result when centimetre dimensions are used?",
           "support_kind": "CONNECT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "APP-D1-QA-MECHANISM"
+          "supports_move_ref": "APP-D1-QA-SUBSTITUTE"
         },
         {
-          "text": "After recording your own mechanism, compare the two original leftover counters with the final leftover count, then verify using the total number of pairs.",
+          "text": "After writing your own calculation, compare its product with a tile grid of equal rows and verify the square-unit label.",
           "support_kind": "CONNECT",
           "reveals": "METHOD",
-          "supports_move_ref": "APP-D1-QA-MECHANISM"
+          "supports_move_ref": "APP-D1-QA-SUBSTITUTE"
         }
       ],
       "hint_ladder": [
@@ -1050,14 +1049,14 @@
         ]
       },
       "repair_ref": "APP-D1-TC-2",
-      "failure_signal": "A numerical even answer is not enough: explain why the lone counters from each group become a pair.",
+      "failure_signal": "Area counts square tiles, so multiply length and width rather than add.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-APP-COUNTER-GROUPS",
-        "closure": "Distinct taught 3+5 example is not the 7+9 assessment mechanism."
+        "closure": "Correct substitution on one item does not establish independent transfer or academic acceptance."
       },
       "independent_check": {
-        "statement": "Verify numeric total equals two times the count of complete pairs after showing the causal grouping.",
-        "check_type": "PAIR_COMPLETENESS"
+        "statement": "Count repeated rows of unit squares to verify numeric area.",
+        "check_type": "EQUAL_ARRAY_COUNT"
       },
       "difficulty": {
         "band": "D1",
@@ -1065,17 +1064,17 @@
         "components": {
           "concept_model_selection": 0,
           "representation_translation": 1,
-          "reasoning_chain_length": 1,
-          "algebra_computational_load": 0,
+          "reasoning_chain_length": 0,
+          "algebra_computational_load": 1,
           "trap_exception_sensitivity": 0
         },
-        "basis": "One directed causal explanation from a supplied pair model; not a multi-stage general proof.",
+        "basis": "The specific area rule is given, one substitution with whole-number multiplication and square units.",
         "component_evidence": {
-          "concept_model_selection": "Pair-group model and meaning supplied.",
-          "representation_translation": "Read groups into complete pairs plus one lone.",
-          "reasoning_chain_length": "Explain one linking event: two lone counters make an extra complete pair.",
-          "algebra_computational_load": "Only small whole-number counting used as optional check.",
-          "trap_exception_sensitivity": "Wrong odd+odd intuition diagnosed separately."
+          "concept_model_selection": "No rule selection required; rectangle and A=l×w given.",
+          "representation_translation": "Map measured length/width into stated formula.",
+          "reasoning_chain_length": "Single application with independent numeric check.",
+          "algebra_computational_load": "One whole-number multiplication or one exact division for inverse.",
+          "trap_exception_sensitivity": "Confusing area with addition is diagnosed separately."
         }
       },
       "learner_question_type": "constructed_response"
@@ -1088,79 +1087,78 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 original EXPLAIN TEST",
+        "grade9v3:authored_by": "AGENT-D1 original APPLY TEST",
         "grade9v3:cognitive_demand": {
-          "primary": "EXPLAIN",
+          "primary": "APPLY",
           "secondary": [],
-          "basis": "Infer and explain the parity mechanism for a missing subgroup from a fully pairable total and a known odd subgroup; numerical subtraction is an independent check, not the explanation."
+          "basis": "Given relevant dimensions and area rule, substitute, compute and label square units."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "An unmatched counter in the known odd subgroup must meet an unmatched one from the remainder to keep the whole total pairable.",
-          "common_wrong_route": "Simply write 18−7=11 or treat removing an odd subgroup as leaving even."
+          "stable_crux_move": "Apply inverse area rule with known area and width; divide instead of multiply.",
+          "common_wrong_route": "Treat area as length or multiply area by width."
         }
       },
       "id": "Q-TEST-IMO182-D1-APP-CORE2B-INVERSE-RECTANGLE-LENGTH",
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-APP-AREA-AUTHORED",
-      "original_identifier": "AUTHORED-APP-D1-INVERSE-18-7",
-      "stem": "INVERSE explanation: one collection has 18 counters, all arranged in 9 complete pairs. A first subgroup has 7 counters (three pairs and one leftover). The remaining subgroup has 11 counters. Explain WHY the remaining subgroup must also have ONE unmatched counter, using the pair structure of the original 18 counters, not just 18−7=11.",
+      "original_identifier": "Q-TEST-IMO182-D1-APP-CORE2B-INVERSE-RECTANGLE-LENGTH",
+      "stem": "INVERSE APPLICATION: a rectangular card covers 24 cm² and is 4 cm wide. Its length is NOT given. Apply the SAME rule A=length×width, this time to find the missing LENGTH in centimetres. Explain what mathematical operation undoes multiplying by width.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "The full collection has 18 counters and is perfectly pairable.",
-        "Seven are put into the first subgroup, leaving eleven in the second.",
-        "An odd count means one unmatched counter in a pairing.",
-        "This is an original TEST mechanism question."
+        "Region is rectangular.",
+        "Dimensions are in centimetres.",
+        "The area rule A=length×width is provided.",
+        "Wholly authored TEST item, no official source."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-APP-INVERSE-AREA-GIVEN"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "The 7-counter subgroup has one leftover. The 18-counter total has no leftover, so the other 11-counter subgroup must also contribute one leftover to pair with it. Therefore the remaining 11 counters are odd.",
+        "summary": "Length = 24÷4 = 6 cm.",
         "reasoning": [
-          "The full group of 18 has no lone counter.",
-          "The first seven have three pairs plus one lone.",
-          "For the whole collection to have no lone counter, a lone from the remaining subgroup must pair with the first group's lone.",
-          "The remaining 11 has five pairs and one lone, agreeing with the given count."
+          "The known area is 24 cm² and width is 4 cm.",
+          "From A=l×w with nonzero width, divide the given area by width.",
+          "24÷4 = 6, so the missing length is 6 cm."
         ],
         "reasoning_route": [
           {
-            "id": "APP-D1-QB-GIVEN",
+            "id": "APP-D1-QB-INVERSE-GIVEN",
             "kind": "REPRESENT",
-            "action": "Use the total's pairability and the first subgroup's one leftover.",
-            "why_valid": "The total has 9 whole pairs and the first group of 7 has 3 pairs plus one.",
+            "action": "Identify the known area and one dimension as A=24 and w=4.",
+            "why_valid": "The rectangular card uses the same area rule.",
             "inputs": [
-              "18 all paired",
-              "7 first group"
+              "A=24 cm²",
+              "w=4 cm"
             ],
-            "output": "total no leftover, first group one lone"
+            "output": "l unknown"
           },
           {
             "id": "APP-D1-QB-INVERSE",
-            "kind": "CONNECT",
-            "action": "Explain why the remaining group must have a lone counter to match the first group's leftover.",
-            "why_valid": "A lone from the first subgroup cannot disappear; since 18 has no lone, the other subgroup must supply its partner.",
+            "kind": "DECIDE",
+            "action": "Reverse multiplication by nonzero width to calculate l=24÷4=6 cm.",
+            "why_valid": "If A=l×w then l=A÷w for w not zero.",
             "inputs": [
-              "one leftover in 7",
-              "no leftover in 18"
+              "A=24",
+              "w=4"
             ],
-            "output": "remaining subgroup has one leftover"
+            "output": "l=6 cm"
           },
           {
-            "id": "APP-D1-QB-CHECK",
+            "id": "APP-D1-QB-VERIFY",
             "kind": "VERIFY",
-            "action": "Check remaining eleven as five pairs plus one lone.",
-            "why_valid": "18−7=11 and 11=2×5+1.",
+            "action": "Check the recovered rectangle 6 by 4 covers 24 squares.",
+            "why_valid": "6×4=24 matches given area.",
             "inputs": [
-              "18",
-              "7"
+              "l=6",
+              "w=4"
             ],
-            "output": "11 odd"
+            "output": "A=24 cm²"
           }
         ],
         "crux_move_ref": "APP-D1-QB-INVERSE",
-        "check": "18−7=11=2×5+1; seven and eleven each leave a lone, and the two lone counters form one complete pair.",
+        "check": "6 cm×4 cm=24 cm².",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -1178,7 +1176,7 @@
       ],
       "hints": [
         {
-          "text": "A group with 18 counters has no lone counter, while 7 counters have exactly one. What must be true of the final pairing after the groups are considered together?",
+          "text": "Area equals length times nonzero width. Which operation reverses multiplication by the given width?",
           "reveals": "CONCEPT"
         }
       ],
@@ -1199,15 +1197,15 @@
           "APP-D1-QB-GIVENS"
         ]
       },
-      "repair_ref": "APP-D1-TC-1",
-      "failure_signal": "Explain how one leftover in a subgroup can coexist with zero leftover in the 18-counter total.",
+      "repair_ref": "APP-D1-TC-2",
+      "failure_signal": "Area counts square tiles, so multiply length and width rather than add.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-APP-COUNTER-GROUPS",
-        "closure": "Inverse explanation after the forward 7+9 task, not simply a new pair of odd addends."
+        "closure": "Correct substitution on one item does not establish independent transfer or academic acceptance."
       },
       "independent_check": {
-        "statement": "Verify remainder 11 and show 11=2×5+1 while 7=2×3+1; two leftovers together are paired.",
-        "check_type": "PAIR_COMPLETENESS"
+        "statement": "Multiply the recovered length by the given width to recover 24 cm².",
+        "check_type": "INVERSE_OPERATION"
       },
       "difficulty": {
         "band": "D1",
@@ -1215,17 +1213,17 @@
         "components": {
           "concept_model_selection": 0,
           "representation_translation": 1,
-          "reasoning_chain_length": 1,
-          "algebra_computational_load": 0,
+          "reasoning_chain_length": 0,
+          "algebra_computational_load": 1,
           "trap_exception_sensitivity": 0
         },
-        "basis": "Given the 18/7/11 values and the pair model, state one mechanism linking a lone from the first subgroup to the remainder; D1 band is provisional pending reviewer.",
+        "basis": "The specific area rule is given, one substitution with whole-number multiplication and square units.",
         "component_evidence": {
-          "concept_model_selection": "Explicit paired whole and first subgroup, no choice of strategy.",
-          "representation_translation": "Interpret one full-group pair diagram and one unmatched counter.",
-          "reasoning_chain_length": "One causal complement linking the missing lone counter; full group has none.",
-          "algebra_computational_load": "Remaining quantity already supplied, subtraction merely a check.",
-          "trap_exception_sensitivity": "No hidden condition beyond parity."
+          "concept_model_selection": "No rule selection required; rectangle and A=l×w given.",
+          "representation_translation": "Map measured length/width into stated formula.",
+          "reasoning_chain_length": "Single application with independent numeric check.",
+          "algebra_computational_load": "One whole-number multiplication or one exact division for inverse.",
+          "trap_exception_sensitivity": "Confusing area with addition is diagnosed separately."
         }
       },
       "learner_question_type": "constructed_response",
@@ -1234,15 +1232,15 @@
         "builds_on": [
           "Q-TEST-IMO182-D1-APP-CORE2A-RECTANGLE-AREA-APPLICATION"
         ],
-        "statement": "The forward Core2A task combines two known odd groups and explains evenness. Here the even complete group and one odd subgroup are given, and the learner explains why the other subgroup must be odd.",
-        "invariant": "Two lone counters must match to leave zero unpaired in a combined even collection.",
+        "statement": "Core2A supplies both sides and asks area; Core2B supplies area and one side and asks for the other, reversing the known and unknown relation.",
+        "invariant": "The same A=l×w area relation and square-unit conventions apply.",
         "novelty": {
           "checked_against": [
             "Q-TEST-IMO182-D1-APP-CORE2A-RECTANGLE-AREA-APPLICATION",
             "MIC-TEST-IMO182-D1-APP-RECTANGLE-AREA:exit_task",
             "MIC-TEST-IMO182-D1-APP-RECTANGLE-AREA:boundary_test"
           ],
-          "why_new": "Inverse explanation from full even group plus an odd component, rather than new odd addends or a restatement of the forward worked example. Both subgroup sizes are given, so one causal link remains."
+          "why_new": "Inversion of quantity and operation from direct multiplication to division, not merely substituting different dimensions."
         },
         "protected_move_ref": "APP-D1-QB-INVERSE"
       }
