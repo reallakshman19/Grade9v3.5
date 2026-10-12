@@ -15,9 +15,9 @@ import jsonschema
 from Shared.tools import core2_v2
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "TEST/imo-research/qrt-d3/represent.v1.json"
+SOURCE = ROOT / "TEST/imo-research/qrt-d3/synthesize.v1.json"
 MANIFEST = ROOT / "TEST/products/imo182-qrt-d3-synthesize.manifest.json"
-OUT = ROOT / "build/imo182-qrt/d3/represent"
+OUT = ROOT / "build/imo182-qrt/d3/synthesize"
 FROZEN = ROOT / "golden/units/G-IMO-G9-FIVE-CORE-20261012"
 QID = "Q-TEST-QRT-SYNTHESIZE-D3-CLASSIFY"
 W = "MOVE-SYNTHESIZE-D3-JOINT-COUNT"
