@@ -1,0 +1,1379 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-MODEL-D4",
+  "title": "Original D4 exterior-accessible square-table modeling",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Wholly authored TEST model of joined square-table sides with inaccessible sealed courtyard and new open-courtyard transfer; not an official or accepted exam question.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-D4-MODEL-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original unit-square table accessibility modeling",
+      "origin": "AUTHORED",
+      "locator": "AUTHOR_CREATED: IMO #182 Tab7 QRT-MODEL-D4",
+      "edition": "2026-10-12 AUTHORED TEST",
+      "section": "Shared edges, exterior-connected borders, enclosed inaccessible courtyards",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "All words/data/SVGs are wholly authored TEST, no official contest source or key.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "4n−2e counts unshared table sides.",
+        "If c such sides face a sealed inaccessible courtyard, outside-accessible chairs A=4n−2e−c.",
+        "4x4 sealed border gives A16; opening top row second position gives A24."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Mathematical model with a topology-dependent correction and independent changed-input transfer.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-D4-MODEL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Model chair sites along accessible table borders",
+      "topic": "Grid geometry and access constraints",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Construct model variables n,e,c for square tables, shared seams and sealed cavities; change topology and revise c.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-D4-MODEL-CORE1A",
+      "conventions": [
+        {
+          "id": "cells",
+          "statement": "Each table fills one grid unit-square cell and offers one possible chair per side accessible from the exterior."
+        },
+        {
+          "id": "joined",
+          "statement": "Each shared full-edge join makes both opposing chair sides unusable."
+        },
+        {
+          "id": "voids",
+          "statement": "An unshared side facing a fully enclosed vacant courtyard cannot hold a chair approached from outside."
+        },
+        {
+          "id": "open",
+          "statement": "Removing a noncorner outer border table can connect the courtyard to the exterior and make its formerly inaccessible sides available."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-D4-MODEL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "Formulate, evaluate and revise a counting model for square-table perimeter seating with shared seams and a completely enclosed courtyard.",
+      "success_criterion": "Learner derives A=4n−2e−c, identifies closed 4x4 ring n12,e12,c8 and16 accessible chair sites, then changed open ring n11,e10,c0 and24 sites.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-D4-MODEL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Build an external-access model from table cells and courtyard reachability",
+      "bucket_id": "BUCKET-D4-MODEL",
+      "primary_capability_ref": "CAP-D4-MODEL",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Construct model variables n,e,c for square tables, shared seams and sealed cavities; change topology and revise c.",
+      "entry_assumptions": [
+        "Grid squares and adjacent full-side joins.",
+        "Counting shared edges without double counting.",
+        "The meaning of an inaccessible enclosed interior courtyard."
+      ],
+      "inferential_jump": "Replace a naive exposed-edge count with a model correcting for completely sealed cavities, then adapt after opening the cavity to outside.",
+      "teaching_path": [
+        {
+          "id": "D4-MOD-STEP-UNITS",
+          "role": "DECLARE",
+          "action": "Begin with four candidate chair sides per square table; let n count occupied unit cells.",
+          "why_valid": "Each table has four unit edges.",
+          "inputs": [],
+          "output": "4n candidate sides.",
+          "source_ref": "SRC-D4-MODEL-ORIGINAL"
+        },
+        {
+          "id": "D4-MOD-STEP-SEAMS",
+          "role": "TRANSFORM",
+          "action": "Let e count full shared edges between adjacent tables. Every such edge removes two candidate sides.",
+          "why_valid": "The two joined tables each lose one side.",
+          "inputs": [
+            "unit-square table layout"
+          ],
+          "output": "4n−2e unshared sides.",
+          "source_ref": "SRC-D4-MODEL-ORIGINAL"
+        },
+        {
+          "id": "D4-MOD-STEP-ACCESS",
+          "role": "CONNECT",
+          "action": "Distinguish outside-connected exposed sides from sides facing a sealed empty courtyard; reserve a count c for the latter.",
+          "why_valid": "Unshared need not mean reachable from outside.",
+          "inputs": [
+            "unit-square table layout"
+          ],
+          "output": "A context-valid model needs accessibility classification.",
+          "source_ref": "SRC-D4-MODEL-ORIGINAL"
+        },
+        {
+          "id": "D4-MOD-STEP-CHECK",
+          "role": "VERIFY",
+          "action": "Check a 3-table L-shaped anchor with two shared seams and no hole by tracing the outside border.",
+          "why_valid": "The L has 12 candidate sides, two joins remove four.",
+          "inputs": [
+            "unit-square table layout"
+          ],
+          "output": "The L anchor has eight accessible sides.",
+          "source_ref": "SRC-D4-MODEL-ORIGINAL"
+        }
+      ],
+      "relation_refs": [
+        "REL-D4-MODEL"
+      ],
+      "representation_refs": [
+        "REP-D4-MODEL-CORE1A"
+      ],
+      "question_family_refs": [
+        "FAM-D4-MODEL"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Every unshared edge on a closed square ring is available for a chair reached from outside.",
+          "diagnostic_prompt": "Can a visitor reach the edges facing the sealed center of a 3x3 table ring?",
+          "repair": "Count enclosed-courtyard-facing sides separately and exclude them from outside-accessible sites."
+        },
+        {
+          "wrong_idea": "Every table-to-table join removes only one possible chair side.",
+          "diagnostic_prompt": "Each table had a side at the joint before tables touched. What happens to BOTH candidate sites?",
+          "repair": "Each join removes two sites; count shared edges once but subtract twice."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independently model a 3x3 ring of square tables with the middle cell empty and sealed. Determine n, e, inaccessible inward-facing sides c and accessible chair sites. Explain why unshared sides alone overcounts.",
+        "source_ref": "SRC-D4-MODEL-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "n=8, e=8, c=4 and A=12 accessible exterior sides.",
+          "reasoning": [
+            "Eight occupied cells form a cycle with eight shared full-side contacts.",
+            "Thirty-two candidate sides minus sixteen sides at shared contacts gives sixteen unshared sides.",
+            "Four of those unshared sides border the sealed central cell and are not externally accessible.",
+            "Therefore A=32−16−4=12; direct outer perimeter also has 12 unit edges."
+          ],
+          "check": "The outside of a 3×3 square has perimeter12.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo182_qrt_d4_model.py",
+            "bindings": {
+              "shape": "3x3 closed ring",
+              "n": 8,
+              "e": 8,
+              "c": 4,
+              "A": 12
+            }
+          }
+        }
+      },
+      "research_contribution": "Original AUTHORED TEST MODEL-D4; demand-band suitability and learner readiness await qualified independent review.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-D4-MODEL-PERIMETER",
+          "decision": "Develop a no-hole L-shaped perimeter model and introduce an accessibility question, preserving the sealed-ring correction as Core2A's protected act.",
+          "step_refs": [
+            "D4-MOD-STEP-UNITS",
+            "D4-MOD-STEP-SEAMS",
+            "D4-MOD-STEP-ACCESS",
+            "D4-MOD-STEP-CHECK"
+          ],
+          "representation_ref": "REP-D4-MODEL-CORE1A",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-D4-MODEL"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Trace all eight exposed L-shape unit edges and compare with 4×3−2×2.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "D4-MOD-ANCHOR-CELLS",
+            "D4-MOD-ANCHOR-SEAMS",
+            "D4-MOD-ANCHOR-EXPOSED"
+          ],
+          "worked_anchor_ref": "Q-D4-MODEL-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "Why does a 3-table L with two shared full sides offer eight accessible edges?",
+        "result": "4×3−2×2=8, and its outside boundary is open throughout.",
+        "representation_ref": "REP-D4-MODEL-CORE1A"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A student uses 4n−2e for the chair count on every joined-table arrangement. Why is this not enough for a closed ring around an inaccessible empty center?",
+          "defensible_answer": "Unshared inner edges surrounding a sealed courtyard are not accessible to visitors approaching from outside."
+        },
+        "attempt": {
+          "produces": "A physical edge-counting model with distinct table, shared-contact and inaccessible-inner-boundary variables; corrected under an opening.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Define n occupied squares and e shared full-edge joins.",
+              "evidence_of": "Counts each seam once and removes two sides."
+            },
+            {
+              "criterion": "Explain why exposed does not always mean exterior-accessible.",
+              "evidence_of": "Detects sealed courtyard boundary."
+            },
+            {
+              "criterion": "Model inaccessible sealed-hole sides separately by c.",
+              "evidence_of": "Explains A=4n−2e−c without assuming every unshared side is reachable."
+            },
+            {
+              "criterion": "Revise c when an opening connects courtyard to exterior.",
+              "evidence_of": "The changed case is recomputed rather than copied."
+            }
+          ],
+          "accepted": [
+            "Start from 4n table sides; subtract 2e for two sides consumed per shared seam. If c additional unshared edges face sealed inaccessible voids, outside-accessible chairs A=4n−2e−c."
+          ],
+          "rejected": [
+            "Every exposed inner cavity edge can hold an outside-reachable chair.",
+            "Each shared seam removes one seat."
+          ],
+          "task": {
+            "prompt": "A learner says the chair model 4n−2e works for ANY joined square-table shape. Test that claim on a closed grid ring with an unreachable center, build the corrected model and consider an opening to the outside.",
+            "givens": [
+              "One square table occupies each marked unit cell.",
+              "Each shared full side makes two chair sites unavailable.",
+              "A chair site must be reachable from outside."
+            ],
+            "representation_ref": "REP-D4-MODEL-CORE1B",
+            "stage_refs": [
+              "D4-MOD-WRONG"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "How many possible unit-edge chairs are there before joining tables?",
+              "why_this_ask": "Elicits n as physical count.",
+              "from_step_ref": "D4-MOD-STEP-UNITS"
+            },
+            {
+              "ask": "Why does one shared edge remove two sites?",
+              "why_this_ask": "Repairs double-counting.",
+              "from_step_ref": "D4-MOD-STEP-SEAMS"
+            },
+            {
+              "ask": "Can all unshared sides be approached from outside a sealed ring?",
+              "why_this_ask": "Exposes the missing condition.",
+              "from_step_ref": "D4-MOD-STEP-ACCESS"
+            },
+            {
+              "ask": "What does c represent in a corrected exterior-access model?",
+              "why_this_ask": "Requires an explicit physically meaningful variable.",
+              "from_step_ref": "D4-MOD-STEP-ACCESS"
+            },
+            {
+              "ask": "When one boundary table is removed, which assumptions about the center are different?",
+              "why_this_ask": "Transfers access logic to changed layout.",
+              "from_step_ref": "D4-MOD-STEP-CHECK"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A builds candidate and shared-edge counts on an L; Core1B falsifies the unshared-side generalization using a sealed ring and an opened boundary."
+        },
+        "boundary_test": {
+          "prompt": "On a closed 3x3 table ring n=8,e=8,c=4. Remove the top-middle table, opening its center: verify new n=7,e=6,c=0 and find the outside-accessible chair sites.",
+          "answer": "Closed A=4×8−2×8−4=12; opened A=4×7−2×6=16, because the center is now exterior-connected.",
+          "confirms": "Revised model handles a new cavity opening without retaining obsolete c."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-D4-MODEL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "Outside-accessible chair sites A=4n−2e−c.",
+      "meaning": "n counts table cells; e counts distinct full shared-side joins; c counts unshared sides facing sealed inaccessible interior voids. Only external-connected exposed edges can hold chairs.",
+      "symbols": [
+        {
+          "symbol": "A",
+          "meaning": "Chairs on externally reachable table sides",
+          "unit_or_domain": "nonnegative integer"
+        },
+        {
+          "symbol": "n",
+          "meaning": "Occupied unit-square table cells",
+          "unit_or_domain": "integer ≥0"
+        },
+        {
+          "symbol": "e",
+          "meaning": "Full shared-side contacts, each counted once",
+          "unit_or_domain": "integer ≥0"
+        },
+        {
+          "symbol": "c",
+          "meaning": "Unshared sides facing sealed inaccessible internal voids",
+          "unit_or_domain": "integer ≥0"
+        }
+      ],
+      "conditions": [
+        "One chair site per exterior-reachable unit side.",
+        "Each table fills one grid cell, joins are on full sides.",
+        "No chairs on seams or sealed-courtyard borders."
+      ],
+      "derivation": [
+        {
+          "id": "D4-MOD-REL-0",
+          "role": "DECLARE",
+          "action": "Begin with four candidate chair sides per square table; let n count occupied unit cells.",
+          "why_valid": "Each table has four unit edges.",
+          "inputs": [],
+          "output": "4n candidate sides."
+        },
+        {
+          "id": "D4-MOD-REL-1",
+          "role": "TRANSFORM",
+          "action": "Let e count full shared edges between adjacent tables. Every such edge removes two candidate sides.",
+          "why_valid": "The two joined tables each lose one side.",
+          "inputs": [
+            "unit-square table layout"
+          ],
+          "output": "4n−2e unshared sides."
+        },
+        {
+          "id": "D4-MOD-REL-2",
+          "role": "CONNECT",
+          "action": "Distinguish outside-connected exposed sides from sides facing a sealed empty courtyard; reserve a count c for the latter.",
+          "why_valid": "Unshared need not mean reachable from outside.",
+          "inputs": [
+            "unit-square table layout"
+          ],
+          "output": "A context-valid model needs accessibility classification."
+        },
+        {
+          "id": "D4-MOD-REL-3",
+          "role": "VERIFY",
+          "action": "Check a 3-table L-shaped anchor with two shared seams and no hole by tracing the outside border.",
+          "why_valid": "The L has 12 candidate sides, two joins remove four.",
+          "inputs": [
+            "unit-square table layout"
+          ],
+          "output": "The L anchor has eight accessible sides."
+        }
+      ],
+      "limits": [
+        "4n−2e alone includes sealed-inner-boundary edges.",
+        "An opening changes outside-connectivity and may set c to zero."
+      ],
+      "checks": [
+        "L-shaped 3-table anchor: A=8.",
+        "Closed 4x4 border outer perimeter is 16."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mn>4</mn><mi>n</mi><mo>−</mo><mn>2</mn><mi>e</mi><mo>−</mo><mi>c</mi></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-D4-MODEL-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Build an L-shaped three-table no-hole model via three visible stages, without closed-ring solution.",
+      "required_elements": [
+        "L-shaped three cells",
+        "two shared seams",
+        "outer perimeter"
+      ],
+      "relation_refs": [
+        "REL-D4-MODEL"
+      ],
+      "read_order": [
+        "Observe occupied table cells and vacant cells.",
+        "Count seams and distinguish exterior-connected from sealed inner sides.",
+        "Derive numeric model independently."
+      ],
+      "instance_constraints": [
+        "Original figure contains no correct chair total in title/desc/aria.",
+        "Empty enclosed cells are inaccessible; a corridor to outside changes access."
+      ],
+      "accessibility": [
+        "Diagram has accessible title, description and text/grid shapes.",
+        "Occupied and vacant cells use symbols as well as fill."
+      ],
+      "misleading_alternatives": [
+        "All unshared inner void sides accept exterior chairs.",
+        "A shared side removes just one seat."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/model-core1a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1A",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-D4-MODEL",
+          "datum_refs": [
+            "D4-MODEL-DATUM-CORE1A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/model-core1a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unit-square table map with no numeric chair count.",
+            "caption": "Decide side access and construct the counting model."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "grid cells and their side contacts",
+          "symbol": "n,e,c",
+          "in_words": "Counts of table, seam and inaccessible inner boundary components."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-MOD-ANCHOR-CELLS",
+          "label": "Occupied cells",
+          "purpose": "Stage physical givens, without the protected numerical answer.",
+          "visible_elements": [
+            "L-shaped three cells"
+          ]
+        },
+        {
+          "id": "D4-MOD-ANCHOR-SEAMS",
+          "label": "Shared seams",
+          "purpose": "Stage physical givens, without the protected numerical answer.",
+          "visible_elements": [
+            "two shared seams"
+          ]
+        },
+        {
+          "id": "D4-MOD-ANCHOR-EXPOSED",
+          "label": "Trace outside",
+          "purpose": "Stage physical givens, without the protected numerical answer.",
+          "visible_elements": [
+            "outer perimeter"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-MODEL-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Safe misconception layout: closed 3x3 ring, unclassified claim that all unshared edges permit outside seats.",
+      "required_elements": [
+        "3x3 sealed ring",
+        "center vacant and unreachable"
+      ],
+      "relation_refs": [
+        "REL-D4-MODEL"
+      ],
+      "read_order": [
+        "Observe occupied table cells and vacant cells.",
+        "Count seams and distinguish exterior-connected from sealed inner sides.",
+        "Derive numeric model independently."
+      ],
+      "instance_constraints": [
+        "Original figure contains no correct chair total in title/desc/aria.",
+        "Empty enclosed cells are inaccessible; a corridor to outside changes access."
+      ],
+      "accessibility": [
+        "Diagram has accessible title, description and text/grid shapes.",
+        "Occupied and vacant cells use symbols as well as fill."
+      ],
+      "misleading_alternatives": [
+        "All unshared inner void sides accept exterior chairs.",
+        "A shared side removes just one seat."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/model-core1b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1B",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-D4-MODEL",
+          "datum_refs": [
+            "D4-MODEL-DATUM-CORE1B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/model-core1b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unit-square table map with no numeric chair count.",
+            "caption": "Decide side access and construct the counting model."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "grid cells and their side contacts",
+          "symbol": "n,e,c",
+          "in_words": "Counts of table, seam and inaccessible inner boundary components."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-MOD-WRONG",
+          "label": "Occupied cells",
+          "purpose": "Stage physical givens, without the protected numerical answer.",
+          "visible_elements": [
+            "3x3 sealed ring"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-MODEL-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Safe 4x4 closed ring with 2x2 sealed center, not marked with counts or equation result.",
+      "required_elements": [
+        "4x4 grid border occupied",
+        "2x2 sealed center"
+      ],
+      "relation_refs": [
+        "REL-D4-MODEL"
+      ],
+      "read_order": [
+        "Observe occupied table cells and vacant cells.",
+        "Count seams and distinguish exterior-connected from sealed inner sides.",
+        "Derive numeric model independently."
+      ],
+      "instance_constraints": [
+        "Original figure contains no correct chair total in title/desc/aria.",
+        "Empty enclosed cells are inaccessible; a corridor to outside changes access."
+      ],
+      "accessibility": [
+        "Diagram has accessible title, description and text/grid shapes.",
+        "Occupied and vacant cells use symbols as well as fill."
+      ],
+      "misleading_alternatives": [
+        "All unshared inner void sides accept exterior chairs.",
+        "A shared side removes just one seat."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/model-core2a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2A",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-D4-MODEL-MAIN",
+          "datum_refs": [
+            "D4-MODEL-DATUM-CORE2A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/model-core2a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unit-square table map with no numeric chair count.",
+            "caption": "Decide side access and construct the counting model."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "grid cells and their side contacts",
+          "symbol": "n,e,c",
+          "in_words": "Counts of table, seam and inaccessible inner boundary components."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-MOD-MAIN",
+          "label": "Occupied cells",
+          "purpose": "Stage physical givens, without the protected numerical answer.",
+          "visible_elements": [
+            "4x4 grid border occupied"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-MODEL-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Safe 4x4 ring after removal of the noncorner top-row second table, revealing passage but no chair answer.",
+      "required_elements": [
+        "4x4 border minus top second table",
+        "center connects to outside"
+      ],
+      "relation_refs": [
+        "REL-D4-MODEL"
+      ],
+      "read_order": [
+        "Observe occupied table cells and vacant cells.",
+        "Count seams and distinguish exterior-connected from sealed inner sides.",
+        "Derive numeric model independently."
+      ],
+      "instance_constraints": [
+        "Original figure contains no correct chair total in title/desc/aria.",
+        "Empty enclosed cells are inaccessible; a corridor to outside changes access."
+      ],
+      "accessibility": [
+        "Diagram has accessible title, description and text/grid shapes.",
+        "Occupied and vacant cells use symbols as well as fill."
+      ],
+      "misleading_alternatives": [
+        "All unshared inner void sides accept exterior chairs.",
+        "A shared side removes just one seat."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/model-core2b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2B",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-D4-MODEL-TRANSFER",
+          "datum_refs": [
+            "D4-MODEL-DATUM-CORE2B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/model-core2b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unit-square table map with no numeric chair count.",
+            "caption": "Decide side access and construct the counting model."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "grid cells and their side contacts",
+          "symbol": "n,e,c",
+          "in_words": "Counts of table, seam and inaccessible inner boundary components."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-MOD-TRANSFER",
+          "label": "Occupied cells",
+          "purpose": "Stage physical givens, without the protected numerical answer.",
+          "visible_elements": [
+            "4x4 border minus top second table"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-D4-MODEL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Model exterior chair sites from adjacency and enclosed inner boundaries",
+      "capability_refs": [
+        "CAP-D4-MODEL"
+      ],
+      "solution_structure": [
+        "Translate unit tables to candidate sides.",
+        "Subtract both sides of each full shared join.",
+        "Classify exposed edges by exterior reachability.",
+        "Subtract inner sealed boundary sides and verify closed ring.",
+        "After opening one border table, update n,e and connectivity-based c."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Decide whether exposed edges are exterior-accessible; introduce cavity correction.",
+        "representation_translation": "Map a square-grid arrangement to variables n,e,c.",
+        "reasoning_steps": "Count components, seams, void-facing inaccessible edges, then validate with outer boundary.",
+        "novelty": "Opening a boundary breaks enclosure and changes which exposed edges are reachable."
+      },
+      "safe_variations": [
+        "Unit-square table shapes with explicit reachability rules."
+      ],
+      "transfer_boundaries": [
+        "A sealed ring's c cannot be reused after a passage opens.",
+        "Count table joins once but subtract both joined sides."
+      ],
+      "common_wrong_routes": [
+        "4n−2e for sealed courtyards.",
+        "Subtract a single side per join.",
+        "Treat an opened courtyard as still sealed."
+      ],
+      "item_refs": [
+        "Q-D4-MODEL-WORKED",
+        "Q-D4-MODEL-MAIN",
+        "Q-D4-MODEL-TRANSFER"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-D4-MODEL-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-MODEL-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-MODEL-WORKED",
+      "stem": "Two non-coprime repeating phases require x≡2 (mod6) and x≡5 (mod9). Check the compatibility condition, reduce the congruence and verify the full solution class.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "x is an integer slot.",
+        "Both schedules must be satisfied simultaneously."
+      ],
+      "figure_refs": [
+        "REP-D4-MODEL-CORE1A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Compatible; x≡14 mod18.",
+        "reasoning": [
+          "gcd(6,9)=3 divides5−2=3.",
+          "Write x=2+6t, then 6t≡3 modulo9, reducing to 2t≡1 modulo3.",
+          "t≡2 modulo3; x=14+18k, and x=14 checks both phases."
+        ],
+        "check": "14%6=2 and14%9=5. Combined period lcm(6,9)=18.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-MODEL",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-MODEL",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-D4-MODEL-CORE1A",
+        "safe_ref": "REP-D4-MODEL-CORE1A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-MOD-ANCHOR-GIVEN"
+        ]
+      },
+      "failure_signal": "Blindly multiplying non-coprime periods misses gcd feasibility and correct lcm repetition.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-MODEL",
+        "closure": "Concept anchor cannot substitute for three-period Core2A protected application."
+      }
+    },
+    {
+      "id": "Q-D4-MODEL-MAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-APPLY-D4",
+        "grade9v3:cognitive_demand": {
+          "primary": "APPLY",
+          "secondary": [
+            "MODEL",
+            "JUSTIFY"
+          ],
+          "basis": "Execute a conditional known modular procedure on non-standard triple with compatibility exceptions and bounded output; W is method choice and correct application."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "At each combination test gcd divisibility, reduce correctly and stop if a changed phase is incompatible.",
+          "common_wrong_route": "Use coprime CRT or product periods blindly, then search an impossible system."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "D4-MOD-MOVE-DECIDE"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "D4-MOD-MOVE-DECIDE"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-MODEL-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-MODEL-MAIN",
+      "stem": "A system admits an integer service slot x only when ALL three repeating phases hold: x≡5 (mod12), x≡11 (mod18), and x≡9 (mod20). The service window is the inclusive interval 200≤x≤600. Apply a VALID compatibility-aware method to find every eligible integer slot. Explicitly check the gcd condition each time you combine constraints, reduce the congruences correctly, give the final repeating class and verify every listed slot. Do not assume pairwise-coprime CRT applies.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "x is an integer with 200≤x≤600 inclusive.",
+        "All three given congruences must hold simultaneously.",
+        "Periods 12,18,20 are positive but not pairwise coprime."
+      ],
+      "figure_refs": [
+        "REP-D4-MODEL-CORE2A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "All eligible integer slots are 209,389,569; the combined class is x≡29 modulo180.",
+        "reasoning": [
+          "First screen gcd(12,18)=6 dividing 11−5=6. The pair is compatible. Write x=5+12t, so 12t≡6 modulo18; divide all terms by6 to get 2t≡1 modulo3 and t≡2 modulo3.",
+          "Therefore x=5+12(2+3k)=29+36k, the first two conditions combined as x≡29 modulo36.",
+          "Second screen gcd(36,20)=4 dividing the third-phase difference 9−29=−20. The third condition is compatible. Substitute 29+36k≡9 modulo20, so 16k≡0 modulo20; divide all terms by4 to get 4k≡0 modulo5, implying k≡0 modulo5.",
+          "Thus x=29+180j, repeating with lcm(36,20)=180. In 200≤x≤600 the admissible j are 1,2,3, producing 209,389,569; j=0 gives29 below and j=4 gives749 above.",
+          "Verify each of 209,389,569 leaves residues5 modulo12,11 modulo18 and9 modulo20."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-MOD-MOVE-SETUP",
+            "kind": "REPRESENT",
+            "action": "Represent the three phases and the inclusive interval; reject blind coprime CRT.",
+            "why_valid": "The periods share factors and compatibility must precede inverse-based reduction.",
+            "inputs": [
+              "12,18,20",
+              "phases5,11,9"
+            ],
+            "output": "A conditional sequential solve plan."
+          },
+          {
+            "id": "D4-MOD-MOVE-FIRST",
+            "kind": "CONNECT",
+            "action": "Check gcd(12,18)=6 divides 11−5; then combine to x≡29 modulo36.",
+            "why_valid": "Substitution x=5+12t yields 2t≡1 mod3; gcd screen establishes feasibility.",
+            "inputs": [
+              "x≡5 mod12",
+              "x≡11 mod18"
+            ],
+            "output": "x=29+36k."
+          },
+          {
+            "id": "D4-MOD-MOVE-DECIDE",
+            "kind": "DECIDE",
+            "action": "Screen gcd(36,20)=4 and reduce the third condition to k≡0 modulo5, or stop if incompatible.",
+            "why_valid": "9−29=−20 is divisible by4, so compatibility permits the reduction.",
+            "inputs": [
+              "x≡29 mod36",
+              "x≡9 mod20"
+            ],
+            "output": "x≡29 modulo180."
+          },
+          {
+            "id": "D4-MOD-MOVE-WINDOW",
+            "kind": "VERIFY",
+            "action": "Intersect x=29+180j with inclusive [200,600], then check each original phase.",
+            "why_valid": "Inequalities yield integer j=1,2,3 and substitution confirms all requirements.",
+            "inputs": [
+              "x≡29 mod180",
+              "200≤x≤600"
+            ],
+            "output": "209,389,569 and no omitted slots."
+          }
+        ],
+        "crux_move_ref": "D4-MOD-MOVE-DECIDE",
+        "check": "209%12=5, %18=11, %20=9; 389 and569 repeat with period180. 29 is below interval,749 above.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-MODEL",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-MODEL",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Before solving, write all three phases as simultaneous congruences, and decide whether pairwise-coprime CRT can be used without modification.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-MOD-MOVE-SETUP"
+        },
+        {
+          "text": "Combine just the first two conditions using gcd(12,18). Is the residue difference compatible? Use a substitution x=5+12t, then keep the lcm as the new period.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-MOD-MOVE-FIRST"
+        },
+        {
+          "text": "Only AFTER your own attempt: audit whether your first combined residue agrees with the third residue modulo the new gcd; reduce the resulting linear congruence and intersect the class with [200,600].",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "D4-MOD-MOVE-DECIDE"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-MODEL-CORE2A",
+        "safe_ref": "REP-D4-MODEL-CORE2A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-MOD-MAIN-GIVEN"
+        ]
+      },
+      "repair_ref": "D4-MOD-STEP-GATE",
+      "failure_signal": "Blind product periods, omitted gcd screen on the third phase, incorrect modular division, or missing one interval endpoint indicates a method-selection error.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-MODEL",
+        "closure": "Independent mastery requires screening both non-coprime combinations, producing the correct class and all bounded slots without post-attempt help."
+      },
+      "independent_check": {
+        "statement": "Enumerate all x in inclusive [200,600] by direct residues, compare with 29+180k, and independently check all solutions of pair 5 mod12,11 mod18 over a full lcm period.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 8,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "Conditional method selection across three non-coprime periods and interval, with a later changed phase that invalidates applicability.",
+        "component_evidence": {
+          "concept_model_selection": "Choose compatibility-first generalized CRT, not the coprime formula.",
+          "representation_translation": "Translate repeating constraints and interval to congruence class.",
+          "reasoning_chain_length": "Reduce first pair, test third, reduce again, enumerate bounded arithmetic progression.",
+          "algebra_computational_load": "Small modular arithmetic and three interval outputs.",
+          "trap_exception_sensitivity": "Third condition can become incompatible after a single phase change."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-D4-MODEL-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-APPLY-D4",
+        "grade9v3:cognitive_demand": {
+          "primary": "APPLY",
+          "secondary": [
+            "MODEL",
+            "JUSTIFY"
+          ],
+          "basis": "Adapt a conditional algorithm to a changed infeasible input then recompute after a valid repair."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Check gcd compatibility before every solve; stop when 4∤−19.",
+          "common_wrong_route": "Continue with previous answer class or invent an impossible slot."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-MODEL-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-MODEL-TRANSFER",
+      "stem": "A single schedule is changed. Keep x≡5 (mod12), x≡11 (mod18), and the SAME inclusive interval 200≤x≤600, but replace the third phase with x≡10 (mod20). Apply your compatibility-first procedure to decide whether ANY slot exists; do not blindly search the interval if the gcd screen fails. An engineer then proposes replacing 10 by 13 modulo20. Test that repair and find ALL slots in [200,600] for the repaired system. State the new combined class.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "x integer; inclusive interval200..600.",
+        "The first two congruences are unchanged.",
+        "Changed third residue10 modulo20 must be evaluated separately.",
+        "A proposed repair replaces residue10 with13 modulo20, not the old residue9."
+      ],
+      "figure_refs": [
+        "REP-D4-MODEL-CORE2B"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Changed residue10 is impossible; corrected residue13 gives x≡173 modulo180 and exactly slots353,533 in [200,600].",
+        "reasoning": [
+          "The unchanged first pair remains x≡29 modulo36.",
+          "With third residue10 modulo20, gcd(36,20)=4 would need to divide 10−29=−19; it does not. Therefore no x can satisfy all constraints, regardless of how large the interval is.",
+          "If the third phase is corrected to13 modulo20, difference13−29=−16 is divisible by4, so the combined system is compatible.",
+          "Set x=29+36k. Require 29+36k≡13 mod20, hence 16k≡4 modulo20, reducing to 4k≡1 modulo5. Since 4 is its own inverse modulo5, k≡4 modulo5.",
+          "Thus x=29+36(4+5j)=173+180j. Within [200,600], j=1,2 yields x=353,533. Check both candidates against phases5 modulo12,11 modulo18 and13 modulo20."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-MOD-TRANSFER-REUSE",
+            "kind": "REPRESENT",
+            "action": "Keep unchanged first-pair residue29 modulo36 and the interval.",
+            "why_valid": "Only the third phase changes.",
+            "inputs": [
+              "original first two phases"
+            ],
+            "output": "x=29+36k remains the starting class."
+          },
+          {
+            "id": "D4-MOD-TRANSFER-STOP",
+            "kind": "DECIDE",
+            "action": "Test changed residue10 for gcd compatibility and STOP immediately when it fails.",
+            "why_valid": "4 does not divide10−29=−19; the congruences are globally inconsistent.",
+            "inputs": [
+              "29 modulo36",
+              "10 modulo20"
+            ],
+            "output": "No integer solution, independent of window."
+          },
+          {
+            "id": "D4-MOD-TRANSFER-REPAIR",
+            "kind": "CONNECT",
+            "action": "Retest residue13, reduce 16k≡4 mod20 and recompute combined class.",
+            "why_valid": "Difference13−29=−16 passes divisibility by4, and k≡4 mod5.",
+            "inputs": [
+              "29 modulo36",
+              "13 modulo20"
+            ],
+            "output": "x≡173 modulo180."
+          },
+          {
+            "id": "D4-MOD-TRANSFER-CHECK",
+            "kind": "VERIFY",
+            "action": "Intersect repaired class with window and verify direct residue checks.",
+            "why_valid": "173+180j in[200,600] iff j=1,2.",
+            "inputs": [
+              "repaired class"
+            ],
+            "output": "353,533 only."
+          }
+        ],
+        "crux_move_ref": "D4-MOD-TRANSFER-STOP",
+        "check": "For x=353 and533, residues (mod12,18,20) are (5,11,13); no x can satisfy old first-pair residue29 mod36 with third residue10 mod20.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "rubric": [
+          {
+            "criterion": "Reject changed residue10 with a gcd divisibility obstruction.",
+            "evidence_of": "No futile numerical search or invented slot."
+          },
+          {
+            "criterion": "Screen repaired residue13 then re-solve correctly.",
+            "evidence_of": "Class x≡173 mod180."
+          },
+          {
+            "criterion": "Find exactly the repaired interval solutions and check all phases.",
+            "evidence_of": "353,533 and endpoint completeness."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-D4-MODEL",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-MODEL",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Start from the first-pair combined class and compare its residue to 10 modulo gcd(36,20) BEFORE enumerating. The correction to13 requires a new modular reduction.",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-MODEL-CORE2B",
+        "safe_ref": "REP-D4-MODEL-CORE2B",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-MOD-TRANSFER-GIVEN"
+        ]
+      },
+      "repair_ref": "D4-MOD-STEP-GATE",
+      "failure_signal": "Finding a numeric slot for incompatible residue10 or recycling 209,389,569 after correction13 is failure to re-run the conditional algorithm.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-MODEL",
+        "closure": "Changed-input transfer is independent only if the incompatibility is detected without search and the repaired branch is genuinely recomputed."
+      },
+      "independent_check": {
+        "statement": "Exhaust all integer x over one period180 and [200,600]; changed third residue10 has zero solutions; corrected residue13 yields class173 modulo180 and slots353,533.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 8,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "Applying the conditional algorithm to a changed infeasible phase, then recomputing a nontrivial corrected phase under the same interval.",
+        "component_evidence": {
+          "concept_model_selection": "Stop at gcd incompatibility without searching, then restart for a compatible correction.",
+          "representation_translation": "Carry first-pair class to two alternative third phases.",
+          "reasoning_chain_length": "Obstruction test, repaired congruence reduction, new interval intersection.",
+          "algebra_computational_load": "Small residues modulo4,5 and bounded class.",
+          "trap_exception_sensitivity": "Changing 9 to10 destroys all solutions, while correction13 creates a different set."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-D4-MODEL-MAIN"
+        ],
+        "statement": "Changed phase causes a genuine impossible branch; proposed correction makes a different feasible class.",
+        "invariant": "The first pair still gives x≡29 mod36, and gcd(36,20)=4 must divide third difference.",
+        "novelty": {
+          "checked_against": [
+            "Q-D4-MODEL-MAIN",
+            "MIC-D4-MODEL:exit_task",
+            "MIC-D4-MODEL:boundary_test"
+          ],
+          "why_new": "The learner must refuse a previously valid procedure at residue10 then restart it for corrected residue13; neither branch is the former x≡29 mod180."
+        },
+        "protected_move_ref": "D4-MOD-TRANSFER-STOP"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-D4-MODEL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "From small connected table model to an inaccessible internal courtyard",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-D4-MODEL"
+      ],
+      "entry_needs": [
+        "Grid cells, side-sharing and perimeter counting."
+      ],
+      "learner_actions": [
+        "Model 3-table L candidates.",
+        "Identify sides removed at seams.",
+        "Critique sealed courtyard access.",
+        "Check 3×3 ring independently."
+      ],
+      "help_plan": [
+        "Core1A avoids revealing 4×4 answer; Core2A third scaffold protected AFTER_ATTEMPT.",
+        "Core1B adds a separately attempted boundary."
+      ],
+      "reveal_plan": "No-hole L -> false generalization -> sealed 4x4 ring -> changed open courtyard.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-D4-MODEL-ORIGINAL",
+          "purpose": "Original square-grid TEST source",
+          "reason": "No authorized official contest source."
+        }
+      ],
+      "when_not_suitable": [
+        "Independent educational appropriateness reviewer and Owner decision pending."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:qrt_cell": "QRT-MODEL-D4",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "D4-MODEL-DATUM-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "unit-square grid arrangement",
+      "symbol": "L tables",
+      "meaning": "Original diagram input, not computed chair answer.",
+      "locator": "AUTHOR_CREATED: QRT-MODEL-D4"
+    },
+    {
+      "id": "D4-MODEL-DATUM-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 1,
+      "unit": "unit-square grid arrangement",
+      "symbol": "3x3 sealed ring",
+      "meaning": "Original diagram input, not computed chair answer.",
+      "locator": "AUTHOR_CREATED: QRT-MODEL-D4"
+    },
+    {
+      "id": "D4-MODEL-DATUM-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 2,
+      "unit": "unit-square grid arrangement",
+      "symbol": "4x4 closed ring",
+      "meaning": "Original diagram input, not computed chair answer.",
+      "locator": "AUTHOR_CREATED: QRT-MODEL-D4"
+    },
+    {
+      "id": "D4-MODEL-DATUM-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-MODEL-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 3,
+      "unit": "unit-square grid arrangement",
+      "symbol": "4x4 top-open ring",
+      "meaning": "Original diagram input, not computed chair answer.",
+      "locator": "AUTHOR_CREATED: QRT-MODEL-D4"
+    }
+  ]
+}
