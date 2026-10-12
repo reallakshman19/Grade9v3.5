@@ -1,0 +1,1373 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-APPLY-D4",
+  "title": "Original APPLY-D4 non-coprime schedules",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Original three-period compatibility-first CRT with bounded integer interval and changed impossible phase; all TEST, no accepted academic or Owner coverage.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-D4-APPLY-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Wholly authored modular periodic scheduling application",
+      "origin": "AUTHORED",
+      "locator": "AUTHOR_CREATED: issue 182 AGENT-D4/QRT-APPLY-D4",
+      "edition": "2026-10-12 authored TEST",
+      "section": "Non-coprime congruences, bounded intervals and phase exceptions",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Original TEST text/diagrams only; no official exam question, PDF, logo or KEY.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Generalized CRT requires gcd compatibility before reduction.",
+        "Three conditions 5 mod12,11 mod18,9 mod20 give 29 mod180 and integer slots 209,389,569 in interval [200,600]."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Original arithmetic decision task with a conditional algorithm and changed incompatible case.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Apply compatibility-aware periodic constraints",
+      "topic": "Integer modular scheduling under exceptions",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "The decisive step is choosing a valid method for three non-coprime schedules, screening each compatibility condition, and refusing a changed impossible phase.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-D4-APPLY-CORE1A",
+      "conventions": [
+        {
+          "id": "domain",
+          "statement": "x is an integer time slot and 200≤x≤600 includes both endpoints."
+        },
+        {
+          "id": "congruence",
+          "statement": "x≡r modulo m describes a repeating phase with positive period m."
+        },
+        {
+          "id": "compatibility",
+          "statement": "Two phases a modulo m and b modulo n can coincide exactly when gcd(m,n) divides b−a."
+        },
+        {
+          "id": "combined_period",
+          "statement": "When compatible, the combined solutions repeat modulo lcm(m,n), not automatically m×n."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "Apply compatibility-first generalized CRT to three non-coprime schedules and a bounded interval, then stop or repair when a changed phase is incompatible.",
+      "success_criterion": "Find x≡29 mod180 then enumerate 209,389,569 in [200,600]; for phase10 mod20 identify no possible x, then for phase13 mod20 recompute 353,533.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Choosing and executing compatible non-coprime schedule methods",
+      "bucket_id": "BUCKET-D4-APPLY",
+      "primary_capability_ref": "CAP-D4-APPLY",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "The decisive step is choosing a valid method for three non-coprime schedules, screening each compatibility condition, and refusing a changed impossible phase.",
+      "entry_assumptions": [
+        "Meaning of modular residues and x=a+mt.",
+        "Compute gcd and lcm.",
+        "Reduce a linear congruence by dividing coefficient, modulus, and right side together.",
+        "Enumerate residue class within an inclusive interval."
+      ],
+      "inferential_jump": "Select the correct compatibility-aware procedure for multiple overlapping periods, then recognize when a changed phase invalidates the procedure regardless of interval size.",
+      "teaching_path": [
+        {
+          "id": "D4-APP-STEP-GATE",
+          "role": "DECLARE",
+          "action": "Check whether gcd of two periods divides the difference of their residues before trying CRT.",
+          "why_valid": "Subtracting the congruences forces that gcd to divide their difference.",
+          "inputs": [],
+          "output": "Choose to solve or stop.",
+          "source_ref": "SRC-D4-APPLY-ORIGINAL"
+        },
+        {
+          "id": "D4-APP-STEP-PAIR",
+          "role": "TRANSFORM",
+          "action": "On a smaller anchor, compare x≡2 mod6 and x≡5 mod9 and verify gcd(6,9)=3 divides 5−2.",
+          "why_valid": "The shared gcd is a feasibility condition, not automatic impossibility.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "This non-coprime anchor is compatible.",
+          "source_ref": "SRC-D4-APPLY-ORIGINAL"
+        },
+        {
+          "id": "D4-APP-STEP-REDUCE",
+          "role": "TRANSFORM",
+          "action": "Set x=2+6t; reduce 6t≡3 mod9 to 2t≡1 mod3 and solve t≡2 mod3.",
+          "why_valid": "Divide both coefficient and right side AND modulus by3; 2 is invertible modulo3.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "The anchor combined class is x≡14 mod18.",
+          "source_ref": "SRC-D4-APPLY-ORIGINAL"
+        },
+        {
+          "id": "D4-APP-STEP-VERIFY",
+          "role": "VERIFY",
+          "action": "Use lcm(6,9)=18 and substitute x=14 into both anchor conditions.",
+          "why_valid": "Compatible solutions recur at the lcm, and direct substitution checks the reduced solution.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "Validated smaller anchor, not the Core2A result.",
+          "source_ref": "SRC-D4-APPLY-ORIGINAL"
+        }
+      ],
+      "relation_refs": [
+        "REL-D4-APPLY"
+      ],
+      "representation_refs": [
+        "REP-D4-APPLY-CORE1A"
+      ],
+      "question_family_refs": [
+        "FAM-D4-APPLY"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Multiply two non-coprime periods and search; every phase pair must meet eventually.",
+          "diagnostic_prompt": "Does x≡2 mod6 meet x≡5 mod9? What changes if the second residue becomes4?",
+          "repair": "gcd(6,9)=3 divides 5−2 but does not divide 4−2; screen feasibility before multiplying or searching."
+        },
+        {
+          "wrong_idea": "If periods share a factor, there is never a shared slot.",
+          "diagnostic_prompt": "Verify x=14 under x≡2 mod6 and x≡5 mod9 even though both periods share3.",
+          "repair": "A shared factor imposes a residue condition; it need not make the system impossible."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independently apply the procedure to x≡1 mod8 and x≡5 mod12. Check compatibility, derive the combined class, and verify slots x=17 and x=41.",
+        "source_ref": "SRC-D4-APPLY-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "x≡17 (mod24).",
+          "reasoning": [
+            "gcd(8,12)=4 divides 5−1=4.",
+            "Write x=1+8t. Then 8t≡4 mod12 reduces to 2t≡1 mod3, giving t≡2 mod3.",
+            "Therefore x=17+24k and checks 17,41 in both residues."
+          ],
+          "check": "17 mod8=1, 17 mod12=5, period24. Also x=41 passes.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo182_qrt_d4_apply.py",
+            "bindings": {
+              "moduli": "8,12",
+              "residues": "1,5",
+              "combined": "17 mod24",
+              "domain": "integers"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original QRT APPLY-D4 TEST candidate. Qualified academic/Owner acceptance not granted.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-D4-APPLY-GCD",
+          "decision": "Practice a compatibility-first reduction on simpler periods before Core2A's three distinct constraints.",
+          "step_refs": [
+            "D4-APP-STEP-GATE",
+            "D4-APP-STEP-PAIR",
+            "D4-APP-STEP-REDUCE",
+            "D4-APP-STEP-VERIFY"
+          ],
+          "representation_ref": "REP-D4-APPLY-CORE1A",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-D4-APPLY"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Verify x≡14 mod18 for the anchor; x≡2 mod6 and x≡4 mod9 has no solution.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "D4-APP-ANCHOR-GIVEN",
+            "D4-APP-ANCHOR-GCD",
+            "D4-APP-ANCHOR-REDUCE"
+          ],
+          "worked_anchor_ref": "Q-D4-APPLY-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "For x≡2 mod6 and x≡5 mod9, which screen comes first, and what combined period is possible?",
+        "result": "gcd=3 divides difference3, so compatible; the combined period is lcm(6,9)=18.",
+        "representation_ref": "REP-D4-APPLY-CORE1A"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A classmate claims every two periodic schedules can be combined by multiplying their periods. Would x≡2 mod6 and x≡5 mod9 behave like x≡2 mod6 and x≡4 mod9?",
+          "defensible_answer": "No. Their gcd is3; the first difference3 passes, whereas the changed difference2 fails."
+        },
+        "attempt": {
+          "produces": "A conditional algorithm that checks gcd feasibility, reduces a compatible pair and stops on an incompatible changed phase.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Use gcd compatibility before solving.",
+              "evidence_of": "Compares residue difference with gcd."
+            },
+            {
+              "criterion": "Reduce congruence validly for compatible case.",
+              "evidence_of": "Divides coefficient, right side, modulus together."
+            },
+            {
+              "criterion": "Use lcm for repeated solutions.",
+              "evidence_of": "Combined period18, not 54."
+            },
+            {
+              "criterion": "Stop on incompatible case.",
+              "evidence_of": "No numeric answer invented for phase4."
+            }
+          ],
+          "accepted": [
+            "gcd(6,9)=3 divides5−2, so set x=2+6t, solve 6t≡3 mod9 to get t≡2 mod3 and x≡14 mod18. Changing residue5 to4 makes gcd3 not divide2, hence no solution."
+          ],
+          "rejected": [
+            "Always multiply periods and search.",
+            "Every non-coprime pair is impossible."
+          ],
+          "task": {
+            "prompt": "A learner says multiply periods and always solve. Compare x≡2 mod6 and x≡5 mod9, then change 5 to4. Repair the method and decide exactly when to stop.",
+            "givens": [
+              "Periods 6 and9 share gcd3.",
+              "Both congruences must hold for one integer."
+            ],
+            "representation_ref": "REP-D4-APPLY-CORE1B",
+            "stage_refs": [
+              "D4-APP-WRONG"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "What must divide the residue difference before a common solution is possible?",
+              "why_this_ask": "Locates overlooked applicability precondition.",
+              "from_step_ref": "D4-APP-STEP-GATE"
+            },
+            {
+              "ask": "Does gcd3 divide 5−2? What valid x can be exhibited?",
+              "why_this_ask": "Preserves feasible non-coprime example.",
+              "from_step_ref": "D4-APP-STEP-PAIR"
+            },
+            {
+              "ask": "When dividing 6t≡3 mod9 by3, which three quantities change?",
+              "why_this_ask": "Repairs invalid modular cancellation.",
+              "from_step_ref": "D4-APP-STEP-REDUCE"
+            },
+            {
+              "ask": "When 5 changes to4, does the new difference pass the gcd test?",
+              "why_this_ask": "Identifies changed assumption rather than arithmetic slip.",
+              "from_step_ref": "D4-APP-STEP-GATE"
+            },
+            {
+              "ask": "What should a correct algorithm return without searching?",
+              "why_this_ask": "Tests ability to stop on genuine incompatibility.",
+              "from_step_ref": "D4-APP-STEP-VERIFY"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A constructs a compatible smaller pair; Core1B starts from a false always-solve algorithm and repairs it under a changed phase."
+        },
+        "boundary_test": {
+          "prompt": "Try a new pair x≡4 mod10 and x≡9 mod15; then change 9 to8. Decide compatibility before finding any times.",
+          "answer": "gcd(10,15)=5 divides9−4=5, so x=24 is a valid common slot. With 8, difference4 not divisible by5, so impossible.",
+          "confirms": "Applies the conditional algorithm to unpractised periods."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "gcd(m,n) divides b−a is the compatibility condition for x≡a (mod m) and x≡b (mod n).",
+      "meaning": "For positive integer moduli m,n, a common solution exists only if their shared gcd divides the phase difference; if yes, combine using lcm.",
+      "symbols": [
+        {
+          "symbol": "x",
+          "meaning": "Integer slot",
+          "unit_or_domain": "Z"
+        },
+        {
+          "symbol": "m,n",
+          "meaning": "Positive repeat periods",
+          "unit_or_domain": "positive integers"
+        },
+        {
+          "symbol": "a,b",
+          "meaning": "Integer phase residues",
+          "unit_or_domain": "Z"
+        }
+      ],
+      "conditions": [
+        "Both modular constraints are simultaneous.",
+        "m and n are positive integers."
+      ],
+      "derivation": [
+        {
+          "id": "D4-APP-REL-0",
+          "role": "DECLARE",
+          "action": "Check whether gcd of two periods divides the difference of their residues before trying CRT.",
+          "why_valid": "Subtracting the congruences forces that gcd to divide their difference.",
+          "inputs": [],
+          "output": "Choose to solve or stop."
+        },
+        {
+          "id": "D4-APP-REL-1",
+          "role": "TRANSFORM",
+          "action": "On a smaller anchor, compare x≡2 mod6 and x≡5 mod9 and verify gcd(6,9)=3 divides 5−2.",
+          "why_valid": "The shared gcd is a feasibility condition, not automatic impossibility.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "This non-coprime anchor is compatible."
+        },
+        {
+          "id": "D4-APP-REL-2",
+          "role": "TRANSFORM",
+          "action": "Set x=2+6t; reduce 6t≡3 mod9 to 2t≡1 mod3 and solve t≡2 mod3.",
+          "why_valid": "Divide both coefficient and right side AND modulus by3; 2 is invertible modulo3.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "The anchor combined class is x≡14 mod18."
+        },
+        {
+          "id": "D4-APP-REL-3",
+          "role": "VERIFY",
+          "action": "Use lcm(6,9)=18 and substitute x=14 into both anchor conditions.",
+          "why_valid": "Compatible solutions recur at the lcm, and direct substitution checks the reduced solution.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "Validated smaller anchor, not the Core2A result."
+        }
+      ],
+      "limits": [
+        "Coprime-only CRT formula cannot be used without checking shared factors.",
+        "An inconsistent pair remains inconsistent for every interval size."
+      ],
+      "checks": [
+        "3 divides5−2 but not4−2.",
+        "14 satisfies 2 mod6 and5 mod9."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>gcd</mi><mo>(</mo><mi>m</mi><mo>,</mo><mi>n</mi><mo>)</mo><mo>|</mo><mo>(</mo><mi>b</mi><mo>−</mo><mi>a</mi><mo>)</mo></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-D4-APPLY-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Stage a smaller compatible pair without Core2A answer.",
+      "required_elements": [
+        "x≡2 mod6, x≡5 mod9",
+        "gcd(6,9)",
+        "x=2+6t"
+      ],
+      "relation_refs": [
+        "REL-D4-APPLY"
+      ],
+      "read_order": [
+        "Read simultaneous phase constraints.",
+        "Select the compatibility screen.",
+        "Complete the calculation independently."
+      ],
+      "instance_constraints": [
+        "No combined residue class in first-stage SVG.",
+        "No preattempt feasibility answer or protected W in alt/title/desc."
+      ],
+      "accessibility": [
+        "Original SVG title and desc describe givens only.",
+        "Stage groups are named and SVG text provides readable labels."
+      ],
+      "misleading_alternatives": [
+        "Product of non-coprime periods is not the smallest combined period."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/apply-core1a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1A",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-D4-APPLY",
+          "datum_refs": [
+            "D4-APPLY-DATUM-CORE1A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/apply-core1a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Modular phase givens, no computed class.",
+            "caption": "The learner must decide compatibility before solving."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "integer schedule constraints",
+          "symbol": "x≡r mod m",
+          "in_words": "Each periodic phase is a condition, not a solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-APP-ANCHOR-GIVEN",
+          "label": "Read phases",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "x≡2 mod6, x≡5 mod9"
+          ]
+        },
+        {
+          "id": "D4-APP-ANCHOR-GCD",
+          "label": "Screen gcd",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "gcd(6,9)"
+          ]
+        },
+        {
+          "id": "D4-APP-ANCHOR-REDUCE",
+          "label": "Write reduced form",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "x=2+6t"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-APPLY-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "False algorithm given without compatibility verdict.",
+      "required_elements": [
+        "always multiply periods?",
+        "phase 5 changed to 4"
+      ],
+      "relation_refs": [
+        "REL-D4-APPLY"
+      ],
+      "read_order": [
+        "Read simultaneous phase constraints.",
+        "Select the compatibility screen.",
+        "Complete the calculation independently."
+      ],
+      "instance_constraints": [
+        "No combined residue class in first-stage SVG.",
+        "No preattempt feasibility answer or protected W in alt/title/desc."
+      ],
+      "accessibility": [
+        "Original SVG title and desc describe givens only.",
+        "Stage groups are named and SVG text provides readable labels."
+      ],
+      "misleading_alternatives": [
+        "Product of non-coprime periods is not the smallest combined period."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/apply-core1b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1B",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-D4-APPLY",
+          "datum_refs": [
+            "D4-APPLY-DATUM-CORE1B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/apply-core1b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Modular phase givens, no computed class.",
+            "caption": "The learner must decide compatibility before solving."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "integer schedule constraints",
+          "symbol": "x≡r mod m",
+          "in_words": "Each periodic phase is a condition, not a solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-APP-WRONG",
+          "label": "Read phases",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "always multiply periods?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-APPLY-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "All three original constraints and interval only.",
+      "required_elements": [
+        "x≡5 mod12; x≡11 mod18; x≡9 mod20",
+        "200≤x≤600"
+      ],
+      "relation_refs": [
+        "REL-D4-APPLY"
+      ],
+      "read_order": [
+        "Read simultaneous phase constraints.",
+        "Select the compatibility screen.",
+        "Complete the calculation independently."
+      ],
+      "instance_constraints": [
+        "No combined residue class in first-stage SVG.",
+        "No preattempt feasibility answer or protected W in alt/title/desc."
+      ],
+      "accessibility": [
+        "Original SVG title and desc describe givens only.",
+        "Stage groups are named and SVG text provides readable labels."
+      ],
+      "misleading_alternatives": [
+        "Product of non-coprime periods is not the smallest combined period."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/apply-core2a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2A",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-D4-APPLY-MAIN",
+          "datum_refs": [
+            "D4-APPLY-DATUM-CORE2A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/apply-core2a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Modular phase givens, no computed class.",
+            "caption": "The learner must decide compatibility before solving."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "integer schedule constraints",
+          "symbol": "x≡r mod m",
+          "in_words": "Each periodic phase is a condition, not a solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-APP-MAIN-GIVEN",
+          "label": "Read phases",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "x≡5 mod12; x≡11 mod18; x≡9 mod20"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-APPLY-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Changed phase and correction inputs only; no feasibility verdict.",
+      "required_elements": [
+        "x≡5 mod12; x≡11 mod18; x≡10 mod20",
+        "repair: residue13 mod20"
+      ],
+      "relation_refs": [
+        "REL-D4-APPLY"
+      ],
+      "read_order": [
+        "Read simultaneous phase constraints.",
+        "Select the compatibility screen.",
+        "Complete the calculation independently."
+      ],
+      "instance_constraints": [
+        "No combined residue class in first-stage SVG.",
+        "No preattempt feasibility answer or protected W in alt/title/desc."
+      ],
+      "accessibility": [
+        "Original SVG title and desc describe givens only.",
+        "Stage groups are named and SVG text provides readable labels."
+      ],
+      "misleading_alternatives": [
+        "Product of non-coprime periods is not the smallest combined period."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/apply-core2b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2B",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-D4-APPLY-TRANSFER",
+          "datum_refs": [
+            "D4-APPLY-DATUM-CORE2B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/apply-core2b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Modular phase givens, no computed class.",
+            "caption": "The learner must decide compatibility before solving."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "integer schedule constraints",
+          "symbol": "x≡r mod m",
+          "in_words": "Each periodic phase is a condition, not a solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-APP-TRANSFER-GIVEN",
+          "label": "Read phases",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "x≡5 mod12; x≡11 mod18; x≡10 mod20"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Apply generalized CRT only after compatibility checks",
+      "capability_refs": [
+        "CAP-D4-APPLY"
+      ],
+      "solution_structure": [
+        "Translate phases to congruences.",
+        "Screen gcd compatibility and stop on failure.",
+        "Reduce compatible pair and use lcm for period.",
+        "Screen and combine next condition.",
+        "Intersect class with closed interval.",
+        "Handle a changed condition by stop and new repair."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Select gcd-compatibility-first CRT over coprime-only version.",
+        "representation_translation": "Translate simultaneous repeating phases into modular constraints.",
+        "reasoning_steps": "Several conditional reductions and an interval restriction.",
+        "novelty": "One changed phase invalidates the previous solution even before any interval search."
+      },
+      "safe_variations": [
+        "Other non-coprime moduli and bounded integer intervals."
+      ],
+      "transfer_boundaries": [
+        "An incompatible changed phase cannot inherit the previous solution.",
+        "A repaired new phase requires a new combined class."
+      ],
+      "common_wrong_routes": [
+        "Multiply the moduli blindly.",
+        "Non-coprime means always impossible.",
+        "Search after gcd incompatibility."
+      ],
+      "item_refs": [
+        "Q-D4-APPLY-WORKED",
+        "Q-D4-APPLY-MAIN",
+        "Q-D4-APPLY-TRANSFER"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-D4-APPLY-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-APPLY-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-APPLY-WORKED",
+      "stem": "For decimal digits u and v, compare the modulo11 residues of 10u+v and 10v+u. Explain why exchanging their two places negates the residue, without generalizing to every digit length.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "u,v are digits 0..9; this identity is valid even when a digit is zero."
+      ],
+      "figure_refs": [
+        "REP-D4-APPLY-CORE1A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Swapping two places negates modulo11 residue.",
+        "reasoning": [
+          "Since 10≡−1 modulo11, 10u+v≡v−u.",
+          "After swapping, 10v+u≡u−v, exactly the negative residue.",
+          "If the original residue is zero, its negative is zero, but this two-place anchor says nothing yet about all digit lengths."
+        ],
+        "check": "Compare 37 versus73 (opposite nonzero residues) and22 versus22 (zero residue).",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-APPLY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-APPLY",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-D4-APPLY-CORE1A",
+        "safe_ref": "REP-D4-APPLY-CORE1A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-APP-STAGE-PLACE"
+        ]
+      },
+      "failure_signal": "Unchanged digit sum is not a valid modulo11 explanation; signed positional contributions are the bridge.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-APPLY",
+        "closure": "A two-digit worked anchor teaches mechanism but not the Core2A parity explanation."
+      }
+    },
+    {
+      "id": "Q-D4-APPLY-MAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-EXPLAIN-D4",
+        "grade9v3:cognitive_demand": {
+          "primary": "EXPLAIN",
+          "secondary": [
+            "REPRESENT",
+            "JUSTIFY"
+          ],
+          "basis": "W is a causal place-value parity mechanism, not a selection from memorized categories."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Explain how changing L reverses leading-digit sign and creates odd-L 2a remainder.",
+          "common_wrong_route": "Digit-sum preservation or only even-length samples used to assert an all-length rule."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "D4-APP-MOVE-CAUSE"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "D4-APP-MOVE-CAUSE"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-APPLY-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-APPLY-MAIN",
+      "stem": "An L-digit positive integer N is divisible by 11. Move its nonzero FIRST digit to the right end, retaining all original L digit positions, including any new leading zero. Explain WHY divisibility by 11 is preserved whenever L is even but cannot be preserved when L is odd. Make the causal contrast between 1210 → 2101 and 121 → 211; giving only numerical checks is not an explanation.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Original L≥2 and positive L-digit N is divisible by11.",
+        "Its leading digit a satisfies 1≤a≤9.",
+        "B represents the suffix of length L−1, with zeros permitted.",
+        "After rotation, a new leading zero is retained as a position."
+      ],
+      "figure_refs": [
+        "REP-D4-APPLY-CORE2A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "For an initial multiple of11, one-leading-digit left rotation preserves divisibility exactly at even original length.",
+        "reasoning": [
+          "Let original N=a10^(L−1)+B, with a in1..9 and suffix B of fixed length L−1. Rotated R=10B+a.",
+          "Because 10≡−1 modulo11, N≡a(-1)^(L−1)+B while R≡a−B.",
+          "If original L is even then N≡B−a and R≡a−B≡−N, so an initial zero remainder remains zero.",
+          "If L is odd and 11|N then 0≡N≡a+B, hence B≡−a and R≡2a, nonzero modulo11 because 1≤a≤9.",
+          "For four-digit 1210, rotation 2101 is divisible by11. For three-digit 121, rotation 211 is not."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-APP-MOVE-DOMAIN",
+            "kind": "REPRESENT",
+            "action": "Maintain original L and leading digit a, with suffix B and zero-safe rotation.",
+            "why_valid": "The defined operation has a fixed original number of positions.",
+            "inputs": [
+              "L≥2",
+              "1≤a≤9",
+              "11|N"
+            ],
+            "output": "N and R retain comparable positions."
+          },
+          {
+            "id": "D4-APP-MOVE-PLACE",
+            "kind": "CONNECT",
+            "action": "Express N=a10^(L−1)+B and R=10B+a and reduce modulo11.",
+            "why_valid": "Rotation shifts all suffix positions and appends a units digit; 10≡−1 modulo11.",
+            "inputs": [
+              "original and rotated strings"
+            ],
+            "output": "N≡a(-1)^(L−1)+B; R≡a−B."
+          },
+          {
+            "id": "D4-APP-MOVE-CAUSE",
+            "kind": "DECIDE",
+            "action": "Explain why the exponent's parity makes R either −N or the nonzero 2a residue when 11|N.",
+            "why_valid": "For even L the sign on a is negative; for odd L it is positive, and a is 1..9 so 11∤2a.",
+            "inputs": [
+              "two modular expressions",
+              "11|N"
+            ],
+            "output": "Even original L preserves; odd L cannot."
+          },
+          {
+            "id": "D4-APP-MOVE-VERIFY",
+            "kind": "VERIFY",
+            "action": "Compare 1210→2101 and 121→211 as independent changed-length checks.",
+            "why_valid": "Both inputs are divisible by11 but have different original length parity.",
+            "inputs": [
+              "explained mechanism"
+            ],
+            "output": "Observed results agree with causal rule."
+          }
+        ],
+        "crux_move_ref": "D4-APP-MOVE-CAUSE",
+        "check": "1210→2101: 11 divides both; 121→211: only 121 is divisible by11; independently try 110→101 and 1232→2321.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-APPLY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-APPLY",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Name the original length L and first digit a. When a rotated string has a leading zero, has the original L changed?",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-APP-MOVE-DOMAIN"
+        },
+        {
+          "text": "If 10≡−1 (mod11), what happens to the residue of a digit each time its positional weight is multiplied by ten?",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-APP-MOVE-PLACE"
+        },
+        {
+          "text": "After your written attempt is committed, compare N=a10^(L−1)+B and R=10B+a. Trace the sign for even and odd original L and explain the fate of the nonzero first digit.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "D4-APP-MOVE-CAUSE"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-APPLY-CORE2A",
+        "safe_ref": "REP-D4-APPLY-CORE2A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-APP-MAIN"
+        ]
+      },
+      "repair_ref": "D4-APP-AUDIT",
+      "failure_signal": "Preserved digit sum is irrelevant to modulo11, and favorable even-length examples do not explain the odd-length obstruction; a leading zero after rotation does not change original L.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-APPLY",
+        "closure": "Independent EXPLAIN-D4 requires explaining the positional sign flip and both length outcomes; H3 help is assisted."
+      },
+      "independent_check": {
+        "statement": "Exhaust original 2..4 digit multiples of11 and independently test sampled 5..6 digit lengths with fixed-width rotation and nonzero initial a.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 8,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "A causal explanation of a place-value invariant breaking under changed original length; no long arithmetic.",
+        "component_evidence": {
+          "concept_model_selection": "Choose modulo11 positional weights, not digit-sum conservation.",
+          "representation_translation": "Map digit rotation to N=a10^(L−1)+B and R=10B+a.",
+          "reasoning_chain_length": "Explain sign change by length parity, then nonzero 2a obstruction for odd L.",
+          "algebra_computational_load": "Simple modular residues only.",
+          "trap_exception_sensitivity": "Odd original length and rotated leading-zero cases expose a hidden assumption."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-D4-APPLY-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-EXPLAIN-D4",
+        "grade9v3:cognitive_demand": {
+          "primary": "EXPLAIN",
+          "secondary": [
+            "MODEL",
+            "JUSTIFY"
+          ],
+          "basis": "Identify changed two-digit prefix mechanism and its odd-length exception."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Explain odd-length rotation remainder2A and why prefix divisibility by11 is decisive.",
+          "common_wrong_route": "Copy the one-digit claim that all odd lengths fail."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-APPLY-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-APPLY-TRANSFER",
+      "stem": "The operation CHANGES: instead of moving ONE leading digit, move the first TWO digits as one block to the right end (original L≥3). An original L-digit integer N is divisible by11. Explain why the new rotation always preserves 11-divisibility at even L, while for odd L it survives exactly when the original two-digit prefix A is itself divisible by11. Account for the contrasting odd-length cases 110 → 011 and 121 → 112.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "L≥3 and the original L-digit positive integer is divisible by11.",
+        "Two-digit prefix A is between10 and99 and suffix C uses exactly L−2 digits, with zero padding allowed.",
+        "Rotate the first TWO digits as a block; retain the original width L.",
+        "Leading zeros produced by rotation do not change original L."
+      ],
+      "figure_refs": [
+        "REP-D4-APPLY-CORE2B"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Two-leading-digit rotation preserves 11-divisibility for even L, or for odd L exactly when the original prefix A is divisible by11.",
+        "reasoning": [
+          "Write N=A10^(L−2)+C and R=100C+A for two-digit prefix A=10a+b and padded suffix C.",
+          "Modulo11, 100≡1 and R≡C+A. If L even, L−2 even, so N≡A+C and the rotated residue equals the original residue, preserving zero.",
+          "If L odd, N≡−A+C=0 gives C≡A; R≡2A. Because 2 and11 are coprime, this is zero iff A is divisible by11.",
+          "For odd length, 110 (A=11) rotates as 011=11 and succeeds; 121 (A=12) rotates to112 and fails."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-APP-TRANSFER-DOMAIN",
+            "kind": "REPRESENT",
+            "action": "Group first two digits as A and keep the original L−2 suffix C.",
+            "why_valid": "Block rotation means N=A10^(L−2)+C, R=100C+A.",
+            "inputs": [
+              "L≥3",
+              "A two-digit prefix"
+            ],
+            "output": "Exact new place-value model."
+          },
+          {
+            "id": "D4-APP-TRANSFER-CAUSE",
+            "kind": "DECIDE",
+            "action": "Explain the even-length equality of residues and odd-length residue2A when N is divisible by11.",
+            "why_valid": "100≡1 modulo11; sign of 10^(L−2) depends on parity of L.",
+            "inputs": [
+              "new expressions",
+              "11|N"
+            ],
+            "output": "Even L always works; odd L depends on A."
+          },
+          {
+            "id": "D4-APP-TRANSFER-EXCEPTION",
+            "kind": "CONNECT",
+            "action": "Identify the odd-length two-digit-prefix exception.",
+            "why_valid": "11|2A iff 11|A because 2 and11 are coprime.",
+            "inputs": [
+              "odd L",
+              "R≡2A"
+            ],
+            "output": "The original prefix A can equal 11,22,...,99."
+          },
+          {
+            "id": "D4-APP-TRANSFER-CHECK",
+            "kind": "VERIFY",
+            "action": "Explain the difference between 110→011 and 121→112.",
+            "why_valid": "Both have odd original length but only the first prefix is multiple11.",
+            "inputs": [
+              "new exception"
+            ],
+            "output": "Changed-operation exception and countercase checked."
+          }
+        ],
+        "crux_move_ref": "D4-APP-TRANSFER-CAUSE",
+        "check": "110→011 (11, divisible by11); 121→112 (not divisible); 11220→22011 (both divisible with A=11).",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "rubric": [
+          {
+            "criterion": "Define two-digit-block rotation in fixed width.",
+            "evidence_of": "Changed operation correctly modeled."
+          },
+          {
+            "criterion": "Explain why even original L preserves zero residue.",
+            "evidence_of": "R≡N because 100≡1 and L−2 even."
+          },
+          {
+            "criterion": "Explain odd-L residue2A and exact A multiple11 exception.",
+            "evidence_of": "New necessary/sufficient prefix mechanism and contrasting example."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-D4-APPLY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-APPLY",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Compare modulo11 the expressions N=A10^(L−2)+C and R=100C+A. Which power of ten changes with the original length?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-APPLY-CORE2B",
+        "safe_ref": "REP-D4-APPLY-CORE2B",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-APP-TRANSFER"
+        ]
+      },
+      "repair_ref": "D4-APP-SPLIT",
+      "failure_signal": "Assuming every odd-length two-digit rotation fails ignores prefix A divisible by11; treating rotated 011 as a two-position input changes the operation.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-APPLY",
+        "closure": "True changed-demand EXPLAIN transfer requires the new A multiple11 exception and the distinct two-digit positional model."
+      },
+      "independent_check": {
+        "statement": "Check all original 3..4 digit multiples11 and sampled longer inputs, including prefix A=11 and A=12 at odd L.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 8,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "A changed two-digit-prefix rotation has a novel odd-length exception, requiring a fresh causal explanation.",
+        "component_evidence": {
+          "concept_model_selection": "Choose a two-digit-block decomposition rather than reuse first-digit model.",
+          "representation_translation": "Translate to N=A10^(L−2)+C, R=100C+A.",
+          "reasoning_chain_length": "Explain even-length invariant, odd-length residue2A, and precise prefix exception.",
+          "algebra_computational_load": "Short congruences only.",
+          "trap_exception_sensitivity": "Some odd L succeed when the two-digit prefix is a multiple of11."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-D4-APPLY-MAIN"
+        ],
+        "statement": "Changed rotation by two digits creates a new surviving odd-length case.",
+        "invariant": "Powers of ten change residue sign modulo11.",
+        "novelty": {
+          "checked_against": [
+            "Q-D4-APPLY-MAIN",
+            "MIC-D4-APPLY:exit_task",
+            "MIC-D4-APPLY:boundary_test"
+          ],
+          "why_new": "Unlike a single digit a in1..9, the two-digit prefix A can be divisible by11 and make odd-length rotation survive."
+        },
+        "protected_move_ref": "D4-APP-TRANSFER-CAUSE"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Compatibility-first non-coprime application",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-D4-APPLY"
+      ],
+      "entry_needs": [
+        "Residues, gcd/lcm, modular reduction, interval sieve."
+      ],
+      "learner_actions": [
+        "Verify gcd screen on two smaller periods.",
+        "Reduce a compatible anchor.",
+        "Repair false always-solve reasoning with independent boundary.",
+        "Complete a fresh two-period exit with moduli8 and12."
+      ],
+      "help_plan": [
+        "Concept roles show 6/9 rather than the three-period Core2A solution.",
+        "Core2A H3 requires committed written work.",
+        "Core1B keeps independent boundary response gate."
+      ],
+      "reveal_plan": "Two-period concept anchor; Core2A three-period interval; Core2B a changed phase and corrected phase.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-D4-APPLY-ORIGINAL",
+          "purpose": "Original TEST modular scheduling item",
+          "reason": "No authentic organizer rights admitted."
+        }
+      ],
+      "when_not_suitable": [
+        "Academic grade and D4 appropriateness unreviewed."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:qrt_cell": "QRT-APPLY-D4",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "D4-APPLY-DATUM-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "integer slots",
+      "symbol": "6,9",
+      "meaning": "Original authored schedule givens, not a solution.",
+      "locator": "AUTHOR_CREATED: QRT-APPLY-D4"
+    },
+    {
+      "id": "D4-APPLY-DATUM-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 1,
+      "unit": "integer slots",
+      "symbol": "gcd compatibility",
+      "meaning": "Original authored schedule givens, not a solution.",
+      "locator": "AUTHOR_CREATED: QRT-APPLY-D4"
+    },
+    {
+      "id": "D4-APPLY-DATUM-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 2,
+      "unit": "integer slots",
+      "symbol": "12,18,20",
+      "meaning": "Original authored schedule givens, not a solution.",
+      "locator": "AUTHOR_CREATED: QRT-APPLY-D4"
+    },
+    {
+      "id": "D4-APPLY-DATUM-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 3,
+      "unit": "integer slots",
+      "symbol": "third residue changed",
+      "meaning": "Original authored schedule givens, not a solution.",
+      "locator": "AUTHOR_CREATED: QRT-APPLY-D4"
+    }
+  ]
+}
