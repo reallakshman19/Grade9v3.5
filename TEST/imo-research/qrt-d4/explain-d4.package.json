@@ -15,28 +15,28 @@
       "source_refs": [],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Original integer iff proof authored for QRT-JUSTIFY-D4",
+      "title": "Original digit-rotation explanation for Grade9 modular arithmetic",
       "origin": "AUTHORED",
-      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #182 Tab7",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #182 Tab7 QRT-EXPLAIN-D4",
       "edition": "2026-10-12 TEST draft",
-      "section": "Difference of squares and modular boundary proof",
+      "section": "Fixed-width cyclic decimal digit shifts and modulo11 sign changes",
       "last_checked": "2026-10-12",
       "access_status": "SECTION_INSPECTED",
-      "rights_status": "No official SOF exam text, PDF, logo, KEY or original image used",
+      "rights_status": "All teaching words and diagrams authored for TEST; no official exam text, logo, PDF, KEY or rights admission.",
       "snapshot_ref": null,
       "snapshot_digest": null,
       "role": [
         "AUTHOR_CREATED"
       ],
       "supports_claims": [
-        "24|(n²−1) iff n mod6 is 1 or5",
-        "48|(n²−1) iff n mod24 is 1,7,17 or23"
+        "One-digit-left rotation of a multiple11 preserves divisibility iff original length is even",
+        "Two-digit-left rotation has an exceptional odd-length prefix divisible by11"
       ],
       "entry_capabilities": [],
       "depth": [
         "COMPETITION"
       ],
-      "selection_reason": "Original Grade9 arithmetic; real exponent #140 fixture not admitted or reused verbatim",
+      "selection_reason": "Original integer-place-value explanation, no publisher question or answer key.",
       "fallback": []
     }
   ],
@@ -50,26 +50,30 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Universal iff proof and exceptional residues",
-      "topic": "Integer squares and factor divisibility",
+      "title": "Causal digit-rotation invariants and exceptional input lengths",
+      "topic": "Integer arithmetic and decimal place-value residues",
       "intrinsic_badge": "HARD",
-      "badge_reason": "Proof needs necessity, sufficiency and two independent exception families.",
+      "badge_reason": "Learner must explain why a digit rotation's invariant depends on original length, then diagnose the distinct two-digit-prefix exception.",
       "depth_overlay": "ADVANCED",
       "curriculum_mappings": [],
       "prerequisite_refs": [],
       "primary_representation_ref": "REP-D4-EXPLAIN-CORE1A",
       "conventions": [
         {
-          "id": "integers",
-          "statement": "n ranges over all integers, including zero and negative integers."
+          "id": "original_length",
+          "statement": "Original decimal digit string has fixed length L≥2, with nonzero first digit a; length is not recalculated after rotating."
         },
         {
-          "id": "divides",
-          "statement": "d|N iff N is an integer multiple of d."
+          "id": "zero_padding",
+          "statement": "Rotated digit string retains its fixed width even if it begins with a zero."
         },
         {
-          "id": "coprime",
-          "statement": "If coprime divisors a and b divide an integer, ab also divides it."
+          "id": "mod11",
+          "statement": "Ten is congruent to minus one modulo11."
+        },
+        {
+          "id": "prefix",
+          "statement": "For two-digit rotations L≥3 and the leading two-digit block A is between 10 and99."
         }
       ]
     }
@@ -84,8 +88,8 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "action": "Prove an exact two-way divisibility criterion with excluded families and a stronger changed-modulus transfer.",
-      "success_criterion": "Derive iff conditions for both divisibility by24 and by48; independently test near-miss exceptions.",
+      "action": "Explain why an apparent divisibility invariant changes under a hidden length assumption and identify the causal source of a changed-operation exception.",
+      "success_criterion": "For an original multiple of11, explain one-digit left rotation's even-length preservation/odd-length obstruction and independently explain two-digit rotation's exceptional odd-length prefix case.",
       "prerequisite_refs": [],
       "curriculum_mappings": [],
       "external_provider": null,
@@ -102,60 +106,59 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Necessity and sufficiency for square-minus-one divisibility",
+      "title": "Explaining a place-value invariant and its length-sensitive failure",
       "bucket_id": "BUCKET-D4-EXPLAIN",
       "primary_capability_ref": "CAP-D4-EXPLAIN",
       "intrinsic_badge": "HARD",
-      "badge_reason": "Proof needs necessity, sufficiency and two independent exception families.",
+      "badge_reason": "Learner must explain why a digit rotation's invariant depends on original length, then diagnose the distinct two-digit-prefix exception.",
       "entry_assumptions": [
-        "Difference of squares.",
-        "Integer parity.",
-        "Remainder classes mod3.",
-        "Coprime factors."
+        "Decimal place value and powers of ten.",
+        "Modulo11 congruence.",
+        "Parity of integer exponents.",
+        "Fixed-width cyclic rotation with the original nonzero first digit."
       ],
-      "inferential_jump": "Two distinct obstructions must be excluded, and sufficiency must be constructed rather than sampled.",
+      "inferential_jump": "Explain why changing original length changes a place-value sign and flips whether a rotation preserves divisibility; under two-digit rotation the odd-length exception is different.",
       "teaching_path": [
         {
-          "id": "D4-STEP-FACTOR",
+          "id": "D4-EXP-PLACE",
           "role": "DECLARE",
-          "action": "Use q²−1=(q−1)(q+1) to separate the factors.",
-          "why_valid": "The difference-of-squares identity is valid for all integers.",
+          "action": "Use the decimal identity 10 congruent to -1 modulo 11: each shift by one decimal place changes the residue sign.",
+          "why_valid": "10+1=11, and multiplication respects congruence.",
           "inputs": [],
-          "output": "Product of the two neighbors of q.",
+          "output": "Sign-change mechanism independent of a particular digit string.",
           "source_ref": "SRC-D4-EXPLAIN-ORIGINAL"
         },
         {
-          "id": "D4-STEP-EIGHT",
+          "id": "D4-EXP-TWO",
           "role": "TRANSFORM",
-          "action": "If q is odd, q−1 and q+1 are even, with one multiple of four.",
-          "why_valid": "They are even and differ by two, so their residues modulo4 are 0 and2.",
+          "action": "Compare two-digit 10u+v with digit-swapped 10v+u as a neutral worked anchor.",
+          "why_valid": "Modulo11, the respective remainders are v-u and u-v.",
           "inputs": [
-            "q odd"
+            "10≡-1 modulo11"
           ],
-          "output": "8 divides q²−1.",
+          "output": "For two positions, swapping negates residue, including zero.",
           "source_ref": "SRC-D4-EXPLAIN-ORIGINAL"
         },
         {
-          "id": "D4-STEP-THREE",
+          "id": "D4-EXP-SPLIT",
           "role": "TRANSFORM",
-          "action": "If q is not divisible by3, one of its neighbors is; if q is divisible by3 neither neighbor is.",
-          "why_valid": "Check the exhaustive q residues 0,1,2 modulo3.",
+          "action": "Represent a general L-digit input with leading digit a and remaining value B as N=a×10^(L−1)+B; its one-digit left rotation is R=10B+a.",
+          "why_valid": "Shifting the suffix left multiplies by ten and appending a adds its units value.",
           "inputs": [
-            "q arbitrary"
+            "10≡-1 modulo11"
           ],
-          "output": "3 divides q²−1 iff 3 does not divide q.",
+          "output": "Exact positional equations, not the final parity classification.",
           "source_ref": "SRC-D4-EXPLAIN-ORIGINAL"
         },
         {
-          "id": "D4-STEP-IFF",
+          "id": "D4-EXP-AUDIT",
           "role": "VERIFY",
-          "action": "Explain generally why proving both implications of a claim requires a warrant for each permitted and excluded case, without stating the target criterion.",
-          "why_valid": "A sufficient example does not establish necessity; each direction needs a separate universal argument.",
+          "action": "Identify the assumption that must be rechecked whenever a two-digit demonstration is generalized to another original length.",
+          "why_valid": "The contribution of a is multiplied by ten L−1 times; changing L changes that exponent.",
           "inputs": [
-            "D4-STEP-EIGHT",
-            "D4-STEP-THREE"
+            "10≡-1 modulo11"
           ],
-          "output": "General two-direction proof method with independent factor checks; decide exact target classes in the later assessment.",
+          "output": "Audit length and leading zero conventions before deciding the invariant.",
           "source_ref": "SRC-D4-EXPLAIN-ORIGINAL"
         }
       ],
@@ -170,56 +173,56 @@
       ],
       "misconceptions": [
         {
-          "wrong_idea": "Every odd n satisfies 24|(n²−1).",
-          "diagnostic_prompt": "Why do n=3 and n=5 behave differently even though both are odd?",
-          "repair": "Oddness only guarantees 8; 3∤n is an independent required condition. Check both conditions, then multiply coprime factors."
+          "wrong_idea": "Rotating a multiple of11 preserves divisibility for every digit length because it works for 22 and 1210.",
+          "diagnostic_prompt": "Why does 121 rotate to 211, but 1210 rotates to 2101? Are these outcomes explained by the unchanged digit sum?",
+          "repair": "Use the positions of digits modulo11. N=a10^(L−1)+B and R=10B+a; exponent parity, not digit sum, controls sign changes."
         },
         {
-          "wrong_idea": "Three true examples prove a universal iff.",
-          "diagnostic_prompt": "What rules out the entire family of even n?",
-          "repair": "Use parity for a universal contradiction; enumerate all modulus families."
+          "wrong_idea": "If rotation creates an initial zero, the original digit length changes and so should the rule.",
+          "diagnostic_prompt": "Does 110 rotating two digits to 011 make the original three-digit statement into a two-digit one?",
+          "repair": "Keep the original fixed-width L positions throughout each rotation; a new leading zero changes value but not the definition of the input operation."
         }
       ],
       "exit_task": {
-        "prompt": "Prove that for any integer m, 8 divides m(m+2) exactly when m is even. Independently verify an unseen negative integer.",
+        "prompt": "For any three-digit integer 100a+10b+c (a from1..9, b,c from0..9), explain why 11 divides it exactly when the alternating digit sum a-b+c is 0 OR 11, not just 0. Check 209.",
         "source_ref": "SRC-D4-EXPLAIN-ORIGINAL",
         "answer": {
           "kind": "MODEL_RESPONSE",
-          "summary": "8|m(m+2) iff m is even.",
+          "summary": "The alternating sum can equal 0 or11.",
           "reasoning": [
-            "If m=2t, then m(m+2)=4t(t+1), and t(t+1) is even.",
-            "If m is odd, then both m and m+2 are odd so their product is odd.",
-            "The argument also covers m=-4, giving product8."
+            "100≡1 and 10≡−1 modulo11, so 100a+10b+c≡a−b+c.",
+            "The allowed digit bounds make −8≤a−b+c≤18. The only multiples of11 in this interval are 0 and 11.",
+            "For 209, 2−0+9=11, and 209=19×11."
           ],
-          "check": "Check both parity classes and m=-4.",
+          "check": "121 has sum0; 209 has sum11; both are divisible by11.",
           "acceptable_alternatives": [],
           "subpart_answers": [],
           "verification_status": "CHECKED_BY_AUTHOR"
         },
         "oracle": {
           "verification": {
-            "validator_id": "tests/test_imo182_qrt_d4_justify.py",
+            "validator_id": "tests/test_imo182_qrt_d4_explain.py",
             "bindings": {
-              "domain": "integers",
-              "divisor": "8",
-              "criterion": "m is even",
-              "expression": "m(m+2)"
+              "domain": "all_three_digit_integers",
+              "expression": "100a+10b+c",
+              "divisor": "11",
+              "criterion": "a-b+c in {0,11}"
             }
           }
         }
       },
-      "research_contribution": "Original TEST content; rights/authentic-source and academic grade-level acceptance not granted.",
+      "research_contribution": "Original digit-rotation EXPLAIN-D4 TEST candidate, subject and band suitability subject to independent qualified review.",
       "prerequisite_refs": [],
       "lineage": [],
       "construction_units": [
         {
           "id": "CU-D4-EXPLAIN-ROTATE",
-          "decision": "Learn the necessity-versus-sufficiency proof method and build partial prime-power tools; independently derive the full criterion in Core2A.",
+          "decision": "Build place-value sign changes and a two-digit anchor; the protected even-versus-odd length classification remains learner-owned in Core2A.",
           "step_refs": [
-            "D4-STEP-FACTOR",
-            "D4-STEP-EIGHT",
-            "D4-STEP-THREE",
-            "D4-STEP-IFF"
+            "D4-EXP-PLACE",
+            "D4-EXP-TWO",
+            "D4-EXP-SPLIT",
+            "D4-EXP-AUDIT"
           ],
           "representation_ref": "REP-D4-EXPLAIN-CORE1A",
           "misconception_indexes": [
@@ -231,66 +234,66 @@
           ],
           "independent_checks": [
             {
-              "statement": "Enumerate all residues modulo24 and compare with residues 1 and5 modulo6.",
+              "statement": "Check all pairs of 2 decimal digits for negated mod11 residues on swapping positions.",
               "check_type": "EXHAUSTIVE_MODULAR_CHECK"
             }
           ],
           "reveal_stage_refs": [
-            "D4-IDENTITY",
-            "D4-EIGHTS",
-            "D4-THREES"
+            "D4-EXP-STAGE-PLACE",
+            "D4-EXP-STAGE-TWO",
+            "D4-EXP-STAGE-SPLIT"
           ],
           "worked_anchor_ref": "Q-D4-EXPLAIN-WORKED"
         }
       ],
       "compact_anchor": {
-        "prompt": "For odd q, why do two even neighbors q−1,q+1 contain a factor of eight?",
-        "result": "Of even numbers two apart, one is divisible by four and the other by two.",
+        "prompt": "Why do two numbers 10u+v and 10v+u have opposite residues modulo11?",
+        "result": "10≡−1 modulo11, giving v−u and u−v.",
         "representation_ref": "REP-D4-EXPLAIN-CORE1A"
       },
       "elicitation": {
         "predict": {
-          "prompt": "A student checks n=5,7,11 and concludes all odd n make 24 divide n²−1. Does sampling prove a universal rule?",
-          "defensible_answer": "No: n=3 is odd and gives 8. The missing factor-of-three condition is decisive."
+          "prompt": "A classmate says two-digit and four-digit rotations show every multiple of11 survives rotation at any length. Why could this rule fail for three-digit 121?",
+          "defensible_answer": "121 rotates to211 and 211 is not divisible by11; tested even-digit cases do not establish all lengths."
         },
         "attempt": {
-          "produces": "A universal iff proof, both necessary exclusion families, sufficient coprime factors and an independent check.",
+          "produces": "Causal explanation of residue sign from place values, even/odd original length contrast and nonzero leading-digit obstruction.",
           "closure": "RUBRIC",
           "rubric": [
             {
-              "criterion": "State both proof directions.",
-              "evidence_of": "Necessity and sufficiency for all integers."
+              "criterion": "Define a fixed-width left rotation with nonzero original leading digit.",
+              "evidence_of": "Keeps domain correct under leading zeros."
             },
             {
-              "criterion": "Justify factor8 for odd n and show even n cannot work.",
-              "evidence_of": "Correct parity and power-of-four warrant."
+              "criterion": "Explain 10≡−1 modulo11 and its dependence on an exponent.",
+              "evidence_of": "Causal place-value mechanism rather than digit-sum claim."
             },
             {
-              "criterion": "Justify factor3 iff 3∤n.",
-              "evidence_of": "Exhaustive mod3 cases."
+              "criterion": "Explain why even L preserves zero residue and odd L yields nonzero 2a.",
+              "evidence_of": "Correct causal effect of changed assumption."
             },
             {
-              "criterion": "Combine coprime factors and classify modulo6.",
-              "evidence_of": "Complete iff criterion."
+              "criterion": "Use odd-length boundary and a changed input to diagnose the overgeneralization.",
+              "evidence_of": "Distinguishes conceptual exception from an arithmetic slip."
             }
           ],
           "accepted": [
-            "24 divides n²−1 exactly when n is odd and 3∤n. If n odd, the two even neighbors differ by2, yielding factor8. If 3∤n a neighbor yields factor3. Conversely even n gives odd n²−1 and 3|n gives remainder2 mod3."
+            "For original N=a10^(L−1)+B with a nonzero first digit and rotation R=10B+a, modulo11 N≡a(-1)^(L−1)+B and R≡a−B. If L is even, R≡−N, so zero stays zero. If L is odd and N≡0, B≡−a, so R≡2a, nonzero because a is 1..9."
           ],
           "rejected": [
-            "Every odd n works, because examples do.",
-            "Checking only mod3 proves 24 divisibility."
+            "Digit sum stays constant so mod11 divisibility always stays constant.",
+            "The odd-length counterexample 121 is an arithmetic accident."
           ],
           "task": {
-            "prompt": "Critique the odd-only claim, replace it with an exact iff condition for 24|(n²−1), and prove both directions.",
+            "prompt": "Explain why the assertion that ALL left one-digit rotations preserve 11-divisibility is wrong; use 121 and 1210 and the decimal place-value mechanism, not a table of many cases.",
             "givens": [
-              "n is any integer.",
-              "n²−1=(n−1)(n+1).",
-              "24=8×3 and gcd(8,3)=1."
+              "L≥2, leading digit a in1..9.",
+              "Original N divisible by11.",
+              "Rotation keeps the original fixed width."
             ],
             "representation_ref": "REP-D4-EXPLAIN-CORE1B",
             "stage_refs": [
-              "D4-WRONG-CLAIM"
+              "D4-EXP-WRONG"
             ],
             "response": {
               "type": "free_response",
@@ -301,37 +304,37 @@
         "reconstruct": {
           "route": [
             {
-              "ask": "Test n=3; does it defeat the proposed odd-only rule?",
-              "why_this_ask": "Distinguishes misconception from a slip.",
-              "from_step_ref": "D4-STEP-THREE"
+              "ask": "What exactly differs between 121→211 and 1210→2101?",
+              "why_this_ask": "Locates original digit length rather than computation.",
+              "from_step_ref": "D4-EXP-AUDIT"
             },
             {
-              "ask": "Which half of the odd-only reasoning remains true for every odd n?",
-              "why_this_ask": "Preserves the valid factor-eight bridge.",
-              "from_step_ref": "D4-STEP-EIGHT"
+              "ask": "Why does shifting a decimal place change the sign modulo11?",
+              "why_this_ask": "Elicits positional cause.",
+              "from_step_ref": "D4-EXP-PLACE"
             },
             {
-              "ask": "Which other residue class destroys factor3?",
-              "why_this_ask": "Locates the missing exception family.",
-              "from_step_ref": "D4-STEP-THREE"
+              "ask": "Write N=a10^(L−1)+B and R=10B+a. Which exponent switches sign with L?",
+              "why_this_ask": "Connects abstract bridge to the operation.",
+              "from_step_ref": "D4-EXP-SPLIT"
             },
             {
-              "ask": "Why do your exclusions prove necessity for every n?",
-              "why_this_ask": "Requires a universal warrant rather than samples.",
-              "from_step_ref": "D4-STEP-IFF"
+              "ask": "For odd L with 11|N, why is R congruent to 2a, and why is that nonzero?",
+              "why_this_ask": "Explains the whole exception family, not one sample.",
+              "from_step_ref": "D4-EXP-AUDIT"
             },
             {
-              "ask": "Now classify changed inputs n=15 and n=17 without first squaring.",
-              "why_this_ask": "Checks repaired concept on unseen givens.",
-              "from_step_ref": "D4-STEP-IFF"
+              "ask": "Test 110 and1232 by length before computing rotated values.",
+              "why_this_ask": "Checks transfer from rule, not copied counterexample.",
+              "from_step_ref": "D4-EXP-AUDIT"
             }
           ],
-          "differs_from_teaching_path": "The reconstruction starts from a false odd-only claim, not a fully worked modular proof."
+          "differs_from_teaching_path": "Core1A gives neutral sign-change and two-digit anchor; Core1B diagnoses a false all-length rule and reconstructs a length-sensitive causal explanation."
         },
         "boundary_test": {
-          "prompt": "After repair, classify n=15 and n=17 using the corrected rule, then verify.",
-          "answer": "n=15 fails because 3 divides it and 15²−1=224. n=17 passes and 17²−1=288=24×12.",
-          "confirms": "Two-condition rule transfers to changed givens."
+          "prompt": "Predict whether left one-digit rotations of 110 and 1232 preserve divisibility by11, using original lengths. Then check 101 and 2321.",
+          "answer": "110 has odd original length and becomes101, not divisible by11; 1232 has even original length and becomes2321, divisible by11.",
+          "confirms": "Repairs explanation on independent changed length and digits."
         }
       }
     }
@@ -346,62 +349,78 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "expression": "For every integer n, n²−1=(n−1)(n+1).",
-      "meaning": "Factoring square-minus-one gives two integers separated by two; divisibility conditions remain for the learner to prove.",
+      "expression": "10 ≡ −1 (mod 11).",
+      "meaning": "A one-place left shift reverses a digit's modular contribution. This is a conceptual bridge, not the learner's protected parity result.",
       "symbols": [
         {
-          "symbol": "n",
-          "meaning": "Arbitrary integer",
-          "unit_or_domain": "Z"
+          "symbol": "L",
+          "meaning": "Original fixed decimal digit length",
+          "unit_or_domain": "integer≥2"
+        },
+        {
+          "symbol": "a",
+          "meaning": "Original nonzero leading decimal digit",
+          "unit_or_domain": "1..9"
+        },
+        {
+          "symbol": "B",
+          "meaning": "Padded trailing suffix interpreted as integer",
+          "unit_or_domain": "0..10^(L−1)-1"
         }
       ],
       "conditions": [
-        "All integers, including negatives and zero.",
-        "24=8×3 with coprime factors."
+        "Retain original L positions under rotation.",
+        "Ten is congruent to minus one modulo11."
       ],
       "derivation": [
         {
-          "id": "D4-REL-0",
-          "action": "If q is odd, q−1 and q+1 are even, with one multiple of four.",
-          "why_valid": "They are even and differ by two, so their residues modulo4 are 0 and2.",
+          "id": "D4-EXP-REL-0",
+          "action": "Use the decimal identity 10 congruent to -1 modulo 11: each shift by one decimal place changes the residue sign.",
+          "why_valid": "10+1=11, and multiplication respects congruence.",
+          "inputs": [],
+          "output": "Sign-change mechanism independent of a particular digit string.",
+          "role": "DECLARE"
+        },
+        {
+          "id": "D4-EXP-REL-1",
+          "action": "Compare two-digit 10u+v with digit-swapped 10v+u as a neutral worked anchor.",
+          "why_valid": "Modulo11, the respective remainders are v-u and u-v.",
           "inputs": [
-            "q odd"
+            "10≡-1 modulo11"
           ],
-          "output": "8 divides q²−1.",
+          "output": "For two positions, swapping negates residue, including zero.",
           "role": "TRANSFORM"
         },
         {
-          "id": "D4-REL-1",
-          "action": "If q is not divisible by3, one of its neighbors is; if q is divisible by3 neither neighbor is.",
-          "why_valid": "Check the exhaustive q residues 0,1,2 modulo3.",
+          "id": "D4-EXP-REL-2",
+          "action": "Represent a general L-digit input with leading digit a and remaining value B as N=a×10^(L−1)+B; its one-digit left rotation is R=10B+a.",
+          "why_valid": "Shifting the suffix left multiplies by ten and appending a adds its units value.",
           "inputs": [
-            "q arbitrary"
+            "10≡-1 modulo11"
           ],
-          "output": "3 divides q²−1 iff 3 does not divide q.",
+          "output": "Exact positional equations, not the final parity classification.",
           "role": "TRANSFORM"
         },
         {
-          "id": "D4-REL-2",
-          "action": "Combine factors 8 and3 for sufficiency; rule out even and divisible-by-three q for necessity.",
-          "why_valid": "gcd(8,3)=1. Even q makes q²−1 odd, and 3|q gives q²−1≡2 mod3.",
+          "id": "D4-EXP-REL-3",
+          "action": "Identify the assumption that must be rechecked whenever a two-digit demonstration is generalized to another original length.",
+          "why_valid": "The contribution of a is multiplied by ten L−1 times; changing L changes that exponent.",
           "inputs": [
-            "D4-STEP-EIGHT",
-            "D4-STEP-THREE"
+            "10≡-1 modulo11"
           ],
-          "output": "24 divides q²−1 iff q odd and 3 does not divide q.",
+          "output": "Audit length and leading zero conventions before deciding the invariant.",
           "role": "VERIFY"
         }
       ],
       "limits": [
-        "Odd n=3 is not sufficient.",
-        "Even n=2 not divisible by3 is not sufficient."
+        "An unchanged digit sum is not a valid explanation of modulo11 invariance.",
+        "A two-digit example alone proves no general length class."
       ],
       "checks": [
-        "Residues modulo6 1 and5 only.",
-        "n=-1 gives zero, divisible by24."
+        "For two-digit 10u+v versus 10v+u, residues are v-u and u-v."
       ],
       "gate_relation_ref": null,
-      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><msup><mi>n</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn><mo>=</mo><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow></math>"
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>10</mn><mo>≡</mo><mo>−</mo><mn>1</mn><mspace width=\"0.4em\"/><mo>(</mo><mtext>mod</mtext><mspace width=\"0.2em\"/><mn>11</mn><mo>)</mo></mrow></math>"
     }
   ],
   "representations": [
@@ -415,27 +434,30 @@
       "evidence_refs": [],
       "extensions": {},
       "kind": "SYMBOLIC_DIAGRAM",
-      "purpose": "Build the factorization and modular proof in separate concept stages.",
+      "purpose": "Staged conceptual sign bridge without revealing which digit lengths preserve 11 divisibility.",
       "required_elements": [
-        "q²−1=(q−1)(q+1)"
+        "10≡−1 (mod11)",
+        "10u+v",
+        "N=a10^(L−1)+B"
       ],
       "relation_refs": [
         "REL-D4-EXPLAIN"
       ],
       "read_order": [
-        "Read expression and domain.",
-        "Make independent mathematical inference."
+        "Read original digit length and operation.",
+        "Track positions without using an answer-bearing diagram.",
+        "Explain or contest the effect on modulo11."
       ],
       "instance_constraints": [
-        "No preattempt answer in SVG.",
-        "No official source claim."
+        "Fixed width after rotation, even if zero leads.",
+        "No correct length class or two-digit prefix exception in SVG metadata."
       ],
       "accessibility": [
-        "SVG alt and desc contain only givens.",
-        "Text labels do not encode final criterion."
+        "Diagram title/description contain given symbols only.",
+        "Text SVG stage labels accessible independently of color."
       ],
       "misleading_alternatives": [
-        "The visual is not a proof."
+        "Digit sum alone is not a modulo11 criterion."
       ],
       "rendered_asset_refs": [
         "TEST/imo-research/qrt-d4/figures/explain-core1a.svg"
@@ -453,41 +475,41 @@
           "asset_ref": "TEST/imo-research/qrt-d4/figures/explain-core1a.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
-            "frame": "Unclassified integer expression.",
-            "caption": "The visible first-stage diagram shows only the question givens."
+            "frame": "Fixed-width decimal string and operation without revealed correct length class.",
+            "caption": "The learner must explain the residue outcome; the figure provides only the givens and the place-value bridge."
           }
         }
       ],
       "correspondence": [
         {
-          "element": "given expression",
-          "symbol": "n²−1",
-          "in_words": "Quantity to assess, not the solution."
+          "element": "digit positions",
+          "symbol": "a×10^(L−1)+B",
+          "in_words": "Original value under an explicitly defined fixed-width rotation."
         }
       ],
       "reveal_stages": [
         {
-          "id": "D4-IDENTITY",
-          "label": "Factor",
-          "purpose": "Verify the difference-of-squares identity.",
+          "id": "D4-EXP-STAGE-PLACE",
+          "label": "Place-value sign",
+          "purpose": "Show conceptual givens without protected answer.",
           "visible_elements": [
-            "q²−1=(q−1)(q+1)"
+            "10≡−1 (mod11)"
           ]
         },
         {
-          "id": "D4-EIGHTS",
-          "label": "Even neighbors",
-          "purpose": "Explain why odd q supplies factor8.",
+          "id": "D4-EXP-STAGE-TWO",
+          "label": "Two digits",
+          "purpose": "Show conceptual givens without protected answer.",
           "visible_elements": [
-            "neighbors are two apart"
+            "10u+v"
           ]
         },
         {
-          "id": "D4-THREES",
-          "label": "Remainder classes",
-          "purpose": "Explain why modulo3 must be checked independently.",
+          "id": "D4-EXP-STAGE-SPLIT",
+          "label": "General form",
+          "purpose": "Show conceptual givens without protected answer.",
           "visible_elements": [
-            "q mod3=0,1,2"
+            "N=a10^(L−1)+B"
           ]
         }
       ]
@@ -502,28 +524,29 @@
       "evidence_refs": [],
       "extensions": {},
       "kind": "SYMBOLIC_DIAGRAM",
-      "purpose": "Pre-attempt CORE1B schematic displays only givens.",
+      "purpose": "Unmarked student overgeneralization for misconception reconstruction.",
       "required_elements": [
-        "n odd?",
-        "24|(n²−1)?"
+        "one-digit rotation",
+        "all original lengths?"
       ],
       "relation_refs": [
         "REL-D4-EXPLAIN"
       ],
       "read_order": [
-        "Read expression and domain.",
-        "Make independent mathematical inference."
+        "Read original digit length and operation.",
+        "Track positions without using an answer-bearing diagram.",
+        "Explain or contest the effect on modulo11."
       ],
       "instance_constraints": [
-        "No preattempt answer in SVG.",
-        "No official source claim."
+        "Fixed width after rotation, even if zero leads.",
+        "No correct length class or two-digit prefix exception in SVG metadata."
       ],
       "accessibility": [
-        "SVG alt and desc contain only givens.",
-        "Text labels do not encode final criterion."
+        "Diagram title/description contain given symbols only.",
+        "Text SVG stage labels accessible independently of color."
       ],
       "misleading_alternatives": [
-        "The visual is not a proof."
+        "Digit sum alone is not a modulo11 criterion."
       ],
       "rendered_asset_refs": [
         "TEST/imo-research/qrt-d4/figures/explain-core1b.svg"
@@ -541,26 +564,25 @@
           "asset_ref": "TEST/imo-research/qrt-d4/figures/explain-core1b.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
-            "frame": "Unclassified integer expression.",
-            "caption": "The visible first-stage diagram shows only the question givens."
+            "frame": "Fixed-width decimal string and operation without revealed correct length class.",
+            "caption": "The learner must explain the residue outcome; the figure provides only the givens and the place-value bridge."
           }
         }
       ],
       "correspondence": [
         {
-          "element": "given expression",
-          "symbol": "n²−1",
-          "in_words": "Quantity to assess, not the solution."
+          "element": "digit positions",
+          "symbol": "a×10^(L−1)+B",
+          "in_words": "Original value under an explicitly defined fixed-width rotation."
         }
       ],
       "reveal_stages": [
         {
-          "id": "D4-WRONG-CLAIM",
-          "label": "Given only",
-          "purpose": "Orient without protected answer.",
+          "id": "D4-EXP-WRONG",
+          "label": "Unmarked givens",
+          "purpose": "Show conceptual givens without protected answer.",
           "visible_elements": [
-            "n odd?",
-            "24|(n²−1)?"
+            "one-digit rotation"
           ]
         }
       ]
@@ -575,29 +597,29 @@
       "evidence_refs": [],
       "extensions": {},
       "kind": "SYMBOLIC_DIAGRAM",
-      "purpose": "Pre-attempt CORE2A schematic displays only givens.",
+      "purpose": "Core2A safe original and rotated digit strings without parity classification.",
       "required_elements": [
-        "n in integers",
-        "n²−1",
-        "divisor 24"
+        "L digit string a d2 ... dL",
+        "one-digit left rotation"
       ],
       "relation_refs": [
         "REL-D4-EXPLAIN"
       ],
       "read_order": [
-        "Read expression and domain.",
-        "Make independent mathematical inference."
+        "Read original digit length and operation.",
+        "Track positions without using an answer-bearing diagram.",
+        "Explain or contest the effect on modulo11."
       ],
       "instance_constraints": [
-        "No preattempt answer in SVG.",
-        "No official source claim."
+        "Fixed width after rotation, even if zero leads.",
+        "No correct length class or two-digit prefix exception in SVG metadata."
       ],
       "accessibility": [
-        "SVG alt and desc contain only givens.",
-        "Text labels do not encode final criterion."
+        "Diagram title/description contain given symbols only.",
+        "Text SVG stage labels accessible independently of color."
       ],
       "misleading_alternatives": [
-        "The visual is not a proof."
+        "Digit sum alone is not a modulo11 criterion."
       ],
       "rendered_asset_refs": [
         "TEST/imo-research/qrt-d4/figures/explain-core2a.svg"
@@ -615,27 +637,25 @@
           "asset_ref": "TEST/imo-research/qrt-d4/figures/explain-core2a.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
-            "frame": "Unclassified integer expression.",
-            "caption": "The visible first-stage diagram shows only the question givens."
+            "frame": "Fixed-width decimal string and operation without revealed correct length class.",
+            "caption": "The learner must explain the residue outcome; the figure provides only the givens and the place-value bridge."
           }
         }
       ],
       "correspondence": [
         {
-          "element": "given expression",
-          "symbol": "n²−1",
-          "in_words": "Quantity to assess, not the solution."
+          "element": "digit positions",
+          "symbol": "a×10^(L−1)+B",
+          "in_words": "Original value under an explicitly defined fixed-width rotation."
         }
       ],
       "reveal_stages": [
         {
-          "id": "D4-24-GIVEN",
-          "label": "Given only",
-          "purpose": "Orient without protected answer.",
+          "id": "D4-EXP-ROTATE1",
+          "label": "Unmarked givens",
+          "purpose": "Show conceptual givens without protected answer.",
           "visible_elements": [
-            "n in integers",
-            "n²−1",
-            "divisor 24"
+            "L digit string a d2 ... dL"
           ]
         }
       ]
@@ -650,29 +670,29 @@
       "evidence_refs": [],
       "extensions": {},
       "kind": "SYMBOLIC_DIAGRAM",
-      "purpose": "Pre-attempt CORE2B schematic displays only givens.",
+      "purpose": "Core2B safe changed operation without exceptional prefix solution.",
       "required_elements": [
-        "n in integers",
-        "n²−1",
-        "divisor 48"
+        "L digit string a b d3 ... dL",
+        "two-digit block moved to end"
       ],
       "relation_refs": [
         "REL-D4-EXPLAIN"
       ],
       "read_order": [
-        "Read expression and domain.",
-        "Make independent mathematical inference."
+        "Read original digit length and operation.",
+        "Track positions without using an answer-bearing diagram.",
+        "Explain or contest the effect on modulo11."
       ],
       "instance_constraints": [
-        "No preattempt answer in SVG.",
-        "No official source claim."
+        "Fixed width after rotation, even if zero leads.",
+        "No correct length class or two-digit prefix exception in SVG metadata."
       ],
       "accessibility": [
-        "SVG alt and desc contain only givens.",
-        "Text labels do not encode final criterion."
+        "Diagram title/description contain given symbols only.",
+        "Text SVG stage labels accessible independently of color."
       ],
       "misleading_alternatives": [
-        "The visual is not a proof."
+        "Digit sum alone is not a modulo11 criterion."
       ],
       "rendered_asset_refs": [
         "TEST/imo-research/qrt-d4/figures/explain-core2b.svg"
@@ -690,27 +710,25 @@
           "asset_ref": "TEST/imo-research/qrt-d4/figures/explain-core2b.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
-            "frame": "Unclassified integer expression.",
-            "caption": "The visible first-stage diagram shows only the question givens."
+            "frame": "Fixed-width decimal string and operation without revealed correct length class.",
+            "caption": "The learner must explain the residue outcome; the figure provides only the givens and the place-value bridge."
           }
         }
       ],
       "correspondence": [
         {
-          "element": "given expression",
-          "symbol": "n²−1",
-          "in_words": "Quantity to assess, not the solution."
+          "element": "digit positions",
+          "symbol": "a×10^(L−1)+B",
+          "in_words": "Original value under an explicitly defined fixed-width rotation."
         }
       ],
       "reveal_stages": [
         {
-          "id": "D4-48-GIVEN",
-          "label": "Given only",
-          "purpose": "Orient without protected answer.",
+          "id": "D4-EXP-ROTATE2",
+          "label": "Unmarked givens",
+          "purpose": "Show conceptual givens without protected answer.",
           "visible_elements": [
-            "n in integers",
-            "n²−1",
-            "divisor 48"
+            "L digit string a b d3 ... dL"
           ]
         }
       ]
@@ -726,31 +744,33 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Square-minus-one exceptional iff proof",
+      "title": "Why modulo11 divisibility changes under decimal digit rotation",
       "capability_refs": [
         "CAP-D4-EXPLAIN"
       ],
       "solution_structure": [
-        "Factor difference of squares.",
-        "Prove factor8 and factor3 conditions.",
-        "Establish both proof directions.",
-        "Change target to48 and find new mod8 exception."
+        "Interpret original fixed-width digit string.",
+        "Use 10≡−1 mod11 and represent rotation in place values.",
+        "Explain why length parity changes residue sign.",
+        "Independently explain a changed two-digit rotation with a new prefix exception."
       ],
       "demand_dimensions": {
-        "model_choice": "Select prime-power criteria.",
-        "representation_translation": "Square to two neighboring integers.",
-        "reasoning_steps": "Necessary and sufficient directions.",
-        "novelty": "Changed factor16 requirement."
+        "model_choice": "Choose modulo11 positional sign rather than digit sum.",
+        "representation_translation": "Convert string rotation into algebraic positional values.",
+        "reasoning_steps": "Explain both the invariant and the failure under changed length.",
+        "novelty": "Two-leading-digit rotation changes the odd-length exception."
       },
       "safe_variations": [
-        "Other divisors with documented prime-power conditions."
+        "Other length-sensitive cyclic rotations with a fixed-width domain."
       ],
       "transfer_boundaries": [
-        "The rule for24 fails for48 at n=5."
+        "Do not reuse one-digit rule for two-digit rotation.",
+        "A leading zero after rotation does not reset the original length."
       ],
       "common_wrong_routes": [
-        "Odd-only rule.",
-        "Examples used as an iff proof."
+        "Digit sums stay equal, so mod11 must.",
+        "Examples at even length prove all-length invariant.",
+        "Any odd-length rotation always fails even when two-digit block is a multiple11."
       ],
       "item_refs": [
         "Q-D4-EXPLAIN-WORKED",
@@ -1221,7 +1241,7 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Iff divisibility construction",
+      "title": "Place-value explanation and length-dependent rotating digits",
       "cores": [
         "CORE1A"
       ],
@@ -1229,28 +1249,29 @@
         "MIC-D4-EXPLAIN"
       ],
       "entry_needs": [
-        "Factorization, parity, residues modulo3."
+        "Decimal place value, parity and congruences modulo11."
       ],
       "learner_actions": [
-        "Build difference-of-squares identity.",
-        "Compare separate prime-power factors.",
-        "Reject the odd-only misconception.",
-        "Attempt an independent changed-expression exit."
+        "Study the 10≡−1 bridge.",
+        "Check a two-digit swapped-anchor residue.",
+        "Describe a general cyclic digit movement.",
+        "Independently explain a three-digit alternating-sum exception."
       ],
       "help_plan": [
-        "Core1A stages teach components but not the Core2A completed criterion.",
-        "Core2A H3 after attempt."
+        "Core1A stages reveal conceptual identity only.",
+        "Core2A must retain a written explanation before H3 or full answer.",
+        "Core1B reconstructs the odd-length misconception."
       ],
-      "reveal_plan": "Teach each concept stage, protect applied iff decision until independent learner work.",
+      "reveal_plan": "Concept bridge then independent exit; protected Core2A causal parity explanation and distinct Core2B two-digit prefix condition.",
       "source_preferences": [
         {
           "resource_ref": "SRC-D4-EXPLAIN-ORIGINAL",
-          "purpose": "Wholly authored proof",
-          "reason": "No official Core2 source admission."
+          "purpose": "Wholly authored digit-place-value task",
+          "reason": "No rights-cleared official source admitted."
         }
       ],
       "when_not_suitable": [
-        "Grade9 placement and QRT reviewer acceptance not yet granted."
+        "Curriculum/D4 and source-rights review not accepted."
       ],
       "practice_profile_ref": null
     }
@@ -1276,10 +1297,10 @@
       "extensions": {},
       "kind": "DATUM",
       "value": 0,
-      "unit": "symbolic expression",
-      "symbol": "q²−1",
-      "meaning": "Attempt-safe authored given, not a proof.",
-      "locator": "AUTHOR_CREATED: D4"
+      "unit": "fixed decimal string position",
+      "symbol": "10u+v",
+      "meaning": "Original authored symbol for a rotation operation, without outcome.",
+      "locator": "AUTHOR_CREATED: QRT-EXPLAIN-D4"
     },
     {
       "id": "D4-EXPLAIN-DATUM-CORE1B",
@@ -1291,11 +1312,11 @@
       "evidence_refs": [],
       "extensions": {},
       "kind": "DATUM",
-      "value": 0,
-      "unit": "symbolic expression",
-      "symbol": "n²−1",
-      "meaning": "Attempt-safe authored given, not a proof.",
-      "locator": "AUTHOR_CREATED: D4"
+      "value": 1,
+      "unit": "fixed decimal string position",
+      "symbol": "a|d₂…dL",
+      "meaning": "Original authored symbol for a rotation operation, without outcome.",
+      "locator": "AUTHOR_CREATED: QRT-EXPLAIN-D4"
     },
     {
       "id": "D4-EXPLAIN-DATUM-CORE2A",
@@ -1307,11 +1328,11 @@
       "evidence_refs": [],
       "extensions": {},
       "kind": "DATUM",
-      "value": 0,
-      "unit": "symbolic expression",
-      "symbol": "n²−1",
-      "meaning": "Attempt-safe authored given, not a proof.",
-      "locator": "AUTHOR_CREATED: D4"
+      "value": 2,
+      "unit": "fixed decimal string position",
+      "symbol": "a d₂…dL → d₂…dL a",
+      "meaning": "Original authored symbol for a rotation operation, without outcome.",
+      "locator": "AUTHOR_CREATED: QRT-EXPLAIN-D4"
     },
     {
       "id": "D4-EXPLAIN-DATUM-CORE2B",
@@ -1323,11 +1344,11 @@
       "evidence_refs": [],
       "extensions": {},
       "kind": "DATUM",
-      "value": 0,
-      "unit": "symbolic expression",
-      "symbol": "n²−1",
-      "meaning": "Attempt-safe authored given, not a proof.",
-      "locator": "AUTHOR_CREATED: D4"
+      "value": 3,
+      "unit": "fixed decimal string position",
+      "symbol": "a b d₃…dL → d₃…dL a b",
+      "meaning": "Original authored symbol for a rotation operation, without outcome.",
+      "locator": "AUTHOR_CREATED: QRT-EXPLAIN-D4"
     }
   ]
 }
