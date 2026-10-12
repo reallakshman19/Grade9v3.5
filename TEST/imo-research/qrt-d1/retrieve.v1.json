@@ -873,25 +873,25 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 / original TEST",
+        "grade9v3:authored_by": "AGENT-D1 original RETRIEVE TEST",
         "grade9v3:cognitive_demand": {
-          "primary": "REPRESENT",
+          "primary": "RETRIEVE",
           "secondary": [],
-          "basis": "The learner's decisive work is a sign- and axis-preserving mapping between spoken directions and ordered pair; the convention is supplied."
+          "basis": "Recall and use the defining condition from complete set; only one classification."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "Keep signed axis meaning and first-x/second-y order through representation change.",
-          "common_wrong_route": "Read distance as always positive or swap x and y."
+          "stable_crux_move": "Use count of distinct positive divisors to choose COMPOSITE.",
+          "common_wrong_route": "Odd 25 is mistaken for prime."
         },
         "grade9v3:core2_support_plan": {
           "protected_move_refs": [
-            "MOVE-TEST-IMO182-D1-RETR-QA-DECIDE"
+            "RET-D1-QA-DECIDE"
           ],
           "support_completions": [
             {
               "support_ref": "scaffolds[2]",
               "completed_move_refs": [
-                "MOVE-TEST-IMO182-D1-RETR-QA-DECIDE"
+                "RET-D1-QA-DECIDE"
               ],
               "availability": "AFTER_ATTEMPT"
             }
@@ -901,64 +901,63 @@
       "id": "Q-TEST-IMO182-D1-RETR-CORE2A-DIVISOR-CATEGORY",
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-RETR-REP-AUTHORED",
-      "original_identifier": "Q-TEST-IMO182-D1-RETR-CORE2A-DIVISOR-CATEGORY",
-      "stem": "A surveyor starts at the origin of an east-positive/north-positive square grid. She records a displacement of 4 grid units EAST and 2 grid units SOUTH. Write the displacement as a signed ordered pair (x,y), with horizontal first. Explain the sign of its second entry.",
+      "original_identifier": "AUTHORED-RET-D1-25-COMPLETE-CARD",
+      "stem": "The COMPLETE list of DISTINCT POSITIVE divisors of 25 is {1, 5, 25}. Choose PRIME, COMPOSITE or NEITHER. Cite the exact defining divisor-count criterion; do not decide by oddness.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Map origin is fixed; east is positive x and north is positive y.",
-        "Horizontal x is written first, vertical y second.",
-        "Original authored TEST; not an official examination item."
+        "25 is positive and the list is complete.",
+        "All listed divisors are distinct.",
+        "Do not use parity as the classification rule.",
+        "Wholly AUTHORED TEST; no official exam source."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-RETR-DIVISOR-GIVEN"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "(4,−2); y is negative because south is opposite positive north.",
+        "summary": "25 is COMPOSITE.",
         "reasoning": [
-          "Four units east gives horizontal x=+4.",
-          "Two units south gives vertical y=−2 because north is positive.",
-          "Write x then y: (4,−2)."
+          "There are three distinct positive divisors: 1,5,25.",
+          "Exactly two means prime; more than two means composite.",
+          "Three is more than two, so 25 is composite."
         ],
         "reasoning_route": [
           {
-            "id": "MOVE-TEST-IMO182-D1-RETR-QA-READ",
+            "id": "RET-D1-QA-COUNT",
             "kind": "REPRESENT",
-            "action": "Identify four east as the horizontal component and two south as the vertical component.",
-            "why_valid": "This map declares horizontal east-west as x and vertical north-south as y.",
+            "action": "Count distinct divisors 1,5,25.",
+            "why_valid": "The supplied list is explicitly complete and distinct.",
             "inputs": [
-              "4 east",
-              "2 south"
+              "{1,5,25}"
             ],
-            "output": "x component comes from east; y component comes from south."
+            "output": "Three distinct positive divisors."
           },
           {
-            "id": "MOVE-TEST-IMO182-D1-RETR-QA-DECIDE",
+            "id": "RET-D1-QA-DECIDE",
             "kind": "DECIDE",
-            "action": "Assign the correct signs and order the components as (4,−2).",
-            "why_valid": "East is positive x, south opposes positive north and is negative y, and x precedes y.",
+            "action": "Classify 25 as composite from its count of three.",
+            "why_valid": "More than two positive divisors is precisely the composite condition.",
             "inputs": [
-              "4 east",
-              "2 south",
-              "east=+x",
-              "north=+y"
+              "Count=3",
+              "Prime count=2",
+              "Composite count>2"
             ],
-            "output": "(4,−2)"
+            "output": "COMPOSITE"
           },
           {
-            "id": "MOVE-TEST-IMO182-D1-RETR-QA-CHECK",
+            "id": "RET-D1-QA-CHECK",
             "kind": "VERIFY",
-            "action": "Read (4,−2) backward as four east and two south.",
-            "why_valid": "The reverse meaning equals both given movements, so no direction or magnitude was lost.",
+            "action": "Check 5×5=25 gives a nontrivial divisor.",
+            "why_valid": "The divisor 5 is distinct from both 1 and 25.",
             "inputs": [
-              "(4,−2)"
+              "25"
             ],
-            "output": "4 east, 2 south"
+            "output": "5×5=25"
           }
         ],
-        "crux_move_ref": "MOVE-TEST-IMO182-D1-RETR-QA-DECIDE",
-        "check": "Read (4,−2) as four east and two south; both givens match.",
+        "crux_move_ref": "RET-D1-QA-DECIDE",
+        "check": "5×5=25 shows a nontrivial factor, independently confirming composite.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -977,22 +976,22 @@
       "hints": [],
       "scaffolds": [
         {
-          "text": "Which part of the description belongs to the first, horizontal entry, and which to the second, vertical entry? Do not sign either for the learner.",
+          "text": "The full positive-divisor card is provided. Count DISTINCT entries before selecting a category; do not use oddness.",
           "support_kind": "REPRESENT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "MOVE-TEST-IMO182-D1-RETR-QA-READ"
+          "supports_move_ref": "RET-D1-QA-COUNT"
         },
         {
-          "text": "Compare each named movement to the positive direction of its own axis. A magnitude alone does not determine the sign.",
+          "text": "Compare the count with exactly two for prime, more than two for composite and one for neither. Choose the category yourself.",
           "support_kind": "CONNECT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "MOVE-TEST-IMO182-D1-RETR-QA-DECIDE"
+          "supports_move_ref": "RET-D1-QA-DECIDE"
         },
         {
-          "text": "After recording your attempt, review x-before-y and translate both signs back to directions to see whether the route is preserved.",
+          "text": "After your written attempt, recheck the threshold and whether a proper positive factor of the number exists.",
           "support_kind": "CONNECT",
           "reveals": "METHOD",
-          "supports_move_ref": "MOVE-TEST-IMO182-D1-RETR-QA-DECIDE"
+          "supports_move_ref": "RET-D1-QA-DECIDE"
         }
       ],
       "hint_ladder": [
@@ -1020,36 +1019,36 @@
         "safe_ref": "REP-TEST-IMO182-D1-RETR-DIVISOR-GIVEN",
         "bound_ref": null,
         "stage_refs": [
-          "RETR-D1-ROUTE-ONLY"
+          "RETR-QA-CARD"
         ]
       },
-      "repair_ref": "RETR-D1-TC-1",
-      "failure_signal": "A signed coordinate encodes direction, not just a positive length; reverse the pair into words.",
+      "repair_ref": "RETR-D1-TC-2",
+      "failure_signal": "The exact number of distinct positive divisors, not oddness, decides prime/composite.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-RETR-WORDS-AND-PAIRS",
         "closure": "Successful forward representation is not equivalent to independent inverse transfer."
       },
       "independent_check": {
-        "statement": "Read (4,−2) as four east and two south; both givens match.",
-        "check_type": "INVERSE_OPERATION"
+        "statement": "5×5=25 is a nontrivial factor; compare it with the complete card.",
+        "check_type": "DEFINITION_AND_COUNTEREXAMPLE"
       },
       "difficulty": {
         "band": "D1",
         "score": 2,
         "components": {
           "concept_model_selection": 0,
-          "representation_translation": 1,
+          "representation_translation": 0,
           "reasoning_chain_length": 0,
           "algebra_computational_load": 0,
           "trap_exception_sensitivity": 1
         },
-        "basis": "The axis rule is given; one independent sign-and-axis translation is required, with an accessible inverse check.",
+        "basis": "Complete divisor set and category definitions supplied, leaving one meaningful classification.",
         "component_evidence": {
-          "concept_model_selection": "Fixed east-positive/north-positive convention supplied; no model choice.",
-          "representation_translation": "Learner independently signs and orders the pair or recovers words.",
-          "reasoning_chain_length": "One correspondence with a verification, not a dependent proof chain.",
-          "algebra_computational_load": "No arithmetic beyond sign interpretation.",
-          "trap_exception_sensitivity": "Signed south and swapped pair order create a plausible wrong route."
+          "concept_model_selection": "No governing model choice.",
+          "representation_translation": "Read a complete card.",
+          "reasoning_chain_length": "One classification.",
+          "algebra_computational_load": "No divisor search needed.",
+          "trap_exception_sensitivity": "Odd composite number traps surface classification."
         }
       },
       "learner_question_type": "constructed_response"
