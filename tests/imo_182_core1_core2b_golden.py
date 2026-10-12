@@ -19,6 +19,7 @@ P1 = ROOT / "TEST/products/imo-182-core1-orientation.manifest.json"
 P2B = ROOT / "TEST/products/imo-182-core2b-transfer.manifest.json"
 GOLD = ROOT / "golden/units/G-MATH-LINEAR-CONSTRAINT/manifest.json"
 PKG = ROOT / "TEST/imo-research/pilots/core1a-render-qualified-divisibility.v1.json"
+ALL_FIVE_MANIFEST = ROOT / "TEST/products/imo-182-five-core-integrated-review.manifest.json"
 TRANSFER_PKG = ROOT / "TEST/imo-research/pilots/imo182-core2b-transfer-pilot.v1.json"
 REGISTRY = ROOT / "Shared/web/interactive-page-blueprints.v1.json"
 QID = "Q-TEST-CORE2B-FOUR-FACTOR-48-BOUNDARY"
@@ -55,6 +56,8 @@ class BlueprintGoldens(unittest.TestCase):
     def setUpClass(cls):
         cls.m1 = load(P1); cls.m2 = load(P2B)
         cls.pkg = load(PKG)
+        cls.mall = load(ALL_FIVE_MANIFEST)
+        cls.all_pages, cls.all_gaps, cls.all_digest, _, _ = render_core.build_report(ALL_FIVE_MANIFEST, "PAGES", held_to="REFERENCE")
         cls.transfer_pkg = load(TRANSFER_PKG)
         cls.registry = load(REGISTRY)
         cls.golden = load(ROOT / "golden/units/G-MATH-LINEAR-CONSTRAINT/records.json")
@@ -181,6 +184,53 @@ class BlueprintGoldens(unittest.TestCase):
         self.assertEqual(self.m2["subject"],"TEST")
         self.assertEqual(len(self.pkg["questions"]), 2)  # do not regress original Core1A pilot\n        self.assertTrue(all(q["origin"]=="AUTHORED" for q in self.pkg["questions"]))\n        self.assertTrue(all(q["origin"]=="AUTHORED" for q in self.transfer_pkg["questions"]))
         # No fake 68-question source, Owner-accepted QRT or production assertion.
+
+
+    def test_integrated_five_role_selection_and_blueprint_slots(self):
+        self.assertEqual(self.mall["output_roles"],
+                         ["CORE1", "CORE1A", "CORE1B", "CORE2A", "CORE2B"])
+        self.assertEqual(self.mall["selection"]["core2"], [])
+        self.assertEqual(set(self.all_pages),
+                         {"core1.html", "core1a.html", "core1b.html",
+                          "core2a.html", "core2b.html", "index.html"})
+        expected = {
+            "CORE1": "BP-CORE1-ORIENTATION@1.1.0",
+            "CORE1A": "BP-CORE1A-CONSTRUCTION@1.8.0",
+            "CORE1B": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+            "CORE2A": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+            "CORE2B": "BP-CORE2B-TRANSFER@1.1.0",
+        }
+        for role, blueprint in expected.items():
+            with self.subTest(role=role):
+                page = self.all_pages[role.lower()+".html"]
+                parsed = parse(page)
+                self.assertEqual(parsed.blueprints, [blueprint])
+                self.assertIn(role, parsed.roles)
+                self.assertIn("TEST", page)
+        self.assertFalse(self.all_gaps, self.all_gaps)
+
+    def test_integrated_repair_and_transfer_protected_work(self):
+        import re
+        prior = self.all_pages["core1a.html"]
+        reconstruction = self.all_pages["core1b.html"]
+        practice = self.all_pages["core2a.html"]
+        transfer = self.all_pages["core2b.html"]
+        self.assertIn("CORE1B", reconstruction)
+        self.assertIn('data-requires-attempt', reconstruction)
+        self.assertIn('data-requires-attempt', practice)
+        self.assertIn('data-requires-attempt', transfer)
+        self.assertIn('data-g9-lineage', transfer)
+        self.assertIn("core2a.html#Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF",transfer)
+        self.assertIn("CORE2B-FOUR-FACTORS-ONLY", transfer)
+        # Existing authors own this content. Do not leak a worked future-exit
+        # method via the transfer pilot's Core1A quick check.
+        prohibited="Check the four-factor exit product modulo 24 for all 24 residue classes."
+        self.assertNotIn(prohibited, json.dumps(self.pkg))
+        self.assertNotIn(prohibited, json.dumps(self.transfer_pkg))
+        svg=(ROOT / "TEST/library/figures/core1a-consecutive-divisibility-staged.svg").read_text(encoding="utf-8")
+        self.assertNotIn("coprime", re.search(r"<desc>(.*?)</desc>", svg, re.S).group(1).lower())
+        # The standalone Core1A page retains its complete construction.
+        self.assertIn("modulo", prior.lower())
 
 if __name__ == "__main__":
     unittest.main()
