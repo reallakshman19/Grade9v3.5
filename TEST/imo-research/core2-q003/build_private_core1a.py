@@ -70,6 +70,20 @@ def stage_private(original: Path, receipt: Path) -> dict:
     for key in ("title", "inferential_jump", "entry_assumptions",
                 "teaching_path", "misconceptions", "construction_units", "exit_task"):
         mic[key] = authored[key]
+    # Native registered relation and authored staged representation; never
+    # source components, placeholder HTML, or copies of private source options.
+    for collection in ("relations", "representations"):
+        rows = authored.get(collection) or []
+        if not isinstance(rows, list) or not rows:
+            raise ValueError("CORE1A_AUTHORED_" + collection.upper() + "_MISSING")
+        existing = {record["id"] for record in result[collection]}
+        for record in rows:
+            if record["id"] in existing or record.get("source_refs") != ["SRC-IMO-Q003-CONCEPT-AUTHORED"]:
+                raise ValueError("CORE1A_AUTHORED_" + collection.upper() + "_IDENTITY_INVALID")
+            result[collection].append(record)
+            existing.add(record["id"])
+    mic["relation_refs"] = [r["id"] for r in authored["relations"]]
+    mic["representation_refs"] = [r["id"] for r in authored["representations"]]
     if len(mic["construction_units"]) < 1:
         raise ValueError("CORE1A_CONSTRUCTION_UNITS_MISSING")
     ids = {step["id"] for step in mic["teaching_path"]}
@@ -79,11 +93,52 @@ def stage_private(original: Path, receipt: Path) -> dict:
         if unit.get("crux_question_refs") and unit["crux_question_refs"] != [expected["question_id"]]:
             raise ValueError("CORE1A_ORIGINAL_QUESTION_REF_MISMATCH")
     # This is a wholly authored worked anchor, not a relabelled original.
-    result["questions"].append(_author_transfer(
+    authored_worked = _author_transfer(
         authored, "SRC-IMO-Q003-CONCEPT-AUTHORED",
         mic["primary_capability_ref"], mic["question_family_refs"][0],
-    ))
+    )
+    result["questions"].append(authored_worked)
     bank = core2_adapter.bank(source, expected)  # private original, no re-keying
+
+    # The native Core1A toughest-concept contract requires a separate worked
+    # teaching anchor bound to the actual source question's exact crux move.
+    # That private crux ref is read from the SHA-validated bank, never guessed,
+    # transcribed into authored Git data, or replaced by a generic topic label.
+    original = next(q for q in bank["questions"] if q["id"] == expected["question_id"])
+    crux = original["answer"]["crux_move_ref"]
+    moves = {move["id"] for move in original["answer"]["reasoning_route"]}
+    if crux not in moves:
+        raise ValueError("CORE1A_AUTHENTIC_CRUX_UNRESOLVED")
+    anchors = {}
+    for binding in authored.get("lesson_anchor_bindings") or []:
+        unit = next((u for u in mic["construction_units"]
+                     if u["id"] == binding.get("construction_ref")), None)
+        if (unit is None or unit["id"] in anchors
+                or binding.get("target_question_ref") != original["id"]
+                or binding.get("authored_worked_ref") != authored_worked["id"]
+                or binding.get("target_crux_move_ref_source") != "SHA_VALIDATED_PRIVATE_BANK"
+                or original["id"] not in (unit.get("crux_question_refs") or [])
+                or unit.get("crux_step_ref") not in (unit.get("step_refs") or [])):
+            raise ValueError("CORE1A_LESSON_ANCHOR_SCOPE_INVALID")
+        anchor = {
+            "id": binding["id"],
+            "construction_ref": unit["id"],
+            "target_question_ref": original["id"],
+            "target_crux_move_ref": crux,
+            "stem": authored_worked["stem"],
+            "answer": authored_worked["answer"],
+        }
+        sys.path.insert(0, str(ROOT))
+        from Shared.tools import learning_repair  # native anchor binding validator
+        problems = learning_repair.anchor_problems(
+            anchor, {original["id"]: original}, unit["id"],
+            expected_ref=original["id"])
+        if problems:
+            raise ValueError("CORE1A_LESSON_ANCHOR_INVALID: " + "; ".join(problems))
+        anchors[unit["id"]] = anchor
+    if not anchors:
+        raise ValueError("CORE1A_TARGET_CRUX_LESSON_ANCHOR_MISSING")
+    mic["extensions"]["grade9v3:lesson_anchors"] = anchors
     write_json(STAGE / "records.json", result)
     write_json(STAGE / "bank.json", bank)
     rel = lambda p: p.relative_to(ROOT).as_posix()
