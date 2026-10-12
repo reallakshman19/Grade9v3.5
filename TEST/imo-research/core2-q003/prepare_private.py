@@ -133,7 +133,7 @@ def package(expected):
     # This is an authored TEST classification, not the original printed label.
     family = base_record("FAM-IMO-NUMERIC-PAIR-RULE-CHECK",
         title="Authored family: numerical pair rule consistency",
-        source_refs=[authored["id"]], capability_refs=[cap["id"]],
+        capability_refs=[cap["id"]],
         solution_structure=[
             "Treat each displayed pair as a fixed input-output observation.",
             "Test the same proposed relation on every pair without changing the rule.",
@@ -154,6 +154,7 @@ def package(expected):
             "Change the candidate rule between options until a chosen answer fits."
         ],
         item_refs=[expected["question_id"]])
+    family["source_refs"] = [authored["id"]]
     mic["question_family_refs"] = [family["id"]]
     return dict(schema_version="0.2.0", package_id="TEST-IMO-Q003-CORE2-PRIVATE",
         title="Original numerical pair question / private TEST", version="0.1.0",
