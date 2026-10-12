@@ -138,8 +138,8 @@
           "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
           "id": "SYN-D1-TC-2",
           "inputs": [
-            "3 packs",
-            "5 beads in every pack"
+            "3 badges",
+            "2 circles and 1 triangle in each badge"
           ],
           "role": "TRANSFORM"
         },
@@ -152,7 +152,7 @@
           ],
           "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
           "id": "SYN-D1-TC-3",
-          "output": "15 beads",
+          "output": "9 badge pieces",
           "role": "VERIFY"
         }
       ],
@@ -280,7 +280,7 @@
             "2×(4+2)=12 because all six shapes repeat in each motif."
           ],
           "rejected": [
-            "There are 4+2=6 lanterns."
+            "There are 4+2×2=8 shapes across the two complete mixed motifs."
           ],
           "task": {
             "prompt": "Two identical motifs each have FOUR stars and TWO crescents. A student wrote 4+(2×2)=8 shapes. Decide whether all parts recur; write a corrected expression and explain it. Commit before checking.",
@@ -347,12 +347,12 @@
         {
           "symbol": "n",
           "meaning": "Number of equally filled groups",
-          "unit_or_domain": "positive integer group count"
+          "unit_or_domain": "positive integer count of complete repeated units"
         },
         {
           "symbol": "k",
           "meaning": "Number of objects per group",
-          "unit_or_domain": "positive integer group size"
+          "unit_or_domain": "positive integer parts-per-full-unit"
         }
       ],
       "conditions": [
@@ -380,8 +380,8 @@
           "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
           "id": "DERIV-SYN-D1-TC-2",
           "inputs": [
-            "3 packs",
-            "5 beads in every pack"
+            "3 badges",
+            "2 circles and one triangle per badge"
           ],
           "role": "TRANSFORM"
         },
@@ -394,20 +394,20 @@
           ],
           "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
           "id": "DERIV-SYN-D1-TC-3",
-          "output": "15 beads",
+          "output": "9 badge pieces",
           "role": "VERIFY"
         }
       ],
       "limits": [
-        "Unequal groups need a different or extended synthesis.",
-        "Do not use n+k as the equal-groups total.",
-        "Group count is not group size; label both."
+        "Mixed-unit structure must be identical in every repeat.",
+        "Zero full-unit size cannot be inverted.",
+        "All component types of the unit must repeat together."
       ],
       "checks": [
-        "3 groups of 5 gives 15 in worked example.",
-        "6 trays with 4 seedlings each gives 24.",
-        "4 shelves with 2 items each gives 8 not 6.",
-        "24 seedlings with 4 per tray gives 6 trays."
+        "Three badges each of 2 circles+1 triangle give 3×(2+1)=9.",
+        "Four banner units each of 3 blue+2 red give 4×(3+2)=20.",
+        "Two motifs each of 4 stars+2 crescents give 2×(4+2)=12, not eight.",
+        "Unknown full blocks of 3+2 parts from 20 marks give 20÷5=4."
       ],
       "gate_relation_ref": null,
       "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>T</mi><mo>=</mo><mi>n</mi><mo>×</mo><mi>k</mi></mrow></math>"
@@ -582,7 +582,7 @@
       "reveal_stages": [
         {
           "id": "SYN-D1-QA-BANNER",
-          "label": "Unsynthesisled trays",
+          "label": "Inspect unsolved complete banner unit",
           "purpose": "Safe target givens only: four banner units, 3 blue and 2 red in each.",
           "visible_elements": [
             "Four complete copies.",
@@ -781,8 +781,8 @@
         "Reverse unknown number of blocks."
       ],
       "transfer_boundaries": [
-        "Unequal group sizes invalidate a single product.",
-        "Zero group size in inverse division is excluded."
+        "Changes in component structure between copies invalidate a constant full-unit size.",
+        "Zero complete-unit size makes reverse division undefined."
       ],
       "common_wrong_routes": [
         "Count first part once plus repeated second part."
@@ -819,7 +819,7 @@
       "options": [],
       "conditions": [
         "Every mentioned group contains exactly the stated number of whole objects.",
-        "Group count and group size are different quantities.",
+        "Each identical repeated unit contains BOTH stated part kinds.",
         "Original TEST context and diagrams; no examination source."
       ],
       "figure_refs": [
@@ -950,7 +950,7 @@
       "options": [],
       "conditions": [
         "Every mentioned group contains exactly the stated number of whole objects.",
-        "Group count and group size are different quantities.",
+        "Each identical repeated unit contains BOTH stated part kinds.",
         "Original TEST context and diagrams; no examination source."
       ],
       "figure_refs": [
@@ -1118,8 +1118,8 @@
           "basis": "One ordering/dependency bridge before elementary computation; reviewer adjudicates D1 vs D2."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "Use inverse group-number synthesis with total and per-group amount known, not direct sum/multiplication of givens.",
-          "common_wrong_route": "Multiply 24 by four or state 24 trays because 24 is the total."
+          "stable_crux_move": "Compute whole two-part size before dividing the total by that complete unit.",
+          "common_wrong_route": "Divide twenty marks by only three dots or two strokes, omitting part of each whole block."
         }
       },
       "id": "Q-TEST-IMO182-D1-SYN-CORE2B-INVERSE-TRAY-COUNT",
@@ -1131,7 +1131,7 @@
       "options": [],
       "conditions": [
         "Every mentioned group contains exactly the stated number of whole objects.",
-        "Group count and group size are different quantities.",
+        "Each identical repeated unit contains BOTH stated part kinds.",
         "Original TEST context and diagrams; no examination source."
       ],
       "figure_refs": [
@@ -1226,7 +1226,7 @@
         "closure": "AUTHORED TEST candidate, not independent academic acceptance."
       },
       "independent_check": {
-        "statement": "Multiply recovered number of trays by seedlings in each tray and check 24.",
+        "statement": "Recover 4 whole blocks using 20÷(3+2), then count twelve blue dots and eight red strokes to verify twenty.",
         "check_type": "INVERSE_GROUP_COUNT"
       },
       "difficulty": {
@@ -1255,16 +1255,15 @@
           "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION"
         ],
         "protected_move_ref": "SYN-D1-QB-REVERSE",
-        "description": "Reverse the known/unknown: total fixed, full two-part unit first, unknown copies.",
-        "statement": "Forward: given number of equal trays and per-tray count, synthesis total. Reverse: given total and per-tray count, synthesis missing tray number.",
-        "invariant": "The equal-groups relation T=n×k.",
+        "statement": "Forward: known number of complete mixed motifs, each with two parts, find total. Reverse: known total and both part counts, find unknown number of complete repeat blocks.",
+        "invariant": "Whole-unit relation T=n×(a+b), not a+n×b.",
         "novelty": {
           "checked_against": [
             "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
             "MIC-TEST-IMO182-D1-SYN-EQUAL-GROUPS:exit_task",
             "MIC-TEST-IMO182-D1-SYN-EQUAL-GROUPS:boundary_test"
           ],
-          "why_new": "Unknown shifts from total to number of groups and mathematical operation changes to division; not merely a fresh group-count substitution."
+          "why_new": "The unknown changes from total number of parts to number of full mixed-part blocks. One whole-unit size must be assembled before reverse division."
         }
       }
     }
@@ -1296,10 +1295,10 @@
         "Recover unknown repeat count from a fixed total."
       ],
       "help_plan": [
-        "Core1A uses only 3 groups of 5, not assessed 6×4.",
-        "Core2A H1/H2 identify semantic roles but protect the multiplicative synthesis; H3 AFTER_ATTEMPT."
+        "Core1A teaches a DIFFERENT 3×(2+1)=9 badge construction, not the assessed banner.",
+        "Core2A H1/H2 orient whole-unit composition but leave the grouped expression/order W; H3 AFTER_ATTEMPT."
       ],
-      "reveal_plan": "Initial target SVG lists givens 6 trays, 4 per tray only; no answer-bearing grid or number sentence. Distinct Core1A worked stages.",
+      "reveal_plan": "Primary initial SVG prints only four units, three blue and two red parts per unit; no parentheses, operation or result. Core1A shows separate worked three-badge stages.",
       "source_preferences": [
         {
           "resource_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
