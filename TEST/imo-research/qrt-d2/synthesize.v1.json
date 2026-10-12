@@ -1,0 +1,1215 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-D2-SYNTHESIZE-DIVISIBILITY-ORDER",
+  "title": "AUTHORED TEST: SYNTHESIZE-D2 join divisibility conditions with digit-order constraints",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Entirely original three-digit digit-choice task. Synthesize even-ending and digit-sum divisibility with largest-number ordering under distinct/fixed digits. Changed transfer examines which single swap preserves both checks and lowers a given multiple of six. No official source or KEY.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original authored simultaneous digit-criteria and ordering test",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
+      "edition": "Authored TEST on 2026-10-12",
+      "section": "Divisibility by 6, distinct-place choices and order",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "WHOLLY_AUTHORED_TEST, not a publisher or SOF source",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Hundreds fixed 4, digits drawn without repetition from 1..5: largest divisible-by-six three-digit integer is 432.",
+        "Single swap of distinct digits in 534, smaller and divisible-by-six, uniquely gives 354."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Explicitly coordinate two familiar number tests and a positional-maximization constraint; learner owns candidate choice and verifies both tests, not a single divisibility procedure.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-TEST-QRT-SYNTHESIZE-D2-DIGIT-CHOICE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Synthesize digit sum, final evenness and place-value ordering",
+      "topic": "Whole-number divisibility rules joined with distinct digit positioning",
+      "intrinsic_badge": "MEDIUM",
+      "badge_reason": "Two linked divisibility conditions plus one learner-owned candidate/order choice; short chain, independent verification.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-QRT-SYNTHESIZE-D2-CONCEPT",
+      "conventions": [
+        {
+          "id": "div6",
+          "statement": "For whole numbers, divisibility by six is equivalent to BOTH even last digit and digit sum divisible by three."
+        },
+        {
+          "id": "distinct",
+          "statement": "Digits must be used without repetition, and a three-digit number has a nonzero hundreds digit."
+        },
+        {
+          "id": "order",
+          "statement": "With hundreds fixed, maximize the tens digit first; an even final digit may constrain that choice."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "Synthesize the independent parity and digit-sum divisibility criteria with restricted available digits and place-value ordering to choose and verify one maximal candidate.",
+      "success_criterion": "With 4 fixed in hundreds and unused digits from {1,2,3,5}, identify 432 as the greatest divisible-by-six code and justify why 452 fails and no bigger valid code exists; in transfer analyze a downward one-swap transformation of 534.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Combine parity, digit-sum and position choice when forming whole numbers",
+      "bucket_id": "BUCKET-TEST-QRT-SYNTHESIZE-D2-DIGIT-CHOICE",
+      "primary_capability_ref": "CAP-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER",
+      "intrinsic_badge": "MEDIUM",
+      "badge_reason": "Known checks connect to a new maximal candidate under fixed and distinct positions; the connection, not routine division, is learner-owned.",
+      "entry_assumptions": [
+        "Read three-digit place value, compare hundreds/tens/ones.",
+        "An even number has an even final digit.",
+        "Use digit sum to test divisibility by three."
+      ],
+      "inferential_jump": "A candidate with the largest available tens digit can still FAIL the other divisibility criterion; revise the placement so BOTH independent checks and the ordering goal hold.",
+      "teaching_path": [
+        {
+          "id": "SY-TC1",
+          "role": "DECLARE",
+          "action": "When making a multiple of six, separately check the LAST digit for evenness and the DIGIT SUM for being a multiple of three.",
+          "why_valid": "6=2×3 with coprime factors, so an integer divisible by both 2 and 3 is divisible by 6.",
+          "inputs": [],
+          "output": "Two necessary and sufficient tests, used together"
+        },
+        {
+          "id": "SY-TC2",
+          "role": "TRANSFORM",
+          "action": "With hundreds digit 3 from 1,2,3,4, list the larger possible tens digits in descending order and choose a nonrepeated even final digit.",
+          "why_valid": "A largest three-digit number prioritizes the tens digit after hundreds is fixed, but must also be even.",
+          "inputs": [],
+          "output": "Test likely 34_ before 32_, then enforce final even"
+        },
+        {
+          "id": "SY-TC3",
+          "role": "TRANSFORM",
+          "action": "For candidate 342 check its last digit 2 (even) and digit sum 3+4+2=9, then compare any higher candidate.",
+          "why_valid": "342 passes both tests and higher 34_ with last digit 4 would repeat, so it cannot be improved.",
+          "inputs": [],
+          "output": "342 divisible by six and maximal in the worked digit set"
+        },
+        {
+          "id": "SY-TC4",
+          "role": "VERIFY",
+          "action": "Check 342÷6=57, and inspect 324 and 312 for why they are smaller while still eligible.",
+          "why_valid": "Divisibility alone does not resolve the largest-valid-code comparison.",
+          "inputs": [],
+          "output": "Worked candidate verified and order justified"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-QRT-SYNTHESIZE-D2-COMBINED-DIGIT-CRITERIA"
+      ],
+      "representation_refs": [
+        "REP-TEST-QRT-SYNTHESIZE-D2-CONCEPT"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-QRT-SYNTHESIZE-D2-DIGIT-CHOICE"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Any three-digit number ending in an even digit must be divisible by six.",
+          "diagnostic_prompt": "Is 352 (even last digit) divisible by three? Add the digits before claiming divisible by six.",
+          "repair": "Use the conjunction of two tests: even ones AND digit sum a multiple of three. 352 ends in two but 3+5+2=10, so it is not divisible by six."
+        }
+      ],
+      "exit_task": {
+        "prompt": "New unseen task: using three DISTINCT digits from {1,2,3,4,7}, with 7 fixed as the hundreds digit, construct the LARGEST three-digit multiple of six. Show how an even ending and digit sum jointly determine the choice; rule out any larger choice.",
+        "source_ref": "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "732 is the greatest possible valid code.",
+          "reasoning": [
+            "Hundreds is 7; choose the tens digit as high as possible with a different even last digit.",
+            "The candidate 742 is even but 7+4+2=13, so it fails divisibility by three. 734 is odd; 732 is even and has sum 12.",
+            "7 is fixed; the larger tens digit 4 has no valid distinct ones digit making multiple of six. 732 is therefore greatest."
+          ],
+          "check": "7+3+2=12, 732÷6=122; any candidate above 732 with hundreds 7 would need tens 4 but fails either digit sum or even last digit.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d2/test_synthesize.py",
+            "bindings": {
+              "available_digits": "1,2,3,4,7",
+              "fixed_hundreds": "7",
+              "largest_multiple_of_six": "732"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original short conjunction-and-order task with falsifying wrong route and separate one-swap invariant transfer; not source-authentic, D2 proposal for qualified review.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-QRT-SYNTHESIZE-D2-TWO-CHECKS",
+          "decision": "Choose candidate digits by place-value ordering then enforce the conjunction of parity and digit-sum rules without repeating digits.",
+          "step_refs": [
+            "SY-TC1",
+            "SY-TC2",
+            "SY-TC3",
+            "SY-TC4"
+          ],
+          "representation_ref": "REP-TEST-QRT-SYNTHESIZE-D2-CONCEPT",
+          "misconception_indexes": [
+            0
+          ],
+          "relation_refs": [
+            "REL-TEST-QRT-SYNTHESIZE-D2-COMBINED-DIGIT-CRITERIA"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Compute all admissible digit placements and verify candidate is maximal among numbers divisible by six.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "SY-ST1",
+            "SY-ST2",
+            "SY-ST3"
+          ],
+          "worked_anchor_ref": "Q-TEST-QRT-SYNTHESIZE-D2-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "A three-digit candidate ends in 2. Does that ALONE prove divisibility by six?",
+        "result": "No; it is even but its digit sum must also be divisible by three.",
+        "representation_ref": "REP-TEST-QRT-SYNTHESIZE-D2-CONCEPT"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A learner says 352 must be divisible by six because it ends in 2. Predict the missing check BEFORE revealing a repaired candidate.",
+          "defensible_answer": "The digit sum is 3+5+2=10, not divisible by 3, so 352 fails the second test."
+        },
+        "attempt": {
+          "produces": "A written three-digit candidate, its evenness and digit-sum checks, plus an order argument excluding larger eligible candidates.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Choose three distinct allowed digits in the correct places and apply fixed hundred.",
+              "evidence_of": "Candidate respects nonrepetition and place value."
+            },
+            {
+              "criterion": "Evaluate BOTH even-ending and digit-sum checks.",
+              "evidence_of": "Synthesizes two criteria rather than conflating them."
+            },
+            {
+              "criterion": "Compare all potentially larger tens placements before asserting maximum.",
+              "evidence_of": "Proves why a valid candidate is largest, not just that one candidate works."
+            }
+          ],
+          "accepted": [
+            "Using digits 1..6 with 6 fixed as hundreds, 654 is the greatest multiple of six: 6+5+4=15 and ending4 even; the higher 65_ even ones options are 2 and 4, where 652 sum13 fails, and 654 works."
+          ],
+          "rejected": [
+            "Any number ending in 2 is divisible by six.",
+            "First even candidate is necessarily the largest without checking digit sum."
+          ],
+          "task": {
+            "prompt": "Independently: choose three DISTINCT digits from {1,2,3,4,5,6}, with 6 fixed in hundreds place. Find the LARGEST multiple of six possible. Explain BOTH divisibility rules and why your answer exceeds all other valid choices. Write a full attempt before revealing the reconstruction.",
+            "givens": [
+              "Available digits 1 through 6, no repeated digits.",
+              "Hundreds digit is 6.",
+              "Three-digit code must be divisible by six and as large as possible."
+            ],
+            "representation_ref": "REP-TEST-QRT-SYNTHESIZE-D2-CONCEPT",
+            "stage_refs": [
+              "SY-ST1"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Which last digits are even and still unused when the hundreds digit is fixed?",
+              "why_this_ask": "Enforce last-digit constraint separately.",
+              "from_step_ref": "SY-TC1"
+            },
+            {
+              "ask": "Can you choose the greatest possible tens digit and still pass the digit-sum condition?",
+              "why_this_ask": "Link the two tests to the order goal rather than guessing.",
+              "from_step_ref": "SY-TC2"
+            },
+            {
+              "ask": "If the first high-tens candidate fails, which next one passes BOTH tests?",
+              "why_this_ask": "Rebuild a bounded short choice chain, not just a checksum.",
+              "from_step_ref": "SY-TC3"
+            },
+            {
+              "ask": "Which potentially larger candidate is excluded, and why?",
+              "why_this_ask": "Demand a justified maximality check.",
+              "from_step_ref": "SY-TC4"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A demonstrates 342 for hundreds 3 from {1,2,3,4}; Core1B starts from invalid even-only 352 and demands an independent largest-number search with hundreds 6."
+        },
+        "boundary_test": {
+          "prompt": "Changed boundary: from digits {1,2,3,5,8}, make a three-digit number with 8 as hundreds and 5 FIXED as its last digit, using distinct digits. Can it be a multiple of six for ANY allowed tens digit? Test BOTH criteria after a written decision.",
+          "answer": "No. Every such number ends in 5, so is odd and fails divisibility by 2; it cannot be divisible by 6 regardless of the tens digit or digit sum.",
+          "confirms": "Both required conditions remain necessary; the odd fixed last digit is a decisive impossibility boundary."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-TEST-QRT-SYNTHESIZE-D2-COMBINED-DIGIT-CRITERIA",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "For distinct allowed digits h,t,u and number N=100h+10t+u, N divisible by 6 exactly when u is even AND h+t+u is divisible by 3. With h fixed, compare t before u when finding the greatest valid N.",
+      "meaning": "The criterion conjunction and place-value ordering must all hold; a candidate satisfying one alone is insufficient.",
+      "symbols": [
+        {
+          "symbol": "h",
+          "meaning": "Hundreds digit",
+          "unit_or_domain": "1..9, prescribed in each task"
+        },
+        {
+          "symbol": "t",
+          "meaning": "Tens digit",
+          "unit_or_domain": "unused allowed digit"
+        },
+        {
+          "symbol": "u",
+          "meaning": "Units digit",
+          "unit_or_domain": "unused allowed even digit"
+        },
+        {
+          "symbol": "N",
+          "meaning": "Three-digit integer",
+          "unit_or_domain": "100h+10t+u"
+        }
+      ],
+      "conditions": [
+        "Digits chosen from the stated permitted finite set without repetition.",
+        "Hundreds digit fixed for construction tasks, nonzero.",
+        "Divisibility by 6 = divisible by both 2 and 3 for integers."
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-SY-TC1",
+          "role": "DECLARE",
+          "action": "When making a multiple of six, separately check the LAST digit for evenness and the DIGIT SUM for being a multiple of three.",
+          "why_valid": "6=2×3 with coprime factors, so an integer divisible by both 2 and 3 is divisible by 6.",
+          "inputs": [],
+          "output": "Two necessary and sufficient tests, used together"
+        },
+        {
+          "id": "DERIV-SY-TC2",
+          "role": "TRANSFORM",
+          "action": "With hundreds digit 3 from 1,2,3,4, list the larger possible tens digits in descending order and choose a nonrepeated even final digit.",
+          "why_valid": "A largest three-digit number prioritizes the tens digit after hundreds is fixed, but must also be even.",
+          "inputs": [],
+          "output": "Test likely 34_ before 32_, then enforce final even"
+        },
+        {
+          "id": "DERIV-SY-TC3",
+          "role": "TRANSFORM",
+          "action": "For candidate 342 check its last digit 2 (even) and digit sum 3+4+2=9, then compare any higher candidate.",
+          "why_valid": "342 passes both tests and higher 34_ with last digit 4 would repeat, so it cannot be improved.",
+          "inputs": [],
+          "output": "342 divisible by six and maximal in the worked digit set"
+        },
+        {
+          "id": "DERIV-SY-TC4",
+          "role": "VERIFY",
+          "action": "Check 342÷6=57, and inspect 324 and 312 for why they are smaller while still eligible.",
+          "why_valid": "Divisibility alone does not resolve the largest-valid-code comparison.",
+          "inputs": [],
+          "output": "Worked candidate verified and order justified"
+        }
+      ],
+      "limits": [
+        "Ending in an even digit alone is insufficient: e.g. 352 is even but digit sum 10.",
+        "A larger-looking tens choice may be disqualified by the other divisibility test.",
+        "Swapping digits keeps their sum but can change the parity of the last digit."
+      ],
+      "checks": [
+        "342 is divisible by six and greater than any other valid three-digit candidate using 1,2,3,4 with hundreds3.",
+        "432 is the maximal valid code when hundreds4 using digits1..5; 452 has sum11 and fails."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>N</mi><mo>=</mo><mn>100</mn><mi>h</mi><mo>+</mo><mn>10</mn><mi>t</mi><mo>+</mo><mi>u</mi></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-TEST-QRT-SYNTHESIZE-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "BAR_MODEL",
+      "purpose": "CORE1A: original fixed-digit-place card for joint checks and ordering, not a solved model.",
+      "required_elements": [
+        "Available digits 1,2,3,4",
+        "Hundreds fixed to 3",
+        "Even final digit and sum divisible by 3"
+      ],
+      "relation_refs": [
+        "REL-TEST-QRT-SYNTHESIZE-D2-COMBINED-DIGIT-CRITERIA"
+      ],
+      "read_order": [
+        "Observe the fixed digit and permitted unused digits.",
+        "Perform BOTH independent tests on a learner-chosen candidate; initial SVG never gives target code or quotient."
+      ],
+      "instance_constraints": [
+        "Digits and positional givens only before attempt.",
+        "Never display full valid code or rule out candidates via SVG alt/desc before learner attempt."
+      ],
+      "accessibility": [
+        "Digits and the conditions readable without relying on color.",
+        "Cards show hundreds/tens/ones placeholders rather than any pre-chosen candidate."
+      ],
+      "misleading_alternatives": [
+        "Displaying maximal eligible digits pre-attempt, which completes the protected move."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/synthesize-d2-stages.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-SYNTHESIZE-D2-CONCEPT",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER",
+          "datum_refs": [
+            "DATUM-TEST-QRT-SYNTHESIZE-D2-CONCEPT"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/synthesize-d2-stages.svg",
+          "scene": {
+            "kind": "STAGED_DIGIT_CARDS",
+            "frame": "Original digit positions and stated constraints",
+            "caption": "Givens only; test candidates and ordering without precomputed solution."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Fixed place and digits available",
+          "symbol": "Available digits 1,2,3,4 / Hundreds fixed to 3 / Even final digit and sum divisible by 3",
+          "in_words": "Problem givens and independent checks; place positions remain unselected until learner decides."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SY-ST1",
+          "label": "Placeholders and available digits",
+          "purpose": "Show 3 _ _ with allowed digits only, prior to the candidate-choice decision.",
+          "visible_elements": [
+            "3 _ _",
+            "digits 1,2,3,4"
+          ]
+        },
+        {
+          "id": "SY-ST2",
+          "label": "Two independent checks",
+          "purpose": "Reveal criteria even final digit AND digit sum divisible by three after prediction.",
+          "visible_elements": [
+            "last digit even",
+            "digit sum multiple of 3"
+          ]
+        },
+        {
+          "id": "SY-ST3",
+          "label": "Order comparison",
+          "purpose": "Reveal maximality check as a principle, without target code in a figure.",
+          "visible_elements": [
+            "compare tens then units"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-QRT-SYNTHESIZE-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "BAR_MODEL",
+      "purpose": "CORE2A: original fixed-digit-place card for joint checks and ordering, not a solved model.",
+      "required_elements": [
+        "Hundreds fixed to 4",
+        "Choose from digits 1,2,3,4,5 without repeats",
+        "Make largest multiple of 6"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Observe the fixed digit and permitted unused digits.",
+        "Perform BOTH independent tests on a learner-chosen candidate; initial SVG never gives target code or quotient."
+      ],
+      "instance_constraints": [
+        "Digits and positional givens only before attempt.",
+        "Never display full valid code or rule out candidates via SVG alt/desc before learner attempt."
+      ],
+      "accessibility": [
+        "Digits and the conditions readable without relying on color.",
+        "Cards show hundreds/tens/ones placeholders rather than any pre-chosen candidate."
+      ],
+      "misleading_alternatives": [
+        "Displaying maximal eligible digits pre-attempt, which completes the protected move."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/synthesize-d2-primary.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-SYNTHESIZE-D2-PRIMARY",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-QRT-SYNTHESIZE-D2-PRIMARY",
+          "datum_refs": [
+            "DATUM-TEST-QRT-SYNTHESIZE-D2-PRIMARY"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/synthesize-d2-primary.svg",
+          "scene": {
+            "kind": "STAGED_DIGIT_CARDS",
+            "frame": "Original digit positions and stated constraints",
+            "caption": "Givens only; test candidates and ordering without precomputed solution."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Fixed place and digits available",
+          "symbol": "Hundreds fixed to 4 / Choose from digits 1,2,3,4,5 without repeats / Make largest multiple of 6",
+          "in_words": "Problem givens and independent checks; place positions remain unselected until learner decides."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SY-PRACTICE",
+          "label": "Unmarked primary digit givens",
+          "purpose": "Show hundreds 4 and available digits plus two test conditions, not any valid or maximal number.",
+          "visible_elements": [
+            "4 _ _",
+            "digits 1,2,3,4,5",
+            "multiple of 6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-TEST-QRT-SYNTHESIZE-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "BAR_MODEL",
+      "purpose": "CORE2B: original fixed-digit-place card for joint checks and ordering, not a solved model.",
+      "required_elements": [
+        "Given three-digit number 534",
+        "Exactly one swap of positions",
+        "Result lower and still divisible by 6"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Observe the fixed digit and permitted unused digits.",
+        "Perform BOTH independent tests on a learner-chosen candidate; initial SVG never gives target code or quotient."
+      ],
+      "instance_constraints": [
+        "Digits and positional givens only before attempt.",
+        "Never display full valid code or rule out candidates via SVG alt/desc before learner attempt."
+      ],
+      "accessibility": [
+        "Digits and the conditions readable without relying on color.",
+        "Cards show hundreds/tens/ones placeholders rather than any pre-chosen candidate."
+      ],
+      "misleading_alternatives": [
+        "Displaying maximal eligible digits pre-attempt, which completes the protected move."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d2/figures/synthesize-d2-transfer.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-QRT-SYNTHESIZE-D2-TRANSFER",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-QRT-SYNTHESIZE-D2-TRANSFER",
+          "datum_refs": [
+            "DATUM-TEST-QRT-SYNTHESIZE-D2-TRANSFER"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d2/figures/synthesize-d2-transfer.svg",
+          "scene": {
+            "kind": "STAGED_DIGIT_CARDS",
+            "frame": "Original digit positions and stated constraints",
+            "caption": "Givens only; test candidates and ordering without precomputed solution."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Fixed place and digits available",
+          "symbol": "Given three-digit number 534 / Exactly one swap of positions / Result lower and still divisible by 6",
+          "in_words": "Problem givens and independent checks; place positions remain unselected until learner decides."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "SY-TRANSFER",
+          "label": "Initial swap problem givens",
+          "purpose": "Show original number and swap rule but not which swap is correct.",
+          "visible_elements": [
+            "Given: 534",
+            "One swap",
+            "lower and divisible by 6"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-TEST-QRT-SYNTHESIZE-D2-DIGIT-CHOICE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Conjunction of digit divisibility and ordering under restricted permutations",
+      "capability_refs": [
+        "CAP-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER"
+      ],
+      "solution_structure": [
+        "Select valid distinct digit positions respecting a fixed hundreds digit.",
+        "Check last-digit evenness separately from divisibility of the digit sum by three.",
+        "Use place-value order to compare admissible candidates and rule out larger ones.",
+        "For changed transfer, track invariant digit sum under swaps while last-digit parity and order may change."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Known divisibility tests, combined in a short synthesis.",
+        "representation_translation": "Translate digit-position candidates into parity and digit-sum checks.",
+        "reasoning_steps": "Order candidate, check both criteria, revise and prove maximal; transfer preserves sum under permutation but tests parity/order.",
+        "novelty": "Instead of constructing max under a fixed digit, alter existing valid code by one swap to lower it while retaining both divisibility conditions."
+      },
+      "safe_variations": [
+        "Author-created small finite digit pools and an explicit fixed place."
+      ],
+      "transfer_boundaries": [
+        "Never treat evenness alone as divisible-by-six.",
+        "Never infer every permutation preserves evenness merely because digit sum is invariant."
+      ],
+      "common_wrong_routes": [
+        "Choose the greatest-looking even code and skip sum of digits.",
+        "Select a valid multiple without proving no larger one exists.",
+        "Swap any digits and wrongly infer divisibility by six is invariant."
+      ],
+      "item_refs": [
+        "Q-TEST-QRT-SYNTHESIZE-D2-PRIMARY",
+        "Q-TEST-QRT-SYNTHESIZE-D2-TRANSFER"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-QRT-SYNTHESIZE-D2-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-SYNTHESIZE-D2-WORKED",
+      "stem": "Using exactly three DISTINCT digits from {1,2,3,4}, with hundreds digit fixed as 3, find the LARGEST three-digit multiple of six. Explain how two divisibility checks interact with the place-value order.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Available digit pool 1,2,3,4.",
+        "Hundreds fixed to 3.",
+        "No digit repetition, multiple of 6 required.",
+        "Largest valid candidate requested."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-SYNTHESIZE-D2-CONCEPT"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-SYNTHESIZE-D2-DIGIT-CHOICE",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": null,
+        "safe_ref": null,
+        "bound_ref": "REP-TEST-QRT-SYNTHESIZE-D2-CONCEPT",
+        "stage_refs": []
+      },
+      "failure_signal": "Chooses an even code without testing digit sum, or chooses a working code without comparing larger candidates.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "342 is the greatest eligible candidate.",
+        "reasoning": [
+          "The last digit must be even, so choose an unused even digit (2 or 4).",
+          "The tens digit 4 is highest available; with hundreds 3 and last digit 2, 342 has digit sum9 and even units, so passes both criteria.",
+          "Other candidates with tens below 4 are smaller than 342 regardless of eligibility."
+        ],
+        "check": "342÷6=57, and tens cannot exceed 4 from the allowed pool.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-SYNTHESIZE-D2-DIGIT-CHOICE",
+        "closure": "Concept worked anchor only; not proof of general target"
+      },
+      "repair_ref": "SY-TC1"
+    },
+    {
+      "id": "Q-TEST-QRT-SYNTHESIZE-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D2",
+        "grade9v3:cognitive_demand": {
+          "primary": "SYNTHESIZE",
+          "secondary": [
+            "JUSTIFY"
+          ],
+          "basis": "Learner owns the short connection of two independent divisibility checks with maximal place ordering, rather than a known single procedure."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Do not accept largest-looking even 452; enforce sum divisibility alongside parity and compare remaining tens choices.",
+          "common_wrong_route": "Divisible by six assumed from even last digit alone."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-TEST-QRT-SYNTHESIZE-D2-UNIFY-CHECKS-ORDER"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-TEST-QRT-SYNTHESIZE-D2-UNIFY-CHECKS-ORDER"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-SYNTHESIZE-D2-PRIMARY",
+      "stem": "Using any THREE DISTINCT digits chosen from {1,2,3,4,5}, form a three-digit number with 4 in the HUNDREDS place. It must be divisible by 6 and be the LARGEST possible number under these rules. Decide which digits to put in the TENS and ONES places, justify your choice by combining BOTH the even-last-digit rule AND the digit-sum divisibility-by-three rule, and show why no larger number works.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Hundreds digit fixed at 4.",
+        "Tens and units come from {1,2,3,5} without repetitions.",
+        "Number must be divisible by both 2 and 3, equivalently by 6.",
+        "Largest valid three-digit value wins.",
+        "Wholly original authored TEST; no exam statement copied."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-SYNTHESIZE-D2-PRIMARY"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-SYNTHESIZE-D2-DIGIT-CHOICE",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-QRT-SYNTHESIZE-D2-PRIMARY",
+        "safe_ref": "REP-TEST-QRT-SYNTHESIZE-D2-PRIMARY",
+        "bound_ref": null,
+        "stage_refs": [
+          "SY-PRACTICE"
+        ]
+      },
+      "failure_signal": "Picks 452 because larger/even or picks 412/432 without digit-sum+maximality proof.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "432 is the largest possible code.",
+        "reasoning": [
+          "Since 4 is fixed in hundreds and no repeats are allowed, the ONLY available even digit for ones is 2; hence all eligible numbers end in 2.",
+          "Choose tens 5 first to maximize: 452 is even but digit sum 4+5+2=11, not a multiple of three, so 452 fails.",
+          "Next highest tens is 3: 432 is even and has digit sum 4+3+2=9, a multiple of three, so 432 is divisible by six.",
+          "The only larger allowed tens choice was 5 and was rejected, so 432 is maximal. Lower tens1 would give412, which also fails sum."
+        ],
+        "check": "Compute 432÷6=72. The complete list of candidates ending2 with hundreds4 and distinct digits is {412,432,452}; only432 has digit sum divisible by3.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-QRT-SYNTHESIZE-D2-READ",
+            "kind": "REPRESENT",
+            "action": "Use 4 as hundreds; remaining positions must use distinct digits from the stated pool.",
+            "why_valid": "Digits cannot repeat and hundreds fixed means only 1,2,3,5 remain.",
+            "inputs": [],
+            "output": "Candidate 4 _ _."
+          },
+          {
+            "id": "MOVE-TEST-QRT-SYNTHESIZE-D2-UNIFY-CHECKS-ORDER",
+            "kind": "CONNECT",
+            "action": "Enforce both independent divisibility checks AND compare high tens candidates.",
+            "why_valid": "Only remaining even ones is 2. Tens 5 leads 452 (sum11 fail), tens3 leads 432 (sum9 pass).",
+            "inputs": [],
+            "output": "The conditions meet first at 432 in descending place order."
+          },
+          {
+            "id": "MOVE-TEST-QRT-SYNTHESIZE-D2-VERIFY",
+            "kind": "VERIFY",
+            "action": "Prove no larger choice remains and divide 432 by six.",
+            "why_valid": "If tens is lower than3, number is smaller; tens5 failed. The sum criterion and evenness are both necessary.",
+            "inputs": [],
+            "output": "432, quotient72, uniquely maximal."
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-QRT-SYNTHESIZE-D2-UNIFY-CHECKS-ORDER",
+        "rubric": [
+          {
+            "criterion": "Respect fixed hundreds4, distinct digit pool and parity of last digit.",
+            "evidence_of": "Chooses candidate from legitimate place-value configuration."
+          },
+          {
+            "criterion": "Synthesize BOTH tests: reject 452 for digit sum11 even though ending2, accept432 sum9.",
+            "evidence_of": "Protected conjunction determines the choice rather than a cosmetic rule label."
+          },
+          {
+            "criterion": "Justify maximum by excluding higher tens candidates, independently check 432÷6=72.",
+            "evidence_of": "Short connected ordering+divisibility reasoning."
+          }
+        ]
+      },
+      "scaffolds": [
+        {
+          "text": "What does the fixed hundreds digit tell you, and why does 'distinct' constrain the two remaining positions? Don't fill them yet.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-QRT-SYNTHESIZE-D2-READ"
+        },
+        {
+          "text": "Divisible by six has TWO separate tests. When trying a large-looking candidate, how would each test be checked independently, without supplying any digits?",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-TEST-QRT-SYNTHESIZE-D2-UNIFY-CHECKS-ORDER"
+        },
+        {
+          "text": "After a written attempt, compare tens choices from high to low. Enforce an even unused last digit AND a digit sum divisible by three before choosing the first eligible candidate; then check maximality.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-TEST-QRT-SYNTHESIZE-D2-UNIFY-CHECKS-ORDER"
+        }
+      ],
+      "independent_check": {
+        "statement": "Enumerate all distinct 4 t u with t,u∈{1,2,3,5}; exactly 432 is divisible by6; verify quotient72.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Short D2 synthesis of familiar divisibility criteria with a learner-owned largest-valid candidate and comparison, no unfamiliar model or large casework.",
+        "component_evidence": {
+          "concept_model_selection": "Both checks are prelearned and explicitly stated.",
+          "representation_translation": "Map digit positions to evenness and sum-of-digits.",
+          "reasoning_chain_length": "High tens candidate -> parity/sum feasibility -> next valid candidate -> maximality.",
+          "algebra_computational_load": "Only short three-digit sums and division.",
+          "trap_exception_sensitivity": "452 ends in2 but sum11, so the misleading even-only route fails."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-SYNTHESIZE-D2-DIGIT-CHOICE",
+        "closure": "Forward choose largest number from a pool with fixed hundreds by coordinating parity, digit sum and candidate order; transfer is a different swap preservation task."
+      },
+      "repair_ref": "SY-TC1"
+    },
+    {
+      "id": "Q-TEST-QRT-SYNTHESIZE-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D2",
+        "grade9v3:cognitive_demand": {
+          "primary": "SYNTHESIZE",
+          "secondary": [
+            "RETRIEVE"
+          ],
+          "basis": "Connect invariant digit sum under permutation, parity of changed final digit, and relative order to select one swap."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Digit sum12 is preserved by any swap, but last-digit parity is not; test all swaps for new number <534.",
+          "common_wrong_route": "Infer all swaps still multiples of six from digit-sum invariant alone."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL",
+      "original_identifier": "AUTHORED-QRT-SYNTHESIZE-D2-TRANSFER",
+      "stem": "A safe three-digit code is 534, which is divisible by 6. You MUST swap EXACTLY TWO digit positions ONCE (no digit may be changed or added). The new three-digit code must be SMALLER than 534 while STILL divisible by 6. Analyze ALL three possible single position swaps. Which swap works, and why do the other two fail? Combine the invariant DIGIT-SUM check with the change in the LAST digit and numerical order.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Initial three distinct digits: 5,3,4, forming 534.",
+        "Exactly one transposition (swap two of hundreds/tens/ones), not a replacement.",
+        "Result must remain a three-digit multiple of six and be strictly smaller than 534.",
+        "Wholly authored TEST, no source-exam provenance."
+      ],
+      "figure_refs": [
+        "REP-TEST-QRT-SYNTHESIZE-D2-TRANSFER"
+      ],
+      "primary_capability_ref": "CAP-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-QRT-SYNTHESIZE-D2-DIGIT-CHOICE",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "What cannot change when you exchange two digit positions, and what might change about the LAST digit?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-QRT-SYNTHESIZE-D2-TRANSFER",
+        "safe_ref": "REP-TEST-QRT-SYNTHESIZE-D2-TRANSFER",
+        "bound_ref": null,
+        "stage_refs": [
+          "SY-TRANSFER"
+        ]
+      },
+      "failure_signal": "Assumes any rearrangement of 534 stays divisible by six because digit sum is preserved, ignoring last digit.",
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Swap hundreds and tens: 354 is the only permissible result.",
+        "reasoning": [
+          "Every one-swap candidate has the same three digits, so the digit sum remains5+3+4=12, divisible by three.",
+          "Swap hundreds and tens: 354 has last digit4 (even), and is smaller than534; 354÷6=59. All three requirements hold.",
+          "Swap hundreds and units: 435 has final digit5 (odd), so not divisible by two, even though435 is smaller and its sum remains12.",
+          "Swap tens and units: 543 ends in3 (odd), and it is larger than534; it fails both the parity and order checks.",
+          "The digit-sum invariant under rearrangement is not enough to preserve a multiple of six: the last-digit parity still matters."
+        ],
+        "check": "Three exact possibilities {354,435,543}; only354 is both even and <534. Independent division 354=6×59.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-QRT-SYNTHESIZE-D2-B-READ",
+            "kind": "REPRESENT",
+            "action": "List all distinct transpositions of 5,3,4 and preserve the digits.",
+            "why_valid": "Exactly one swap gives three results.",
+            "inputs": [],
+            "output": "354,435,543."
+          },
+          {
+            "id": "MOVE-TEST-QRT-SYNTHESIZE-D2-SWAP-INVARIANT-PARITY",
+            "kind": "CONNECT",
+            "action": "Identify invariant digit sum under any swap, then test changed last-digit parity and numeric order.",
+            "why_valid": "Sum stays12, but only354 ends even and is less than534.",
+            "inputs": [],
+            "output": "Only hundreds-tens swap succeeds."
+          },
+          {
+            "id": "MOVE-TEST-QRT-SYNTHESIZE-D2-B-VERIFY",
+            "kind": "VERIFY",
+            "action": "Test each swap against all rules and divide successful number by six.",
+            "why_valid": "354=6×59; 435 odd;543 odd and greater.",
+            "inputs": [],
+            "output": "One permissible output,354."
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-QRT-SYNTHESIZE-D2-SWAP-INVARIANT-PARITY",
+        "rubric": [
+          {
+            "criterion": "Enumerate exactly three distinct single-swaps with correct resulting code.",
+            "evidence_of": "Understand the transformed representation rather than choose arbitrary numbers."
+          },
+          {
+            "criterion": "Use unchanged digit sum and changed last-digit parity together with strict decrease condition.",
+            "evidence_of": "Synthesizes invariant and non-invariant criteria under swaps."
+          },
+          {
+            "criterion": "Conclude uniquely 354 and reject435 and543 with independent reasons.",
+            "evidence_of": "Supports new transfer decision with complete small case check."
+          }
+        ]
+      },
+      "independent_check": {
+        "statement": "Enumerate all three transpositions: 354,435,543, check sum12 for each, even last digit, and result<534; only354.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "The digit sum remains invariant during swaps while last parity/order can change; short three-case synthesis under different transformation, reviewer pending.",
+        "component_evidence": {
+          "concept_model_selection": "No new formula needed.",
+          "representation_translation": "Apply position swap to candidate code.",
+          "reasoning_chain_length": "Enumerate, track invariant sum, filter parity/order, verify unique.",
+          "algebra_computational_load": "Three 3-digit candidates and one division.",
+          "trap_exception_sensitivity": "False idea that digit-sum invariance alone preserves divisibility by 6."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-QRT-SYNTHESIZE-D2-PRIMARY"
+        ],
+        "statement": "Primary constructs the maximum legal multiple using a fixed hundreds digit and a digit pool; transfer begins with a valid complete number and requires exactly one position swap, then preservation of divisibility and strict decrease.",
+        "invariant": "Rearrangements preserve the sum of digits, so the divisibility-by-three test stays fixed, while evenness and ordering depend on the final position.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-QRT-SYNTHESIZE-D2-PRIMARY",
+            "MIC-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER:exit_task",
+            "MIC-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER:boundary_test"
+          ],
+          "why_new": "Neither the primary nor Core1A exit or Core1B boundary asks for transformation of an already-divisible number by one transposition or compares preservation of one condition versus change in another. It demands all three swaps, parity/order filtering, and uniqueness."
+        },
+        "protected_move_ref": "MOVE-TEST-QRT-SYNTHESIZE-D2-SWAP-INVARIANT-PARITY"
+      },
+      "family_exposure": {
+        "family_ref": "FAM-TEST-QRT-SYNTHESIZE-D2-DIGIT-CHOICE",
+        "closure": "Changed transfer reverses selection: starting valid code is given, must choose a swap preserving two checks and reduce numeric value, not construct maximum with fixed hundred."
+      },
+      "repair_ref": "SY-TC1"
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-TEST-QRT-SYNTHESIZE-D2-CONSTRUCTION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Core1A stage two independent divisibility checks then compare place-value candidates",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-QRT-SYNTHESIZE-D2-DIVISIBILITY-ORDER"
+      ],
+      "entry_needs": [
+        "Parity from last digit.",
+        "Digit-sum test for divisibility by three.",
+        "Compare three-digit candidates with fixed hundreds digit."
+      ],
+      "learner_actions": [
+        "Predict why even-only route 352 fails.",
+        "Reveal 3 _ _ placeholders and digit pool.",
+        "Reveal both tests after a prediction.",
+        "Select highest valid tens candidate and verify.",
+        "Complete an unseen 7 _ _ exit from digits1,2,3,4,7."
+      ],
+      "help_plan": [
+        "Concept worked 342 with hundreds3 distinct from protected Core2A hundreds4.",
+        "Core1B diagnoses even-only invalid route and another fixed-hundreds search."
+      ],
+      "reveal_plan": "Core1A reveals checks progressively, not protected Core2A digits 432 or comparator 452. Core2A H3 only after learner written attempt.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL",
+          "purpose": "Original authored concept",
+          "reason": "No real-exam source use."
+        }
+      ],
+      "when_not_suitable": [
+        "No official question/source promotion.",
+        "Answers may not be in SVG before the protected attempt."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {},
+  "data": [
+    {
+      "id": "DATUM-TEST-QRT-SYNTHESIZE-D2-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>3</mn><mo>□</mo><mo>□</mo></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Concept hundreds three fixed, tens and ones remain blank."
+    },
+    {
+      "id": "DATUM-TEST-QRT-SYNTHESIZE-D2-PRIMARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>4</mn><mo>□</mo><mo>□</mo></mrow></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Primary hundreds four fixed, target tens/ones not shown."
+    },
+    {
+      "id": "DATUM-TEST-QRT-SYNTHESIZE-D2-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-SYNTHESIZE-D2-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>534</mn></math>",
+      "locator": "AUTHOR_CREATED: initial task expression only",
+      "meaning": "Transfer original safe source number534, without any swapped result."
+    }
+  ]
+}
