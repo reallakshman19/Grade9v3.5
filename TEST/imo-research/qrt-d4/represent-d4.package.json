@@ -1,11 +1,11 @@
 {
   "schema_version": "0.2.0",
   "package_id": "TEST-IMO182-QRT-MODEL-D4",
-  "title": "Draft ORIGINAL REPRESENT-D4 parity/adjacency domino-board cell; full source authoring in progress",
+  "title": "Original D4 chessboard representation: global balance versus local domino partner shortage",
   "version": "0.1.0",
   "status": "CANDIDATE",
   "subject": "TEST",
-  "scope_summary": "Wholly authored TEST model of joined square-table sides with inaccessible sealed courtyard and new open-courtyard transfer; not an official or accepted exam question.",
+  "scope_summary": "Wholly original 6x6 domino board where 15 black and 15 white squares remain but no domino tiling exists due to a local neighbor shortage; same-color hole transfer admits a full tiling.",
   "curriculum_mappings": [],
   "resources": [
     {
@@ -15,11 +15,11 @@
       "source_refs": [],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Original unit-square table accessibility modeling",
+      "title": "Original domino-board local pairing problem",
       "origin": "AUTHORED",
-      "locator": "AUTHOR_CREATED: IMO #182 Tab7 QRT-MODEL-D4",
+      "locator": "AUTHOR_CREATED: Grade9 #182 QRT-REPRESENT-D4 Tab7",
       "edition": "2026-10-12 AUTHORED TEST",
-      "section": "Shared edges, exterior-connected borders, enclosed inaccessible courtyards",
+      "section": "6x6 grid domino matching and relocation",
       "last_checked": "2026-10-12",
       "access_status": "SECTION_INSPECTED",
       "rights_status": "All words/data/SVGs are wholly authored TEST, no official contest source or key.",
@@ -29,15 +29,15 @@
         "AUTHOR_CREATED"
       ],
       "supports_claims": [
-        "Each occupied unit-square table contributes four candidate chair sides.",
-        "Every shared full-side contact consumes two candidates.",
-        "A sealed courtyard may make an otherwise unshared side inaccessible; the learner must model which boundaries are eligible."
+        "Each domino spans two orthogonally adjacent cells of opposite checkerboard colors.",
+        "Color balance is necessary, not sufficient, for a complete domino tiling.",
+        "Three black cells with only two distinct white neighbors cannot all be paired."
       ],
       "entry_capabilities": [],
       "depth": [
         "COMPETITION"
       ],
-      "selection_reason": "Mathematical model with a topology-dependent correction and independent changed-input transfer.",
+      "selection_reason": "Original exception-sensitive checkerboard representation problem, not authentic source.",
       "fallback": []
     }
   ],
@@ -51,30 +51,30 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Model chair sites along accessible table borders",
-      "topic": "Grid geometry and access constraints",
+      "title": "Domino representations through color and adjacency",
+      "topic": "Checkerboard invariants and bipartite graph matching",
       "intrinsic_badge": "HARD",
-      "badge_reason": "Construct model variables n,e,c for square tables, shared seams and sealed cavities; change topology and revise c.",
+      "badge_reason": "D4 protected work is learner selection of a three-versus-two local neighbor shortage, not the easy global color check.",
       "depth_overlay": "ADVANCED",
       "curriculum_mappings": [],
       "prerequisite_refs": [],
       "primary_representation_ref": "REP-D4-REPRESENT-CORE1A",
       "conventions": [
         {
-          "id": "cells",
-          "statement": "Each table fills one grid unit-square cell and offers one possible chair per side accessible from the exterior."
+          "id": "domino",
+          "statement": "Each 1x2 domino covers two orthogonally adjacent surviving squares."
         },
         {
-          "id": "joined",
-          "statement": "Each shared full-edge join makes both opposing chair sides unusable."
+          "id": "color",
+          "statement": "A square (r,c) is black if r+c is even, white otherwise; the top-left is black."
         },
         {
-          "id": "voids",
-          "statement": "An unshared side facing a fully enclosed vacant courtyard cannot hold a chair approached from outside."
+          "id": "removed",
+          "statement": "Removed holes are not covered and cannot be used by a domino."
         },
         {
-          "id": "open",
-          "statement": "Removing a noncorner outer border table can connect the courtyard to the exterior and make its formerly inaccessible sides available."
+          "id": "pair",
+          "statement": "Each surviving square may belong to exactly one domino."
         }
       ]
     }
@@ -89,8 +89,8 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "action": "Formulate, evaluate and revise a counting model for square-table perimeter seating with shared seams and a completely enclosed courtyard.",
-      "success_criterion": "Learner builds a physically meaningful model of outside-accessible chair sides from n occupied squares, e shared contacts and a separately justified accessibility correction, then independently validates a closed courtyard and rebuilds the model after opening it.",
+      "action": "Choose a stronger adjacency-graph representation when global chessboard color counts are inconclusive, and prove a local shortage or build a full domino matching.",
+      "success_criterion": "Independently show a balanced six-hole 6x6 board lacks a domino cover because three black cells have only two distinct white neighbors, then construct 15 pairs when one hole relocates.",
       "prerequisite_refs": [],
       "curriculum_mappings": [],
       "external_provider": null,
@@ -107,58 +107,58 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "title": "Build an external-access model from table cells and courtyard reachability",
+      "title": "From chessboard parity to locally constrained pairing",
       "bucket_id": "BUCKET-D4-REPRESENT",
       "primary_capability_ref": "CAP-D4-REPRESENT",
       "intrinsic_badge": "HARD",
-      "badge_reason": "Construct model variables n,e,c for square tables, shared seams and sealed cavities; change topology and revise c.",
+      "badge_reason": "D4 protected work is learner selection of a three-versus-two local neighbor shortage, not the easy global color check.",
       "entry_assumptions": [
-        "Grid squares and adjacent full-side joins.",
-        "Counting shared edges without double counting.",
-        "The meaning of an inaccessible enclosed interior courtyard."
+        "Grid coordinates identify orthogonally adjacent cells.",
+        "Dominoes cover one horizontally or vertically adjacent pair.",
+        "Alternating two-color checkerboards."
       ],
-      "inferential_jump": "Replace a naive exposed-edge count with a model correcting for completely sealed cavities, then adapt after opening the cavity to outside.",
+      "inferential_jump": "Switch from whole-board color balance to an independently selected local neighborhood certificate showing that some squares compete for too few possible partners.",
       "teaching_path": [
         {
           "id": "D4-REP-STEP-UNITS",
           "role": "DECLARE",
-          "action": "Begin with four candidate chair sides per square table; let n count occupied unit cells.",
-          "why_valid": "Each table has four unit edges.",
+          "action": "Prove one domino always covers opposite colors.",
+          "why_valid": "A 1x2 domino shares a full edge across a color change.",
           "inputs": [],
-          "output": "4n candidate sides.",
+          "output": "Any complete domino cover requires equal numbers of black and white squares.",
           "source_ref": "SRC-D4-REPRESENT-ORIGINAL"
         },
         {
           "id": "D4-REP-STEP-SEAMS",
           "role": "TRANSFORM",
-          "action": "Let e count full shared edges between adjacent tables. Every such edge removes two candidate sides.",
-          "why_valid": "The two joined tables each lose one side.",
+          "action": "On an intact 2x3 grid, draw three vertical dominoes and account for all six cells.",
+          "why_valid": "Each column contains two opposite-color squares.",
           "inputs": [
-            "unit-square table layout"
+            "2x3 unbroken grid"
           ],
-          "output": "4n−2e unshared sides.",
+          "output": "Three nonoverlapping dominoes cover three black and three white cells.",
           "source_ref": "SRC-D4-REPRESENT-ORIGINAL"
         },
         {
           "id": "D4-REP-STEP-ACCESS",
           "role": "TRANSFORM",
-          "action": "Distinguish outside-connected exposed sides from sides facing a sealed empty courtyard; reserve a count c for the latter.",
-          "why_valid": "Unshared need not mean reachable from outside.",
+          "action": "Ask why meeting a necessary global color condition does not itself construct valid adjacent pairings. Do not identify the 6x6 shortage witness.",
+          "why_valid": "Global counts omit adjacency constraints.",
           "inputs": [
-            "unit-square table layout"
+            "2x3 unbroken grid"
           ],
-          "output": "A context-valid model needs accessibility classification.",
+          "output": "The existence question is still open even when color totals agree.",
           "source_ref": "SRC-D4-REPRESENT-ORIGINAL"
         },
         {
           "id": "D4-REP-STEP-CHECK",
           "role": "VERIFY",
-          "action": "Check a 3-table L-shaped anchor with two shared seams and no hole by tracing the outside border.",
-          "why_valid": "The L has 12 candidate sides, two joins remove four.",
+          "action": "Independently verify the small 2x3 rectangle by listing all three vertical pairs.",
+          "why_valid": "Three vertical pairs cover every cell once.",
           "inputs": [
-            "unit-square table layout"
+            "2x3 unbroken grid"
           ],
-          "output": "The L anchor has eight accessible sides.",
+          "output": "The small anchor has a complete constructive tiling.",
           "source_ref": "SRC-D4-REPRESENT-ORIGINAL"
         }
       ],
@@ -173,42 +173,40 @@
       ],
       "misconceptions": [
         {
-          "wrong_idea": "Every unshared edge on a closed square ring is available for a chair reached from outside.",
-          "diagnostic_prompt": "Can a visitor reach the edges facing the sealed center of a 3x3 table ring?",
-          "repair": "Count enclosed-courtyard-facing sides separately and exclude them from outside-accessible sites."
+          "wrong_idea": "Equal global color counts guarantee a complete domino cover.",
+          "diagnostic_prompt": "Does equality of two totals give actual adjacent nonoverlapping pairs?",
+          "repair": "Require a full matching or an obstruction involving available neighbors."
         },
         {
-          "wrong_idea": "Every table-to-table join removes only one possible chair side.",
-          "diagnostic_prompt": "Each table had a side at the joint before tables touched. What happens to BOTH candidate sites?",
-          "repair": "Each join removes two sites; count shared edges once but subtract twice."
+          "wrong_idea": "Two diagonal squares may be paired by one domino.",
+          "diagnostic_prompt": "Can a 1x2 domino cover only cells touching at a corner?",
+          "repair": "Only horizontal and vertical shared-edge pairs are legal."
         }
       ],
       "exit_task": {
-        "prompt": "Independently model a 3x3 ring of square tables with the middle cell empty and sealed. Determine n, e, inaccessible inward-facing sides c and accessible chair sites. Explain why unshared sides alone overcounts.",
+        "prompt": "Remove the top-left and bottom-right corner squares of a 4x4 checkerboard. Decide if domino tiling is possible using only the necessary color-count test.",
         "source_ref": "SRC-D4-REPRESENT-ORIGINAL",
         "answer": {
           "kind": "MODEL_RESPONSE",
-          "summary": "n=8, e=8, c=4 and A=12 accessible exterior sides.",
+          "summary": "No: both removed corners are black, leaving six black and eight white squares.",
           "reasoning": [
-            "Eight occupied cells form a cycle with eight shared full-side contacts.",
-            "Thirty-two candidate sides minus sixteen sides at shared contacts gives sixteen unshared sides.",
-            "Four of those unshared sides border the sealed central cell and are not externally accessible.",
-            "Therefore A=32−16−4=12; direct outer perimeter also has 12 unit edges."
+            "The complete 4x4 has eight squares of each color.",
+            "Cells (r1,c1) and (r4,c4) have the same even coordinate parity and are both black.",
+            "Removing both leaves six black and eight white squares, impossible for dominoes pairing one of each."
           ],
-          "check": "The outside of a 3×3 square has perimeter12.",
+          "check": "Seven dominoes would require seven of each color, contradicting 6:8.",
           "acceptable_alternatives": [],
           "subpart_answers": [],
           "verification_status": "CHECKED_BY_AUTHOR"
         },
         "oracle": {
           "verification": {
-            "validator_id": "tests/test_imo182_qrt_d4_model.py",
+            "validator_id": "tests/test_imo182_qrt_d4_represent.py",
             "bindings": {
-              "shape": "3x3 closed ring",
-              "n": "8",
-              "e": "8",
-              "c": "4",
-              "A": "12"
+              "board": "4x4 opposite corners",
+              "black": "6",
+              "white": "8",
+              "tileable": "false"
             }
           }
         }
@@ -219,7 +217,7 @@
       "construction_units": [
         {
           "id": "CU-D4-REPRESENT-PERIMETER",
-          "decision": "Develop a no-hole L-shaped perimeter model and introduce an accessibility question, preserving the sealed-ring correction as Core2A's protected act.",
+          "decision": "Build necessary color-parity rule on a fully tileable 2x3 grid, reserving six-hole three-versus-two witness for Core2A learner choice.",
           "step_refs": [
             "D4-REP-STEP-UNITS",
             "D4-REP-STEP-SEAMS",
@@ -236,7 +234,7 @@
           ],
           "independent_checks": [
             {
-              "statement": "Trace all eight exposed L-shape unit edges and compare with 4×3−2×2.",
+              "statement": "Three vertical dominoes cover all six cells of a full 2x3 grid exactly once.",
               "check_type": "EXHAUSTIVE_MODULAR_CHECK"
             }
           ],
@@ -249,8 +247,8 @@
         }
       ],
       "compact_anchor": {
-        "prompt": "Why does a 3-table L with two shared full sides offer eight accessible edges?",
-        "result": "4×3−2×2=8, and its outside boundary is open throughout.",
+        "prompt": "Why can three vertical dominoes tile a 2x3 checkerboard?",
+        "result": "Each adjacent vertical pair covers one black and one white square; all six cells are used once.",
         "representation_ref": "REP-D4-REPRESENT-CORE1A"
       },
       "elicitation": {
@@ -351,79 +349,83 @@
       ],
       "evidence_refs": [],
       "extensions": {},
-      "expression": "Unshared table sides U=4n−2e.",
-      "meaning": "A safe preliminary count: n is occupied square tables and e is distinct shared contacts. U counts ALL unshared table sides without yet judging outside accessibility of a sealed hole.",
+      "expression": "A domino covers one black and one white square.",
+      "meaning": "Equal counts B=W are necessary for domino tiling, but not by themselves a sufficient construction.",
       "symbols": [
         {
-          "symbol": "U",
-          "meaning": "Unshared table sides before access is considered",
+          "symbol": "B",
+          "meaning": "Surviving black-square count",
           "unit_or_domain": "nonnegative integer"
         },
         {
-          "symbol": "n",
-          "meaning": "Occupied unit-square table cells",
-          "unit_or_domain": "integer ≥0"
+          "symbol": "W",
+          "meaning": "Surviving white-square count",
+          "unit_or_domain": "nonnegative integer"
         },
         {
-          "symbol": "e",
-          "meaning": "Full shared-side contacts counted once",
-          "unit_or_domain": "integer ≥0"
+          "symbol": "P",
+          "meaning": "Number of dominoes in a full tiling",
+          "unit_or_domain": "nonnegative integer"
         }
       ],
       "conditions": [
-        "One candidate side on each edge of every table.",
-        "Two candidate sides removed by each shared full-edge contact.",
-        "This identity alone does not assert chair-site eligibility or solve the protected task."
+        "Each 1x2 domino covers two orthogonally adjacent surviving squares.",
+        "Adjacent grid squares have opposite colors.",
+        "Every surviving square must be covered once for a complete tiling."
       ],
       "derivation": [
         {
-          "id": "D4-REP-REL-0",
+          "id": "D4-REP-STEP-UNITS",
           "role": "DECLARE",
-          "action": "Begin with four candidate chair sides per square table; let n count occupied unit cells.",
-          "why_valid": "Each table has four unit edges.",
+          "action": "Prove one domino always covers opposite colors.",
+          "why_valid": "A 1x2 domino shares a full edge across a color change.",
           "inputs": [],
-          "output": "4n candidate sides."
+          "output": "Any complete domino cover requires equal numbers of black and white squares.",
+          "source_ref": "SRC-D4-REPRESENT-ORIGINAL"
         },
         {
-          "id": "D4-REP-REL-1",
+          "id": "D4-REP-STEP-SEAMS",
           "role": "TRANSFORM",
-          "action": "Let e count full shared edges between adjacent tables. Every such edge removes two candidate sides.",
-          "why_valid": "The two joined tables each lose one side.",
+          "action": "On an intact 2x3 grid, draw three vertical dominoes and account for all six cells.",
+          "why_valid": "Each column contains two opposite-color squares.",
           "inputs": [
-            "unit-square table layout"
+            "2x3 unbroken grid"
           ],
-          "output": "4n−2e unshared sides."
+          "output": "Three nonoverlapping dominoes cover three black and three white cells.",
+          "source_ref": "SRC-D4-REPRESENT-ORIGINAL"
         },
         {
-          "id": "D4-REP-REL-2",
+          "id": "D4-REP-STEP-ACCESS",
           "role": "TRANSFORM",
-          "action": "Distinguish outside-connected exposed sides from sides facing a sealed empty courtyard; reserve a count c for the latter.",
-          "why_valid": "Unshared need not mean reachable from outside.",
+          "action": "Ask why meeting a necessary global color condition does not itself construct valid adjacent pairings. Do not identify the 6x6 shortage witness.",
+          "why_valid": "Global counts omit adjacency constraints.",
           "inputs": [
-            "unit-square table layout"
+            "2x3 unbroken grid"
           ],
-          "output": "A context-valid model needs accessibility classification."
+          "output": "The existence question is still open even when color totals agree.",
+          "source_ref": "SRC-D4-REPRESENT-ORIGINAL"
         },
         {
-          "id": "D4-REP-REL-3",
+          "id": "D4-REP-STEP-CHECK",
           "role": "VERIFY",
-          "action": "Check a 3-table L-shaped anchor with two shared seams and no hole by tracing the outside border.",
-          "why_valid": "The L has 12 candidate sides, two joins remove four.",
+          "action": "Independently verify the small 2x3 rectangle by listing all three vertical pairs.",
+          "why_valid": "Three vertical pairs cover every cell once.",
           "inputs": [
-            "unit-square table layout"
+            "2x3 unbroken grid"
           ],
-          "output": "The L anchor has eight accessible sides."
+          "output": "The small anchor has a complete constructive tiling.",
+          "source_ref": "SRC-D4-REPRESENT-ORIGINAL"
         }
       ],
       "limits": [
-        "Unshared sides may face inaccessible empty space; a physical eligibility model requires additional reasoning.",
-        "Opening a gap changes the outside-connectivity condition."
+        "B=W does not ensure that allowed adjacent pairs can be selected without reusing squares.",
+        "Local shortages can defeat complete pairing despite equal global populations."
       ],
       "checks": [
-        "The three-table L anchor has U=4×3−2×2=8."
+        "A 2x3 intact rectangle admits three vertical dominoes and B=W=3."
       ],
       "gate_relation_ref": null,
-      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>U</mi><mo>=</mo><mn>4</mn><mi>n</mi><mo>−</mo><mn>2</mn><mi>e</mi></mrow></math>"
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>B</mi><mo>=</mo><mi>W</mi><mo>=</mo><mi>P</mi></mrow></math>"
     }
   ],
   "representations": [
