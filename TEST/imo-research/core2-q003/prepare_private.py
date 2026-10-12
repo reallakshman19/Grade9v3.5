@@ -129,13 +129,39 @@ def package(expected):
         research_contribution="Test-only authored prerequisite for Q003 Core2; not a validated Core1A lesson.",
         prerequisite_refs=[], lineage=[])
     mic["source_refs"] = [authored["id"]]
+    # Learner metadata requires a real, package-resolved question family.
+    # This is an authored TEST classification, not the original printed label.
+    family = base_record("FAM-IMO-NUMERIC-PAIR-RULE-CHECK",
+        title="Authored family: numerical pair rule consistency",
+        source_refs=[authored["id"]], capability_refs=[cap["id"]],
+        solution_structure=[
+            "Treat each displayed pair as a fixed input-output observation.",
+            "Test the same proposed relation on every pair without changing the rule.",
+            "Justify the unique mismatch only after verifying the other pairs."
+        ],
+        demand_dimensions={
+            "model_choice":"Select and falsify a common input-output relation.",
+            "representation_translation":"Translate the printed ordered pairs into exact input/output checks.",
+            "reasoning_steps":"Apply one rule consistently and verify its unique counterexample.",
+            "novelty":"A different list of pairs can require a fresh rule, never a memorized option."
+        },
+        safe_variations=[],
+        transfer_boundaries=[
+            "Do not assume a rule from only one matching pair.",
+            "Do not relabel or reorder the original source options."
+        ],
+        common_wrong_routes=[
+            "Change the candidate rule between options until a chosen answer fits."
+        ],
+        item_refs=[expected["question_id"]])
+    mic["question_family_refs"] = [family["id"]]
     return dict(schema_version="0.2.0", package_id="TEST-IMO-Q003-CORE2-PRIVATE",
         title="Original numerical pair question / private TEST", version="0.1.0",
         status="CANDIDATE", subject="TEST",
         scope_summary="TEST-only. No QRT, rights, print or publication acceptance.",
         curriculum_mappings=[], resources=[res, authored], buckets=[bucket],
         capabilities=[cap], microtopics=[mic], relations=[], representations=[],
-        question_families=[], questions=[], teaching_routes=[],
+        question_families=[family], questions=[], teaching_routes=[],
         practice_profiles=[], evidence=[], known_issues=[],
         extensions={"grade9v3:publication":"FORBIDDEN"}, data=[])
 
@@ -151,7 +177,8 @@ def bank(row, expected):
         scaffolds=work["scaffolds"], answer=answer,
         response={"type":"single_choice"},
         primary_capability_ref="CAP-IMO-NUMERIC-RELATIONSHIPS",
-        secondary_capability_refs=[], family_ref=None,
+        secondary_capability_refs=[],
+        family_ref="FAM-IMO-NUMERIC-PAIR-RULE-CHECK",
         adaptation=None, exposure=[], extensions={
             # The square-offset model is the learner-owned crux; only neutral
             # option-pair orientation can be shown before commitment.
