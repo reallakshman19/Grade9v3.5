@@ -649,6 +649,80 @@
           ]
         }
       ]
+    },
+    {
+      "id": "REP-TEST-CORE2B-FOUR-FACTOR-UNMARKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:stage_mode": "REPLACE"
+      },
+      "kind": "ALGEBRA_TILES",
+      "purpose": "Show precisely the four consecutive integer factors in the TEST transfer task without identifying the result or a correct divisor.",
+      "required_elements": [
+        "Four unmarked factor tiles k,k+1,k+2,k+3",
+        "Three multiplication signs and no result or divisor highlighting"
+      ],
+      "relation_refs": [],
+      "read_order": [
+        "Read the four consecutive symbolic factors in order.",
+        "Choose independently whether the 48-divisibility claim holds for every starting k."
+      ],
+      "instance_constraints": [
+        "No factor of 2, 3 or boundary conclusion pre-marked.",
+        "Positive integer k; symbols are not counted unit-area blocks.",
+        "Authored TEST task, no official examination-source identity."
+      ],
+      "accessibility": [
+        "Descriptive alternative names all four factor labels in reading order.",
+        "Title and descriptions cannot disclose divisibility by 24 or the counterexample."
+      ],
+      "misleading_alternatives": [
+        "Using a previously solved four-factor SVG that reveals the 24 proof or boundary case."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/core2b-four-consecutive-attempt-safe.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-TEST-CORE2B-FOUR-FACTOR-PREATTEMPT",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-CORE2B-FOUR-FACTOR-48-BOUNDARY",
+          "datum_refs": [],
+          "asset_ref": "TEST/library/figures/core2b-four-consecutive-attempt-safe.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "k is any positive integer",
+            "caption": "Four unmarked consecutive factors; assess the claim yourself."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Four consecutive unmarked factor tiles",
+          "symbol": "k(k+1)(k+2)(k+3)",
+          "in_words": "Arbitrary consecutive positive integers beginning at k."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "CORE2B-FOUR-FACTORS-ONLY",
+          "label": "Input factors only",
+          "purpose": "Display givens without proving or refuting the proposed statement.",
+          "visible_elements": [
+            "k",
+            "k+1",
+            "k+2",
+            "k+3"
+          ]
+        }
+      ]
     }
   ],
   "question_families": [
@@ -942,6 +1016,194 @@
         }
       },
       "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-CORE2B-FOUR-FACTOR-48-BOUNDARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "core-architect-test-journey",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "MODEL"
+          ],
+          "basis": "The transferred work is falsification of an overly strong universal claim and a proof of the greatest universally valid divisor."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Find a counterexample at k=1 to the overstrong 48 claim, then establish exact maximal universal 24.",
+          "common_wrong_route": "Assume universal 24-divisibility doubles to 48, or mistake one successful 48 instance for a proof."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-CORE1A-QUAL-G9-NS-AUTHORED",
+      "original_identifier": "TEST-AUTHORED-CORE2B-FOUR-FACTOR-48",
+      "stem": "A learner claims that for EVERY positive integer k, the product k(k+1)(k+2)(k+3) is divisible by 48. Decide whether the claim is true. Give a general justification or an exact counterexample, then find and prove the greatest positive integer that always divides this four-factor product.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "k is an arbitrary positive integer.",
+        "A single counterexample refutes the 48 claim, but proving a greatest universal divisor needs a proof for every k and a maximality example.",
+        "You must commit your argument before opening the worked review.",
+        "Authored TEST practice only; not an examination-source question."
+      ],
+      "figure_refs": [
+        "REP-TEST-CORE2B-FOUR-FACTOR-UNMARKED"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The 48 claim is false: k=1 gives 1×2×3×4=24. The greatest positive integer dividing every such four-factor product is 24.",
+        "reasoning": [
+          "At k=1 the four-factor product is 24, so 48 cannot divide every example; this one counterexample defeats the universal claim.",
+          "For any positive k, exactly one of four consecutive integers is a multiple of 4, and a distinct one is even, giving at least a factor 8 in the product.",
+          "At least one of those four integers is divisible by 3; coprime divisors 8 and 3 therefore imply the whole product is divisible by 24 for every k.",
+          "Any universally guaranteed positive divisor must divide the k=1 product 24. Since 24 itself divides all products, 24 is the greatest universal divisor."
+        ],
+        "reasoning_route": [
+          {
+            "id": "MOVE-TEST-CORE2B-READ48",
+            "kind": "REPRESENT",
+            "action": "Interpret the word every and the new divisor 48: one counterexample can reject this claim.",
+            "why_valid": "A universal property must hold for every admissible k.",
+            "inputs": [
+              "k≥1",
+              "k(k+1)(k+2)(k+3)"
+            ],
+            "output": "Test the universal 48 claim rather than assuming a doubled guarantee."
+          },
+          {
+            "id": "MOVE-TEST-CORE2B-COUNTERMODEL",
+            "kind": "DECIDE",
+            "action": "Choose k=1: 1×2×3×4=24, which 48 does not divide.",
+            "why_valid": "The permitted boundary k=1 is a counterexample to universal 48-divisibility.",
+            "inputs": [
+              "k=1"
+            ],
+            "output": "The 48 claim is false."
+          },
+          {
+            "id": "MOVE-TEST-CORE2B-GUARANTEE24",
+            "kind": "CONNECT",
+            "action": "Show a factor 8 from the multiple of 4 and the other even term, and a factor 3 from one of four consecutive integers.",
+            "why_valid": "Four consecutive residues mod4 contain 0 and 2, and at least three consecutive factors cover residue 0 mod3; gcd(8,3)=1.",
+            "inputs": [
+              "arbitrary k≥1"
+            ],
+            "output": "24 divides the product for every k."
+          },
+          {
+            "id": "MOVE-TEST-CORE2B-MAXIMALITY",
+            "kind": "VERIFY",
+            "action": "Use k=1's product 24 as an upper divisibility bound for every common divisor.",
+            "why_valid": "Any integer dividing every product must in particular divide 24; the prior step proves 24 always divides.",
+            "inputs": [
+              "all products divisible by 24",
+              "k=1 product=24"
+            ],
+            "output": "24 is the greatest positive universal divisor."
+          }
+        ],
+        "crux_move_ref": "MOVE-TEST-CORE2B-COUNTERMODEL",
+        "check": "Check k=1 gives 24 and k=5 gives 1680 (divisible by 48), showing neither 'always 48' nor 'never 48' is justified. The general 24 proof and k=1 maximality certify the strongest universal divisor.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "rubric": [
+          {
+            "criterion": "Give an admissible exact counterexample to 48-divisibility."
+          },
+          {
+            "criterion": "Prove every four-factor product contains a factor of 8 and factor of 3."
+          },
+          {
+            "criterion": "Use coprimality to justify the 24 divisor and the k=1 product to prove maximality."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-TEST-CORE1A-QUAL-G9-UNIVERSAL-DIVISIBILITY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-CORE1A-QUAL-G9-AUTHORED-CONSECUTIVE-PRODUCT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Read the exact claim: ALL positive starts and the divisor 48. How would you falsify 'all' without assuming the answer? If it fails, what new universal statement is worth proving?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-CORE2B-FOUR-FACTOR-UNMARKED",
+        "safe_ref": "REP-TEST-CORE2B-FOUR-FACTOR-UNMARKED",
+        "bound_ref": null,
+        "stage_refs": [
+          "CORE2B-FOUR-FACTORS-ONLY"
+        ]
+      },
+      "repair_ref": "TC-03",
+      "failure_signal": "A proof of divisibility by 24 does not imply divisibility by 48; check an admissible boundary and the missing extra factor 2.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-CORE1A-QUAL-G9-AUTHORED-CONSECUTIVE-PRODUCT",
+        "closure": "After confronting the final transfer claim, the guaranteed invariant is divisibility by 24; the newly tested 48 claim fails at k=1, and that same boundary establishes maximality of 24."
+      },
+      "independent_check": {
+        "statement": "Check k=1 and k=5 after proof; distinguish the false universal 48 claim from the valid all-k 24 guarantee.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D2",
+        "score": 4,
+        "components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "TEST-only provisional metadata: changed divisibility target, exact counterexample, general 24 guarantee and maximality; pending independent Owner QRT decision.",
+        "component_evidence": {
+          "concept_model_selection": "Select a counterexample to challenge a universal claim.",
+          "representation_translation": "Relate four-factor structure to three-factor concept.",
+          "reasoning_chain_length": "General 24 proof and a maximality argument.",
+          "algebra_computational_load": "Products small, no lengthy algebra.",
+          "trap_exception_sensitivity": "Unjustified doubling from 24 to 48."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "changed_divisor_and_countermodel",
+        "builds_on": [
+          "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF"
+        ],
+        "statement": "The transfer asks whether the guaranteed four-factor divisor can be doubled to 48, and requires a countermodel plus the greatest universally guaranteed divisor.",
+        "invariant": "The consecutive-factor parity, residue and coprime arguments remain valid; a guaranteed factor 8 and factor 3 establish 24 for four consecutive positive integers.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF",
+            "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS:exit_task",
+            "MIC-TEST-CORE1A-QUAL-G9-CONSECUTIVE-FACTOR-INVARIANTS:boundary_test"
+          ],
+          "why_new": "Core2A proved a three-factor multiple of 6 and Core1A exit proved four-factor multiple of 24; this task challenges an unjustified doubling to 48 and requires maximality from the k=1 boundary. Neither prior task asked for the strongest universal divisor."
+        }
+      }
     }
   ],
   "teaching_routes": [
