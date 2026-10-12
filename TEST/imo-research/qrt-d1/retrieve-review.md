@@ -9,7 +9,7 @@ Z: count card entries and compare with exact criterion.
 W: learner independently chooses COMPOSITE and names the more-than-two rule.
 Wrong idea: odd means prime. Diagnostic: 9 has full {1,3,9}; category composite.
 Replacement: use distinct-positive-divisor count. Independent check: 5×5=25.
-Changed Core1B boundary: {1} belongs to NEITHER, with separate commitment.
+Changed Core1B boundary: EVEN prime 2, full divisor card {1,2}, requires a fresh PRIME classification and explains why evenness cannot replace the divisor criterion; distinct from taught singleton 1.
 Independent Core1A exit: 22 with {1,2,11,22} is composite.
 Core2B: GIVEN target PRIME, select among A {1}, B {1,23}, C {1,5,25}. Reverses input/output category decision; protected choice B.
 Adjacent D2 distinction: no factor discovery or multi-step justification is needed; all divisor sets are complete.
