@@ -64,7 +64,7 @@ class D4AdoptionEvidence(unittest.TestCase):
         self.assertTrue(repaired["six_sha256_independently_verified"])
         self.assertEqual(tuple(repaired["six_html_sha256"]), ROLES)
         self.assertNotEqual(repaired["exact_head"], model["source"]["verified_worker_commit"])
-        self.assertEqual(model["assessment"]["academic_review"], "PENDING_INDEPENDENT_QUALIFIED_REVIEW") if "academic_review" in model["assessment"] else self.assertEqual(model["assessment"]["mathematics"], "PENDING_INDEPENDENT_QUALIFIED_REVIEW")
+        self.assertEqual(model["assessment"]["mathematics"], "PENDING_INDEPENDENT_QUALIFIED_REVIEW")
 
     def test_adoption_viewer_is_navigable_without_claiming_owner_acceptance(self):
         html = VIEWER.read_text()
