@@ -5,25 +5,31 @@
   "band_issue": 203,
   "source_custody_issue": 183,
   "viewer": "../q003-model-d2/index.html",
-  "rendered_worker_candidates_verified": 5,
-  "not_authored": 2,
+  "rendered_worker_candidates_verified": 7,
+  "not_authored": 0,
   "owner_qrt_accepted": 0,
   "owner_total_qrt_accepted": "0/28",
   "blueprint_change_justified": false,
-  "acceptance_warning": "Five old D4 authored renders and earlier two new six-page ZIPs are technically hash-valid, but the new two had cross-role content leakage. The corrected new source requires final head CI/browser evidence. All seven qualified academic/Owner verdicts remain PENDING; zero accepted.",
+  "acceptance_warning": "7/7 D4 cells have hosted zero-gap five-role native TEST renders verified at exact source head (five inherited worker candidates, two new #210 corrected candidates); this is only RENDERED_TEST, not qualified mathematical/cognitive review or Owner acceptance. Prior cross-role contaminated ZIPs explicitly superseded. All seven reviewer/Owner verdicts pending. Canonical accepted 0/28.",
   "cells": [
     {
       "cell_id": "QRT-RETRIEVE-D4",
       "demand": "RETRIEVE",
       "band": "D4",
-      "adoption_status": "NATIVE_RENDERED_WITH_REVISIONS; CLEAN_SOURCE_CI_PENDING",
-      "protected_W": null,
+      "adoption_status": "RENDERED_TEST; INDEPENDENT_ACADEMIC_REVIEW_PENDING",
+      "protected_W": "Retrieve the k>=3 odd-square iff condition for new residues modulo128; switch theorem branch at k=2 without root enumeration.",
       "source": {
-        "classification": "WHOLLY_AUTHORED_TEST_CANDIDATE",
+        "classification": "AUTHORED_TEST_ONLY",
+        "worker_pr": 210,
+        "verified_worker_commit": "9faa52d499e071e9e6d4c419b5afdf5fbc044455",
+        "package_path": "TEST/imo-research/qrt-d4/retrieve-d4.package.json",
+        "package_blob_sha": "27791fbd4735ecdbfda107b0087c16a68bfd8753",
+        "manifest_path": "TEST/products/imo203-qrt-d4-retrieve.manifest.json",
+        "manifest_blob_sha": "c4ed1576da7880c9aaf04cfb1cdb2c775e1f9d12",
+        "review_path": "TEST/imo-research/qrt-d4/retrieve-d4.review.json",
+        "review_blob_sha": "bf3e4b9ebeb387c2b1d9d7d44aa28584432356cb",
         "math_spec_path": "TEST/imo-research/qrt-tiles/d4-review/retrieve-d4.candidate.json",
-        "source_package_path": null,
-        "manifest_path": null,
-        "source_rights": "AUTHORED_TEST_ONLY; no publisher source"
+        "rights": "Wholly authored TEST; no publisher source rights or official Core2"
       },
       "blueprints": {
         "registry_blob_sha": "591ba061b8771c30fdffc4506aa720ca9ba89335",
@@ -35,12 +41,36 @@
           "BP-CORE2B-TRANSFER@1.1.0"
         ]
       },
-      "render": null,
+      "render": {
+        "generator": "Shared/tools/render_core.py",
+        "renderer": "render_core/2",
+        "mode": "PAGES",
+        "held_to": "REFERENCE",
+        "render_digest": "58480e05be52a11a",
+        "semantic_digest": "23ec094d71e40b3c",
+        "gaps": 0,
+        "exact_head_scoped_ci": "success",
+        "broader_checks": "guardrails and canonical-assurance failed; NOT MERGE READY",
+        "workflow_run": 38413546614,
+        "artifact_id": 11823696124,
+        "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38413546614/artifacts/11823696124",
+        "six_html_sha256": {
+          "core1.html": "ac54180ff0ffa3dd495f2776913a8e5dada145960fca3b14d9233f265dc48a4d",
+          "core1a.html": "5e82f4394cef2b5527461c3d00a4633b0336028c780a5248c1e3f045a025392c",
+          "core1b.html": "f053c7c7bb44bf5884bebd165464f65b0c93700e21ddb5fe4a48f169074274c7",
+          "core2a.html": "b4cb1778077eb99bdb9a16df7ab7c4f68e21014e7d1c45f8954359a2a0186135",
+          "core2b.html": "545eb2fcc5d75385eb4e503d8c6cb695a03b4a1cbdbab5de1d8ef073ecf8a26f",
+          "index.html": "150fe7b5d50ca91516947e7d886cf5bdedf35d1d79a3173464e70695f7098d6f"
+        },
+        "six_sha256_independently_verified": true,
+        "verified_against": "Hosted GitHub Actions ZIP, receipt and evidence JSON independently hash-checked at PR #210 exact head",
+        "browser_checks": "Chromium: 390/768/1280; blank/nonblank attempt; H3 gate; Core1A/B precommit visual + AX cross-role checks PASS"
+      },
       "golden": {
         "id": "G-IMO-G9-FIVE-CORE-20261012",
         "lock_blob_sha": "888678554c41257e6d96c802f0009983ccbb5328",
         "comparator_kind": "SEMANTIC_CROSS_QUESTION",
-        "role_slot_comparison": "worker scoped CI PASS; independent semantics still PENDING",
+        "role_slot_comparison": "Registered role identity + semantic slot structure PASS; independent golden comparator and academic quality PENDING",
         "frozen_snapshot_unchanged": true,
         "owner_new_fixture": null
       },
@@ -52,7 +82,7 @@
         "owner_golden_decision_id": null,
         "accepted": false,
         "release": "NOT_AUTHORIZED",
-        "cross_role_semantic_security": "PREVIOUS_RENDER_DEFECT_FOUND; INPUT_REPAIRED; CURRENT_HEAD_BROWSER_PENDING"
+        "cross_role_semantic_security": "AUTO_CROSS_ROLE_SOURCE_HTML_CHROMIUM_AX_PASS; QUALIFIED_REVIEW_PENDING"
       },
       "candidate_math_spec_link": "retrieve-d4.candidate.json",
       "candidate_math_oracle": "tests/test_imo203_new_d4_candidate_math.py",
@@ -63,11 +93,11 @@
         "pr": 210,
         "head_sha": "9faa52d499e071e9e6d4c419b5afdf5fbc044455",
         "package_path": "TEST/imo-research/qrt-d4/retrieve-d4.package.json",
-        "package_git_blob": "6d00bb45776641713134eba2850f0a9f66e10b44",
+        "package_git_blob": "27791fbd4735ecdbfda107b0087c16a68bfd8753",
         "manifest_path": "TEST/products/imo203-qrt-d4-retrieve.manifest.json",
         "manifest_git_blob": "c4ed1576da7880c9aaf04cfb1cdb2c775e1f9d12",
         "renderer_receipt": null,
-        "native_html_status": "CROSS_ROLE_ANSWER_LEAK_REPAIRED_IN_SOURCE; CLEAN_HEAD_CI_QUEUED"
+        "native_html_status": "VERIFIED_SOURCE_EXACT_HEAD; RENDERED_TEST_NOT_ACCEPTED"
       },
       "review_packet_path": "TEST/imo-research/qrt-d4/retrieve-d4.review.json",
       "superseded_native_evidence": {
@@ -378,14 +408,20 @@
       "cell_id": "QRT-SYNTHESIZE-D4",
       "demand": "SYNTHESIZE",
       "band": "D4",
-      "adoption_status": "NATIVE_RENDERED_WITH_REVISIONS; CLEAN_SOURCE_CI_PENDING",
-      "protected_W": null,
+      "adoption_status": "RENDERED_TEST; INDEPENDENT_ACADEMIC_REVIEW_PENDING",
+      "protected_W": "Choose dependency order among alternating positions, mod4 suffix and lexicographic feasibility; revise for mod7.",
       "source": {
-        "classification": "WHOLLY_AUTHORED_TEST_CANDIDATE",
+        "classification": "AUTHORED_TEST_ONLY",
+        "worker_pr": 210,
+        "verified_worker_commit": "9faa52d499e071e9e6d4c419b5afdf5fbc044455",
+        "package_path": "TEST/imo-research/qrt-d4/synthesize-d4.package.json",
+        "package_blob_sha": "c7b24e409d64cf196986fa179bf54aef34292613",
+        "manifest_path": "TEST/products/imo203-qrt-d4-synthesize.manifest.json",
+        "manifest_blob_sha": "e0187126363ce1db19a0487f56772c5e3d1ee721",
+        "review_path": "TEST/imo-research/qrt-d4/synthesize-d4.review.json",
+        "review_blob_sha": "6344d6594a66e6539439dcb38e9888fc4d0b5d0",
         "math_spec_path": "TEST/imo-research/qrt-tiles/d4-review/synthesize-d4.candidate.json",
-        "source_package_path": null,
-        "manifest_path": null,
-        "source_rights": "AUTHORED_TEST_ONLY; no publisher source"
+        "rights": "Wholly authored TEST; no publisher source rights or official Core2"
       },
       "blueprints": {
         "registry_blob_sha": "591ba061b8771c30fdffc4506aa720ca9ba89335",
@@ -397,12 +433,36 @@
           "BP-CORE2B-TRANSFER@1.1.0"
         ]
       },
-      "render": null,
+      "render": {
+        "generator": "Shared/tools/render_core.py",
+        "renderer": "render_core/2",
+        "mode": "PAGES",
+        "held_to": "REFERENCE",
+        "render_digest": "9e3f23576b772b77",
+        "semantic_digest": "43c0eaacbe3893b7",
+        "gaps": 0,
+        "exact_head_scoped_ci": "success",
+        "broader_checks": "guardrails and canonical-assurance failed; NOT MERGE READY",
+        "workflow_run": 38413545923,
+        "artifact_id": 11824250043,
+        "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38413545923/artifacts/11824250043",
+        "six_html_sha256": {
+          "core1.html": "8818f82eabffbf1ee896b425bc15e97e16998e0805d8961893984582c2140a68",
+          "core1a.html": "bcfafdbc9e17b25ca16d0e1272c06cd5ea3a52820dcadcef82361c16e7dca09f",
+          "core1b.html": "33cb44eb44e99435cc3381cee405c0fe74670723a684cae3903f321b316b2296",
+          "core2a.html": "484b8e649829fdd3d1198efa2ae8cedb558b5c8ab2022ed012c20388d3d15f50",
+          "core2b.html": "82056458e9e69b047c12e4752f1bb44eeef1c516306f466ca8b8a62c41ef11ce",
+          "index.html": "f54076cf93ffaaa0f01e4b5c559f6503bd37973c7582e684fde6c94f513750b1"
+        },
+        "six_sha256_independently_verified": true,
+        "verified_against": "Hosted GitHub Actions ZIP, receipt and evidence JSON independently hash-checked at PR #210 exact head",
+        "browser_checks": "Chromium: 390/768/1280; blank/nonblank attempt; H3 gate; Core1A/B precommit visual + AX cross-role checks PASS"
+      },
       "golden": {
         "id": "G-IMO-G9-FIVE-CORE-20261012",
         "lock_blob_sha": "888678554c41257e6d96c802f0009983ccbb5328",
         "comparator_kind": "SEMANTIC_CROSS_QUESTION",
-        "role_slot_comparison": "worker scoped CI PASS; independent semantics still PENDING",
+        "role_slot_comparison": "Registered role identity + semantic slot structure PASS; independent golden comparator and academic quality PENDING",
         "frozen_snapshot_unchanged": true,
         "owner_new_fixture": null
       },
@@ -414,7 +474,7 @@
         "owner_golden_decision_id": null,
         "accepted": false,
         "release": "NOT_AUTHORIZED",
-        "cross_role_semantic_security": "PREVIOUS_RENDER_DEFECT_FOUND; INPUT_REPAIRED; CURRENT_HEAD_BROWSER_PENDING"
+        "cross_role_semantic_security": "AUTO_CROSS_ROLE_SOURCE_HTML_CHROMIUM_AX_PASS; QUALIFIED_REVIEW_PENDING"
       },
       "candidate_math_spec_link": "synthesize-d4.candidate.json",
       "candidate_math_oracle": "tests/test_imo203_new_d4_candidate_math.py",
@@ -425,11 +485,11 @@
         "pr": 210,
         "head_sha": "9faa52d499e071e9e6d4c419b5afdf5fbc044455",
         "package_path": "TEST/imo-research/qrt-d4/synthesize-d4.package.json",
-        "package_git_blob": "02509bc27b0f3bdac35fc8516dba6c54a97741a4",
+        "package_git_blob": "c7b24e409d64cf196986fa179bf54aef34292613",
         "manifest_path": "TEST/products/imo203-qrt-d4-synthesize.manifest.json",
         "manifest_git_blob": "e0187126363ce1db19a0487f56772c5e3d1ee721",
         "renderer_receipt": null,
-        "native_html_status": "CROSS_ROLE_ANSWER_LEAK_REPAIRED_IN_SOURCE; CLEAN_HEAD_CI_QUEUED"
+        "native_html_status": "VERIFIED_SOURCE_EXACT_HEAD; RENDERED_TEST_NOT_ACCEPTED"
       },
       "review_packet_path": "TEST/imo-research/qrt-d4/synthesize-d4.review.json",
       "superseded_native_evidence": {
@@ -509,5 +569,6 @@
       }
     }
   ],
-  "candidate_math_scoped_run": 38404571127
+  "candidate_math_scoped_run": 38404571127,
+  "original_worker_candidates_verified": 5
 }
