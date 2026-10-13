@@ -1,0 +1,184 @@
+{
+  "schema": "imo-qrt-cell-evidence/v1",
+  "version": "1.0.0",
+  "template": false,
+  "cell_id": "QRT-RETRIEVE-D1",
+  "band": "D1",
+  "primary_demand": "RETRIEVE",
+  "band_issue": 200,
+  "status_dimensions": {
+    "technical": "REUSED_RENDERED_TEST",
+    "renderer_verified": true,
+    "technique_review": "AUTHOR_CHECK_ONLY_INDEPENDENT_PENDING",
+    "academic_review": "QRT_DECISION_PENDING",
+    "owner_qrt_accepted": false,
+    "owner_golden_designated": false,
+    "release": "NOT_AUTHORIZED"
+  },
+  "candidate_ids": [
+    "Q-TEST-IMO182-D1-RETR-CORE1A-WORKED",
+    "Q-TEST-IMO182-D1-RETR-CORE2A-DIVISOR-CATEGORY",
+    "Q-TEST-IMO182-D1-RETR-CORE2B-CATEGORY-TO-CARD"
+  ],
+  "source": {
+    "classification": "AUTHORED_TEST_NOT_SOF",
+    "verified_sha": "ef59ed588e0ad39f3834e5adeb3affeff582104b",
+    "source_path": "TEST/imo-research/qrt-d1/retrieve.v1.json",
+    "source_code_commit": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "upstream_candidate_id": null,
+    "upstream_source_blob_sha": null,
+    "custody": "SOURCE_SAFE_AUTHORED_TEST",
+    "rights": "NOT_LICENSED_SOF_OR_PUBLISHED",
+    "question_stem_embedded": false,
+    "source_quality_hold": null
+  },
+  "cognitive": {
+    "X": "Classify 25 as prime, composite, or neither using its complete given positive-divisor list, not oddness.",
+    "Y": "Positive divisibility, distinct divisor count, and the supplied three category definitions.",
+    "Z": "Interpret the complete set {1,5,25} and recall which definition fits three divisors.",
+    "W": "Retrieve the exact divisor-count criterion, then classify 25 as composite rather than prime.",
+    "primary_vs_alternative": "Distinguish RETRIEVE from REPRESENT: no novel representation design; the divisor card already supplies all divisors.",
+    "adjacent_band_reason": "Complete divisor set and category definitions supplied, leaving one meaningful classification. Reading a complete divisor card into a category contributes one representation-translation dimension.",
+    "difficulty_five_component_evidence": {
+      "concept_model_selection": "No governing model choice.",
+      "representation_translation": "Translate the complete positive-divisor card into a category using its distinct-entry count.",
+      "reasoning_chain_length": "One classification.",
+      "algebra_computational_load": "No divisor search needed.",
+      "trap_exception_sensitivity": "Odd composite number traps surface classification."
+    },
+    "protected_move_id": "RET-D1-QA-DECIDE"
+  },
+  "blueprints": [
+    {
+      "role": "CORE1",
+      "ref": "BP-CORE1-ORIENTATION@1.1.0"
+    },
+    {
+      "role": "CORE1A",
+      "ref": "BP-CORE1A-CONSTRUCTION@1.8.0"
+    },
+    {
+      "role": "CORE1B",
+      "ref": "BP-CORE1B-RECONSTRUCTION@1.1.0"
+    },
+    {
+      "role": "CORE2A",
+      "ref": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0"
+    },
+    {
+      "role": "CORE2B",
+      "ref": "BP-CORE2B-TRANSFER@1.1.0"
+    }
+  ],
+  "generation": {
+    "repo_commit_sha": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "manifest_path": "TEST/products/imo182-qrt-d1-retrieve.manifest.json",
+    "manifest_blob_sha": "f1f9934b43e57a98531d6117dacd58ab7a001f4d",
+    "renderer_version": "render_core/2",
+    "registry_path": "Shared/web/interactive-page-blueprints.v1.json",
+    "registry_version": "1.17.0",
+    "registry_blob_sha": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "mode": "PAGES",
+    "held_to": "REFERENCE",
+    "gaps": 0,
+    "exact_head_ci_run": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599474",
+    "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599474/artifacts/11774222940",
+    "html": [
+      {
+        "filename": "core1.html",
+        "sha256": "dcf87bd062c47dc39b5aedc35f2764b7d274ddf31cc3e4e953e14e27a01b801d"
+      },
+      {
+        "filename": "core1a.html",
+        "sha256": "9f825cdc9037229ab36eb69132c9799872774f38ee3b05a0785520ac238f3fe8"
+      },
+      {
+        "filename": "core1b.html",
+        "sha256": "9b293f02ed30186c8a117ec5a53ee1a0e41342de9e5418a720ec4073b4976681"
+      },
+      {
+        "filename": "core2a.html",
+        "sha256": "b3dd2b306b092e434047df4dac155cc885eece2d8b57c3aba087acff3888d640"
+      },
+      {
+        "filename": "core2b.html",
+        "sha256": "d287721df4e54867c6c31cc7409256f75841c860ec6c0f2044380c7736f857a0"
+      },
+      {
+        "filename": "index.html",
+        "sha256": "fc37188509550de6c09a6073f6694bffd8a6f5b801b8d1b09fa9538a03c2f5ef"
+      }
+    ],
+    "six_html_sha_verified": true
+  },
+  "golden": {
+    "kind": "IMMUTABLE_OWNER_EXACT_FOR_ORIGINAL_QUESTION_ROLE_TECHNIQUE_ONLY_FOR_THIS_DISTINCT_TEST",
+    "id": "G-IMO-G9-FIVE-CORE-20261012",
+    "pinned_commit": "67c34dababb0da0ef7d5f4a532bfcf3119754961",
+    "lock_git_blob_sha": "888678554c41257e6d96c802f0009983ccbb5328",
+    "role_comparator": "CORE1 T01/T14; CORE1A T02/T03/T11; CORE1B T06/T10/T12; CORE2A T05/T07; CORE2B T08/T09",
+    "comparison_kind": "SEMANTIC_CROSS_QUESTION_NOT_BYTE_PARITY",
+    "technique_oracles": [
+      "T01",
+      "T14",
+      "T02",
+      "T03",
+      "T11",
+      "T06",
+      "T10",
+      "T12",
+      "T05",
+      "T07",
+      "T08",
+      "T09"
+    ],
+    "semantic_deltas": [],
+    "actual_html_bytes_independently_verified": true,
+    "owner_fixture_decision_id": null
+  },
+  "review": {
+    "H1": null,
+    "H2": null,
+    "H3": null,
+    "S1": null,
+    "S2": null,
+    "S3": null,
+    "P1": null,
+    "P2": null,
+    "P3": null,
+    "M1": null,
+    "M2": null,
+    "M3": null,
+    "qualified_reviewer_name": null,
+    "conflict_declaration": null,
+    "independent_mathematical_oracle": "TEST/imo-research/qrt-d1/verify_retrieve.py",
+    "decision": "PENDING"
+  },
+  "owner": {
+    "qrt_decision": "PENDING",
+    "qrt_decision_id": null,
+    "golden_scope_decision_id": null,
+    "rights_decision_id": null,
+    "print_visual_decision_id": null,
+    "release_decision_id": null
+  },
+  "viewer": {
+    "entry_path": "q003-model-d2/index.html",
+    "tile_json_path": "d1/retrieve.tile.v1.json",
+    "links_checked": false
+  },
+  "evidence": {
+    "source_commit": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "CI": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599474",
+    "academic": null,
+    "golden": "https://github.com/reallakshman19/Grade9v3.5/tree/67c34dababb0da0ef7d5f4a532bfcf3119754961/golden/units/G-IMO-G9-FIVE-CORE-20261012",
+    "owner": null,
+    "updated_utc": "2026-10-13"
+  },
+  "restrictions": [
+    "No original private Q003 bytes or authentic SOF question contents",
+    "No QRT acceptance or new golden without Owner decision",
+    "Never equate distinct question HTML bytes with original Owner golden",
+    "No learner release from this tile"
+  ]
+}
