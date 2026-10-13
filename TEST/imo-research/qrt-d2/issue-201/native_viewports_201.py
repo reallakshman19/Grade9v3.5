@@ -107,9 +107,9 @@ def main() -> int:
                                 ) if response.status >= 400 and response.url.startswith(site_origin) else None)
                                 try:
                                     page.goto(
-                                    site_origin + "/" + destination.relative_to(site_docs).as_posix(),
-                                    wait_until="load"
-                                )
+                                        site_origin + "/" + destination.relative_to(site_docs).as_posix(),
+                                        wait_until="load",
+                                    )
                                     assets = page.evaluate("""() => ({
                                       css: [...document.querySelectorAll('link[rel="stylesheet"]')]
                                         .map(link => ({href:link.getAttribute('href'), loaded:!!link.sheet})),
@@ -126,13 +126,13 @@ def main() -> int:
                                             f"STYLESHEET_NOT_LOADED:{demand}:{role}:{stylesheet}"
                                         )
                                     for script in ("display-controls.js", "site-header.js"):
-                                    assert sum(src.endswith(script) for src in assets["js"]) == 1, (
-                                        f"REQUIRED_SCRIPT_MISSING:{demand}:{role}:{script}"
+                                        assert sum(src.endswith(script) for src in assets["js"]) == 1, (
+                                            f"REQUIRED_SCRIPT_MISSING:{demand}:{role}:{script}"
+                                        )
+                                    assert not status_failures, (
+                                        f"ASSET_HTTP_ERROR:{demand}:{role}:{status_failures[:3]}"
                                     )
-                                assert not status_failures, (
-                                    f"ASSET_HTTP_ERROR:{demand}:{role}:{status_failures[:3]}"
-                                )
-                                assert not request_failures, (
+                                    assert not request_failures, (
                                         f"ASSET_REQUEST_FAILED:{demand}:{role}:{request_failures[:3]}"
                                     )
                                     dims = page.evaluate("""() => ({
@@ -149,8 +149,8 @@ def main() -> int:
                                     )
                                     filename = f"{role}-{width}px-pre-attempt.png"
                                     target = path / demand / filename
-                                    target.parent.mkdir(parents=True,exist_ok=True)
-                                    page.screenshot(path=str(target),full_page=True,animations="disabled")
+                                    target.parent.mkdir(parents=True, exist_ok=True)
+                                    page.screenshot(path=str(target), full_page=True, animations="disabled")
                                     report["checks"].append({
                                         "demand":demand.upper(),
                                         "role":role.upper(),
@@ -158,7 +158,7 @@ def main() -> int:
                                         **dims,
                                         "js_page_errors":0,
                                         "site_assets": assets,
-                                    "asset_http_errors": 0,
+                                        "asset_http_errors": 0,
                                         "screenshot_path":str(target.relative_to(path.parent)),
                                         "screenshot_sha256":hashlib.sha256(target.read_bytes()).hexdigest(),
                                         "state":"INITIAL_PRE_ATTEMPT",
