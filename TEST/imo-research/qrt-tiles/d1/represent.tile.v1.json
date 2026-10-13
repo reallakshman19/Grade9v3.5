@@ -1,0 +1,184 @@
+{
+  "schema": "imo-qrt-cell-evidence/v1",
+  "version": "1.0.0",
+  "template": false,
+  "cell_id": "QRT-REPRESENT-D1",
+  "band": "D1",
+  "primary_demand": "REPRESENT",
+  "band_issue": 200,
+  "status_dimensions": {
+    "technical": "REUSED_RENDERED_TEST",
+    "renderer_verified": true,
+    "technique_review": "AUTHOR_CHECK_ONLY_INDEPENDENT_PENDING",
+    "academic_review": "QRT_DECISION_PENDING",
+    "owner_qrt_accepted": false,
+    "owner_golden_designated": false,
+    "release": "NOT_AUTHORIZED"
+  },
+  "candidate_ids": [
+    "Q-TEST-IMO182-D1-CORE1A-WORKED",
+    "Q-TEST-IMO182-D1-CORE2A-WORDS-TO-PAIR",
+    "Q-TEST-IMO182-D1-CORE2B-PAIR-TO-WORDS"
+  ],
+  "source": {
+    "classification": "AUTHORED_TEST_NOT_SOF",
+    "verified_sha": "3c8bb09b6349c4a0001085369749b458c85fe261",
+    "source_path": "TEST/imo-research/qrt-d1/represent.v1.json",
+    "source_code_commit": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "upstream_candidate_id": null,
+    "upstream_source_blob_sha": null,
+    "custody": "SOURCE_SAFE_AUTHORED_TEST",
+    "rights": "NOT_LICENSED_SOF_OR_PUBLISHED",
+    "question_stem_embedded": false,
+    "source_quality_hold": null
+  },
+  "cognitive": {
+    "X": "Translate four units east and two units south into a signed ordered displacement pair.",
+    "Y": "East-positive horizontal and north-positive vertical axes, ordered pair convention.",
+    "Z": "Assign each direction to the specified axis and select the correct sign.",
+    "W": "Represent the displacement as (4,−2) and explain negative vertical movement.",
+    "primary_vs_alternative": "Distinguish REPRESENT from APPLY: preserving sign and coordinate order is the protected translation.",
+    "adjacent_band_reason": "The axis rule is given; one independent sign-and-axis translation is required, with an accessible inverse check.",
+    "difficulty_five_component_evidence": {
+      "concept_model_selection": "Fixed east-positive/north-positive convention supplied; no model choice.",
+      "representation_translation": "Learner independently signs and orders the pair or recovers words.",
+      "reasoning_chain_length": "One correspondence with a verification, not a dependent proof chain.",
+      "algebra_computational_load": "No arithmetic beyond sign interpretation.",
+      "trap_exception_sensitivity": "Signed south and swapped pair order create a plausible wrong route."
+    },
+    "protected_move_id": "MOVE-TEST-IMO182-D1-QA-DECIDE"
+  },
+  "blueprints": [
+    {
+      "role": "CORE1",
+      "ref": "BP-CORE1-ORIENTATION@1.1.0"
+    },
+    {
+      "role": "CORE1A",
+      "ref": "BP-CORE1A-CONSTRUCTION@1.8.0"
+    },
+    {
+      "role": "CORE1B",
+      "ref": "BP-CORE1B-RECONSTRUCTION@1.1.0"
+    },
+    {
+      "role": "CORE2A",
+      "ref": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0"
+    },
+    {
+      "role": "CORE2B",
+      "ref": "BP-CORE2B-TRANSFER@1.1.0"
+    }
+  ],
+  "generation": {
+    "repo_commit_sha": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "manifest_path": "TEST/products/imo182-qrt-d1-represent.manifest.json",
+    "manifest_blob_sha": "8a012acb7e47ce8f0ddd9f540c68a0fed2d5c1cc",
+    "renderer_version": "render_core/2",
+    "registry_path": "Shared/web/interactive-page-blueprints.v1.json",
+    "registry_version": "1.17.0",
+    "registry_blob_sha": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "mode": "PAGES",
+    "held_to": "REFERENCE",
+    "gaps": 0,
+    "exact_head_ci_run": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599416",
+    "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599416/artifacts/11774497648",
+    "html": [
+      {
+        "filename": "core1.html",
+        "sha256": "a477bf1132ee4704bbc617c983e08cee77472ceec6dacdce71ada4577fb03931"
+      },
+      {
+        "filename": "core1a.html",
+        "sha256": "298d277ef623b89267f602187a7775fe4482e1a1f1fc82805c965a12e99bc889"
+      },
+      {
+        "filename": "core1b.html",
+        "sha256": "eeca2fc7ac620bf66dd620eef0b336996ebcac4f06a6cbc86b9ebc05ff8074dd"
+      },
+      {
+        "filename": "core2a.html",
+        "sha256": "a8c0acfef176967a44777a57634076a8157b016c78d26a4a1d3207dc521de300"
+      },
+      {
+        "filename": "core2b.html",
+        "sha256": "087b2ec74ebfc568e618e9e2b12daca42ffc56d3afc30f2de596f41abfd0c9cf"
+      },
+      {
+        "filename": "index.html",
+        "sha256": "671eff41ee84f795a0b59d9cfd6c6fd1ab802c4d47fabdf44fc0251d1cb7cb06"
+      }
+    ],
+    "six_html_sha_verified": true
+  },
+  "golden": {
+    "kind": "IMMUTABLE_OWNER_EXACT_FOR_ORIGINAL_QUESTION_ROLE_TECHNIQUE_ONLY_FOR_THIS_DISTINCT_TEST",
+    "id": "G-IMO-G9-FIVE-CORE-20261012",
+    "pinned_commit": "67c34dababb0da0ef7d5f4a532bfcf3119754961",
+    "lock_git_blob_sha": "888678554c41257e6d96c802f0009983ccbb5328",
+    "role_comparator": "CORE1 T01/T14; CORE1A T02/T03/T11; CORE1B T06/T10/T12; CORE2A T05/T07; CORE2B T08/T09",
+    "comparison_kind": "SEMANTIC_CROSS_QUESTION_NOT_BYTE_PARITY",
+    "technique_oracles": [
+      "T01",
+      "T14",
+      "T02",
+      "T03",
+      "T11",
+      "T06",
+      "T10",
+      "T12",
+      "T05",
+      "T07",
+      "T08",
+      "T09"
+    ],
+    "semantic_deltas": [],
+    "actual_html_bytes_independently_verified": true,
+    "owner_fixture_decision_id": null
+  },
+  "review": {
+    "H1": null,
+    "H2": null,
+    "H3": null,
+    "S1": null,
+    "S2": null,
+    "S3": null,
+    "P1": null,
+    "P2": null,
+    "P3": null,
+    "M1": null,
+    "M2": null,
+    "M3": null,
+    "qualified_reviewer_name": null,
+    "conflict_declaration": null,
+    "independent_mathematical_oracle": "TEST/imo-research/qrt-d1/verify_represent.py",
+    "decision": "PENDING"
+  },
+  "owner": {
+    "qrt_decision": "PENDING",
+    "qrt_decision_id": null,
+    "golden_scope_decision_id": null,
+    "rights_decision_id": null,
+    "print_visual_decision_id": null,
+    "release_decision_id": null
+  },
+  "viewer": {
+    "entry_path": "q003-model-d2/index.html",
+    "tile_json_path": "d1/represent.tile.v1.json",
+    "links_checked": false
+  },
+  "evidence": {
+    "source_commit": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "CI": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599416",
+    "academic": null,
+    "golden": "https://github.com/reallakshman19/Grade9v3.5/tree/67c34dababb0da0ef7d5f4a532bfcf3119754961/golden/units/G-IMO-G9-FIVE-CORE-20261012",
+    "owner": null,
+    "updated_utc": "2026-10-13"
+  },
+  "restrictions": [
+    "No original private Q003 bytes or authentic SOF question contents",
+    "No QRT acceptance or new golden without Owner decision",
+    "Never equate distinct question HTML bytes with original Owner golden",
+    "No learner release from this tile"
+  ]
+}
