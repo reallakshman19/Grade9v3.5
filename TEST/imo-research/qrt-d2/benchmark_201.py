@@ -71,6 +71,25 @@ def browser_check(html: str, role: str, demand: str, browser) -> dict:
                       if token.casefold() in exposed]
             if leaked:
                 raise AssertionError("CORE2A_PRECOMMIT_ANSWER_LEAK:" + ",".join(leaked))
+            # H2 is reachable pre-commit. Preserve exact visible text for the
+            # qualified reviewer, and forbid known-answer leaks after that click.
+            next_hint = page.get_by_role("button", name="Next hint")
+            if next_hint.count() != 1:
+                raise AssertionError("MISSING_PRECOMMIT_H2_NAV")
+            lines_before = set(line.strip() for line in precommit_text.splitlines())
+            next_hint.click()
+            after_h2 = page.locator("body").inner_text()
+            h2_lines = [line.strip() for line in after_h2.splitlines()
+                        if line.strip() not in lines_before and len(line.strip()) >= 25]
+            if not h2_lines:
+                raise AssertionError("H2_DID_NOT_ADD_MEANINGFUL_HINT_TEXT")
+            h2_exposed = (after_h2 + " " + visible_labels).casefold()
+            h2_leaks = [token for token in PRIMARY_CONCLUSION_SENTINELS[demand]
+                        if token.casefold() in h2_exposed]
+            if h2_leaks:
+                raise AssertionError("CORE2A_H2_PRECOMMIT_ANSWER_LEAK:" + ",".join(h2_leaks))
+            result["precommit_hint_2_visible_text"] = h2_lines
+            result["h2_before_commit"] = "VISIBLE_AND_SENTINEL_SAFE"
         targets = page.locator("details[data-g9-reveal][data-requires-attempt]")
         if not targets.count():
             raise AssertionError("NO_ATTEMPT_GATED_REVEAL")
