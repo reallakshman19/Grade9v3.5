@@ -133,7 +133,8 @@ def main():
             "cognitive":{"X":x,"Y":y,"Z":z,"W":row["protected_w"],
                          "primary_vs_alternative":alternative,
                          "adjacent_band_reason":"D2 provisional; D1 removes connection/choice, D3 requires deeper independent strategy",
-                         "difficulty_five_component_evidence":None},
+                         "difficulty_five_component_evidence":{"author_proposal":primaries[0]["difficulty"],
+                                                               "qualified_verdict":"PENDING_INDEPENDENT"}},
             "blueprints":roles,
             "generation":{
                 "repo_commit_sha":head,"source_original_commit_sha":row["provenance"]["head"],
