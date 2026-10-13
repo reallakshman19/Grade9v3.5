@@ -85,6 +85,30 @@ class D1EvidenceTiles(unittest.TestCase):
                 self.assertEqual(row["qrt_acceptance"],"UNACCEPTED")
                 self.assertIsNone(row["owner_decision_id"])
 
+    def test_justify_manual_feedback_examples_do_not_misrepresent_grading(self):
+        path=TILES/"d1/justify-reasoning-probes.v1.json"
+        p=json.loads(path.read_text())
+        self.assertEqual(p["cell_id"],"QRT-JUSTIFY-D1")
+        self.assertEqual(p["scope"],"MANUAL_REVIEW_ONLY_NOT_AUTOGRADED_NOT_ACADEMIC_SIGNOFF")
+        self.assertEqual(p["source_quality_hold"],"ALTITUDE_WORDING_CLARITY")
+        self.assertIsNone(p["owner_decision_id"])
+        self.assertEqual(p["academic_decision"],"PENDING")
+        self.assertEqual(len(p["rubric"]),5)
+        cases={c["id"]:c for c in p["cases"]}
+        self.assertEqual(len(cases),16)
+        self.assertEqual(cases["numeric_only"]["author_expected_manual_category"],"PARTIAL_OR_UNJUSTIFIED")
+        self.assertEqual(cases["same_base_only"]["author_expected_manual_category"],"INCORRECT_REASONING")
+        self.assertEqual(cases["valid_det"]["author_expected_manual_category"],"FULL_ALTERNATIVE_WARRANT")
+        self.assertEqual(cases["wrong_slanted"]["author_expected_manual_category"],"INCORRECT_REASONING")
+        self.assertEqual(cases["wrong_transfer"]["author_expected_manual_category"],"INCORRECT_CONVERSE")
+        self.assertEqual(cases["valid_transfer"]["author_expected_manual_category"],"FULL_CONVERSE")
+        self.assertTrue(all(c["reviewer_verdict"] is None for c in cases.values()))
+        self.assertTrue(all(c["reviewer_name"] is None and c["conflict_declaration"] is None
+                            for c in cases.values()))
+        self.assertFalse(self.tiles["JUSTIFY"]["review"]["automatic_free_response_grading"])
+        self.assertEqual(self.viewer["cells"][6]["feedback_review"],
+                         "../d1/justify-reasoning-probes.v1.json")
+
     def test_repaired_model_and_actual_justify_not_obsolete_inventory(self):
         m=self.tiles["MODEL"];j=self.tiles["JUSTIFY"]
         self.assertIn("11802730066",m["generation"]["artifact_url"])
