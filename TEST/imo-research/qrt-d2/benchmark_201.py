@@ -64,7 +64,25 @@ def browser_check(html: str, role: str, browser) -> dict:
             raise AssertionError("BLANK_ATTEMPT_UNLOCKS_REVEAL")
         attempt.fill("I choose a route, connect the given quantities and will test it.")
         commit.click()
-        if any(targets.nth(i).get_attribute("data-locked") is not None for i in range(targets.count())):
+        if targets.first.get_attribute("data-locked") is not None:
+            raise AssertionError("NONBLANK_ATTEMPT_FAILED_TO_UNLOCK_PRIMARY")
+        if role == "core1b":
+            boundary = page.locator('details[data-g9-attempt-stage="boundary"][data-requires-attempt]')
+            boundary_box = page.locator('[data-g9-attempt-box][data-g9-attempt-stage="boundary"]')
+            if boundary.count() != 1 or boundary_box.count() != 1:
+                raise AssertionError("MISSING_INDEPENDENT_CORE1B_BOUNDARY")
+            if boundary.get_attribute("data-locked") is None:
+                raise AssertionError("PRIMARY_ATTEMPT_UNLOCKED_INDEPENDENT_BOUNDARY")
+            boundary_box.locator("button[data-g9-commit]").click()
+            if boundary.get_attribute("data-locked") is None:
+                raise AssertionError("BLANK_BOUNDARY_ATTEMPT_UNLOCKED")
+            boundary_box.locator("textarea[data-g9-attempt]").fill(
+                "This changed boundary fails the original argument for an explicit reason."
+            )
+            boundary_box.locator("button[data-g9-commit]").click()
+            if boundary.get_attribute("data-locked") is not None:
+                raise AssertionError("NONBLANK_BOUNDARY_ATTEMPT_FAILED_TO_UNLOCK")
+        elif any(targets.nth(i).get_attribute("data-locked") is not None for i in range(targets.count())):
             raise AssertionError("NONBLANK_ATTEMPT_FAILED_TO_UNLOCK")
         if role == "core2a":
             h3 = page.locator('details[data-g9-payload-ref*="after-attempt-hint-3"]')
