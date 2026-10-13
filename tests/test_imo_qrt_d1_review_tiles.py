@@ -192,4 +192,27 @@ class D1EvidenceTiles(unittest.TestCase):
         self.assertEqual(self.band["bands"]["D1"]["reported"]["rendered"],7)
         self.assertEqual(self.band["bands"]["D1"]["historical_reported"]["unstarted"],1)
 
+
+    def test_synthesize_bridge_ablation_controls(self):
+        j=json.loads((TILES/"d1/synthesize-bridge-ablation.v1.json").read_text())
+        t=self.tiles["SYNTHESIZE"]
+        x={c["id"]:c for c in j["conditions"]}
+        self.assertEqual(j["baseline"]["source_blob"],t["source"]["verified_sha"])
+        self.assertEqual(j["baseline"]["native_artifact"],t["generation"]["artifact_url"])
+        self.assertEqual(len(x),5)
+        a=x["A_CURRENT"]["values"];b=x["B_BRIDGE_SUPPLIED"]["values"]
+        self.assertEqual(a["groups"]*(a["blue_per_group"]+a["red_per_group"]),20)
+        self.assertEqual(b["groups"]*b["unit_total_given"],20)
+        self.assertEqual(b["unit_total_given"],a["blue_per_group"]+a["red_per_group"])
+        z=x["C_ALREADY_TAUGHT"]["values"]
+        self.assertEqual(z["groups"]*(z["first_per_group"]+z["second_per_group"]),9)
+        w=x["D_MISSING_COMPONENT_DIAGNOSIS"]
+        self.assertEqual(3+2*4,w["values"]["wrong_count"])
+        self.assertEqual(w["omitted_blue_count"],20-w["values"]["wrong_count"])
+        e=x["E_CHANGED_COMPOSITION"]["values"]
+        self.assertEqual(e["standard_units"]*(e["standard_blue"]+e["standard_red"])
+                         +e["changed_blue"]+e["changed_red"],19)
+        self.assertTrue(all(v is None or v==[] for v in j["review"].values()))
+        self.assertEqual(j["owner"]["qrt_decision"],"PENDING")
+
 if __name__=="__main__":unittest.main()
