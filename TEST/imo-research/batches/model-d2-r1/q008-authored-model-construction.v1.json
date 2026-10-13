@@ -1,0 +1,187 @@
+{
+  "schema": "imo-batch1-authored-concept-candidate/v1",
+  "origin": "AUTHORED",
+  "source_original_not_embedded": true,
+  "issue": 183,
+  "batch": "IMO-BATCH-001-MODEL-D2",
+  "date": "2026-10-13",
+  "question_ref": "SOF-IMO-G09-SAMPLE-2026-27-Q008",
+  "source_role": "CONCEPT_ASSOCIATION_ONLY_NOT_ORIGINAL_ITEM",
+  "owner_qt_acceptance": false,
+  "provisional_QRT": {
+    "cell": "QRT-MODEL-D2",
+    "primary": "MODEL",
+    "band": "D2",
+    "independent_academic_status": "PENDING",
+    "crux": "Choose distinct governing models for ground footprint and enclosed conical capacity, checking their geometrical and dimensional conditions",
+    "secondary": [
+      "APPLY",
+      "REPRESENT"
+    ],
+    "protected_W": "The governing choice of circle area vs right-cone volume and reason cylinder volume cannot substitute."
+  },
+  "target_concept": {
+    "title": "Choose models for footprint area and enclosed cone volume",
+    "capability": "Distinguish 2D area from 3D volume and check geometry applicability before plugging in values",
+    "prerequisites": [
+      "Area of a circle from its radius",
+      "Units of area vs volume",
+      "Right circular cone versus cylinder geometry"
+    ],
+    "learner_evidence": "SIMULATED/NOT_OBSERVED",
+    "relation_candidates": [
+      {
+        "id": "REL-CIRCLE-AREA-AUTH",
+        "meaning": "Covering a circular footprint",
+        "expression": "A = πr²",
+        "condition": "The required measure is the 2D circular base area; radius r"
+      },
+      {
+        "id": "REL-RIGHT-CONE-VOLUME-AUTH",
+        "meaning": "Air enclosed in a right circular cone",
+        "expression": "V = (πr²h)/3",
+        "condition": "The required measure is 3D interior capacity of a right circular cone; h is vertical height"
+      }
+    ]
+  },
+  "construction_units": [
+    {
+      "id": "CU-CONE-MODEL-1",
+      "decision": "Classify target quantity (2D footprint or 3D enclosed space) and reject mismatched units.",
+      "steps": [
+        {
+          "action": "Name exactly what must be measured",
+          "why_valid": "Covering a ground region consumes area in m²; storage or air occupies volume in m³."
+        },
+        {
+          "action": "Inspect whether the geometry matches a circle, cylinder or cone",
+          "why_valid": "The circular base and the tapered enclosed body have different measure formulas and applicability conditions."
+        }
+      ],
+      "stages": [
+        {
+          "label": "Distinguish measurement targets",
+          "visible": "Ground cover→area; air capacity→volume",
+          "protected_answer_absent": true
+        },
+        {
+          "label": "Isolate the base",
+          "visible": "A circular footprint depends on radius, not height",
+          "protected_answer_absent": true
+        },
+        {
+          "label": "Enclose the tapered solid",
+          "visible": "A right cone needs base radius and vertical height to determine volume",
+          "protected_answer_absent": true
+        }
+      ],
+      "authored_anchor": {
+        "radius_m": 2,
+        "height_m": 6,
+        "base_area_pi_coefficient": 4,
+        "cone_volume_pi_coefficient": 8
+      },
+      "diagnostic": {
+        "wrong_idea": "Use any familiar cone-sounding formula without checking what is measured",
+        "probe": "If the height changes but radius does not, which desired measure changes?",
+        "repair": "Separate the object from the requested quantity; match unit and geometry before selecting equation."
+      }
+    },
+    {
+      "id": "CU-CONE-MODEL-2",
+      "decision": "Compare candidate volume models and use a changed condition to test the selection independently.",
+      "steps": [
+        {
+          "action": "Contrast tapered cone with constant-cross-section cylinder",
+          "why_valid": "Equal base radii and heights do not make their volumes equal; the cone occupies one-third of that cylinder's space."
+        },
+        {
+          "action": "Check a fixed-radius height change",
+          "why_valid": "Area of the fixed circular base is invariant; enclosed cone volume scales with height."
+        }
+      ],
+      "stages": [
+        {
+          "label": "Compare geometric assumptions",
+          "visible": "Cone tapers; cylinder does not"
+        },
+        {
+          "label": "State candidate governing models",
+          "visible": "Circle area uses r²; cone volume uses r²h/3"
+        },
+        {
+          "label": "Check doubled height",
+          "visible": "At fixed radius, base area unchanged, cone volume doubled"
+        }
+      ],
+      "independent_check": "Counterfactual height doubled at fixed base radius",
+      "diagnostic": {
+        "wrong_idea": "Use cylinder volume πr²h for a cone",
+        "probe": "At fixed radius and height, compare cone and cylinder volumes and explain the difference in shape.",
+        "repair": "Demand right circular cone assumptions and the 1/3 factor; verify independently with a height change."
+      }
+    }
+  ],
+  "authored_core2_demo": {
+    "question_text_scope": "AUTHOR_MADE_NOT_ORIGINAL",
+    "radius_m": 3,
+    "height_m": 4,
+    "option_key_for_demo_only": "A",
+    "option_pairs": [
+      {
+        "A": "9π m²; 12π m³"
+      },
+      {
+        "B": "12π m²; 9π m³"
+      },
+      {
+        "C": "9π m²; 36π m³"
+      },
+      {
+        "D": "3π m²; 12π m³"
+      }
+    ],
+    "hint_ladder": [
+      {
+        "rung": "H0",
+        "availability": "PRE_ATTEMPT_SAFE",
+        "kind": "ORIENT",
+        "content": "Are floor covering and enclosed air measured in the same dimension?"
+      },
+      {
+        "rung": "H1",
+        "availability": "AFTER_ATTEMPT",
+        "kind": "REPRESENT",
+        "content": "Separate the 2D circular base from the 3D tapered cone."
+      },
+      {
+        "rung": "H2",
+        "availability": "AFTER_ATTEMPT",
+        "kind": "CONNECT",
+        "content": "Which expressions measure circle area and right-cone volume, with square and cubic units?"
+      }
+    ],
+    "source_hint_provenance": "NONE; all hints GUIDED_AUTHORED, no original source questions included"
+  },
+  "authored_independent_exit": {
+    "prompt": "For a different right circular cone, r=5 m, h=9 m. Find floor area and enclosed air capacity; identify which formula applies and why a cylinder model is invalid.",
+    "radius_m": 5,
+    "height_m": 9,
+    "expected": {
+      "base_area_pi_coefficient": 25,
+      "cone_volume_pi_coefficient": 75,
+      "dimensions": [
+        "m²",
+        "m³"
+      ]
+    },
+    "answer_reveal": "TYPED_ATTEMPT_AND_SELF_ATTEMPT_CHECKBOX",
+    "math_author_check": "CHECKED_INDEPENDENT_ARITHMETIC_NOT_OWNER_ACADEMIC"
+  },
+  "registered_blueprint": "BP-CORE1A-CONSTRUCTION@1.8.0",
+  "renderer_authority": "Shared/tools/render_core.py",
+  "native_state": "DATA_STAGING_FOR_FUTURE_RENDER_ONLY_NOT_NATIVE_RENDERED",
+  "source_pdf_custody": "NEEDS_PRIVATE_SOURCE_FIDELITY_COMPONENT_VERIFICATION_BEFORE_AUTHENTIC_CORE2",
+  "owner_qrt_accepted": false,
+  "rights_granted": false
+}
