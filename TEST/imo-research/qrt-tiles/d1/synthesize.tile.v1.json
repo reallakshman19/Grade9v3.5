@@ -7,7 +7,7 @@
   "primary_demand": "SYNTHESIZE",
   "band_issue": 200,
   "status_dimensions": {
-    "technical": "REUSED_RENDERED_TEST",
+    "technical": "REPAIRED_RENDERED_TEST",
     "renderer_verified": true,
     "technique_review": "AUTHOR_CHECK_ONLY_INDEPENDENT_PENDING",
     "academic_review": "QRT_DECISION_PENDING",
@@ -22,9 +22,9 @@
   ],
   "source": {
     "classification": "AUTHORED_TEST_NOT_SOF",
-    "verified_sha": "db474cd38de262b6d324e1cb01028402b0317afc",
+    "verified_sha": "0c8cea02abd858ff74d47aa57c3a3b742c197b9b",
     "source_path": "TEST/imo-research/qrt-d1/synthesize.v1.json",
-    "source_code_commit": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "source_code_commit": "e41b06cc5056faa094dff7b239759edf74aeec67",
     "upstream_candidate_id": null,
     "upstream_source_blob_sha": null,
     "custody": "SOURCE_SAFE_AUTHORED_TEST",
@@ -36,8 +36,8 @@
     "X": "Count all tiles in four repeats of a two-part motif of three blue and two red squares.",
     "Y": "Addition within complete units and multiplication of identical repeated units.",
     "Z": "Combine both colored components within each complete motif before repeating it.",
-    "W": "Choose 4×(3+2), not an expression repeating only one component; total 20 tiles.",
-    "primary_vs_alternative": "D1 vs D2 challenge: one unit-first dependency, no further coupled constraints.",
+    "W": "Independently choose and justify a mathematical expression accounting for both component kinds across all four repeats; 4×(3+2) and 4×3+4×2 are equivalent valid counts, unlike 3+2×4.",
+    "primary_vs_alternative": "HIGH-PRIORITY QUALIFIED REVIEW: Compare explicit 4 repeated mixed components with MODEL equal groups and APPLY arithmetic. A=4(3+2) is isomorphic to equal-groups model with group size 5; determine whether the intermediate component-composition dependency is enough to make primary SYNTHESIZE-D1. Academic and Owner status remain PENDING.",
     "adjacent_band_reason": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
     "difficulty_five_component_evidence": {
       "concept_model_selection": "Known repeat motif.",
@@ -71,7 +71,7 @@
     }
   ],
   "generation": {
-    "repo_commit_sha": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "repo_commit_sha": "e41b06cc5056faa094dff7b239759edf74aeec67",
     "manifest_path": "TEST/products/imo182-qrt-d1-synthesize.manifest.json",
     "manifest_blob_sha": "ea4f462ab9a51f6d9c3d6549f0925dde9db081f0",
     "renderer_version": "render_core/2",
@@ -81,32 +81,32 @@
     "mode": "PAGES",
     "held_to": "REFERENCE",
     "gaps": 0,
-    "exact_head_ci_run": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599455",
-    "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599455/artifacts/11774880288",
+    "exact_head_ci_run": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38426322845",
+    "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38426322845/artifacts/11829090822",
     "html": [
       {
         "filename": "core1.html",
-        "sha256": "27810d6987e1b6a69a9adc5073144827ddde6c7812a788ba3fe9703fbb81dc0f"
+        "sha256": "1fb92127f2f086a73f9f4bc597a2482aba4bdcad8659cb117083b7499c748af3"
       },
       {
         "filename": "core1a.html",
-        "sha256": "eb45565041bfe00e0f927e8599c7a052e1260a929810ca6cdb44573a7cca6af8"
+        "sha256": "1684300674da83ec281425075f313b6729730cc1d7d681f2a9036b796062a08f"
       },
       {
         "filename": "core1b.html",
-        "sha256": "d73adb22be53ee82d2f135796125c310dd09dfd198a14ae8b569ef047f2b8b43"
+        "sha256": "7efb14ca4df78b916b1ff1d2e120731417aec6c6be41e6b554009efb4b32cd59"
       },
       {
         "filename": "core2a.html",
-        "sha256": "53176e92e8c7f94135a036b2c4d03de1aea1b730c24e737fe24217ba3ef4c31c"
+        "sha256": "571b52c9d32ec75b7f3a76cea51d80aa2a3084edf127071d44ce1080a1640e1d"
       },
       {
         "filename": "core2b.html",
-        "sha256": "6577cdff5e94abe1b616f83535ff9654a00dc4496522a53b226da41d38e4c7c3"
+        "sha256": "454cf216b4b298c3cf85d7a1ba4bdad30375cf14047533b9308526d00f60d314"
       },
       {
         "filename": "index.html",
-        "sha256": "358de41e734d715ae87f7908eaf531d2b0ec17e768bc9f724a1abf16892caa9b"
+        "sha256": "9d4b57b131aff0c98c72d552ec12b560f4193496e31786b5e8d93c09d92da1a8"
       }
     ],
     "six_html_sha_verified": true
@@ -168,12 +168,30 @@
     "links_checked": false
   },
   "evidence": {
-    "source_commit": "089b57c98d697a0e19683c3d78e0d51220b9174a",
-    "CI": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599455",
+    "source_commit": "e41b06cc5056faa094dff7b239759edf74aeec67",
+    "CI": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38426322845",
     "academic": null,
     "golden": "https://github.com/reallakshman19/Grade9v3.5/tree/67c34dababb0da0ef7d5f4a532bfcf3119754961/golden/units/G-IMO-G9-FIVE-CORE-20261012",
     "owner": null,
-    "updated_utc": "2026-10-13"
+    "updated_utc": "2026-10-13",
+    "measured_repair": {
+      "type": "AUTHORING_HINT_AND_MATHEMATICAL_EQUIVALENCE",
+      "pull_request": "https://github.com/reallakshman19/Grade9v3.5/pull/213",
+      "old_preattempt_prompt": "When a whole unit repeats, are both component kinds copied each time?",
+      "new_hint_does_not_name_order": true,
+      "grouped_and_distributed_count_both_valid": true,
+      "answer_acceptance": "SOURCE_ACCEPTABLE_ALTERNATIVES_NOT_VERBATIM_GRADED_BY_NATIVE_HTML",
+      "independent_sha6_match": true,
+      "gaps": 0,
+      "chromium_widths": [
+        390,
+        768,
+        1366
+      ],
+      "blank_attempt_refused": true,
+      "after_commit_reveal": true,
+      "human_demand_verdict": "PENDING"
+    }
   },
   "restrictions": [
     "No original private Q003 bytes or authentic SOF question contents",
