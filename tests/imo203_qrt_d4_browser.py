@@ -33,7 +33,7 @@ with sync_playwright() as p:
                 commit=page.locator('[data-g9-attempt-box] button[data-g9-commit]').first
                 before=page.locator("body").inner_text()
                 accessible=page.locator("body").aria_snapshot()
-                for word in protected[cell]:
+                for word in protected:
                     assert word not in before,(cell,"VISIBLE_PREATTEMPT",word)
                     assert word not in accessible,(cell,"AX_PREATTEMPT",word)
                 commit.click()
@@ -45,7 +45,7 @@ with sync_playwright() as p:
                     if nxt.count() and nxt.is_enabled():
                         nxt.click()
                 current=page.locator("body").inner_text()
-                for word in protected[cell]:
+                for word in protected:
                     assert word not in current,(cell,"VISIBLE_SAFE_HINT",word)
                 attempt.fill("I am checking the defining conditions and keeping the decisive classification or ordering decision for my attempt.")
                 commit.click()
