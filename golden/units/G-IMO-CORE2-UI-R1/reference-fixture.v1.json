@@ -1,0 +1,108 @@
+{
+  "schema": "imo-core2-ui-owner-review-golden/v1",
+  "id": "G-IMO-CORE2-UI-R1",
+  "version": "1.0.0",
+  "status": "OWNER_APPROVED_VISUAL_INTERACTION_REFERENCE",
+  "owner_review": {
+    "decision": "looks perfect. save this as IMO golden fixture, proceed next.",
+    "provided_at_utc": "2026-10-13T05:55:58Z",
+    "scope": "CORE2 HTML visual/interactions authored source-safe preview only; no native renderer or original question acceptance",
+    "role": "Owner",
+    "personal_review_claim": "Owner chat appearance approval only"
+  },
+  "primary": {
+    "path": "core2_authored_demo.html",
+    "sha256": "90fa27ec928ef6121c0350cc469ef1bd98e13029d9f4e26b66b08813b4401ddb",
+    "bytes": 32261,
+    "git_blob": "e0599f5abcd27cbb31185c4ba3207a22f18eca22",
+    "origin": "WHOLLY_AUTHORED_SAMPLE_NOT_PRINTED_IMO",
+    "frozen_visual_reference": true,
+    "sole_production_renderer": false
+  },
+  "companion": {
+    "path": "core1a_authored_preview.html",
+    "sha256": "d0e0670007734ba738f12a5f4aa88e63ffaa140a540fb51b1cf41d9348a899a3",
+    "bytes": 21109,
+    "role": "NAVIGATION_DEMONSTRATION_ONLY",
+    "owner_blessed": false,
+    "do_not_reuse_across_question_demands": true
+  },
+  "navigation": {
+    "path": "q003_preview_index.html",
+    "sha256": "4056c6f37b59c06d25c451a56ae51ea6d6c526f03b3d43101607b57957bdfa45",
+    "bytes": 10736,
+    "owner_blessed": false
+  },
+  "grounding": {
+    "blueprint": "BP-CORE2-SOURCE-QUESTION@1.11.0",
+    "blueprint_registry_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "candidate_golden": "G-CORE2-R2",
+    "candidate_golden_md_blob": "13c33f13d558fbd2026a72ae3392cafcaf0c8f80",
+    "sole_native_renderer": "Shared/tools/render_core.py",
+    "reference_identity_max_css_px": 190
+  },
+  "approved_teaching_moves": [
+    "T01_ATTEMPT_FIRST",
+    "T05_REQUEST_ONE_HINT_RUNG_AT_A_TIME",
+    "T13_SEPARATE_PRINTED_KEY_AND_INDEPENDENT_VERIFICATION",
+    "T15_SOURCE_OPTIONS_TYPED_COMMIT"
+  ],
+  "preview_structure": [
+    "IDENTITY",
+    "DIFFICULTY_WHY",
+    "STEM",
+    "CONDITIONS",
+    "ATTEMPT",
+    "REPRESENTATION",
+    "TRAP_AFTER_ATTEMPT",
+    "HINT_LADDER",
+    "CONCEPT_NAV",
+    "SOLUTION",
+    "SOLUTION_STEPS",
+    "ANSWER",
+    "CHECK",
+    "DIAGNOSTIC_REPAIR_HYPOTHESIS"
+  ],
+  "example_ladder_policy": {
+    "rungs": [
+      {
+        "label": "H0",
+        "purpose": "ORIENT",
+        "availability": "PRE_ATTEMPT_SAFE"
+      },
+      {
+        "label": "H1",
+        "purpose": "REPRESENT",
+        "availability": "AFTER_ATTEMPT"
+      },
+      {
+        "label": "H2",
+        "purpose": "COMPARE",
+        "availability": "AFTER_ATTEMPT"
+      }
+    ],
+    "provenance": "GUIDED_AUTHORED_NOT_SOURCE_HINT",
+    "materialise_one_rung_on_request": true,
+    "number_is_NOT_a_quality_target": true
+  },
+  "constraints": {
+    "do_not_directly_publish_preview_as_core2": true,
+    "do_not_register_as_native_rendered_golden": true,
+    "do_not_replace_G_CORE2_R2": true,
+    "do_not_claim_original_Q003_verification": true,
+    "never_insert_source_exam_wording_or_options": true,
+    "no_new_SHARED_renderer_or_template": true,
+    "apply_per_question_semantic_review": true,
+    "authored_companion_core1a_not_general_template": true
+  },
+  "unresolved": {
+    "owner_accepts_native_Q003_Core2": false,
+    "owner_accepts_q003_core1a": false,
+    "owner_qrt_cells_accepted": 0,
+    "owner_same_page_a4_review": "PENDING",
+    "publisher_rights": "NOT_GRANTED",
+    "original_paper_personal_verification": "UNCONFIRMED",
+    "accessibility_keyboard": "DEFERRED_BY_USER"
+  },
+  "native_fixture_rule": "No manifest.json is deliberately supplied: this authored mock does not have native data authority and may not be built using build_golden.py. True native acceptance must produce new source-safe records via Shared/tools/render_core.py and separate evidence."
+}
