@@ -39,7 +39,10 @@ class D4AdoptionEvidence(unittest.TestCase):
                 self.assertIsNone(cell["assessment"]["owner_qrt_decision_id"])
                 self.assertEqual(cell["assessment"]["release"], "NOT_AUTHORIZED")
                 if not cell["render"]:
-                    self.assertEqual(cell["source"]["classification"], "NOT_AUTHORED")
+                    self.assertEqual(cell["source"]["classification"], "WHOLLY_AUTHORED_TEST_CANDIDATE")
+                    self.assertIsNone(cell["source"]["manifest_path"])
+                    self.assertEqual(cell["candidate_math_ci"], "PENDING_EXACT_HEAD_RESULT")
+                    self.assertTrue(cell["candidate_math_spec_link"].endswith("-d4.candidate.json"))
                     continue
                 src = cell["source"]
                 self.assertEqual(src["classification"], "AUTHORED_TEST_ONLY")
