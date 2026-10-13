@@ -87,7 +87,7 @@ class RetrieveD4(unittest.TestCase):
             "criterion for k>=3: odd a≡1",
         )
         for role in ("core1.html", "core1a.html", "core1b.html"):
-            visible = re.sub(r"\\s+", " ", unescape(re.sub(r"<[^>]+>", " ", pages[role]))).casefold()
+            visible = re.sub(r"\s+", " ", unescape(re.sub(r"<[^>]+>", " ", pages[role]))).casefold()
             for leaked in forbidden:
                 with self.subTest(role=role, leaked=leaked):
                     self.assertNotIn(leaked, visible)
