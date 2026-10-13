@@ -159,6 +159,25 @@ class D1EvidenceTiles(unittest.TestCase):
         self.assertIsNone(challenge["independent_review"]["academic_verdict"])
         self.assertEqual(self.band["bands"]["D1"]["reported"]["academic_accepted"],0)
 
+    def test_synthesize_contrast_is_unsigned_and_falsifiable(self):
+        t=self.tiles["SYNTHESIZE"]
+        contrast_path=TILES/"d1/synthesize-demand-contrast.v1.json"
+        j=json.loads(contrast_path.read_text())
+        self.assertEqual(j["schema"],"imo-qrt-d1-primary-demand-contrast/v1")
+        self.assertEqual(j["cell_id"],"QRT-SYNTHESIZE-D1")
+        self.assertIn("4×3+4×2=20",j["pinned_actual_evidence"]["valid_equal_counts"])
+        self.assertEqual(j["pinned_actual_evidence"]["CI"],t["generation"]["exact_head_ci_run"])
+        self.assertEqual(j["pinned_actual_evidence"]["html"],t["generation"]["artifact_url"])
+        self.assertEqual(j["source_authority"]["template_id"],"QRT-SYNTHESIZE-D1")
+        self.assertEqual(len(j["conflicting_hypotheses"]),3)
+        self.assertTrue(all(x["reviewer_result"] is None for x in j["conflicting_hypotheses"]))
+        self.assertEqual(len(j["falsifiable_review_protocol"]),6)
+        self.assertIsNone(j["independent_review"]["primary_demand_verdict"])
+        self.assertIsNone(j["independent_review"]["qualified_reviewer_name"])
+        self.assertIsNone(j["owner"]["decision_id"])
+        self.assertEqual(self.viewer["cells"][5]["demand_contrast"],
+                         "../d1/synthesize-demand-contrast.v1.json")
+
     def test_repaired_model_and_actual_justify_not_obsolete_inventory(self):
         m=self.tiles["MODEL"];j=self.tiles["JUSTIFY"]
         self.assertIn("11802730066",m["generation"]["artifact_url"])
