@@ -40,6 +40,23 @@ class D1Retrieve(unittest.TestCase):
         self.assertIn("data-g9-after-attempt-hint",self.pages["core2a.html"])
         self.assertIn("data-requires-attempt",self.pages["core2a.html"])
         self.assertEqual(q["answer"]["summary"],"25 is COMPOSITE.")
+    def test_retrieve_h2_does_not_recite_protected_classification_rule(self):
+        q=self.source["questions"][1]
+        self.assertEqual(q["answer"]["crux_move_ref"],"RET-D1-QA-DECIDE")
+        safe_hints=[s["text"] for s in q["scaffolds"][:2]]
+        self.assertEqual(len(safe_hints),2)
+        all_pre_attempt=" ".join(safe_hints).lower()
+        for leaked in ("exactly two for prime", "more than two for composite",
+                       "one for neither", "three means composite", "25 is composite",
+                       "composite because it has three"):
+            self.assertNotIn(leaked,all_pre_attempt)
+        self.assertIn("Recall the rule",q["scaffolds"][1]["text"])
+        self.assertIn(q["scaffolds"][1]["text"],self.pages["core2a.html"])
+        self.assertEqual([s["availability"] for s in core2_v2.project_support(q)],
+                         ["PRE_ATTEMPT_SAFE","PRE_ATTEMPT_SAFE","AFTER_ATTEMPT"])
+        # The AFTER_ATTEMPT hint may discuss checking thresholds, but not on initial display.
+        self.assertIn("data-g9-after-attempt-hint",self.pages["core2a.html"])
+
     def test_unmarked_figure_and_new_transfer(self):
         for record in self.source["representations"]:
             for asset in record["rendered_asset_refs"]:

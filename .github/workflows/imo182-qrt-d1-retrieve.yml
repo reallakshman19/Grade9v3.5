@@ -39,9 +39,11 @@ jobs:
           folder=Path('build/imo182-qrt/d1/retrieve')
           r=json.loads((folder/'render-receipt.json').read_text())
           assert not r['gaps'],r['gaps']
-          names=['core1.html','core1a.html','core1b.html','core2a.html','core2b.html']
-          assert all(n in r['pages'] for n in names)
-          j={'cell':'QRT-RETRIEVE-D1','qrt_accepted':'0/28','academic_review':'PENDING','status':'RENDERED_TEST_ONLY','pages':{n:hashlib.sha256((folder/n).read_bytes()).hexdigest() for n in names}}
+          names=['core1.html','core1a.html','core1b.html','core2a.html','core2b.html','index.html']
+          assert set(names)==set(r['pages']),r['pages']
+          actual={n:hashlib.sha256((folder/n).read_bytes()).hexdigest() for n in names}
+          assert actual==r['page_sha256'],'Independent SHA6 differs from render receipt'
+          j={'cell':'QRT-RETRIEVE-D1','qrt_accepted':'0/28','academic_review':'PENDING','status':'RENDERED_TEST_ONLY','pages':actual,'independent_sha6_receipt_match':True}
           (folder/'d1-retrieve-evidence.json').write_text(json.dumps(j,indent=2)+'\n')
           print(json.dumps(j,indent=2))
           PY
