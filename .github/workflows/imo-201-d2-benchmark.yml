@@ -1,0 +1,67 @@
+name: IMO 201 D2 native golden semantic benchmark
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo-201-d2-benchmark.yml'
+      - 'TEST/imo-research/qrt-d2/**'
+      - 'TEST/products/imo182-qrt-d2-*.manifest.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-d2-technique:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Assert checked-out exact PR head (never synthetic merge)
+        env:
+          EXPECTED_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser QA
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Check independent arithmetic and changed-condition oracles
+        run: python -m unittest discover -s TEST/imo-research/qrt-d2/issue-201 -p math_oracle_201.py -v
+      - name: Render seven actual native five-role products
+        run: |
+          set -euo pipefail
+          for demand in retrieve explain apply model represent synthesize justify; do
+            python Shared/tools/render_core.py build \
+              --manifest "TEST/products/imo182-qrt-d2-${demand}.manifest.json" \
+              --out "build/imo201/d2/${demand}" --draft --reference
+          done
+      - name: Check frozen golden locks, semantic technique, and browser learner gates
+        run: |
+          python TEST/imo-research/qrt-d2/benchmark_201.py \
+            --render-root build/imo201/d2 \
+            --output build/imo201/d2/benchmark-results.json \
+            --browser
+      - name: Produce seven protocol-compatible QRT cell tiles with exact HTML SHA proofs
+        env:
+          CI_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python TEST/imo-research/qrt-d2/issue-201/make_protocol_tiles_201.py \
+            --render-root build/imo201/d2 \
+            --out build/imo201/d2/tiles \
+            --run-url "$CI_RUN_URL"
+      - name: Screenshot and check all 35 native pages at phone tablet and desktop widths
+        run: |
+          python TEST/imo-research/qrt-d2/issue-201/native_viewports_201.py \
+            --render-root build/imo201/d2 \
+            --screenshots build/imo201/d2/screenshots
+      - name: Chromium-check 7x4 review viewer and all twelve pending gate rows
+        run: python TEST/imo-research/qrt-d2/issue-201/browser_viewer_201.py
+      - name: Upload rendered native evidence and discrepancy report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-201-seven-d2-native-pages-and-benchmark
+          path: build/imo201/d2/
+          if-no-files-found: warn

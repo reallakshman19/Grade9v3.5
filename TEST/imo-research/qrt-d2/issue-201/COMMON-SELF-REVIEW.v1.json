@@ -1,0 +1,202 @@
+{
+  "review_profile": {
+    "common_protocol": {
+      "ref": "reallakshman19/Common@546111279ed066ee1a4559e2e091c5097a38ce3b/skills/common-reviewer-protocol-v1.0/SKILL.md",
+      "version": "1.0",
+      "digest": "git-blob-sha1:9ea7ff68c9e5d61331ec08e690f231c921c842f5"
+    },
+    "project_protocol": {
+      "ref": "reallakshman19/Grade9v3.5@38c205d1c1230c8d8ff6ea558d2970b5e8e12d49/docs/method/QUESTION-REVIEW-MATRIX.md",
+      "digest": "git-blob-sha1:fe739c61f6a3374d38a46b0621f9a91e34dd78a7"
+    },
+    "role": "SELF_REVIEW",
+    "author_principal": "ChatGPT agent working on PR #205",
+    "review_principal": "ChatGPT agent working on PR #205",
+    "principal_independence": "NONE",
+    "context_reset": "FRESH_REVIEW_ATTEMPT",
+    "common_criteria": {
+      "CR-01": {
+        "applicability": "REQUIRED",
+        "result": "PASS",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/issues/211",
+          "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38411886698"
+        ]
+      },
+      "CR-02": {
+        "applicability": "REQUIRED",
+        "result": "PASS",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/blob/38c205d1c1230c8d8ff6ea558d2970b5e8e12d49/docs/method/QUESTION-REVIEW-MATRIX.md",
+          "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38411886698"
+        ]
+      },
+      "CR-03": {
+        "applicability": "REQUIRED",
+        "result": "FAIL",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/blob/38c205d1c1230c8d8ff6ea558d2970b5e8e12d49/TEST/imo-research/qrt-d2/model.v1.json",
+          "https://github.com/reallakshman19/Grade9v3.5/blob/38c205d1c1230c8d8ff6ea558d2970b5e8e12d49/TEST/imo-research/qrt-d2/retrieve.v1.json",
+          "https://github.com/reallakshman19/Grade9v3.5/blob/38c205d1c1230c8d8ff6ea558d2970b5e8e12d49/docs/method/QUESTION-REVIEW-MATRIX.md"
+        ]
+      },
+      "CR-04": {
+        "applicability": "REQUIRED",
+        "result": "INCONCLUSIVE",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/issues/211"
+        ]
+      },
+      "CR-05": {
+        "applicability": "REQUIRED",
+        "result": "INCONCLUSIVE",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38411886698",
+          "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38399681860"
+        ]
+      },
+      "CR-06": {
+        "applicability": "REQUIRED",
+        "result": "PASS",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/blob/38c205d1c1230c8d8ff6ea558d2970b5e8e12d49/TEST/imo-research/qrt-d2/model.v1.json",
+          "https://github.com/reallakshman19/Grade9v3.5/blob/38c205d1c1230c8d8ff6ea558d2970b5e8e12d49/TEST/imo-research/qrt-d2/retrieve.v1.json",
+          "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38411886698"
+        ]
+      },
+      "CR-07": {
+        "applicability": "NOT_APPLICABLE",
+        "result": "NOT_APPLICABLE",
+        "evidence_refs": [],
+        "applicability_basis": "This narrow review concerns wholly authored TEST mathematics and publicly linked evidence, not changed authentication, credentials, access controls, sensitive source admission or production network/service trust boundaries. Security review of all PR files is explicitly excluded."
+      },
+      "CR-08": {
+        "applicability": "REQUIRED",
+        "result": "INCONCLUSIVE",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38411886698"
+        ]
+      },
+      "CR-09": {
+        "applicability": "REQUIRED",
+        "result": "PASS",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/issues/211"
+        ]
+      },
+      "CR-10": {
+        "applicability": "REQUIRED",
+        "result": "FAIL",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/issues/211",
+          "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38411886176"
+        ]
+      }
+    },
+    "project_method_ids": [
+      "QRT_MATH_PRIMARY_AND_CHANGED_CASE_ORACLES",
+      "QRT_7_NATIVE_FIVE_ROLE_STRUCTURAL_CHECKS",
+      "QRT_PREATTEMPT_H2_H3_BROWSER",
+      "QRT_12_HSPM_QUALIFIED_VERDICTS_NOT_RUN",
+      "QRT_DEMAND_DIFFICULTY_QUALIFICATION_NOT_RUN",
+      "QRT_OWNER_DECISION_NOT_RUN",
+      "CI_HEAD_BASE_COMPARISON"
+    ],
+    "specialist_required": [
+      "Distinct qualified Grade 9 maths and QRT cognitive-demand reviewer with conflict declaration",
+      "Owner for per-cell acceptance and any golden designation",
+      "Separate accessibility/visual specialist if required for release"
+    ],
+    "review_scope": {
+      "included_surfaces": [
+        "Two candidate authored source records: retrieve.v1.json and model.v1.json",
+        "10 exact native Core role pages (five per candidate) from run 38399681860",
+        "Issue #211 reviewer handoff and QRT review protocol",
+        "Scoped technical CI metadata and historical exact-ID comparison"
+      ],
+      "excluded_surfaces": [
+        "Full human-written diff review of all 11 files in PR #205",
+        "Qualified H1-H3/S1-S3/P1-P3/M1-M3 academic evaluation",
+        "Other five D2 academic candidates and 21 other QRT cells",
+        "Authentic/private Q003 Core2 and rights",
+        "A4/print, full keyboard or screen-reader, security penetration testing",
+        "Final canonical-assurance status not available during initial review"
+      ],
+      "coverage_basis": "Focused academic-risk and review-handoff self-review. Technical artifacts consumed as evidence, not a new independent reviewer or academic signature."
+    },
+    "findings": [
+      {
+        "id": "QRT201-SR-01",
+        "class": "BLOCKING_DEFECT",
+        "summary": "MODEL-D2 authored stem preselects the large-cup-count variable while its authored concept_model_selection rationale claims that choosing which type x represents is learner-owned. The intended W and primary MODEL label therefore need subject-level reconciliation before academic acceptance.",
+        "affected_surfaces": [
+          "TEST/imo-research/qrt-d2/model.v1.json",
+          "issue #211"
+        ],
+        "disposition": "OPEN",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/blob/38c205d1c1230c8d8ff6ea558d2970b5e8e12d49/TEST/imo-research/qrt-d2/model.v1.json",
+          "https://github.com/reallakshman19/Grade9v3.5/issues/211"
+        ]
+      },
+      {
+        "id": "QRT201-SR-02",
+        "class": "EXTERNAL_DEPENDENCY",
+        "summary": "RETRIEVE-D2 names the rule and demands computations/allowance/saving. Determining RETRIEVE versus APPLY and D1/D2/D3 needs qualified, independent QRT judgment; author self-review does not resolve demand.",
+        "affected_surfaces": [
+          "TEST/imo-research/qrt-d2/retrieve.v1.json",
+          "issue #211"
+        ],
+        "disposition": "OPEN",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/blob/38c205d1c1230c8d8ff6ea558d2970b5e8e12d49/TEST/imo-research/qrt-d2/retrieve.v1.json",
+          "https://github.com/reallakshman19/Grade9v3.5/blob/38c205d1c1230c8d8ff6ea558d2970b5e8e12d49/docs/method/QUESTION-REVIEW-MATRIX.md",
+          "https://github.com/reallakshman19/Grade9v3.5/issues/211"
+        ]
+      },
+      {
+        "id": "QRT201-SR-03",
+        "class": "EXTERNAL_DEPENDENCY",
+        "summary": "Issue #211 is open but has no assigned qualified independent reviewer or dated signed 12-ask verdict for either risk cell; Common engineering review does not substitute for academic expertise or Owner authority.",
+        "affected_surfaces": [
+          "issue #211",
+          "issue #201"
+        ],
+        "disposition": "OPEN",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/issues/211"
+        ]
+      },
+      {
+        "id": "QRT201-SR-04",
+        "class": "EXTERNAL_DEPENDENCY",
+        "summary": "Whole-repository guardrails failed at exact candidate; canonical assurance remained incomplete at the review snapshot, although the scoped D2 native CI passed. No merge gate can be inferred from scoped green.",
+        "affected_surfaces": [
+          "PR #205 integration gate"
+        ],
+        "disposition": "OPEN",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38411886176",
+          "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38411886698"
+        ]
+      },
+      {
+        "id": "QRT201-SR-05",
+        "class": "ADVISORY",
+        "summary": "Precommit H2 browser answer-sentinel checks detect known numeric answers, not every pedagogical disclosure of learner-owned W. Reviewer must directly inspect all precommit text, SVG labels and narrative.",
+        "affected_surfaces": [
+          "TEST/imo-research/qrt-d2/benchmark_201.py",
+          "issue #211"
+        ],
+        "disposition": "ACCEPTED_ADVISORY",
+        "evidence_refs": [
+          "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38399681860",
+          "https://github.com/reallakshman19/Grade9v3.5/issues/211"
+        ]
+      }
+    ],
+    "unresolved_required_findings": 4,
+    "final_candidate": "38c205d1c1230c8d8ff6ea558d2970b5e8e12d49",
+    "result": "BLOCKED"
+  }
+}
