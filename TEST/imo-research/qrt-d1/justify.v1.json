@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "status": "CANDIDATE",
   "subject": "TEST",
-  "scope_summary": "IN PROGRESS: adapt authored IMO-G9-ORIGINAL-PRACTICE-003 as an unadmitted five-role suite. ALTITUDE_WORDING_CLARITY hold remains. Not official SOF source.",
+  "scope_summary": "AUTHORED TEST derived from existing IMO-G9-ORIGINAL-PRACTICE-003, with source-intake ALTITUDE_WORDING_CLARITY hold. Main D1 W: justify equal area of two triangles sharing 12 cm base and 7 cm perpendicular altitudes despite displaced peaks. Core1A 10×4 worked, Core1B 10×3 misconception and 8 cm unequal-height boundary, Core2B converse height from equal area 36 and base 12. No original SOF source rights, independent review or release.",
   "curriculum_mappings": [],
   "resources": [
     {
@@ -251,38 +251,38 @@
       },
       "elicitation": {
         "predict": {
-          "prompt": "A learner writes area=5+3=8 cm² for a rectangle 5 cm by 3 cm. Predict whether that counts all 1 cm square tiles.",
-          "defensible_answer": "No. There are fifteen tiles, from 5×3, not eight."
+          "prompt": "A student claims shifting a triangle apex sideways makes its area greater because one slanted side grows longer. Is that necessarily so?",
+          "defensible_answer": "No. The triangle area is unchanged when base and perpendicular altitude remain fixed."
         },
         "attempt": {
-          "produces": "Written diagnosis of addition instead of tile counting and an independently changed area result.",
+          "produces": "Explain an invalid slanted-edge argument using the perpendicular base-height relation.",
           "closure": "RUBRIC",
           "rubric": [
             {
-              "criterion": "Identify rule confusion.",
-              "evidence_of": "Explains why 5+3 is not tile count."
+              "criterion": "Identify which height is valid.",
+              "evidence_of": "Names the perpendicular altitude, not a slanted side."
             },
             {
-              "criterion": "Apply multiplication and square-unit label.",
-              "evidence_of": "Writes 5×3=15 cm²."
+              "criterion": "State the decisive area warrant.",
+              "evidence_of": "Uses A=bh/2 with the relevant base and height."
             }
           ],
           "accepted": [
-            "A rectangle 5 cm by 3 cm holds 15 one-centimetre squares because area is length×width."
+            "A peak moving parallel to the base keeps perpendicular altitude unchanged, so the area remains equal."
           ],
           "rejected": [
-            "Area is 8 cm² because 5+3=8."
+            "The longer slanted edge makes the area larger."
           ],
           "task": {
-            "prompt": "A learner calculated 'area = 5+3 = 8 cm²' for a 5 cm by 3 cm rectangle. Explain what the rule should count and repair the calculation before revealing the model.",
+            "prompt": "A classmate says moving the peak sideways must change the area of a triangle whose 10 cm base and 3 cm perpendicular height stay fixed. Challenge the claim and explain the governing relation.",
             "givens": [
-              "The region is a rectangle.",
-              "Length 5 cm, width 3 cm.",
-              "Each 1 cm by 1 cm square covers 1 cm²."
+              "Base remains 10 cm.",
+              "Perpendicular height remains 3 cm.",
+              "Peak moves parallel to the base line."
             ],
             "representation_ref": "REP-TEST-IMO182-D1-JUS-ERROR-CLAIM",
             "stage_refs": [
-              "APP-ERROR-CLAIM"
+              "JUS-ERROR-CLAIM"
             ],
             "response": {
               "type": "free_response",
@@ -293,27 +293,27 @@
         "reconstruct": {
           "route": [
             {
-              "ask": "Does adding two lengths count all 1 cm² tiles in a rectangle?",
-              "why_this_ask": "Exposes mistaken sum model.",
+              "ask": "Which line is the base and which distance is perpendicular?",
+              "why_this_ask": "Distinguishes altitude from a slanted side.",
               "from_step_ref": "JUS-D1-TC-1"
             },
             {
-              "ask": "How many tiles are in one row and how many equally sized rows?",
-              "why_this_ask": "Builds direct multiplicative relation.",
+              "ask": "What measurement is unchanged by sliding the peak sideways?",
+              "why_this_ask": "Identifies base-height invariance.",
               "from_step_ref": "JUS-D1-TC-2"
             },
             {
-              "ask": "What result and squared units describe all the tiles?",
-              "why_this_ask": "Reconstructs valid application with correct units.",
+              "ask": "Which area relation verifies the conclusion?",
+              "why_this_ask": "Constructs a valid claim-to-warrant explanation.",
               "from_step_ref": "JUS-D1-TC-3"
             }
           ],
-          "differs_from_teaching_path": "Worked 3×5 teaches direct tile counting. Reconstruction starts from incorrect 5+3 addition and forces a different tile-count explanation."
+          "differs_from_teaching_path": "Core1A worked base 10 height 4; Core1B challenges an invalid sideways-peak argument with height 3."
         },
         "boundary_test": {
-          "prompt": "Changed case: a 4 cm by 4 cm square mat has four rows of four 1 cm² tiles. Apply the rectangle rule and write the correct AREA UNIT. Commit before opening the answer.",
-          "answer": "4×4=16 cm². It is sixteen square centimetres, not sixteen centimetres.",
-          "confirms": "Checks rule transfer to square case and independent area-versus-length unit discrimination."
+          "prompt": "Two triangles share an 8 cm base. Their perpendicular altitudes are 5 cm and 4 cm. Does the shared base prove equal areas? Compute and explain.",
+          "answer": "No: 8×5/2=20 cm² and 8×4/2=16 cm².",
+          "confirms": "Falsifies equal-base-only reasoning with a genuinely changed altitude condition."
         }
       }
     }
@@ -739,34 +739,36 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "FAM-TEST-IMO182-D1-JUS-COUNTER-GROUPS",
-      "title": "Apply A=length×width to triangular surface measurements",
+      "title": "Justify area equality of different-shaped triangles",
       "capability_refs": [
         "CAP-TEST-IMO182-D1-JUS-TRIANGLE-AREA-APPLICATION"
       ],
       "solution_structure": [
-        "Identify two supplied perpendicular measurements.",
-        "Substitute them in the fixed area rule.",
-        "Multiply to count equal unit-square tiles.",
-        "State cm² and check by rows."
+        "Identify common base and perpendicular altitudes.",
+        "Invoke A=bh/2 as warrant.",
+        "Conclude equality with independent reasoning.",
+        "Verify two areas and falsify a bad boundary."
       ],
       "demand_dimensions": {
-        "model_choice": "The rectangle and formula are explicitly supplied, no model choice.",
-        "representation_translation": "Dimension labels to given l and w slots.",
-        "reasoning_steps": "Direct one-rule substitution, one multiplication.",
-        "novelty": "Core2B reverses application from given area and width to missing length."
+        "model_choice": "A known area relation, no model-choice search.",
+        "representation_translation": "Perpendicular heights explicitly given.",
+        "reasoning_steps": "Single protected claim-to-warrant step.",
+        "novelty": "Converse equal area with common base to unknown altitude."
       },
       "safe_variations": [
-        "New rectangle dimensions with whole-number centimetres.",
-        "Given area and one nonzero dimension, find the other."
+        "Apex slides parallel to common base.",
+        "Change shared base and equal perpendicular heights.",
+        "Infer height from equal area and common positive base."
       ],
       "transfer_boundaries": [
-        "Nonrectangles require another area rule.",
-        "Division inversion only with nonzero known width."
+        "Unequal heights defeat base-only argument.",
+        "Slanted edge is not the height.",
+        "A positive base is required for h=2A/b."
       ],
       "common_wrong_routes": [
-        "Add length and width to compute area.",
-        "Forget squared units.",
-        "Treat a missing side as the same quantity as area."
+        "Mistake slanted edge for perpendicular altitude.",
+        "Assume equal base alone.",
+        "Confuse square area units with centimetre distances."
       ],
       "item_refs": [
         "Q-TEST-IMO182-D1-JUS-CORE1A-WORKED",
@@ -1255,7 +1257,7 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "ROUTE-TEST-IMO182-D1-JUS-PAIR-CONSTRUCTION",
-      "title": "Use unit-square reasoning to apply triangular area rule",
+      "title": "Teach triangle area warrant then justify an independent equal-area claim",
       "cores": [
         "CORE1A"
       ],
@@ -1263,31 +1265,33 @@
         "MIC-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
       ],
       "entry_needs": [
-        "Whole number multiplication.",
-        "Meaning of triangular grid."
+        "Triangle area A=bh/2.",
+        "Perpendicular to the line through the base.",
+        "Area units squared."
       ],
       "learner_actions": [
-        "View A=l×w rule and unit-square meaning.",
-        "Inspect distinct 3-by-5 teaching example.",
-        "Independently apply to 7 by 4 mat and square-area unit.",
-        "Dispute 5+3 misconception.",
-        "Use inverse 24/4 in changed transfer."
+        "Work base 10 height 4 in Core1A.",
+        "Judge separate common-base 12 and equal-height 7 source candidate.",
+        "Challenge slanted-side error and unequal-height counterexample.",
+        "Use inverse area 36 with base 12 in Core2B."
       ],
       "help_plan": [
-        "Core1A may solve only 3 by 5, not the protected 7 by 4.",
-        "Core2A H1/H2 identify dimensions and rule without computing 28; H3 after nonblank attempt."
+        "Use different worked values in Core1A.",
+        "Core2A hints clarify but do not print the target area equality.",
+        "H3 is AFTER_ATTEMPT when it materially narrows W."
       ],
-      "reveal_plan": "Show given side labels only; keep 7×4 calculation and inverse division gated.",
+      "reveal_plan": "No area conclusion or 42 cm² target on source initial figure or preattempt hints.",
       "source_preferences": [
         {
           "resource_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
-          "purpose": "Wholly authored triangular area teaching",
-          "reason": "No examination sample required."
+          "purpose": "Reuse IMO-G9-ORIGINAL-PRACTICE-003",
+          "reason": "Existing authored candidate; preserve wording-review hold and no SOF original rights."
         }
       ],
       "when_not_suitable": [
-        "Non-triangular regions require other formula.",
-        "No academically accepted QRT or official source admission."
+        "No source/QRT Owner acceptance.",
+        "Original organizer source is absent.",
+        "Altitude wording and accessibility hold unresolved."
       ],
       "practice_profile_ref": null
     }
@@ -1296,11 +1300,12 @@
   "evidence": [],
   "known_issues": [],
   "extensions": {
-    "grade9v3:imo_provenance": "AUTHORED_TEST",
+    "grade9v3:imo_provenance": "AUTHORED_TEST_FROM_ORIGINAL_PRACTICE_003",
     "grade9v3:qrt_admitted": false,
     "grade9v3:core2_source_custody_granted": false,
     "grade9v3:learner_published": false,
-    "grade9v3:core_maturity": "TEST_CANDIDATE"
+    "grade9v3:core_maturity": "TEST_CANDIDATE",
+    "grade9v3:source_quality_hold": "ALTITUDE_WORDING_CLARITY"
   },
   "data": [
     {
