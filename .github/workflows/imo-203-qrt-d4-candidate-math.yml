@@ -1,0 +1,25 @@
+name: IMO 203 D4 new mathematical candidates (TEST only)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo-203-qrt-d4-candidate-math.yml'
+      - 'TEST/imo-research/qrt-tiles/d4-review/retrieve-d4.candidate.json'
+      - 'TEST/imo-research/qrt-tiles/d4-review/synthesize-d4.candidate.json'
+      - 'tests/test_imo203_new_d4_candidate_math.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  candidate-math:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check independent modular-square and permutation oracles
+        run: python -m unittest tests.test_imo203_new_d4_candidate_math -v
