@@ -438,11 +438,11 @@
       "cell_id": "QRT-SYNTHESIZE-D1",
       "demand": "SYNTHESIZE",
       "band": "D1",
-      "question_summary": "Four complete motifs, each with 3 blue and 2 red tiles; decide operation dependency/order.",
-      "author_mathematical_crosscheck": "4×(3+2)=20; equivalently 4×3+4×2=20; wrong partial 3+4×2=11 or 3×4+2=14.",
-      "adjacent_band_and_demand_challenge": "HIGH PRIORITY: Is this truly SYNTHESIZE-D1 instead of straightforward MODEL-D1/APPLY-D1? Both component counts and repeats are explicit; requiring just combine-then-repeat may not differ materially from equal groups. Separately challenge D1 vs D2 when two dependent operations are needed.",
-      "concern_code": "ACADEMIC_PRIMARY_DEMAND_AND_D1_D2_AMBIGUITY_NOT_TECHNICAL_RENDER_DEFECT",
-      "remediation_or_reviewer_action": "Require qualified reviewer to compare against MODEL-D1 equal-group task. Permit distributive 4×3+4×2; test that explanation connects both components. Do not self-reclassify without decision.",
+      "question_summary": "Four identical motifs, three blue and two red in each. Write one valid complete count; accept grouped or distributed expressions.",
+      "author_mathematical_crosscheck": "4×(3+2)=20=4×3+4×2; neither form alone is mandatory. 3+2×4=11 omits three blue copies; inverse 20÷(3+2)=4.",
+      "adjacent_band_and_demand_challenge": "UNRESOLVED PRIMARY-DEMAND CHALLENGE AGAINST CANONICAL QRT TEMPLATE: SYNTHESIZE requires coordination of dependent ideas/steps where route choice is difficult; this item gives 4 identical copies each composed of 3+2 elements. Once 3+2=5, it reduces to MODEL equal-group T=ng with n=4,g=5 (MODEL-D1 uses 6×4). Determine in independent review whether choosing the intermediate full-unit bridge is a meaningful SYNTHESIZE-D1 act or mere scaffolded MODEL/APPLY, and whether real dependency moves D2. Do not self-accept/relabel.",
+      "concern_code": "REPAIRED_AUTHORING_H2_AND_EQUIVALENT_EXPRESSION_FAIRNESS; ACADEMIC_PRIMARY_DEMAND_AND_BAND_UNRESOLVED",
+      "remediation_or_reviewer_action": "Revised authored source #213 removes leading yes/no H2, and explicitly accepts grouped or separately distributed expressions with reasoning. Actual CI 38426322845 and 390/768/1366 browser behavior pass, but NO automatic correctness grading. Compare QRT-SYNTHESIZE-D1 formal template X/Y/Z/W with modeled equal groups, then record independent academic verdict or Owner QRT waiver.",
       "independent_review": {
         "academic_verdict": null,
         "reviewer": null,
@@ -456,7 +456,7 @@
           "evidence_comment": null
         },
         "H2": {
-          "specific_test": "Does the 'are both component kinds copied' question over-cue the whole-unit-first dependency for W?",
+          "specific_test": "Does repaired H2 ask for a neutral expression check without giving the repeated-both-parts decision, or a leading yes/no about whether both components copy?",
           "qualified_reviewer_verdict": null,
           "evidence_comment": null
         },
@@ -486,12 +486,12 @@
           "evidence_comment": null
         },
         "P2": {
-          "specific_test": "Does support leave the bracket/order decision learner-owned, rather than asking an obvious leading yes/no?",
+          "specific_test": "Does source text invite learner-generated grouped or distributed counting while leaving the coverage/dependency choice open, and does qualified review find a real SYNTHESIZE bridge rather than routine MODEL?",
           "qualified_reviewer_verdict": null,
           "evidence_comment": null
         },
         "P3": {
-          "specific_test": "Is H3 solution opened only after nonblank attempt?",
+          "specific_test": "Does postattempt reasoning recognize both 4(3+2) and 4×3+4×2=20 and reject an incomplete 3+2×4; does commitment gate still refuse blank responses?",
           "qualified_reviewer_verdict": null,
           "evidence_comment": null
         },
@@ -590,5 +590,17 @@
         }
       }
     }
-  ]
+  ],
+  "second_confirmed_authoring_defect": {
+    "cell": "QRT-SYNTHESIZE-D1",
+    "old_pre_attempt_H2": "When a whole unit repeats, are both component kinds copied each time? Decide how your expression accounts for them.",
+    "repair_pr": "https://github.com/reallakshman19/Grade9v3.5/pull/213",
+    "head_sha": "e41b06cc5056faa094dff7b239759edf74aeec67",
+    "ci": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38426322845",
+    "artifact": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38426322845/artifacts/11829090822",
+    "sha6_verified": true,
+    "zero_gaps": true,
+    "mathematically_equivalent_expressions_source_accepted": true,
+    "still_needs_primary_demand_and_D1_band_verdict": true
+  }
 }
