@@ -11,8 +11,8 @@ receipt=json.loads((root/"render-receipt.json").read_text())
 assert receipt["gaps"]==[],receipt["gaps"]
 screens=root/"browser";screens.mkdir(exist_ok=True)
 protected={
-    "retrieve":["Yes:9,17,33,49","9,17,33,49 yes","criterion for k>=3: odd a≡1","a≡1 mod8"],
-    "synthesize":["120384","130284","odd-position and even-position sums both9"],
+    "retrieve":["Yes:9,17,33,49","9,17,33,49","criterion for k>=3: odd a≡1","a≡1 mod8"],
+    "synthesize":["120384","130284","odd-position and even-position sums both9","odd and even positions each sum9"],
 }[cell]
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True)
@@ -22,6 +22,14 @@ with sync_playwright() as p:
             page.goto((root/(role+".html")).as_uri())
             assert page.locator("body").inner_text().strip(),(role,width)
             assert page.locator("[data-blueprint-ref]").count()>0,(role,width)
+            # Earlier teaching roles must not preview the main/transfer answer,
+            # either visibly or through the accessibility projection.
+            if role in ("core1a","core1b") and width==1280:
+                prior_visible=page.locator("body").inner_text()
+                prior_ax=page.locator("body").aria_snapshot()
+                for protected_word in protected:
+                    assert protected_word not in prior_visible,(cell,role,"VISIBLE_PREVIEW",protected_word)
+                    assert protected_word not in prior_ax,(cell,role,"AX_PREVIEW",protected_word)
             page.screenshot(path=str(screens/f"{role}-{width}.png"),full_page=True)
             # Oversized drawings must scroll locally, not make the whole page unusable.
             if role=="core2a" and width==1280:
