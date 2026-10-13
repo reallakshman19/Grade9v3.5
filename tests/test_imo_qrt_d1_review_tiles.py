@@ -154,7 +154,7 @@ class D1EvidenceTiles(unittest.TestCase):
         self.assertEqual(t["evidence"]["measured_repair"]["human_demand_verdict"],"PENDING")
         q=json.loads((TILES/"d1/semantic-challenge-20261013.v1.json").read_text())
         challenge=next(c for c in q["cells"] if c["cell_id"]=="QRT-SYNTHESIZE-D1")
-        self.assertIn("isomorphic",challenge["adjacent_band_and_demand_challenge"])
+        self.assertIn("reduces to MODEL equal-group",challenge["adjacent_band_and_demand_challenge"])
         self.assertIn("4×3+4×2",challenge["author_mathematical_crosscheck"])
         self.assertIsNone(challenge["independent_review"]["academic_verdict"])
         self.assertEqual(self.band["bands"]["D1"]["reported"]["academic_accepted"],0)
