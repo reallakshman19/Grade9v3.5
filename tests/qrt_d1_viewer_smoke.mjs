@@ -66,6 +66,7 @@ for(const demand of d1){
  assert(anchors.some(a=>a.href.endsWith('/d1/'+demand.toLowerCase()+'.tile.v1.json')));
  assert(anchors.some(a=>String(a.href).includes('/actions/runs/')));
  assert(anchors.some(a=>String(a.href).includes('G-IMO-G9-FIVE-CORE-20261012')));
+ assert(anchors.some(a=>String(a.href).endsWith('/d1/semantic-challenge-20261013.v1.json')),'Missing specific unsigned H/S/P/M challenge');
  assert(anchors.some(a=>String(a.href).includes('/TEST/imo-research/qrt-d1/')));
  if(demand==='JUSTIFY')assert(anchors.some(a=>String(a.href).endsWith('/d1/justify-reasoning-probes.v1.json')),'Missing human-only explanation feedback review set');
  const actual=data.cells.find(x=>x.id===id);
