@@ -265,6 +265,30 @@ jobs:
                   "generated_delta": old_generated != new_generated,
                   "committed_delta": old_original != new_original,
               })
+          def components(repo):
+              raw = json.loads((repo / "docs/architecture-manifest.json").read_text(encoding="utf-8"))
+              return raw, {node["path"]: node for node in raw["components"]}
+
+          old_manifest, old_components = components(baseline)
+          new_manifest, new_components = components(head)
+          all_component_names = set(old_components) | set(new_components)
+          architecture_delta = {
+              "base_components": old_manifest["component_count"],
+              "head_components": new_manifest["component_count"],
+              "base_relations": old_manifest["relation_count"],
+              "head_relations": new_manifest["relation_count"],
+              "added": sorted(set(new_components) - set(old_components)),
+              "removed": sorted(set(old_components) - set(new_components)),
+              "changed": sorted(
+                  name for name in all_component_names & set(old_components) & set(new_components)
+                  if old_components[name] != new_components[name]
+              ),
+              "changed_roles": sorted({
+                  new_components[name]["role"]
+                  for name in all_component_names & set(old_components) & set(new_components)
+                  if old_components[name] != new_components[name]
+              }),
+          }
           report = {
               "purpose": "Exact-base generated-drift attribution only; no waiver or publication",
               "base_sha": subprocess.check_output(
@@ -274,6 +298,7 @@ jobs:
                   ["git", "rev-parse", "HEAD"], text=True
               ).strip(),
               "rows": rows,
+              "architecture_delta": architecture_delta,
           }
           (preview / "exact-base-generated-delta.json").write_text(
               json.dumps(report, indent=2) + "\n", encoding="utf-8"
