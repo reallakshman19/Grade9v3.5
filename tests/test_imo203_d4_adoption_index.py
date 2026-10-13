@@ -26,9 +26,8 @@ class D4AdoptionEvidence(unittest.TestCase):
     def test_seven_cells_five_immutable_worker_artifacts_two_missing(self):
         self.assertEqual([c["cell_id"] for c in self.cells],
                          ["QRT-" + d + "-D4" for d in DEMANDS])
-        self.assertEqual(sum(bool(c["render"]) for c in self.cells), 5)
-        self.assertEqual([c["demand"] for c in self.cells if c["render"] is None],
-                         ["RETRIEVE", "SYNTHESIZE"])
+        self.assertEqual(sum(bool(c["render"]) for c in self.cells), 7)
+        self.assertEqual([c["demand"] for c in self.cells if c["render"] is None], [])
         self.assertEqual(self.ledger["owner_qrt_accepted"], 0)
         self.assertEqual(len(self.index["cells"]), 28)
 
@@ -59,6 +58,21 @@ class D4AdoptionEvidence(unittest.TestCase):
                     self.assertRegex(digest, SHA256)
                 self.assertEqual(cell["golden"]["comparator_kind"], "SEMANTIC_CROSS_QUESTION")
                 self.assertIsNone(cell["golden"]["owner_new_fixture"])
+
+    def test_new_exact_head_native_evidence_and_supersession(self):
+        for demand, run, artifact in (("RETRIEVE", 38413546614, 11823696124),
+                                      ("SYNTHESIZE", 38413545923, 11824250043)):
+            with self.subTest(cell=demand):
+                cell = next(c for c in self.cells if c["demand"] == demand)
+                self.assertEqual(cell["adoption_status"], "RENDERED_TEST; INDEPENDENT_ACADEMIC_REVIEW_PENDING")
+                self.assertEqual(cell["render"]["workflow_run"], run)
+                self.assertEqual(cell["render"]["artifact_id"], artifact)
+                self.assertEqual(cell["source"]["worker_pr"], 210)
+                self.assertEqual(cell["source"]["verified_worker_commit"], "9faa52d499e071e9e6d4c419b5afdf5fbc044455")
+                self.assertTrue(cell["superseded_native_evidence"]["do_not_adopt"])
+                self.assertNotEqual(cell["superseded_native_evidence"]["artifact_id"], artifact)
+                self.assertIsNone(cell["assessment"]["owner_qrt_decision_id"])
+                self.assertFalse(cell["assessment"]["accepted"])
 
     def test_model_has_distinct_corrected_exact_head_evidence(self):
         model = next(c for c in self.cells if c["demand"] == "MODEL")
