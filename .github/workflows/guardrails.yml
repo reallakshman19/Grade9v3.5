@@ -340,6 +340,19 @@ jobs:
           python3 Shared/tools/library_board.py --subject Physics > /dev/null
           python3 -m unittest tests.test_research_library -v
 
+      # D3 tests must execute in the broad guard, not only scoped jobs.
+      # No skips, public outputs, or relaxation of failure enforcement.
+      - name: Prepare seven D3 TEST renderer receipts and Chromium
+        if: ${{ !cancelled() && hashFiles('TEST/products/imo182-qrt-d3-*.manifest.json') != '' }}
+        run: |
+          python3 -m pip install --quiet playwright==1.56.1
+          python3 -m playwright install --with-deps chromium
+          for cell in apply explain justify model represent retrieve synthesize; do
+            python3 Shared/tools/render_core.py build \
+              --manifest "TEST/products/imo182-qrt-d3-${cell}.manifest.json" \
+              --out "build/imo182-qrt/d3/${cell}" --draft --reference
+          done
+
       - name: Tests (engine port, gate falsifiers, library, compilation, tooling)
         if: ${{ !cancelled() }}
         run: python3 -m unittest discover -s tests -p "test_*.py" -v
