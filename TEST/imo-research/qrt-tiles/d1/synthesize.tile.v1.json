@@ -1,0 +1,214 @@
+{
+  "schema": "imo-qrt-cell-evidence/v1",
+  "version": "1.0.0",
+  "template": false,
+  "cell_id": "QRT-SYNTHESIZE-D1",
+  "band": "D1",
+  "primary_demand": "SYNTHESIZE",
+  "band_issue": 200,
+  "status_dimensions": {
+    "technical": "REPAIRED_RENDERED_TEST",
+    "renderer_verified": true,
+    "technique_review": "AUTHOR_CHECK_ONLY_INDEPENDENT_PENDING",
+    "academic_review": "QRT_DECISION_PENDING",
+    "owner_qrt_accepted": false,
+    "owner_golden_designated": false,
+    "release": "NOT_AUTHORIZED"
+  },
+  "candidate_ids": [
+    "Q-TEST-IMO182-D1-SYN-CORE1A-WORKED",
+    "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
+    "Q-TEST-IMO182-D1-SYN-CORE2B-INVERSE-TRAY-COUNT"
+  ],
+  "source": {
+    "classification": "AUTHORED_TEST_NOT_SOF",
+    "verified_sha": "f9008c6dc4642d45798d23ddd06a51a4a33f540b",
+    "source_path": "TEST/imo-research/qrt-d1/synthesize.v1.json",
+    "source_code_commit": "c967ff226516de25d6235c6c0f1749b39ffced7d",
+    "upstream_candidate_id": null,
+    "upstream_source_blob_sha": null,
+    "custody": "SOURCE_SAFE_AUTHORED_TEST",
+    "rights": "NOT_LICENSED_SOF_OR_PUBLISHED",
+    "question_stem_embedded": false,
+    "source_quality_hold": null
+  },
+  "cognitive": {
+    "X": "Count all tiles in four repeats of a two-part motif of three blue and two red squares.",
+    "Y": "Addition within complete units and multiplication of identical repeated units.",
+    "Z": "Combine both colored components within each complete motif before repeating it.",
+    "W": "Independently choose and justify a mathematical expression accounting for both component kinds across all four repeats; 4×(3+2) and 4×3+4×2 are equivalent valid counts, unlike 3+2×4.",
+    "primary_vs_alternative": "HIGH-PRIORITY QUALIFIED REVIEW: Compare explicit 4 repeated mixed components with MODEL equal groups and APPLY arithmetic. A=4(3+2) is isomorphic to equal-groups model with group size 5; determine whether the intermediate component-composition dependency is enough to make primary SYNTHESIZE-D1. Academic and Owner status remain PENDING.",
+    "adjacent_band_reason": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
+    "difficulty_five_component_evidence": {
+      "concept_model_selection": "Known repeat motif.",
+      "representation_translation": "No separate translation bridge.",
+      "reasoning_chain_length": "Choose one order/dependency.",
+      "algebra_computational_load": "Addition and small multiplication.",
+      "trap_exception_sensitivity": "False precedence separately diagnosed."
+    },
+    "protected_move_id": "SYN-D1-QA-ORDER"
+  },
+  "blueprints": [
+    {
+      "role": "CORE1",
+      "ref": "BP-CORE1-ORIENTATION@1.1.0"
+    },
+    {
+      "role": "CORE1A",
+      "ref": "BP-CORE1A-CONSTRUCTION@1.8.0"
+    },
+    {
+      "role": "CORE1B",
+      "ref": "BP-CORE1B-RECONSTRUCTION@1.1.0"
+    },
+    {
+      "role": "CORE2A",
+      "ref": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0"
+    },
+    {
+      "role": "CORE2B",
+      "ref": "BP-CORE2B-TRANSFER@1.1.0"
+    }
+  ],
+  "generation": {
+    "repo_commit_sha": "c967ff226516de25d6235c6c0f1749b39ffced7d",
+    "manifest_path": "TEST/products/imo182-qrt-d1-synthesize.manifest.json",
+    "manifest_blob_sha": "ea4f462ab9a51f6d9c3d6549f0925dde9db081f0",
+    "renderer_version": "render_core/2",
+    "registry_path": "Shared/web/interactive-page-blueprints.v1.json",
+    "registry_version": "1.17.0",
+    "registry_blob_sha": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "mode": "PAGES",
+    "held_to": "REFERENCE",
+    "gaps": 0,
+    "exact_head_ci_run": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38427757190",
+    "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38427757190/artifacts/11828784099",
+    "html": [
+      {
+        "filename": "core1.html",
+        "sha256": "8ba10e5d689c1ab4c0b391d97f845717532281822546cfa4b884a525be586c0b"
+      },
+      {
+        "filename": "core1a.html",
+        "sha256": "5c18f99d3e62b1190dba1c9ad04f22931cd7ea8e9aaaeb4d2c35fa30924f70e6"
+      },
+      {
+        "filename": "core1b.html",
+        "sha256": "9b3e5f9b5786a118082dbd641db3471d18234fcf7e228aeeb80d6220e5f36149"
+      },
+      {
+        "filename": "core2a.html",
+        "sha256": "a40a666028a82b3b5626ca32d2ec6586a69aece48c9fd20822516af14f49cea2"
+      },
+      {
+        "filename": "core2b.html",
+        "sha256": "991f36bbf778071f9294b3a0d342b7664590dc433eca35ecf973ba7a6f52c054"
+      },
+      {
+        "filename": "index.html",
+        "sha256": "1e26b6eed98764514d889645393b85f00e1fe6cbe12f04a2a6c79744bac7fd22"
+      }
+    ],
+    "six_html_sha_verified": true
+  },
+  "golden": {
+    "kind": "IMMUTABLE_OWNER_EXACT_FOR_ORIGINAL_QUESTION_ROLE_TECHNIQUE_ONLY_FOR_THIS_DISTINCT_TEST",
+    "id": "G-IMO-G9-FIVE-CORE-20261012",
+    "pinned_commit": "67c34dababb0da0ef7d5f4a532bfcf3119754961",
+    "lock_git_blob_sha": "888678554c41257e6d96c802f0009983ccbb5328",
+    "role_comparator": "CORE1 T01/T14; CORE1A T02/T03/T11; CORE1B T06/T10/T12; CORE2A T05/T07; CORE2B T08/T09",
+    "comparison_kind": "SEMANTIC_CROSS_QUESTION_NOT_BYTE_PARITY",
+    "technique_oracles": [
+      "T01",
+      "T14",
+      "T02",
+      "T03",
+      "T11",
+      "T06",
+      "T10",
+      "T12",
+      "T05",
+      "T07",
+      "T08",
+      "T09"
+    ],
+    "semantic_deltas": [],
+    "actual_html_bytes_independently_verified": true,
+    "owner_fixture_decision_id": null
+  },
+  "review": {
+    "H1": null,
+    "H2": null,
+    "H3": null,
+    "S1": null,
+    "S2": null,
+    "S3": null,
+    "P1": null,
+    "P2": null,
+    "P3": null,
+    "M1": null,
+    "M2": null,
+    "M3": null,
+    "qualified_reviewer_name": null,
+    "conflict_declaration": null,
+    "independent_mathematical_oracle": "TEST/imo-research/qrt-d1/verify_synthesize.py",
+    "decision": "PENDING",
+    "primary_demand_contrast_path": "TEST/imo-research/qrt-tiles/d1/synthesize-demand-contrast.v1.json",
+    "primary_demand_ruling": "PENDING_QUALIFIED",
+    "primary_demand_evidence_not_acceptance": true
+  },
+  "owner": {
+    "qrt_decision": "PENDING",
+    "qrt_decision_id": null,
+    "golden_scope_decision_id": null,
+    "rights_decision_id": null,
+    "print_visual_decision_id": null,
+    "release_decision_id": null
+  },
+  "viewer": {
+    "entry_path": "q003-model-d2/index.html",
+    "tile_json_path": "d1/synthesize.tile.v1.json",
+    "links_checked": false
+  },
+  "evidence": {
+    "source_commit": "c967ff226516de25d6235c6c0f1749b39ffced7d",
+    "CI": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38427757190",
+    "academic": null,
+    "golden": "https://github.com/reallakshman19/Grade9v3.5/tree/67c34dababb0da0ef7d5f4a532bfcf3119754961/golden/units/G-IMO-G9-FIVE-CORE-20261012",
+    "owner": null,
+    "updated_utc": "2026-10-13",
+    "measured_repair": {
+      "type": "AUTHORING_HINT_AND_MATHEMATICAL_EQUIVALENCE",
+      "pull_request": "https://github.com/reallakshman19/Grade9v3.5/pull/213",
+      "old_preattempt_prompt": "When a whole unit repeats, are both component kinds copied each time?",
+      "new_hint_does_not_name_order": true,
+      "grouped_and_distributed_count_both_valid": true,
+      "answer_acceptance": "SOURCE_ACCEPTABLE_ALTERNATIVES_NOT_VERBATIM_GRADED_BY_NATIVE_HTML",
+      "independent_sha6_match": true,
+      "gaps": 0,
+      "chromium_widths": [
+        390,
+        768,
+        1366
+      ],
+      "blank_attempt_refused": true,
+      "after_commit_reveal": true,
+      "human_demand_verdict": "PENDING"
+    },
+    "latest_source_sync": {
+      "newer_source_diff_count": 5,
+      "change_type": "AUTHOR_METADATA_AND_PRIMARY_DEMAND_EXPLANATION_NOT_LEARNER_ANSWER_CHANGE",
+      "old_artifact_head": "e41b06cc5056faa094dff7b239759edf74aeec67",
+      "new_artifact_head": "c967ff226516de25d6235c6c0f1749b39ffced7d",
+      "all_six_sha256_independently_computed_and_match_receipt": true,
+      "zero_gaps": true,
+      "qualified_primary_demand_judgment": "PENDING"
+    }
+  },
+  "restrictions": [
+    "No original private Q003 bytes or authentic SOF question contents",
+    "No QRT acceptance or new golden without Owner decision",
+    "Never equate distinct question HTML bytes with original Owner golden",
+    "No learner release from this tile"
+  ]
+}

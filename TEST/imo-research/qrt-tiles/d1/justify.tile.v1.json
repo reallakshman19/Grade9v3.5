@@ -1,0 +1,212 @@
+{
+  "schema": "imo-qrt-cell-evidence/v1",
+  "version": "1.0.0",
+  "template": false,
+  "cell_id": "QRT-JUSTIFY-D1",
+  "band": "D1",
+  "primary_demand": "JUSTIFY",
+  "band_issue": 200,
+  "status_dimensions": {
+    "technical": "NEW_FIVE_ROLE_RENDERED_TEST",
+    "renderer_verified": true,
+    "technique_review": "AUTHOR_CHECK_ONLY_INDEPENDENT_PENDING",
+    "academic_review": "QRT_DECISION_PENDING",
+    "owner_qrt_accepted": false,
+    "owner_golden_designated": false,
+    "release": "NOT_AUTHORIZED"
+  },
+  "candidate_ids": [
+    "Q-TEST-IMO182-D1-JUS-CORE1A-WORKED",
+    "Q-TEST-IMO182-D1-JUS-CORE2A-EQUAL-AREA-WARRANT",
+    "Q-TEST-IMO182-D1-JUS-CORE2B-CONVERSE-ALTITUDE"
+  ],
+  "source": {
+    "classification": "MODEL_AUTHORED_ORIGINAL_PRACTICE_ADAPTED_TEST_NOT_SOF",
+    "verified_sha": "0738dcc7390cee08e03ec672a698fc8b4bc4ea2f",
+    "source_path": "TEST/imo-research/qrt-d1/justify.v1.json",
+    "source_code_commit": "d28ac2bea348412a0451d226e278d01531839932",
+    "upstream_candidate_id": "IMO-G9-ORIGINAL-PRACTICE-003",
+    "upstream_source_blob_sha": "8ee7cc78f34cc1fa640e4abac84620f43d5538c1",
+    "custody": "SOURCE_SAFE_AUTHORED_TEST",
+    "rights": "NOT_LICENSED_SOF_OR_PUBLISHED",
+    "question_stem_embedded": false,
+    "source_quality_hold": "ALTITUDE_WORDING_CLARITY"
+  },
+  "cognitive": {
+    "X": "Prove two triangles share equal area despite horizontally different peaks.",
+    "Y": "Triangle area is half base times perpendicular altitude; horizontal apex displacement does not alter perpendicular height.",
+    "Z": "Identify their common 12 cm base and separate shortest 7 cm perpendicular distances to the extended baseline.",
+    "W": "Give the mathematical equality warrant from matched base and perpendicular altitudes, then compute 42 cm² for each.",
+    "primary_vs_alternative": "Distinguish JUSTIFY D1 from APPLY D1: numeric 42 alone is insufficient; a valid general area warrant is required.",
+    "adjacent_band_reason": "One claim-to-warrant implication from explicitly matched base and perpendicular altitudes.",
+    "difficulty_five_component_evidence": {
+      "concept_model_selection": "Known area formula, no family choice.",
+      "representation_translation": "Base and perpendicular altitude explicitly stated.",
+      "reasoning_chain_length": "One meaningful warrant required.",
+      "algebra_computational_load": "Elementary multiplication is secondary.",
+      "trap_exception_sensitivity": "Slanted-side confusion is tested in Core1B."
+    },
+    "protected_move_id": "JUS-D1-QA-WARRANT"
+  },
+  "blueprints": [
+    {
+      "role": "CORE1",
+      "ref": "BP-CORE1-ORIENTATION@1.1.0"
+    },
+    {
+      "role": "CORE1A",
+      "ref": "BP-CORE1A-CONSTRUCTION@1.8.0"
+    },
+    {
+      "role": "CORE1B",
+      "ref": "BP-CORE1B-RECONSTRUCTION@1.1.0"
+    },
+    {
+      "role": "CORE2A",
+      "ref": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0"
+    },
+    {
+      "role": "CORE2B",
+      "ref": "BP-CORE2B-TRANSFER@1.1.0"
+    }
+  ],
+  "generation": {
+    "repo_commit_sha": "d28ac2bea348412a0451d226e278d01531839932",
+    "manifest_path": "TEST/products/imo182-qrt-d1-justify.manifest.json",
+    "manifest_blob_sha": "82c4b00ec4c79b0ed95793420fc6a93edf219900",
+    "renderer_version": "render_core/2",
+    "registry_path": "Shared/web/interactive-page-blueprints.v1.json",
+    "registry_version": "1.17.0",
+    "registry_blob_sha": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "mode": "PAGES",
+    "held_to": "REFERENCE",
+    "gaps": 0,
+    "exact_head_ci_run": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38393136211",
+    "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38393136211/artifacts/11810416794",
+    "html": [
+      {
+        "filename": "core1.html",
+        "sha256": "0d62d3a3ab3607d90f67fa1a37eb13334938970434b17f7df9e8d6d80d89e280"
+      },
+      {
+        "filename": "core1a.html",
+        "sha256": "abe090289f5527f25bfad20f6bc7eb37380c1d367a137fd72391cf88744e47ff"
+      },
+      {
+        "filename": "core1b.html",
+        "sha256": "f1819038b5916943a7dbd6fc6d10a9b862adb49bf7c0203761b38dd0a8464160"
+      },
+      {
+        "filename": "core2a.html",
+        "sha256": "45e1beaa6ac21a08d9a710e3c4347f6d1aba14bd75764062269b9699029e1546"
+      },
+      {
+        "filename": "core2b.html",
+        "sha256": "4f39283d8c5daf5b2989859843a9cb3430d7dcc21dd147025a83ff937da9d867"
+      },
+      {
+        "filename": "index.html",
+        "sha256": "548035a6a6179cbfdb84adc12f32cf9e139bb1c0bf58b117aa7581d0f346f17f"
+      }
+    ],
+    "six_html_sha_verified": true
+  },
+  "golden": {
+    "kind": "IMMUTABLE_OWNER_EXACT_FOR_ORIGINAL_QUESTION_ROLE_TECHNIQUE_ONLY_FOR_THIS_DISTINCT_TEST",
+    "id": "G-IMO-G9-FIVE-CORE-20261012",
+    "pinned_commit": "67c34dababb0da0ef7d5f4a532bfcf3119754961",
+    "lock_git_blob_sha": "888678554c41257e6d96c802f0009983ccbb5328",
+    "role_comparator": "CORE1 T01/T14; CORE1A T02/T03/T11; CORE1B T06/T10/T12; CORE2A T05/T07; CORE2B T08/T09",
+    "comparison_kind": "SEMANTIC_CROSS_QUESTION_NOT_BYTE_PARITY",
+    "technique_oracles": [
+      "T01",
+      "T14",
+      "T02",
+      "T03",
+      "T11",
+      "T06",
+      "T10",
+      "T12",
+      "T05",
+      "T07",
+      "T08",
+      "T09"
+    ],
+    "semantic_deltas": [],
+    "actual_html_bytes_independently_verified": true,
+    "owner_fixture_decision_id": null
+  },
+  "review": {
+    "H1": null,
+    "H2": null,
+    "H3": null,
+    "S1": null,
+    "S2": null,
+    "S3": null,
+    "P1": null,
+    "P2": null,
+    "P3": null,
+    "M1": null,
+    "M2": null,
+    "M3": null,
+    "qualified_reviewer_name": null,
+    "conflict_declaration": null,
+    "independent_mathematical_oracle": "TEST/imo-research/qrt-d1/verify_justify.py",
+    "decision": "PENDING",
+    "human_feedback_probes": "d1/justify-reasoning-probes.v1.json",
+    "automatic_free_response_grading": false,
+    "reasoning_feedback_status": "AUTHOR_CURATED_CASES_HUMAN_REVIEW_PENDING"
+  },
+  "owner": {
+    "qrt_decision": "PENDING",
+    "qrt_decision_id": null,
+    "golden_scope_decision_id": null,
+    "rights_decision_id": null,
+    "print_visual_decision_id": null,
+    "release_decision_id": null
+  },
+  "viewer": {
+    "entry_path": "q003-model-d2/index.html",
+    "tile_json_path": "d1/justify.tile.v1.json",
+    "links_checked": false
+  },
+  "evidence": {
+    "source_commit": "d28ac2bea348412a0451d226e278d01531839932",
+    "CI": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38393136211",
+    "academic": null,
+    "golden": "https://github.com/reallakshman19/Grade9v3.5/tree/67c34dababb0da0ef7d5f4a532bfcf3119754961/golden/units/G-IMO-G9-FIVE-CORE-20261012",
+    "owner": null,
+    "updated_utc": "2026-10-13",
+    "measured_repair": {
+      "authored_five_role_pull_request": "https://github.com/reallakshman19/Grade9v3.5/pull/206",
+      "altitude_wording_clarity_hold_open": true,
+      "learner_feedback_auto_grading": "NOT_PRESENT",
+      "browser_qa": {
+        "engine": "Chromium",
+        "widths_px": [
+          390,
+          768,
+          1366
+        ],
+        "all_five_role_pages_opened": true,
+        "script_errors": 0,
+        "horizontal_overflow": false,
+        "source_wording_visible": true,
+        "svg_accessible_name": "AB base 12 cm; each peak 7 cm at 90° to its extended line",
+        "h2_requestable_preattempt": true,
+        "h2_no_decisive_equality_or_answer": true,
+        "h3_and_solution_initially_locked": true,
+        "blank_attempt_rejected": true,
+        "h3_and_solution_nonblank_attempt_unlocked": true,
+        "learner_accessibility_comprehension_signoff": "PENDING_HUMAN_REVIEW"
+      }
+    },
+    "human_review_examples": "TEST/imo-research/qrt-tiles/d1/justify-reasoning-probes.v1.json"
+  },
+  "restrictions": [
+    "No original private Q003 bytes or authentic SOF question contents",
+    "No QRT acceptance or new golden without Owner decision",
+    "Never equate distinct question HTML bytes with original Owner golden",
+    "No learner release from this tile"
+  ]
+}

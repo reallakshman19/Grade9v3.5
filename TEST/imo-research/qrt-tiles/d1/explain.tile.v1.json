@@ -1,0 +1,184 @@
+{
+  "schema": "imo-qrt-cell-evidence/v1",
+  "version": "1.0.0",
+  "template": false,
+  "cell_id": "QRT-EXPLAIN-D1",
+  "band": "D1",
+  "primary_demand": "EXPLAIN",
+  "band_issue": 200,
+  "status_dimensions": {
+    "technical": "REUSED_RENDERED_TEST",
+    "renderer_verified": true,
+    "technique_review": "AUTHOR_CHECK_ONLY_INDEPENDENT_PENDING",
+    "academic_review": "QRT_DECISION_PENDING",
+    "owner_qrt_accepted": false,
+    "owner_golden_designated": false,
+    "release": "NOT_AUTHORIZED"
+  },
+  "candidate_ids": [
+    "Q-TEST-IMO182-D1-EXP-CORE1A-WORKED",
+    "Q-TEST-IMO182-D1-EXP-CORE2A-ODD-PAIR-EXPLANATION",
+    "Q-TEST-IMO182-D1-EXP-CORE2B-INVERSE-GROUP-EXPLANATION"
+  ],
+  "source": {
+    "classification": "AUTHORED_TEST_NOT_SOF",
+    "verified_sha": "8295ef485fbfe64a24a84eb6c69ef41497a74201",
+    "source_path": "TEST/imo-research/qrt-d1/explain.v1.json",
+    "source_code_commit": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "upstream_candidate_id": null,
+    "upstream_source_blob_sha": null,
+    "custody": "SOURCE_SAFE_AUTHORED_TEST",
+    "rights": "NOT_LICENSED_SOF_OR_PUBLISHED",
+    "question_stem_embedded": false,
+    "source_quality_hold": null
+  },
+  "cognitive": {
+    "X": "Explain why merging odd groups of 7 red and 9 blue counters makes complete pairs without leftovers.",
+    "Y": "Each odd count is complete pairs plus one unmatched counter.",
+    "Z": "Find the two separate unmatched counters and reason about their combined pairing.",
+    "W": "Articulate that the two lone counters become one additional pair, not merely give 7+9=16.",
+    "primary_vs_alternative": "Distinguish EXPLAIN from JUSTIFY: one concrete mechanism, not a general parity proof.",
+    "adjacent_band_reason": "One directed causal explanation from a supplied pair model; not a multi-stage general proof.",
+    "difficulty_five_component_evidence": {
+      "concept_model_selection": "Pair-group model and meaning supplied.",
+      "representation_translation": "Read groups into complete pairs plus one lone.",
+      "reasoning_chain_length": "Explain one linking event: two lone counters make an extra complete pair.",
+      "algebra_computational_load": "Only small whole-number counting used as optional check.",
+      "trap_exception_sensitivity": "Wrong odd+odd intuition diagnosed separately."
+    },
+    "protected_move_id": "EXP-D1-QA-MECHANISM"
+  },
+  "blueprints": [
+    {
+      "role": "CORE1",
+      "ref": "BP-CORE1-ORIENTATION@1.1.0"
+    },
+    {
+      "role": "CORE1A",
+      "ref": "BP-CORE1A-CONSTRUCTION@1.8.0"
+    },
+    {
+      "role": "CORE1B",
+      "ref": "BP-CORE1B-RECONSTRUCTION@1.1.0"
+    },
+    {
+      "role": "CORE2A",
+      "ref": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0"
+    },
+    {
+      "role": "CORE2B",
+      "ref": "BP-CORE2B-TRANSFER@1.1.0"
+    }
+  ],
+  "generation": {
+    "repo_commit_sha": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "manifest_path": "TEST/products/imo182-qrt-d1-explain.manifest.json",
+    "manifest_blob_sha": "bfbaf843678c1fca03121bc9671f49f532da4554",
+    "renderer_version": "render_core/2",
+    "registry_path": "Shared/web/interactive-page-blueprints.v1.json",
+    "registry_version": "1.17.0",
+    "registry_blob_sha": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "mode": "PAGES",
+    "held_to": "REFERENCE",
+    "gaps": 0,
+    "exact_head_ci_run": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599324",
+    "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599324/artifacts/11773769541",
+    "html": [
+      {
+        "filename": "core1.html",
+        "sha256": "f56f8ff22cc720aeab534a3c4d40bbf0e41a36614e12d0ba7bcfb62d9fe79e5d"
+      },
+      {
+        "filename": "core1a.html",
+        "sha256": "6435390373e8f4fd2ac9ea5d0afd6d537fb98ccf3a667021ad60103a82f6e222"
+      },
+      {
+        "filename": "core1b.html",
+        "sha256": "bebd6fc9ec9d621e2b655ea36a73deb32cbeaa8a82a27ac5a74588aff63f7c35"
+      },
+      {
+        "filename": "core2a.html",
+        "sha256": "84fd99d41a6a278690db9d53377166930ed72158d5e7c17aca6832e6fe9990dd"
+      },
+      {
+        "filename": "core2b.html",
+        "sha256": "c849b7eaf2a9cc5e79b237a99fd0b60431caa4884740d35323ba97291bd3eddc"
+      },
+      {
+        "filename": "index.html",
+        "sha256": "b4e79da1b5794725d98d9a87eb7a9dbd0b44fb0035f261b25a10449f861fdd65"
+      }
+    ],
+    "six_html_sha_verified": true
+  },
+  "golden": {
+    "kind": "IMMUTABLE_OWNER_EXACT_FOR_ORIGINAL_QUESTION_ROLE_TECHNIQUE_ONLY_FOR_THIS_DISTINCT_TEST",
+    "id": "G-IMO-G9-FIVE-CORE-20261012",
+    "pinned_commit": "67c34dababb0da0ef7d5f4a532bfcf3119754961",
+    "lock_git_blob_sha": "888678554c41257e6d96c802f0009983ccbb5328",
+    "role_comparator": "CORE1 T01/T14; CORE1A T02/T03/T11; CORE1B T06/T10/T12; CORE2A T05/T07; CORE2B T08/T09",
+    "comparison_kind": "SEMANTIC_CROSS_QUESTION_NOT_BYTE_PARITY",
+    "technique_oracles": [
+      "T01",
+      "T14",
+      "T02",
+      "T03",
+      "T11",
+      "T06",
+      "T10",
+      "T12",
+      "T05",
+      "T07",
+      "T08",
+      "T09"
+    ],
+    "semantic_deltas": [],
+    "actual_html_bytes_independently_verified": true,
+    "owner_fixture_decision_id": null
+  },
+  "review": {
+    "H1": null,
+    "H2": null,
+    "H3": null,
+    "S1": null,
+    "S2": null,
+    "S3": null,
+    "P1": null,
+    "P2": null,
+    "P3": null,
+    "M1": null,
+    "M2": null,
+    "M3": null,
+    "qualified_reviewer_name": null,
+    "conflict_declaration": null,
+    "independent_mathematical_oracle": "TEST/imo-research/qrt-d1/verify_explain.py",
+    "decision": "PENDING"
+  },
+  "owner": {
+    "qrt_decision": "PENDING",
+    "qrt_decision_id": null,
+    "golden_scope_decision_id": null,
+    "rights_decision_id": null,
+    "print_visual_decision_id": null,
+    "release_decision_id": null
+  },
+  "viewer": {
+    "entry_path": "q003-model-d2/index.html",
+    "tile_json_path": "d1/explain.tile.v1.json",
+    "links_checked": false
+  },
+  "evidence": {
+    "source_commit": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "CI": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599324",
+    "academic": null,
+    "golden": "https://github.com/reallakshman19/Grade9v3.5/tree/67c34dababb0da0ef7d5f4a532bfcf3119754961/golden/units/G-IMO-G9-FIVE-CORE-20261012",
+    "owner": null,
+    "updated_utc": "2026-10-13"
+  },
+  "restrictions": [
+    "No original private Q003 bytes or authentic SOF question contents",
+    "No QRT acceptance or new golden without Owner decision",
+    "Never equate distinct question HTML bytes with original Owner golden",
+    "No learner release from this tile"
+  ]
+}

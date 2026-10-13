@@ -1,0 +1,203 @@
+{
+  "schema": "imo-qrt-cell-evidence/v1",
+  "version": "1.0.0",
+  "template": false,
+  "cell_id": "QRT-MODEL-D1",
+  "band": "D1",
+  "primary_demand": "MODEL",
+  "band_issue": 200,
+  "status_dimensions": {
+    "technical": "REPAIRED_RENDERED_TEST",
+    "renderer_verified": true,
+    "technique_review": "AUTHOR_CHECK_ONLY_INDEPENDENT_PENDING",
+    "academic_review": "QRT_DECISION_PENDING",
+    "owner_qrt_accepted": false,
+    "owner_golden_designated": false,
+    "release": "NOT_AUTHORIZED"
+  },
+  "candidate_ids": [
+    "Q-TEST-IMO182-D1-MOD-CORE1A-WORKED",
+    "Q-TEST-IMO182-D1-MOD-CORE2A-EQUAL-GROUPS-APPLICATION",
+    "Q-TEST-IMO182-D1-MOD-CORE2B-INVERSE-TRAY-COUNT"
+  ],
+  "source": {
+    "classification": "AUTHORED_TEST_NOT_SOF",
+    "verified_sha": "baeda88be7388d43d5582187fdd107d199753caf",
+    "source_path": "TEST/imo-research/qrt-d1/model.v1.json",
+    "source_code_commit": "78645b0a6deb8c5a09e102731580132c78ebb0d2",
+    "upstream_candidate_id": null,
+    "upstream_source_blob_sha": null,
+    "custody": "SOURCE_SAFE_AUTHORED_TEST",
+    "rights": "NOT_LICENSED_SOF_OR_PUBLISHED",
+    "question_stem_embedded": false,
+    "source_quality_hold": null
+  },
+  "cognitive": {
+    "X": "Count all seedlings from six trays each containing four seedlings by choosing a mathematical model.",
+    "Y": "Repeated equal groups, basic multiplication, meaning of each.",
+    "Z": "Relate tray count to number of groups and seedlings per tray to size of each group.",
+    "W": "Independently select six equal groups of four and justify 6×4=24 rather than add 6+4.",
+    "primary_vs_alternative": "Distinguish MODEL D1 from D2: grouping and uniform size are explicit; one representational decision.",
+    "adjacent_band_reason": "One explicit equal-groups story, one model selection and depiction; no unknown model family or multistep algebra.",
+    "difficulty_five_component_evidence": {
+      "concept_model_selection": "Choose equal-group product instead of summing quantities.",
+      "representation_translation": "Encode group count and group size in a labelled dot/equation model.",
+      "reasoning_chain_length": "One relation selection, no independent proof chain.",
+      "algebra_computational_load": "Small multiplication/division not the primary learning demand.",
+      "trap_exception_sensitivity": "False addition misconception diagnosed separately."
+    },
+    "protected_move_id": "MOD-D1-QA-CHOOSE"
+  },
+  "blueprints": [
+    {
+      "role": "CORE1",
+      "ref": "BP-CORE1-ORIENTATION@1.1.0"
+    },
+    {
+      "role": "CORE1A",
+      "ref": "BP-CORE1A-CONSTRUCTION@1.8.0"
+    },
+    {
+      "role": "CORE1B",
+      "ref": "BP-CORE1B-RECONSTRUCTION@1.1.0"
+    },
+    {
+      "role": "CORE2A",
+      "ref": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0"
+    },
+    {
+      "role": "CORE2B",
+      "ref": "BP-CORE2B-TRANSFER@1.1.0"
+    }
+  ],
+  "generation": {
+    "repo_commit_sha": "78645b0a6deb8c5a09e102731580132c78ebb0d2",
+    "manifest_path": "TEST/products/imo182-qrt-d1-model.manifest.json",
+    "manifest_blob_sha": "d9cb9fcc59041eedf64f826cf187cdf70982d4e6",
+    "renderer_version": "render_core/2",
+    "registry_path": "Shared/web/interactive-page-blueprints.v1.json",
+    "registry_version": "1.17.0",
+    "registry_blob_sha": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "mode": "PAGES",
+    "held_to": "REFERENCE",
+    "gaps": 0,
+    "exact_head_ci_run": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38378345091",
+    "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38378345091/artifacts/11802730066",
+    "html": [
+      {
+        "filename": "core1.html",
+        "sha256": "e74434549d6f6e64789f457c5c25cc7c33a581ea1a0d64231f88982bd2904bd5"
+      },
+      {
+        "filename": "core1a.html",
+        "sha256": "98ca7d8355380d55c2ec6d203b2f59eff3f8ea57ca4cb19918ea2a6a53b00bc6"
+      },
+      {
+        "filename": "core1b.html",
+        "sha256": "7b8fe65d2a58e477097838994eb2ee3593fe656457a29b33ebf93ce0cdf8081a"
+      },
+      {
+        "filename": "core2a.html",
+        "sha256": "679c1b4525d2bed5517a46d136e7cb3789ad7657fef5c01737589e7dff64597d"
+      },
+      {
+        "filename": "core2b.html",
+        "sha256": "5f226fcec44a44cf90eb0923f38d5fbddfc861e99870dba15934481b750141a9"
+      },
+      {
+        "filename": "index.html",
+        "sha256": "b254c527590e7fcd831faad49af0f330f2d832c0af5dc1e8cedaf1b359faa2f7"
+      }
+    ],
+    "six_html_sha_verified": true
+  },
+  "golden": {
+    "kind": "IMMUTABLE_OWNER_EXACT_FOR_ORIGINAL_QUESTION_ROLE_TECHNIQUE_ONLY_FOR_THIS_DISTINCT_TEST",
+    "id": "G-IMO-G9-FIVE-CORE-20261012",
+    "pinned_commit": "67c34dababb0da0ef7d5f4a532bfcf3119754961",
+    "lock_git_blob_sha": "888678554c41257e6d96c802f0009983ccbb5328",
+    "role_comparator": "CORE1 T01/T14; CORE1A T02/T03/T11; CORE1B T06/T10/T12; CORE2A T05/T07; CORE2B T08/T09",
+    "comparison_kind": "SEMANTIC_CROSS_QUESTION_NOT_BYTE_PARITY",
+    "technique_oracles": [
+      "T01",
+      "T14",
+      "T02",
+      "T03",
+      "T11",
+      "T06",
+      "T10",
+      "T12",
+      "T05",
+      "T07",
+      "T08",
+      "T09"
+    ],
+    "semantic_deltas": [],
+    "actual_html_bytes_independently_verified": true,
+    "owner_fixture_decision_id": null
+  },
+  "review": {
+    "H1": null,
+    "H2": null,
+    "H3": null,
+    "S1": null,
+    "S2": null,
+    "S3": null,
+    "P1": null,
+    "P2": null,
+    "P3": null,
+    "M1": null,
+    "M2": null,
+    "M3": null,
+    "qualified_reviewer_name": null,
+    "conflict_declaration": null,
+    "independent_mathematical_oracle": "TEST/imo-research/qrt-d1/verify_model.py",
+    "decision": "PENDING"
+  },
+  "owner": {
+    "qrt_decision": "PENDING",
+    "qrt_decision_id": null,
+    "golden_scope_decision_id": null,
+    "rights_decision_id": null,
+    "print_visual_decision_id": null,
+    "release_decision_id": null
+  },
+  "viewer": {
+    "entry_path": "q003-model-d2/index.html",
+    "tile_json_path": "d1/model.tile.v1.json",
+    "links_checked": false
+  },
+  "evidence": {
+    "source_commit": "78645b0a6deb8c5a09e102731580132c78ebb0d2",
+    "CI": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38378345091",
+    "academic": null,
+    "golden": "https://github.com/reallakshman19/Grade9v3.5/tree/67c34dababb0da0ef7d5f4a532bfcf3119754961/golden/units/G-IMO-G9-FIVE-CORE-20261012",
+    "owner": null,
+    "updated_utc": "2026-10-13",
+    "measured_repair": {
+      "old_preattempt_h2_leak_reproduced": true,
+      "repaired_pull_request": "https://github.com/reallakshman19/Grade9v3.5/pull/204",
+      "old_original_render_artifact": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599417/artifacts/11774372882",
+      "current_native_qa": {
+        "engine": "Chromium",
+        "viewports_css_px": [
+          390,
+          768,
+          1366
+        ],
+        "precommit_h2_no_decisive_model_family": true,
+        "h3_precommit_locked": true,
+        "blank_attempt_rejected": true,
+        "h3_post_nonblank_opened": true,
+        "no_document_horizontal_overflow": true,
+        "javascript_errors": 0
+      }
+    }
+  },
+  "restrictions": [
+    "No original private Q003 bytes or authentic SOF question contents",
+    "No QRT acceptance or new golden without Owner decision",
+    "Never equate distinct question HTML bytes with original Owner golden",
+    "No learner release from this tile"
+  ]
+}

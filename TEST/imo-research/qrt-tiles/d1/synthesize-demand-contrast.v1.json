@@ -1,0 +1,151 @@
+{
+  "schema": "imo-qrt-d1-primary-demand-contrast/v1",
+  "cell_id": "QRT-SYNTHESIZE-D1",
+  "as_of_utc": "2026-10-13",
+  "source_authority": {
+    "canonical_matrix_path": "Shared/quality/question-demand-matrix.v1.json",
+    "canonical_matrix_blob": "3779a53ae7d20efbb4644bc3f9243909e93dc145",
+    "template_path": "Shared/quality/question-demand-templates.v1.json",
+    "template_blob": "e2409aef11ae7d98444593bfbe1a38eb00c97cef",
+    "template_id": "QRT-SYNTHESIZE-D1",
+    "owner_aim_label_sha": "2ff9246"
+  },
+  "pinned_actual_evidence": {
+    "source_git_blob": "f9008c6dc4642d45798d23ddd06a51a4a33f540b",
+    "source_code_commit": "c967ff226516de25d6235c6c0f1749b39ffced7d",
+    "source_patch_pr": "https://github.com/reallakshman19/Grade9v3.5/pull/213",
+    "CI": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38427757190",
+    "html": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38427757190/artifacts/11828784099",
+    "sole_renderer": "render_core/2",
+    "six_html_sha_match": true,
+    "render_gaps": 0,
+    "independent_oracle_cases": 1430,
+    "h2_no_longer_leads_copy_both": true,
+    "valid_equal_counts": [
+      "4×(3+2)=20",
+      "4×3+4×2=20"
+    ],
+    "no_auto_grading": true
+  },
+  "mathematical_comparison": {
+    "SYNTHESIZE_D1": {
+      "stem": "Four identical banner units; each unit has three blue and two red tiles; write a complete count.",
+      "relation": "T=n(a+b), with n=4,a=3,b=2",
+      "protected_work": "Select valid coordination/count of all two-part components across four copies. Either whole-unit or distributed form is valid.",
+      "dependent_intermediate": "g=a+b=5, then T=4g=20",
+      "wrong_route": "a+nb=3+4×2=11 omits three additional blue counts."
+    },
+    "MODEL_D1": {
+      "stem": "Six trays; each has four seedlings. Construct a count model for all seedlings.",
+      "relation": "T=n g, with n=6,g=4",
+      "protected_work": "Choose six equal groups of four rather than add 6+4",
+      "wrong_route": "n+g=10 instead of 24"
+    },
+    "APPLY_D1": {
+      "stem": "Rectangle 7 cm by 4 cm, supplied area rule A=length×width.",
+      "relation": "A=l×w=7×4=28",
+      "protected_work": "Substitute into the explicitly provided area rule and use cm²",
+      "wrong_route": "l+w=11 instead of area"
+    }
+  },
+  "canonical_demands": {
+    "synthesize": {
+      "decisive_act": "Coordinate dependent ideas or steps where route selection is part of the difficulty.",
+      "protected_X": "Dependency between subproblems or ideas",
+      "protected_W": "Bridge or ordering decision that unlocks multi-step route"
+    },
+    "model": {
+      "description": "Choose and justify a mathematical representation/model for the supplied situation."
+    },
+    "apply": {
+      "description": "Use supplied governing relation to calculate a value, with correct unit and substitution."
+    }
+  },
+  "conflicting_hypotheses": [
+    {
+      "id": "H-SYN",
+      "claim": "SYNTHESIZE-D1 is an appropriate primary-demand proposal.",
+      "support": "Learner must construct a nontrivial bridge g=3+2 across two component kinds, then propagate it through four copies, diagnosing a false route that repeats only one part.",
+      "disconfirm": "If the bridge is supplied by prior teaching and only equal-group multiplication remains, SYNTHESIZE may not be independently assessed.",
+      "reviewer_result": null
+    },
+    {
+      "id": "H-MOD",
+      "claim": "The current item is primarily MODEL-D1 or APPLY-D1, not independent SYNTHESIZE.",
+      "support": "It is isomorphic to n uniform groups of size g after immediately computing 3+2; no external condition changes, and both arithmetic forms are routine.",
+      "disconfirm": "If an independent task-specific dependency choice remains essential and wrong route a+nb is distinguishable from generic multiplication modeling, SYNTHESIZE may be warranted.",
+      "reviewer_result": null
+    },
+    {
+      "id": "H-D2",
+      "claim": "The component coordination may require D2 connected reasoning rather than D1.",
+      "support": "Two numerical operations are connected by an intermediate whole-unit size.",
+      "disconfirm": "Canonical D1 allows one meaningful bridge with otherwise explicit route; here both component counts and repeat count are given and there is no second independent condition.",
+      "reviewer_result": null
+    }
+  ],
+  "falsifiable_review_protocol": [
+    {
+      "id": "Q1",
+      "ask": "Ask learner to solve MODEL 6 trays×4 before SYNTHESIZE 4 motifs(3+2). Does SYNTHESIZE require a new protected dependency, or just a trivial preprocessing addition?",
+      "status": "PENDING_QUALIFIED"
+    },
+    {
+      "id": "Q2",
+      "ask": "Show original wrong expression 3+2×4=11; does learner diagnose omitted blue repetition or merely apply parentheses mechanically?",
+      "status": "PENDING_QUALIFIED"
+    },
+    {
+      "id": "Q3",
+      "ask": "Accept and probe BOTH 4(3+2)=20 and 4×3+4×2=20; is the proof/warrant genuinely independent of the chosen notation?",
+      "status": "PENDING_QUALIFIED"
+    },
+    {
+      "id": "Q4",
+      "ask": "If told explicitly that one motif contains five parts, would the question collapse into MODEL-D1? If yes, is finding five by combining components a sufficiently meaningful dependent step?",
+      "status": "PENDING_QUALIFIED"
+    },
+    {
+      "id": "Q5",
+      "ask": "Verify Core2A H2 after patch and H3 timing by actual screenshot/AX; does preattempt scaffolding still hand over the repeated-components relation?",
+      "status": "PENDING_QUALIFIED"
+    },
+    {
+      "id": "Q6",
+      "ask": "Compare a counterfactual with two constraints/variable composition (possible D2): does the current task really require that complexity? Do not reauthor until reviewed.",
+      "status": "PENDING_QUALIFIED"
+    }
+  ],
+  "independent_review": {
+    "qualified_reviewer_name": null,
+    "conflict_declaration": null,
+    "template_alignment": null,
+    "primary_demand_verdict": null,
+    "band_verdict": null,
+    "mathematical_equivalence_verdict": null,
+    "H_S_P_M_verdicts": null,
+    "evidence_ids": [],
+    "review_signed_at": null
+  },
+  "owner": {
+    "qrt_decision": "PENDING",
+    "decision_id": null,
+    "source_rights_id": null,
+    "golden_promotion_id": null,
+    "merge_release_id": null
+  },
+  "choices_for_reviewer": [
+    "RETAIN_SYNTHESIZE_D1_WITH_GROUNDED_MATHEMATICAL_RATIONALE",
+    "RECLASSIFY_MODEL_D1",
+    "RECLASSIFY_APPLY_D1",
+    "RECLASSIFY_DIFFERENT_BAND",
+    "REAUTHOR_FOR_GENUINE_SYNTHESIZE",
+    "REJECT_TECHNICAL_CANDIDATE"
+  ],
+  "restrictions": [
+    "Author hypotheses are not qualified academic verdicts",
+    "No Owner QRT decision inferred from scoped CI",
+    "Never change frozen Owner golden or global blueprint to resolve semantic classification",
+    "Preserve valid alternative distributive solution as acceptable"
+  ]
+}

@@ -1,0 +1,30 @@
+name: IMO 200 QRT D1 7x4 review tiles (TEST only)
+on:
+  pull_request:
+    paths:
+      - 'TEST/imo-research/qrt-tiles/d1/**'
+      - 'TEST/imo-research/qrt-tiles/q003-model-d2/index.html'
+      - 'TEST/imo-research/qrt-tiles/q003-model-d2/band-issues.v1.json'
+      - 'tests/test_imo_qrt_d1_review_tiles.py'
+      - 'tests/qrt_d1_viewer_smoke.mjs'
+      - '.github/workflows/imo200-qrt-d1-review-tiles.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  d1-review-tile-fidelity:
+    name: Exact SHA6 D1 tile contracts and clickable source-safe Q003 viewer
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Assert 7/7 independent technical evidence, 0/7 Owner decisions, original private Q003 intact
+        run: python -m unittest tests.test_imo_qrt_d1_review_tiles -v
+      - name: Exercise 28-cell viewer, seven D1 click paths and six-file SHA links
+        run: node tests/qrt_d1_viewer_smoke.mjs
