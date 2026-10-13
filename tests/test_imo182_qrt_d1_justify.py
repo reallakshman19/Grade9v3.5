@@ -62,6 +62,34 @@ class JustifyD1(unittest.TestCase):
         self.assertIn("9 cm",mic["exit_task"]["prompt"])
         self.assertIn("perpendicular",mic["inferential_jump"])
 
+    def test_accessible_altitude_wording_preserves_the_decision(self):
+        # Research-intake wording hold: make the line/90-degree distance explicit,
+        # but never treat this automated test as a learner accessibility signoff.
+        qa=self.source["questions"][1]
+        self.assertIn("extending the straight line through A and B",qa["stem"])
+        self.assertIn("shortest distance",qa["stem"])
+        self.assertIn("right angle (90°)",qa["stem"])
+        self.assertIn("Must the triangles have equal areas?",qa["stem"])
+        self.assertIn("grade9v3:wording_revision_status",self.source["extensions"])
+        self.assertEqual(self.source["extensions"]["grade9v3:wording_revision_status"],
+                         "AUTHOR_CANDIDATE_NOT_REVIEWED")
+        self.assertEqual(self.source["extensions"]["grade9v3:source_quality_hold"],
+                         "ALTITUDE_WORDING_CLARITY")
+        # H2 must invite a warrant, not decide it on the learner's behalf.
+        safe_hints=" ".join(h["text"] for h in qa["scaffolds"][:2]).lower()
+        for forbidden in ("42 cm", "both areas equal", "sideways offset does not",
+                          "guarantee equal area", "areas are the same"):
+            self.assertNotIn(forbidden,safe_hints)
+        from xml.etree import ElementTree as ET
+        svg=ET.parse(ROOT/"TEST/imo-research/qrt-d1/figures/justify-core2a-triangles.v1.svg").getroot()
+        ns="{http://www.w3.org/2000/svg}"
+        desc=svg.find(ns+"desc")
+        self.assertIsNotNone(desc)
+        self.assertIn("90 degrees",desc.text)
+        self.assertIn("extended through A and B",desc.text)
+        self.assertNotIn("42",ET.tostring(svg,encoding="unicode"))
+        self.assertNotIn("same area",desc.text.lower())
+
     def test_cumulative_core1a_stages_do_not_redraw_geometry(self):
         # The sole renderer reveals SVG stages cumulatively, not exclusively.
         # Redrawing whole triangles in stages 2/3 superimposes labels/edges.
