@@ -35,6 +35,14 @@ class ModelD1(unittest.TestCase):
         plan=q["extensions"]["grade9v3:core2_support_plan"]
         self.assertEqual(plan["protected_move_refs"],[q["answer"]["crux_move_ref"]])
         self.assertEqual([x["availability"] for x in core2_v2.project_support(q)],["PRE_ATTEMPT_SAFE","PRE_ATTEMPT_SAFE","AFTER_ATTEMPT"])
+        # Regression: H2 is requestable before commitment, so it must not select W.
+        h2=q["scaffolds"][1]["text"]
+        self.assertIn("Before choosing an equation",h2)
+        self.assertIn("every seedling is counted exactly once?",h2)
+        self.assertNotIn("A valid group model",h2)
+        self.assertNotIn("repeating the same group",h2)
+        self.assertNotIn("6×4",h2)
+        self.assertIn(h2,self.pages["core2a.html"])
         self.assertIn("data-g9-after-attempt-hint",self.pages["core2a.html"])
         self.assertIn("data-requires-attempt",self.pages["core2a.html"])
     def test_safe_svg_and_changed_boundary(self):
