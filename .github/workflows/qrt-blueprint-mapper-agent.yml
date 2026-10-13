@@ -1,0 +1,23 @@
+name: QRT Blueprint Mapper agent contract
+on:
+  pull_request:
+    paths:
+      - '.github/agents/qrt-blueprint-mapper.agent.md'
+      - 'agents/qrt-blueprint-mapper/**'
+      - 'tests/test_qrt_blueprint_mapper_agent.py'
+      - '.github/workflows/qrt-blueprint-mapper-agent.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  agent-contract:
+    name: GitHub agent config, live registry, honest evidence defaults
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test source-of-truth and approval safeguards
+        run: python -m unittest tests.test_qrt_blueprint_mapper_agent -v
