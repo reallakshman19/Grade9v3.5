@@ -1,0 +1,1333 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-JUSTIFY-D4",
+  "title": "D4 necessary-and-sufficient square divisibility",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Original authored Grade9 integer iff; no official question source, QRT acceptance or learner release.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-D4-JUSTIFY-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original integer iff proof authored for QRT-JUSTIFY-D4",
+      "origin": "AUTHORED",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #182 Tab7",
+      "edition": "2026-10-12 TEST draft",
+      "section": "Difference of squares and modular boundary proof",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "No official SOF exam text, PDF, logo, KEY or original image used",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "24|(n²−1) iff n mod6 is 1 or5",
+        "48|(n²−1) iff n mod24 is 1,7,17 or23"
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Original Grade9 arithmetic; real exponent #140 fixture not admitted or reused verbatim",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-D4-JUSTIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Universal iff proof and exceptional residues",
+      "topic": "Integer squares and factor divisibility",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Proof needs necessity, sufficiency and two independent exception families.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-D4-JUSTIFY-CORE1A",
+      "conventions": [
+        {
+          "id": "integers",
+          "statement": "n ranges over all integers, including zero and negative integers."
+        },
+        {
+          "id": "divides",
+          "statement": "d|N iff N is an integer multiple of d."
+        },
+        {
+          "id": "coprime",
+          "statement": "If coprime divisors a and b divide an integer, ab also divides it."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-D4-JUSTIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "Prove an exact two-way divisibility criterion with excluded families and a stronger changed-modulus transfer.",
+      "success_criterion": "Derive iff conditions for both divisibility by24 and by48; independently test near-miss exceptions.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-D4-JUSTIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Necessity and sufficiency for square-minus-one divisibility",
+      "bucket_id": "BUCKET-D4-JUSTIFY",
+      "primary_capability_ref": "CAP-D4-JUSTIFY",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Proof needs necessity, sufficiency and two independent exception families.",
+      "entry_assumptions": [
+        "Difference of squares.",
+        "Integer parity.",
+        "Remainder classes mod3.",
+        "Coprime factors."
+      ],
+      "inferential_jump": "Two distinct obstructions must be excluded, and sufficiency must be constructed rather than sampled.",
+      "teaching_path": [
+        {
+          "id": "D4-STEP-FACTOR",
+          "role": "DECLARE",
+          "action": "Use q²−1=(q−1)(q+1) to separate the factors.",
+          "why_valid": "The difference-of-squares identity is valid for all integers.",
+          "inputs": [],
+          "output": "Product of the two neighbors of q.",
+          "source_ref": "SRC-D4-JUSTIFY-ORIGINAL"
+        },
+        {
+          "id": "D4-STEP-EIGHT",
+          "role": "TRANSFORM",
+          "action": "If q is odd, q−1 and q+1 are even, with one multiple of four.",
+          "why_valid": "They are even and differ by two, so their residues modulo4 are 0 and2.",
+          "inputs": [
+            "q odd"
+          ],
+          "output": "8 divides q²−1.",
+          "source_ref": "SRC-D4-JUSTIFY-ORIGINAL"
+        },
+        {
+          "id": "D4-STEP-THREE",
+          "role": "TRANSFORM",
+          "action": "If q is not divisible by3, one of its neighbors is; if q is divisible by3 neither neighbor is.",
+          "why_valid": "Check the exhaustive q residues 0,1,2 modulo3.",
+          "inputs": [
+            "q arbitrary"
+          ],
+          "output": "3 divides q²−1 iff 3 does not divide q.",
+          "source_ref": "SRC-D4-JUSTIFY-ORIGINAL"
+        },
+        {
+          "id": "D4-STEP-IFF",
+          "role": "VERIFY",
+          "action": "Explain generally why proving both implications of a claim requires a warrant for each permitted and excluded case, without stating the target criterion.",
+          "why_valid": "A sufficient example does not establish necessity; each direction needs a separate universal argument.",
+          "inputs": [
+            "D4-STEP-EIGHT",
+            "D4-STEP-THREE"
+          ],
+          "output": "General two-direction proof method with independent factor checks; decide exact target classes in the later assessment.",
+          "source_ref": "SRC-D4-JUSTIFY-ORIGINAL"
+        }
+      ],
+      "relation_refs": [
+        "REL-D4-JUSTIFY"
+      ],
+      "representation_refs": [
+        "REP-D4-JUSTIFY-CORE1A"
+      ],
+      "question_family_refs": [
+        "FAM-D4-JUSTIFY"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Every odd n satisfies 24|(n²−1).",
+          "diagnostic_prompt": "Why do n=3 and n=5 behave differently even though both are odd?",
+          "repair": "Oddness only guarantees 8; 3∤n is an independent required condition. Check both conditions, then multiply coprime factors."
+        },
+        {
+          "wrong_idea": "Three true examples prove a universal iff.",
+          "diagnostic_prompt": "What rules out the entire family of even n?",
+          "repair": "Use parity for a universal contradiction; enumerate all modulus families."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Prove that for any integer m, 8 divides m(m+2) exactly when m is even. Independently verify an unseen negative integer.",
+        "source_ref": "SRC-D4-JUSTIFY-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "8|m(m+2) iff m is even.",
+          "reasoning": [
+            "If m=2t, then m(m+2)=4t(t+1), and t(t+1) is even.",
+            "If m is odd, then both m and m+2 are odd so their product is odd.",
+            "The argument also covers m=-4, giving product8."
+          ],
+          "check": "Check both parity classes and m=-4.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo182_qrt_d4_justify.py",
+            "bindings": {
+              "domain": "integers",
+              "divisor": "8",
+              "criterion": "m is even",
+              "expression": "m(m+2)"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original TEST content; rights/authentic-source and academic grade-level acceptance not granted.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-D4-IFF",
+          "decision": "Learn the necessity-versus-sufficiency proof method and build partial prime-power tools; independently derive the full criterion in Core2A.",
+          "step_refs": [
+            "D4-STEP-FACTOR",
+            "D4-STEP-EIGHT",
+            "D4-STEP-THREE",
+            "D4-STEP-IFF"
+          ],
+          "representation_ref": "REP-D4-JUSTIFY-CORE1A",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-D4-JUSTIFY"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Enumerate all residues modulo24 and compare with residues 1 and5 modulo6.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "D4-IDENTITY",
+            "D4-EIGHTS",
+            "D4-THREES"
+          ],
+          "worked_anchor_ref": "Q-D4-JUSTIFY-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "For odd q, why do two even neighbors q−1,q+1 contain a factor of eight?",
+        "result": "Of even numbers two apart, one is divisible by four and the other by two.",
+        "representation_ref": "REP-D4-JUSTIFY-CORE1A"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A student checks n=5,7,11 and concludes all odd n make 24 divide n²−1. Does sampling prove a universal rule?",
+          "defensible_answer": "No: n=3 is odd and gives 8. The missing factor-of-three condition is decisive."
+        },
+        "attempt": {
+          "produces": "A universal iff proof, both necessary exclusion families, sufficient coprime factors and an independent check.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "State both proof directions.",
+              "evidence_of": "Necessity and sufficiency for all integers."
+            },
+            {
+              "criterion": "Justify factor8 for odd n and show even n cannot work.",
+              "evidence_of": "Correct parity and power-of-four warrant."
+            },
+            {
+              "criterion": "Justify factor3 iff 3∤n.",
+              "evidence_of": "Exhaustive mod3 cases."
+            },
+            {
+              "criterion": "Combine coprime factors and classify modulo6.",
+              "evidence_of": "Complete iff criterion."
+            }
+          ],
+          "accepted": [
+            "24 divides n²−1 exactly when n is odd and 3∤n. If n odd, the two even neighbors differ by2, yielding factor8. If 3∤n a neighbor yields factor3. Conversely even n gives odd n²−1 and 3|n gives remainder2 mod3."
+          ],
+          "rejected": [
+            "Every odd n works, because examples do.",
+            "Checking only mod3 proves 24 divisibility."
+          ],
+          "task": {
+            "prompt": "Critique the odd-only claim, replace it with an exact iff condition for 24|(n²−1), and prove both directions.",
+            "givens": [
+              "n is any integer.",
+              "n²−1=(n−1)(n+1).",
+              "24=8×3 and gcd(8,3)=1."
+            ],
+            "representation_ref": "REP-D4-JUSTIFY-CORE1B",
+            "stage_refs": [
+              "D4-WRONG-CLAIM"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Test n=3; does it defeat the proposed odd-only rule?",
+              "why_this_ask": "Distinguishes misconception from a slip.",
+              "from_step_ref": "D4-STEP-THREE"
+            },
+            {
+              "ask": "Which half of the odd-only reasoning remains true for every odd n?",
+              "why_this_ask": "Preserves the valid factor-eight bridge.",
+              "from_step_ref": "D4-STEP-EIGHT"
+            },
+            {
+              "ask": "Which other residue class destroys factor3?",
+              "why_this_ask": "Locates the missing exception family.",
+              "from_step_ref": "D4-STEP-THREE"
+            },
+            {
+              "ask": "Why do your exclusions prove necessity for every n?",
+              "why_this_ask": "Requires a universal warrant rather than samples.",
+              "from_step_ref": "D4-STEP-IFF"
+            },
+            {
+              "ask": "Now classify changed inputs n=15 and n=17 without first squaring.",
+              "why_this_ask": "Checks repaired concept on unseen givens.",
+              "from_step_ref": "D4-STEP-IFF"
+            }
+          ],
+          "differs_from_teaching_path": "The reconstruction starts from a false odd-only claim, not a fully worked modular proof."
+        },
+        "boundary_test": {
+          "prompt": "After repair, classify n=15 and n=17 using the corrected rule, then verify.",
+          "answer": "n=15 fails because 3 divides it and 15²−1=224. n=17 passes and 17²−1=288=24×12.",
+          "confirms": "Two-condition rule transfers to changed givens."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-D4-JUSTIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "For every integer n, n²−1=(n−1)(n+1).",
+      "meaning": "Factoring square-minus-one gives two integers separated by two; divisibility conditions remain for the learner to prove.",
+      "symbols": [
+        {
+          "symbol": "n",
+          "meaning": "Arbitrary integer",
+          "unit_or_domain": "Z"
+        }
+      ],
+      "conditions": [
+        "All integers, including negatives and zero.",
+        "24=8×3 with coprime factors."
+      ],
+      "derivation": [
+        {
+          "id": "D4-REL-0",
+          "action": "If q is odd, q−1 and q+1 are even, with one multiple of four.",
+          "why_valid": "They are even and differ by two, so their residues modulo4 are 0 and2.",
+          "inputs": [
+            "q odd"
+          ],
+          "output": "8 divides q²−1.",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "D4-REL-1",
+          "action": "If q is not divisible by3, one of its neighbors is; if q is divisible by3 neither neighbor is.",
+          "why_valid": "Check the exhaustive q residues 0,1,2 modulo3.",
+          "inputs": [
+            "q arbitrary"
+          ],
+          "output": "3 divides q²−1 iff 3 does not divide q.",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "D4-REL-2",
+          "action": "Combine factors 8 and3 for sufficiency; rule out even and divisible-by-three q for necessity.",
+          "why_valid": "gcd(8,3)=1. Even q makes q²−1 odd, and 3|q gives q²−1≡2 mod3.",
+          "inputs": [
+            "D4-STEP-EIGHT",
+            "D4-STEP-THREE"
+          ],
+          "output": "24 divides q²−1 iff q odd and 3 does not divide q.",
+          "role": "VERIFY"
+        }
+      ],
+      "limits": [
+        "Odd n=3 is not sufficient.",
+        "Even n=2 not divisible by3 is not sufficient."
+      ],
+      "checks": [
+        "Residues modulo6 1 and5 only.",
+        "n=-1 gives zero, divisible by24."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><msup><mi>n</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn><mo>=</mo><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-D4-JUSTIFY-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Build the factorization and modular proof in separate concept stages.",
+      "required_elements": [
+        "q²−1=(q−1)(q+1)"
+      ],
+      "relation_refs": [
+        "REL-D4-JUSTIFY"
+      ],
+      "read_order": [
+        "Read expression and domain.",
+        "Make independent mathematical inference."
+      ],
+      "instance_constraints": [
+        "No preattempt answer in SVG.",
+        "No official source claim."
+      ],
+      "accessibility": [
+        "SVG alt and desc contain only givens.",
+        "Text labels do not encode final criterion."
+      ],
+      "misleading_alternatives": [
+        "The visual is not a proof."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/core1a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1A",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-D4-JUSTIFY",
+          "datum_refs": [
+            "D4-DATUM-CORE1A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/core1a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unclassified integer expression.",
+            "caption": "The visible first-stage diagram shows only the question givens."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "given expression",
+          "symbol": "n²−1",
+          "in_words": "Quantity to assess, not the solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-IDENTITY",
+          "label": "Factor",
+          "purpose": "Verify the difference-of-squares identity.",
+          "visible_elements": [
+            "q²−1=(q−1)(q+1)"
+          ]
+        },
+        {
+          "id": "D4-EIGHTS",
+          "label": "Even neighbors",
+          "purpose": "Explain why odd q supplies factor8.",
+          "visible_elements": [
+            "neighbors are two apart"
+          ]
+        },
+        {
+          "id": "D4-THREES",
+          "label": "Remainder classes",
+          "purpose": "Explain why modulo3 must be checked independently.",
+          "visible_elements": [
+            "q mod3=0,1,2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-JUSTIFY-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Pre-attempt CORE1B schematic displays only givens.",
+      "required_elements": [
+        "n odd?",
+        "24|(n²−1)?"
+      ],
+      "relation_refs": [
+        "REL-D4-JUSTIFY"
+      ],
+      "read_order": [
+        "Read expression and domain.",
+        "Make independent mathematical inference."
+      ],
+      "instance_constraints": [
+        "No preattempt answer in SVG.",
+        "No official source claim."
+      ],
+      "accessibility": [
+        "SVG alt and desc contain only givens.",
+        "Text labels do not encode final criterion."
+      ],
+      "misleading_alternatives": [
+        "The visual is not a proof."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/core1b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1B",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-D4-JUSTIFY",
+          "datum_refs": [
+            "D4-DATUM-CORE1B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/core1b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unclassified integer expression.",
+            "caption": "The visible first-stage diagram shows only the question givens."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "given expression",
+          "symbol": "n²−1",
+          "in_words": "Quantity to assess, not the solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-WRONG-CLAIM",
+          "label": "Given only",
+          "purpose": "Orient without protected answer.",
+          "visible_elements": [
+            "n odd?",
+            "24|(n²−1)?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-JUSTIFY-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Pre-attempt CORE2A schematic displays only givens.",
+      "required_elements": [
+        "n in integers",
+        "n²−1",
+        "divisor 24"
+      ],
+      "relation_refs": [
+        "REL-D4-JUSTIFY"
+      ],
+      "read_order": [
+        "Read expression and domain.",
+        "Make independent mathematical inference."
+      ],
+      "instance_constraints": [
+        "No preattempt answer in SVG.",
+        "No official source claim."
+      ],
+      "accessibility": [
+        "SVG alt and desc contain only givens.",
+        "Text labels do not encode final criterion."
+      ],
+      "misleading_alternatives": [
+        "The visual is not a proof."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/core2a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2A",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-D4-JUSTIFY-24",
+          "datum_refs": [
+            "D4-DATUM-CORE2A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/core2a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unclassified integer expression.",
+            "caption": "The visible first-stage diagram shows only the question givens."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "given expression",
+          "symbol": "n²−1",
+          "in_words": "Quantity to assess, not the solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-24-GIVEN",
+          "label": "Given only",
+          "purpose": "Orient without protected answer.",
+          "visible_elements": [
+            "n in integers",
+            "n²−1",
+            "divisor 24"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-JUSTIFY-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Pre-attempt CORE2B schematic displays only givens.",
+      "required_elements": [
+        "n in integers",
+        "n²−1",
+        "divisor 48"
+      ],
+      "relation_refs": [
+        "REL-D4-JUSTIFY"
+      ],
+      "read_order": [
+        "Read expression and domain.",
+        "Make independent mathematical inference."
+      ],
+      "instance_constraints": [
+        "No preattempt answer in SVG.",
+        "No official source claim."
+      ],
+      "accessibility": [
+        "SVG alt and desc contain only givens.",
+        "Text labels do not encode final criterion."
+      ],
+      "misleading_alternatives": [
+        "The visual is not a proof."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/core2b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2B",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-D4-JUSTIFY-48",
+          "datum_refs": [
+            "D4-DATUM-CORE2B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/core2b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unclassified integer expression.",
+            "caption": "The visible first-stage diagram shows only the question givens."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "given expression",
+          "symbol": "n²−1",
+          "in_words": "Quantity to assess, not the solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-48-GIVEN",
+          "label": "Given only",
+          "purpose": "Orient without protected answer.",
+          "visible_elements": [
+            "n in integers",
+            "n²−1",
+            "divisor 48"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-D4-JUSTIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Square-minus-one exceptional iff proof",
+      "capability_refs": [
+        "CAP-D4-JUSTIFY"
+      ],
+      "solution_structure": [
+        "Factor difference of squares.",
+        "Prove factor8 and factor3 conditions.",
+        "Establish both proof directions.",
+        "Change target to48 and find new mod8 exception."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Select prime-power criteria.",
+        "representation_translation": "Square to two neighboring integers.",
+        "reasoning_steps": "Necessary and sufficient directions.",
+        "novelty": "Changed factor16 requirement."
+      },
+      "safe_variations": [
+        "Other divisors with documented prime-power conditions."
+      ],
+      "transfer_boundaries": [
+        "The rule for24 fails for48 at n=5."
+      ],
+      "common_wrong_routes": [
+        "Odd-only rule.",
+        "Examples used as an iff proof."
+      ],
+      "item_refs": [
+        "Q-D4-JUSTIFY-WORKED",
+        "Q-D4-JUSTIFY-24",
+        "Q-D4-JUSTIFY-48"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-D4-JUSTIFY-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-JUSTIFY-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-JUSTIFY-WORKED",
+      "stem": "Verify q²−1=(q−1)(q+1). Explain how parity and modulo3 each affect the factorization, using q=3 as a conceptual boundary.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "n is any integer, including negative integers and zero."
+      ],
+      "figure_refs": [
+        "REP-D4-JUSTIFY-CORE1A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The two modular conditions are distinct.",
+        "reasoning": [
+          "Expand (q−1)(q+1)=q²−1.",
+          "For odd q, two even neighbors spaced by2 supply factor8.",
+          "For q≡0 mod3 the expression is 2 mod3, while otherwise one neighbor supplies3."
+        ],
+        "check": "Contrast q=3 andq=5.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-JUSTIFY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-JUSTIFY",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-D4-JUSTIFY-CORE1A",
+        "safe_ref": "REP-D4-JUSTIFY-CORE1A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-IDENTITY"
+        ]
+      },
+      "failure_signal": "Oddness may not guarantee factor3.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-JUSTIFY",
+        "closure": "The concept worked anchor is not an independent QRT proof."
+      }
+    },
+    {
+      "id": "Q-D4-JUSTIFY-24",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "MODEL",
+            "SYNTHESIZE"
+          ],
+          "basis": "Prove a nontrivial iff with exact exceptions."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Establish both necessary exclusions and constructive sufficiency.",
+          "common_wrong_route": "All odd n suffice, based on favorable examples."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "D4-MOVE-IFF"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "D4-MOVE-IFF"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-JUSTIFY-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-JUSTIFY-24",
+      "stem": "For all integers n, prove the exact necessary-and-sufficient criterion for 24 to divide n²−1. State all allowed residue classes modulo6 and prove both directions, including exceptions and a negative boundary.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "n is any integer, including negative integers and zero."
+      ],
+      "figure_refs": [
+        "REP-D4-JUSTIFY-CORE2A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "24|(n²−1) iff n≡1,5 modulo6.",
+        "reasoning": [
+          "Factor n²−1=(n−1)(n+1).",
+          "Sufficiency: for odd n, two even neighbors differ by2, giving factor8; if 3∤n a neighbor supplies factor3; coprimality yields24.",
+          "Necessity: even n has odd n²−1; a multiple of3 gives n²−1≡2 modulo3. Either cannot be divisible by24.",
+          "Thus n is odd and not divisible by3: exactly residues1 or5 modulo6."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-MOVE-DOMAIN",
+            "kind": "REPRESENT",
+            "action": "State integer domain and the two proof directions.",
+            "why_valid": "An iff assertion needs necessity and sufficiency.",
+            "inputs": [
+              "n in integers"
+            ],
+            "output": "Two quantified obligations."
+          },
+          {
+            "id": "D4-MOVE-FACTOR",
+            "kind": "CONNECT",
+            "action": "Factor n²−1 into neighboring integers.",
+            "why_valid": "Difference of squares.",
+            "inputs": [
+              "n²−1"
+            ],
+            "output": "(n−1)(n+1)."
+          },
+          {
+            "id": "D4-MOVE-IFF",
+            "kind": "DECIDE",
+            "action": "Prove both condition families and both converses.",
+            "why_valid": "Odd n forces factor8, nonmultiples of3 force factor3; even n or multiples of3 give universal obstructions.",
+            "inputs": [
+              "24=8×3",
+              "n arbitrary"
+            ],
+            "output": "Exactly n≡1,5 modulo6."
+          },
+          {
+            "id": "D4-MOVE-CHECK",
+            "kind": "VERIFY",
+            "action": "Independently inspect modulo24 residues and negative/zero cases.",
+            "why_valid": "All residue classes of integers are exhausted.",
+            "inputs": [
+              "iff proof"
+            ],
+            "output": "Complete exception audit."
+          }
+        ],
+        "crux_move_ref": "D4-MOVE-IFF",
+        "check": "n=-1 yields0 (yes); n=0 yields -1 (no); n=3 yields8 (no); n=5 yields24 (yes). Enumerate residues modulo24.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-JUSTIFY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-JUSTIFY",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "State precisely what an iff claim requires of an arbitrary integer. Separate the two directions.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-MOVE-DOMAIN"
+        },
+        {
+          "text": "Can you factor n²−1 into two neighbors? What kinds of prime-power factors would matter?",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-MOVE-FACTOR"
+        },
+        {
+          "text": "After recording your first attempt, audit factor8 and factor3 separately and use the excluded families to check necessity.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "D4-MOVE-IFF"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-JUSTIFY-CORE2A",
+        "safe_ref": "REP-D4-JUSTIFY-CORE2A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-24-GIVEN"
+        ]
+      },
+      "repair_ref": "D4-STEP-THREE",
+      "failure_signal": "A missing factor3 or proving only examples does not establish iff.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-JUSTIFY",
+        "closure": "No independent credit without both quantified proof directions."
+      },
+      "independent_check": {
+        "statement": "Exhaust residues modulo24; test n=-1,0,3,5.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 8,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "Two-way universal iff with non-obvious exceptional families.",
+        "component_evidence": {
+          "concept_model_selection": "Select prime powers8 and3.",
+          "representation_translation": "Factor to neighboring integers.",
+          "reasoning_chain_length": "Prove sufficiency and necessity separately.",
+          "algebra_computational_load": "Simple arithmetic and congruences.",
+          "trap_exception_sensitivity": "Odd multiple of3 fails the near-miss condition."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-D4-JUSTIFY-48",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "MODEL"
+          ],
+          "basis": "Prove the exception-sensitive changed criterion universally."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Derive factor16 iff by residues modulo8.",
+          "common_wrong_route": "Reuse old 24 condition unchanged."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-JUSTIFY-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-JUSTIFY-48",
+      "stem": "The divisor changes to 48. Prove exactly which residue classes modulo24 give 48|(n²−1) for arbitrary integers n. Show why the earlier 24-rule fails on a permitted input.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "n is any integer, including negative integers and zero."
+      ],
+      "figure_refs": [
+        "REP-D4-JUSTIFY-CORE2B"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "48|(n²−1) iff n≡1,7,17,23 modulo24.",
+        "reasoning": [
+          "48=16×3 with coprime factors.",
+          "For odd n modulo8, residues1,3,5,7 square modulo16 to1,9,9,1. Even n cannot work. Thus 16 divides exactly when n mod8 is1 or7.",
+          "3 divides the expression exactly when n is not divisible by3. Combining the two restrictions gives n mod24 in {1,7,17,23}.",
+          "n=5 gives n²−1=24, invalidating naive reuse of the earlier rule."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-MOVE-48-READ",
+            "kind": "REPRESENT",
+            "action": "Compare target prime powers.",
+            "why_valid": "48 requires 16 whereas24 requires8.",
+            "inputs": [
+              "24",
+              "48"
+            ],
+            "output": "New stronger factor of two."
+          },
+          {
+            "id": "D4-MOVE-48",
+            "kind": "DECIDE",
+            "action": "Classify when 16 divides n²−1 via odd residues mod8.",
+            "why_valid": "The four odd classes square modulo16 to1,9,9,1.",
+            "inputs": [
+              "n integer"
+            ],
+            "output": "n mod8 in{1,7}."
+          },
+          {
+            "id": "D4-MOVE-48-COMBINE",
+            "kind": "CONNECT",
+            "action": "Combine factor16 and factor3 and list modulo24 classes.",
+            "why_valid": "gcd(16,3)=1 and mod24 encodes both residue conditions.",
+            "inputs": [
+              "mod8 rule",
+              "3∤n"
+            ],
+            "output": "n mod24 in{1,7,17,23}."
+          },
+          {
+            "id": "D4-MOVE-48-CHECK",
+            "kind": "VERIFY",
+            "action": "Exhaust all modulo24 classes and falsify old rule using n=5.",
+            "why_valid": "Every integer has one class, and n=5 is admissible.",
+            "inputs": [
+              "new criterion"
+            ],
+            "output": "Changed condition verified."
+          }
+        ],
+        "crux_move_ref": "D4-MOVE-48",
+        "check": "Check classes1,7,17,23 modulo24 and n=5 as old-rule false positive.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "rubric": [
+          {
+            "criterion": "Recognize factor16 requirement.",
+            "evidence_of": "New requirement selected."
+          },
+          {
+            "criterion": "Prove mod8 restriction and exclusions.",
+            "evidence_of": "Correct new necessity/sufficiency."
+          },
+          {
+            "criterion": "Combine with mod3 to get four mod24 classes.",
+            "evidence_of": "Complete transfer."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-D4-JUSTIFY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-JUSTIFY",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Compare prime powers of 24 and48. Which extra factor2 is required?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-JUSTIFY-CORE2B",
+        "safe_ref": "REP-D4-JUSTIFY-CORE2B",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-48-GIVEN"
+        ]
+      },
+      "repair_ref": "D4-STEP-EIGHT",
+      "failure_signal": "The earlier 24 rule incorrectly admits n=5.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-JUSTIFY",
+        "closure": "The changed factor16 test requires an independent iff argument."
+      },
+      "independent_check": {
+        "statement": "Exhaust 24 residues; test n=5,7,17,-1.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 8,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "A stronger power-of-two requirement changes the valid residue families.",
+        "component_evidence": {
+          "concept_model_selection": "Select prime powers8 and3.",
+          "representation_translation": "Factor to neighboring integers.",
+          "reasoning_chain_length": "Prove sufficiency and necessity separately.",
+          "algebra_computational_load": "Simple arithmetic and congruences.",
+          "trap_exception_sensitivity": "Odd multiple of3 fails the near-miss condition."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-D4-JUSTIFY-24"
+        ],
+        "statement": "Derive a new higher-power necessity and sufficiency criterion.",
+        "invariant": "Difference-of-squares factorization and factor3 requirement remain unchanged.",
+        "novelty": {
+          "checked_against": [
+            "Q-D4-JUSTIFY-24",
+            "MIC-D4-JUSTIFY:exit_task",
+            "MIC-D4-JUSTIFY:boundary_test"
+          ],
+          "why_new": "Factor16 requires n mod8 in {1,7}; factor8 criterion accepted n=5 but 48 does not."
+        },
+        "protected_move_ref": "D4-MOVE-48"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-D4-JUSTIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Iff divisibility construction",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-D4-JUSTIFY"
+      ],
+      "entry_needs": [
+        "Factorization, parity, residues modulo3."
+      ],
+      "learner_actions": [
+        "Build difference-of-squares identity.",
+        "Compare separate prime-power factors.",
+        "Reject the odd-only misconception.",
+        "Attempt an independent changed-expression exit."
+      ],
+      "help_plan": [
+        "Core1A stages teach components but not the Core2A completed criterion.",
+        "Core2A H3 after attempt."
+      ],
+      "reveal_plan": "Teach each concept stage, protect applied iff decision until independent learner work.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-D4-JUSTIFY-ORIGINAL",
+          "purpose": "Wholly authored proof",
+          "reason": "No official Core2 source admission."
+        }
+      ],
+      "when_not_suitable": [
+        "Grade9 placement and QRT reviewer acceptance not yet granted."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:qrt_cell": "QRT-JUSTIFY-D4",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:learner_published": false,
+    "grade9v3:core2_source_custody_granted": false
+  },
+  "data": [
+    {
+      "id": "D4-DATUM-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "symbolic expression",
+      "symbol": "q²−1",
+      "meaning": "Attempt-safe authored given, not a proof.",
+      "locator": "AUTHOR_CREATED: D4"
+    },
+    {
+      "id": "D4-DATUM-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "symbolic expression",
+      "symbol": "n²−1",
+      "meaning": "Attempt-safe authored given, not a proof.",
+      "locator": "AUTHOR_CREATED: D4"
+    },
+    {
+      "id": "D4-DATUM-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "symbolic expression",
+      "symbol": "n²−1",
+      "meaning": "Attempt-safe authored given, not a proof.",
+      "locator": "AUTHOR_CREATED: D4"
+    },
+    {
+      "id": "D4-DATUM-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-JUSTIFY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "symbolic expression",
+      "symbol": "n²−1",
+      "meaning": "Attempt-safe authored given, not a proof.",
+      "locator": "AUTHOR_CREATED: D4"
+    }
+  ]
+}
