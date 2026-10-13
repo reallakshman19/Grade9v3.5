@@ -2,6 +2,7 @@
 import json
 import re
 import unittest
+from html import unescape
 from pathlib import Path
 from jsonschema import Draft202012Validator
 from Shared.tools import render_core, core2_v2
@@ -75,6 +76,22 @@ class RetrieveD4(unittest.TestCase):
             html=pages[role]
             self.assertNotIn("9,17,33,49",html,role)
             self.assertNotIn("At modulus128, a=9",html,role)
+        # A cross-role leak can expose the iff theorem without printing the
+        # main residue list. Core1/1A/1B may teach necessity and counterexamples,
+        # but cannot give the full protected k-dependent existence rule.
+        forbidden = (
+            "at k>=3 the criterion is1 modulo8",
+            "for k>=3 use1 modulo8",
+            "the weaker rule is exact only at exponent2",
+            "every odd class congruent 1 modulo8 lifts",
+            "criterion for k>=3: odd a≡1",
+        )
+        for role in ("core1.html", "core1a.html", "core1b.html"):
+            visible = re.sub(r"\\s+", " ", unescape(re.sub(r"<[^>]+>", " ", pages[role]))).casefold()
+            for leaked in forbidden:
+                with self.subTest(role=role, leaked=leaked):
+                    self.assertNotIn(leaked, visible)
+        self.assertIn("Every odd square is1 modulo8", pages["core1a.html"])
         # Internal authoring move IDs are not meant to be published in learner HTML.
         self.assertIn("data-g9-after-attempt-hint",pages["core2a.html"])
         self.assertIn("data-g9-after-attempt-hint",pages["core2a.html"])
