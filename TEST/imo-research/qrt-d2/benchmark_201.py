@@ -29,13 +29,26 @@ ARTIFACT_SHA = {
     "justify": "cf7ebbebe8bb9987a66a9da3f179e5bc9f320686dd83812fa8b267ca1661e4e3",
 }
 
+# Exact answer tokens must not occur in the readable Core2A page before
+# commitment, including SVG accessible labels. This is a targeted leak
+# regression test, not a complete H/S/P/M pedagogic judgment.
+PRIMARY_CONCLUSION_SENTINELS = {
+    "retrieve": ("15m", "21m", "saving 6m"),
+    "explain": ("3^2=9", "t=1 gives", "3² = 9"),
+    "apply": ("648", "32.5%", "720 credits"),
+    "model": ("x=4", "x = 4", "four large", "five small"),
+    "represent": ("15 unshaded", "3×5=15", "3 × 5 = 15"),
+    "synthesize": ("432", "452 is not"),
+    "justify": ("m=2 gives", "m = 2 gives", "3×4×5=60"),
+}
+
 def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 def collect(html: str, attribute: str) -> list[str]:
     return re.findall(r'\b' + re.escape(attribute) + r'="([^"]+)"', html)
 
-def browser_check(html: str, role: str, browser) -> dict:
+def browser_check(html: str, role: str, demand: str, browser) -> dict:
     """Real Chromium on native renderer HTML (not on a handwritten imitation)."""
     ctx = browser.new_context(viewport={"width": 390, "height": 844})
     page = ctx.new_page()
@@ -44,6 +57,20 @@ def browser_check(html: str, role: str, browser) -> dict:
     result = {"role": role}
     try:
         page.set_content(html, wait_until="load")
+        if role == "core2a":
+            # innerText follows browser display semantics: <template> is inert.
+            precommit_text = page.locator("body").inner_text()
+            visible_labels = page.evaluate("""() => [...document.querySelectorAll(
+               '[aria-label], [title], svg title, svg desc'
+            )].filter(e => !e.closest('template')).map(e =>
+                [e.getAttribute('aria-label') || '', e.getAttribute('title') || '',
+                 e.tagName === 'title' || e.tagName === 'desc' ? e.textContent : '']
+                 .join(' ')).join(' ')""")
+            exposed = (precommit_text + " " + visible_labels).casefold()
+            leaked = [token for token in PRIMARY_CONCLUSION_SENTINELS[demand]
+                      if token.casefold() in exposed]
+            if leaked:
+                raise AssertionError("CORE2A_PRECOMMIT_ANSWER_LEAK:" + ",".join(leaked))
         targets = page.locator("details[data-g9-reveal][data-requires-attempt]")
         if not targets.count():
             raise AssertionError("NO_ATTEMPT_GATED_REVEAL")
@@ -200,7 +227,7 @@ def verify(render_root: Path, run_browser: bool) -> dict:
                         "h3_policy": "EXPECTED_POST_GOLDEN_AFTER_ATTEMPT_DELTA" if role == "core2a" else "NOT_APPLICABLE",
                     }
                     if browser is not None and role in ("core1b", "core2a", "core2b"):
-                        outcome = browser_check(text, role, browser)
+                        outcome = browser_check(text, role, demand, browser)
                         row["role_checks"][role]["browser"] = outcome
                         assert outcome["status"] == "BROWSER_PASS", f"{role}:{outcome.get('reason')}"
                 row["technical"] = "STATIC_TECHNIQUE_PASS" if browser is None else "BROWSER_AND_STATIC_PASS"
