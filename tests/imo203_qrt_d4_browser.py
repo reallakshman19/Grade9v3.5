@@ -3,6 +3,7 @@ import json
 import sys
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from imo203_d4_w_guard import assert_no_protected_iff
 
 cell=sys.argv[1].lower()
 assert cell in ("retrieve","synthesize"),cell
@@ -29,6 +30,9 @@ with sync_playwright() as p:
             if role in ("core1","core1a","core1b") and width==1280:
                 prior_visible=page.locator("body").inner_text()
                 prior_ax=page.locator("body").aria_snapshot()
+                if cell == "retrieve":
+                    assert_no_protected_iff(prior_visible, role + "-visible")
+                    assert_no_protected_iff(prior_ax, role + "-AX")
                 for protected_word in protected:
                     assert protected_word not in prior_visible,(cell,role,"VISIBLE_PREVIEW",protected_word)
                     assert protected_word not in prior_ax,(cell,role,"AX_PREVIEW",protected_word)
@@ -43,6 +47,9 @@ with sync_playwright() as p:
                 commit=page.locator('[data-g9-attempt-box] button[data-g9-commit]').first
                 before=page.locator("body").inner_text()
                 accessible=page.locator("body").aria_snapshot()
+                if cell == "retrieve":
+                    assert_no_protected_iff(before, "core2a-precommit-visible")
+                    assert_no_protected_iff(accessible, "core2a-precommit-AX")
                 for word in protected:
                     assert word not in before,(cell,"VISIBLE_PREATTEMPT",word)
                     assert word not in accessible,(cell,"AX_PREATTEMPT",word)
@@ -55,6 +62,8 @@ with sync_playwright() as p:
                     if nxt.count() and nxt.is_enabled():
                         nxt.click()
                 current=page.locator("body").inner_text()
+                if cell == "retrieve":
+                    assert_no_protected_iff(current, "core2a-safe-hints")
                 for word in protected:
                     assert word not in current,(cell,"VISIBLE_SAFE_HINT",word)
                 attempt.fill("I am checking the defining conditions and keeping the decisive classification or ordering decision for my attempt.")
