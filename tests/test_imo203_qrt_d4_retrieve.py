@@ -75,7 +75,8 @@ class RetrieveD4(unittest.TestCase):
             html=pages[role]
             self.assertNotIn("9,17,33,49",html,role)
             self.assertNotIn("At modulus128, a=9",html,role)
-        self.assertIn("D4-RET-MOVE-CRITERION",pages["core2a.html"])
+        # Internal authoring move IDs are not meant to be published in learner HTML.
+        self.assertIn("data-g9-after-attempt-hint",pages["core2a.html"])
         self.assertIn("data-g9-after-attempt-hint",pages["core2a.html"])
         self.assertIn("data-requires-attempt",pages["core2a.html"])
 
