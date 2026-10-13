@@ -10,6 +10,7 @@ on:
       - 'TEST/library/figures/qrt-d3-synthesize-*.svg'
       - 'TEST/products/imo182-qrt-d3-synthesize.manifest.json'
       - 'tests/test_imo182_qrt_d3_synthesize.py'
+      - 'tests/test_imo182_qrt_d3_synthesize_exposure_label.py'
   pull_request:
     paths:
       - '.github/workflows/imo182-qrt-d3-synthesize.yml'
@@ -17,6 +18,7 @@ on:
       - 'TEST/library/figures/qrt-d3-synthesize-*.svg'
       - 'TEST/products/imo182-qrt-d3-synthesize.manifest.json'
       - 'tests/test_imo182_qrt_d3_synthesize.py'
+      - 'tests/test_imo182_qrt_d3_synthesize_exposure_label.py'
   workflow_dispatch:
 
 permissions:
@@ -41,7 +43,7 @@ jobs:
             --manifest TEST/products/imo182-qrt-d3-synthesize.manifest.json \
             --out build/imo182-qrt/d3/synthesize --draft --reference
       - name: Validate independent digit synthesis and transfer, five goldens and live attempt gates
-        run: python -m unittest tests.test_imo182_qrt_d3_synthesize -v
+        run: python -m unittest tests.test_imo182_qrt_d3_synthesize tests.test_imo182_qrt_d3_synthesize_exposure_label -v
       - name: Exact-head HTML SHA256 receipts
         if: always()
         run: |
