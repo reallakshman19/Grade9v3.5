@@ -1,0 +1,1319 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO203-QRT-RETRIEVE-D4",
+  "title": "Authored TEST: odd-square residue retrieval and modulus exception",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Original authored TEST task, no official exam source, no accepted QRT or golden. Supports registered five-role Core output; classification remains pending independent review.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-D4-RETRIEVE-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original odd modular-square classification",
+      "origin": "AUTHORED",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 #203 RETRIEVE-D4",
+      "edition": "2026-10-12 TEST draft",
+      "section": "Odd-square classes modulo powers of two",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "All teaching words and diagrams authored for TEST; no official exam text, logo, PDF, KEY or rights admission.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Odd square classes modulo2^k for k>=3 iff1 mod8.",
+        "For modulus4 odd square classes iff1 mod4."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Original TEST item; no publisher text or source key.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-D4-RETRIEVE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Odd square residues with an exceptional exponent",
+      "topic": "Number theory, modular quadratic residues",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Different power-of-two exponents require distinct defining conditions.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-D4-RETRIEVE-CORE1A",
+      "conventions": [
+        {
+          "id": "odd-class",
+          "statement": "All classes and roots are odd in the classification task."
+        },
+        {
+          "id": "modulus",
+          "statement": "Modulus128=2^7 changes to modulus4=2^2 on transfer."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-D4-RETRIEVE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "Retrieve the iff odd-square class definition for the applicable power of two.",
+      "success_criterion": "Classify six unfamiliar odd residues without brute-force roots, correct the modulo4 versus modulo8 exception and defend the distinction.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-D4-RETRIEVE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Classify modular squares with the correct power-of-two criterion",
+      "bucket_id": "BUCKET-D4-RETRIEVE",
+      "primary_capability_ref": "CAP-D4-RETRIEVE",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Different power-of-two exponents require distinct defining conditions.",
+      "entry_assumptions": [
+        "Odd x is 2t+1.",
+        "Modulo4 and modulo8.",
+        "A modular square root is an integer root of x²≡a."
+      ],
+      "inferential_jump": "Select the right odd-square existence criterion for k>=3 versus the exceptional k=2.",
+      "teaching_path": [
+        {
+          "id": "D4-RET-PLACE",
+          "role": "DECLARE",
+          "action": "Write an odd number as 2t+1 and expand its square.",
+          "why_valid": "All odd integers have this form.",
+          "inputs": [],
+          "output": "x²=4t(t+1)+1.",
+          "source_ref": "SRC-D4-RETRIEVE-ORIGINAL"
+        },
+        {
+          "id": "D4-RET-TWO",
+          "role": "TRANSFORM",
+          "action": "Use parity of consecutive integers to interpret odd squares modulo8.",
+          "why_valid": "One of t and t+1 is even.",
+          "inputs": [
+            "odd-square residue conditions"
+          ],
+          "output": "Odd square is1 modulo8.",
+          "source_ref": "SRC-D4-RETRIEVE-ORIGINAL"
+        },
+        {
+          "id": "D4-RET-SPLIT",
+          "role": "TRANSFORM",
+          "action": "Compare k=2 and k>=3 before selecting a classification theorem.",
+          "why_valid": "The modulus determines which criterion can apply.",
+          "inputs": [
+            "odd-square residue conditions"
+          ],
+          "output": "Small-modulus boundary must be checked.",
+          "source_ref": "SRC-D4-RETRIEVE-ORIGINAL"
+        },
+        {
+          "id": "D4-RET-AUDIT",
+          "role": "VERIFY",
+          "action": "Challenge a=5 at modulus4 and8.",
+          "why_valid": "Five is1 modulo4 but5 modulo8.",
+          "inputs": [
+            "odd-square residue conditions"
+          ],
+          "output": "Near-neighbor class disproves false generalizations.",
+          "source_ref": "SRC-D4-RETRIEVE-ORIGINAL"
+        }
+      ],
+      "relation_refs": [
+        "REL-D4-RETRIEVE"
+      ],
+      "representation_refs": [
+        "REP-D4-RETRIEVE-CORE1A"
+      ],
+      "question_family_refs": [
+        "FAM-D4-RETRIEVE"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Every odd residue is an odd square.",
+          "diagnostic_prompt": "Is5 a square modulo8? Contrast modulo4.",
+          "repair": "Oddness alone is insufficient: at k>=3 the criterion is1 modulo8."
+        },
+        {
+          "wrong_idea": "1 modulo4 suffices at every power of two.",
+          "diagnostic_prompt": "Five is1 modulo4; does that make it a square modulo8?",
+          "repair": "For k>=3 use1 modulo8; the weaker rule is exact only at exponent2."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independently classify 5 and9 as odd-square residues modulo16, then compare modulo4.",
+        "source_ref": "SRC-D4-RETRIEVE-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "9 is an odd square modulo16,5 is not; both are modulo4.",
+          "reasoning": [
+            "3²≡9 mod16 and odd square classes mod16 are1 or9.",
+            "5≡1 mod4 and9≡1 mod4."
+          ],
+          "check": "All eight odd squares mod16 are either1 or9.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        }
+      },
+      "research_contribution": "Recover the exact criterion for odd modular-square classes, distinguish the small exponent exception and keep the learner's classification independent.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-D4-RETRIEVE-ROTATE",
+          "decision": "Build the small odd-square necessity anchor; leave classification at an unfamiliar larger modulus learner-owned.",
+          "step_refs": [
+            "D4-RET-PLACE",
+            "D4-RET-TWO",
+            "D4-RET-SPLIT",
+            "D4-RET-AUDIT"
+          ],
+          "representation_ref": "REP-D4-RETRIEVE-CORE1A",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-D4-RETRIEVE"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Enumerate odd squares modulo8 and16 and independently test a=5.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "D4-RET-STAGE-PLACE",
+            "D4-RET-STAGE-TWO",
+            "D4-RET-STAGE-SPLIT"
+          ],
+          "worked_anchor_ref": "Q-D4-RETRIEVE-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "Why must every odd square be1 modulo8?",
+        "result": "(2t+1)²=4t(t+1)+1, and t(t+1) is even.",
+        "representation_ref": "REP-D4-RETRIEVE-CORE1A"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A learner claims that any odd residue is a square modulo a power of two. Is5 a square modulo8?",
+          "defensible_answer": "No; every odd square equals1 modulo8."
+        },
+        "attempt": {
+          "produces": "Retrieve the correct k-dependent odd-square classification criterion rather than blindly calculate roots.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Choose correct criterion at k>=3.",
+              "evidence_of": "States iff a≡1 modulo8."
+            },
+            {
+              "criterion": "Classify all six residues.",
+              "evidence_of": "Yes 9,17,33,49; no13,21."
+            },
+            {
+              "criterion": "Identify changed k=2 criterion.",
+              "evidence_of": "Recognizes modulo4 class."
+            }
+          ],
+          "accepted": [
+            "At modulus128, a=9,17,33,49 have odd square roots, 13 and21 do not."
+          ],
+          "rejected": [
+            "Every odd residue works.",
+            "a≡1 mod4 suffices modulo128."
+          ],
+          "task": {
+            "prompt": "Explain why oddness alone does not classify square residues: compare a=5 at modulus4 and8.",
+            "givens": [
+              "a=5 odd.",
+              "Moduli4 and8."
+            ],
+            "representation_ref": "REP-D4-RETRIEVE-CORE1B",
+            "stage_refs": [
+              "D4-RET-WRONG"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "What form does odd x have?",
+              "why_this_ask": "Tests necessary criterion and its exponent boundary.",
+              "from_step_ref": "D4-RET-PLACE"
+            },
+            {
+              "ask": "What does its square give modulo8?",
+              "why_this_ask": "Tests necessary criterion and its exponent boundary.",
+              "from_step_ref": "D4-RET-TWO"
+            },
+            {
+              "ask": "Does k=2 use the same rule?",
+              "why_this_ask": "Tests necessary criterion and its exponent boundary.",
+              "from_step_ref": "D4-RET-SPLIT"
+            },
+            {
+              "ask": "Does residue5 refute an overgeneralization?",
+              "why_this_ask": "Tests necessary criterion and its exponent boundary.",
+              "from_step_ref": "D4-RET-AUDIT"
+            }
+          ],
+          "differs_from_teaching_path": "Core1B refutes blind overgeneralization; Core1A teaches a worked necessity anchor."
+        },
+        "boundary_test": {
+          "prompt": "Can a=5 be an odd square modulo4? modulo8? modulo16?",
+          "answer": "Yes modulo4; no modulo8 or16.",
+          "confirms": "Exponent changes the exact classification."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-D4-RETRIEVE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "(2t+1)² ≡ 1 (mod 8).",
+      "meaning": "Odd-square necessity anchor; full iff at large modulus remains a learner retrieval decision.",
+      "symbols": [
+        {
+          "symbol": "x",
+          "meaning": "Odd candidate square root",
+          "unit_or_domain": "odd integer"
+        },
+        {
+          "symbol": "t",
+          "meaning": "Integer parameter",
+          "unit_or_domain": "integer"
+        },
+        {
+          "symbol": "k",
+          "meaning": "Exponent of the power-of-two modulus",
+          "unit_or_domain": "integer≥2"
+        }
+      ],
+      "conditions": [
+        "The candidate root x is odd.",
+        "At exponent k=2, a different weaker criterion applies."
+      ],
+      "derivation": [
+        {
+          "id": "D4-RET-REL-0",
+          "role": "DECLARE",
+          "action": "Write an odd number as 2t+1 and expand its square.",
+          "why_valid": "All odd integers have this form.",
+          "inputs": [],
+          "output": "x²=4t(t+1)+1."
+        },
+        {
+          "id": "D4-RET-REL-1",
+          "role": "TRANSFORM",
+          "action": "Use parity of consecutive integers to interpret odd squares modulo8.",
+          "why_valid": "One of t and t+1 is even.",
+          "inputs": [
+            "odd-square residue conditions"
+          ],
+          "output": "Odd square is1 modulo8."
+        },
+        {
+          "id": "D4-RET-REL-2",
+          "role": "TRANSFORM",
+          "action": "Compare k=2 and k>=3 before selecting a classification theorem.",
+          "why_valid": "The modulus determines which criterion can apply.",
+          "inputs": [
+            "odd-square residue conditions"
+          ],
+          "output": "Small-modulus boundary must be checked."
+        },
+        {
+          "id": "D4-RET-REL-3",
+          "role": "VERIFY",
+          "action": "Challenge a=5 at modulus4 and8.",
+          "why_valid": "Five is1 modulo4 but5 modulo8.",
+          "inputs": [
+            "odd-square residue conditions"
+          ],
+          "output": "Near-neighbor class disproves false generalizations."
+        }
+      ],
+      "limits": [
+        "Do not extrapolate a modulo4 criterion to higher powers.",
+        "Sufficiency modulo2^k requires the lifting principle, supplied after attempt."
+      ],
+      "checks": [
+        "x=1,3,5,7 all square to1 modulo8."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>≡</mo><mn>1</mn><mtext> (mod 8)</mtext></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-D4-RETRIEVE-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Work a small odd-square modulo8 anchor.",
+      "required_elements": [
+        "odd x",
+        "modulus8",
+        "odd-square expansion"
+      ],
+      "relation_refs": [
+        "REL-D4-RETRIEVE"
+      ],
+      "read_order": [
+        "Read the modulus and candidate.",
+        "Consider appropriate criterion.",
+        "State your classification separately."
+      ],
+      "instance_constraints": [
+        "Do not display an answer class precommit.",
+        "Do not label the correct theorem branch in the main problem."
+      ],
+      "accessibility": [
+        "Same givens appear in text and diagram.",
+        "Answer not in title or description."
+      ],
+      "misleading_alternatives": [
+        "Oddness alone is not sufficient at all exponents."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/retrieve-core1a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1A",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-D4-RETRIEVE",
+          "datum_refs": [
+            "D4-RETRIEVE-DATUM-CORE1A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/retrieve-core1a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Only candidate residues and modulus displayed.",
+            "caption": "An answer-free classification prompt."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "candidate residue",
+          "symbol": "a",
+          "in_words": "The odd residue being classified modulo2^k."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-RET-STAGE-PLACE",
+          "label": "Safe stage 1",
+          "purpose": "Orient givens without revealing the winning criterion.",
+          "visible_elements": [
+            "odd x"
+          ]
+        },
+        {
+          "id": "D4-RET-STAGE-TWO",
+          "label": "Safe stage 2",
+          "purpose": "Orient givens without revealing the winning criterion.",
+          "visible_elements": [
+            "odd x",
+            "modulus8"
+          ]
+        },
+        {
+          "id": "D4-RET-STAGE-SPLIT",
+          "label": "Safe stage 3",
+          "purpose": "Orient givens without revealing the winning criterion.",
+          "visible_elements": [
+            "odd x",
+            "modulus8",
+            "odd-square expansion"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-RETRIEVE-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Present an unmarked misconception boundary.",
+      "required_elements": [
+        "modulus4",
+        "modulus8",
+        "candidate5"
+      ],
+      "relation_refs": [
+        "REL-D4-RETRIEVE"
+      ],
+      "read_order": [
+        "Read the modulus and candidate.",
+        "Consider appropriate criterion.",
+        "State your classification separately."
+      ],
+      "instance_constraints": [
+        "Do not display an answer class precommit.",
+        "Do not label the correct theorem branch in the main problem."
+      ],
+      "accessibility": [
+        "Same givens appear in text and diagram.",
+        "Answer not in title or description."
+      ],
+      "misleading_alternatives": [
+        "Oddness alone is not sufficient at all exponents."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/retrieve-core1b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1B",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-D4-RETRIEVE",
+          "datum_refs": [
+            "D4-RETRIEVE-DATUM-CORE1B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/retrieve-core1b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Only candidate residues and modulus displayed.",
+            "caption": "An answer-free classification prompt."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "candidate residue",
+          "symbol": "a",
+          "in_words": "The odd residue being classified modulo2^k."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-RET-WRONG",
+          "label": "Safe stage 1",
+          "purpose": "Orient givens without revealing the winning criterion.",
+          "visible_elements": [
+            "modulus4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-RETRIEVE-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Present six mod128 odd candidates without class labels.",
+      "required_elements": [
+        "modulus128",
+        "9,13,17,21,33,49",
+        "classification blank"
+      ],
+      "relation_refs": [
+        "REL-D4-RETRIEVE"
+      ],
+      "read_order": [
+        "Read the modulus and candidate.",
+        "Consider appropriate criterion.",
+        "State your classification separately."
+      ],
+      "instance_constraints": [
+        "Do not display an answer class precommit.",
+        "Do not label the correct theorem branch in the main problem."
+      ],
+      "accessibility": [
+        "Same givens appear in text and diagram.",
+        "Answer not in title or description."
+      ],
+      "misleading_alternatives": [
+        "Oddness alone is not sufficient at all exponents."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/retrieve-core2a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2A",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Recover the exact criterion for odd modular-square classes, distinguish the small exponent exception and keep the learner's classification independent.",
+          "datum_refs": [
+            "D4-RETRIEVE-DATUM-CORE2A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/retrieve-core2a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Only candidate residues and modulus displayed.",
+            "caption": "An answer-free classification prompt."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "candidate residue",
+          "symbol": "a",
+          "in_words": "The odd residue being classified modulo2^k."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-RET-ROTATE1",
+          "label": "Safe stage 1",
+          "purpose": "Orient givens without revealing the winning criterion.",
+          "visible_elements": [
+            "modulus128"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-RETRIEVE-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Present the changed modulus4 candidates without class labels.",
+      "required_elements": [
+        "modulus4",
+        "5,9,13",
+        "classification blank"
+      ],
+      "relation_refs": [
+        "REL-D4-RETRIEVE"
+      ],
+      "read_order": [
+        "Read the modulus and candidate.",
+        "Consider appropriate criterion.",
+        "State your classification separately."
+      ],
+      "instance_constraints": [
+        "Do not display an answer class precommit.",
+        "Do not label the correct theorem branch in the main problem."
+      ],
+      "accessibility": [
+        "Same givens appear in text and diagram.",
+        "Answer not in title or description."
+      ],
+      "misleading_alternatives": [
+        "Oddness alone is not sufficient at all exponents."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/retrieve-core2b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2B",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Recover the exact criterion for odd modular-square classes, distinguish the small exponent exception and keep the learner's classification independent.",
+          "datum_refs": [
+            "D4-RETRIEVE-DATUM-CORE2B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/retrieve-core2b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Only candidate residues and modulus displayed.",
+            "caption": "An answer-free classification prompt."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "candidate residue",
+          "symbol": "a",
+          "in_words": "The odd residue being classified modulo2^k."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-RET-ROTATE2",
+          "label": "Safe stage 1",
+          "purpose": "Orient givens without revealing the winning criterion.",
+          "visible_elements": [
+            "modulus4"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-D4-RETRIEVE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Exception-sensitive modular square criterion retrieval",
+      "capability_refs": [
+        "CAP-D4-RETRIEVE"
+      ],
+      "solution_structure": [
+        "Identify exponent of modulus.",
+        "Recall odd-square defining criterion for that exponent.",
+        "Classify unfamiliar residues.",
+        "Switch criterion at modulus4."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Select the rule branch rather than invent a new model.",
+        "representation_translation": "Reduce odd residues modulo8 or4.",
+        "reasoning_steps": "State necessary and sufficient classification condition.",
+        "novelty": "Small exponent changes the theorem branch."
+      },
+      "safe_variations": [
+        "Other odd residues at stated powers of two."
+      ],
+      "transfer_boundaries": [
+        "Never treat even residues as included.",
+        "Modulus4 differs from modulus128."
+      ],
+      "common_wrong_routes": [
+        "Every odd residue is square.",
+        "Modulo4 criterion suffices modulo128."
+      ],
+      "item_refs": [
+        "Q-D4-RETRIEVE-WORKED",
+        "Q-D4-RETRIEVE-ROTATE1",
+        "Q-D4-RETRIEVE-ROTATE2"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-D4-RETRIEVE-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-RETRIEVE-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-RETRIEVE-WORKED",
+      "stem": "For arbitrary odd x=2t+1, establish its square residue modulo8 without classifying odd residues modulo128.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "x is odd.",
+        "This teaching anchor uses modulus8 only."
+      ],
+      "figure_refs": [
+        "REP-D4-RETRIEVE-CORE1A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Every odd square is1 modulo8.",
+        "reasoning": [
+          "(2t+1)²=4t(t+1)+1.",
+          "Since t(t+1) is even, x²≡1 modulo8."
+        ],
+        "check": "1,3,5,7 all square to1 modulo8.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-RETRIEVE",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-RETRIEVE",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-D4-RETRIEVE-CORE1A",
+        "safe_ref": "REP-D4-RETRIEVE-CORE1A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-RET-STAGE-PLACE"
+        ]
+      },
+      "failure_signal": "Enumerating integer perfect squares does not establish a modular residue rule.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-RETRIEVE",
+        "closure": "Anchor establishes small-modulus necessity; main classification is learner-owned."
+      }
+    },
+    {
+      "id": "Q-D4-RETRIEVE-ROTATE1",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "ISSUE203-AUTHORED-RETRIEVE",
+        "grade9v3:cognitive_demand": {
+          "primary": "RETRIEVE",
+          "secondary": [
+            "APPLY",
+            "JUSTIFY"
+          ],
+          "basis": "Independently retrieve the correct threshold-specific criterion a≡1 (mod8) for k>=3, classify unfamiliar residues, and switch criterion at k=2."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Independently retrieve the correct threshold-specific criterion a≡1 (mod8) for k>=3, classify unfamiliar residues, and switch criterion at k=2.",
+          "common_wrong_route": "Every odd residue is a square, or residue 1 modulo4 is enough for every power of two."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "D4-RET-MOVE-CRITERION"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "D4-RET-MOVE-CRITERION"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-RETRIEVE-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-RETRIEVE-ROTATE1",
+      "stem": "An odd residue a modulo 128 is called an odd-square residue if some odd integer x satisfies x²≡a (mod128). Without listing all 128 possibilities, classify a=9,13,17,21,33,49. Name the exact defining criterion and give one counterexample to 'all odd residues work'.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "The modulus is 128=2^7.",
+        "All six candidate residues are odd.",
+        "Classification, not finding individual square roots, is the primary requested answer."
+      ],
+      "figure_refs": [
+        "REP-D4-RETRIEVE-CORE2A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Yes:9,17,33,49. No:13,21. Criterion for k>=3: odd a≡1 mod8.",
+        "reasoning": [
+          "For necessity, (2t+1)^2=4t(t+1)+1≡1 mod8. For sufficiency, modulo8 every residue 1 mod8 has a root; if x²≡a modulo2^k, replacing odd x by x+2^(k−1) flips the k-th binary bit of the square modulo2^(k+1) (k>=3), allowing a lift to either residue. Hence induction.",
+          "9,17,33,49 have residue1 modulo8; 13 and21 have residue5 modulo8.",
+          "The counterexample5 modulo8 proves oddness alone does not suffice."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-RET-MOVE-DOMAIN",
+            "kind": "REPRESENT",
+            "action": "Identify exponent k=7 and odd residue domain.",
+            "why_valid": "128=2^7.",
+            "inputs": [
+              "modulus128",
+              "odd residues"
+            ],
+            "output": "Correct theorem domain."
+          },
+          {
+            "id": "D4-RET-MOVE-ANCHOR",
+            "kind": "CONNECT",
+            "action": "Recall the odd-square necessity observation modulo8.",
+            "why_valid": "(2t+1)²≡1 modulo8.",
+            "inputs": [
+              "odd square expansion"
+            ],
+            "output": "Conceptual anchor."
+          },
+          {
+            "id": "D4-RET-MOVE-CRITERION",
+            "kind": "DECIDE",
+            "action": "Retrieve the full iff theorem for k>=3 and classify six residues.",
+            "why_valid": "Odd a has an odd square root modulo2^k iff a≡1 mod8.",
+            "inputs": [
+              "six odd residues",
+              "k=7"
+            ],
+            "output": "9,17,33,49 yes; 13,21 no."
+          },
+          {
+            "id": "D4-RET-MOVE-VERIFY",
+            "kind": "VERIFY",
+            "action": "Use residue5 modulo8 as counterexample.",
+            "why_valid": "An odd root square modulo8 must be1.",
+            "inputs": [
+              "a=5"
+            ],
+            "output": "Refutes the wrong route."
+          }
+        ],
+        "crux_move_ref": "D4-RET-MOVE-CRITERION",
+        "check": "Independent exhaustive modulo2^k odd-square oracle k=2..10.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-RETRIEVE",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-RETRIEVE",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Which property must a candidate residue have to be the square of an odd integer? Avoid computing six roots.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-RET-MOVE-DOMAIN"
+        },
+        {
+          "text": "Use a short odd-square example at a lower power of two as an anchor; ask whether every power of two has the same boundary.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-RET-MOVE-ANCHOR"
+        },
+        {
+          "text": "Odd squares are 1 modulo8, and every odd class congruent 1 modulo8 lifts to a square at higher powers of two. Distinguish k>=3 from the k=2 exception.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "D4-RET-MOVE-CRITERION"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-RETRIEVE-CORE2A",
+        "safe_ref": "REP-D4-RETRIEVE-CORE2A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-RET-ROTATE1"
+        ]
+      },
+      "repair_ref": "D4-RET-AUDIT",
+      "failure_signal": "Overgeneralizing oddness or modulo4 to modulus128 shows an incorrect theorem boundary.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-RETRIEVE",
+        "closure": "Retrieve a threshold-conditioned property, not just execute a rote procedure."
+      },
+      "independent_check": {
+        "statement": "Enumerate odd square classes modulo2^k k=2..10, compare with criterion.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "High-transfer exceptional exponent boundary rather than many calculations; D4 provisional because criterion selection at k=2 versus k>=3 must remain learner-owned.",
+        "component_evidence": {
+          "concept_model_selection": "Select criterion based on exponent.",
+          "representation_translation": "Compare odd residues mod8.",
+          "reasoning_chain_length": "Classification and a counterexample.",
+          "algebra_computational_load": "Small remainders only.",
+          "trap_exception_sensitivity": "k=2 different from k>=3."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-D4-RETRIEVE-ROTATE2",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "ISSUE203-AUTHORED-RETRIEVE",
+        "grade9v3:cognitive_demand": {
+          "primary": "RETRIEVE",
+          "secondary": [
+            "APPLY"
+          ],
+          "basis": "Retrieve and switch to the k=2 criterion; do not reuse 1 mod8 from the earlier problem."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Retrieve and switch to the k=2 criterion; do not reuse 1 mod8 from the earlier problem.",
+          "common_wrong_route": "Copy the modulo8 criterion."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-RETRIEVE-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-RETRIEVE-ROTATE2",
+      "stem": "The modulus is now 4 instead of 128; classify odd residues a=5,9,13 and contrast the result for a=5 modulo8.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Odd residues 5,9,13 only.",
+        "New modulus4; contrast 5 modulo8."
+      ],
+      "figure_refs": [
+        "REP-D4-RETRIEVE-CORE2B"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "All 5,9,13 are 1 modulo4 and have odd square roots modulo4. The residue 5 has no root modulo8; the small-modulus exception is genuine.",
+        "reasoning": [
+          "Odd squares mod4 are exactly residue1.",
+          "5,9,13 are all1 modulo4 and therefore admit roots.",
+          "Modulo8,5 does not have an odd root."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-RET-TRANSFER-DOMAIN",
+            "kind": "REPRESENT",
+            "action": "Recognize k=2 exceptional modulus.",
+            "why_valid": "4=2².",
+            "inputs": [
+              "modulus4"
+            ],
+            "output": "Changed theorem branch."
+          },
+          {
+            "id": "D4-RET-TRANSFER-CRITERION",
+            "kind": "DECIDE",
+            "action": "Retrieve the modulo4 criterion and classify5,9,13.",
+            "why_valid": "Odd square classes modulo4 are1.",
+            "inputs": [
+              "5,9,13"
+            ],
+            "output": "All yes."
+          },
+          {
+            "id": "D4-RET-TRANSFER-VERIFY",
+            "kind": "VERIFY",
+            "action": "Contrast5 modulo8.",
+            "why_valid": "Five is not1 modulo8.",
+            "inputs": [
+              "5",
+              "mod8"
+            ],
+            "output": "Boundary checked."
+          }
+        ],
+        "crux_move_ref": "D4-RET-TRANSFER-CRITERION",
+        "check": "Enumerate odd squares modulo4 and8.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "rubric": [
+          {
+            "criterion": "Recognize changed modulus.",
+            "evidence_of": "Uses k=2."
+          },
+          {
+            "criterion": "Classify all 3 residues.",
+            "evidence_of": "All positive."
+          },
+          {
+            "criterion": "Contrast modulo8.",
+            "evidence_of": "5 fails."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-D4-RETRIEVE",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-RETRIEVE",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "At the changed exponent2, which defining class must be recalled?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-RETRIEVE-CORE2B",
+        "safe_ref": "REP-D4-RETRIEVE-CORE2B",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-RET-ROTATE2"
+        ]
+      },
+      "repair_ref": "D4-RET-SPLIT",
+      "failure_signal": "Copying modulo8 criterion at modulus4 misses legitimate roots.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-RETRIEVE",
+        "closure": "Requires retrieving changed exact theorem branch."
+      },
+      "independent_check": {
+        "statement": "All odd squares modulo4 versus8 independently enumerated.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "Changed modulus crosses an exception threshold.",
+        "component_evidence": {
+          "concept_model_selection": "Select criterion based on exponent.",
+          "representation_translation": "Compare odd residues mod8.",
+          "reasoning_chain_length": "Classification and a counterexample.",
+          "algebra_computational_load": "Small remainders only.",
+          "trap_exception_sensitivity": "k=2 different from k>=3."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "exception-sensitive retrieval",
+        "builds_on": [
+          "Q-D4-RETRIEVE-ROTATE1"
+        ],
+        "statement": "Modulus changes to4; criterion must change.",
+        "invariant": "Square-root existence is a modular classification.",
+        "novelty": {
+          "checked_against": [
+            "Q-D4-RETRIEVE-ROTATE1",
+            "MIC-D4-RETRIEVE:exit_task",
+            "MIC-D4-RETRIEVE:boundary_test"
+          ],
+          "why_new": "Small exponent requires a weaker iff condition."
+        },
+        "protected_move_ref": "D4-RET-TRANSFER-CRITERION"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-D4-RETRIEVE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Odd squares anchor to exception-sensitive classification",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-D4-RETRIEVE"
+      ],
+      "entry_needs": [
+        "Odd number expansion and elementary congruence."
+      ],
+      "learner_actions": [
+        "Learn odd-square modulo8 anchor.",
+        "Test counterexample residue5.",
+        "Classify unfamiliar odd residue classes modulo128.",
+        "Change criterion at exponent2."
+      ],
+      "help_plan": [
+        "Core1A works a small odd-square anchor.",
+        "Core1B repairs overgeneralization.",
+        "Core2A H3 waits for nonblank commitment."
+      ],
+      "reveal_plan": "Anchor first; main odd-square iff theorem after attempt.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-D4-RETRIEVE-ORIGINAL",
+          "purpose": "Original TEST problem",
+          "reason": "No official source rights."
+        }
+      ],
+      "when_not_suitable": [
+        "Academic D4 classification and Owner decision remain pending."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:qrt_cell": "QRT-RETRIEVE-D4",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "D4-RETRIEVE-DATUM-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "odd modular residue",
+      "symbol": "a",
+      "meaning": "Safe authored datum: classification not supplied.",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #203"
+    },
+    {
+      "id": "D4-RETRIEVE-DATUM-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "odd modular residue",
+      "symbol": "a",
+      "meaning": "Safe authored datum: classification not supplied.",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #203"
+    },
+    {
+      "id": "D4-RETRIEVE-DATUM-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "odd modular residue",
+      "symbol": "a",
+      "meaning": "Safe authored datum: classification not supplied.",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #203"
+    },
+    {
+      "id": "D4-RETRIEVE-DATUM-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-RETRIEVE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "odd modular residue",
+      "symbol": "a",
+      "meaning": "Safe authored datum: classification not supplied.",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #203"
+    }
+  ]
+}
