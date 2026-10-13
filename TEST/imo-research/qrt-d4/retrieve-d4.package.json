@@ -65,7 +65,7 @@
         },
         {
           "id": "modulus",
-          "statement": "Modulus128=2^7 changes to modulus4=2^2 on transfer."
+          "statement": "Square-residue classification is relative to a stated modulus; do not transfer necessary or sufficient claims between moduli without checking."
         }
       ]
     }
@@ -108,7 +108,7 @@
         "Modulo4 and modulo8.",
         "A modular square root is an integer root of x²≡a."
       ],
-      "inferential_jump": "Select the right odd-square existence criterion for k>=3 versus the exceptional k=2.",
+      "inferential_jump": "Distinguish a necessary modular-square property from a sufficient classification rule, using a separate small-modulus example.",
       "teaching_path": [
         {
           "id": "D4-RET-PLACE",
@@ -133,7 +133,7 @@
         {
           "id": "D4-RET-SPLIT",
           "role": "TRANSFORM",
-          "action": "Compare k=2 and k>=3 before selecting a classification theorem.",
+          "action": "Contrast the independent boundary example a=5 at moduli4 and8; decide what the example proves and what it does not.",
           "why_valid": "The modulus determines which criterion can apply.",
           "inputs": [
             "odd-square residue conditions"
@@ -166,12 +166,12 @@
         {
           "wrong_idea": "Every odd residue is an odd square.",
           "diagnostic_prompt": "Is5 a square modulo8? Contrast modulo4.",
-          "repair": "Oddness alone is insufficient: at k>=3 the criterion is1 modulo8."
+          "repair": "Oddness alone is insufficient: a=5 has no odd square root modulo8. This establishes a necessary restriction, not an if-and-only-if rule for larger moduli."
         },
         {
           "wrong_idea": "1 modulo4 suffices at every power of two.",
           "diagnostic_prompt": "Five is1 modulo4; does that make it a square modulo8?",
-          "repair": "For k>=3 use1 modulo8; the weaker rule is exact only at exponent2."
+          "repair": "A condition that works modulo4 need not remain sufficient modulo8, as a=5 shows. Do not claim a full classification rule from this counterexample."
         }
       ],
       "exit_task": {
@@ -352,7 +352,7 @@
       ],
       "conditions": [
         "The candidate root x is odd.",
-        "At exponent k=2, a different weaker criterion applies."
+        "The result modulo8 is a necessary restriction; determining existence at other moduli requires its own justification."
       ],
       "derivation": [
         {
@@ -376,7 +376,7 @@
         {
           "id": "D4-RET-REL-2",
           "role": "TRANSFORM",
-          "action": "Compare k=2 and k>=3 before selecting a classification theorem.",
+          "action": "Contrast the independent boundary example a=5 at moduli4 and8; decide what the example proves and what it does not.",
           "why_valid": "The modulus determines which criterion can apply.",
           "inputs": [
             "odd-square residue conditions"

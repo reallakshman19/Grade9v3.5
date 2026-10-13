@@ -2,6 +2,7 @@
 import json
 import re
 import unittest
+from html import unescape
 from pathlib import Path
 from jsonschema import Draft202012Validator
 from Shared.tools import render_core, core2_v2
@@ -9,6 +10,7 @@ from Shared.tools import render_core, core2_v2
 ROOT=Path(__file__).resolve().parents[1]
 PKG=ROOT/"TEST/imo-research/qrt-d4/retrieve-d4.package.json"
 MANIFEST=ROOT/"TEST/products/imo203-qrt-d4-retrieve.manifest.json"
+REVIEW=ROOT/"TEST/imo-research/qrt-d4/retrieve-d4.review.json"
 SCHEMA=ROOT/"Shared/library/package.schema.json"
 GOLDEN=ROOT/"golden/units/G-IMO-G9-FIVE-CORE-20261012/snapshots"
 
@@ -18,6 +20,7 @@ class RetrieveD4(unittest.TestCase):
     def setUpClass(cls):
         cls.p=json.loads(PKG.read_text())
         cls.m=json.loads(MANIFEST.read_text())
+        cls.review=json.loads(REVIEW.read_text())
         cls.q=next(q for q in cls.p["questions"] if q["id"]=="Q-D4-RETRIEVE-MAIN")
 
     def test_schema_source_rights_and_scaffold_release(self):
@@ -43,6 +46,18 @@ class RetrieveD4(unittest.TestCase):
             svg=(ROOT/rep["rendered_asset_refs"][0]).read_text()
             self.assertIn("data-g9-stage-id",svg)
             self.assertNotIn("Yes:9,17,33,49",svg)
+
+    def test_question_first_learner_evidence_must_not_be_fabricated(self):
+        learner=self.review["learner_evidence"]
+        self.assertEqual(learner["X"]["status"],"HYPOTHESIS_NOT_DEMONSTRATED")
+        self.assertIsNone(learner["X"]["learner_event_ref"])
+        self.assertEqual(learner["Y"]["status"],"UNKNOWN")
+        self.assertIsNone(learner["Y"]["learner_event_ref"])
+        self.assertEqual(learner["Z"]["status"],"SAFE_BRIDGE_PROPOSED")
+        self.assertEqual(learner["W"]["move_ref"],"D4-RET-MOVE-CRITERION")
+        self.assertEqual(self.review["classification_hold"]["status"],
+                         "PENDING_QUALIFIED_REVIEW_AND_PRIOR_LEARNING_EVIDENCE")
+        self.assertIsNone(self.review["owner_decision"])
 
     def test_independent_odd_square_classes_and_exception(self):
         for k in range(2,11):
@@ -75,6 +90,22 @@ class RetrieveD4(unittest.TestCase):
             html=pages[role]
             self.assertNotIn("9,17,33,49",html,role)
             self.assertNotIn("At modulus128, a=9",html,role)
+        # A cross-role leak can expose the iff theorem without printing the
+        # main residue list. Core1/1A/1B may teach necessity and counterexamples,
+        # but cannot give the full protected k-dependent existence rule.
+        forbidden = (
+            "at k>=3 the criterion is1 modulo8",
+            "for k>=3 use1 modulo8",
+            "the weaker rule is exact only at exponent2",
+            "every odd class congruent 1 modulo8 lifts",
+            "criterion for k>=3: odd a≡1",
+        )
+        for role in ("core1.html", "core1a.html", "core1b.html"):
+            visible = re.sub(r"\s+", " ", unescape(re.sub(r"<[^>]+>", " ", pages[role]))).casefold()
+            for leaked in forbidden:
+                with self.subTest(role=role, leaked=leaked):
+                    self.assertNotIn(leaked, visible)
+        self.assertIn("Every odd square is1 modulo8", pages["core1a.html"])
         # Internal authoring move IDs are not meant to be published in learner HTML.
         self.assertIn("data-g9-after-attempt-hint",pages["core2a.html"])
         self.assertIn("data-g9-after-attempt-hint",pages["core2a.html"])
