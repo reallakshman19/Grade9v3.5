@@ -34,3 +34,31 @@ Similarly, failed `guardrails` [PR #205 run #38378804040](https://github.com/rea
 ## Next qualified-review requests
 
 Ask an independent qualified mathematics/QRT reviewer (explicit identity, date, conflict disclosure) to review the seven primary-demand claims and D1/D2/D3 boundaries, all 12 H1–H3/S1–S3/P1–P3/M1–M3 objectives **against exact native HTML** and safe/hidden accessible representations, each changed-case solution and P1 learner-owned W. Prioritize RETRIEVE-D2's possible reclassification, then MODEL-D2's variable-choice framing. Each outcome should be `ACCEPT / REVISE / RECLASSIFY` with a reasoned signature, and **separately** an Owner cell decision ID. No cell is independently accepted on this document.
+
+## Proposed academic alternatives — reviewer decision required, NOT adopted
+
+These are source-safe **alternative authored stems only**, not new learner-page records, accepted QRT fixtures, verified rendered packages, or permission to replace the existing #191 artifacts. They preserve the old candidates as immutable evidence while providing concrete revision options.
+
+### RETRIEVE-D2: primary-demand repair option
+
+**Observed question:** current stem directs the learner to *retrieve the right-triangle relation*, calculate two route lengths, compare to a cap and compute a saving. The main product is the calculation/decision; independent subject reviewer must decide whether that is in fact **APPLY-D2**.
+
+**Alternative stem for reviewer to challenge:**
+
+> A rectangular playground has perpendicular sides of 9 m and 12 m. The route card shows three expressions: (A) `9 + 12`, (B) `9² + 12²`, and (C) `√(9² + 12²)`. Match the expressions to (i) a trip using two adjacent edges, (ii) the direct corner-to-corner **distance**, and (iii) the **square** of that direct distance. State the defining property of each match. A display accepts measurements in **metres**, not square metres: which of A, B and C are directly valid route-length entries, and why? Evaluate just one chosen length as a check.
+
+**Target decisive act:** retrieve/classify physical path and unit/property across near-neighbour expressions, not primarily execute a known diagonal-and-cap algorithm. **W**: independently connect each route/quantity to its defining property and choose valid length dimensions, then execute one confirming evaluation. D1 control: classify metres versus square metres in one expression. D3 control: a path has obstacles/non-rectilinear access or unknown orientation requiring a different route model. H1 should orient route labels without matching letters; H2 should invoke the meaning of square units and route geometry without selecting A/B/C; H3 may only guide a match after a nonblank attempt. **Caution:** because the options already contain candidate relations, an independent reviewer might judge this too cued or still D1. Revise again or RECLASSIFY if it does not require a meaningful D2 connection.
+
+**No automatic patch:** adopting this variant would require changing the five-role learner journeys, independent Core1A lesson and Core2B changed-demand transfer, plus creating new exact-head native HTML receipts; it must not be spliced into only CORE2A.
+
+### MODEL-D2: learner-owned variable selection repair option
+
+**Observed question:** the current stem specifically instructs *choose a variable for the LARGE-cup count*. That already selects the model's variable meaning, while its review packet says choosing the variable is part of protected W. Independent reviewer should decide whether complement/weighted sum alone is sufficient MODEL-D2.
+
+**Minimal alternative stem for reviewer to challenge:**
+
+> At a school stall, exactly 9 drinks were sold. Small cups cost 4 credits each, large cups cost 7 credits each, and the total collected was exactly 48 credits. Form a **one-variable model** for the unknown mix, clearly defining your own variable and explaining the other count from the total. Solve the model, show both whole-number counts, and check the count and revenue independently.
+
+**W** now contains the learner's variable definition, complementary count, weighted sum and independent two-condition check. H1/H2 must not write the complement `9−x` or choose one category for the learner; H3 after written attempt may suggest the complement as a method, not supply the primary solution. The existing 11-ticket infeasible changed-demand transfer remains a potentially suitable independent Core2B task, subject to separate congruence/count verification. Before adopting, rerun actual renderer, source/manifest git SHA, visual/H2 protection and review of all five roles.
+
+**Required qualified decision:** for each observed stem, record PRIMARY_DEMAND = ACCEPT_AS_D2 / RECLASSIFY / REVISE, band justification using the five canonical components, explicit conflict statement, date and name; then a distinct Owner decision ID. Neither alternative is approved or integrated by this document.
