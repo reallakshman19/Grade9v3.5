@@ -51,6 +51,11 @@ jobs:
             --render-root build/imo201/d2 \
             --out build/imo201/d2/tiles \
             --run-url "$CI_RUN_URL"
+      - name: Screenshot and check all 35 native pages at phone tablet and desktop widths
+        run: |
+          python TEST/imo-research/qrt-d2/issue-201/native_viewports_201.py \
+            --render-root build/imo201/d2 \
+            --screenshots build/imo201/d2/screenshots
       - name: Chromium-check 7x4 review viewer and all twelve pending gate rows
         run: python TEST/imo-research/qrt-d2/issue-201/browser_viewer_201.py
       - name: Upload rendered native evidence and discrepancy report
