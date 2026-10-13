@@ -215,4 +215,50 @@ class D1EvidenceTiles(unittest.TestCase):
         self.assertTrue(all(v is None or v==[] for v in j["review"].values()))
         self.assertEqual(j["owner"]["qrt_decision"],"PENDING")
 
+
+    def test_justify_reasoning_feedback_manual_review_worksheet(self):
+        """The 16 author probes are linked, not silently promoted to human verdicts."""
+        p=json.loads((TILES/"d1/justify-reasoning-probes.v1.json").read_text())
+        w=json.loads((TILES/"d1/justify-feedback-review-sheet.v1.json").read_text())
+        tile=self.tiles["JUSTIFY"]
+        self.assertEqual(w["schema"],"imo-qrt-justify-d1-manual-feedback-review/v1")
+        self.assertEqual(w["scope"],
+                         "REVIEW_WORKSHEET_ONLY_NO_AUTOGRADING_NO_LEARNER_TRIAL_NO_ACADEMIC_SIGNOFF")
+        self.assertEqual(w["cell_id"],p["cell_id"])
+        self.assertEqual(w["hold"],p["source_quality_hold"])
+        self.assertEqual(w["protected_W"],tile["cognitive"]["W"])
+        self.assertEqual(w["provenance"]["learner_source_blob_sha"],
+                         tile["source"]["verified_sha"])
+        self.assertEqual(w["provenance"]["existing_native_html_artifact"],
+                         tile["generation"]["artifact_url"])
+        self.assertEqual(w["provenance"]["owner_frozen_golden_blob"],
+                         tile["golden"]["lock_git_blob_sha"])
+        self.assertEqual(tile["review"]["manual_feedback_worksheet"],
+                         "d1/justify-feedback-review-sheet.v1.json")
+        self.assertEqual([x["id"] for x in w["criteria"]],
+                         [x["id"] for x in p["rubric"]])
+        cases={c["id"]:c for c in p["cases"]}
+        rows={c["probe_id"]:c for c in w["case_reviews"]}
+        self.assertEqual(len(rows),16)
+        self.assertEqual(set(rows),set(cases))
+        for key,row in rows.items():
+            with self.subTest(probe=key):
+                self.assertEqual(row["author_expected_category_reference"],
+                                 cases[key]["author_expected_manual_category"])
+                self.assertTrue(row["feedback_risk_to_check"])
+                self.assertEqual(set(row["manual_review"]["rubric"]),
+                                 {x["id"] for x in p["rubric"]})
+                self.assertTrue(all(v is None for v in
+                                    row["manual_review"]["rubric"].values()))
+                self.assertTrue(all(v is None for k,v in
+                                    row["manual_review"].items() if k!="rubric"))
+        self.assertIsNone(w["comprehension_trials"]["actual_participant_count"])
+        self.assertIsNone(w["comprehension_trials"]["observations"])
+        self.assertTrue(all(v is None for k,v in w["reviewer"].items()
+                            if k!="case_verdict_count"))
+        self.assertEqual(w["reviewer"]["case_verdict_count"],0)
+        self.assertEqual(w["owner"],{"qrt_decision":"PENDING","decision_id":None})
+        self.assertEqual(p["academic_decision"],"PENDING")
+        self.assertFalse(tile["review"]["automatic_free_response_grading"])
+
 if __name__=="__main__":unittest.main()
