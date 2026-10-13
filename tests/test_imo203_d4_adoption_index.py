@@ -2,6 +2,8 @@
 import json
 import re
 import unittest
+from copy import deepcopy
+from tests.imo203_d4_review_gate import promotion_errors
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -136,6 +138,44 @@ class D4AdoptionEvidence(unittest.TestCase):
             self.assertIsNone(item["academic_verdict"])
             self.assertIsNone(item["owner_decision_id"])
             self.assertFalse(item["accepted"])
+
+    def test_unreviewed_rows_cannot_be_promoted_by_status_change(self):
+        handoff = json.loads((BASE / "d4-review/qualified-review-handoff.v1.json").read_text())
+        golden = json.loads((BASE / "d4-review/golden-technique-diff.v1.json").read_text())
+        packets = {r["cell_id"]: r for r in handoff["cells"]}
+        reports = {r["cell_id"]: r for r in golden["cells"]}
+        for cell in self.cells:
+            name = cell["cell_id"]
+            with self.subTest(cell=name, state="pending"):
+                self.assertEqual(promotion_errors(cell, packets[name], reports[name]), [])
+            proposed = deepcopy(cell)
+            proposed["adoption_status"] = "ACADEMIC_REVIEWED"
+            with self.subTest(cell=name, state="academic"):
+                defects = promotion_errors(proposed, packets[name], reports[name])
+                self.assertTrue(defects, "Unreviewed candidate was promoted")
+                self.assertIn("qualified independent reviewer missing", defects)
+                self.assertIn("reviewer conflict-of-interest declaration missing", defects)
+            proposed["adoption_status"] = "OWNER_QRT_ACCEPTED"
+            proposed["assessment"]["accepted"] = True
+            with self.subTest(cell=name, state="owner"):
+                defects = promotion_errors(proposed, packets[name], reports[name])
+                self.assertIn("Owner QRT decision ID missing", defects)
+                self.assertIn("Owner acceptance requires an independent academic PASS", defects)
+
+    def test_retrieve_academic_pass_requires_real_prior_learning(self):
+        handoff = json.loads((BASE / "d4-review/qualified-review-handoff.v1.json").read_text())
+        golden = json.loads((BASE / "d4-review/golden-technique-diff.v1.json").read_text())
+        c = deepcopy(next(x for x in self.cells if x["demand"] == "RETRIEVE"))
+        h = deepcopy(next(x for x in handoff["cells"] if x["cell_id"] == c["cell_id"]))
+        g = deepcopy(next(x for x in golden["cells"] if x["cell_id"] == c["cell_id"]))
+        c["adoption_status"] = "ACADEMIC_REVIEWED"
+        h["academic_verdict"] = "ACADEMIC_PASS"  # synthetic negative-test mutation, not an actual verdict
+        defects = promotion_errors(c, h, g)
+        self.assertIn("RETRIEVE pass requires proven prior full-theorem mastery", defects)
+        c["learner_profile"]["Y"]["status"] = "DEMONSTRATED"
+        # A label alone does not establish mastery.
+        defects = promotion_errors(c, h, g)
+        self.assertIn("Y DEMONSTRATED requires a real learner-event reference", defects)
 
     def test_model_has_distinct_corrected_exact_head_evidence(self):
         model = next(c for c in self.cells if c["demand"] == "MODEL")
