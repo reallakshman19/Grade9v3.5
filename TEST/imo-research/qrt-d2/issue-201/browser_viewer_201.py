@@ -39,7 +39,23 @@ def main():
                 assert page.locator("#five-roles tr").count() == 5, "MISSING_ROLE_LOCKS"
                 assert page.locator("#twelve-checks tr").count() == 12, "MISSING_12_REVIEW_ASKS"
                 assert "PENDING" in page.locator("#owner").inner_text()
-                assert page.locator("#links a").count() >= 5, "MISSING_EVIDENCE_LINKS"
+                links = page.locator("#links a")
+                assert links.count() >= 8, "MISSING_EVIDENCE_OR_ACADEMIC_REVIEW_LINKS"
+                review_id = 211 if demand in ("RETRIEVE", "MODEL") else 214
+                packet = ("ACADEMIC-REVIEW-REQUEST.md" if review_id == 211
+                          else "OTHER-FIVE-ACADEMIC-REVIEW.md")
+                assert links.filter(has_text=f"Qualified academic review request · #{review_id}").count() == 1, (
+                    f"WRONG_QUALIFIED_REVIEW_ISSUE:{demand}:{review_id}"
+                )
+                assert links.locator(f'[href$="/issues/{review_id}"]').count() == 1, (
+                    f"MISSING_UNIQUE_ACADEMIC_ISSUE_TARGET:{demand}"
+                )
+                assert links.locator(f'[href$="{packet}"]').count() == 1, (
+                    f"ACADEMIC_PACKET_NOT_LINKED:{demand}:{packet}"
+                )
+                assert links.locator('[href*="/actions/runs/38426896089/artifacts/11829196580"]').count() == 1, (
+                    f"LATEST_VERIFIED_ARTIFACT_NOT_LINKED:{demand}"
+                )
                 assert "AUTHORED TEST" in page.locator("#rights").inner_text()
                 output["checked"].append(f"QRT-{demand}-D2")
             assert not errors, f"JS_ERRORS:{errors}"
