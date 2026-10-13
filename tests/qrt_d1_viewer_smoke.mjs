@@ -67,6 +67,7 @@ for(const demand of d1){
  assert(anchors.some(a=>String(a.href).includes('/actions/runs/')));
  assert(anchors.some(a=>String(a.href).includes('G-IMO-G9-FIVE-CORE-20261012')));
  assert(anchors.some(a=>String(a.href).includes('/TEST/imo-research/qrt-d1/')));
+ if(demand==='JUSTIFY')assert(anchors.some(a=>String(a.href).endsWith('/d1/justify-reasoning-probes.v1.json')),'Missing human-only explanation feedback review set');
  const actual=data.cells.find(x=>x.id===id);
  assert.equal(document.getElementById('selected-cell-artifact').href,actual.url);
 }
