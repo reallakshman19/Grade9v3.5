@@ -142,6 +142,23 @@ class D1EvidenceTiles(unittest.TestCase):
         self.assertEqual(t["evidence"]["measured_repair"]["type"],"CONFIRMED_AUTHORING_HINT_LEAK")
         self.assertTrue(t["evidence"]["measured_repair"]["six_html_sha_receipt_matches"])
 
+    def test_synthesize_maths_equivalence_and_unresolved_demand_classification(self):
+        t=self.tiles["SYNTHESIZE"]
+        self.assertEqual(t["status_dimensions"]["technical"],"REPAIRED_RENDERED_TEST")
+        self.assertIn("38426322845",t["generation"]["exact_head_ci_run"])
+        self.assertIn("11829090822",t["generation"]["artifact_url"])
+        self.assertEqual(t["source"]["verified_sha"],"0c8cea02abd858ff74d47aa57c3a3b742c197b9b")
+        self.assertEqual(t["evidence"]["measured_repair"]["type"],
+                         "AUTHORING_HINT_AND_MATHEMATICAL_EQUIVALENCE")
+        self.assertTrue(t["evidence"]["measured_repair"]["grouped_and_distributed_count_both_valid"])
+        self.assertEqual(t["evidence"]["measured_repair"]["human_demand_verdict"],"PENDING")
+        q=json.loads((TILES/"d1/semantic-challenge-20261013.v1.json").read_text())
+        challenge=next(c for c in q["cells"] if c["cell_id"]=="QRT-SYNTHESIZE-D1")
+        self.assertIn("isomorphic",challenge["adjacent_band_and_demand_challenge"])
+        self.assertIn("4×3+4×2",challenge["author_mathematical_crosscheck"])
+        self.assertIsNone(challenge["independent_review"]["academic_verdict"])
+        self.assertEqual(self.band["bands"]["D1"]["reported"]["academic_accepted"],0)
+
     def test_repaired_model_and_actual_justify_not_obsolete_inventory(self):
         m=self.tiles["MODEL"];j=self.tiles["JUSTIFY"]
         self.assertIn("11802730066",m["generation"]["artifact_url"])
