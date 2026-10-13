@@ -70,6 +70,7 @@ for(const demand of d1){
  assert(anchors.some(a=>String(a.href).includes('/TEST/imo-research/qrt-d1/')));
  if(demand==='JUSTIFY')assert(anchors.some(a=>String(a.href).endsWith('/d1/justify-reasoning-probes.v1.json')),'Missing human-only explanation feedback review set');
  if(demand==='SYNTHESIZE')assert(anchors.some(a=>String(a.href).includes('/actions/runs/38426322845/artifacts/11829090822')),'SYNTHESIZE viewer must link corrected source-bound artifact');
+ if(demand==='SYNTHESIZE')assert(anchors.some(a=>String(a.href).endsWith('/d1/synthesize-demand-contrast.v1.json')),'SYNTHESIZE unsigned academic contrast must be linked');
  const actual=data.cells.find(x=>x.id===id);
  assert.equal(document.getElementById('selected-cell-artifact').href,actual.url);
 }
