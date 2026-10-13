@@ -37,6 +37,8 @@ jobs:
             --render-root build/imo201/d2 \
             --output build/imo201/d2/benchmark-results.json \
             --browser
+      - name: Chromium-check 7x4 review viewer and all twelve pending gate rows
+        run: python TEST/imo-research/qrt-d2/issue-201/browser_viewer_201.py
       - name: Upload rendered native evidence and discrepancy report
         if: always()
         uses: actions/upload-artifact@v4
