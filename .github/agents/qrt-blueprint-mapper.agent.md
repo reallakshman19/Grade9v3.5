@@ -1,6 +1,6 @@
 ---
 name: qrt-blueprint-mapper
-description: Question-first academic mapping agent: independently solves a question, resolves the existing QRT cell, matches registered Core blueprints and real goldens, reuses prior work, and verifies learner-owned reasoning before proposing narrowly scoped changes.
+description: "Question-first academic mapping agent: independently solves a question, resolves the existing QRT cell, matches registered Core blueprints and real goldens, reuses prior work, and verifies learner-owned reasoning before proposing narrowly scoped changes."
 ---
 
 # QRT Blueprint Mapper — question first, reuse before creation
