@@ -1,0 +1,1392 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-JUSTIFY-D1-AUTHORED",
+  "title": "Source-qualified TEST JUSTIFY-D1 triangle area equality",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "AUTHORED TEST derived from existing IMO-G9-ORIGINAL-PRACTICE-003, with source-intake ALTITUDE_WORDING_CLARITY hold. Main D1 W: justify equal area of two triangles sharing 12 cm base and 7 cm perpendicular altitudes despite displaced peaks. Core1A 10×4 worked, Core1B 10×3 misconception and 8 cm unequal-height boundary, Core2B converse height from equal area 36 and base 12. No original SOF source rights, independent review or release.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:upstream_authored_candidate_id": "IMO-G9-ORIGINAL-PRACTICE-003",
+        "grade9v3:source_quality_hold": "ALTITUDE_WORDING_CLARITY",
+        "grade9v3:upstream_git_blob": "8ee7cc78f34cc1fa640e4abac84620f43d5538c1",
+        "grade9v3:wording_revision": "PRACTICAL_EXPLICIT_RIGHT_ANGLE_AND_EXTENDED_BASE_LINE_PENDING_LEARNER_QA"
+      },
+      "id": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
+      "title": "Authored triangle equal-area JUSTIFY-D1 candidate",
+      "origin": "AUTHORED",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/blob/main/TEST/imo-research/original-practice/seven-cell-original-problems.v1.json",
+      "edition": "Adapted 13 October 2026 from IMO-G9-ORIGINAL-PRACTICE-003",
+      "section": "Common base, perpendicular altitude and triangle area warrant",
+      "last_checked": "2026-10-13",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Previously model-authored practice, not official SOF exam question; source/learner admission pending",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Triangle area is half the chosen base times perpendicular altitude to its line.",
+        "Equal base and perpendicular altitude imply equal triangle areas even for sideways-shifted peaks.",
+        "Equal base alone with unequal perpendicular altitudes does not imply equal area.",
+        "For positive base b, h=2A/b."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Reuse pre-existing original-practice-003 with recorded ALTITUDE_WORDING_CLARITY hold; not new exam rights.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-TEST-IMO182-D1-JUS-GRID",
+      "title": "Justify equal areas from equal triangle bases and perpendicular altitudes",
+      "topic": "Triangle area, corresponding heights and independent warrant",
+      "intrinsic_badge": "EASY",
+      "badge_reason": "One direct claim-to-warrant inference, with base and perpendicular heights supplied.",
+      "depth_overlay": "FOUNDATION",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-TEST-IMO182-D1-JUS-AREA-STAGES",
+      "conventions": [
+        {
+          "id": "base",
+          "statement": "Use the same specified segment AB as the base in both triangles."
+        },
+        {
+          "id": "altitude",
+          "statement": "Altitude is the perpendicular distance to the straight line through base AB, not a slanted edge."
+        },
+        {
+          "id": "area",
+          "statement": "A=base×perpendicular altitude / 2."
+        },
+        {
+          "id": "apex",
+          "statement": "A sideways apex shift need not alter perpendicular altitude."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-TEST-IMO182-D1-JUS-TRIANGLE-AREA-JUSTIFICATION",
+      "action": "Justify why two triangles with a shared base and equal perpendicular altitudes have equal areas despite different slanted sides.",
+      "success_criterion": "Identify a valid base-height area warrant, calculate both 12×7/2 = 42 cm², falsify shared-base-only reasoning using unequal heights, and reverse area to height in a genuinely changed task.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-TEST-IMO182-D1-JUS-TRIANGLE-AREA",
+      "title": "Construct a triangle-area warrant rather than compare silhouettes",
+      "bucket_id": "BUCKET-TEST-IMO182-D1-JUS-GRID",
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-JUS-TRIANGLE-AREA-JUSTIFICATION",
+      "intrinsic_badge": "EASY",
+      "badge_reason": "One supplied base-height relation supports one meaningful learner-owned inference.",
+      "entry_assumptions": [
+        "Triangle area is half base times perpendicular height.",
+        "Perpendicular height is not generally the length of an oblique edge.",
+        "Area units are squared."
+      ],
+      "inferential_jump": "Decide whether the equal base and perpendicular altitude facts license equal triangle areas even when apex positions differ.",
+      "teaching_path": [
+        {
+          "id": "JUS-D1-TC-1",
+          "action": "Declare chosen base and perpendicular altitude as the area-determining pair.",
+          "why_valid": "A triangle occupies half the area of an associated base-height parallelogram.",
+          "inputs": [
+            "base b",
+            "perpendicular altitude h"
+          ],
+          "output": "A=bh/2",
+          "role": "DECLARE",
+          "source_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+        },
+        {
+          "id": "JUS-D1-TC-2",
+          "action": "Solve a DIFFERENT triangle: base 10 cm and perpendicular altitude 4 cm.",
+          "why_valid": "A=10×4/2=20 cm² from the actual perpendicular height.",
+          "inputs": [
+            "base 10",
+            "height 4"
+          ],
+          "output": "20 cm²",
+          "role": "TRANSFORM",
+          "source_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+        },
+        {
+          "id": "JUS-D1-TC-3",
+          "action": "Slide the worked apex sideways while keeping its height 4 cm, then verify unchanged area.",
+          "why_valid": "The formula has the same base and perpendicular height after translation parallel to the baseline.",
+          "inputs": [
+            "base 10",
+            "height 4",
+            "shifted apex"
+          ],
+          "output": "20 cm² again",
+          "role": "VERIFY",
+          "source_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+        }
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
+      ],
+      "representation_refs": [
+        "REP-TEST-IMO182-D1-JUS-AREA-STAGES"
+      ],
+      "question_family_refs": [
+        "FAM-TEST-IMO182-D1-JUS-TRIANGLE-AREA-WARRANT"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "A shifted apex or unequal slanted sides prove triangle areas differ.",
+          "diagnostic_prompt": "A peak slides sideways over the same 10 cm base, staying 3 cm above its line. A student claims its area grows because the slanted side is longer. Is this warranted?",
+          "repair": "Use the 3 cm perpendicular height, not the changing slanted side: both triangle areas remain 10×3/2 = 15 cm²."
+        },
+        {
+          "wrong_idea": "Equal base lengths alone prove areas are equal.",
+          "diagnostic_prompt": "With common base 8 cm, altitudes 5 cm and 4 cm differ. Must the areas match?",
+          "repair": "No; 8×5/2=20 and 8×4/2=16 cm². The perpendicular height condition matters."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Changed exit: two triangles share a 9 cm base and both peaks are at perpendicular distance 6 cm. Justify equal areas and calculate them.",
+        "source_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "Equal areas, 9×6/2=27 cm² each.",
+          "reasoning": [
+            "Both use base 9 cm.",
+            "Both heights to its line are perpendicular and 6 cm.",
+            "Area A=bh/2 is therefore 27 cm² for both."
+          ],
+          "check": "Determinants for vertices (0,0),(9,0),(2,6) and (0,0),(9,0),(7,6) both give 27.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "TEST/imo-research/qrt-d1/verify_justify.py",
+            "bindings": {
+              "base": "9",
+              "height": "6",
+              "expected_area": "27"
+            }
+          }
+        }
+      },
+      "research_contribution": "Reuse previously authored original-practice-003; D1 JUSTIFY warrant tested against slanted-edge misconception, unequal-height boundary, and converse inverse-height transfer. Academic/Owner/source-quality pending.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-TEST-IMO182-D1-JUS-AREA-WARRANT",
+          "decision": "Select the valid perpendicular base-height area warrant instead of visual shape matching.",
+          "step_refs": [
+            "JUS-D1-TC-1",
+            "JUS-D1-TC-2",
+            "JUS-D1-TC-3"
+          ],
+          "representation_ref": "REP-TEST-IMO182-D1-JUS-AREA-STAGES",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Check determinant areas for horizontally shifted peaks.",
+              "check_type": "COORDINATE_AREA"
+            }
+          ],
+          "reveal_stage_refs": [
+            "JUS-STAGE-AREA-MEANING",
+            "JUS-STAGE-WORKED-10-4",
+            "JUS-STAGE-WORKED-CHECK"
+          ],
+          "worked_anchor_ref": "Q-TEST-IMO182-D1-JUS-CORE1A-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "Which measured height determines triangle area?",
+        "result": "A=bh/2 uses perpendicular altitude, not a slanted edge.",
+        "representation_ref": "REP-TEST-IMO182-D1-JUS-AREA-STAGES"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A student claims shifting a triangle apex sideways makes its area greater because one slanted side grows longer. Is that necessarily so?",
+          "defensible_answer": "No. The triangle area is unchanged when base and perpendicular altitude remain fixed."
+        },
+        "attempt": {
+          "produces": "Explain an invalid slanted-edge argument using the perpendicular base-height relation.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Identify which height is valid.",
+              "evidence_of": "Names the perpendicular altitude, not a slanted side."
+            },
+            {
+              "criterion": "State the decisive area warrant.",
+              "evidence_of": "Uses A=bh/2 with the relevant base and height."
+            }
+          ],
+          "accepted": [
+            "A peak moving parallel to the base keeps perpendicular altitude unchanged, so the area remains equal."
+          ],
+          "rejected": [
+            "The longer slanted edge makes the area larger."
+          ],
+          "task": {
+            "prompt": "A classmate says moving the peak sideways must change the area of a triangle whose 10 cm base and 3 cm perpendicular height stay fixed. Challenge the claim and explain the governing relation.",
+            "givens": [
+              "Base remains 10 cm.",
+              "Perpendicular height remains 3 cm.",
+              "Peak moves parallel to the base line."
+            ],
+            "representation_ref": "REP-TEST-IMO182-D1-JUS-ERROR-CLAIM",
+            "stage_refs": [
+              "JUS-ERROR-CLAIM"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Which line is the base and which distance is perpendicular?",
+              "why_this_ask": "Distinguishes altitude from a slanted side.",
+              "from_step_ref": "JUS-D1-TC-1"
+            },
+            {
+              "ask": "What measurement is unchanged by sliding the peak sideways?",
+              "why_this_ask": "Identifies base-height invariance.",
+              "from_step_ref": "JUS-D1-TC-2"
+            },
+            {
+              "ask": "Which area relation verifies the conclusion?",
+              "why_this_ask": "Constructs a valid claim-to-warrant explanation.",
+              "from_step_ref": "JUS-D1-TC-3"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A worked base 10 height 4; Core1B challenges an invalid sideways-peak argument with height 3."
+        },
+        "boundary_test": {
+          "prompt": "Two triangles share an 8 cm base. Their perpendicular altitudes are 5 cm and 4 cm. Does the shared base prove equal areas? Compute and explain.",
+          "answer": "No: 8×5/2=20 cm² and 8×4/2=16 cm².",
+          "confirms": "Falsifies equal-base-only reasoning with a genuinely changed altitude condition."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA",
+      "expression": "A=(b×h)/2",
+      "meaning": "A triangle's area depends on a chosen base b and its perpendicular altitude h, not apex sideways position.",
+      "symbols": [
+        {
+          "symbol": "A",
+          "meaning": "Triangle area",
+          "unit_or_domain": "cm²"
+        },
+        {
+          "symbol": "b",
+          "meaning": "Chosen base length",
+          "unit_or_domain": "cm"
+        },
+        {
+          "symbol": "h",
+          "meaning": "Perpendicular distance of peak to base line",
+          "unit_or_domain": "cm"
+        }
+      ],
+      "conditions": [
+        "Height must be perpendicular to the line through the base.",
+        "Corresponding bases and altitudes are given in the same length units.",
+        "For inverse altitude, b is positive."
+      ],
+      "derivation": [
+        {
+          "id": "DERIV-JUS-D1-TC-1",
+          "action": "Declare chosen base and perpendicular altitude as the area-determining pair.",
+          "why_valid": "A triangle occupies half the area of an associated base-height parallelogram.",
+          "inputs": [
+            "base b",
+            "perpendicular altitude h"
+          ],
+          "output": "A=bh/2",
+          "role": "DECLARE"
+        },
+        {
+          "id": "DERIV-JUS-D1-TC-2",
+          "action": "Solve a DIFFERENT triangle: base 10 cm and perpendicular altitude 4 cm.",
+          "why_valid": "A=10×4/2=20 cm² from the actual perpendicular height.",
+          "inputs": [
+            "base 10",
+            "height 4"
+          ],
+          "output": "20 cm²",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "DERIV-JUS-D1-TC-3",
+          "action": "Slide the worked apex sideways while keeping its height 4 cm, then verify unchanged area.",
+          "why_valid": "The formula has the same base and perpendicular height after translation parallel to the baseline.",
+          "inputs": [
+            "base 10",
+            "height 4",
+            "shifted apex"
+          ],
+          "output": "20 cm² again",
+          "role": "VERIFY"
+        }
+      ],
+      "limits": [
+        "A slanted side is not necessarily the perpendicular altitude.",
+        "Equal base but different heights need not give equal area.",
+        "h=2A/b requires a positive nonzero base."
+      ],
+      "checks": [
+        "Separate worked base 10, height 4 has area 20 cm².",
+        "Source candidate two shifted peaks each base 12, height 7 have area 42 cm².",
+        "Equal base 8 with heights 5 and 4 gives 20 and 16 cm².",
+        "Converse transfer area 36, base 12 yields height 6 cm."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>×</mo><mi>h</mi></mrow><mn>2</mn></mfrac></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-JUS-AREA-STAGES",
+      "kind": "STATIC_FIGURE",
+      "purpose": "Show general base and perpendicular altitude, not target answer.",
+      "required_elements": [
+        "base b",
+        "altitude h",
+        "b=10",
+        "h=4",
+        "A=20 cm²"
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
+      ],
+      "read_order": [
+        "Base and perpendicular height",
+        "Different worked triangle",
+        "Worked example area verification"
+      ],
+      "instance_constraints": [
+        "Do not reveal the target equality conclusion or 42 cm² in a preattempt SVG.",
+        "No original organizer figure bytes or official source custody."
+      ],
+      "accessibility": [
+        "SVG title and desc read given quantities independently of color.",
+        "Perpendicular altitude is described as distance at right angles to the baseline.",
+        "Figure is not drawn to scale."
+      ],
+      "misleading_alternatives": [
+        "Use slanted edge as height.",
+        "Premark two triangle areas equal before learner's attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/justify-area-stages.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-JUS-AREA-STAGES",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-TEST-IMO182-D1-JUS-TRIANGLE-AREA",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-JUS-AREA-RULE"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-area-stages.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Triangles with a common baseline and perpendicular distances",
+            "caption": "Read the factual givens; decide the warrant independently."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Area-relevant base and perpendicular altitude",
+          "symbol": "A=bh/2",
+          "in_words": "Use only the measurements stated for this question."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "JUS-STAGE-AREA-MEANING",
+          "label": "Base and perpendicular height",
+          "purpose": "Show general base and perpendicular altitude, not target answer.",
+          "visible_elements": [
+            "base b",
+            "altitude h"
+          ]
+        },
+        {
+          "id": "JUS-STAGE-WORKED-10-4",
+          "label": "Different worked triangle",
+          "purpose": "Only worked base 10 cm and height 4 cm.",
+          "visible_elements": [
+            "b=10",
+            "h=4"
+          ]
+        },
+        {
+          "id": "JUS-STAGE-WORKED-CHECK",
+          "label": "Worked example area verification",
+          "purpose": "Show 10×4/2=20 cm², not 12×7 conclusion.",
+          "visible_elements": [
+            "A=20 cm²"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN",
+      "kind": "STATIC_FIGURE",
+      "purpose": "Two shifted apexes, common base and equal perpendicular heights; no area result.",
+      "required_elements": [
+        "AB 12 cm",
+        "C and D distances 7 cm"
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
+      ],
+      "read_order": [
+        "Shared base and perpendicular altitudes"
+      ],
+      "instance_constraints": [
+        "Do not reveal the target equality conclusion or 42 cm² in a preattempt SVG.",
+        "No original organizer figure bytes or official source custody."
+      ],
+      "accessibility": [
+        "SVG title and desc read given quantities independently of color.",
+        "Perpendicular altitude is described as distance at right angles to the baseline.",
+        "Figure is not drawn to scale."
+      ],
+      "misleading_alternatives": [
+        "Use slanted edge as height.",
+        "Premark two triangle areas equal before learner's attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/justify-core2a-triangles.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-TEST-IMO182-D1-JUS-CORE2A-EQUAL-AREA-WARRANT",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-core2a-triangles.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Triangles with a common baseline and perpendicular distances",
+            "caption": "Unsolved triangle givens: A to B measures 12 cm; C and D each lie 7 cm at a right angle from the extended AB line. Different sideways apex positions. Area conclusion left for learner."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Area-relevant base and perpendicular altitude",
+          "symbol": "AB=12, h=7 for each",
+          "in_words": "Use only the measurements stated for this question."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "JUS-D1-QA-GIVENS",
+          "label": "AB base 12 cm; each peak 7 cm at 90° to its extended line",
+          "purpose": "Two shifted apexes, common base and equal perpendicular heights; no area result.",
+          "visible_elements": [
+            "AB 12 cm",
+            "C and D distances 7 cm"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-JUS-ERROR-CLAIM",
+      "kind": "STATIC_FIGURE",
+      "purpose": "Show the shifted apex and a disputed unsupported claim, not its correction.",
+      "required_elements": [
+        "base 10 cm",
+        "height 3 cm",
+        "claim slanted side implies more area?"
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
+      ],
+      "read_order": [
+        "Slanted-side claim"
+      ],
+      "instance_constraints": [
+        "Do not reveal the target equality conclusion or 42 cm² in a preattempt SVG.",
+        "No original organizer figure bytes or official source custody."
+      ],
+      "accessibility": [
+        "SVG title and desc read given quantities independently of color.",
+        "Perpendicular altitude is described as distance at right angles to the baseline.",
+        "Figure is not drawn to scale."
+      ],
+      "misleading_alternatives": [
+        "Use slanted edge as height.",
+        "Premark two triangle areas equal before learner's attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/justify-core1b-slope-claim.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-JUS-ERROR-CLAIM",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-TEST-IMO182-D1-JUS-TRIANGLE-AREA",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-JUS-ERROR-CLAIM"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-core1b-slope-claim.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Triangles with a common baseline and perpendicular distances",
+            "caption": "Read the factual givens; decide the warrant independently."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Area-relevant base and perpendicular altitude",
+          "symbol": "b=10, h=3",
+          "in_words": "Use only the measurements stated for this question."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "JUS-ERROR-CLAIM",
+          "label": "Slanted-side claim",
+          "purpose": "Show the shifted apex and a disputed unsupported claim, not its correction.",
+          "visible_elements": [
+            "base 10 cm",
+            "height 3 cm",
+            "claim slanted side implies more area?"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN",
+      "kind": "STATIC_FIGURE",
+      "purpose": "Only supplied areas 36 cm², common base 12 cm and unknown perpendicular heights.",
+      "required_elements": [
+        "36 cm² for each",
+        "AB 12 cm",
+        "heights unknown"
+      ],
+      "relation_refs": [
+        "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
+      ],
+      "read_order": [
+        "Converse area and base givens"
+      ],
+      "instance_constraints": [
+        "Do not reveal the target equality conclusion or 42 cm² in a preattempt SVG.",
+        "No original organizer figure bytes or official source custody."
+      ],
+      "accessibility": [
+        "SVG title and desc read given quantities independently of color.",
+        "Perpendicular altitude is described as distance at right angles to the baseline.",
+        "Figure is not drawn to scale."
+      ],
+      "misleading_alternatives": [
+        "Use slanted edge as height.",
+        "Premark two triangle areas equal before learner's attempt."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d1/figures/justify-core2b-converse.v1.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-REP-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-TEST-IMO182-D1-JUS-CORE2B-CONVERSE-ALTITUDE",
+          "datum_refs": [
+            "DATUM-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-core2b-converse.v1.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Triangles with a common baseline and perpendicular distances",
+            "caption": "Read the factual givens; decide the warrant independently."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Area-relevant base and perpendicular altitude",
+          "symbol": "A=36, b=12, h=?",
+          "in_words": "Use only the measurements stated for this question."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "JUS-D1-QB-GIVENS",
+          "label": "Converse area and base givens",
+          "purpose": "Only supplied areas 36 cm², common base 12 cm and unknown perpendicular heights.",
+          "visible_elements": [
+            "36 cm² for each",
+            "AB 12 cm",
+            "heights unknown"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-TEST-IMO182-D1-JUS-TRIANGLE-AREA-WARRANT",
+      "title": "Justify area equality of different-shaped triangles",
+      "capability_refs": [
+        "CAP-TEST-IMO182-D1-JUS-TRIANGLE-AREA-JUSTIFICATION"
+      ],
+      "solution_structure": [
+        "Identify common base and perpendicular altitudes.",
+        "Invoke A=bh/2 as warrant.",
+        "Conclude equality with independent reasoning.",
+        "Verify two areas and falsify a bad boundary."
+      ],
+      "demand_dimensions": {
+        "model_choice": "A known area relation, no model-choice search.",
+        "representation_translation": "Perpendicular heights explicitly given.",
+        "reasoning_steps": "Single protected claim-to-warrant step.",
+        "novelty": "Converse equal area with common base to unknown altitude."
+      },
+      "safe_variations": [
+        "Apex slides parallel to common base.",
+        "Change shared base and equal perpendicular heights.",
+        "Infer height from equal area and common positive base."
+      ],
+      "transfer_boundaries": [
+        "Unequal heights defeat base-only argument.",
+        "Slanted edge is not the height.",
+        "A positive base is required for h=2A/b."
+      ],
+      "common_wrong_routes": [
+        "Mistake slanted edge for perpendicular altitude.",
+        "Assume equal base alone.",
+        "Confuse square area units with centimetre distances."
+      ],
+      "item_refs": [
+        "Q-TEST-IMO182-D1-JUS-CORE1A-WORKED",
+        "Q-TEST-IMO182-D1-JUS-CORE2A-EQUAL-AREA-WARRANT",
+        "Q-TEST-IMO182-D1-JUS-CORE2B-CONVERSE-ALTITUDE"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "Issue 200 adapted earlier model-authored original-practice-003",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "APPLY"
+          ],
+          "basis": "Learner must establish a conclusion by a valid base-height area warrant; arithmetic alone is insufficient."
+        },
+        "grade9v3:original_practice_candidate_ref": "IMO-G9-ORIGINAL-PRACTICE-003",
+        "grade9v3:source_quality_hold": "ALTITUDE_WORDING_CLARITY"
+      },
+      "id": "Q-TEST-IMO182-D1-JUS-CORE1A-WORKED",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-JUS-CORE1A-WORKED",
+      "stem": "DISTINCT WORKED CASE: a triangle has a base of 10 cm and perpendicular altitude 4 cm. Calculate its area. If the apex slides sideways parallel to the baseline without changing altitude, determine whether its area changes.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "All stated altitudes are perpendicular distances to the line of the base.",
+        "Measurements are in centimetres.",
+        "Wholly authored TEST practice adapted from IMO-G9-ORIGINAL-PRACTICE-003; no official SOF source rights."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-JUS-AREA-STAGES"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Area 20 cm²; horizontal apex movement preserves that area.",
+        "reasoning": [
+          "Use the 10 cm base and the perpendicular 4 cm altitude.",
+          "A=10×4/2=20 cm².",
+          "The base and perpendicular altitude are unchanged under a sideways shift."
+        ],
+        "reasoning_route": [
+          {
+            "id": "JUS-D1-WORK-10-4",
+            "kind": "DECIDE",
+            "action": "Apply A=bh/2 and compare sideways-shifted peaks using the same height.",
+            "why_valid": "Both placements keep the same perpendicular altitude and base.",
+            "inputs": [
+              "b=10 cm",
+              "h=4 cm"
+            ],
+            "output": "A=20 cm² in either placement"
+          }
+        ],
+        "crux_move_ref": "JUS-D1-WORK-10-4",
+        "check": "Coordinate determinant with base endpoints (0,0),(10,0) and apex at (2,4) or (7,4) equals 20 cm².",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-JUS-TRIANGLE-AREA-JUSTIFICATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-JUS-TRIANGLE-AREA-WARRANT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-JUS-AREA-STAGES",
+        "safe_ref": "REP-TEST-IMO182-D1-JUS-AREA-STAGES",
+        "bound_ref": "REP-TEST-IMO182-D1-JUS-AREA-STAGES",
+        "stage_refs": [
+          "JUS-STAGE-AREA-MEANING",
+          "JUS-STAGE-WORKED-10-4",
+          "JUS-STAGE-WORKED-CHECK"
+        ]
+      },
+      "repair_ref": "JUS-D1-TC-2",
+      "failure_signal": "A slanted edge is not a perpendicular altitude to the chosen baseline.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-JUS-TRIANGLE-AREA-WARRANT",
+        "closure": "A correct numerical result is not independent academic acceptance of JUSTIFY-D1."
+      },
+      "independent_check": {
+        "statement": "Use a coordinate determinant check for shifted peaks, or reverse A=bh/2.",
+        "check_type": "COORDINATE_AREA"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 1,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "One claim-to-warrant implication from explicitly matched base and perpendicular altitudes.",
+        "component_evidence": {
+          "concept_model_selection": "Known area formula, no family choice.",
+          "representation_translation": "Base and perpendicular altitude explicitly stated.",
+          "reasoning_chain_length": "One meaningful warrant required.",
+          "algebra_computational_load": "Elementary multiplication is secondary.",
+          "trap_exception_sensitivity": "Slanted-side confusion is tested in Core1B."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "Issue 200 adapted earlier model-authored original-practice-003",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "APPLY"
+          ],
+          "basis": "Learner must establish a conclusion by a valid base-height area warrant; arithmetic alone is insufficient."
+        },
+        "grade9v3:original_practice_candidate_ref": "IMO-G9-ORIGINAL-PRACTICE-003",
+        "grade9v3:source_quality_hold": "ALTITUDE_WORDING_CLARITY",
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "JUS-D1-QA-WARRANT"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "JUS-D1-QA-WARRANT"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Justify equal areas from matching base and perpendicular altitude even with sideways displaced peaks.",
+          "common_wrong_route": "Assume different slanted sides force different areas."
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-JUS-CORE2A-EQUAL-AREA-WARRANT",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-JUS-CORE2A-EQUAL-AREA-WARRANT",
+      "stem": "Triangles ABC and ABD share the straight base AB, 12 cm long. Imagine extending the straight line through A and B beyond both endpoints if needed. From C, the shortest distance to that line, measured at a right angle (90°), is 7 cm. The shortest distance from D to the same line, also at a right angle, is 7 cm. The peaks C and D lie at different sideways positions. Must the triangles have equal areas? Give a mathematical reason and find both areas.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "AB is the same 12 cm base for ABC and ABD.",
+        "The given 7 cm distances from C and D are each the shortest 90° distances to the straight line containing AB, extended beyond the segment if necessary.",
+        "Peaks are horizontally displaced; slanted edge lengths may differ.",
+        "Authored practice TEST candidate; source-quality ALTITUDE_WORDING_CLARITY review pending."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Yes. Both areas are 42 cm² because each has b=12 cm and perpendicular h=7 cm in A=bh/2.",
+        "reasoning": [
+          "A chosen triangle base and its perpendicular altitude determine area.",
+          "Both triangles have the same 12 cm base and 7 cm perpendicular altitude.",
+          "A=12×7/2=42 cm² for each; horizontal peak displacement does not change that formula."
+        ],
+        "reasoning_route": [
+          {
+            "id": "JUS-D1-QA-GIVENS",
+            "kind": "REPRESENT",
+            "action": "Identify common base AB and both perpendicular altitudes.",
+            "why_valid": "Distances were measured perpendicular to the same baseline.",
+            "inputs": [
+              "AB=12 cm",
+              "h_C=7 cm",
+              "h_D=7 cm"
+            ],
+            "output": "The two relevant input pairs match."
+          },
+          {
+            "id": "JUS-D1-QA-WARRANT",
+            "kind": "DECIDE",
+            "action": "Justify equal area by the area relation A=bh/2 for both triangles.",
+            "why_valid": "The product of matched base and perpendicular altitude is the same even for differently placed apexes.",
+            "inputs": [
+              "b_C=b_D",
+              "h_C=h_D"
+            ],
+            "output": "Equal triangle areas"
+          },
+          {
+            "id": "JUS-D1-QA-VALUE",
+            "kind": "VERIFY",
+            "action": "Calculate the common 12×7/2 area.",
+            "why_valid": "Both applications give 42 cm²; a determinant check is independent.",
+            "inputs": [
+              "12 cm",
+              "7 cm"
+            ],
+            "output": "42 cm² each"
+          }
+        ],
+        "crux_move_ref": "JUS-D1-QA-WARRANT",
+        "check": "A=(0,0),B=(12,0),C=(2,7),D=(10,7): both determinant areas are |12×7|/2=42 cm².",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-JUS-TRIANGLE-AREA-JUSTIFICATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-JUS-TRIANGLE-AREA-WARRANT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "What is the shared base? Locate the two 7 cm shortest distances measured at 90° to the straight base line, rather than following either slanted edge.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "JUS-D1-QA-GIVENS"
+        },
+        {
+          "text": "Recall a triangle-area relation involving a base and its perpendicular distance. What must you check about the measurements before you can use that relation to support or reject an area comparison?",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "JUS-D1-QA-WARRANT"
+        },
+        {
+          "text": "After committing your own reasoning, calculate each area separately using the stated base and perpendicular distance, then check your conclusion and square-unit labels.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "JUS-D1-QA-WARRANT"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN",
+        "bound_ref": null,
+        "stage_refs": [
+          "JUS-D1-QA-GIVENS"
+        ]
+      },
+      "repair_ref": "JUS-D1-TC-2",
+      "failure_signal": "A slanted edge is not a perpendicular altitude to the chosen baseline.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-JUS-TRIANGLE-AREA-WARRANT",
+        "closure": "A correct numerical result is not independent academic acceptance of JUSTIFY-D1."
+      },
+      "independent_check": {
+        "statement": "Use a coordinate determinant check for shifted peaks, or reverse A=bh/2.",
+        "check_type": "COORDINATE_AREA"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 1,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "One claim-to-warrant implication from explicitly matched base and perpendicular altitudes.",
+        "component_evidence": {
+          "concept_model_selection": "Known area formula, no family choice.",
+          "representation_translation": "Base and perpendicular altitude explicitly stated.",
+          "reasoning_chain_length": "One meaningful warrant required.",
+          "algebra_computational_load": "Elementary multiplication is secondary.",
+          "trap_exception_sensitivity": "Slanted-side confusion is tested in Core1B."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "Issue 200 adapted earlier model-authored original-practice-003",
+        "grade9v3:cognitive_demand": {
+          "primary": "JUSTIFY",
+          "secondary": [
+            "APPLY"
+          ],
+          "basis": "Learner must establish a conclusion by a valid base-height area warrant; arithmetic alone is insufficient."
+        },
+        "grade9v3:original_practice_candidate_ref": "IMO-G9-ORIGINAL-PRACTICE-003",
+        "grade9v3:source_quality_hold": "ALTITUDE_WORDING_CLARITY",
+        "grade9v3:analysis": {
+          "stable_crux_move": "Use converse of triangle area to infer height from equal area and common base.",
+          "common_wrong_route": "Treat slanted edge as altitude or divide by the area."
+        }
+      },
+      "id": "Q-TEST-IMO182-D1-JUS-CORE2B-CONVERSE-ALTITUDE",
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
+      "original_identifier": "Q-TEST-IMO182-D1-JUS-CORE2B-CONVERSE-ALTITUDE",
+      "stem": "CHANGED CONVERSE: two triangles share base 12 cm and EACH has area 36 cm². Neither perpendicular altitude is stated. Use an area relation to determine each missing perpendicular altitude and justify why the heights agree.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Each triangle has area 36 cm².",
+        "Both have the same positive 12 cm base.",
+        "Perpendicular altitudes are unknown.",
+        "Wholly authored converse transfer TEST; no organizer item used."
+      ],
+      "figure_refs": [
+        "REP-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Both perpendicular altitudes are 6 cm, because h=2A/b=2×36/12.",
+        "reasoning": [
+          "Triangle area A=bh/2 holds for each.",
+          "With positive base, isolate h=2A/b.",
+          "Both have A=36 and b=12, so h=6 cm for each; 12×6/2 verifies area 36 cm²."
+        ],
+        "reasoning_route": [
+          {
+            "id": "JUS-D1-QB-AREA-BASE",
+            "kind": "REPRESENT",
+            "action": "Identify each A=36 cm² and b=12 cm.",
+            "why_valid": "The values are given for both triangles.",
+            "inputs": [
+              "A=36 cm²",
+              "b=12 cm"
+            ],
+            "output": "h unknown"
+          },
+          {
+            "id": "JUS-D1-QB-INVERSE",
+            "kind": "DECIDE",
+            "action": "Reverse the relation to h=2A/b, then infer both heights are 6 cm.",
+            "why_valid": "The same positive base and area determine the same perpendicular altitude.",
+            "inputs": [
+              "A=36",
+              "b=12"
+            ],
+            "output": "h=6 cm in both"
+          },
+          {
+            "id": "JUS-D1-QB-VERIFY",
+            "kind": "VERIFY",
+            "action": "Check 12×6/2=36 cm².",
+            "why_valid": "This reproduces the stated area for both triangles.",
+            "inputs": [
+              "b=12",
+              "h=6"
+            ],
+            "output": "A=36 cm²"
+          }
+        ],
+        "crux_move_ref": "JUS-D1-QB-INVERSE",
+        "check": "Both equations 12×6/2=36 cm² match givens.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-TEST-IMO182-D1-JUS-TRIANGLE-AREA-JUSTIFICATION",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-TEST-IMO182-D1-JUS-TRIANGLE-AREA-WARRANT",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "The area and base are known, not the altitude. Which equation could be rearranged to isolate the distance perpendicular to that base?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN",
+        "safe_ref": "REP-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN",
+        "bound_ref": null,
+        "stage_refs": [
+          "JUS-D1-QB-GIVENS"
+        ]
+      },
+      "repair_ref": "JUS-D1-TC-2",
+      "failure_signal": "A slanted edge is not a perpendicular altitude to the chosen baseline.",
+      "family_exposure": {
+        "family_ref": "FAM-TEST-IMO182-D1-JUS-TRIANGLE-AREA-WARRANT",
+        "closure": "A correct numerical result is not independent academic acceptance of JUSTIFY-D1."
+      },
+      "independent_check": {
+        "statement": "Use a coordinate determinant check for shifted peaks, or reverse A=bh/2.",
+        "check_type": "COORDINATE_AREA"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 1,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "One claim-to-warrant implication from explicitly matched base and perpendicular altitudes.",
+        "component_evidence": {
+          "concept_model_selection": "Known area formula, no family choice.",
+          "representation_translation": "Base and perpendicular altitude explicitly stated.",
+          "reasoning_chain_length": "One meaningful warrant required.",
+          "algebra_computational_load": "Elementary multiplication is secondary.",
+          "trap_exception_sensitivity": "Slanted-side confusion is tested in Core1B."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-IMO182-D1-JUS-CORE2A-EQUAL-AREA-WARRANT"
+        ],
+        "statement": "Core2A infers equal areas from equal heights; Core2B infers equal unknown heights from equal areas and positive shared base.",
+        "invariant": "Triangle area A=bh/2, with h the perpendicular altitude.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-IMO182-D1-JUS-CORE2A-EQUAL-AREA-WARRANT",
+            "MIC-TEST-IMO182-D1-JUS-TRIANGLE-AREA:exit_task",
+            "MIC-TEST-IMO182-D1-JUS-TRIANGLE-AREA:boundary_test"
+          ],
+          "why_new": "Reverses the known and unknown quantity and direction of the logical implication."
+        },
+        "protected_move_ref": "JUS-D1-QB-INVERSE"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-TEST-IMO182-D1-JUS-PAIR-CONSTRUCTION",
+      "title": "Teach triangle area warrant then justify an independent equal-area claim",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
+      ],
+      "entry_needs": [
+        "Triangle area A=bh/2.",
+        "Perpendicular to the line through the base.",
+        "Area units squared."
+      ],
+      "learner_actions": [
+        "Work base 10 height 4 in Core1A.",
+        "Judge separate common-base 12 and equal-height 7 source candidate.",
+        "Challenge slanted-side error and unequal-height counterexample.",
+        "Use inverse area 36 with base 12 in Core2B."
+      ],
+      "help_plan": [
+        "Use different worked values in Core1A.",
+        "Core2A hints clarify but do not print the target area equality.",
+        "H3 is AFTER_ATTEMPT when it materially narrows W."
+      ],
+      "reveal_plan": "No area conclusion or 42 cm² target on source initial figure or preattempt hints.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
+          "purpose": "Reuse IMO-G9-ORIGINAL-PRACTICE-003",
+          "reason": "Existing authored candidate; preserve wording-review hold and no SOF original rights."
+        }
+      ],
+      "when_not_suitable": [
+        "No source/QRT Owner acceptance.",
+        "Original organizer source is absent.",
+        "Altitude wording and accessibility hold unresolved."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "AUTHORED_TEST_FROM_ORIGINAL_PRACTICE_003",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false,
+    "grade9v3:core_maturity": "TEST_CANDIDATE",
+    "grade9v3:source_quality_hold": "ALTITUDE_WORDING_CLARITY",
+    "grade9v3:wording_revision_status": "AUTHOR_CANDIDATE_NOT_REVIEWED"
+  },
+  "data": [
+    {
+      "id": "DATUM-TEST-IMO182-D1-JUS-AREA-RULE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>×</mo><mi>h</mi></mrow><mn>2</mn></mfrac></mrow></math>",
+      "symbol": "A=bh/2",
+      "meaning": "Known triangle-area relation",
+      "locator": "AUTHORED: IMO-G9-ORIGINAL-PRACTICE-003-adapted TEST JUSTIFY-D1"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>×</mo><mi>h</mi></mrow><mn>2</mn></mfrac></mrow></math>",
+      "symbol": "AB=12, altitudes 7",
+      "meaning": "Same baseline and given perpendicular distances",
+      "locator": "AUTHORED: IMO-G9-ORIGINAL-PRACTICE-003-adapted TEST JUSTIFY-D1"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-JUS-ERROR-CLAIM",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>×</mo><mi>h</mi></mrow><mn>2</mn></mfrac></mrow></math>",
+      "symbol": "b=10,h=3; slanted side?",
+      "meaning": "Disputed shape-based area claim",
+      "locator": "AUTHORED: IMO-G9-ORIGINAL-PRACTICE-003-adapted TEST JUSTIFY-D1"
+    },
+    {
+      "id": "DATUM-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
+      },
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>×</mo><mi>h</mi></mrow><mn>2</mn></mfrac></mrow></math>",
+      "symbol": "A=36,b=12,h=?",
+      "meaning": "Converse known area and base, unknown height",
+      "locator": "AUTHORED: IMO-G9-ORIGINAL-PRACTICE-003-adapted TEST JUSTIFY-D1"
+    }
+  ]
+}
