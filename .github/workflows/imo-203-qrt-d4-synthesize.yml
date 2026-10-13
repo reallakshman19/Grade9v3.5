@@ -1,0 +1,52 @@
+name: IMO 203 QRT SYNTHESIZE D4 native five-role TEST
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo-203-qrt-d4-synthesize.yml'
+      - 'TEST/imo-research/qrt-d4/synthesize-d4.package.json'
+      - 'TEST/imo-research/qrt-d4/figures/synthesize-*.svg'
+      - 'TEST/products/imo203-qrt-d4-synthesize.manifest.json'
+      - 'tests/test_imo203_qrt_d4_synthesize.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthesize-five-role:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install schema validator
+        run: python -m pip install --quiet jsonschema
+      - name: Check source schema, independent combinatorics and governed blueprints
+        run: python -m unittest tests.test_imo203_qrt_d4_synthesize -v
+      - name: Render actual five-role Core pages
+        run: python Shared/tools/render_core.py build --manifest TEST/products/imo203-qrt-d4-synthesize.manifest.json --out build/imo203-qrt/d4/synthesize --mode PAGES --reference
+      - name: Independently checksum all six HTML pages
+        run: |
+          python - <<'PY'
+          import json, pathlib, hashlib
+          root=pathlib.Path("build/imo203-qrt/d4/synthesize")
+          receipt=json.loads((root/"render-receipt.json").read_text())
+          assert receipt["gaps"]==[],receipt["gaps"]
+          roles=["core1.html","core1a.html","core1b.html","core2a.html","core2b.html","index.html"]
+          assert set(receipt["pages"])==set(roles)
+          output={"cell":"QRT-SYNTHESIZE-D4","academic_review":"PENDING","owner_acceptance":False,
+                  "rights":"AUTHORED_TEST_ONLY","render_version":receipt["renderer"],"gaps":receipt["gaps"],
+                  "html":[{"role":name,"bytes":(root/name).stat().st_size,
+                           "sha256":hashlib.sha256((root/name).read_bytes()).hexdigest()} for name in roles]}
+          (root/"synthesize-d4-evidence.json").write_text(json.dumps(output,indent=2))
+          print(json.dumps(output,indent=2))
+          PY
+      - name: Upload exact native HTML, not golden promotion
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo203-qrt-synthesize-d4-native-html
+          path: build/imo203-qrt/d4/synthesize/
+          if-no-files-found: error
