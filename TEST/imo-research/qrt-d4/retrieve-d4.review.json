@@ -1,0 +1,79 @@
+{
+  "cell": "QRT-RETRIEVE-D4",
+  "primary_demand": "RETRIEVE",
+  "band": "D4",
+  "stage": "AUTHOR_SELF_AUDIT_NATIVE_RENDER_PENDING",
+  "X": "Identify the necessary and sufficient condition that distinguishes an odd square residue modulo 2^k; note the exceptional small exponent.",
+  "Y": "Previously reconstructed odd-square residues modulo 8 and basic reduction of squares modulo small powers of two.",
+  "Z": "Select the correct classification criterion for k>=3 instead of overgeneralizing oddness or the modulo4 case.",
+  "W": "Independently retrieve the correct threshold-specific criterion a≡1 (mod8) for k>=3, classify unfamiliar residues, and switch criterion at k=2.",
+  "wrong_idea": "Every odd residue is a square, or residue 1 modulo4 is enough for every power of two.",
+  "diagnostic": "Why is 5 an odd square class modulo4 but not modulo8?",
+  "replacement_rule": "For odd a and k>=3, odd square roots modulo 2^k exist exactly when a≡1 (mod8); for k=2 the exact criterion is a≡1 (mod4).",
+  "independent_check": "Enumerate odd x and all odd residue classes modulo 2^k for k=2..10 and compare to the proposed criterion",
+  "math_results": {
+    "yes": [
+      9,
+      17,
+      33,
+      49
+    ],
+    "no": [
+      13,
+      21
+    ],
+    "criterion": "Odd a modulo 2^k for k>=3 is an odd-square residue iff a≡1 mod8."
+  },
+  "core2b_transfer": "The modulus is now 4 instead of 128; classify odd residues a=5,9,13 and contrast the result for a=5 modulo8.",
+  "adjacent_band": "A familiar single gcd/modular arithmetic procedure or a supplied rule followed stepwise would be D2/D3, not D4. A qualified reviewer must confirm whether the exceptional criterion is genuinely novel and instructionally fair.",
+  "difficulty_five_components": {
+    "concept_model_selection": 2,
+    "representation_translation": 1,
+    "reasoning_chain_length": 1,
+    "algebra_computational_load": 0,
+    "trap_exception_sensitivity": 2
+  },
+  "source": "Entirely AUTHORED TEST; no #183 publisher original source custody, official IMO source or permission granted.",
+  "planned_roles": [
+    "BP-CORE1-ORIENTATION@1.1.0",
+    "BP-CORE1A-CONSTRUCTION@1.8.0",
+    "BP-CORE1B-RECONSTRUCTION@1.1.0",
+    "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+    "BP-CORE2B-TRANSFER@1.1.0"
+  ],
+  "candidate_math_oracle_ci": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38404571127",
+  "native_artifact_url": null,
+  "native_page_sha256": null,
+  "actual_browser_evidence": null,
+  "status": "ACADEMIC_REVIEW_PENDING",
+  "accepted": false,
+  "reviewer_verdict": null,
+  "reviewer_name": null,
+  "conflict_declaration": null,
+  "owner_decision": null,
+  "owner_decision_id": null,
+  "owner_golden_designation": null,
+  "review_asks": {
+    "H1": "PENDING independent qualified judgment: Question-specific safe orientation; no W",
+    "H2": "PENDING independent qualified judgment: Connect applicable prerequisite without selecting W",
+    "H3": "PENDING independent qualified judgment: After nonblank attempt if W-revealing; otherwise no premature conclusion",
+    "S1": "PENDING independent qualified judgment: Safe givens, meaningful stage or justified visual waiver",
+    "S2": "PENDING independent qualified judgment: Correlate prior representation without decisive exception/route",
+    "S3": "PENDING independent qualified judgment: Open a route, preserve W and gate if necessary",
+    "P1": "PENDING independent qualified judgment: No W in visible, options, image title/desc or AX before commit",
+    "P2": "PENDING independent qualified judgment: Real concept/repair link resolves to relevant teaching",
+    "P3": "PENDING independent qualified judgment: After attempt warranted reasoning and independent check",
+    "M1": "PENDING independent qualified judgment: Explicit plausible misconception",
+    "M2": "PENDING independent qualified judgment: Discriminating boundary not merely arithmetic slip",
+    "M3": "PENDING independent qualified judgment: Counterexample and replacement rule"
+  },
+  "checklist": {
+    "cross_role_answer_ownership": "REVIEW especially preceding Core1B elicitation accepted answers and Core1A teaching paths; student W must not be disclosed",
+    "render_provenance": "PENDING final exact-head independent receipt and six SHA256",
+    "comparator": "G-IMO-G9-FIVE-CORE-20261012 registered-role semantic slot test only; numerical/string parity across questions forbidden",
+    "visual_and_AX": "PENDING screenshot/AX review 390,768,1280 and precommit visual/metadata/keyboard assessment",
+    "math": "Author independent exhaustive oracle, awaiting qualified second-person math proof signoff",
+    "release": "NOT_AUTHORIZED",
+    "classification": "D4 is a proposal; qualified reviewer must explicitly test D3 alternative"
+  }
+}
