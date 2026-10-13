@@ -55,6 +55,12 @@ def load(path: Path) -> dict:
 
 def main() -> None:
     inventory = load(CATALOG)
+    expected_checkout = os.environ.get("EXPECTED_SOURCE_HEAD")
+    if expected_checkout:
+        checkout = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+        require(checkout == expected_checkout,
+                f"checkout {checkout} differs from PR source HEAD {expected_checkout}")
     expected_cells = [r["demand"] for r in inventory["all_7_cells"]]
     selection = inventory["build_selection"]
     require(len(expected_cells) == 7 and len(set(expected_cells)) == 7,
@@ -122,9 +128,35 @@ def main() -> None:
                 f"{demand}: source rights changed")
         require(pack["extensions"]["grade9v3:learner_published"] is False,
                 f"{demand}: publication unexpectedly changed")
-        for rep in pack["representations"]:
-            for asset in rep.get("rendered_asset_refs", []):
-                require((ROOT / asset).is_file(), f"{demand}: missing SVG {asset}")
+        # Only representations selected by the actual five-role source package
+        # are required. A legacy record may describe a different, unselected
+        # question: retain its missing-asset finding without falsifying M1.
+        selected_question_ids = (manifest["selection"]["core2a"]
+                                 + manifest["selection"]["core2b"])
+        selected_questions = [q for q in pack["questions"]
+                              if q["id"] in selected_question_ids]
+        selected_rep_refs = {
+            ref for q in selected_questions for ref in q.get("figure_refs", [])
+        }
+        selected_micro_refs = set(manifest["selection"]["microtopics"])
+        selected_rep_refs.update(
+            ref for micro in pack["microtopics"]
+            if micro["id"] in selected_micro_refs
+            for ref in micro.get("representation_refs", [])
+        )
+        all_reps = {rep["id"]: rep for rep in pack["representations"]}
+        require(selected_rep_refs.issubset(all_reps),
+                f"{demand}: missing selected representation definition")
+        for ref in selected_rep_refs:
+            for asset in all_reps[ref].get("rendered_asset_refs", []):
+                require((ROOT / asset).is_file(),
+                        f"{demand}: selected SVG asset missing {asset}")
+        unused_missing_assets = [
+            asset for rep in pack["representations"]
+            if rep["id"] not in selected_rep_refs
+            for asset in rep.get("rendered_asset_refs", [])
+            if not (ROOT / asset).is_file()
+        ]
         record = {
             "cell": row["cell"], "status": row["status"],
             "source_path": row["source_path"], "source_blob_sha": row["source_blob_sha"],
@@ -133,6 +165,7 @@ def main() -> None:
             "original_transfer_question_id": manifest["selection"]["core2b"][0],
             "candidate_primary_demand": question["extensions"]["grade9v3:cognitive_demand"]["primary"],
             "candidate_band": question["difficulty"]["band"],
+            "unselected_missing_asset_refs": unused_missing_assets,
             "academic_asks": {k: "PENDING" for k in ASKS},
             "principal_independence": "NONE", "academic_reviewer": None,
             "owner_decision_id": None, "qrt_accepted": False,
