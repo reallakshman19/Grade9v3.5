@@ -625,7 +625,7 @@
       ],
       "reveal_stages": [
         {
-          "id": "D4-RET-ROTATE1",
+          "id": "D4-RET-MAIN",
           "label": "Safe stage 1",
           "purpose": "Orient givens without revealing the winning criterion.",
           "visible_elements": [
@@ -699,7 +699,7 @@
       ],
       "reveal_stages": [
         {
-          "id": "D4-RET-ROTATE2",
+          "id": "D4-RET-TRANSFER",
           "label": "Safe stage 1",
           "purpose": "Orient givens without revealing the winning criterion.",
           "visible_elements": [
@@ -748,8 +748,8 @@
       ],
       "item_refs": [
         "Q-D4-RETRIEVE-WORKED",
-        "Q-D4-RETRIEVE-ROTATE1",
-        "Q-D4-RETRIEVE-ROTATE2"
+        "Q-D4-RETRIEVE-MAIN",
+        "Q-D4-RETRIEVE-TRANSFER"
       ]
     }
   ],
@@ -818,7 +818,7 @@
       }
     },
     {
-      "id": "Q-D4-RETRIEVE-ROTATE1",
+      "id": "Q-D4-RETRIEVE-MAIN",
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
@@ -856,7 +856,7 @@
       },
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-RETRIEVE-ORIGINAL",
-      "original_identifier": "AUTHORED-Q-D4-RETRIEVE-ROTATE1",
+      "original_identifier": "AUTHORED-Q-D4-RETRIEVE-MAIN",
       "stem": "An odd residue a modulo 128 is called an odd-square residue if some odd integer x satisfies x²≡a (mod128). Without listing all 128 possibilities, classify a=9,13,17,21,33,49. Name the exact defining criterion and give one counterexample to 'all odd residues work'.",
       "subparts": [],
       "options": [],
@@ -983,7 +983,7 @@
         "safe_ref": "REP-D4-RETRIEVE-CORE2A",
         "bound_ref": null,
         "stage_refs": [
-          "D4-RET-ROTATE1"
+          "D4-RET-MAIN"
         ]
       },
       "repair_ref": "D4-RET-AUDIT",
@@ -1018,7 +1018,7 @@
       "learner_question_type": "constructed_response"
     },
     {
-      "id": "Q-D4-RETRIEVE-ROTATE2",
+      "id": "Q-D4-RETRIEVE-TRANSFER",
       "version": "0.1.0",
       "status": "CANDIDATE",
       "source_refs": [
@@ -1041,7 +1041,7 @@
       },
       "origin": "AUTHORED",
       "origin_ref": "SRC-D4-RETRIEVE-ORIGINAL",
-      "original_identifier": "AUTHORED-Q-D4-RETRIEVE-ROTATE2",
+      "original_identifier": "AUTHORED-Q-D4-RETRIEVE-TRANSFER",
       "stem": "The modulus is now 4 instead of 128; classify odd residues a=5,9,13 and contrast the result for a=5 modulo8.",
       "subparts": [],
       "options": [],
@@ -1144,7 +1144,7 @@
         "safe_ref": "REP-D4-RETRIEVE-CORE2B",
         "bound_ref": null,
         "stage_refs": [
-          "D4-RET-ROTATE2"
+          "D4-RET-TRANSFER"
         ]
       },
       "repair_ref": "D4-RET-SPLIT",
@@ -1180,13 +1180,13 @@
       "transfer": {
         "dimension": "exception-sensitive retrieval",
         "builds_on": [
-          "Q-D4-RETRIEVE-ROTATE1"
+          "Q-D4-RETRIEVE-MAIN"
         ],
         "statement": "Modulus changes to4; criterion must change.",
         "invariant": "Square-root existence is a modular classification.",
         "novelty": {
           "checked_against": [
-            "Q-D4-RETRIEVE-ROTATE1",
+            "Q-D4-RETRIEVE-MAIN",
             "MIC-D4-RETRIEVE:exit_task",
             "MIC-D4-RETRIEVE:boundary_test"
           ],
