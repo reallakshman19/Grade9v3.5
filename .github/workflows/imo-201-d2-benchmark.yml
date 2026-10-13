@@ -29,6 +29,10 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Check independent arithmetic and changed-condition oracles
         run: python -m unittest discover -s TEST/imo-research/qrt-d2/issue-201 -p math_oracle_201.py -v
+      - name: Check source-to-W preflight contracts and record unsigned warnings
+        run: |
+          python -m unittest discover -s TEST/imo-research/qrt-d2/issue-201 -p test_source_w_preflight_201.py -v
+          python TEST/imo-research/qrt-d2/issue-201/source_w_preflight_201.py --out build/imo201/d2/source-w-preflight.json
       - name: Render seven actual native five-role products
         run: |
           set -euo pipefail
