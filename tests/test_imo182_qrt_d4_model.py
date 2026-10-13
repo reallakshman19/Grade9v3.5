@@ -62,6 +62,12 @@ class ModelD4(unittest.TestCase):
         plan=self.q["extensions"]["grade9v3:core2_support_plan"]
         self.assertEqual(plan["protected_move_refs"],["D4-MOD-MOVE-CAVITY"])
         self.assertEqual(plan["support_completions"][0]["availability"],"AFTER_ATTEMPT")
+        # H2 may bridge side counting but must not name the exception/strategy W.
+        h2=self.q["scaffolds"][1]["text"].lower()
+        self.assertIn("what quantity does that subtraction count",h2)
+        for leaked in ("unshared edges necessarily reachable","inaccessible","sealed courtyard","subtract c"):
+            self.assertNotIn(leaked,h2)
+
         self.assertEqual([s["availability"] for s in core2_v2.project_support(self.q)],["PRE_ATTEMPT_SAFE","PRE_ATTEMPT_SAFE","AFTER_ATTEMPT"])
         for rep in self.p["representations"]:
             svg=(ROOT/rep["rendered_asset_refs"][0]).read_text()
