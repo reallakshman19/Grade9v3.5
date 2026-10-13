@@ -1,0 +1,57 @@
+name: IMO 200 QRT JUSTIFY-D1 native five-role render (TEST)
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-qrt-d1-justify.yml'
+      - 'TEST/imo-research/qrt-d1/justify.v1.json'
+      - 'TEST/imo-research/qrt-d1/verify_justify.py'
+      - 'TEST/imo-research/qrt-d1/figures/justify-*.svg'
+      - 'TEST/products/imo182-qrt-d1-justify.manifest.json'
+      - 'tests/test_imo182_qrt_d1_justify.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  justify-d1-native:
+    name: Sole renderer JUSTIFY-D1 five roles, math and SHA6
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet jsonschema
+      - name: Independent triangle area and converse oracle
+        run: python TEST/imo-research/qrt-d1/verify_justify.py
+      - name: Build actual native pages from registered five role blueprints
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d1-justify.manifest.json \
+            --out build/imo182-qrt/d1/justify --draft --reference
+      - name: Check source schema, protected warrant, five role HTML and immutable golden
+        run: python -m unittest tests.test_imo182_qrt_d1_justify -v
+      - name: Verify six HTML SHA-256 values against render receipt
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          root=Path("build/imo182-qrt/d1/justify")
+          receipt=json.loads((root/"render-receipt.json").read_text())
+          assert receipt["gaps"]==[],receipt["gaps"]
+          files=["core1.html","core1a.html","core1b.html","core2a.html","core2b.html","index.html"]
+          actual={x:hashlib.sha256((root/x).read_bytes()).hexdigest() for x in files}
+          assert set(files)==set(receipt["pages"]),receipt["pages"]
+          assert actual==receipt["page_sha256"],"Receipt does not match actual HTML bytes"
+          evidence={"cell":"QRT-JUSTIFY-D1","source":"AUTHORED_TEST_ORIGINAL_PRACTICE_003","technical":"RENDERED_TEST_ONLY",
+                    "source_quality_hold":"ALTITUDE_WORDING_CLARITY","accepted":False,
+                    "academic_review":"PENDING_INDEPENDENT","pages":actual}
+          (root/"d1-justify-evidence.json").write_text(json.dumps(evidence,indent=2)+"\n")
+          print(json.dumps(evidence,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: imo182-qrt-d1-justify-five-core-html
+          path: build/imo182-qrt/d1/justify/
+          if-no-files-found: warn
