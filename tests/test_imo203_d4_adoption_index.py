@@ -74,6 +74,32 @@ class D4AdoptionEvidence(unittest.TestCase):
                 self.assertIsNone(cell["assessment"]["owner_qrt_decision_id"])
                 self.assertFalse(cell["assessment"]["accepted"])
 
+    def test_owner_frozen_role_slot_differential_is_only_structural(self):
+        report = json.loads((BASE / "d4-review/golden-technique-diff.v1.json").read_text())
+        self.assertEqual(report["comparison_type"], "CROSS_QUESTION_ROLE_STRUCTURE_ONLY")
+        self.assertEqual(report["comparator"]["owner_commit"],
+                         "67c34dababb0da0ef7d5f4a532bfcf3119754961")
+        self.assertEqual(report["summary"]["matched_role_sequences"], 35)
+        self.assertEqual(report["summary"]["academic_reviewed_cells"], 0)
+        self.assertEqual(report["summary"]["owner_qrt_accepted_cells"], 0)
+        self.assertFalse(report["summary"]["release_authorized"])
+        self.assertEqual({r["cell_id"] for r in report["cells"]},
+                         {r["cell_id"] for r in self.cells})
+        expected_roles = ("core1", "core1a", "core1b", "core2a", "core2b")
+        for result in report["cells"]:
+            cell = next(x for x in self.cells if x["cell_id"] == result["cell_id"])
+            self.assertEqual(result["render_artifact_id"], cell["render"]["artifact_id"])
+            self.assertIsNone(result["owner_qrt_decision_id"])
+            self.assertEqual(tuple(result["registered_role_slot_order"]), expected_roles)
+            for role, check in result["registered_role_slot_order"].items():
+                self.assertEqual(check["status"], "MATCH")
+                self.assertEqual(check["observed_slot_sequence"],
+                                 check["expected_slot_sequence"])
+                golden = report["comparator"]["role_slots"][role]
+                self.assertEqual(check["expected_slot_sequence"], golden["sequence"])
+                self.assertEqual(result["role_specific_semantic_differential"][role]["academic_semantics"],
+                                 "PENDING_QUALIFIED_REVIEW")
+
     def test_model_has_distinct_corrected_exact_head_evidence(self):
         model = next(c for c in self.cells if c["demand"] == "MODEL")
         repaired = model["repaired_evidence"]
