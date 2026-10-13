@@ -1,0 +1,110 @@
+{
+  "source": "WHOLLY_AUTHORED_TEST_ONLY",
+  "band": "D4",
+  "stage": "AUTHORED_SPEC_MATH_VERIFIED_NATIVE_HTML_PENDING",
+  "accepted": false,
+  "owner_qrt_decision_id": null,
+  "qualified_independent_reviewer": null,
+  "reviewer_coi": null,
+  "blueprint_refs": [
+    "BP-CORE1-ORIENTATION@1.1.0",
+    "BP-CORE1A-CONSTRUCTION@1.8.0",
+    "BP-CORE1B-RECONSTRUCTION@1.1.0",
+    "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+    "BP-CORE2B-TRANSFER@1.1.0"
+  ],
+  "renderer": "Shared/tools/render_core.py",
+  "planned_mode": "PAGES",
+  "selection_core2": [],
+  "review_requirements": {
+    "H1": "Question-specific safe orientation; no W",
+    "H2": "Connect applicable prerequisite without selecting W",
+    "H3": "After nonblank attempt if W-revealing; otherwise no premature conclusion",
+    "S1": "Safe givens, meaningful stage or justified visual waiver",
+    "S2": "Correlate prior representation without decisive exception/route",
+    "S3": "Open a route, preserve W and gate if necessary",
+    "P1": "No W in visible, options, image title/desc or AX before commit",
+    "P2": "Real concept/repair link resolves to relevant teaching",
+    "P3": "After attempt warranted reasoning and independent check",
+    "M1": "Explicit plausible misconception",
+    "M2": "Discriminating boundary not merely arithmetic slip",
+    "M3": "Counterexample and replacement rule"
+  },
+  "schema": "imo-qrt-authored-math-candidate/v1",
+  "cell_id": "QRT-RETRIEVE-D4",
+  "primary_demand": "RETRIEVE",
+  "topic": "Odd modular squares at powers of two: exception-sensitive criterion retrieval",
+  "question_id": "Q-IMO203-RETRIEVE-D4-TEST",
+  "crux_ref": "D4-RET-W-THRESHOLD",
+  "cognitive": {
+    "X": "Identify the necessary and sufficient condition that distinguishes an odd square residue modulo 2^k; note the exceptional small exponent.",
+    "Y": "Previously reconstructed odd-square residues modulo 8 and basic reduction of squares modulo small powers of two.",
+    "Z": "Select the correct classification criterion for k>=3 instead of overgeneralizing oddness or the modulo4 case.",
+    "W": "Independently retrieve the correct threshold-specific criterion a≡1 (mod8) for k>=3, classify unfamiliar residues, and switch criterion at k=2.",
+    "wrong_idea": "Every odd residue is a square, or residue 1 modulo4 is enough for every power of two.",
+    "replacement_rule": "For odd a and k>=3, odd square roots modulo 2^k exist exactly when a≡1 (mod8); for k=2 the exact criterion is a≡1 (mod4)."
+  },
+  "difficulty_proposal": {
+    "components": {
+      "concept_model_selection": 2,
+      "representation_translation": 1,
+      "reasoning_chain_length": 1,
+      "algebra_computational_load": 0,
+      "trap_exception_sensitivity": 2
+    },
+    "basis": "High-transfer exceptional exponent boundary rather than many calculations; D4 provisional because criterion selection at k=2 versus k>=3 must remain learner-owned.",
+    "adjacent_D3_alternative": "A familiar single gcd/modular arithmetic procedure or a supplied rule followed stepwise would be D2/D3, not D4. A qualified reviewer must confirm whether the exceptional criterion is genuinely novel and instructionally fair.",
+    "classification_hold": "PROPOSED_D4_PENDING_QUALIFIED_REVIEW"
+  },
+  "core2a": {
+    "prompt": "An odd residue a modulo 128 is called an odd-square residue if some odd integer x satisfies x²≡a (mod128). Without listing all 128 possibilities, classify a=9,13,17,21,33,49. Name the exact defining criterion and give one counterexample to 'all odd residues work'.",
+    "givens": [
+      "The modulus is 128=2^7.",
+      "All six candidate residues are odd.",
+      "Classification, not finding individual square roots, is the primary requested answer."
+    ],
+    "expected": {
+      "yes": [
+        9,
+        17,
+        33,
+        49
+      ],
+      "no": [
+        13,
+        21
+      ],
+      "criterion": "Odd a modulo 2^k for k>=3 is an odd-square residue iff a≡1 mod8."
+    },
+    "protected_before_attempt": [
+      "criterion 1 mod8",
+      "which k-dependent theorem applies",
+      "final classification"
+    ],
+    "H1": "Which property must a candidate residue have to be the square of an odd integer? Avoid computing six roots.",
+    "H2": "Use a short odd-square example at a lower power of two as an anchor; ask whether every power of two has the same boundary.",
+    "H3_after_nonblank": "Odd squares are 1 modulo8, and every odd class congruent 1 modulo8 lifts to a square at higher powers of two. Distinguish k>=3 from the k=2 exception.",
+    "math_proof": "For necessity, (2t+1)^2=4t(t+1)+1≡1 mod8. For sufficiency, modulo8 every residue 1 mod8 has a root; if x²≡a modulo2^k, replacing odd x by x+2^(k−1) flips the k-th binary bit of the square modulo2^(k+1) (k>=3), allowing a lift to either residue. Hence induction."
+  },
+  "core2b": {
+    "changed_task": "The modulus is now 4 instead of 128; classify odd residues a=5,9,13 and contrast the result for a=5 modulo8.",
+    "correct_answer": "All 5,9,13 are 1 modulo4 and have odd square roots modulo4. The residue 5 has no root modulo8; the small-modulus exception is genuine.",
+    "different_W": "Retrieve and switch to the k=2 criterion; do not reuse 1 mod8 from the earlier problem."
+  },
+  "role_plans": {
+    "CORE1": "Orient parity, modular equivalence and difference between being an integer square and a square residue; do not publish the main six classifications.",
+    "CORE1A": "Build odd-square residues on a different, small modulo8 anchor (for instance 1,3,5,7) and make the student independently classify a new modulo16 near-neighbor with an after-teaching exit.",
+    "CORE1B": "Misconception: odd implies square or mod4 criterion automatically applies at k>=3. Boundary: 5 is 1 modulo4 but not a square modulo8; ask for the corrected defining condition.",
+    "CORE2A": "Classify six nonconsecutive odd residues modulo128; learners must retrieve the threshold condition, not brute-force calculate roots; H3 after nonblank attempt only.",
+    "CORE2B": "Changed modulus4 classification of 5/9/13 and counterexample modulo8, independently asking for correct boundary condition."
+  },
+  "independent_oracle": {
+    "method": "Enumerate odd x and all odd residue classes modulo 2^k for k=2..10 and compare to the proposed criterion",
+    "expected_boundary": {
+      "k2": "a % 4 == 1",
+      "k3_through_k10": "a % 8 == 1"
+    }
+  },
+  "html_status": "NOT_GENERATED",
+  "academic_status": "PENDING_INDEPENDENT_REVIEW"
+}
