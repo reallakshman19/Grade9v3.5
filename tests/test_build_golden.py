@@ -11,12 +11,19 @@ from Shared.tools import build_golden, render_core
 class GoldenRenderTests(unittest.TestCase):
     def test_each_candidate_renders_without_gaps(self):
         manifests = build_golden.candidates()
-        self.assertEqual({p.parent.name for p in manifests},
-                         {"G-MATH-LINEAR-CONSTRAINT", "G-CORE2-R2"})
+        # An Owner-frozen five-Core fixture has six outputs (five roles +
+        # index), unlike the two older six-Core candidate fixtures (seven).
+        # Keep explicit identities, exact counts and fail-closed zero-gap QA.
+        expected = {
+            "G-MATH-LINEAR-CONSTRAINT": 7,
+            "G-CORE2-R2": 7,
+            "G-IMO-G9-FIVE-CORE-20261012": 6,
+        }
+        self.assertEqual({p.parent.name for p in manifests}, set(expected))
         for manifest in manifests:
             with self.subTest(golden=manifest.parent.name):
                 result = build_golden.build_one(manifest, check=True)
-                self.assertEqual(result["pages"], 7)
+                self.assertEqual(result["pages"], expected[manifest.parent.name])
                 self.assertEqual(result["gaps"], 0)
 
     @unittest.skipUnless(importlib.util.find_spec("jsonschema"), "jsonschema unavailable")
