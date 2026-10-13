@@ -41,7 +41,8 @@ class D4AdoptionEvidence(unittest.TestCase):
                 if not cell["render"]:
                     self.assertEqual(cell["source"]["classification"], "WHOLLY_AUTHORED_TEST_CANDIDATE")
                     self.assertIsNone(cell["source"]["manifest_path"])
-                    self.assertEqual(cell["candidate_math_ci"], "PENDING_EXACT_HEAD_RESULT")
+                    self.assertEqual(cell["candidate_math_ci"], "SCOPED_PASS")
+                    self.assertEqual(cell["candidate_math_workflow_run"], 38404571127)
                     self.assertTrue(cell["candidate_math_spec_link"].endswith("-d4.candidate.json"))
                     continue
                 src = cell["source"]
