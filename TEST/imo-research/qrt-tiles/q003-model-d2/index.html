@@ -12,7 +12,7 @@ function showD1Detail(c){
  add('p',host,'Artifact-producing commit: '+c.head+' · registry '+c.registry_version+' / '+c.registry_sha);
  if(c.source_quality_hold)add('p',host,'Outstanding source-quality review: '+c.source_quality_hold);
  const links=add('p',host);d1Link(links,'D1 machine-readable cell tile',c.tile);d1Link(links,'Native HTML artifact',c.url);d1Link(links,'Exact-head renderer CI',c.ci);
- const refs=add('p',host);d1Link(refs,'Authored source',c.source);d1Link(refs,'Five-role manifest',c.manifest);d1Link(refs,'Blueprint registry',c.blueprint);d1Link(refs,'Frozen golden',c.golden);d1Link(refs,'Actual-page role technique crosswalk',c.crosswalk);d1Link(refs,'84 task-specific unsigned semantic prompts',c.semantic_challenge);d1Link(refs,'Unsigned review packet',c.review);if(c.feedback_review)d1Link(refs,'Curated reasoning-feedback cases (manual review)',c.feedback_review);
+ const refs=add('p',host);d1Link(refs,'Authored source',c.source);d1Link(refs,'Five-role manifest',c.manifest);d1Link(refs,'Blueprint registry',c.blueprint);d1Link(refs,'Frozen golden',c.golden);d1Link(refs,'Actual-page role technique crosswalk',c.crosswalk);d1Link(refs,'84 task-specific unsigned semantic prompts',c.semantic_challenge);d1Link(refs,'Seven-cell Owner decision queue (unsigned)','../d1/OWNER-DECISION-QUEUE-20261013.md');d1Link(refs,'Unsigned review packet',c.review);if(c.feedback_review)d1Link(refs,'Curated reasoning-feedback cases (manual review)',c.feedback_review);
  add('h4',host,'Learner-owned X / Y / Z / W');
  for(const id of ['X','Y','Z','W'])add('p',host,id+' · '+c.XYZW[id]);
  add('h4',host,'Actual HTML SHA-256 · five roles + index');
