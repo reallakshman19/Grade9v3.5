@@ -1,0 +1,192 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Core2 · blueprint/golden-aligned authored review sample</title><meta name="description" content="Source-safe Core2 interactive demonstration with progressively gated hint ladder and full component crosswalk"><style>
+:root{--ink:#12213c;--muted:#53637d;--indigo:#3449a5;--deep:#17265a;--border:#dfe6f1;--paper:#fff;--bg:#f3f6fb;--aqua:#12a58b;--aquaP:#e5f8f2;--amber:#985d19;--amberP:#fff5e6;--red:#9c3343;--redP:#fff0f3;--shadow:0 14px 42px rgba(30,47,79,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.57 system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--indigo)}button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #2484d8;outline-offset:3px}
+.pretop{background:#192c53;color:#e7edff;padding:10px max(20px,calc((100vw - 1160px)/2));font-size:13px;font-weight:800;letter-spacing:.055em;text-transform:uppercase}.pretoptag{color:#a9eadd}
+.top{background:#fff;border-bottom:1px solid var(--border)}.topin{max-width:1160px;margin:auto;min-height:73px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 24px}.brand{display:flex;align-items:center;gap:12px;color:var(--deep);font-weight:850;letter-spacing:-.035em;font-size:21px;text-decoration:none}.mark{display:grid;place-items:center;width:39px;height:39px;border-radius:13px;background:var(--deep);color:#fff;font-size:19px}.toplinks{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.toplinks a{padding:10px 14px;border:1px solid var(--border);border-radius:11px;text-decoration:none;color:var(--deep);font-size:14px;font-weight:700;min-height:44px}.toplinks a[aria-current=page]{background:#edf0ff;border-color:#c9d2fa;color:var(--indigo)}
+.wrap{max-width:1160px;margin:0 auto;padding:29px 24px 72px}.tagline{font-size:12px;color:var(--indigo);letter-spacing:.13em;text-transform:uppercase;font-weight:850}.hero{background:linear-gradient(125deg,#fff 42%,#eef3ff);border:1px solid var(--border);border-radius:22px;padding:29px 33px 27px;box-shadow:var(--shadow);margin-bottom:20px;position:relative;overflow:hidden}.hero:after{content:'x²';position:absolute;right:30px;top:5px;font-weight:900;font-size:160px;line-height:1;color:#dfe7fc;opacity:.7;pointer-events:none}.hero>*{position:relative;z-index:1}.hero h1{font-size:clamp(29px,3.5vw,44px);line-height:1.18;letter-spacing:-.045em;margin:10px 0;max-width:790px}.intro{max-width:775px;color:var(--muted);margin:0 0 18px}.pills{display:flex;gap:8px;flex-wrap:wrap}.pill{font-size:13px;font-weight:750;color:var(--indigo);border-radius:999px;border:1px solid #ced9f3;background:#eff3ff;padding:6px 11px}.pill.green{color:#157362;background:var(--aquaP);border-color:#b6e8da}.pill.orange{color:#88581e;background:var(--amberP);border-color:#f2d7ae}
+.columns{display:grid;grid-template-columns:minmax(0,1fr) 310px;align-items:start;gap:20px}.main,.side{min-width:0}.stack>*+*{margin-top:18px}.card{background:var(--paper);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:25px 27px;min-width:0}.card h2{font-size:24px;line-height:1.25;letter-spacing:-.025em;margin:5px 0 15px}.card h3{font-size:17px;margin:10px 0 12px}.eyebrow{color:var(--indigo);font-weight:850;letter-spacing:.085em;font-size:12px;text-transform:uppercase}.subtle{color:var(--muted)}.mathbox{border:1px solid #cad7fb;border-radius:15px;background:linear-gradient(100deg,#edf1ff,#f9fbff);padding:17px;display:grid;gap:5px;text-align:center}.math{font-size:clamp(25px,3vw,34px);font-weight:750;color:var(--deep);letter-spacing:.01em}.step-list{display:grid;gap:12px}.step{display:flex;gap:13px;align-items:flex-start}.num{flex:none;display:grid;place-items:center;height:35px;width:35px;border-radius:11px;color:#fff;background:var(--indigo);font-size:14px;font-weight:800}.step p{margin:1px 0 0}.tip{border-left:4px solid var(--aqua);background:var(--aquaP);padding:12px 15px;border-radius:0 11px 11px 0;margin:14px 0}.warn{border-left:4px solid #cf9a3d;background:var(--amberP);padding:12px 15px;border-radius:0 11px 11px 0;margin:14px 0}.label{display:block;font-weight:750;margin:13px 0 8px}
+.stage-controls{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 12px}.chip{border:1px solid #cbd5eb;background:#fff;color:var(--deep);padding:10px 12px;min-height:48px;border-radius:12px;font-weight:750;font-size:13px}.chip[aria-pressed=true]{background:var(--indigo);border-color:var(--indigo);color:#fff}.stageboard{background:#f6f8ff;border:1px solid #dce4f5;border-radius:15px;padding:20px;min-height:165px;display:grid;align-items:center}.stageboard .slabel{font-size:12px;color:var(--muted);font-weight:850;text-transform:uppercase;letter-spacing:.09em}.stageboard h3{font-size:20px;line-height:1.4;margin:8px 0;color:var(--deep)}.calc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.calc{min-width:0;text-align:center;border:1px solid #d5dff2;background:#fff;border-radius:11px;padding:11px 4px}.calc b{display:block;color:var(--deep)}.calc span{color:var(--muted);font-size:13px}.calc.bad{background:var(--redP);border-color:#eab2bf}.calc.bad b{color:var(--red)}.stagebottom{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap}.stagebottom button,.primary,.secondary{border-radius:12px;min-height:48px;padding:10px 19px;font-weight:750;border:1px solid var(--indigo)}.stagebottom button,.secondary{background:#fff;color:var(--indigo)}.primary{background:var(--indigo);color:white}.primary:disabled{background:#7d89c0;cursor:not-allowed}.stagebottom button:disabled{opacity:.4;cursor:not-allowed}.stage-caption{font-size:14px;color:var(--muted);min-height:25px}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:13px}.t{width:100%;min-width:420px;border-collapse:collapse;font-size:15px}.t th,.t td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--border)}.t th{color:var(--deep);background:#f0f4fb;font-size:13px}.t tr:last-child td{border-bottom:0}.t .exception{background:#fff1f2;color:#9c3343;font-weight:750}details{border:1px solid var(--border);border-radius:13px;background:#fff;overflow:hidden;margin:10px 0}details summary{cursor:pointer;min-height:48px;padding:12px 15px;font-weight:750;color:var(--deep)}details>div{padding:0 15px 13px;font-size:15px;color:var(--muted)}.exit{border:2px solid #b9c4f2}.exit .field{width:100%;border:1px solid #b9c8dd;border-radius:12px;padding:14px 15px;resize:vertical;min-height:125px;background:#fff}.paper{display:flex;align-items:center;gap:10px;margin:13px 0 14px;font-size:15px}.paper input{height:20px;width:20px;accent-color:var(--indigo)}.status{min-height:26px;font-weight:750;color:#854e1a;font-size:14px}.solution{background:#effaf6;border:1px solid #b7e4d3;padding:15px 18px;border-radius:13px;margin-top:14px}.solution[hidden]{display:none}.solution h3{margin-top:0;color:#126c57}.side .card{padding:22px}.side h3{font-size:16px;margin:3px 0 10px}.bullet{padding-left:20px;margin:6px 0}.bullet li{margin-bottom:10px;color:var(--muted);font-size:14px}.rolebox{border-radius:12px;background:#eef2ff;padding:13px;font-size:13px;color:#344270}.minihead{font-weight:850;color:var(--deep)}.footer{padding-top:30px;color:#697891;font-size:13px}.choice{display:flex;align-items:center;gap:14px;border:1px solid var(--border);border-radius:14px;padding:13px 15px;min-height:62px;margin:10px 0;cursor:pointer}.choice:hover{background:#f6f8ff}.choice input{width:20px;height:20px;accent-color:var(--indigo);flex:none}.choice strong{font-weight:750}.choices fieldset{border:0;padding:0;margin:0}.choices legend{font-weight:750;margin-bottom:10px}.hint-title{margin-top:18px}hr{border:none;border-top:1px solid var(--border);margin:17px 0}.micro{font-size:12px;color:#697891}
+@media(max-width:860px){.columns{grid-template-columns:minmax(0,1fr)}.side{display:grid;grid-template-columns:1fr 1fr;gap:14px}.side .card{margin:0}.topin{align-items:flex-start}.brand{font-size:17px}.hero:after{right:-20px;font-size:130px}}@media(max-width:570px){.wrap{padding:16px 12px 45px}.topin{padding:12px;flex-direction:column;gap:12px}.toplinks a{padding:8px 9px;font-size:12px}.pret op{padding:8px}.hero{padding:20px 18px}.hero:after{font-size:105px;top:20px}.card{padding:19px 17px}.card h2{font-size:21px}.side{grid-template-columns:1fr}.calc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stagebottom{align-items:stretch}.stagebottom button{flex:1}.math{font-size:25px}}@media print{body{background:white}.pretop,.toplinks,.stage-controls,.stagebottom,.exit form,.footer{display:none!important}.columns{display:block}.side{display:none}.card,.hero{break-inside:avoid;box-shadow:none}.wrap{padding:0}.solution{display:none!important}}
+
+/* Core2 preview aligned to registered Core2 slot/component layout, NOT native HTML */
+.c2-shell{max-width:1240px;margin:auto;padding:24px 24px 85px}
+.c2-banner{background:#fff8e8;border:1px solid #e3c887;color:#704918;border-radius:12px;padding:10px 16px;margin-bottom:16px;font-size:13px}
+.c2-identity{padding:19px 24px;margin-bottom:14px;border-left:5px solid #3c4ca0;min-height:0}
+.c2-identity h1{font-size:clamp(22px,2.7vw,30px);letter-spacing:-.035em;margin:5px 0}
+.c2-identity p{margin:3px 0 9px;font-size:14px}
+.c2-identity .pills{margin-top:6px}
+.c2-identity details[data-g9-component="DIFFICULTY_WHY"]{position:absolute;z-index:4;top:9px;right:18px;width:225px;max-width:calc(100% - 36px);background:#fff;box-shadow:0 4px 22px rgba(22,42,79,.13)}
+.c2-identity details[data-g9-component="DIFFICULTY_WHY"][open]{width:min(420px,calc(100% - 36px))}
+@media(max-width:930px){.c2-identity details[data-g9-component="DIFFICULTY_WHY"]{position:static;width:100%;max-width:100%;margin-top:12px;box-shadow:none}.c2-identity details[data-g9-component="DIFFICULTY_WHY"][open]{width:100%}}
+.c2-layout{display:grid;grid-template-columns:minmax(0,0.42fr) minmax(0,0.58fr);gap:16px;align-items:start}
+.c2-left,.c2-right{display:grid;gap:16px;min-width:0}
+.c2-card{padding:22px 24px}
+.c2-card h2{font-size:22px;margin:5px 0 13px}
+.c2-card .subtle{margin:7px 0}
+.c2-full{margin-top:16px}
+.c2-source-note{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.c2-badge{font-size:12px;font-weight:750;background:#f0f2ff;color:#3a498e;border:1px solid #d9dcf3;border-radius:999px;padding:4px 9px;white-space:nowrap}
+.c2-badge.author{background:#eef8f6;color:#166b5a;border-color:#b5ddcf}
+.c2-kv{display:grid;grid-template-columns:1fr auto;gap:6px;border-top:1px solid #e4e8f1;padding-top:10px;margin-top:11px;font-size:13px}
+.c2-kv strong{color:#384772}
+.c2-choices{display:grid;gap:9px;margin:14px 0}
+.c2-choice{display:flex;gap:12px;align-items:center;border:1px solid #ced8eb;border-radius:12px;min-height:60px;padding:11px 14px;cursor:pointer}
+.c2-choice:has(input:checked){border-color:#3b4fae;background:#edf1ff}
+.c2-choice input{min-width:21px;min-height:21px;flex:none}
+.c2-choice b{font-size:14px;width:21px}
+.c2-help{background:#f5f8ff;border:1px solid #dce4f6;border-radius:11px;padding:13px 16px;font-size:14px}
+.c2-conditions{padding-left:18px;margin:3px 0 0}
+.c2-conditions li{margin-bottom:7px;font-size:15px}
+.c2-mini{font-size:13px;color:var(--muted)}
+.c2-keyline{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.c2-ladder{border-radius:13px;padding:15px;background:#f5f7ff;border:1px solid #d4dff2}
+.c2-ladder h3{margin:0 0 6px}
+.c2-rung-map{list-style:none;margin:14px 0 16px;padding:0;display:grid;gap:7px}
+.c2-rung-map li{display:flex;align-items:center;gap:10px;border:1px dashed #bac7dd;border-radius:11px;background:white;padding:10px;font-size:13px}
+.c2-rung-map li[data-state='revealed']{background:#f0faf5;border-style:solid;border-color:#c3e5d3}
+.c2-rung-map li[data-state='locked']{color:#6f7891}
+.c2-no{font-weight:850;color:#334ba9;background:#edf0ff;border-radius:9px;min-width:42px;text-align:center;padding:6px 5px}
+.c2-rung-map li[data-state='revealed'] .c2-no{background:#dff7ee;color:#11674e}
+.c2-rung-map strong{display:block}
+.c2-rung-detail{background:#fff;border:1px solid #ccd6ec;border-radius:12px;padding:13px 14px;margin-bottom:10px}
+.c2-rung-detail p{margin:6px 0}
+.c2-rung-detail .c2-badge{margin-left:5px}
+.c2-rung-detail strong{font-size:14px}
+.c2-hint-actions{display:flex;gap:9px;flex-wrap:wrap}
+.c2-hint-actions button{min-height:48px}
+.c2-hint-actions button:disabled{opacity:.5;cursor:default}
+.c2-ladder-status{min-height:25px;font-size:13px;font-weight:750;color:#475678}
+.c2-figure{margin:0}
+.c2-figure svg{width:100%;height:auto;display:block;border:1px solid #dce5f2;border-radius:14px;background:#f8faff}
+.c2-figure figcaption{font-size:13px;color:#53647d;margin-top:8px}
+.c2-pillgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.c2-pillgrid>div{padding:9px 10px;border:1px solid #d4dfed;border-radius:10px;background:#f8fbff;font-size:13px}
+.c2-pillgrid b{display:block;font-size:16px;color:#233e88}
+.c2-audit{border:1px solid #dfe6f2;background:#fff;border-radius:16px;margin-top:16px;padding:18px 24px}
+.c2-audit h2{font-size:17px;margin:4px 0}
+.c2-audit ul{columns:2;list-style:none;margin:8px 0;padding:0;font-size:13px}
+.c2-audit li{break-inside:avoid;padding:4px 0;color:#526480}
+.c2-audit li:before{content:'✓';color:#128064;margin-right:8px;font-weight:900}
+.c2-details-locked summary{cursor:not-allowed;color:#677992}
+.c2-complete-steps{display:grid;gap:13px}
+.c2-solution-step{border-left:3px solid #7084c4;padding-left:15px}
+.c2-solution-step[data-crux='true']{border-color:#16a28c}
+.c2-solution-step p{margin:6px 0}
+.c2-solution-step h3{margin:3px 0;font-size:16px}
+.c2-answer{padding:14px 16px;border:1px solid #a6ddc7;background:#effaf3;border-radius:12px}
+.c2-answer strong{color:#126b4a}
+.c2-responsive-warning{font-size:12px;color:#566783}
+.c2-card [data-g9-component]{scroll-margin-top:16px}
+.c2-hidden-note{font-weight:700;font-size:13px;color:#65738b}
+.c2-where{margin:12px 0 0;padding:13px 15px;border-left:4px solid #486bc8;background:#eef3ff;border-radius:0 10px 10px 0}
+@media(max-width:930px){.c2-layout{grid-template-columns:minmax(0,1fr)}.c2-shell{padding:16px 12px 50px}.c2-card{padding:19px 17px}}
+@media(max-width:540px){.c2-identity{padding:15px}.c2-pillgrid{grid-template-columns:1fr 1fr}.c2-audit ul{columns:1}.c2-figure svg{min-height:105px}.c2-source-note{gap:4px}}
+@media print{.c2-banner,.c2-audit,.c2-hint-actions,.c2-precommit,.c2-buttons{display:none!important}.c2-layout{display:block}.c2-left,.c2-right{display:block}.c2-card{break-inside:avoid;margin:10px 0}.c2-identity{break-inside:avoid}}
+</style></head><body><div class="pretop"><span class="pretoptag">SOURCE-SAFE · BLUEPRINT-ALIGNED REVIEW</span> · authored Core2 · not native / not original Q003</div>
+<header class="top"><div class="topin"><a class="brand" href="q003_preview_index.html"><span class="mark">✦</span><span>Grade 9 · Math studio</span></a><nav class="toplinks" aria-label="Preview navigation"><a href="core1a_authored_preview.html">Core1A lesson</a><a href="core2_authored_demo.html" aria-current="page">Core2 guided demo</a></nav></div></header><main class="c2-shell" data-g9-role="CORE2" data-demo="authored-not-native">
+<div class="c2-banner"><strong>Review boundary:</strong> This is a newly authored demonstration aligned to blueprint <code>BP-CORE2-SOURCE-QUESTION@1.11.0</code> and golden techniques T01/T05/T07/T13/T15. It is <strong>not</strong> the secure native IMO Q003 page, not a copy of the candidate golden, and not a released bank entry.</div>
+<section class="card c2-identity" data-blueprint-slot="identity"><div data-g9-component="IDENTITY">
+<div class="eyebrow">Core2 · authored sample identity · source-safe</div><h1>Which invented ordered pair is inconsistent?</h1><p class="subtle">DEMO-MATH-PAIR-001 · new author-created exercise · four single-choice options</p><div class="pills"><span class="pill green">Authored · not printed IMO</span><span class="pill">Attempt-first</span><span class="pill orange">QRT placement unaccepted</span></div>
+</div><details data-g9-component="DIFFICULTY_WHY"><summary>Why this difficulty? · author estimate</summary><div><p>This illustrative exercise asks for a consistent relation test, not visual guessing. The rationale that could reveal the solution remains protected until after commitment.</p><div class="c2-pillgrid"><div>Choosing model <b>1/2</b></div><div>Representation <b>1/2</b></div><div>Reasoning chain <b>1/2</b></div><div>Arithmetic <b>1/2</b></div><div>Trap sensitivity <b>1/2</b></div></div><p>Demonstration score: 5/10 · no canonical band assigned · about 3 minutes.</p></div></details></section>
+<div class="c2-layout"><div class="c2-left">
+<section class="card c2-card" data-blueprint-slot="attempt"><div data-g9-component="STEM"><span class="eyebrow">Attempt first · independently authored</span><h2>Find the exception</h2>
+<p>Three of these invented ordered pairs follow one relationship of the form <strong>y = x² + k</strong>, using the <strong>same k</strong> for three matching pairs. Which option breaks that relationship?</p></div>
+<div data-g9-component="CONDITIONS" class="c2-help"><strong>Stated conditions</strong><ul class="c2-conditions"><li>Each pair is ordered as (input x, output y).</li><li>The same unknown k applies to the three matching pairs.</li><li>Choose exactly one exceptional option.</li></ul></div>
+<form id="c2-form" novalidate data-g9-component="ATTEMPT" data-g9-attempt-box data-g9-response-type="single_choice"><fieldset style="border:0;margin:12px 0;padding:0"><legend class="label">Choose one response</legend><div class="c2-choices">
+<label class="c2-choice"><input data-g9-choice name="pair" type="radio" value="A"><b>A</b><span>(10, 109)</span></label>
+<label class="c2-choice"><input data-g9-choice name="pair" type="radio" value="B"><b>B</b><span>(11, 130)</span></label>
+<label class="c2-choice"><input data-g9-choice name="pair" type="radio" value="C"><b>C</b><span>(12, 153)</span></label>
+<label class="c2-choice"><input data-g9-choice name="pair" type="radio" value="D"><b>D</b><span>(13, 180)</span></label>
+</div></fieldset><div class="c2-buttons"><button class="primary" data-g9-commit type="submit" id="c2-commit">Commit my choice</button></div><p id="c2-status" class="status" role="status" aria-live="polite">An unanswered commit will be refused; no correct/incorrect grading is inferred from a choice alone.</p></form></section>
+<section class="card c2-card" data-blueprint-slot="representation"><span class="eyebrow">Representation</span><h2>Keep input and output fixed</h2><figure class="c2-figure" data-g9-component="REPRESENTATION"><svg role="img" aria-labelledby="fig-title fig-desc" viewBox="0 0 680 170" xmlns="http://www.w3.org/2000/svg">
+<title id="fig-title">Four authored ordered pairs shown as input and output cards</title><desc id="fig-desc">Four cards labeled A to D. First value of each pair is input x, second is output y. No answer or calculated offset is shown.</desc>
+<g font-family="system-ui, sans-serif"><text x="18" y="23" font-size="16" font-weight="700" fill="#344b80">Input x → Output y</text>
+<g transform="translate(13,42)"><rect width="154" height="103" rx="12" fill="#fff" stroke="#cbd7eb"/><text x="12" y="25" font-size="16" fill="#415482" font-weight="700">A</text><text x="12" y="62" font-size="24" font-weight="700" fill="#1a376d">10 → 109</text></g>
+<g transform="translate(179,42)"><rect width="154" height="103" rx="12" fill="#fff" stroke="#cbd7eb"/><text x="12" y="25" font-size="16" fill="#415482" font-weight="700">B</text><text x="12" y="62" font-size="24" font-weight="700" fill="#1a376d">11 → 130</text></g>
+<g transform="translate(345,42)"><rect width="154" height="103" rx="12" fill="#fff" stroke="#cbd7eb"/><text x="12" y="25" font-size="16" fill="#415482" font-weight="700">C</text><text x="12" y="62" font-size="24" font-weight="700" fill="#1a376d">12 → 153</text></g>
+<g transform="translate(511,42)"><rect width="154" height="103" rx="12" fill="#fff" stroke="#cbd7eb"/><text x="12" y="25" font-size="16" fill="#415482" font-weight="700">D</text><text x="12" y="62" font-size="24" font-weight="700" fill="#1a376d">13 → 180</text></g>
+</g></svg><figcaption>Question-aligned orientation visual. It does not precompute the answer or identify the exception.</figcaption></figure></section>
+</div><div class="c2-right">
+<section class="card c2-card" data-blueprint-slot="support"><div data-g9-component="HINT_LADDER">
+<span class="eyebrow">Hint ladder · reveal only what you need</span><h2>Guided support</h2><p class="subtle">One rung at a time. H0 is safe orientation; more decisive methods stay behind an actual committed attempt.</p>
+<div class="c2-source-note"><span class="c2-badge author">Guided · author-created</span><span class="c2-badge">Source hints: none (not an exam item)</span></div>
+<div class="c2-ladder" data-g9-ladder-ref="DEMO-AUTHORED-CORE2"><ol class="c2-rung-map" aria-label="Guidance stages"><li data-state="available" id="rung-map-0"><span class="c2-no">H0</span><span><strong>Orient</strong>Before your attempt · authored</span></li><li data-state="locked" id="rung-map-1"><span class="c2-no">H1</span><span><strong>Represent</strong>After commitment · authored</span></li><li data-state="locked" id="rung-map-2"><span class="c2-no">H2</span><span><strong>Compare</strong>After commitment · authored</span></li></ol>
+<ol id="c2-rungs" data-g9-ladder aria-label="Revealed guided support" style="list-style:none;margin:0;padding:0"></ol>
+<div class="c2-hint-actions"><button type="button" id="c2-next-hint" class="secondary" data-g9-next-rung>Show orientation · H0</button></div>
+<p id="c2-ladder-status" class="c2-ladder-status" role="status" aria-live="polite">H1 and H2 are locked until a choice is committed.</p></div>
+<template id="c2-rung-0"><li class="c2-rung-detail" data-g9-rung="1" data-g9-support-provenance="AUTHORED_CORE2_SUPPORT" data-g9-support-stage="ORIENT"><strong>H0 · Orient <span class="c2-badge author">Guided</span></strong><p>Which number in each ordered pair is the input and which is the output? Keep that orientation unchanged while comparing.</p></li></template>
+<template id="c2-rung-1"><li class="c2-rung-detail" data-g9-rung="2" data-g9-support-provenance="AUTHORED_CORE2_SUPPORT" data-g9-support-stage="REPRESENT"><strong>H1 · Represent <span class="c2-badge author">Guided</span></strong><p>For a rule <em>y = x² + k</em>, what does <em>y − x²</em> equal? Make a four-row residual column using the exact same subtraction for every option.</p></li></template>
+<template id="c2-rung-2"><li class="c2-rung-detail" data-g9-rung="3" data-g9-support-provenance="AUTHORED_CORE2_SUPPORT" data-g9-support-stage="CONNECT"><strong>H2 · Compare <span class="c2-badge author">Guided</span></strong><p>Which residual occurs three times? Use that shared k unchanged when you test the remaining pair; explain the mismatch without changing the rule.</p></li></template>
+</div></section>
+<section class="card c2-card" data-blueprint-slot="support"><div data-g9-component="TRAP"><span class="eyebrow">Common wrong route</span><h2>Diagnose after your attempt</h2><details id="c2-trap" data-requires-attempt class="c2-details-locked"><summary>Wrong-route hypothesis · locked until commit</summary><div><p>Choosing a different k for every pair makes any option appear consistent. Keep one rule across all observations and verify with a second pair; a guess from one observation is not a diagnosis.</p></div></details></div><hr><div data-g9-component="CONCEPT_NAV"><span class="eyebrow">Concept bridge</span><h3>Learn the method before retrying?</h3><p class="subtle">The authored Core1A lesson builds the fixed-residual test and independent transfer.</p><a href="core1a_authored_preview.html" id="c2-concept-nav" data-g9-concept-link>Open Core1A construction →</a><p id="c2-help-status" class="c2-mini">Opening concept help marks this demonstration attempt as assisted; a later changed question would be needed to check independent transfer.</p></div></section>
+</div></div>
+<section class="card c2-card c2-full" data-blueprint-slot="solution" data-g9-component="SOLUTION">
+<span class="eyebrow">Solution · after commitment only</span><h2>Answer and working</h2><p class="subtle">The answer remains unavailable to open before a chosen response is committed. This page does not grade you merely for choosing an option.</p>
+<details id="c2-solution" data-requires-attempt class="c2-details-locked"><summary>Answer and working · locked until commit</summary><div id="c2-solution-slot"><p class="c2-hidden-note">Commit an independent attempt to unlock the solution.</p></div></details>
+<template id="c2-solution-template"><div data-g9-component="SOLUTION_STEPS" class="c2-complete-steps" aria-label="Structured worked steps">
+<section class="c2-solution-step" data-g9-solution-order="1"><h3>1 · Represent the rule</h3><p><strong>Action:</strong> Rearrange the candidate relationship <em>y = x² + k</em> as <em>k = y − x²</em>.</p><p><em>Why valid:</em> Subtracting x² on both sides preserves equality. The same expression must be used for each option.</p><p><strong>Result:</strong> One numerical residual can be calculated for each pair.</p></section>
+<section class="c2-solution-step" data-crux="true" data-g9-solution-order="2"><h3>2 · Compare all four residuals · Key move</h3><p><strong>Action:</strong> Calculate A: 109 − 10² = 9; B: 130 − 11² = 9; C: 153 − 12² = 9; D: 180 − 13² = 11.</p><p><em>Why valid:</em> Three matches support one constant k = 9, while exactly one pair violates it.</p><p><strong>Result:</strong> D has the sole differing residual.</p></section>
+<section class="c2-solution-step" data-g9-solution-order="3"><h3>3 · Decide without changing the rule</h3><p><strong>Action:</strong> Hold k = 9 fixed for every option and select the one that fails.</p><p><em>Why valid:</em> Selecting a different k for each option would no longer test a common relation.</p><p><strong>Result:</strong> The authored sample's exception is option D.</p></section></div>
+<section class="c2-answer" data-g9-component="ANSWER"><strong>Answer · Authored demonstration: D, (13, 180).</strong> Three pairs satisfy y = x² + 9; D gives residual 11.</section>
+<section class="c2-where" data-g9-component="CHECK"><strong>Independent substitution check.</strong> For x = 13, the common rule y = x² + 9 predicts 178; authored D reports 180. Check A–C by substitution; they agree with the same k.</section>
+<details><summary>Source key versus independent verification</summary><div><p><strong>Printed/source key:</strong> Not applicable. This is a newly authored sample, not an original exam item.</p><p><strong>Independent computation:</strong> The arithmetic and substitution above establish D for this authored demonstration only.</p></div></details>
+<details data-g9-component="DIAGNOSTIC_REPAIR"><summary>Diagnostic probe · hypothesis only</summary><div><p>A wrong selection does not establish a misconception. Ask the learner to list all four values of y − x² without changing the formula. Distinguish an arithmetic slip from changing k between pairs; use a fresh authored pair to verify any repair.</p></div></details>
+<details><summary>Author-estimated difficulty rationale</summary><div>The main burden is choosing the invariant residual, checking all options consistently, and recognizing that one mismatch defeats the proposed common rule. This is an author estimate, not the canonical QRT classification.</div></details></template>
+</section>
+<section class="c2-audit"><div class="eyebrow">Reviewer crosswalk · registered BP-CORE2-SOURCE-QUESTION@1.11.0</div><h2>Included design slots / golden teaching moves</h2><ul><li>IDENTITY and provenance (authored only)</li><li>DIFFICULTY_WHY estimate</li><li>STEM, CONDITIONS and ATTEMPT</li><li>Question-aligned REPRESENTATION</li><li>TRAP after attempt</li><li>HINT_LADDER: one authored rung at a time</li><li>CONCEPT_NAV → Core1A</li><li>SOLUTION + structured SOLUTION_STEPS</li><li>ANSWER separated from CHECK</li><li>DIAGNOSTIC_REPAIR kept hypothetical</li><li>T01 · decision before derivation</li><li>T05 · orient → represent → compare</li><li>T07 · substitution back-check</li><li>T13 · no invented printed key</li><li>T15 · source format/option order protected in real pages</li></ul><p class="micro"><strong>Not applicable / not claimed:</strong> SOURCE_PDF (no official paper for an authored sample); authentic source stem/options; native renderer output; Owner-certified QRT/A4/rights; independent academic acceptance. No extra filler rungs were added to meet a numeric count.</p></section>
+<footer class="footer">Authored source-safe design demonstration only · original Q003 and SHA-pinned native pages were not available or reproduced.</footer></main><script>
+(()=>{
+ const root=document.querySelector('[data-g9-role="CORE2"]');
+ const form=document.getElementById('c2-form');
+ const commit=document.getElementById('c2-commit');
+ const status=document.getElementById('c2-status');
+ const next=document.getElementById('c2-next-hint');
+ const hstatus=document.getElementById('c2-ladder-status');
+ const list=document.getElementById('c2-rungs');
+ const trap=document.getElementById('c2-trap');
+ const solution=document.getElementById('c2-solution');
+ const slot=document.getElementById('c2-solution-slot');
+ let committed=false, revealed=0, assisted=false;
+ const markAssistance=kind=>{assisted=true;root.dataset.g9Assisted='1';root.dataset.g9Assistance=kind;};
+ const hintUpdate=()=>{
+   const locked=!committed&&revealed>=1;
+   next.disabled=locked||revealed>=3;
+   const captions=['Show orientation · H0','Show next support · H1','Show next support · H2','All guidance revealed'];
+   next.textContent=captions[revealed];
+   hstatus.textContent=(revealed>=3?'All three requested guidance steps are visible.':locked?'H1 and H2 remain locked until you commit an answer.':revealed===0?'H0 is safe before your attempt; more revealing hints require commitment.':'Choose the next rung only if you need it.');
+   for(let i=0;i<3;i++)document.getElementById('rung-map-'+i).dataset.state=i<revealed?'revealed':(i===0||committed)?'available':'locked';
+ };
+ next.addEventListener('click',()=>{
+   if(revealed>=3||(!committed&&revealed>=1))return;
+   const template=document.getElementById('c2-rung-'+revealed);
+   if(!template)return;
+   list.append(template.content.cloneNode(true));
+   markAssistance('HINT_LADDER');
+   revealed++;
+   hintUpdate();
+ });
+ form.addEventListener('submit',event=>{
+   event.preventDefault();
+   const checked=form.querySelector('input[name="pair"]:checked');
+   if(!checked){status.textContent='Select one option before committing.';form.querySelector('input[name="pair"]').focus();return;}
+   committed=true;root.dataset.attempted='1';
+   status.style.color='#16725d';status.textContent='Choice '+checked.value+' committed. Support and working are now available if requested. No automatic mastery judgement.';
+   form.querySelectorAll('input[name="pair"]').forEach(input=>input.disabled=true);
+   commit.disabled=true;
+   const template=document.getElementById('c2-solution-template');
+   slot.replaceChildren(template.content.cloneNode(true));
+   solution.classList.remove('c2-details-locked');
+   trap.classList.remove('c2-details-locked');
+   hintUpdate();
+ });
+ for(const d of [trap,solution]){
+   d.addEventListener('click',e=>{if(!committed){e.preventDefault();form.querySelector('input[name="pair"]').focus();status.textContent='Commit one option first to unlock this panel.';}});
+   d.addEventListener('toggle',()=>{if(!committed&&d.open)d.open=false;});
+ }
+ trap.addEventListener('toggle',()=>{if(trap.open&&committed)markAssistance('WRONG_ROUTE')});
+ const nav=document.getElementById('c2-concept-nav');
+ nav.addEventListener('click',()=>markAssistance('CONCEPT_NAV'));
+ hintUpdate();
+})();
+</script></body></html>
