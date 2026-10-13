@@ -1,0 +1,174 @@
+{
+  "schema": "imo203-d4-author-pre-review-mathematics-and-demand/v1",
+  "as_of_utc_date": "2026-10-14",
+  "purpose": "Falsifiable source-backed challenge packet, NOT a qualified independent academic verdict and NOT Owner acceptance",
+  "source_basis": {
+    "issue": "https://github.com/reallakshman19/Grade9v3.5/issues/203",
+    "review_ledger": "TEST/imo-research/qrt-tiles/d4-review/adoption.v1.json",
+    "retrieve": {
+      "source_head": "8ffa008e1bbd03898751af4380762178697fb715",
+      "source_path": "TEST/imo-research/qrt-d4/retrieve-d4.package.json",
+      "blob_sha": "b9de3db24eb414075a50d0b36298a6306f26056b",
+      "native_artifact_id": 11842190265,
+      "source_repair_pr": 219
+    },
+    "synthesize": {
+      "source_head": "9faa52d499e071e9e6d4c419b5afdf5fbc044455",
+      "source_path": "TEST/imo-research/qrt-d4/synthesize-d4.package.json",
+      "blob_sha": "c7b24e409d64cf196986fa179bf54aef34292613",
+      "native_artifact_id": 11824250043,
+      "source_pr": 210
+    }
+  },
+  "cells": [
+    {
+      "cell_id": "QRT-RETRIEVE-D4",
+      "origin": "AUTHORED_TEST_ONLY",
+      "X": {
+        "status": "HYPOTHESIS_NOT_OBSERVED",
+        "description": "May confuse necessary odd-square condition with a sufficient root-existence theorem",
+        "learner_event_ref": null
+      },
+      "Y": {
+        "status": "UNKNOWN",
+        "description": "Evidence only teaches modulo8 necessity; no demonstrated learner event of prior full iff theorem for all k>=3",
+        "learner_event_ref": null,
+        "required_proof": "Chronologically prior named lesson plus learner response independently retrieving the complete sufficiency/necessity and exponent boundary"
+      },
+      "Z": {
+        "status": "SAFE_PROPOSED_BRIDGE",
+        "description": "Expand (2t+1)^2 and test a=5 mod4 versus mod8 without giving sufficiency for higher powers"
+      },
+      "W": {
+        "status": "PROTECTED_LEARNER_DECISION",
+        "move_ref": "D4-RET-MOVE-CRITERION",
+        "description": "Retrieve full iff odd root-existence theorem at 2^k, k>=3, then switch branch at k=2"
+      },
+      "mathematics": {
+        "claim": "For odd a, x^2 = a mod 2^k for some odd x iff a=1 mod8 if k>=3; at k=2 iff a=1 mod4",
+        "proof": [
+          "Necessity: x=2t+1 gives x^2=4t(t+1)+1; consecutive t and t+1 include an even factor, hence x^2=1 mod8.",
+          "Sufficiency base k=3: any a=1 mod8 is represented by x=1 modulo8.",
+          "Suppose odd x squares to a modulo2^k, k>=3. Set x'=x+2^(k-1). Then x'^2-x^2 = 2^k*x + 2^(2k-2) = 2^k modulo2^(k+1): x odd and 2k-2>=k+1.",
+          "Thus either original x or shifted x' corrects the next binary digit, giving an odd root modulo2^(k+1); induction handles all k>=3.",
+          "For k=2, every odd x^2=1 mod4, and a=1 mod4 is realized by x=1."
+        ],
+        "mod128_yes": [
+          9,
+          17,
+          33,
+          49
+        ],
+        "mod128_no": [
+          13,
+          21
+        ],
+        "mod4_transfer_yes": [
+          5,
+          9,
+          13
+        ],
+        "check_counterexample": "5 is 1 mod4 but 5 mod8; no odd-square root exists mod8",
+        "mathematical_status": "SOURCE_CONSISTENT_CONSTRUCTIVE_PROOF; INDEPENDENT_QUALIFIED_REVIEW_PENDING"
+      },
+      "primary_demand_challenge": {
+        "proposed": "RETRIEVE-D4",
+        "status": "HOLD_PRIOR_LEARNING_AND_D4_VALIDITY",
+        "rivals": [
+          "APPLY-D3",
+          "EXPLAIN",
+          "JUSTIFY",
+          "APPLY-D4"
+        ],
+        "test": "If the iff theorem was never learned, discovering/proving it is not RETRIEVE. If teacher provides the iff immediately before attempt, subsequent residue reductions could be D2/D3. Ask learner to retrieve theorem cold before this task; preserve attempt evidence and chronology.",
+        "reviewer_questions": [
+          "Where is the chronologically earlier full theorem and a learner demonstration, not just a teaching page?",
+          "Does classification require genuine high-transfer retrieval rather than a six-residue routine?",
+          "Is the modulus4 switch still nontrivial after the preceding Core1A/B example already contrasts 4 and8?"
+        ]
+      },
+      "qualified_reviewer": null,
+      "conflict_declaration": null,
+      "academic_verdict": null,
+      "owner_decision_id": null,
+      "accepted": false
+    },
+    {
+      "cell_id": "QRT-SYNTHESIZE-D4",
+      "origin": "AUTHORED_TEST_ONLY",
+      "X": {
+        "status": "HYPOTHESIS_NOT_OBSERVED",
+        "description": "Learner may choose a smallest-looking prefix without maintaining alternating and final-pair constraints",
+        "learner_event_ref": null
+      },
+      "Y": {
+        "status": "UNKNOWN",
+        "description": "Authored source lists mod9/mod11/mod4 divisibility tests as entry assumptions but supplies no actual learner-event demonstration of those skills",
+        "learner_event_ref": null,
+        "required_proof": "Chronologically prior learner work demonstrating each relevant divisibility rule and no mere inferred prior competency"
+      },
+      "Z": {
+        "status": "SAFE_BRIDGE_PROPOSED",
+        "description": "Distinct four-digit example 0,1,2,6 teaches digit-sum and last-pair interaction; does not supply six-digit odd-position total or winning suffix"
+      },
+      "W": {
+        "status": "PROTECTED_LEARNER_DECISION",
+        "move_ref": "D4-SYN-MOVE-ORDER",
+        "description": "Coordinate six-digit alternating sums, mod4 suffix, lexicographic minimum and updated mod7 condition independently"
+      },
+      "mathematics": {
+        "claim": "Smallest six-digit permutation of 0,1,2,3,4,8 divisible by4,9,11 is 120384; adding7 yields 130284",
+        "proof": [
+          "Every permutation has digit sum18; mod9 is automatic. Let O be positions1+3+5, E positions2+4+6: O+E=18 and alternating difference O-E=2O-18 is even, magnitude<=18; if divisible by11 it is0, so O=E=9.",
+          "The smallest possible leading digit is1. Prefix10 leaves odd positions3+5 required to total8, but remaining distinct digits2,3,4,8 contain no pair with sum8; prefix10 is impossible.",
+          "Prefix12 forces positions3+5 to total8 from 0,3,4,8: only digits0 and8 work, while positions4+6 are3 and4. Enumerate only the four placements of these two pairs: 120384 (84 ending), 120483 (83), 128304 (04), 128403 (03). The suffix divisibility test leaves precisely 120384 and128304.",
+          "Therefore 120384 is the least number satisfying4,9,11; its last two digits84 are divisible4, and alternating positional totals are9 each.",
+          "For added7, 120384 has remainder5 and128304 remainder1, so neither prefix12 feasible number survives.",
+          "The next possible prefix is13. Odd positions3+5 then require8 from remaining0,2,4,8: only0 and8. Even positions4+6 are2 and4. Mod4 yields 130284 (ending84) and138204 (ending04); the smaller 130284 is divisible7 (130284=7*18612). No smaller candidate exists."
+        ],
+        "original_minimum": 120384,
+        "original_prefix12_feasible": [
+          120384,
+          128304
+        ],
+        "next_prefix13_feasible": [
+          130284,
+          138204
+        ],
+        "changed_minimum": 130284,
+        "original_valid_permutations": 24,
+        "status": "HAND_CHECKABLE_PREFIX_EXCLUSION_PLUS_EXHAUSTIVE_ORACLE; QUALIFIED_INDEPENDENT_REVIEW_PENDING"
+      },
+      "observed_native_role_cues": {
+        "artifact_id": 11824250043,
+        "status": "SOURCE_AND_RENDERED_TEXT_INSPECTED; NO INDEPENDENT_QUALIFIED_SEMANTIC_VERDICT",
+        "earlier_core1": "Orientation repeatedly says choose dependency order among alternating sums, suffix and minimal prefix. This names strategy families but not six-digit odd/even totals or a winning arrangement.",
+        "earlier_core1a": "Displays all six given digits and automatic mod9 sum18; teaches four-digit last-pair and minimality examples and gives the high-level instruction to choose a constraint order.",
+        "earlier_core1b": "Four-digit misconception case, digits0,1,2,6, tests prefix10 and suffix viability, not the main six-digit allocation.",
+        "core2a": "Original stem requires human minimum proof; H3 protected as after-attempt in source support plan. Numeric browser/AX regression PASS in cited native run.",
+        "central_risk": "Does stating the three method ingredients and 'choose dependency order' before Core2A materially prescribe the primary SYNTHESIZE decision? Reviewer must inspect all reachable roles/figures and adjudicate."
+      },
+      "primary_demand_challenge": {
+        "proposed": "SYNTHESIZE-D4",
+        "status": "PENDING_QUALIFIED_ROLE_SEMANTICS_AND_PRELEARNING",
+        "rivals": [
+          "APPLY-D3",
+          "JUSTIFY-D3",
+          "SYNTHESIZE-D3"
+        ],
+        "reviewer_questions": [
+          "After Core1A/B, does learner still choose the constraint order and rule out smaller prefixes, or only execute a supplied route?",
+          "Can the learner construct the odd/even position sum9 split without seeing it in earlier roles or hints?",
+          "Does adding7 materially change the search strategy, or merely check two earlier candidates?",
+          "Does a prior learner assessment substantiate the source's claimed mod9/11/4 knowledge?"
+        ]
+      },
+      "qualified_reviewer": null,
+      "conflict_declaration": null,
+      "academic_verdict": null,
+      "owner_decision_id": null,
+      "accepted": false
+    }
+  ],
+  "protocol": "Falsifiable internal author-style analytical challenge only. Do not fill qualified H/S/P/M review verdicts, Owner decisions, rights or successor golden from this packet."
+}
