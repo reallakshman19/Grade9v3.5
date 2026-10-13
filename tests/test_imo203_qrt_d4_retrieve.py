@@ -10,6 +10,7 @@ from Shared.tools import render_core, core2_v2
 ROOT=Path(__file__).resolve().parents[1]
 PKG=ROOT/"TEST/imo-research/qrt-d4/retrieve-d4.package.json"
 MANIFEST=ROOT/"TEST/products/imo203-qrt-d4-retrieve.manifest.json"
+REVIEW=ROOT/"TEST/imo-research/qrt-d4/retrieve-d4.review.json"
 SCHEMA=ROOT/"Shared/library/package.schema.json"
 GOLDEN=ROOT/"golden/units/G-IMO-G9-FIVE-CORE-20261012/snapshots"
 
@@ -19,6 +20,7 @@ class RetrieveD4(unittest.TestCase):
     def setUpClass(cls):
         cls.p=json.loads(PKG.read_text())
         cls.m=json.loads(MANIFEST.read_text())
+        cls.review=json.loads(REVIEW.read_text())
         cls.q=next(q for q in cls.p["questions"] if q["id"]=="Q-D4-RETRIEVE-MAIN")
 
     def test_schema_source_rights_and_scaffold_release(self):
@@ -44,6 +46,18 @@ class RetrieveD4(unittest.TestCase):
             svg=(ROOT/rep["rendered_asset_refs"][0]).read_text()
             self.assertIn("data-g9-stage-id",svg)
             self.assertNotIn("Yes:9,17,33,49",svg)
+
+    def test_question_first_learner_evidence_must_not_be_fabricated(self):
+        learner=self.review["learner_evidence"]
+        self.assertEqual(learner["X"]["status"],"HYPOTHESIS_NOT_DEMONSTRATED")
+        self.assertIsNone(learner["X"]["learner_event_ref"])
+        self.assertEqual(learner["Y"]["status"],"UNKNOWN")
+        self.assertIsNone(learner["Y"]["learner_event_ref"])
+        self.assertEqual(learner["Z"]["status"],"SAFE_BRIDGE_PROPOSED")
+        self.assertEqual(learner["W"]["move_ref"],"D4-RET-MOVE-CRITERION")
+        self.assertEqual(self.review["classification_hold"]["status"],
+                         "PENDING_QUALIFIED_REVIEW_AND_PRIOR_LEARNING_EVIDENCE")
+        self.assertIsNone(self.review["owner_decision"])
 
     def test_independent_odd_square_classes_and_exception(self):
         for k in range(2,11):
