@@ -109,6 +109,39 @@ class D1EvidenceTiles(unittest.TestCase):
         self.assertEqual(self.viewer["cells"][6]["feedback_review"],
                          "../d1/justify-reasoning-probes.v1.json")
 
+    def test_84_specific_semantic_questions_without_forged_signoff(self):
+        path=TILES/"d1/semantic-challenge-20261013.v1.json"
+        r=json.loads(path.read_text())
+        self.assertEqual(r["schema"],"imo-qrt-d1-semantic-challenge/v1")
+        self.assertTrue(r["authorial_quality_review_only"])
+        self.assertEqual(r["coverage"]["accepted_D1"],0)
+        self.assertEqual(r["coverage"]["accepted_programme"],0)
+        self.assertEqual(len(r["cells"]),7)
+        asks=("H1","H2","H3","S1","S2","S3","P1","P2","P3","M1","M2","M3")
+        for c in r["cells"]:
+            self.assertEqual(set(c["semantic_asks"]),set(asks))
+            self.assertTrue(all(c["semantic_asks"][a]["specific_test"] for a in asks))
+            self.assertTrue(all(c["semantic_asks"][a]["qualified_reviewer_verdict"] is None for a in asks))
+            self.assertIsNone(c["independent_review"]["academic_verdict"])
+            self.assertIsNone(c["independent_review"]["reviewer"])
+            self.assertIsNone(c["independent_review"]["owner_qrt_decision_id"])
+        self.assertEqual(r["coverage"]["semantic_ask_count"],84)
+        self.assertEqual(r["confirmed_defect"]["cell"],"QRT-RETRIEVE-D1")
+        self.assertTrue(r["confirmed_defect"]["new_technical_evidence"]["all_six_sha_match"])
+        self.assertIn("38412153491",r["confirmed_defect"]["new_technical_evidence"]["ci_run"])
+        for c in self.viewer["cells"]:
+            if c["band"]=="D1":
+                self.assertEqual(c["semantic_challenge"],"../d1/semantic-challenge-20261013.v1.json")
+
+    def test_retrieve_tile_points_at_repaired_actual_HTML_not_leaked_old_output(self):
+        t=self.tiles["RETRIEVE"]
+        self.assertEqual(t["status_dimensions"]["technical"],"REPAIRED_RENDERED_TEST")
+        self.assertIn("38412153491",t["generation"]["exact_head_ci_run"])
+        self.assertIn("11823141979",t["generation"]["artifact_url"])
+        self.assertEqual(t["source"]["verified_sha"],"c372c0ae7b7d0c04ad2375c02b4e564f3c642936")
+        self.assertEqual(t["evidence"]["measured_repair"]["type"],"CONFIRMED_AUTHORING_HINT_LEAK")
+        self.assertTrue(t["evidence"]["measured_repair"]["six_html_sha_receipt_matches"])
+
     def test_repaired_model_and_actual_justify_not_obsolete_inventory(self):
         m=self.tiles["MODEL"];j=self.tiles["JUSTIFY"]
         self.assertIn("11802730066",m["generation"]["artifact_url"])
