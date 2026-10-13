@@ -28,6 +28,8 @@ footer{border-top:1px solid #dce3ea;color:#5d6873;font-size:.9rem}
 <a href="https://github.com/reallakshman19/Grade9v3.5/pull/191">Source draft PR #191</a>
 <a href="https://github.com/reallakshman19/Grade9v3.5/blob/agent/182-q003-qrt-golden-tile-6acda00e/TEST/imo-research/qrt-tiles/q003-model-d2/index.html">Existing Q003 matrix reference</a>
 <a href="evidence.v1.json">Machine-readable adoption ledger</a>
+<a href="https://github.com/reallakshman19/Grade9v3.5/issues/211">Qualified review: RETRIEVE / MODEL · #211</a>
+<a href="https://github.com/reallakshman19/Grade9v3.5/issues/214">Qualified review: other five · #214</a>
 </nav></header>
 <main class="layout">
 <section aria-labelledby="matrix-heading"><h2 id="matrix-heading">7 demands × 4 bands</h2>
@@ -91,8 +93,17 @@ function selectCell(row){
  }
  t.append(tbody);asks.append(t);
  const links=document.getElementById("links");links.replaceChildren();
- link(links,row.provenance.artifact_url,"Open actual exact-head HTML ZIP");
- link(links,row.provenance.run_url,"Open exact-head scoped CI");
+ const highRisk=row.demand==="RETRIEVE"||row.demand==="MODEL";
+ const reviewIssue=highRisk?211:214;
+ const reviewPacket=highRisk?"ACADEMIC-REVIEW-REQUEST.md":"OTHER-FIVE-ACADEMIC-REVIEW.md";
+ const reviewBranch="https://github.com/reallakshman19/Grade9v3.5/blob/agent/201-d2-evidence-golden-gates-20261013/TEST/imo-research/qrt-d2/issue-201/";
+ link(links,"https://github.com/reallakshman19/Grade9v3.5/issues/"+reviewIssue,
+      "Qualified academic review request · #"+reviewIssue+" · UNSIGNED");
+ link(links,reviewBranch+reviewPacket,"Read cell-specific academic decision packet");
+ link(links,"https://github.com/reallakshman19/Grade9v3.5/actions/runs/38426896089/artifacts/11829196580",
+      "Verified seven-cell native evidence at source-safe PR #205 snapshot");
+ link(links,row.provenance.artifact_url,"Historical source-draft native HTML artifact (#191)");
+ link(links,row.provenance.run_url,"Historical source-draft native CI run (#191)");
  const ref="https://github.com/reallakshman19/Grade9v3.5/blob/eb3cf06646f00bf208084e794b41b4d8d83135b6/";
  link(links,ref+row.provenance.source,"Read source package");
  link(links,ref+row.provenance.manifest,"Read renderer manifest");
