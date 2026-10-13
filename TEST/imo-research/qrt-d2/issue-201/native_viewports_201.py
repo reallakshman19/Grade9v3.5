@@ -61,6 +61,7 @@ def main() -> int:
         "human_visual_review": "PENDING_INDEPENDENT",
         "owner_approval": "NOT_GRANTED",
         "checks": [],
+        "staged_core2a": [],
         "failures": [],
     }
     # Generated role HTML contains ../../../css and ../../../js asset links.
@@ -164,6 +165,77 @@ def main() -> int:
                                         "state":"INITIAL_PRE_ATTEMPT",
                                         "status":"VIEWPORT_BROWSER_PASS",
                                     })
+                                    if role == "core2a":
+                                        # Human reviewers need evidence of W protection
+                                        # after H2 and after actual nonblank commitment,
+                                        # not just a screenshot of the initial document.
+                                        h3 = page.locator(
+                                            'details[data-g9-payload-ref*="after-attempt-hint-3"]'
+                                        )
+                                        assert h3.count() == 1, f"H3_NOT_UNIQUE:{demand}:{width}"
+                                        assert h3.get_attribute("data-locked") is not None, (
+                                            f"INITIAL_H3_UNLOCKED:{demand}:{width}"
+                                        )
+                                        assert not page.locator("[data-g9-after-attempt-hint]").count(), (
+                                            f"INITIAL_H3_PAYLOAD_EXPOSED:{demand}:{width}"
+                                        )
+                                        before_h2 = set(page.locator("body").inner_text().splitlines())
+                                        next_hint = page.get_by_role("button", name="Next hint")
+                                        assert next_hint.count() == 1, f"NO_H2_NAV:{demand}:{width}"
+                                        next_hint.click()
+                                        exposed_h2 = page.locator("body").inner_text()
+                                        h2_lines = [line.strip() for line in exposed_h2.splitlines()
+                                                    if line not in before_h2 and len(line.strip()) >= 25]
+                                        assert h2_lines, f"H2_TEXT_NOT_VISIBLE:{demand}:{width}"
+                                        assert h3.get_attribute("data-locked") is not None, (
+                                            f"H2_UNLOCKED_H3_PRECOMMIT:{demand}:{width}"
+                                        )
+                                        h2_png = path / demand / f"{role}-{width}px-h2-before-attempt.png"
+                                        page.screenshot(path=str(h2_png), full_page=True, animations="disabled")
+                                        commit = page.locator("button[data-g9-commit]").first
+                                        attempt = page.locator("textarea[data-g9-attempt]").first
+                                        assert commit.count() and attempt.count(), (
+                                            f"MISSING_ATTEMPT_UI:{demand}:{width}"
+                                        )
+                                        commit.click()
+                                        assert h3.get_attribute("data-locked") is not None, (
+                                            f"BLANK_ATTEMPT_UNLOCKED_H3:{demand}:{width}"
+                                        )
+                                        attempt.fill(
+                                            "I will choose a rule, connect the stated quantities "
+                                            "and explain the choice before checking."
+                                        )
+                                        commit.click()
+                                        assert h3.get_attribute("data-locked") is None, (
+                                            f"NONBLANK_ATTEMPT_H3_STILL_LOCKED:{demand}:{width}"
+                                        )
+                                        h3.locator("summary").click()
+                                        assert page.locator("[data-g9-after-attempt-hint]").is_visible(), (
+                                            f"H3_PAYLOAD_NOT_VISIBLE:{demand}:{width}"
+                                        )
+                                        after_png = path / demand / f"{role}-{width}px-h3-after-attempt.png"
+                                        page.screenshot(path=str(after_png), full_page=True, animations="disabled")
+                                        assert page.evaluate(
+                                            "document.documentElement.scrollWidth <= window.innerWidth"
+                                        ), f"POSTCOMMIT_H3_HORIZONTAL_OVERFLOW:{demand}:{width}"
+                                        assert not js_errors and not status_failures and not request_failures, (
+                                            f"STAGED_RUNTIME_ASSET_ERROR:{demand}:{width}"
+                                        )
+                                        report["staged_core2a"].append({
+                                            "demand": demand.upper(),
+                                            "role": "CORE2A",
+                                            "width_px": width,
+                                            "h2_before_attempt": h2_lines,
+                                            "h3_initial": "LOCKED_NO_RENDERED_PAYLOAD",
+                                            "blank_attempt": "REMAINS_LOCKED",
+                                            "nonblank_attempt": "UNLOCKED",
+                                            "h3_after_attempt": "VISIBLE",
+                                            "h2_screenshot_path": str(h2_png.relative_to(path.parent)),
+                                            "h2_screenshot_sha256": hashlib.sha256(h2_png.read_bytes()).hexdigest(),
+                                            "h3_screenshot_path": str(after_png.relative_to(path.parent)),
+                                            "h3_screenshot_sha256": hashlib.sha256(after_png.read_bytes()).hexdigest(),
+                                            "academic_semantic_verdict": "PENDING_INDEPENDENT",
+                                        })
                                 except Exception as exc:
                                     report["failures"].append({
                                         "demand":demand.upper(),"role":role.upper(),
@@ -175,13 +247,18 @@ def main() -> int:
                     browser.close()
     report["expected_checks"] = len(DEMANDS)*len(ROLES)*len(WIDTHS)
     report["observed_checks"] = len(report["checks"])
+    report["expected_staged_core2a"] = len(DEMANDS)*len(WIDTHS)
+    report["observed_staged_core2a"] = len(report["staged_core2a"])
     report["status"] = ("PASS" if not report["failures"] and
-                         report["observed_checks"]==report["expected_checks"] else "FAIL")
+                         report["observed_checks"]==report["expected_checks"] and
+                         report["observed_staged_core2a"]==report["expected_staged_core2a"] else "FAIL")
     (path.parent / "viewport-evidence.json").write_text(
         json.dumps(report,indent=2)+"\n",encoding="utf-8"
     )
     print(f'{report["status"]}: {report["observed_checks"]}/{report["expected_checks"]} '
           f'phone/tablet/desktop native page views; failures={len(report["failures"])}')
+    print(f'Core2A H2/H3 staging: {report["observed_staged_core2a"]}/'
+          f'{report["expected_staged_core2a"]} role-width states')
     for failure in report["failures"][:15]:
         print(failure)
     return 0 if report["status"]=="PASS" else 1
