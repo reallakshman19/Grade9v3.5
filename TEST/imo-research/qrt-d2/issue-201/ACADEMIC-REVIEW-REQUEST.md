@@ -1,5 +1,7 @@
 # #201 — qualified independent academic review request: RETRIEVE-D2 and MODEL-D2
 
+> **Current evidence entry:** [Seven-cell academic reviewer start](REVIEW-START-HERE.md) pins PR #205 `5b382356e792ae50884241fb047c328e304d011d`, the corresponding benchmark artifact, source blobs and pending H/S/P/M questions. Older run links below are historical technical evidence, **not** the current PR head or an academic verdict.
+
 **Review status: REQUESTED, NOT PERFORMED.** Prepared 13 October 2026. Scope is two high-risk **wholly authored TEST** exemplars, not an official IMO question or the authentic source Q003 (#183). Parent issue [#201](https://github.com/reallakshman19/Grade9v3.5/issues/201); draft adoption [PR #205](https://github.com/reallakshman19/Grade9v3.5/pull/205), based on authored [PR #191](https://github.com/reallakshman19/Grade9v3.5/pull/191). The requesting author/agent cannot confer an independent qualification or QRT acceptance.
 
 ## Exact evidence to review, not inferred status
