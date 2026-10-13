@@ -57,16 +57,36 @@ if (args.includes('--include-core2')) {
   });
 }
 
+// A Windows npm command is a .cmd shim; execFileSync('npm', ...) cannot invoke
+// it without a shell. Resolve the already-installed module from Node's own
+// installation first, before invoking npm on non-Windows only. No installs.
 let playwright;
 try {
   const require = createRequire(import.meta.url);
   try { playwright = require('playwright'); }
   catch {
-    const globalNpmRoot = execFileSync('npm', ['root', '-g'], { encoding: 'utf8' }).trim();
-    playwright = require(path.join(globalNpmRoot, 'playwright'));
+    const nodeDir = path.dirname(process.execPath);
+    const roots = [
+      ...(process.env.NODE_PATH || '').split(path.delimiter).filter(Boolean),
+      path.join(nodeDir, 'node_modules'),
+      path.resolve(nodeDir, '..', 'node_modules'),
+    ];
+    if (process.platform === 'win32' && process.env.APPDATA) {
+      roots.push(path.join(process.env.APPDATA, 'npm', 'node_modules'));
+    }
+    if (process.platform !== 'win32') {
+      try {
+        roots.push(execFileSync('npm', ['root', '-g'], { encoding: 'utf8' }).trim());
+      } catch { /* no npm CLI: use known module roots only */ }
+    }
+    for (const root of new Set(roots)) {
+      try { playwright = require(path.join(root, 'playwright')); break; }
+      catch { /* try next already-installed location */ }
+    }
+    if (!playwright) throw new Error('PLAYWRIGHT_MODULE_NOT_FOUND');
   }
 } catch {
-  console.error('A4_AUDIT_BLOCKED: Playwright is not locally installed; no substitute HTML/PDF produced.');
+  console.error('A4_AUDIT_BLOCKED: PLAYWRIGHT_MODULE_NOT_FOUND');
   process.exit(2);
 }
 
