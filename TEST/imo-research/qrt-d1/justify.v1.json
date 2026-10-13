@@ -413,33 +413,35 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "REP-TEST-IMO182-D1-JUS-AREA-STAGES",
-      "kind": "GRID",
-      "purpose": "Staged area model and a distinct 3-by-5 worked rectangle",
+      "kind": "STATIC_FIGURE",
+      "purpose": "Show general base and perpendicular altitude, not target answer.",
       "required_elements": [
-        "Formula A=l×w explained by equal rows of unit squares.",
-        "Different 3-by-5 worked grid only.",
-        "No 7-by-4 answer."
+        "base b",
+        "altitude h",
+        "b=10",
+        "h=4",
+        "A=20 cm²"
       ],
       "relation_refs": [
         "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
       ],
       "read_order": [
-        "Read area equation.",
-        "Reveal 3 by 5 example.",
-        "Check tile count."
+        "Base and perpendicular height",
+        "Different worked triangle",
+        "Worked example area verification"
       ],
       "instance_constraints": [
-        "Do not print 7×4 area or 24÷4 missing length in preattempt SVG.",
-        "Original authored rectangle, no official specimen."
+        "Do not reveal the target equality conclusion or 42 cm² in a preattempt SVG.",
+        "No original organizer figure bytes or official source custody."
       ],
       "accessibility": [
-        "SVG title and description state only given quantities, not answer.",
-        "Dimension labels are also provided as text; color alone does not encode a side.",
-        "All grid units are in centimetres."
+        "SVG title and desc read given quantities independently of color.",
+        "Perpendicular altitude is described as distance at right angles to the baseline.",
+        "Figure is not drawn to scale."
       ],
       "misleading_alternatives": [
-        "Premarking answer area or inverse length.",
-        "Showing diagonal lengths as width."
+        "Use slanted edge as height.",
+        "Premark two triangle areas equal before learner's attempt."
       ],
       "rendered_asset_refs": [
         "TEST/imo-research/qrt-d1/figures/justify-area-stages.v1.svg"
@@ -457,44 +459,43 @@
           "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-area-stages.v1.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
-            "frame": "Rectangular tile grid with perpendicular measured sides",
-            "caption": "Study givens and choose formula substitution independently."
+            "frame": "Triangles with a common baseline and perpendicular distances",
+            "caption": "Read the factual givens; decide the warrant independently."
           }
         }
       ],
       "correspondence": [
         {
-          "element": "Rectangular measurements",
-          "symbol": "A=l×w",
-          "in_words": "Area as triangular tile count"
+          "element": "Area-relevant base and perpendicular altitude",
+          "symbol": "A=bh/2",
+          "in_words": "Use only the measurements stated for this question."
         }
       ],
       "reveal_stages": [
         {
-          "id": "APP-STAGE-AREA-MEANING",
-          "label": "Unit-square area rule",
-          "purpose": "Show a blank triangular tile grid and area=l×w, but not target 7×4.",
+          "id": "JUS-STAGE-AREA-MEANING",
+          "label": "Base and perpendicular height",
+          "purpose": "Show general base and perpendicular altitude, not target answer.",
           "visible_elements": [
-            "Area=l×w",
-            "unit squares"
+            "base b",
+            "altitude h"
           ]
         },
         {
-          "id": "APP-STAGE-WORKED-3-5",
-          "label": "Different worked rectangle",
-          "purpose": "Show only 3×5 rectangle as fifteen tiles.",
+          "id": "JUS-STAGE-WORKED-10-4",
+          "label": "Different worked triangle",
+          "purpose": "Only worked base 10 cm and height 4 cm.",
           "visible_elements": [
-            "length 3 cm",
-            "width 5 cm",
-            "fifteen 1cm² tiles"
+            "b=10",
+            "h=4"
           ]
         },
         {
-          "id": "APP-STAGE-WORKED-CHECK",
-          "label": "Worked-example tile check",
-          "purpose": "Check distinct worked 3×5=15 square centimetres.",
+          "id": "JUS-STAGE-WORKED-CHECK",
+          "label": "Worked example area verification",
+          "purpose": "Show 10×4/2=20 cm², not 12×7 conclusion.",
           "visible_elements": [
-            "3×5=15 cm²"
+            "A=20 cm²"
           ]
         }
       ]
@@ -508,35 +509,33 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "REP-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN",
-      "kind": "GRID",
-      "purpose": "Two measured sides of an unsolved triangular mat",
+      "kind": "STATIC_FIGURE",
+      "purpose": "Two shifted apexes, common base and equal perpendicular heights; no area result.",
       "required_elements": [
-        "Length 7 cm.",
-        "Width 4 cm.",
-        "No complete tile count or target area."
+        "AB 12 cm",
+        "C and D distances 7 cm"
       ],
       "relation_refs": [
         "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
       ],
       "read_order": [
-        "Read perpendicular measurements.",
-        "Use supplied rule independently."
+        "Shared base and perpendicular altitudes"
       ],
       "instance_constraints": [
-        "Do not print 7×4 area or 24÷4 missing length in preattempt SVG.",
-        "Original authored rectangle, no official specimen."
+        "Do not reveal the target equality conclusion or 42 cm² in a preattempt SVG.",
+        "No original organizer figure bytes or official source custody."
       ],
       "accessibility": [
-        "SVG title and description state only given quantities, not answer.",
-        "Dimension labels are also provided as text; color alone does not encode a side.",
-        "All grid units are in centimetres."
+        "SVG title and desc read given quantities independently of color.",
+        "Perpendicular altitude is described as distance at right angles to the baseline.",
+        "Figure is not drawn to scale."
       ],
       "misleading_alternatives": [
-        "Premarking answer area or inverse length.",
-        "Showing diagonal lengths as width."
+        "Use slanted edge as height.",
+        "Premark two triangle areas equal before learner's attempt."
       ],
       "rendered_asset_refs": [
-        "TEST/imo-research/qrt-d1/figures/justify-core2a-mat.v1.svg"
+        "TEST/imo-research/qrt-d1/figures/justify-core2a-triangles.v1.svg"
       ],
       "scene_instances": [
         {
@@ -548,29 +547,29 @@
           "datum_refs": [
             "DATUM-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN"
           ],
-          "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-core2a-mat.v1.svg",
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-core2a-triangles.v1.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
-            "frame": "Rectangular tile grid with perpendicular measured sides",
-            "caption": "Study givens and choose formula substitution independently."
+            "frame": "Triangles with a common baseline and perpendicular distances",
+            "caption": "Read the factual givens; decide the warrant independently."
           }
         }
       ],
       "correspondence": [
         {
-          "element": "Rectangular measurements",
-          "symbol": "7×4",
-          "in_words": "Given dimension labels"
+          "element": "Area-relevant base and perpendicular altitude",
+          "symbol": "AB=12, h=7 for each",
+          "in_words": "Use only the measurements stated for this question."
         }
       ],
       "reveal_stages": [
         {
           "id": "JUS-D1-QA-GIVENS",
-          "label": "Unsolved 7 by 4 mat",
-          "purpose": "Show only given rectangle side labels 7 cm and 4 cm without area value or tiled answer.",
+          "label": "Shared base and perpendicular altitudes",
+          "purpose": "Two shifted apexes, common base and equal perpendicular heights; no area result.",
           "visible_elements": [
-            "length 7 cm",
-            "width 4 cm"
+            "AB 12 cm",
+            "C and D distances 7 cm"
           ]
         }
       ]
@@ -584,34 +583,34 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "REP-TEST-IMO182-D1-JUS-ERROR-CLAIM",
-      "kind": "GRID",
-      "purpose": "False area-by-addition claim",
+      "kind": "STATIC_FIGURE",
+      "purpose": "Show the shifted apex and a disputed unsupported claim, not its correction.",
       "required_elements": [
-        "Rectangle length 5 cm and width 3 cm.",
-        "Classmate wrote 5+3=8 cm²; no repair."
+        "base 10 cm",
+        "height 3 cm",
+        "claim slanted side implies more area?"
       ],
       "relation_refs": [
         "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
       ],
       "read_order": [
-        "Read claim.",
-        "Test against actual unit-square grid."
+        "Slanted-side claim"
       ],
       "instance_constraints": [
-        "Do not print 7×4 area or 24÷4 missing length in preattempt SVG.",
-        "Original authored rectangle, no official specimen."
+        "Do not reveal the target equality conclusion or 42 cm² in a preattempt SVG.",
+        "No original organizer figure bytes or official source custody."
       ],
       "accessibility": [
-        "SVG title and description state only given quantities, not answer.",
-        "Dimension labels are also provided as text; color alone does not encode a side.",
-        "All grid units are in centimetres."
+        "SVG title and desc read given quantities independently of color.",
+        "Perpendicular altitude is described as distance at right angles to the baseline.",
+        "Figure is not drawn to scale."
       ],
       "misleading_alternatives": [
-        "Premarking answer area or inverse length.",
-        "Showing diagonal lengths as width."
+        "Use slanted edge as height.",
+        "Premark two triangle areas equal before learner's attempt."
       ],
       "rendered_asset_refs": [
-        "TEST/imo-research/qrt-d1/figures/justify-core1b-wrong-rule.v1.svg"
+        "TEST/imo-research/qrt-d1/figures/justify-core1b-slope-claim.v1.svg"
       ],
       "scene_instances": [
         {
@@ -623,30 +622,30 @@
           "datum_refs": [
             "DATUM-TEST-IMO182-D1-JUS-ERROR-CLAIM"
           ],
-          "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-core1b-wrong-rule.v1.svg",
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-core1b-slope-claim.v1.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
-            "frame": "Rectangular tile grid with perpendicular measured sides",
-            "caption": "Study givens and choose formula substitution independently."
+            "frame": "Triangles with a common baseline and perpendicular distances",
+            "caption": "Read the factual givens; decide the warrant independently."
           }
         }
       ],
       "correspondence": [
         {
-          "element": "Rectangular measurements",
-          "symbol": "5+3?",
-          "in_words": "Diagnostic wrong addition"
+          "element": "Area-relevant base and perpendicular altitude",
+          "symbol": "b=10, h=3",
+          "in_words": "Use only the measurements stated for this question."
         }
       ],
       "reveal_stages": [
         {
-          "id": "APP-ERROR-CLAIM",
-          "label": "Disputed area addition",
-          "purpose": "Show 5 by 3 triangular givens and a classmate's incorrect 5+3 result without correcting.",
+          "id": "JUS-ERROR-CLAIM",
+          "label": "Slanted-side claim",
+          "purpose": "Show the shifted apex and a disputed unsupported claim, not its correction.",
           "visible_elements": [
-            "length 5 cm",
-            "width 3 cm",
-            "student wrote 5+3=8"
+            "base 10 cm",
+            "height 3 cm",
+            "claim slanted side implies more area?"
           ]
         }
       ]
@@ -660,35 +659,34 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "REP-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN",
-      "kind": "GRID",
-      "purpose": "Area and width without a given length",
+      "kind": "STATIC_FIGURE",
+      "purpose": "Only supplied areas 36 cm², common base 12 cm and unknown perpendicular heights.",
       "required_elements": [
-        "Area 24 cm².",
-        "Width 4 cm.",
-        "Length unknown."
+        "36 cm² for each",
+        "AB 12 cm",
+        "heights unknown"
       ],
       "relation_refs": [
         "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA"
       ],
       "read_order": [
-        "Read known measurements.",
-        "Infer missing length using inverse rule."
+        "Converse area and base givens"
       ],
       "instance_constraints": [
-        "Do not print 7×4 area or 24÷4 missing length in preattempt SVG.",
-        "Original authored rectangle, no official specimen."
+        "Do not reveal the target equality conclusion or 42 cm² in a preattempt SVG.",
+        "No original organizer figure bytes or official source custody."
       ],
       "accessibility": [
-        "SVG title and description state only given quantities, not answer.",
-        "Dimension labels are also provided as text; color alone does not encode a side.",
-        "All grid units are in centimetres."
+        "SVG title and desc read given quantities independently of color.",
+        "Perpendicular altitude is described as distance at right angles to the baseline.",
+        "Figure is not drawn to scale."
       ],
       "misleading_alternatives": [
-        "Premarking answer area or inverse length.",
-        "Showing diagonal lengths as width."
+        "Use slanted edge as height.",
+        "Premark two triangle areas equal before learner's attempt."
       ],
       "rendered_asset_refs": [
-        "TEST/imo-research/qrt-d1/figures/justify-core2b-inverse.v1.svg"
+        "TEST/imo-research/qrt-d1/figures/justify-core2b-converse.v1.svg"
       ],
       "scene_instances": [
         {
@@ -700,30 +698,30 @@
           "datum_refs": [
             "DATUM-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN"
           ],
-          "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-core2b-inverse.v1.svg",
+          "asset_ref": "TEST/imo-research/qrt-d1/figures/justify-core2b-converse.v1.svg",
           "scene": {
             "kind": "STAGED_SYMBOLIC_FACTORS",
-            "frame": "Rectangular tile grid with perpendicular measured sides",
-            "caption": "Study givens and choose formula substitution independently."
+            "frame": "Triangles with a common baseline and perpendicular distances",
+            "caption": "Read the factual givens; decide the warrant independently."
           }
         }
       ],
       "correspondence": [
         {
-          "element": "Rectangular measurements",
-          "symbol": "24 & 4",
-          "in_words": "Unknown side via area relation"
+          "element": "Area-relevant base and perpendicular altitude",
+          "symbol": "A=36, b=12, h=?",
+          "in_words": "Use only the measurements stated for this question."
         }
       ],
       "reveal_stages": [
         {
           "id": "JUS-D1-QB-GIVENS",
-          "label": "Inverse area givens",
-          "purpose": "Show area 24 cm² and width 4 cm with length unknown, no computed side.",
+          "label": "Converse area and base givens",
+          "purpose": "Only supplied areas 36 cm², common base 12 cm and unknown perpendicular heights.",
           "visible_elements": [
-            "A=24 cm²",
-            "width=4 cm",
-            "length=?"
+            "36 cm² for each",
+            "AB 12 cm",
+            "heights unknown"
           ]
         }
       ]
@@ -1332,10 +1330,10 @@
         "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
       },
       "kind": "EQUATION",
-      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mi>l</mi><mo>×</mo><mi>w</mi></mrow></math>",
-      "symbol": "A=l×w",
-      "meaning": "Unit-square triangular area formula",
-      "locator": "AUTHOR_CREATED: QRT JUSTIFY-D1 measured rectangle"
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>×</mo><mi>h</mi></mrow><mn>2</mn></mfrac></mrow></math>",
+      "symbol": "A=bh/2",
+      "meaning": "Known triangle-area relation",
+      "locator": "AUTHORED: IMO-G9-ORIGINAL-PRACTICE-003-adapted TEST JUSTIFY-D1"
     },
     {
       "id": "DATUM-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN",
@@ -1349,10 +1347,10 @@
         "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
       },
       "kind": "EQUATION",
-      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mi>l</mi><mo>×</mo><mi>w</mi></mrow></math>",
-      "symbol": "7 cm by 4 cm",
-      "meaning": "Given dimensions of unsolved triangular mat",
-      "locator": "AUTHOR_CREATED: QRT JUSTIFY-D1 measured rectangle"
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>×</mo><mi>h</mi></mrow><mn>2</mn></mfrac></mrow></math>",
+      "symbol": "AB=12, altitudes 7",
+      "meaning": "Same baseline and given perpendicular distances",
+      "locator": "AUTHORED: IMO-G9-ORIGINAL-PRACTICE-003-adapted TEST JUSTIFY-D1"
     },
     {
       "id": "DATUM-TEST-IMO182-D1-JUS-ERROR-CLAIM",
@@ -1366,10 +1364,10 @@
         "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
       },
       "kind": "EQUATION",
-      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mi>l</mi><mo>×</mo><mi>w</mi></mrow></math>",
-      "symbol": "5+3=8?",
-      "meaning": "Incorrect addition claim for 5 by 3 rectangle",
-      "locator": "AUTHOR_CREATED: QRT JUSTIFY-D1 measured rectangle"
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>×</mo><mi>h</mi></mrow><mn>2</mn></mfrac></mrow></math>",
+      "symbol": "b=10,h=3; slanted side?",
+      "meaning": "Disputed shape-based area claim",
+      "locator": "AUTHORED: IMO-G9-ORIGINAL-PRACTICE-003-adapted TEST JUSTIFY-D1"
     },
     {
       "id": "DATUM-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN",
@@ -1383,10 +1381,10 @@
         "grade9v3:scope": "AUTHORED_TEST_GIVEN_ONLY"
       },
       "kind": "EQUATION",
-      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mi>l</mi><mo>×</mo><mi>w</mi></mrow></math>",
-      "symbol": "A=24,w=4",
-      "meaning": "Inverse area 24 with known width 4 and unknown length",
-      "locator": "AUTHOR_CREATED: QRT JUSTIFY-D1 measured rectangle"
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>×</mo><mi>h</mi></mrow><mn>2</mn></mfrac></mrow></math>",
+      "symbol": "A=36,b=12,h=?",
+      "meaning": "Converse known area and base, unknown height",
+      "locator": "AUTHORED: IMO-G9-ORIGINAL-PRACTICE-003-adapted TEST JUSTIFY-D1"
     }
   ]
 }
