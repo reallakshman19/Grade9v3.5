@@ -10,8 +10,8 @@ from html import unescape
 
 PATTERNS = {
     "iff_mod8": r"(?:if and only if|\biff\b).{0,45}\b1\s*\(?\s*(?:mod|modulo)\s*8",
-    "sufficiency_mod8": r"(?:sufficient|guarantees|ensures).{0,80}(?:mod|modulo)\s*8|(?:mod|modulo)\s*8.{0,80}(?:sufficient|guarantees|ensures)",
-    "all_classes_lift": r"(?:every|all)\s+(?:odd\s+)?(?:residue|class|number)s?.{0,90}(?:mod|modulo)\s*8.{0,75}(?:square|root|lift)",
+    "sufficiency_mod8": r"1\s*(?:mod|modulo)\s*8.{0,65}(?:guarantees|always\s+has|is\s+sufficient\s+for|ensures|suffices)|(?:guarantees|ensures|is\s+sufficient\s+for).{0,65}1\s*(?:mod|modulo)\s*8",
+    "all_classes_lift": r"(?:every|all)\s+(?:odd\s+)?(?:residue|class|number)s?.{0,85}1\s*(?:mod|modulo)\s*8.{0,65}(?:square|root|lift)",
     "exact_exponent_rule": r"(?:k\s*>=\s*3|exponent\s*3\s+or\s+(?:higher|more)).{0,65}(?:criterion|condition|rule|use).{0,60}(?:mod|modulo)\s*8",
     "high_power_root": r"(?:1\s*(?:mod|modulo)\s*8|1\s+congruent).{0,80}(?:lifts?\s+to|has\s+a\s+(?:square\s+)?root\s+modulo)",
 }
