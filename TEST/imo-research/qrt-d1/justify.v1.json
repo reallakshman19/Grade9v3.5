@@ -184,39 +184,39 @@
         }
       ],
       "exit_task": {
-        "prompt": "Independent exit: a triangular noticeboard is 8 cm long and 2 cm wide. Apply A=l×w and explain the square-unit label.",
+        "prompt": "Changed exit: two triangles share a 9 cm base and both peaks are at perpendicular distance 6 cm. Justify equal areas and calculate them.",
         "source_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
         "answer": {
           "kind": "MODEL_RESPONSE",
-          "summary": "8×2=16 cm².",
+          "summary": "Equal areas, 9×6/2=27 cm² each.",
           "reasoning": [
-            "The board is triangular and both dimensions are in centimetres.",
-            "Substitute length 8 and width 2 into A=l×w.",
-            "The product counts sixteen 1 cm² unit squares."
+            "Both use base 9 cm.",
+            "Both heights to its line are perpendicular and 6 cm.",
+            "Area A=bh/2 is therefore 27 cm² for both."
           ],
-          "check": "Two rows of eight 1 cm² tiles give sixteen squares.",
+          "check": "Determinants for vertices (0,0),(9,0),(2,6) and (0,0),(9,0),(7,6) both give 27.",
           "acceptable_alternatives": [],
           "subpart_answers": [],
           "verification_status": "CHECKED_BY_AUTHOR"
         },
         "oracle": {
           "verification": {
-            "validator_id": "TEST/imo-research/qrt-d1/verify_apply.py",
+            "validator_id": "TEST/imo-research/qrt-d1/verify_justify.py",
             "bindings": {
-              "length": "8",
-              "width": "2",
-              "expected_area": "16"
+              "base": "9",
+              "height": "6",
+              "expected_area": "27"
             }
           }
         }
       },
-      "research_contribution": "D1 direct formula application with row-count model, addition misconception and inverse transfer, all original TEST; no academic acceptance.",
+      "research_contribution": "Reuse previously authored original-practice-003; D1 JUSTIFY warrant tested against slanted-edge misconception, unequal-height boundary, and converse inverse-height transfer. Academic/Owner/source-quality pending.",
       "prerequisite_refs": [],
       "lineage": [],
       "construction_units": [
         {
-          "id": "CU-TEST-IMO182-D1-JUS-AREA-SUBSTITUTION",
-          "decision": "Apply the supplied multiplication formula and distinguish area units from linear units.",
+          "id": "CU-TEST-IMO182-D1-JUS-AREA-WARRANT",
+          "decision": "Select the valid perpendicular base-height area warrant instead of visual shape matching.",
           "step_refs": [
             "JUS-D1-TC-1",
             "JUS-D1-TC-2",
@@ -232,21 +232,21 @@
           ],
           "independent_checks": [
             {
-              "statement": "Check product using equal rows of unit-square tiles.",
-              "check_type": "EQUAL_ARRAY_COUNT"
+              "statement": "Check determinant areas for horizontally shifted peaks.",
+              "check_type": "COORDINATE_AREA"
             }
           ],
           "reveal_stage_refs": [
-            "APP-STAGE-AREA-MEANING",
-            "APP-STAGE-WORKED-3-5",
-            "APP-STAGE-WORKED-CHECK"
+            "JUS-STAGE-AREA-MEANING",
+            "JUS-STAGE-WORKED-10-4",
+            "JUS-STAGE-WORKED-CHECK"
           ],
           "worked_anchor_ref": "Q-TEST-IMO182-D1-JUS-CORE1A-WORKED"
         }
       ],
       "compact_anchor": {
-        "prompt": "How does the area rule use two perpendicular side measurements?",
-        "result": "Multiply length by width to count unit-square tiles; use cm² for centimetre measurements.",
+        "prompt": "Which measured height determines triangle area?",
+        "result": "A=bh/2 uses perpendicular altitude, not a slanted edge.",
         "representation_ref": "REP-TEST-IMO182-D1-JUS-AREA-STAGES"
       },
       "elicitation": {
