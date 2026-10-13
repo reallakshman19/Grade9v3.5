@@ -47,13 +47,13 @@ def main():
                 assert links.filter(has_text=f"Qualified academic review request · #{review_id}").count() == 1, (
                     f"WRONG_QUALIFIED_REVIEW_ISSUE:{demand}:{review_id}"
                 )
-                assert links.locator(f'[href$="/issues/{review_id}"]').count() == 1, (
+                assert page.locator(f'#links a[href$="/issues/{review_id}"]').count() == 1, (
                     f"MISSING_UNIQUE_ACADEMIC_ISSUE_TARGET:{demand}"
                 )
-                assert links.locator(f'[href$="{packet}"]').count() == 1, (
+                assert page.locator(f'#links a[href$="{packet}"]').count() == 1, (
                     f"ACADEMIC_PACKET_NOT_LINKED:{demand}:{packet}"
                 )
-                assert links.locator('[href*="/actions/runs/38426896089/artifacts/11829196580"]').count() == 1, (
+                assert page.locator('#links a[href*="/actions/runs/38426896089/artifacts/11829196580"]').count() == 1, (
                     f"LATEST_VERIFIED_ARTIFACT_NOT_LINKED:{demand}"
                 )
                 assert "AUTHORED TEST" in page.locator("#rights").inner_text()
