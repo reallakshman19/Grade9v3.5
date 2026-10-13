@@ -2,6 +2,7 @@
 import json
 import re
 import unittest
+from itertools import permutations
 from copy import deepcopy
 from tests.imo203_d4_review_gate import promotion_errors
 from pathlib import Path
@@ -176,6 +177,77 @@ class D4AdoptionEvidence(unittest.TestCase):
         # A label alone does not establish mastery.
         defects = promotion_errors(c, h, g)
         self.assertIn("Y DEMONSTRATED requires a real learner-event reference", defects)
+
+    def test_falsifiable_retrieve_synthesize_author_challenge_remains_unsigned(self):
+        challenge = json.loads((BASE / "d4-review/academic-challenge-retrieve-synthesize.v1.json").read_text())
+        self.assertEqual(challenge["schema"], "imo203-d4-author-pre-review-mathematics-and-demand/v1")
+        self.assertEqual(challenge["as_of_utc_date"], "2026-10-14")
+        self.assertEqual({p["cell_id"] for p in challenge["cells"]},
+                         {"QRT-RETRIEVE-D4", "QRT-SYNTHESIZE-D4"})
+        for audit in challenge["cells"]:
+            cell = next(x for x in self.cells if x["cell_id"] == audit["cell_id"])
+            with self.subTest(cell=cell["cell_id"]):
+                self.assertEqual(cell["academic_challenge_ref"],
+                                 "academic-challenge-retrieve-synthesize.v1.json#" + cell["cell_id"])
+                self.assertEqual(audit["Y"]["status"], "UNKNOWN")
+                self.assertIsNone(audit["Y"]["learner_event_ref"])
+                self.assertEqual(cell["learner_profile"]["Y"]["status"], "UNKNOWN")
+                self.assertIsNone(cell["learner_profile"]["Y"]["learner_event_ref"])
+                self.assertEqual(audit["W"]["move_ref"], cell["learner_profile"]["W"]["move_ref"])
+                self.assertIsNone(audit["qualified_reviewer"])
+                self.assertIsNone(audit["conflict_declaration"])
+                self.assertIsNone(audit["academic_verdict"])
+                self.assertIsNone(audit["owner_decision_id"])
+                self.assertFalse(audit["accepted"])
+                self.assertFalse(cell["assessment"]["accepted"])
+                self.assertIn("PENDING_QUALIFIED_REVIEW", cell["classification_hold"]["status"])
+
+    def test_constructive_odd_square_lifting_and_mod4_boundary(self):
+        # Verifies the algebraic induction step, not merely enumerating roots.
+        # For odd x and k>=3, shifting x by 2^(k-1) toggles the next square bit.
+        for k in range(3, 10):
+            modulus = 2 ** (k + 1)
+            for x in range(1, 2 ** k, 2):
+                shifted = x + 2 ** (k - 1)
+                self.assertEqual((shifted ** 2 - x ** 2) % modulus, 2 ** k)
+        for a in (9, 17, 33, 49):
+            self.assertEqual(a % 8, 1)
+        for a in (13, 21):
+            self.assertEqual(a % 8, 5)
+        self.assertTrue(all(a % 4 == 1 for a in (5, 9, 13)))
+        self.assertEqual(5 % 8, 5)
+
+    def test_synthesize_prefix_proof_without_720_permutation_bruteforce(self):
+        # Analytical structure: sum18 and alternating position totals9 each.
+        # Exhaust only the at-most-four completions of ONE fixed two-digit prefix.
+        def feasible(prefix):
+            a, b = map(int, str(prefix))
+            remaining = set((0, 1, 2, 3, 4, 8)) - {a, b}
+            result = []
+            for p3, p5 in permutations(remaining, 2):
+                if a + p3 + p5 != 9:
+                    continue
+                other = remaining - {p3, p5}
+                for p4, p6 in permutations(other):
+                    if b + p4 + p6 != 9 or (10*p5 + p6) % 4:
+                        continue
+                    number = int(f"{a}{b}{p3}{p4}{p5}{p6}")
+                    self.assertEqual(number % 9, 0)
+                    self.assertEqual(number % 11, 0)
+                    result.append(number)
+            return sorted(result)
+        self.assertEqual(feasible(10), [])
+        self.assertEqual(feasible(12), [120384, 128304])
+        self.assertEqual(feasible(13), [130284, 138204])
+        self.assertEqual(120384 % 7, 5)
+        self.assertEqual(128304 % 7, 1)
+        self.assertEqual(130284, 7*18612)
+        challenge = json.loads((BASE / "d4-review/academic-challenge-retrieve-synthesize.v1.json").read_text())
+        synth = next(x for x in challenge["cells"] if x["cell_id"] == "QRT-SYNTHESIZE-D4")
+        self.assertEqual(synth["mathematics"]["original_prefix12_feasible"], feasible(12))
+        self.assertEqual(synth["mathematics"]["next_prefix13_feasible"], feasible(13))
+        self.assertEqual(synth["mathematics"]["original_minimum"], feasible(12)[0])
+        self.assertEqual(synth["mathematics"]["changed_minimum"], feasible(13)[0])
 
     def test_model_has_distinct_corrected_exact_head_evidence(self):
         model = next(c for c in self.cells if c["demand"] == "MODEL")
