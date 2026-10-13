@@ -80,6 +80,13 @@ class SynthesizeD4(unittest.TestCase):
                 self.assertIn('data-blueprint-ref="'+ref+'"',html)
                 if GOLDEN.exists():
                     self.assertEqual(re.findall(slot,html),re.findall(slot,(GOLDEN/(role+".html")).read_text()))
+        # Core1A/B are prior conceptual teaching, never preview main/transfer W.
+        for role in ("core1a.html","core1b.html"):
+            html=pages[role]
+            self.assertNotIn("120384",html,role)
+            self.assertNotIn("130284",html,role)
+            self.assertNotIn("odd-position and even-position sums both9",html,role)
+        self.assertIn("D4-SYN-MOVE-ORDER",pages["core2a.html"])
         self.assertIn("data-g9-after-attempt-hint",pages["core2a.html"])
         self.assertIn("data-requires-attempt",pages["core2a.html"])
         self.assertNotEqual(pages["core2a.html"],pages["core2b.html"])
