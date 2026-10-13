@@ -23,6 +23,9 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+        with:
+          # PR-triggered GITHUB_SHA is synthetic merge; checkout actual head.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -54,6 +57,8 @@ jobs:
             tests.test_imo182_qrt_d3_synthesize \
             tests.test_imo182_qrt_d3_justify
       - name: Verify exact source blobs, native receipts, original golden role slots and holds
+        env:
+          EXPECTED_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           python TEST/imo-research/qrt-d3-successor/native_audit_217.py
       - name: Upload five authentic native role bundles and machine M1 audit
