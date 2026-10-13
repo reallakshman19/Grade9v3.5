@@ -145,9 +145,9 @@ class D1EvidenceTiles(unittest.TestCase):
     def test_synthesize_maths_equivalence_and_unresolved_demand_classification(self):
         t=self.tiles["SYNTHESIZE"]
         self.assertEqual(t["status_dimensions"]["technical"],"REPAIRED_RENDERED_TEST")
-        self.assertIn("38426322845",t["generation"]["exact_head_ci_run"])
-        self.assertIn("11829090822",t["generation"]["artifact_url"])
-        self.assertEqual(t["source"]["verified_sha"],"0c8cea02abd858ff74d47aa57c3a3b742c197b9b")
+        self.assertIn("38427757190",t["generation"]["exact_head_ci_run"])
+        self.assertIn("11828784099",t["generation"]["artifact_url"])
+        self.assertEqual(t["source"]["verified_sha"],"f9008c6dc4642d45798d23ddd06a51a4a33f540b")
         self.assertEqual(t["evidence"]["measured_repair"]["type"],
                          "AUTHORING_HINT_AND_MATHEMATICAL_EQUIVALENCE")
         self.assertTrue(t["evidence"]["measured_repair"]["grouped_and_distributed_count_both_valid"])
