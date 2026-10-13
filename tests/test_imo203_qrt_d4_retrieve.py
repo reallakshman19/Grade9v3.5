@@ -53,6 +53,11 @@ class RetrieveD4(unittest.TestCase):
             "For odd x, x squared is 1 modulo 8.",
             "Five is a square modulo 4 but not modulo 8.",
             "The modulo-8 condition is necessary, not by itself a proof of existence.",
+            "Distinguish a necessary property from a sufficient classification rule, using a small modulo8 anchor.",
+            "Oddness alone is insufficient: a=5 has no odd square root modulo8.",
+            "A condition that works modulo4 need not remain sufficient modulo8, as a=5 shows.",
+            "Every odd residue is an odd square. Diagnose this false claim with a counterexample modulo8.",
+            "The full iff theorem at large modulus remains the learner's retrieval decision.",
         )
         leaked = (
             "For k>=3 the exact rule is to use 1 modulo 8.",
