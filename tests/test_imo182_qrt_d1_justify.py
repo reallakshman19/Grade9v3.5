@@ -62,6 +62,21 @@ class JustifyD1(unittest.TestCase):
         self.assertIn("9 cm",mic["exit_task"]["prompt"])
         self.assertIn("perpendicular",mic["inferential_jump"])
 
+    def test_cumulative_core1a_stages_do_not_redraw_geometry(self):
+        # The sole renderer reveals SVG stages cumulatively, not exclusively.
+        # Redrawing whole triangles in stages 2/3 superimposes labels/edges.
+        from xml.etree import ElementTree as ET
+        svg=ET.parse(ROOT/"TEST/imo-research/qrt-d1/figures/justify-area-stages.v1.svg").getroot()
+        namespace="{http://www.w3.org/2000/svg}"
+        groups=[g for g in svg.iter(namespace+"g") if g.get("data-g9-stage-id")]
+        self.assertEqual([g.get("data-g9-stage-id") for g in groups],
+                         ["JUS-STAGE-AREA-MEANING","JUS-STAGE-WORKED-10-4","JUS-STAGE-WORKED-CHECK"])
+        self.assertTrue(any(e.tag in (namespace+"path",namespace+"line") for e in groups[0].iter()))
+        for g in groups[1:]:
+            self.assertFalse(any(e.tag in (namespace+"path",namespace+"line") for e in g.iter()),
+                             "Incremental stages must add annotation, not duplicate full geometry")
+        self.assertIn("20 cm²",ET.tostring(groups[2],encoding="unicode"))
+
     def test_core2b_converse_new_unknown(self):
         qa,qb=self.source["questions"][1:]
         self.assertEqual(qb["transfer"]["dimension"],"novelty")
