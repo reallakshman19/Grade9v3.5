@@ -100,6 +100,23 @@ class D4AdoptionEvidence(unittest.TestCase):
                 self.assertEqual(result["role_specific_semantic_differential"][role]["academic_semantics"],
                                  "PENDING_QUALIFIED_REVIEW")
 
+    def test_reviewer_handoff_keeps_84_checks_unsigned(self):
+        p = json.loads((BASE / "d4-review/qualified-review-handoff.v1.json").read_text())
+        self.assertEqual(len(p["cells"]), 7)
+        self.assertEqual(p["baseline"]["owner_qrt_accepted"], 0)
+        self.assertEqual(p["common_hspm_objectives"],
+                         ["H1","H2","H3","S1","S2","S3","P1","P2","P3","M1","M2","M3"])
+        for item in p["cells"]:
+            c = next(c for c in self.cells if c["cell_id"] == item["cell_id"])
+            self.assertEqual(item["exact_render_artifact"], c["render"]["artifact_url"])
+            self.assertEqual(item["worker_source_head"], c["source"]["verified_worker_commit"])
+            self.assertEqual(len(item["HSPM_review"]), 12)
+            self.assertTrue(all(v["verdict"] == "PENDING" for v in item["HSPM_review"].values()))
+            self.assertIsNone(item["qualified_reviewer"])
+            self.assertIsNone(item["academic_verdict"])
+            self.assertIsNone(item["owner_decision_id"])
+            self.assertFalse(item["accepted"])
+
     def test_model_has_distinct_corrected_exact_head_evidence(self):
         model = next(c for c in self.cells if c["demand"] == "MODEL")
         repaired = model["repaired_evidence"]
