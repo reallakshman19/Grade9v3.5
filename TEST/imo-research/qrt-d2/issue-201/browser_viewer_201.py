@@ -1,14 +1,24 @@
 """Issue #201: actual Chromium smoke test for the source-safe 7x4 review viewer."""
 from pathlib import Path
 import json
+import re
 import sys
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[4]
 HTML = ROOT / "TEST/imo-research/qrt-d2/issue-201/index.html"
+LEDGER = HTML.with_name("evidence.v1.json")
 EXPECTED = ("RETRIEVE","EXPLAIN","APPLY","MODEL","REPRESENT","SYNTHESIZE","JUSTIFY")
 
 def main():
+    # The self-contained HTML embeds rows for offline/file:// review. Enforce that
+    # those rows match the canonical ledger whenever it changes.
+    html_text = HTML.read_text(encoding="utf-8")
+    match = re.search(r"const rows=(.*?);\s*const bands=", html_text, flags=re.DOTALL)
+    assert match, "VIEWER_MISSING_EMBEDDED_LEDGER"
+    embedded = json.loads(match.group(1))
+    canonical = json.loads(LEDGER.read_text(encoding="utf-8"))["rows"]
+    assert embedded == canonical, "VIEWER_EMBEDDED_LEDGER_STALE"
     errors = []
     output = {"schema": "imo-qrt-d2-viewer-browser-smoke/v1", "viewer": str(HTML.relative_to(ROOT)),
               "checked": [], "status": "FAIL"}
