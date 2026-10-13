@@ -1,0 +1,184 @@
+{
+  "schema": "imo-qrt-cell-evidence/v1",
+  "version": "1.0.0",
+  "template": false,
+  "cell_id": "QRT-SYNTHESIZE-D1",
+  "band": "D1",
+  "primary_demand": "SYNTHESIZE",
+  "band_issue": 200,
+  "status_dimensions": {
+    "technical": "REUSED_RENDERED_TEST",
+    "renderer_verified": true,
+    "technique_review": "AUTHOR_CHECK_ONLY_INDEPENDENT_PENDING",
+    "academic_review": "QRT_DECISION_PENDING",
+    "owner_qrt_accepted": false,
+    "owner_golden_designated": false,
+    "release": "NOT_AUTHORIZED"
+  },
+  "candidate_ids": [
+    "Q-TEST-IMO182-D1-SYN-CORE1A-WORKED",
+    "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
+    "Q-TEST-IMO182-D1-SYN-CORE2B-INVERSE-TRAY-COUNT"
+  ],
+  "source": {
+    "classification": "AUTHORED_TEST_NOT_SOF",
+    "verified_sha": "db474cd38de262b6d324e1cb01028402b0317afc",
+    "source_path": "TEST/imo-research/qrt-d1/synthesize.v1.json",
+    "source_code_commit": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "upstream_candidate_id": null,
+    "upstream_source_blob_sha": null,
+    "custody": "SOURCE_SAFE_AUTHORED_TEST",
+    "rights": "NOT_LICENSED_SOF_OR_PUBLISHED",
+    "question_stem_embedded": false,
+    "source_quality_hold": null
+  },
+  "cognitive": {
+    "X": "Count all tiles in four repeats of a two-part motif of three blue and two red squares.",
+    "Y": "Addition within complete units and multiplication of identical repeated units.",
+    "Z": "Combine both colored components within each complete motif before repeating it.",
+    "W": "Choose 4×(3+2), not an expression repeating only one component; total 20 tiles.",
+    "primary_vs_alternative": "D1 vs D2 challenge: one unit-first dependency, no further coupled constraints.",
+    "adjacent_band_reason": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
+    "difficulty_five_component_evidence": {
+      "concept_model_selection": "Known repeat motif.",
+      "representation_translation": "No separate translation bridge.",
+      "reasoning_chain_length": "Choose one order/dependency.",
+      "algebra_computational_load": "Addition and small multiplication.",
+      "trap_exception_sensitivity": "False precedence separately diagnosed."
+    },
+    "protected_move_id": "SYN-D1-QA-ORDER"
+  },
+  "blueprints": [
+    {
+      "role": "CORE1",
+      "ref": "BP-CORE1-ORIENTATION@1.1.0"
+    },
+    {
+      "role": "CORE1A",
+      "ref": "BP-CORE1A-CONSTRUCTION@1.8.0"
+    },
+    {
+      "role": "CORE1B",
+      "ref": "BP-CORE1B-RECONSTRUCTION@1.1.0"
+    },
+    {
+      "role": "CORE2A",
+      "ref": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0"
+    },
+    {
+      "role": "CORE2B",
+      "ref": "BP-CORE2B-TRANSFER@1.1.0"
+    }
+  ],
+  "generation": {
+    "repo_commit_sha": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "manifest_path": "TEST/products/imo182-qrt-d1-synthesize.manifest.json",
+    "manifest_blob_sha": "ea4f462ab9a51f6d9c3d6549f0925dde9db081f0",
+    "renderer_version": "render_core/2",
+    "registry_path": "Shared/web/interactive-page-blueprints.v1.json",
+    "registry_version": "1.17.0",
+    "registry_blob_sha": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "mode": "PAGES",
+    "held_to": "REFERENCE",
+    "gaps": 0,
+    "exact_head_ci_run": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599455",
+    "artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599455/artifacts/11774880288",
+    "html": [
+      {
+        "filename": "core1.html",
+        "sha256": "27810d6987e1b6a69a9adc5073144827ddde6c7812a788ba3fe9703fbb81dc0f"
+      },
+      {
+        "filename": "core1a.html",
+        "sha256": "eb45565041bfe00e0f927e8599c7a052e1260a929810ca6cdb44573a7cca6af8"
+      },
+      {
+        "filename": "core1b.html",
+        "sha256": "d73adb22be53ee82d2f135796125c310dd09dfd198a14ae8b569ef047f2b8b43"
+      },
+      {
+        "filename": "core2a.html",
+        "sha256": "53176e92e8c7f94135a036b2c4d03de1aea1b730c24e737fe24217ba3ef4c31c"
+      },
+      {
+        "filename": "core2b.html",
+        "sha256": "6577cdff5e94abe1b616f83535ff9654a00dc4496522a53b226da41d38e4c7c3"
+      },
+      {
+        "filename": "index.html",
+        "sha256": "358de41e734d715ae87f7908eaf531d2b0ec17e768bc9f724a1abf16892caa9b"
+      }
+    ],
+    "six_html_sha_verified": true
+  },
+  "golden": {
+    "kind": "IMMUTABLE_OWNER_EXACT_FOR_ORIGINAL_QUESTION_ROLE_TECHNIQUE_ONLY_FOR_THIS_DISTINCT_TEST",
+    "id": "G-IMO-G9-FIVE-CORE-20261012",
+    "pinned_commit": "67c34dababb0da0ef7d5f4a532bfcf3119754961",
+    "lock_git_blob_sha": "888678554c41257e6d96c802f0009983ccbb5328",
+    "role_comparator": "CORE1 T01/T14; CORE1A T02/T03/T11; CORE1B T06/T10/T12; CORE2A T05/T07; CORE2B T08/T09",
+    "comparison_kind": "SEMANTIC_CROSS_QUESTION_NOT_BYTE_PARITY",
+    "technique_oracles": [
+      "T01",
+      "T14",
+      "T02",
+      "T03",
+      "T11",
+      "T06",
+      "T10",
+      "T12",
+      "T05",
+      "T07",
+      "T08",
+      "T09"
+    ],
+    "semantic_deltas": [],
+    "actual_html_bytes_independently_verified": true,
+    "owner_fixture_decision_id": null
+  },
+  "review": {
+    "H1": null,
+    "H2": null,
+    "H3": null,
+    "S1": null,
+    "S2": null,
+    "S3": null,
+    "P1": null,
+    "P2": null,
+    "P3": null,
+    "M1": null,
+    "M2": null,
+    "M3": null,
+    "qualified_reviewer_name": null,
+    "conflict_declaration": null,
+    "independent_mathematical_oracle": "TEST/imo-research/qrt-d1/verify_synthesize.py",
+    "decision": "PENDING"
+  },
+  "owner": {
+    "qrt_decision": "PENDING",
+    "qrt_decision_id": null,
+    "golden_scope_decision_id": null,
+    "rights_decision_id": null,
+    "print_visual_decision_id": null,
+    "release_decision_id": null
+  },
+  "viewer": {
+    "entry_path": "q003-model-d2/index.html",
+    "tile_json_path": "d1/synthesize.tile.v1.json",
+    "links_checked": false
+  },
+  "evidence": {
+    "source_commit": "089b57c98d697a0e19683c3d78e0d51220b9174a",
+    "CI": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38310599455",
+    "academic": null,
+    "golden": "https://github.com/reallakshman19/Grade9v3.5/tree/67c34dababb0da0ef7d5f4a532bfcf3119754961/golden/units/G-IMO-G9-FIVE-CORE-20261012",
+    "owner": null,
+    "updated_utc": "2026-10-13"
+  },
+  "restrictions": [
+    "No original private Q003 bytes or authentic SOF question contents",
+    "No QRT acceptance or new golden without Owner decision",
+    "Never equate distinct question HTML bytes with original Owner golden",
+    "No learner release from this tile"
+  ]
+}
