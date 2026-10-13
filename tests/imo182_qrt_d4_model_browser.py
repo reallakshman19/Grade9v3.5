@@ -24,6 +24,17 @@ with sync_playwright() as p:
             assert "data-g9-after-attempt-hint" in html
             assert page.locator("[data-requires-attempt]").count()>0
             assert not any(loc.is_visible() for loc in page.get_by_text("Only AFTER a written attempt",exact=False).all()),"H3 visible preattempt"
+            # Verify actual pre-commit H2 and its accessibility projection, not only source JSON.
+            ladder=page.locator("[data-g9-ladder]").first
+            assert "What quantity does that subtraction count" not in ladder.inner_text()
+            page.locator("button[data-g9-next-rung]").first.click()
+            assert "What quantity does that subtraction count" in ladder.inner_text()
+            visible=page.locator("body").inner_text()
+            exposed=page.locator("body").aria_snapshot()
+            for text in (visible,exposed):
+                assert "Are all remaining unshared edges necessarily reachable?" not in text
+                assert "A=4n−2e−c" not in text
+            assert "What quantity does that subtraction count" in exposed
             page.locator('[data-g9-attempt-box] button[data-g9-commit]').first.click()
             article=page.locator("article[data-g9-unit]").first
             assert article.get_attribute("data-attempted")!="1","Blank attempt erroneously accepted"
