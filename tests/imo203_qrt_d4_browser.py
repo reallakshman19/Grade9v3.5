@@ -53,7 +53,7 @@ with sync_playwright() as p:
                 payload=page.locator("[data-g9-after-attempt-hint]").first
                 assert payload.count()==1
                 wrapper=payload.locator("xpath=ancestor::details[1]")
-                if wrapper.count() and not wrapper.is_open():
+                if wrapper.count() and wrapper.get_attribute('open') is None:
                     wrapper.locator("summary").click()
                 assert payload.is_visible(),"Decisive H3 did not unlock after nonblank commitment"
                 page.screenshot(path=str(screens/"core2a-after-attempt.png"),full_page=True)
