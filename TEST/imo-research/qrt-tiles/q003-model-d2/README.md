@@ -20,3 +20,18 @@ This folder makes a **source-safe, inspectable question-to-QRT-to-blueprint-to-n
 **Next secure operator:** inspect exact private original stem/choices/key and actual two native pages by their recorded SHA; compare rendered Core2 to Owner-approved UI, native Core1A to technique candidate; capture source-safe measured discrepancies and independent reviewer signature. Owner then records ACCEPT / REVISE / REJECT and explicit new golden fixture authority if desired. Do not claim accepted from the Owner-approved UI sample.
 
 **Conflict boundary:** repo branch is an isolated documentation+TEST mapping branch forked from the existing #183 development head; neither #183's working branch nor Grade9 main, Shared renderer/blueprint, private Q003 files, source rights or Owner fixture is modified.
+
+## Four new band workstreams / reusable tile index (2026-10-13)
+
+The Owner requested one issue for each difficulty band to reuse the earlier D1–D4 agents' work and progress seven cells **per band** in the QRT HTML. Each issue explicitly covers adopted or missing SOURCE-SAFE authored TEST pages, existing registered blueprints, native renderer output, correct golden benchmarking, independent QRT cognitive reviews, and Owner fixture designation/acceptance as separate gates.
+
+| Band | Issue | Historical rendered TEST cells | Missing | Flagged for revision |
+| --- | --- | --- | --- | --- |
+| D1 | [#200](https://github.com/reallakshman19/Grade9v3.5/issues/200) | 6/7 | JUSTIFY-D1 | MODEL-D1 |
+| D2 | [#201](https://github.com/reallakshman19/Grade9v3.5/issues/201) | 7/7 | None | Academic/Owner acceptance open |
+| D3 | [#202](https://github.com/reallakshman19/Grade9v3.5/issues/202) | 7/7 | None | Academic/Owner acceptance open |
+| D4 | [#203](https://github.com/reallakshman19/Grade9v3.5/issues/203) | 5/7 | RETRIEVE-D4, SYNTHESIZE-D4 | MODEL-D4 |
+
+**[Machine-readable band-to-28-cell issue/adoption index](band-issues.v1.json)** preserves the prior agent's named protected W, source artifact URL, historical technical state and new band issue number. The linked standalone [HTML review page](index.html) now includes direct D1–D4 issue links and updates the selected band's issue link when selecting a QRT cell. No prior artifact is automatically an Owner golden or an accepted cell: **0/28 accepted** until per-cell decision IDs.
+
+**No new global blueprint registrations yet:** existing registered Core role templates remain authoritative. If a *proven* golden-to-actual mismatch requires O3 registry change, fix under separate scoped review after ruling out authoring/renderer/oracle errors. Five frozen Owner golden exact-byte snapshots and separate Core2 authored UI golden remain immutable; different candidate question pages match by semantics/technique rather than necessarily raw bytes.
