@@ -47,7 +47,7 @@ class ReconciledMatrixViewerTest(unittest.TestCase):
         self.assertIn("Independent verdict pending", self.html)
         self.assertNotIn("6 rendered / 1 missing", self.html)
         self.assertNotIn("5 rendered / 2 missing", self.html)
-        self.assertEqual(len(re.findall(r'"H[123]","S[123]","P[123]","M[123]"', self.html)), 0)
+        self.assertTrue(all(f'"{ask}"' in self.html for ask in ("H1","H2","H3","S1","S2","S3","P1","P2","P3","M1","M2","M3")))
         self.assertTrue(all(p["owner_qrta_accepted"] is False for p in self.ledger))
         self.assertTrue(all(p["owner_golden_designated"] is False for p in self.ledger))
 
