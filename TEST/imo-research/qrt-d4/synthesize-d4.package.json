@@ -127,34 +127,34 @@
         {
           "id": "D4-SYN-STEP-PAIR",
           "role": "TRANSFORM",
-          "action": "Partition six positions into the odd and even index sets required by modulo11.",
-          "why_valid": "The alternating sum has the same parity as total18.",
+          "action": "Using a separate short example, compare how decimal positions affect a divisibility test by11, without specifying the main six-digit partition.",
+          "why_valid": "Mod11 alternating positional weights are a conceptual test on any decimal numeral.",
           "inputs": [
             "digit multiset, divisibility rules"
           ],
-          "output": "For this set, odd/even position totals must both equal9.",
+          "output": "A positional condition may interact with a later ending; the six-digit required partition is not supplied.",
           "source_ref": "SRC-D4-SYNTHESIZE-ORIGINAL"
         },
         {
           "id": "D4-SYN-STEP-REDUCE",
           "role": "TRANSFORM",
-          "action": "Coordinate the alternating-position partition with a final two-digit multiple of4.",
-          "why_valid": "Each digit is used once and the last two places determine mod4.",
+          "action": "On the independent four-digit anchor, test whether a choice of final pair is compatible with the remaining givens.",
+          "why_valid": "One position can affect several properties; a valid ending alone does not prove a valid complete arrangement.",
           "inputs": [
             "digit multiset, divisibility rules"
           ],
-          "output": "A candidate suffix must preserve both position-sum constraints.",
+          "output": "Small-case demonstration of coupled constraints, without giving the main six-digit solution route.",
           "source_ref": "SRC-D4-SYNTHESIZE-ORIGINAL"
         },
         {
           "id": "D4-SYN-STEP-VERIFY",
           "role": "VERIFY",
-          "action": "Exclude all smaller prefixes before declaring an optimum; repeat when a new independent divisor appears.",
-          "why_valid": "Minimality requires proof no smaller eligible arrangement remains.",
+          "action": "Compare two four-digit candidates and decide which is a feasible smaller number; leave the six-digit minimum for the learner.",
+          "why_valid": "Minimality involves both feasibility and a lower-bound argument.",
           "inputs": [
             "digit multiset, divisibility rules"
           ],
-          "output": "Changed demand may change the least feasible arrangement.",
+          "output": "Independent short-case minimum requires ruling out a smaller compatible alternative.",
           "source_ref": "SRC-D4-SYNTHESIZE-ORIGINAL"
         }
       ],
@@ -250,32 +250,32 @@
           "defensible_answer": "No. 1026 and1062 both fail mod4, whereas 1260 works."
         },
         "attempt": {
-          "produces": "Choose a dependency-respecting order for simultaneously satisfying position, suffix, and minimality constraints.",
+          "produces": "Coordinate multiple digit constraints in a separate four-digit misconception-repair task without selecting the six-digit Core2A winning partition or minimum.",
           "closure": "RUBRIC",
           "rubric": [
             {
-              "criterion": "Use digit sum to handle9 automatically.",
-              "evidence_of": "Sum18 independent of permutation."
+              "criterion": "Check all digits exactly once in a four-place number.",
+              "evidence_of": "Uses independent 0,1,2,6 worked set."
             },
             {
-              "criterion": "Derive the alternating-position partition for11.",
-              "evidence_of": "Odd and even positions each sum9."
+              "criterion": "Show why divisibility by9 is fixed by the four-digit sum.",
+              "evidence_of": "1+0+2+6=9."
             },
             {
-              "criterion": "Coordinate suffix divisibility by4 with the partition.",
-              "evidence_of": "No reused or omitted digit."
+              "criterion": "Show how suffix choice can invalidate a candidate.",
+              "evidence_of": "1026 fails mod4; 1260 works."
             },
             {
-              "criterion": "Prove a least arrangement and redo the changed divisor7 demand.",
-              "evidence_of": "Valid result and systematic exclusion of smaller candidates."
+              "criterion": "Do not reuse a solved small example as the unknown six-digit minimum.",
+              "evidence_of": "Protects later independent synthesis."
             }
           ],
           "accepted": [
-            "For digits0,1,2,3,4,8, constraints9/11/4 lead to minimum120384; adding7 gives130284."
+            "For independent four-digit digits 0,1,2,6, 1260 satisfies divisibility by9 and4, while 1026 fails the mod4 ending test."
           ],
           "rejected": [
-            "Minimize the prefix without checking whether the remaining ending is feasible.",
-            "A mod4 suffix guarantees mod11."
+            "A legal smallest-looking prefix guarantees a compatible ending.",
+            "Checking a digit sum alone guarantees a mod4 ending."
           ],
           "task": {
             "prompt": "A learner chooses the smallest apparent first digits then appends an arbitrary last-two-digit multiple of4. Why can this fail for digits0,1,2,6?",
@@ -296,23 +296,23 @@
         "reconstruct": {
           "route": [
             {
-              "ask": "Which test is fixed by digit sum?",
-              "why_this_ask": "Forces dependency-respecting digit-position synthesis.",
+              "ask": "In a four-digit task, which property is decided by the unchanged digit sum?",
+              "why_this_ask": "Identifies a safe fixed invariant.",
               "from_step_ref": "D4-SYN-STEP-GATE"
             },
             {
-              "ask": "Which positions must be paired for11?",
-              "why_this_ask": "Forces dependency-respecting digit-position synthesis.",
+              "ask": "On a different short number, how does moving a digit between alternate positions affect the 11-test?",
+              "why_this_ask": "Elicits positional interactions without main partition.",
               "from_step_ref": "D4-SYN-STEP-PAIR"
             },
             {
-              "ask": "Can the final digits independently satisfy4?",
-              "why_this_ask": "Forces dependency-respecting digit-position synthesis.",
+              "ask": "Why might an otherwise legal last pair fail to complete your small digit set?",
+              "why_this_ask": "Diagnoses a greedy route.",
               "from_step_ref": "D4-SYN-STEP-REDUCE"
             },
             {
-              "ask": "How do you certify no smaller valid prefix?",
-              "why_this_ask": "Forces dependency-respecting digit-position synthesis.",
+              "ask": "What must be excluded to justify a least valid four-digit arrangement?",
+              "why_this_ask": "Practises an independent minimality argument.",
               "from_step_ref": "D4-SYN-STEP-VERIFY"
             }
           ],
@@ -366,32 +366,32 @@
         {
           "id": "D4-SYN-REL-1",
           "role": "TRANSFORM",
-          "action": "Partition six positions into the odd and even index sets required by modulo11.",
-          "why_valid": "The alternating sum has the same parity as total18.",
+          "action": "Using a separate short example, compare how decimal positions affect a divisibility test by11, without specifying the main six-digit partition.",
+          "why_valid": "Mod11 alternating positional weights are a conceptual test on any decimal numeral.",
           "inputs": [
             "digit multiset, divisibility rules"
           ],
-          "output": "For this set, odd/even position totals must both equal9."
+          "output": "A positional condition may interact with a later ending; the six-digit required partition is not supplied."
         },
         {
           "id": "D4-SYN-REL-2",
           "role": "TRANSFORM",
-          "action": "Coordinate the alternating-position partition with a final two-digit multiple of4.",
-          "why_valid": "Each digit is used once and the last two places determine mod4.",
+          "action": "On the independent four-digit anchor, test whether a choice of final pair is compatible with the remaining givens.",
+          "why_valid": "One position can affect several properties; a valid ending alone does not prove a valid complete arrangement.",
           "inputs": [
             "digit multiset, divisibility rules"
           ],
-          "output": "A candidate suffix must preserve both position-sum constraints."
+          "output": "Small-case demonstration of coupled constraints, without giving the main six-digit solution route."
         },
         {
           "id": "D4-SYN-REL-3",
           "role": "VERIFY",
-          "action": "Exclude all smaller prefixes before declaring an optimum; repeat when a new independent divisor appears.",
-          "why_valid": "Minimality requires proof no smaller eligible arrangement remains.",
+          "action": "Compare two four-digit candidates and decide which is a feasible smaller number; leave the six-digit minimum for the learner.",
+          "why_valid": "Minimality involves both feasibility and a lower-bound argument.",
           "inputs": [
             "digit multiset, divisibility rules"
           ],
-          "output": "Changed demand may change the least feasible arrangement."
+          "output": "Independent short-case minimum requires ruling out a smaller compatible alternative."
         }
       ],
       "limits": [
