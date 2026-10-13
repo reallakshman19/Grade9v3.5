@@ -6,6 +6,7 @@ from html import unescape
 from pathlib import Path
 from jsonschema import Draft202012Validator
 from Shared.tools import render_core, core2_v2
+from tests.imo203_d4_w_guard import assert_no_protected_iff, cue_matches
 
 ROOT=Path(__file__).resolve().parents[1]
 PKG=ROOT/"TEST/imo-research/qrt-d4/retrieve-d4.package.json"
@@ -46,6 +47,25 @@ class RetrieveD4(unittest.TestCase):
             svg=(ROOT/rep["rendered_asset_refs"][0]).read_text()
             self.assertIn("data-g9-stage-id",svg)
             self.assertNotIn("Yes:9,17,33,49",svg)
+
+    def test_paraphrase_guard_distinguishes_necessity_from_sufficiency(self):
+        safe = (
+            "For odd x, x squared is 1 modulo 8.",
+            "Five is a square modulo 4 but not modulo 8.",
+            "The modulo-8 condition is necessary, not by itself a proof of existence.",
+        )
+        leaked = (
+            "For k>=3 the exact rule is to use 1 modulo 8.",
+            "Every odd residue that is 1 modulo 8 lifts to an odd square root.",
+            "For odd numbers a, an odd root exists if and only if a is 1 modulo 8.",
+            "Being 1 mod 8 guarantees an odd root for these higher powers.",
+        )
+        for example in safe:
+            with self.subTest(kind="safe", text=example):
+                self.assertFalse(cue_matches(example), example)
+        for example in leaked:
+            with self.subTest(kind="leak", text=example):
+                self.assertTrue(cue_matches(example), example)
 
     def test_question_first_learner_evidence_must_not_be_fabricated(self):
         learner=self.review["learner_evidence"]
@@ -105,6 +125,7 @@ class RetrieveD4(unittest.TestCase):
             for leaked in forbidden:
                 with self.subTest(role=role, leaked=leaked):
                     self.assertNotIn(leaked, visible)
+            assert_no_protected_iff(visible, role)
         self.assertIn("Every odd square is1 modulo8", pages["core1a.html"])
         # Internal authoring move IDs are not meant to be published in learner HTML.
         self.assertIn("data-g9-after-attempt-hint",pages["core2a.html"])
