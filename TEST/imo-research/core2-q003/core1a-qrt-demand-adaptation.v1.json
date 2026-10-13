@@ -1,0 +1,212 @@
+{
+  "schema": "imo-core1a-demand-concept-adaptation/v1",
+  "date_utc": "2026-10-13",
+  "issue": 183,
+  "plan": "r7",
+  "owner_instruction": "For Core 1A, remember to change as per demand/concepts of each question see QRT.",
+  "basis": {
+    "canonical_matrix": "Shared/quality/question-demand-matrix.v1.json",
+    "matrix_blob": "3779a53ae7d20efbb4644bc3f9243909e93dc145",
+    "matrix_version": "1.0.0",
+    "template_ref": "Shared/quality/question-demand-templates.v1.json",
+    "template_blob": "e2409aef11ae7d98444593bfbe1a38eb00c97cef",
+    "vocab_ref": "Shared/vocabularies/cognitive-demand.v1.json",
+    "vocab_blob": "b19b39586632cabb637a61fd05fdaaef105305ef",
+    "blueprint": "BP-CORE1A-CONSTRUCTION@1.8.0",
+    "renderer": "Shared/tools/render_core.py",
+    "approved_imo_core2_visual_reference": "golden/units/G-IMO-CORE2-UI-R1/reference-fixture.v1.json"
+  },
+  "authority": "AUTHORING_DESIGN_GUIDE_NOT_A_NEW_QRT_AUTHORITY_OR_ACCEPTED_CELL",
+  "approval_boundary": "Owner approved IMO Core2 visual reference only; every original question demands independent QRT academic review and separate Core1A concept construction.",
+  "selection_policy": {
+    "primary_demand": "exactly one primary from canonical 7, determined by existing question answer.crux_move_ref and associated decisive learner act, not wording/option format",
+    "secondary_demands": "record as supporting context without changing base cell",
+    "difficulty_band": "derive D1..D4 from five difficulty components and evidence, not from sample cohort title or guessed percentage",
+    "cell_id": "QRT-${PRIMARY_DEMAND}-${D1|D2|D3|D4}",
+    "status": "PROPOSED until explicit independent academic and Owner decision ID and approved evidence hash",
+    "no_automatic_inference_from_original_question_title": true,
+    "reclassify_after_reviewer": "update teaching focus and review before any Core1A admission"
+  },
+  "question_specific_brief_required": [
+    "original question ID and source hash only (protected words stay private) and truthfully stated source custody status",
+    "exact crux_move_ref resolving to existing answer.reasoning_route and primary/secondary demands",
+    "exact target mathematical concept, capability, prerequisite and assumed/observed learner knowledge with uncertainty",
+    "canonical QRT D-band, X/Y/Z/W learner-relative goals, hardest inferential bridge",
+    "two or more *meaningfully distinct* construction decisions only if needed by concept (not fixed number for parity)",
+    "stage representation that serves the demand or an explicit no-visual applicability waiver",
+    "authored changed-givens worked anchor, diagnostic hypothesis+discriminating probe, independent new-case exit",
+    "semantic checks H1 H2 H3 S1 S2 S3 P1 P2 P3 M1 M2 M3; justify N/A; no count scoring",
+    "separate reviewer classification decision and exact Owner QRT verdict before accepted/admitted flags"
+  ],
+  "core1a_reuse_only_if": [
+    "same mathematical concept/capability AND prerequisites are appropriate",
+    "same inferential decision that the learner must construct, not only same chapter or question format",
+    "independent authored worked/exit tasks target the question's actual demand at required depth",
+    "new question's W protected by preattempt support; route-to-concept and return context remain valid",
+    "reuse explicitly recorded and independently reviewed with no original question details embedded in shared lesson"
+  ],
+  "fail_closed_on": [
+    "missing crux or contradictory question-to-QRT demand",
+    "unjustified claim that one generic Core1A fits all 68",
+    "model-selection lesson reused as an APPLY computation tutorial without review",
+    "source protected original Q003 values copied into shared authored Core1A",
+    "auto-accepted cell or claims of new rights/A4 authority"
+  ],
+  "demands": {
+    "RETRIEVE": {
+      "canonical_decisive_act": "Reconstruct or select a fact, category, definition, property, unit, or condition.",
+      "canonical_visual_job": "make discriminating features visible when representation helps; otherwise prefer a justified waiver to decoration",
+      "core1a": {
+        "construction_decision": "Rebuild the discriminating criterion and boundary for a category instead of memorising a surface label.",
+        "visual_job": "Contrast cases sharing an appearance but differing in a defining feature; if drawing adds nothing, waive visual.",
+        "worked_anchor": "Sort a fresh authored pair of near-neighbour examples and show the exact criterion.",
+        "independent_exit": "Classify a newly authored boundary case and justify its criterion, not by recognition.",
+        "diagnosis": "Probe surface-familiarity recall versus criterion-based classification."
+      },
+      "band_independent_demand_key": "RETRIEVE"
+    },
+    "EXPLAIN": {
+      "canonical_decisive_act": "Explain why a relation, mechanism, pattern, or result holds.",
+      "canonical_visual_job": "show causal states, dependencies, or before/after relations without writing the conclusion",
+      "core1a": {
+        "construction_decision": "Connect a mechanism or warranted cause to the observed outcome, with direction and limits visible.",
+        "visual_job": "Stage cause/dependency states or before/after; do not mark the protected explanation as already proven.",
+        "worked_anchor": "Explain a new phenomenon from a named principle and state why each link holds.",
+        "independent_exit": "Predict a change in outcome when one mechanism condition changes, then explain why.",
+        "diagnosis": "Distinguish paraphrase of the outcome from an explanatory chain."
+      },
+      "band_independent_demand_key": "EXPLAIN"
+    },
+    "APPLY": {
+      "canonical_decisive_act": "Execute a known model, algorithm, relation, or procedure under the right conditions.",
+      "canonical_visual_job": "align givens with procedure variables or steps without carrying out the protected computation",
+      "core1a": {
+        "construction_decision": "Verify the procedure's applicability, map each datum to a variable and execute correctly.",
+        "visual_job": "Show input-to-variable and ordered algorithm maps without computing the protected numeric result.",
+        "worked_anchor": "Solve a new authored case with the correct substitutions and a reverse check.",
+        "independent_exit": "Apply the same rule to new values or edge conditions and independently verify.",
+        "diagnosis": "Distinguish valid arithmetic with a wrong formula/variable mapping from a simple arithmetic slip."
+      },
+      "band_independent_demand_key": "APPLY"
+    },
+    "MODEL": {
+      "canonical_decisive_act": "Choose or formulate the governing model, law, variables, process, or strategy.",
+      "canonical_visual_job": "surface features that discriminate between candidate models without naming the winning model",
+      "core1a": {
+        "construction_decision": "Discriminate between plausible candidate models/strategies using assumptions, invariants and failure conditions.",
+        "visual_job": "Reveal model-selection cues, counterexamples or comparison criteria without prematurely naming the winning model.",
+        "worked_anchor": "Choose a governing model in a new authored situation and justify selection against an alternative.",
+        "independent_exit": "Change an applicability condition and require the learner to select or reject a model before executing it.",
+        "diagnosis": "Distinguish keyword-triggered model choice from evidence-based assumption comparison."
+      },
+      "band_independent_demand_key": "MODEL"
+    },
+    "REPRESENT": {
+      "canonical_decisive_act": "Preserve meaning while translating between representations.",
+      "canonical_visual_job": "show source-to-target correspondences progressively while preserving the invariant without completing the final mapping",
+      "core1a": {
+        "construction_decision": "Identify the invariant and map entities or values between two representations without distortion.",
+        "visual_job": "Progressive source→target map with matching quantity/sign/scale preserving the same mathematical meaning.",
+        "worked_anchor": "Translate a novel authored expression/pair/table/diagram in both directions and compare invariants.",
+        "independent_exit": "Translate a changed representation back, explain what remained unchanged.",
+        "diagnosis": "Distinguish superficial diagram copying from preservation of quantities and relations."
+      },
+      "band_independent_demand_key": "REPRESENT"
+    },
+    "SYNTHESIZE": {
+      "canonical_decisive_act": "Coordinate dependent ideas or steps where route selection is part of the difficulty.",
+      "canonical_visual_job": "make dependencies, shared conditions, or state transitions visible without completing the route",
+      "core1a": {
+        "construction_decision": "Identify and order dependencies among two or more component moves and justify the bridge quantity.",
+        "visual_job": "Stage a dependency graph or successive states without filling in the decisive missing link.",
+        "worked_anchor": "Solve an authored case needing two interdependent principles and an explicit coordination decision.",
+        "independent_exit": "Transfer to changed route ordering or a modified dependency, checking end-state consistency.",
+        "diagnosis": "Distinguish independent fragment calculations from a valid integrated route."
+      },
+      "band_independent_demand_key": "SYNTHESIZE"
+    },
+    "JUSTIFY": {
+      "canonical_decisive_act": "Establish a conclusion from explicit warrants or evidence.",
+      "canonical_visual_job": "show givens, evidence, and construction relationships without marking the conclusion as established",
+      "core1a": {
+        "construction_decision": "Move from a specific claim and its available evidence to a defensible warrant and conclusion.",
+        "visual_job": "Make evidence, assumptions and inference boundaries visible without putting the final proof conclusion in the prompt.",
+        "worked_anchor": "Prove a new authored claim with an explicit conditional warrant and boundary case.",
+        "independent_exit": "Audit a new attempted justification using counterexample, converse check or independent derivation.",
+        "diagnosis": "Distinguish pattern/sample-based assertion from a valid warrant or proof."
+      },
+      "band_independent_demand_key": "JUSTIFY"
+    }
+  },
+  "bands": {
+    "D1": {
+      "canonical_protected_work": "Leave one meaningful identification, relation, translation, or execution decision to the learner; support may make the surrounding route explicit.",
+      "canonical_support_posture": "Narrow the immediate operation if useful, but do not perform W.",
+      "core1a_adaptation": "One transparent construction and one independent decision; never pre-solve W.",
+      "not_a_step_count": true
+    },
+    "D2": {
+      "canonical_protected_work": "Leave a short connection or choice plus its execution to the learner; support may identify relevant givens and a familiar principle.",
+      "canonical_support_posture": "Make the familiar pieces visible, but preserve the connection that makes them work together.",
+      "core1a_adaptation": "Connect two held elements or an idea and its new instantiation; learner must make the connection and complete the work.",
+      "not_a_step_count": true
+    },
+    "D3": {
+      "canonical_protected_work": "Leave the important bridge between ideas, representations, or models to the learner; support may expose the component ideas separately.",
+      "canonical_support_posture": "Orient dependencies and component ideas, but do not make the bridge or ordering decision for the learner.",
+      "core1a_adaptation": "Expose component ideas while learner resolves a critical multi-step bridge and justifies ordering.",
+      "not_a_step_count": true
+    },
+    "D4": {
+      "canonical_protected_work": "Leave the decisive model, strategy, synthesis, exception, or warrant itself to the learner; support may clarify constraints and invariants only.",
+      "canonical_support_posture": "Preserve the decisive abstraction or strategy choice even when additional optional support is available later.",
+      "core1a_adaptation": "Teach transfer constraints and counterexample thinking; preserve novel model/strategy/warrant abstraction without a solved clone.",
+      "not_a_step_count": true
+    }
+  },
+  "matrix_semantic_review_ids": [
+    "H1",
+    "H2",
+    "H3",
+    "S1",
+    "S2",
+    "S3",
+    "P1",
+    "P2",
+    "P3",
+    "M1",
+    "M2",
+    "M3"
+  ],
+  "candidate_q003": {
+    "original_source_question_id": "SOF-IMO-G09-L1-2023-24-A-Q003",
+    "existing_source_shas": {
+      "native_core2": "827a8a99128601721c3c13dfd99806b5a563624526edfd8ba137ab8d4b64b6a0",
+      "core1a_native": "d1fe23c43d1eeae67c69600beef1b5054c361854c3e5cd6742545859592998c0"
+    },
+    "proposed_cell": "QRT-MODEL-D2",
+    "proposal_only": true,
+    "owner_accepted": false,
+    "current_concept": "Compare a consistent square-offset model over authored ordered pairs; identify one exception with a fixed residual.",
+    "when_model": "Teach assumption/model-family identification and compare a candidate square-offset rule against plausible alternatives before computing the residual; the learner must still decide the governing relation.",
+    "when_apply": "IF academic reviewer instead chooses APPLY: teach applying an explicitly supplied y=x²+k rule, input/output variable mapping and unchanged substitution, then independently verify; do NOT assume MODEL lesson is sufficient.",
+    "when_represent": "IF academic reviewer instead chooses REPRESENT: teach preservation of input/output order and invariant k across ordered pairs ↔ residual table ↔ graph, including reverse translation; not merely numerical substitution.",
+    "owner_pending": [
+      "source original paper personal verification",
+      "exact primary demand and difficulty band",
+      "Core1A concept/visual teaching review",
+      "semantic H/S/P/M evidence",
+      "A4 print-quality review",
+      "publisher rights/display mode",
+      "per-cell acceptance"
+    ]
+  },
+  "admitted_core2_original_of_68": 0,
+  "admitted_core1a": 0,
+  "owner_qrt_accepted_of_28": 0,
+  "publisher_rights_granted": false,
+  "a4_geometry_coordinator_local_pass": true,
+  "owner_a4_accepted": false,
+  "keyboard_ax": "DEFERRED_BY_USER",
+  "release": "FORBIDDEN"
+}
