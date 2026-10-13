@@ -1,0 +1,59 @@
+name: IMO 182 QRT APPLY D4 authored TEST (sole renderer)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo-182-qrt-d4-apply.yml'
+      - 'TEST/imo-research/qrt-d4/apply-d4.*'
+      - 'TEST/imo-research/qrt-d4/figures/apply-*.svg'
+      - 'TEST/products/imo182-qrt-d4-apply.manifest.json'
+      - 'tests/test_imo182_qrt_d4_apply.py'
+      - 'tests/imo182_qrt_d4_apply_browser.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apply-d4-five-role:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install schema validator and browser driver
+        run: python -m pip install --quiet jsonschema playwright
+      - name: Build real TEST pages with the one registered renderer
+        run: |
+          python Shared/tools/render_core.py build --manifest TEST/products/imo182-qrt-d4-apply.manifest.json --out build/imo182-qrt/d4/apply --draft --reference
+      - name: Assert schema, arithmetic oracle, exact role anatomy and H3
+        run: python -m unittest tests.test_imo182_qrt_d4_apply -v
+      - name: Install Chromium for actual browser checks
+        run: python -m playwright install --with-deps chromium
+      - name: Inspect five pages including H3 before and after committed attempt
+        run: python tests/imo182_qrt_d4_apply_browser.py
+      - name: Write actual generated HTML SHA receipt
+        if: always()
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          folder=Path("build/imo182-qrt/d4/apply")
+          if folder.exists():
+              evidence=dict(cell="QRT-APPLY-D4",qrt_accepted=False,
+                source_rights="AUTHORED_TEST_ONLY",renderer="Shared/tools/render_core.py",
+                html=[dict(role=p.name,sha256=hashlib.sha256(p.read_bytes()).hexdigest()) for p in sorted(folder.glob("*.html"))])
+              (folder/"apply-d4-evidence.json").write_text(json.dumps(evidence,indent=2)+"\n")
+              print(json.dumps(evidence,indent=2))
+          else:
+              print("BLOCKED_RENDER: no generated HTML; no rendered-cell credit")
+          PY
+      - name: Upload sole-renderer learner HTML, receipt and Chromium screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-qrt-apply-d4-actual-html
+          path: build/imo182-qrt/d4/apply/
+          if-no-files-found: warn

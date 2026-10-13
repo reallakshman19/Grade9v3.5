@@ -1,0 +1,1374 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-APPLY-D4",
+  "title": "Original APPLY-D4 non-coprime schedules",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Original three-period compatibility-first CRT with bounded integer interval and changed impossible phase; all TEST, no accepted academic or Owner coverage.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-D4-APPLY-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Wholly authored modular periodic scheduling application",
+      "origin": "AUTHORED",
+      "locator": "AUTHOR_CREATED: issue 182 AGENT-D4/QRT-APPLY-D4",
+      "edition": "2026-10-12 authored TEST",
+      "section": "Non-coprime congruences, bounded intervals and phase exceptions",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Original TEST text/diagrams only; no official exam question, PDF, logo or KEY.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Generalized CRT requires gcd compatibility before reduction.",
+        "Three conditions 5 mod12,11 mod18,9 mod20 give 29 mod180 and integer slots 209,389,569 in interval [200,600]."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Original arithmetic decision task with a conditional algorithm and changed incompatible case.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Apply compatibility-aware periodic constraints",
+      "topic": "Integer modular scheduling under exceptions",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "The decisive step is choosing a valid method for three non-coprime schedules, screening each compatibility condition, and refusing a changed impossible phase.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-D4-APPLY-CORE1A",
+      "conventions": [
+        {
+          "id": "domain",
+          "statement": "x is an integer time slot and 200≤x≤600 includes both endpoints."
+        },
+        {
+          "id": "congruence",
+          "statement": "x≡r modulo m describes a repeating phase with positive period m."
+        },
+        {
+          "id": "compatibility",
+          "statement": "Two phases a modulo m and b modulo n can coincide exactly when gcd(m,n) divides b−a."
+        },
+        {
+          "id": "combined_period",
+          "statement": "When compatible, the combined solutions repeat modulo lcm(m,n), not automatically m×n."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "Apply compatibility-first generalized CRT to three non-coprime schedules and a bounded interval, then stop or repair when a changed phase is incompatible.",
+      "success_criterion": "Find x≡29 mod180 then enumerate 209,389,569 in [200,600]; for phase10 mod20 identify no possible x, then for phase13 mod20 recompute 353,533.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Choosing and executing compatible non-coprime schedule methods",
+      "bucket_id": "BUCKET-D4-APPLY",
+      "primary_capability_ref": "CAP-D4-APPLY",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "The decisive step is choosing a valid method for three non-coprime schedules, screening each compatibility condition, and refusing a changed impossible phase.",
+      "entry_assumptions": [
+        "Meaning of modular residues and x=a+mt.",
+        "Compute gcd and lcm.",
+        "Reduce a linear congruence by dividing coefficient, modulus, and right side together.",
+        "Enumerate residue class within an inclusive interval."
+      ],
+      "inferential_jump": "Select the correct compatibility-aware procedure for multiple overlapping periods, then recognize when a changed phase invalidates the procedure regardless of interval size.",
+      "teaching_path": [
+        {
+          "id": "D4-APP-STEP-GATE",
+          "role": "DECLARE",
+          "action": "Check whether gcd of two periods divides the difference of their residues before trying CRT.",
+          "why_valid": "Subtracting the congruences forces that gcd to divide their difference.",
+          "inputs": [],
+          "output": "Choose to solve or stop.",
+          "source_ref": "SRC-D4-APPLY-ORIGINAL"
+        },
+        {
+          "id": "D4-APP-STEP-PAIR",
+          "role": "TRANSFORM",
+          "action": "On a smaller anchor, compare x≡2 mod6 and x≡5 mod9 and verify gcd(6,9)=3 divides 5−2.",
+          "why_valid": "The shared gcd is a feasibility condition, not automatic impossibility.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "This non-coprime anchor is compatible.",
+          "source_ref": "SRC-D4-APPLY-ORIGINAL"
+        },
+        {
+          "id": "D4-APP-STEP-REDUCE",
+          "role": "TRANSFORM",
+          "action": "Set x=2+6t; reduce 6t≡3 mod9 to 2t≡1 mod3 and solve t≡2 mod3.",
+          "why_valid": "Divide both coefficient and right side AND modulus by3; 2 is invertible modulo3.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "The anchor combined class is x≡14 mod18.",
+          "source_ref": "SRC-D4-APPLY-ORIGINAL"
+        },
+        {
+          "id": "D4-APP-STEP-VERIFY",
+          "role": "VERIFY",
+          "action": "Use lcm(6,9)=18 and substitute x=14 into both anchor conditions.",
+          "why_valid": "Compatible solutions recur at the lcm, and direct substitution checks the reduced solution.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "Validated smaller anchor, not the Core2A result.",
+          "source_ref": "SRC-D4-APPLY-ORIGINAL"
+        }
+      ],
+      "relation_refs": [
+        "REL-D4-APPLY"
+      ],
+      "representation_refs": [
+        "REP-D4-APPLY-CORE1A"
+      ],
+      "question_family_refs": [
+        "FAM-D4-APPLY"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Multiply two non-coprime periods and search; every phase pair must meet eventually.",
+          "diagnostic_prompt": "Does x≡2 mod6 meet x≡5 mod9? What changes if the second residue becomes4?",
+          "repair": "gcd(6,9)=3 divides 5−2 but does not divide 4−2; screen feasibility before multiplying or searching."
+        },
+        {
+          "wrong_idea": "If periods share a factor, there is never a shared slot.",
+          "diagnostic_prompt": "Verify x=14 under x≡2 mod6 and x≡5 mod9 even though both periods share3.",
+          "repair": "A shared factor imposes a residue condition; it need not make the system impossible."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independently apply the procedure to x≡1 mod8 and x≡5 mod12. Check compatibility, derive the combined class, and verify slots x=17 and x=41.",
+        "source_ref": "SRC-D4-APPLY-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "x≡17 (mod24).",
+          "reasoning": [
+            "gcd(8,12)=4 divides 5−1=4.",
+            "Write x=1+8t. Then 8t≡4 mod12 reduces to 2t≡1 mod3, giving t≡2 mod3.",
+            "Therefore x=17+24k and checks 17,41 in both residues."
+          ],
+          "check": "17 mod8=1, 17 mod12=5, period24. Also x=41 passes.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo182_qrt_d4_apply.py",
+            "bindings": {
+              "moduli": "8,12",
+              "residues": "1,5",
+              "combined": "17 mod24",
+              "domain": "integers"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original QRT APPLY-D4 TEST candidate. Qualified academic/Owner acceptance not granted.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-D4-APPLY-GCD",
+          "decision": "Practice a compatibility-first reduction on simpler periods before Core2A's three distinct constraints.",
+          "step_refs": [
+            "D4-APP-STEP-GATE",
+            "D4-APP-STEP-PAIR",
+            "D4-APP-STEP-REDUCE",
+            "D4-APP-STEP-VERIFY"
+          ],
+          "representation_ref": "REP-D4-APPLY-CORE1A",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-D4-APPLY"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Verify x≡14 mod18 for the anchor; x≡2 mod6 and x≡4 mod9 has no solution.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "D4-APP-ANCHOR-GIVEN",
+            "D4-APP-ANCHOR-GCD",
+            "D4-APP-ANCHOR-REDUCE"
+          ],
+          "worked_anchor_ref": "Q-D4-APPLY-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "For x≡2 mod6 and x≡5 mod9, which screen comes first, and what combined period is possible?",
+        "result": "gcd=3 divides difference3, so compatible; the combined period is lcm(6,9)=18.",
+        "representation_ref": "REP-D4-APPLY-CORE1A"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A classmate claims every two periodic schedules can be combined by multiplying their periods. Would x≡2 mod6 and x≡5 mod9 behave like x≡2 mod6 and x≡4 mod9?",
+          "defensible_answer": "No. Their gcd is3; the first difference3 passes, whereas the changed difference2 fails."
+        },
+        "attempt": {
+          "produces": "A conditional algorithm that checks gcd feasibility, reduces a compatible pair and stops on an incompatible changed phase.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Use gcd compatibility before solving.",
+              "evidence_of": "Compares residue difference with gcd."
+            },
+            {
+              "criterion": "Reduce congruence validly for compatible case.",
+              "evidence_of": "Divides coefficient, right side, modulus together."
+            },
+            {
+              "criterion": "Use lcm for repeated solutions.",
+              "evidence_of": "Combined period18, not 54."
+            },
+            {
+              "criterion": "Stop on incompatible case.",
+              "evidence_of": "No numeric answer invented for phase4."
+            }
+          ],
+          "accepted": [
+            "gcd(6,9)=3 divides5−2, so set x=2+6t, solve 6t≡3 mod9 to get t≡2 mod3 and x≡14 mod18. Changing residue5 to4 makes gcd3 not divide2, hence no solution."
+          ],
+          "rejected": [
+            "Always multiply periods and search.",
+            "Every non-coprime pair is impossible."
+          ],
+          "task": {
+            "prompt": "A learner says multiply periods and always solve. Compare x≡2 mod6 and x≡5 mod9, then change 5 to4. Repair the method and decide exactly when to stop.",
+            "givens": [
+              "Periods 6 and9 share gcd3.",
+              "Both congruences must hold for one integer."
+            ],
+            "representation_ref": "REP-D4-APPLY-CORE1B",
+            "stage_refs": [
+              "D4-APP-WRONG"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "What must divide the residue difference before a common solution is possible?",
+              "why_this_ask": "Locates overlooked applicability precondition.",
+              "from_step_ref": "D4-APP-STEP-GATE"
+            },
+            {
+              "ask": "Does gcd3 divide 5−2? What valid x can be exhibited?",
+              "why_this_ask": "Preserves feasible non-coprime example.",
+              "from_step_ref": "D4-APP-STEP-PAIR"
+            },
+            {
+              "ask": "When dividing 6t≡3 mod9 by3, which three quantities change?",
+              "why_this_ask": "Repairs invalid modular cancellation.",
+              "from_step_ref": "D4-APP-STEP-REDUCE"
+            },
+            {
+              "ask": "When 5 changes to4, does the new difference pass the gcd test?",
+              "why_this_ask": "Identifies changed assumption rather than arithmetic slip.",
+              "from_step_ref": "D4-APP-STEP-GATE"
+            },
+            {
+              "ask": "What should a correct algorithm return without searching?",
+              "why_this_ask": "Tests ability to stop on genuine incompatibility.",
+              "from_step_ref": "D4-APP-STEP-VERIFY"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A constructs a compatible smaller pair; Core1B starts from a false always-solve algorithm and repairs it under a changed phase."
+        },
+        "boundary_test": {
+          "prompt": "Try a new pair x≡4 mod10 and x≡9 mod15; then change 9 to8. Decide compatibility before finding any times.",
+          "answer": "gcd(10,15)=5 divides9−4=5, so x=24 is a valid common slot. With 8, difference4 not divisible by5, so impossible.",
+          "confirms": "Applies the conditional algorithm to unpractised periods."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "gcd(m,n) divides b−a is the compatibility condition for x≡a (mod m) and x≡b (mod n).",
+      "meaning": "For positive integer moduli m,n, a common solution exists only if their shared gcd divides the phase difference; if yes, combine using lcm.",
+      "symbols": [
+        {
+          "symbol": "x",
+          "meaning": "Integer slot",
+          "unit_or_domain": "Z"
+        },
+        {
+          "symbol": "m,n",
+          "meaning": "Positive repeat periods",
+          "unit_or_domain": "positive integers"
+        },
+        {
+          "symbol": "a,b",
+          "meaning": "Integer phase residues",
+          "unit_or_domain": "Z"
+        }
+      ],
+      "conditions": [
+        "Both modular constraints are simultaneous.",
+        "m and n are positive integers."
+      ],
+      "derivation": [
+        {
+          "id": "D4-APP-REL-0",
+          "role": "DECLARE",
+          "action": "Check whether gcd of two periods divides the difference of their residues before trying CRT.",
+          "why_valid": "Subtracting the congruences forces that gcd to divide their difference.",
+          "inputs": [],
+          "output": "Choose to solve or stop."
+        },
+        {
+          "id": "D4-APP-REL-1",
+          "role": "TRANSFORM",
+          "action": "On a smaller anchor, compare x≡2 mod6 and x≡5 mod9 and verify gcd(6,9)=3 divides 5−2.",
+          "why_valid": "The shared gcd is a feasibility condition, not automatic impossibility.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "This non-coprime anchor is compatible."
+        },
+        {
+          "id": "D4-APP-REL-2",
+          "role": "TRANSFORM",
+          "action": "Set x=2+6t; reduce 6t≡3 mod9 to 2t≡1 mod3 and solve t≡2 mod3.",
+          "why_valid": "Divide both coefficient and right side AND modulus by3; 2 is invertible modulo3.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "The anchor combined class is x≡14 mod18."
+        },
+        {
+          "id": "D4-APP-REL-3",
+          "role": "VERIFY",
+          "action": "Use lcm(6,9)=18 and substitute x=14 into both anchor conditions.",
+          "why_valid": "Compatible solutions recur at the lcm, and direct substitution checks the reduced solution.",
+          "inputs": [
+            "x≡2 mod6",
+            "x≡5 mod9"
+          ],
+          "output": "Validated smaller anchor, not the Core2A result."
+        }
+      ],
+      "limits": [
+        "Coprime-only CRT formula cannot be used without checking shared factors.",
+        "An inconsistent pair remains inconsistent for every interval size."
+      ],
+      "checks": [
+        "3 divides5−2 but not4−2.",
+        "14 satisfies 2 mod6 and5 mod9."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>gcd</mi><mo>(</mo><mi>m</mi><mo>,</mo><mi>n</mi><mo>)</mo><mo>|</mo><mo>(</mo><mi>b</mi><mo>−</mo><mi>a</mi><mo>)</mo></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-D4-APPLY-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Stage a smaller compatible pair without Core2A answer.",
+      "required_elements": [
+        "x≡2 mod6, x≡5 mod9",
+        "gcd(6,9)",
+        "x=2+6t"
+      ],
+      "relation_refs": [
+        "REL-D4-APPLY"
+      ],
+      "read_order": [
+        "Read simultaneous phase constraints.",
+        "Select the compatibility screen.",
+        "Complete the calculation independently."
+      ],
+      "instance_constraints": [
+        "No combined residue class in first-stage SVG.",
+        "No preattempt feasibility answer or protected W in alt/title/desc."
+      ],
+      "accessibility": [
+        "Original SVG title and desc describe givens only.",
+        "Stage groups are named and SVG text provides readable labels."
+      ],
+      "misleading_alternatives": [
+        "Product of non-coprime periods is not the smallest combined period."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/apply-core1a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1A",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-D4-APPLY",
+          "datum_refs": [
+            "D4-APPLY-DATUM-CORE1A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/apply-core1a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Modular phase givens, no computed class.",
+            "caption": "The learner must decide compatibility before solving."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "integer schedule constraints",
+          "symbol": "x≡r mod m",
+          "in_words": "Each periodic phase is a condition, not a solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-APP-ANCHOR-GIVEN",
+          "label": "Read phases",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "x≡2 mod6, x≡5 mod9"
+          ]
+        },
+        {
+          "id": "D4-APP-ANCHOR-GCD",
+          "label": "Screen gcd",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "gcd(6,9)"
+          ]
+        },
+        {
+          "id": "D4-APP-ANCHOR-REDUCE",
+          "label": "Write reduced form",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "x=2+6t"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-APPLY-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "False algorithm given without compatibility verdict.",
+      "required_elements": [
+        "always multiply periods?",
+        "phase 5 changed to 4"
+      ],
+      "relation_refs": [
+        "REL-D4-APPLY"
+      ],
+      "read_order": [
+        "Read simultaneous phase constraints.",
+        "Select the compatibility screen.",
+        "Complete the calculation independently."
+      ],
+      "instance_constraints": [
+        "No combined residue class in first-stage SVG.",
+        "No preattempt feasibility answer or protected W in alt/title/desc."
+      ],
+      "accessibility": [
+        "Original SVG title and desc describe givens only.",
+        "Stage groups are named and SVG text provides readable labels."
+      ],
+      "misleading_alternatives": [
+        "Product of non-coprime periods is not the smallest combined period."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/apply-core1b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1B",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-D4-APPLY",
+          "datum_refs": [
+            "D4-APPLY-DATUM-CORE1B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/apply-core1b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Modular phase givens, no computed class.",
+            "caption": "The learner must decide compatibility before solving."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "integer schedule constraints",
+          "symbol": "x≡r mod m",
+          "in_words": "Each periodic phase is a condition, not a solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-APP-WRONG",
+          "label": "Read phases",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "always multiply periods?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-APPLY-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "All three original constraints and interval only.",
+      "required_elements": [
+        "x≡5 mod12; x≡11 mod18; x≡9 mod20",
+        "200≤x≤600"
+      ],
+      "relation_refs": [
+        "REL-D4-APPLY"
+      ],
+      "read_order": [
+        "Read simultaneous phase constraints.",
+        "Select the compatibility screen.",
+        "Complete the calculation independently."
+      ],
+      "instance_constraints": [
+        "No combined residue class in first-stage SVG.",
+        "No preattempt feasibility answer or protected W in alt/title/desc."
+      ],
+      "accessibility": [
+        "Original SVG title and desc describe givens only.",
+        "Stage groups are named and SVG text provides readable labels."
+      ],
+      "misleading_alternatives": [
+        "Product of non-coprime periods is not the smallest combined period."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/apply-core2a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2A",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-D4-APPLY-MAIN",
+          "datum_refs": [
+            "D4-APPLY-DATUM-CORE2A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/apply-core2a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Modular phase givens, no computed class.",
+            "caption": "The learner must decide compatibility before solving."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "integer schedule constraints",
+          "symbol": "x≡r mod m",
+          "in_words": "Each periodic phase is a condition, not a solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-APP-MAIN-GIVEN",
+          "label": "Read phases",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "x≡5 mod12; x≡11 mod18; x≡9 mod20"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-APPLY-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Changed phase and correction inputs only; no feasibility verdict.",
+      "required_elements": [
+        "x≡5 mod12; x≡11 mod18; x≡10 mod20",
+        "repair: residue13 mod20"
+      ],
+      "relation_refs": [
+        "REL-D4-APPLY"
+      ],
+      "read_order": [
+        "Read simultaneous phase constraints.",
+        "Select the compatibility screen.",
+        "Complete the calculation independently."
+      ],
+      "instance_constraints": [
+        "No combined residue class in first-stage SVG.",
+        "No preattempt feasibility answer or protected W in alt/title/desc."
+      ],
+      "accessibility": [
+        "Original SVG title and desc describe givens only.",
+        "Stage groups are named and SVG text provides readable labels."
+      ],
+      "misleading_alternatives": [
+        "Product of non-coprime periods is not the smallest combined period."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/apply-core2b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2B",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-D4-APPLY-TRANSFER",
+          "datum_refs": [
+            "D4-APPLY-DATUM-CORE2B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/apply-core2b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Modular phase givens, no computed class.",
+            "caption": "The learner must decide compatibility before solving."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "integer schedule constraints",
+          "symbol": "x≡r mod m",
+          "in_words": "Each periodic phase is a condition, not a solution."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-APP-TRANSFER-GIVEN",
+          "label": "Read phases",
+          "purpose": "Reveal neutral anchor or safe assessment givens, without W.",
+          "visible_elements": [
+            "x≡5 mod12; x≡11 mod18; x≡10 mod20"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Apply generalized CRT only after compatibility checks",
+      "capability_refs": [
+        "CAP-D4-APPLY"
+      ],
+      "solution_structure": [
+        "Translate phases to congruences.",
+        "Screen gcd compatibility and stop on failure.",
+        "Reduce compatible pair and use lcm for period.",
+        "Screen and combine next condition.",
+        "Intersect class with closed interval.",
+        "Handle a changed condition by stop and new repair."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Select gcd-compatibility-first CRT over coprime-only version.",
+        "representation_translation": "Translate simultaneous repeating phases into modular constraints.",
+        "reasoning_steps": "Several conditional reductions and an interval restriction.",
+        "novelty": "One changed phase invalidates the previous solution even before any interval search."
+      },
+      "safe_variations": [
+        "Other non-coprime moduli and bounded integer intervals."
+      ],
+      "transfer_boundaries": [
+        "An incompatible changed phase cannot inherit the previous solution.",
+        "A repaired new phase requires a new combined class."
+      ],
+      "common_wrong_routes": [
+        "Multiply the moduli blindly.",
+        "Non-coprime means always impossible.",
+        "Search after gcd incompatibility."
+      ],
+      "item_refs": [
+        "Q-D4-APPLY-WORKED",
+        "Q-D4-APPLY-MAIN",
+        "Q-D4-APPLY-TRANSFER"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-D4-APPLY-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-APPLY-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-APPLY-WORKED",
+      "stem": "Two non-coprime repeating phases require x≡2 (mod6) and x≡5 (mod9). Check the compatibility condition, reduce the congruence and verify the full solution class.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "x is an integer slot.",
+        "Both schedules must be satisfied simultaneously."
+      ],
+      "figure_refs": [
+        "REP-D4-APPLY-CORE1A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Compatible; x≡14 mod18.",
+        "reasoning": [
+          "gcd(6,9)=3 divides5−2=3.",
+          "Write x=2+6t, then 6t≡3 modulo9, reducing to 2t≡1 modulo3.",
+          "t≡2 modulo3; x=14+18k, and x=14 checks both phases."
+        ],
+        "check": "14%6=2 and14%9=5. Combined period lcm(6,9)=18.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-APPLY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-APPLY",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-D4-APPLY-CORE1A",
+        "safe_ref": "REP-D4-APPLY-CORE1A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-APP-ANCHOR-GIVEN"
+        ]
+      },
+      "failure_signal": "Blindly multiplying non-coprime periods misses gcd feasibility and correct lcm repetition.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-APPLY",
+        "closure": "Concept anchor cannot substitute for three-period Core2A protected application."
+      }
+    },
+    {
+      "id": "Q-D4-APPLY-MAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-APPLY-D4",
+        "grade9v3:cognitive_demand": {
+          "primary": "APPLY",
+          "secondary": [
+            "MODEL",
+            "JUSTIFY"
+          ],
+          "basis": "Execute a conditional known modular procedure on non-standard triple with compatibility exceptions and bounded output; W is method choice and correct application."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "At each combination test gcd divisibility, reduce correctly and stop if a changed phase is incompatible.",
+          "common_wrong_route": "Use coprime CRT or product periods blindly, then search an impossible system."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "D4-APP-MOVE-DECIDE"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "D4-APP-MOVE-DECIDE"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-APPLY-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-APPLY-MAIN",
+      "stem": "A system admits an integer service slot x only when ALL three repeating phases hold: x≡5 (mod12), x≡11 (mod18), and x≡9 (mod20). The service window is the inclusive interval 200≤x≤600. Apply a VALID compatibility-aware method to find every eligible integer slot. Explicitly check the gcd condition each time you combine constraints, reduce the congruences correctly, give the final repeating class and verify every listed slot. Do not assume pairwise-coprime CRT applies.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "x is an integer with 200≤x≤600 inclusive.",
+        "All three given congruences must hold simultaneously.",
+        "Periods 12,18,20 are positive but not pairwise coprime."
+      ],
+      "figure_refs": [
+        "REP-D4-APPLY-CORE2A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "All eligible integer slots are 209,389,569; the combined class is x≡29 modulo180.",
+        "reasoning": [
+          "First screen gcd(12,18)=6 dividing 11−5=6. The pair is compatible. Write x=5+12t, so 12t≡6 modulo18; divide all terms by6 to get 2t≡1 modulo3 and t≡2 modulo3.",
+          "Therefore x=5+12(2+3k)=29+36k, the first two conditions combined as x≡29 modulo36.",
+          "Second screen gcd(36,20)=4 dividing the third-phase difference 9−29=−20. The third condition is compatible. Substitute 29+36k≡9 modulo20, so 16k≡0 modulo20; divide all terms by4 to get 4k≡0 modulo5, implying k≡0 modulo5.",
+          "Thus x=29+180j, repeating with lcm(36,20)=180. In 200≤x≤600 the admissible j are 1,2,3, producing 209,389,569; j=0 gives29 below and j=4 gives749 above.",
+          "Verify each of 209,389,569 leaves residues5 modulo12,11 modulo18 and9 modulo20."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-APP-MOVE-SETUP",
+            "kind": "REPRESENT",
+            "action": "Represent the three phases and the inclusive interval; reject blind coprime CRT.",
+            "why_valid": "The periods share factors and compatibility must precede inverse-based reduction.",
+            "inputs": [
+              "12,18,20",
+              "phases5,11,9"
+            ],
+            "output": "A conditional sequential solve plan."
+          },
+          {
+            "id": "D4-APP-MOVE-FIRST",
+            "kind": "CONNECT",
+            "action": "Check gcd(12,18)=6 divides 11−5; then combine to x≡29 modulo36.",
+            "why_valid": "Substitution x=5+12t yields 2t≡1 mod3; gcd screen establishes feasibility.",
+            "inputs": [
+              "x≡5 mod12",
+              "x≡11 mod18"
+            ],
+            "output": "x=29+36k."
+          },
+          {
+            "id": "D4-APP-MOVE-DECIDE",
+            "kind": "DECIDE",
+            "action": "Screen gcd(36,20)=4 and reduce the third condition to k≡0 modulo5, or stop if incompatible.",
+            "why_valid": "9−29=−20 is divisible by4, so compatibility permits the reduction.",
+            "inputs": [
+              "x≡29 mod36",
+              "x≡9 mod20"
+            ],
+            "output": "x≡29 modulo180."
+          },
+          {
+            "id": "D4-APP-MOVE-WINDOW",
+            "kind": "VERIFY",
+            "action": "Intersect x=29+180j with inclusive [200,600], then check each original phase.",
+            "why_valid": "Inequalities yield integer j=1,2,3 and substitution confirms all requirements.",
+            "inputs": [
+              "x≡29 mod180",
+              "200≤x≤600"
+            ],
+            "output": "209,389,569 and no omitted slots."
+          }
+        ],
+        "crux_move_ref": "D4-APP-MOVE-DECIDE",
+        "check": "209%12=5, %18=11, %20=9; 389 and569 repeat with period180. 29 is below interval,749 above.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-APPLY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-APPLY",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Before solving, write all three phases as simultaneous congruences, and decide whether pairwise-coprime CRT can be used without modification.",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-APP-MOVE-SETUP"
+        },
+        {
+          "text": "Combine just the first two conditions using gcd(12,18). Is the residue difference compatible? Use a substitution x=5+12t, then keep the lcm as the new period.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-APP-MOVE-FIRST"
+        },
+        {
+          "text": "Only AFTER your own attempt: audit whether your first combined residue agrees with the third residue modulo the new gcd; reduce the resulting linear congruence and intersect the class with [200,600].",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "D4-APP-MOVE-DECIDE"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-APPLY-CORE2A",
+        "safe_ref": "REP-D4-APPLY-CORE2A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-APP-MAIN-GIVEN"
+        ]
+      },
+      "repair_ref": "D4-APP-STEP-GATE",
+      "failure_signal": "Blind product periods, omitted gcd screen on the third phase, incorrect modular division, or missing one interval endpoint indicates a method-selection error.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-APPLY",
+        "closure": "Independent mastery requires screening both non-coprime combinations, producing the correct class and all bounded slots without post-attempt help."
+      },
+      "independent_check": {
+        "statement": "Enumerate all x in inclusive [200,600] by direct residues, compare with 29+180k, and independently check all solutions of pair 5 mod12,11 mod18 over a full lcm period.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 8,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "Conditional method selection across three non-coprime periods and interval, with a later changed phase that invalidates applicability.",
+        "component_evidence": {
+          "concept_model_selection": "Choose compatibility-first generalized CRT, not the coprime formula.",
+          "representation_translation": "Translate repeating constraints and interval to congruence class.",
+          "reasoning_chain_length": "Reduce first pair, test third, reduce again, enumerate bounded arithmetic progression.",
+          "algebra_computational_load": "Small modular arithmetic and three interval outputs.",
+          "trap_exception_sensitivity": "Third condition can become incompatible after a single phase change."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-D4-APPLY-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-APPLY-D4",
+        "grade9v3:cognitive_demand": {
+          "primary": "APPLY",
+          "secondary": [
+            "MODEL",
+            "JUSTIFY"
+          ],
+          "basis": "Adapt a conditional algorithm to a changed infeasible input then recompute after a valid repair."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Check gcd compatibility before every solve; stop when 4∤−19.",
+          "common_wrong_route": "Continue with previous answer class or invent an impossible slot."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-APPLY-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-APPLY-TRANSFER",
+      "stem": "A single schedule is changed. Keep x≡5 (mod12), x≡11 (mod18), and the SAME inclusive interval 200≤x≤600, but replace the third phase with x≡10 (mod20). Apply your compatibility-first procedure to decide whether ANY slot exists; do not blindly search the interval if the gcd screen fails. An engineer then proposes replacing 10 by 13 modulo20. Test that repair and find ALL slots in [200,600] for the repaired system. State the new combined class.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "x integer; inclusive interval200..600.",
+        "The first two congruences are unchanged.",
+        "Changed third residue10 modulo20 must be evaluated separately.",
+        "A proposed repair replaces residue10 with13 modulo20, not the old residue9."
+      ],
+      "figure_refs": [
+        "REP-D4-APPLY-CORE2B"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Changed residue10 is impossible; corrected residue13 gives x≡173 modulo180 and exactly slots353,533 in [200,600].",
+        "reasoning": [
+          "The unchanged first pair remains x≡29 modulo36.",
+          "With third residue10 modulo20, gcd(36,20)=4 would need to divide 10−29=−19; it does not. Therefore no x can satisfy all constraints, regardless of how large the interval is.",
+          "If the third phase is corrected to13 modulo20, difference13−29=−16 is divisible by4, so the combined system is compatible.",
+          "Set x=29+36k. Require 29+36k≡13 mod20, hence 16k≡4 modulo20, reducing to 4k≡1 modulo5. Since 4 is its own inverse modulo5, k≡4 modulo5.",
+          "Thus x=29+36(4+5j)=173+180j. Within [200,600], j=1,2 yields x=353,533. Check both candidates against phases5 modulo12,11 modulo18 and13 modulo20."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-APP-TRANSFER-REUSE",
+            "kind": "REPRESENT",
+            "action": "Keep unchanged first-pair residue29 modulo36 and the interval.",
+            "why_valid": "Only the third phase changes.",
+            "inputs": [
+              "original first two phases"
+            ],
+            "output": "x=29+36k remains the starting class."
+          },
+          {
+            "id": "D4-APP-TRANSFER-STOP",
+            "kind": "DECIDE",
+            "action": "Test changed residue10 for gcd compatibility and STOP immediately when it fails.",
+            "why_valid": "4 does not divide10−29=−19; the congruences are globally inconsistent.",
+            "inputs": [
+              "29 modulo36",
+              "10 modulo20"
+            ],
+            "output": "No integer solution, independent of window."
+          },
+          {
+            "id": "D4-APP-TRANSFER-REPAIR",
+            "kind": "CONNECT",
+            "action": "Retest residue13, reduce 16k≡4 mod20 and recompute combined class.",
+            "why_valid": "Difference13−29=−16 passes divisibility by4, and k≡4 mod5.",
+            "inputs": [
+              "29 modulo36",
+              "13 modulo20"
+            ],
+            "output": "x≡173 modulo180."
+          },
+          {
+            "id": "D4-APP-TRANSFER-CHECK",
+            "kind": "VERIFY",
+            "action": "Intersect repaired class with window and verify direct residue checks.",
+            "why_valid": "173+180j in[200,600] iff j=1,2.",
+            "inputs": [
+              "repaired class"
+            ],
+            "output": "353,533 only."
+          }
+        ],
+        "crux_move_ref": "D4-APP-TRANSFER-STOP",
+        "check": "For x=353 and533, residues (mod12,18,20) are (5,11,13); no x can satisfy old first-pair residue29 mod36 with third residue10 mod20.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "rubric": [
+          {
+            "criterion": "Reject changed residue10 with a gcd divisibility obstruction.",
+            "evidence_of": "No futile numerical search or invented slot."
+          },
+          {
+            "criterion": "Screen repaired residue13 then re-solve correctly.",
+            "evidence_of": "Class x≡173 mod180."
+          },
+          {
+            "criterion": "Find exactly the repaired interval solutions and check all phases.",
+            "evidence_of": "353,533 and endpoint completeness."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-D4-APPLY",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-APPLY",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Start from the first-pair combined class and compare its residue to 10 modulo gcd(36,20) BEFORE enumerating. The correction to13 requires a new modular reduction.",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-APPLY-CORE2B",
+        "safe_ref": "REP-D4-APPLY-CORE2B",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-APP-TRANSFER-GIVEN"
+        ]
+      },
+      "repair_ref": "D4-APP-STEP-GATE",
+      "failure_signal": "Finding a numeric slot for incompatible residue10 or recycling 209,389,569 after correction13 is failure to re-run the conditional algorithm.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-APPLY",
+        "closure": "Changed-input transfer is independent only if the incompatibility is detected without search and the repaired branch is genuinely recomputed."
+      },
+      "independent_check": {
+        "statement": "Exhaust all integer x over one period180 and [200,600]; changed third residue10 has zero solutions; corrected residue13 yields class173 modulo180 and slots353,533.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 8,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "Applying the conditional algorithm to a changed infeasible phase, then recomputing a nontrivial corrected phase under the same interval.",
+        "component_evidence": {
+          "concept_model_selection": "Stop at gcd incompatibility without searching, then restart for a compatible correction.",
+          "representation_translation": "Carry first-pair class to two alternative third phases.",
+          "reasoning_chain_length": "Obstruction test, repaired congruence reduction, new interval intersection.",
+          "algebra_computational_load": "Small residues modulo4,5 and bounded class.",
+          "trap_exception_sensitivity": "Changing 9 to10 destroys all solutions, while correction13 creates a different set."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-D4-APPLY-MAIN"
+        ],
+        "statement": "Changed phase causes a genuine impossible branch; proposed correction makes a different feasible class.",
+        "invariant": "The first pair still gives x≡29 mod36, and gcd(36,20)=4 must divide third difference.",
+        "novelty": {
+          "checked_against": [
+            "Q-D4-APPLY-MAIN",
+            "MIC-D4-APPLY:exit_task",
+            "MIC-D4-APPLY:boundary_test"
+          ],
+          "why_new": "The learner must refuse a previously valid procedure at residue10 then restart it for corrected residue13; neither branch is the former x≡29 mod180."
+        },
+        "protected_move_ref": "D4-APP-TRANSFER-STOP"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-D4-APPLY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Compatibility-first non-coprime application",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-D4-APPLY"
+      ],
+      "entry_needs": [
+        "Residues, gcd/lcm, modular reduction, interval sieve."
+      ],
+      "learner_actions": [
+        "Verify gcd screen on two smaller periods.",
+        "Reduce a compatible anchor.",
+        "Repair false always-solve reasoning with independent boundary.",
+        "Complete a fresh two-period exit with moduli8 and12."
+      ],
+      "help_plan": [
+        "Concept roles show 6/9 rather than the three-period Core2A solution.",
+        "Core2A H3 requires committed written work.",
+        "Core1B keeps independent boundary response gate."
+      ],
+      "reveal_plan": "Two-period concept anchor; Core2A three-period interval; Core2B a changed phase and corrected phase.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-D4-APPLY-ORIGINAL",
+          "purpose": "Original TEST modular scheduling item",
+          "reason": "No authentic organizer rights admitted."
+        }
+      ],
+      "when_not_suitable": [
+        "Academic grade and D4 appropriateness unreviewed."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:qrt_cell": "QRT-APPLY-D4",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "D4-APPLY-DATUM-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "integer slots",
+      "symbol": "6,9",
+      "meaning": "Original authored schedule givens, not a solution.",
+      "locator": "AUTHOR_CREATED: QRT-APPLY-D4"
+    },
+    {
+      "id": "D4-APPLY-DATUM-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 1,
+      "unit": "integer slots",
+      "symbol": "gcd compatibility",
+      "meaning": "Original authored schedule givens, not a solution.",
+      "locator": "AUTHOR_CREATED: QRT-APPLY-D4"
+    },
+    {
+      "id": "D4-APPLY-DATUM-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 2,
+      "unit": "integer slots",
+      "symbol": "12,18,20",
+      "meaning": "Original authored schedule givens, not a solution.",
+      "locator": "AUTHOR_CREATED: QRT-APPLY-D4"
+    },
+    {
+      "id": "D4-APPLY-DATUM-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-APPLY-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 3,
+      "unit": "integer slots",
+      "symbol": "third residue changed",
+      "meaning": "Original authored schedule givens, not a solution.",
+      "locator": "AUTHOR_CREATED: QRT-APPLY-D4"
+    }
+  ]
+}
