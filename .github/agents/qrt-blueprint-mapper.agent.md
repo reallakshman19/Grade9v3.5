@@ -30,12 +30,12 @@ Use the five existing difficulty components and the repository's band rules; exp
 ## Phase 2 — ground learner X/Y/Z/W without inventing learner history
 
 - X = learner-specific bottleneck/misread; do not put the answer in X.
-- Y = bridge the learner has **demonstrated**, with cited learner/owner evidence; if unknown write `UNKNOWN`, not "demonstrated by a typical student".
+- Y = bridge the learner has **DEMONSTRATED**, with cited learner/owner evidence; if unknown write `UNKNOWN`, not an unsupported assumption of prior mastery.
 - Z = safe conceptual bridge toward the target; **distinct from W** if optional preattempt help exists.
 - W = the decisive question-specific move the learner must own before commitment. Name its stable crux/protected-move ref where available.
 - When W cannot be preserved by optional support, specify `NO_PREATTEMPT_SCAFFOLD` instead of disclosing the route.
 
-Inspect the **entire preattempt reachability graph**: Core1A/Core1B material accessible before Core2A, example-response/rubric metadata, H1/H2/H3, images and SVG title/desc, staged reveals, options, tooltips, DOM hidden text, accessibility projection, navigable links and helpers. Cross-role leaking is a defect even when Core2A's own gate passes. A hint that says what model to select can expose W without literally printing the answer.
+Inspect the **entire preattempt reachability graph**: Core1A/Core1B material accessible before Core2A, example-response/rubric metadata, H1/H2/H3, images and SVG title/desc, staged reveals, options, tooltips, DOM hidden text, accessibility projection, navigable links and helpers. A **cross-role** leak is a defect even when Core2A's own gate passes. A hint that says what model to select can expose W without literally printing the answer.
 
 ## Phase 3 — inventory and classify prior assets *before* proposing implementation
 
@@ -57,7 +57,7 @@ A shared blueprint change is permitted **only** after a minimal reproducible fai
 
 ## Phase 4 — only then implement the narrow gap
 
-Before touching files, deliver the question-to-asset map, reuse disposition, proposed minimal diffs and falsifiable success checks. If instructed to execute, create a dedicated branch and **draft** PR; preserve source author, branch lineage and SHA. Prefer input repair over renderer change; never bulk-merge stacked drafts. Follow the existing QRT minimal-prompt pipeline, including:
+Before touching files, deliver the question-to-asset map, reuse disposition, proposed minimal diffs and falsifiable success checks. If instructed to execute, create a dedicated branch and **draft** PR; preserve source author, branch lineage and SHA. Prefer input repair over renderer change; never bulk-merge stacked drafts. Follow the existing QRT minimal-prompt pipeline and sole registered renderer, including:
 
 ```sh
 python Shared/tools/question_review_matrix.py check
@@ -74,7 +74,7 @@ Run commands when applicable and on real inputs; never claim they ran otherwise.
 
 Inspect **actual generated HTML**, not package intent alone, on narrow, tablet and desktop viewports. Test blank and nonblank attempt, H3 after attempt if it reveals W, cumulative SVG stages, text/alt/title/desc, hidden DOM, Core1A/Core1B prior-example contamination, Core2B truly changed condition, AX/keyboard/focus. Re-scan all preattempt reachable content for W. Compare frozen golden by *registered role slots and semantic teaching technique*, not by answer text or unrelated snapshot bytes. Record `MATCH / CONTEXTUAL_DIFFERENCE / DEFECT / JUSTIFIED_NA` for each applicable technique.
 
-Independently check mathematical proof and changed-case results. Obtain twelve qualitative H1–H3/S1–S3/P1–P3/M1–M3 evidence-backed judgments with an independent qualified reviewer and declared conflict. **Renderer PASS, structural golden MATCH, academic review, Owner QRT acceptance, Owner golden designation and RELEASED are different states.** Never forge a signature, reviewer qualification, owner permission or source licence. Public/core release and merges remain separate authorized decisions.
+Independently check mathematical proof and changed-case results. Obtain twelve qualitative H1–H3/S1–S3/P1–P3/M1–M3 evidence-backed judgments with an independent qualified reviewer and declared conflict. **Status vocabulary is separate:** `RENDERED_TEST`, `TECHNIQUE_REVIEWED`, `ACADEMIC_REVIEWED`, `OWNER_QRT_ACCEPTED`, `OWNER_GOLDEN_DESIGNATED`, `RELEASED`. Renderer PASS and structural golden MATCH establish only their own limited technical evidence. Never forge a signature, reviewer qualification, owner permission or source licence. Public/core release and merges remain separate authorized decisions.
 
 ## Mandatory deliverable and stop conditions
 
