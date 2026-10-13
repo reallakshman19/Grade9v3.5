@@ -60,19 +60,39 @@ class D4AdoptionEvidence(unittest.TestCase):
                 self.assertIsNone(cell["golden"]["owner_new_fixture"])
 
     def test_new_exact_head_native_evidence_and_supersession(self):
-        for demand, run, artifact in (("RETRIEVE", 38413546614, 11823696124),
-                                      ("SYNTHESIZE", 38413545923, 11824250043)):
+        for demand, run, artifact, head in (
+                ("RETRIEVE", 38455006076, 11842190265, "8ffa008e1bbd03898751af4380762178697fb715"),
+                ("SYNTHESIZE", 38413545923, 11824250043, "9faa52d499e071e9e6d4c419b5afdf5fbc044455")):
             with self.subTest(cell=demand):
                 cell = next(c for c in self.cells if c["demand"] == demand)
                 self.assertEqual(cell["adoption_status"], "RENDERED_TEST; INDEPENDENT_ACADEMIC_REVIEW_PENDING")
                 self.assertEqual(cell["render"]["workflow_run"], run)
                 self.assertEqual(cell["render"]["artifact_id"], artifact)
                 self.assertEqual(cell["source"]["worker_pr"], 210)
-                self.assertEqual(cell["source"]["verified_worker_commit"], "9faa52d499e071e9e6d4c419b5afdf5fbc044455")
+                self.assertEqual(cell["source"]["verified_worker_commit"], head)
                 self.assertTrue(cell["superseded_native_evidence"]["do_not_adopt"])
                 self.assertNotEqual(cell["superseded_native_evidence"]["artifact_id"], artifact)
                 self.assertIsNone(cell["assessment"]["owner_qrt_decision_id"])
                 self.assertFalse(cell["assessment"]["accepted"])
+
+    def test_retrieve_learner_evidence_and_repaired_source_not_academic_acceptance(self):
+        cell = next(c for c in self.cells if c["demand"] == "RETRIEVE")
+        profile = cell["learner_profile"]
+        self.assertEqual(profile["X"]["status"], "HYPOTHESIS_NOT_OBSERVED")
+        self.assertEqual(profile["Y"]["status"], "UNKNOWN")
+        self.assertIsNone(profile["Y"]["learner_event_ref"])
+        self.assertEqual(profile["Z"]["status"], "SAFE_BRIDGE_PROPOSED")
+        self.assertEqual(profile["W"]["move_ref"], "D4-RET-MOVE-CRITERION")
+        self.assertEqual(cell["source"]["source_repair_draft_pr"], 219)
+        self.assertEqual(cell["further_superseded_native_evidence"]["artifact_id"], 11823696124)
+        self.assertTrue(cell["further_superseded_native_evidence"]["do_not_adopt"])
+        self.assertIn("PENDING_QUALIFIED_REVIEW", cell["classification_hold"]["status"])
+        self.assertIsNone(cell["assessment"]["owner_qrt_decision_id"])
+        self.assertFalse(cell["assessment"]["accepted"])
+        html = VIEWER.read_text()
+        for marker in ("X (hypothesis only)", "Y (UNKNOWN)", "Z (safe proposed bridge)"):
+            self.assertIn(marker, html)
+        self.assertIn(str(cell["render"]["artifact_id"]), html)
 
     def test_owner_frozen_role_slot_differential_is_only_structural(self):
         report = json.loads((BASE / "d4-review/golden-technique-diff.v1.json").read_text())
