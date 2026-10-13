@@ -42,3 +42,19 @@ Private files (ignored, never commit):
 **Return only** the source-safe content of `TEST/imo-research/core2-q003/.private/core1a/native-core1a-golden-comparison.json` plus `source-safe-core1a-receipt.json`, and if nonzero gaps, a redacted first gap identifier/component without original stem/options, answer, source text, HTML or figures. Reports include renderer digests, both page SHA-256 values/bytes, exact native gap counts, component slot sets/differences and `STRUCTURAL_CHECK_ONLY` vs failure. A receipt alone cannot close actual learner browser/visual/A4 review or any Owner QRT cell. The original Owner question paper personal-inspection claim remains unconfirmed.
 
 This changes only this isolated TEST branch. Shared/core and main remain governed by the serial issue #212 lease. If native rendering cannot run, report **BLOCKED**; do not ask any operator to compose HTML.
+
+## Source-safe A4 technical preflight (r7 / 13 October 2026)
+
+User explicitly **deferred the remaining staged-control keyboard/accessibility inspection**; do not run or claim it. The next independent technical gate is **actual A4 geometry and eventual Owner inspection of the same already-rendered native page**. Existing `tools/print/print-product.mjs` prints at **280×175 mm**, which is *not A4*. That established print-production tool, its registry and `Shared/tools/render_core.py` must not be edited under issue #183; source rights, page layout and Owner A4 approval remain separate.
+
+`audit_private_a4.mjs` is **TEST-only QA**. It does not render the concept, regenerate Q003 source/HTML, or author a page. It reads the existing ignored `.private/core1a/rendered/core1a.html` only when its SHA-256 is **`d1fe23c43d1eeae67c69600beef1b5054c361854c3e5cd6742545859592998c0`** and its byte count is **76,401** (the Coordinator-reported browser-tested original at `f030a0a`). It requires the native `render-receipt.json` to identify `render_core/2` with zero gaps and the selected page. It uses local Playwright Chromium to print those same HTML bytes as A4 **portrait** with 10 mm margins, checks the PDF media dimensions and page count via local Poppler `pdfinfo`, and saves a **private**, source-safe hash/geometry receipt. Any missing page, digest mismatch, native receipt error, uncommitted answer reveal, missing `pdfinfo`, or incorrect media dimension fails closed. It never materialises the source answer templates.
+
+From repository root, where the original native output already exists:
+
+```sh
+node TEST/imo-research/core2-q003/audit_private_a4.mjs
+# If the EXACT 62,277-byte frozen original Core2 page also exists in this checkout:
+node TEST/imo-research/core2-q003/audit_private_a4.mjs --include-core2
+```
+
+Preconditions: local Playwright with installed Chromium, and `pdfinfo` available on the PATH. The tool does **not** fetch dependencies. The generated `.private/a4-audit/{core1a-native-a4.private.pdf,source-safe-a4-audit-receipt.json}` (and optional `core2-native-a4.private.pdf`) remain ignored on the Owner's machine. **Do not send or publish the PDFs, full source HTML, unredacted screenshot or original item.** Return only the source-safe receipt values/first sanitized error. An A4 MediaBox and PDF page count do not certify clipping, legibility, page breaks, the default public PDF link or Owner print approval; these remain `PENDING`. This is not a replacement for the registered production `print-product.mjs` (its PDF target integrity contract is separately enforced before deployment).
