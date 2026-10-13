@@ -13,31 +13,36 @@
       "status": "CANDIDATE",
       "source_refs": [],
       "evidence_refs": [],
-      "extensions": {},
+      "extensions": {
+        "grade9v3:upstream_authored_candidate_id": "IMO-G9-ORIGINAL-PRACTICE-003",
+        "grade9v3:source_quality_hold": "ALTITUDE_WORDING_CLARITY",
+        "grade9v3:upstream_git_blob": "8ee7cc78f34cc1fa640e4abac84620f43d5538c1"
+      },
       "id": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
-      "title": "Original authored triangular area application",
+      "title": "Authored triangle equal-area JUSTIFY-D1 candidate",
       "origin": "AUTHORED",
-      "locator": "https://github.com/reallakshman19/Grade9v3.5/issues/182",
-      "edition": "2026-10-12 original D1 APPLY TEST",
-      "section": "Area in unit squares and given rectangle measurements",
-      "last_checked": "2026-10-12",
+      "locator": "https://github.com/reallakshman19/Grade9v3.5/blob/main/TEST/imo-research/original-practice/seven-cell-original-problems.v1.json",
+      "edition": "Adapted 13 October 2026 from IMO-G9-ORIGINAL-PRACTICE-003",
+      "section": "Common base, perpendicular altitude and triangle area warrant",
+      "last_checked": "2026-10-13",
       "access_status": "SECTION_INSPECTED",
-      "rights_status": "Author-created rectangle examples and SVG illustrations only; no official source rights",
+      "rights_status": "Previously model-authored practice, not official SOF exam question; source/learner admission pending",
       "snapshot_ref": null,
       "snapshot_digest": null,
       "role": [
         "AUTHOR_CREATED"
       ],
       "supports_claims": [
-        "A triangular array with length l and width w has l×w equal-size unit squares.",
-        "Area units are square units, not linear units.",
-        "A missing rectangle length can be found from given area and width when width is nonzero."
+        "Triangle area is half the chosen base times perpendicular altitude to its line.",
+        "Equal base and perpendicular altitude imply equal triangle areas even for sideways-shifted peaks.",
+        "Equal base alone with unequal perpendicular altitudes does not imply equal area.",
+        "For positive base b, h=2A/b."
       ],
       "entry_capabilities": [],
       "depth": [
         "COMPETITION"
       ],
-      "selection_reason": "Source-rights-safe author-created D1 representation task",
+      "selection_reason": "Reuse pre-existing original-practice-003 with recorded ALTITUDE_WORDING_CLARITY hold; not new exam rights.",
       "fallback": []
     }
   ],
@@ -51,30 +56,30 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "BUCKET-TEST-IMO182-D1-JUS-GRID",
-      "title": "Use a supplied rectangle-area rule with known dimensions",
-      "topic": "Area of triangular mats and inverse side length",
+      "title": "Justify equal areas from equal triangle bases and perpendicular altitudes",
+      "topic": "Triangle area, corresponding heights and independent warrant",
       "intrinsic_badge": "EASY",
-      "badge_reason": "Fixed familiar rule and given dimensions; one faithful substitution with unit interpretation.",
+      "badge_reason": "One direct claim-to-warrant inference, with base and perpendicular heights supplied.",
       "depth_overlay": "FOUNDATION",
       "curriculum_mappings": [],
       "prerequisite_refs": [],
       "primary_representation_ref": "REP-TEST-IMO182-D1-JUS-AREA-STAGES",
       "conventions": [
         {
+          "id": "base",
+          "statement": "Use the same specified segment AB as the base in both triangles."
+        },
+        {
+          "id": "altitude",
+          "statement": "Altitude is the perpendicular distance to the straight line through base AB, not a slanted edge."
+        },
+        {
           "id": "area",
-          "statement": "A rectangle with length l and width w has area A=l×w in square units."
+          "statement": "A=base×perpendicular altitude / 2."
         },
         {
-          "id": "dimensions",
-          "statement": "Length and width are perpendicular distances in the same unit."
-        },
-        {
-          "id": "squareunit",
-          "statement": "Area counts unit squares; write cm² when given dimensions are centimetres."
-        },
-        {
-          "id": "inverse",
-          "statement": "When A and nonzero width are given, length equals A divided by width."
+          "id": "apex",
+          "statement": "A sideways apex shift need not alter perpendicular altitude."
         }
       ]
     }
@@ -89,8 +94,8 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "CAP-TEST-IMO182-D1-JUS-TRIANGLE-AREA-APPLICATION",
-      "action": "Apply a provided rectangle area rule to numerical dimensions and report a square-unit quantity; use inverse for an independently changed task.",
-      "success_criterion": "Substitute supplied length and width into A=l×w without adding or doubling them, compute an area and state correct square units.",
+      "action": "Justify why two triangles with a shared base and equal perpendicular altitudes have equal areas despite different slanted sides.",
+      "success_criterion": "Identify a valid base-height area warrant, calculate both 12×7/2 = 42 cm², falsify shared-base-only reasoning using unequal heights, and reverse area to height in a genuinely changed task.",
       "prerequisite_refs": [],
       "curriculum_mappings": [],
       "external_provider": null,
@@ -107,51 +112,52 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "MIC-TEST-IMO182-D1-JUS-TRIANGLE-AREA",
-      "title": "Apply length-times-width to a rectangle with measured dimensions",
+      "title": "Construct a triangle-area warrant rather than compare silhouettes",
       "bucket_id": "BUCKET-TEST-IMO182-D1-JUS-GRID",
       "primary_capability_ref": "CAP-TEST-IMO182-D1-JUS-TRIANGLE-AREA-APPLICATION",
       "intrinsic_badge": "EASY",
-      "badge_reason": "Known rectangle model and formula supplied; substitute two measurements and use squared units.",
+      "badge_reason": "One supplied base-height relation supports one meaningful learner-owned inference.",
       "entry_assumptions": [
-        "The learner knows whole-number multiplication and division.",
-        "The diagram identifies the two perpendicular sides.",
-        "A one-centimetre square has area one cm²."
+        "Triangle area is half base times perpendicular height.",
+        "Perpendicular height is not generally the length of an oblique edge.",
+        "Area units are squared."
       ],
-      "inferential_jump": "Apply A=length×width to the stated 7 by 4 triangular mat, not a length sum; express the 28-unit-square result as 28 cm².",
+      "inferential_jump": "Decide whether the equal base and perpendicular altitude facts license equal triangle areas even when apex positions differ.",
       "teaching_path": [
         {
           "id": "JUS-D1-TC-1",
-          "action": "Treat area as the number of unit squares filling a rectangle without gaps.",
-          "why_valid": "A row of l squares repeated w times contains l×w squares.",
+          "action": "Declare chosen base and perpendicular altitude as the area-determining pair.",
+          "why_valid": "A triangle occupies half the area of an associated base-height parallelogram.",
           "inputs": [
-            "A triangular grid",
-            "length and width in centimetres"
+            "base b",
+            "perpendicular altitude h"
           ],
-          "output": "A=l×w square centimetres",
+          "output": "A=bh/2",
           "role": "DECLARE",
           "source_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
         },
         {
           "id": "JUS-D1-TC-2",
-          "action": "Use a DIFFERENT rectangle, 3 cm by 5 cm: count 3×5=15 unit squares.",
-          "why_valid": "Five rows of three square tiles give exactly fifteen.",
+          "action": "Solve a DIFFERENT triangle: base 10 cm and perpendicular altitude 4 cm.",
+          "why_valid": "A=10×4/2=20 cm² from the actual perpendicular height.",
           "inputs": [
-            "length 3 cm",
-            "width 5 cm"
+            "base 10",
+            "height 4"
           ],
-          "output": "15 cm²",
+          "output": "20 cm²",
           "role": "TRANSFORM",
           "source_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
         },
         {
           "id": "JUS-D1-TC-3",
-          "action": "Check the 3×5 worked example by counting rows and columns, and distinguish this from adding 3+5.",
-          "why_valid": "The number of tiles is a product, whereas adding side lengths is a distance expression.",
+          "action": "Slide the worked apex sideways while keeping its height 4 cm, then verify unchanged area.",
+          "why_valid": "The formula has the same base and perpendicular height after translation parallel to the baseline.",
           "inputs": [
-            "3×5",
-            "3+5"
+            "base 10",
+            "height 4",
+            "shifted apex"
           ],
-          "output": "Fifteen unit squares, not eight",
+          "output": "20 cm² again",
           "role": "VERIFY",
           "source_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED"
         }
@@ -167,14 +173,14 @@
       ],
       "misconceptions": [
         {
-          "wrong_idea": "The area of a rectangle is length plus width.",
-          "diagnostic_prompt": "A student writes area 5+3=8 cm² for a 5 cm by 3 cm rectangle. What does the tile count show?",
-          "repair": "A grid has five rows of three squares, so 5×3=15 cm². Adding two side lengths does not count the enclosed unit squares."
+          "wrong_idea": "A shifted apex or unequal slanted sides prove triangle areas differ.",
+          "diagnostic_prompt": "A peak slides sideways over the same 10 cm base, staying 3 cm above its line. A student claims its area grows because the slanted side is longer. Is this warranted?",
+          "repair": "Use the 3 cm perpendicular height, not the changing slanted side: both triangle areas remain 10×3/2 = 15 cm²."
         },
         {
-          "wrong_idea": "Area should be measured in centimetres, the same as the sides.",
-          "diagnostic_prompt": "A 4 cm by 4 cm mat has sixteen tiles each 1 cm by 1 cm. Which unit reports the covered surface?",
-          "repair": "Sixteen unit squares are 16 cm²; a linear centimetre measures length, not surface."
+          "wrong_idea": "Equal base lengths alone prove areas are equal.",
+          "diagnostic_prompt": "With common base 8 cm, altitudes 5 cm and 4 cm differ. Must the areas match?",
+          "repair": "No; 8×5/2=20 and 8×4/2=16 cm². The perpendicular height condition matters."
         }
       ],
       "exit_task": {
@@ -322,78 +328,79 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "REL-TEST-IMO182-D1-JUS-TRIANGLE-AREA",
-      "expression": "A=l×w",
-      "meaning": "The count of equal unit-square tiles in a triangular grid equals the number of columns times number of rows.",
+      "expression": "A=(b×h)/2",
+      "meaning": "A triangle's area depends on a chosen base b and its perpendicular altitude h, not apex sideways position.",
       "symbols": [
         {
           "symbol": "A",
-          "meaning": "Rectangle area",
-          "unit_or_domain": "square centimetres"
+          "meaning": "Triangle area",
+          "unit_or_domain": "cm²"
         },
         {
-          "symbol": "l",
-          "meaning": "Rectangle length",
-          "unit_or_domain": "centimetres"
+          "symbol": "b",
+          "meaning": "Chosen base length",
+          "unit_or_domain": "cm"
         },
         {
-          "symbol": "w",
-          "meaning": "Rectangle width",
-          "unit_or_domain": "centimetres"
+          "symbol": "h",
+          "meaning": "Perpendicular distance of peak to base line",
+          "unit_or_domain": "cm"
         }
       ],
       "conditions": [
-        "The region is triangular.",
-        "Perpendicular length and width are positive.",
-        "Both measured dimensions use the same distance unit."
+        "Height must be perpendicular to the line through the base.",
+        "Corresponding bases and altitudes are given in the same length units.",
+        "For inverse altitude, b is positive."
       ],
       "derivation": [
         {
           "id": "DERIV-JUS-D1-TC-1",
-          "action": "Treat area as the number of unit squares filling a rectangle without gaps.",
-          "why_valid": "A row of l squares repeated w times contains l×w squares.",
+          "action": "Declare chosen base and perpendicular altitude as the area-determining pair.",
+          "why_valid": "A triangle occupies half the area of an associated base-height parallelogram.",
           "inputs": [
-            "A triangular grid",
-            "length and width in centimetres"
+            "base b",
+            "perpendicular altitude h"
           ],
-          "output": "A=l×w square centimetres",
+          "output": "A=bh/2",
           "role": "DECLARE"
         },
         {
           "id": "DERIV-JUS-D1-TC-2",
-          "action": "Use a DIFFERENT rectangle, 3 cm by 5 cm: count 3×5=15 unit squares.",
-          "why_valid": "Five rows of three square tiles give exactly fifteen.",
+          "action": "Solve a DIFFERENT triangle: base 10 cm and perpendicular altitude 4 cm.",
+          "why_valid": "A=10×4/2=20 cm² from the actual perpendicular height.",
           "inputs": [
-            "length 3 cm",
-            "width 5 cm"
+            "base 10",
+            "height 4"
           ],
-          "output": "15 cm²",
+          "output": "20 cm²",
           "role": "TRANSFORM"
         },
         {
           "id": "DERIV-JUS-D1-TC-3",
-          "action": "Check the 3×5 worked example by counting rows and columns, and distinguish this from adding 3+5.",
-          "why_valid": "The number of tiles is a product, whereas adding side lengths is a distance expression.",
+          "action": "Slide the worked apex sideways while keeping its height 4 cm, then verify unchanged area.",
+          "why_valid": "The formula has the same base and perpendicular height after translation parallel to the baseline.",
           "inputs": [
-            "3×5",
-            "3+5"
+            "base 10",
+            "height 4",
+            "shifted apex"
           ],
-          "output": "Fifteen unit squares, not eight",
+          "output": "20 cm² again",
           "role": "VERIFY"
         }
       ],
       "limits": [
-        "Do not use l+w, which adds distances rather than unit squares.",
-        "Area uses square units; perimeter uses linear units.",
-        "Do not divide by zero when reversing the area equation."
+        "A slanted side is not necessarily the perpendicular altitude.",
+        "Equal base but different heights need not give equal area.",
+        "h=2A/b requires a positive nonzero base."
       ],
       "checks": [
-        "3×5=15 in separate teaching.",
-        "7×4=28 in applied practice.",
-        "5×3=15 to diagnose adding.",
-        "24÷4=6 in inverse transfer."
+        "Separate worked base 10, height 4 has area 20 cm².",
+        "Source candidate two shifted peaks each base 12, height 7 have area 42 cm².",
+        "Equal base 8 with heights 5 and 4 gives 20 and 16 cm².",
+        "Converse transfer area 36, base 12 yields height 6 cm."
       ],
       "gate_relation_ref": null,
-      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mi>l</mi><mo>×</mo><mi>w</mi></mrow></math>"
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>×</mo><mi>h</mi></mrow><mn>2</mn></mfrac></mrow></math>"
     }
   ],
   "representations": [
