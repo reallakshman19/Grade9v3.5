@@ -25,6 +25,7 @@ R = "REL-TEST-IMO-G9-THREE-CONSECUTIVE-FACTORS"
 P = "REP-TEST-IMO-G9-RESIDUE-TABLE"
 F = "FAM-TEST-IMO-G9-AUTHORED-CONSECUTIVE-PRODUCT"
 T = "ROUTE-TEST-IMO-G9-CORE1A-CONSTRUCTION"
+I = "ISS-TEST-IMO-G9-CORE1A-EXIT-VALIDATOR-HELD"
 
 
 class IMOCore1ACandidateError(ValueError):
@@ -52,7 +53,7 @@ def validate_package(package: Path = PACKAGE) -> dict:
         "microtopics": (M,), "relations": (R,), "representations": (P,),
         "question_families": (F,), "teaching_routes": (T,),
         "questions": (), "practice_profiles": (), "evidence": (),
-        "known_issues": (), "data": ()
+        "known_issues": (I,), "data": ()
     }
     ensure(d.get("schema_version") == "0.2.0"
            and d.get("package_id") == PACKAGE_ID
@@ -130,9 +131,18 @@ def validate_package(package: Path = PACKAGE) -> dict:
            and "divisible by 3" in " ".join(answer.get("reasoning", []))
            and "24" in answer.get("check","")
            and exit_task.get("source_ref") == S
-           and exit_task.get("oracle",{}).get("verification",{}).get("validator_id") ==
-           "TEST/imo-research/validate_core1a_candidate_package.py",
+           and exit_task.get("oracle") == {"held_by": I},
            "exit task must have an authored full 24-divisibility closure and oracle")
+    # A Python research falsifier is not a declared TEST subject oracle.
+    # The contract deliberately has no validator catalogue: record a real hold.
+    issue = d["known_issues"][0]
+    subject_contract = json.loads((REPO / "TEST/adapter/CoreContracts.json").read_text(encoding="utf-8"))
+    ensure(subject_contract.get("validator_catalogue") == []
+           and issue.get("classification") == "CAPABILITY_LIMIT"
+           and issue.get("affected_refs") == [M]
+           and "empty validator_catalogue" in issue.get("description", "")
+           and "Issue #130" in issue.get("next_action", ""),
+           "unregistered TEST validator must remain explicitly held")
     units = micro.get("construction_units")
     ensure(isinstance(units,list) and len(units) == 1
            and units[0].get("step_refs") == [s["id"] for s in steps]

@@ -1,0 +1,198 @@
+{
+  "schema_version": "imo-authored-d3-boundary-proposal/1",
+  "proposal_id": "TEST-IMO-G9-NEW-BOUNDARY-24-D3-TRIAL-001",
+  "question_id": "IMO-G9-AUTHORED-BOUNDARY-24-D3-TRIAL-001",
+  "status": "RESEARCH_TRIAL_NOT_ADMITTED",
+  "origin": "AUTHORED_NEW_UNPUBLISHED_NOT_SOF",
+  "subject": "TEST",
+  "rights_scope": "NEW_INDEPENDENT_MATHEMATICAL_EXERCISE_NOT_PUBLISHER_SOURCE",
+  "source_core2_admitted": false,
+  "core_learner_published": false,
+  "qrt_owner_accepted": false,
+  "band": "D3_PROPOSED_NOT_CONFIRMED",
+  "demand": "JUSTIFY",
+  "existing_d2_comparison": {
+    "old_question_id": "Q-TEST-CORE2A-THREE-ADJACENT-PRODUCT-PROOF",
+    "old_proof_core": [
+      "a universal parity warrant",
+      "an exhaustive modulo-three warrant",
+      "combine coprime factor 2 and factor 3 into factor 6"
+    ],
+    "overlap_with_old": [
+      "uses consecutive-integer factors",
+      "uses universal divisibility and modulo/ parity arguments"
+    ],
+    "learner_owned_new_work": [
+      "Recognize that a factor of 6 alone does not force the extra 2 needed for 12",
+      "Use a counterexample to refute the first universal claim",
+      "Classify exactly which n make the first failed universal claim true using exhaustive residue classes",
+      "Establish two *distinct* even factors in every four-consecutive block, one divisible by 4",
+      "Synthesize an 8-divisibility warrant with the independent factor-of-3 warrant for every starting n",
+      "Distinguish disproof, conditional truth, and universal proof without being told each verdict"
+    ],
+    "difference_from_d2": "No substitution of variable or 'prove that 6 divides a triple' repetition; this problem demands a counterexample, an iff classification and a separate universal factor-of-24 argument requiring 2-adic analysis.",
+    "accepted_by_reviewer": false,
+    "decision_needed": "Subject reviewer must inspect actual learner-owned work and independently decide D2, D3 or D4. No automatic upgrade."
+  },
+  "stem": "For a positive integer n, let P(n)=n(n+1)(n+2) and Q(n)=n(n+1)(n+2)(n+3). A learner knows that P(n) is always divisible by 6, and makes two further claims: (A) P(n) is divisible by 12 for every n; (B) Q(n) is divisible by 24 for every n. For each claim decide whether it holds for every positive n and give a proof or a counterexample. If a claim fails, determine exactly which positive starting n make it true, and prove your classification. Explain why knowing that a product is divisible by 6 does not by itself establish divisibility by 12. Do not rely on checking finitely many starting values to prove a universal statement.",
+  "conditions": [
+    "n is an arbitrary positive integer",
+    "the 6-divisibility of a three-integer product is a given starting fact",
+    "a counterexample may disprove 'every', but does not classify all successful n",
+    "classification must be proved across every possible positive n"
+  ],
+  "pre_attempt_support": [
+    {
+      "id": "H1",
+      "text": "A statement about every n can fail because of one counterexample. But how would you prove an exact classification once the universal statement fails?",
+      "protected": "Do not tell which universal claim fails."
+    },
+    {
+      "id": "H2",
+      "text": "Check how the power of 2 required by a target divisor differs between 6, 12 and 24. Does merely knowing a product has some even factor settle that?",
+      "protected": "Do not identify the missing two-adic bridge."
+    },
+    {
+      "id": "H3",
+      "text": "When a divisibility question repeats with a short modular cycle, explain why a complete set of residues—rather than chosen examples—covers every permitted n.",
+      "protected": "Do not list successful residues or the truth value of B."
+    }
+  ],
+  "protected_work": "Independently decide both universal verdicts, derive the exact exceptional residue class for A, and prove the distinct-even-factor 8-divisibility warrant for B without receiving that synthesis in a hint.",
+  "answer_for_review_only": {
+    "a_universal": false,
+    "a_counterexample": {
+      "n": 1,
+      "p": 6,
+      "not_divisible_by": 12
+    },
+    "a_exact_classification": {
+      "holds_iff": "n % 4 != 1",
+      "exception_class": "n ≡ 1 (mod 4)"
+    },
+    "a_general_warrant": [
+      "Three consecutive integers always supply a factor of 3.",
+      "When n ≡ 1 (mod 4), the only even member is n+1, which is ≡2 (mod 4), so the triple has just one factor of two and is not divisible by 4.",
+      "When n ≡ 0 or 3 (mod 4), one member is divisible by 4. When n ≡ 2 (mod 4), two members are even and one is divisible by 4. Thus in all three classes n ≠1 mod4, the triple has a factor of 4.",
+      "Since 3 divides the triple for all n and gcd(3,4)=1, divisibility by 12 holds precisely outside n ≡1 mod4."
+    ],
+    "b_universal": true,
+    "b_general_warrant": [
+      "Among four consecutive integers one is divisible by 4 and a distinct integer two steps away from it is even.",
+      "The product therefore has at least three factors of 2, meaning 8 divides Q(n) for every n.",
+      "Among any three consecutive integers one is divisible by 3, hence 3 divides Q(n) for every n.",
+      "Since gcd(8,3)=1, 24 divides Q(n) for every positive n."
+    ],
+    "independent_modular_check": "As a falsifier, check all n modulo 24 for Q and all n modulo 12 for P. These finite *complete residue classes* cover every n by polynomial congruence; they are not merely sample starts.",
+    "crux": "A universal 6-divisibility proof does not supply sufficient powers of two for 12 or 24; locate and justify the extra powers, including the distinct even factors within four consecutive integers."
+  },
+  "misconception_routes": [
+    {
+      "id": "EXTRA_TWO_ASSUMED",
+      "diagnostic": "Learner infers factor 12 directly from a factor 6.",
+      "repair": "Distinguish 2-adic exponent of 6 and 12; n=1 refutes the extra-factor inference."
+    },
+    {
+      "id": "SAMPLES_AS_PROOF",
+      "diagnostic": "Learner proves B by checking a short finite list with no residue/completeness argument.",
+      "repair": "Treat n as arbitrary and prove the distinct multiple-of-4/other-even guarantee."
+    },
+    {
+      "id": "ONE_EVEN_IN_FOUR",
+      "diagnostic": "Learner counts one even in a four-consecutive product then jumps to a factor of 8.",
+      "repair": "Identify a factor divisible by four and a different even factor; do not assume a single even supplies 2^3."
+    }
+  ],
+  "review_matrix": {
+    "H1": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "H2": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "H3": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "S1": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "S2": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "S3": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "P1": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "P2": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "P3": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "M1": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "M2": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    },
+    "M3": {
+      "review_state": "NOT_ACCEPTED",
+      "owner_acceptance": false,
+      "evidence_status": "AWAITING_INDEPENDENT_REVIEW"
+    }
+  },
+  "navigation_hold": {
+    "route_status": "NO_PUBLIC_ROUTE_PENDING_ACADEMIC_SUBTOPIC_CLASSIFICATION",
+    "no_misfile_under": "POLY-DIVISIBILITY",
+    "not_equal_to": "NS-INDEX-LAWS",
+    "programme_issue": 137,
+    "owning_issue": 130,
+    "core1a_alignment": "General divisor warrants from the existing inherited TEST construction may be a repair entry after commitment, but this new advanced classification is not taught or certified by that existing unit.",
+    "authentic_source_core2": "NONE_RIGHTS_AND_CUSTODY_HELD"
+  },
+  "acceptance_gates": [
+    "Independent mathematics reviewer checks both universal solutions and all residues",
+    "Reviewer confirms additional cognitive demand relative to old D2, or relabels without self-approval",
+    "Design a new source-safe pre-attempt four-factor representation and optional Core1A repair",
+    "Implement in canonical package/renderer and verify actual attempt/reveal/print/keyboard route",
+    "Owner names and approves corresponding academic subtopic; do not fake existing route",
+    "Owner decides release only after published generator parity and applicable rules"
+  ],
+  "pre_attempt_representation": {
+    "status": "AUTHOR_SOURCE_SAFE_REVIEW_ASSET_NOT_LIVE",
+    "asset_ref": "TEST/library/figures/imo-g9-authored-boundary-24-safe.svg",
+    "stage_mode": "REPLACE",
+    "stage_refs": [
+      "BOUNDARY-24-THREE-FACTORS",
+      "BOUNDARY-24-FOUR-FACTORS",
+      "BOUNDARY-24-COMPARE-CLAIMS"
+    ],
+    "description": "Three panels show exactly the provided variables and target divisors but omit truth verdicts, residue classifications and the missing power-of-two proof bridge.",
+    "accessibility_status": "AUTHOR_LABELS_PRESENT_BROWSER_AND_AT_NOT_YET_REVIEWED",
+    "owner_acceptance": false
+  }
+}

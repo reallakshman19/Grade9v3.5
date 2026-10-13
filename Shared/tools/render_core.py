@@ -2333,6 +2333,71 @@ def _repair(ctx: Ctx, ref: str | None) -> str:
     return ""
 
 
+
+def authored_m2_probe(ctx: Ctx, q: dict) -> str:
+    """Opt-in, post-commit concept-transfer and arithmetic diagnostic for Core2A.
+
+    Repeated example-only answers across distinct universal claims are a
+    stronger conceptual warning than one multiple-choice error. A learner who
+    recognizes both general arguments but miscomputes gets arithmetic repair;
+    mixed or incomplete patterns remain inconclusive. It is not proof grading.
+    """
+    spec = (q.get("extensions") or {}).get("grade9v3:m2_probe")
+    if not spec:
+        return ""
+    choices = spec.get("reason_choices") or []
+    transfer = spec.get("transfer_choices") or []
+    messages = spec.get("feedback") or {}
+    expected_ids = ["EXAMPLE_ONLY", "UNIVERSAL", "UNSURE"]
+    required = {"MISCONCEPTION", "SLIP", "NO_SIGNAL", "INCONCLUSIVE"}
+    if ([choice.get("id") for choice in choices] != expected_ids or
+            [choice.get("id") for choice in transfer] != expected_ids or
+            not all(isinstance(c.get("text"), str) and c["text"]
+                    for c in choices + transfer) or
+            not all(isinstance(messages.get(k), str) and messages[k] for k in required) or
+            not str(spec.get("arithmetic_expected", "")).isdigit() or
+            not spec.get("reason_prompt") or not spec.get("transfer_prompt") or
+            not spec.get("arithmetic_prompt") or
+            spec.get("repair_ref") != q.get("repair_ref") or
+            not _repair(ctx, q.get("repair_ref"))):
+        ctx.gap("AUTHOR_M2_DIAGNOSTIC", q["id"],
+                "post-commit probe requires two independently worded concept checks,"
+                " separate arithmetic check, honest feedback, and real Core1A repair",
+                "CORE2A")
+        return ""
+    group = "m2-" + re.sub(r"[^A-Za-z0-9_-]+", "-", q["id"])
+    options = "".join(
+        f'<label class="g9-answer-option"><input type="radio" name="{esc(group)}" '
+        f'data-g9-m2-reason value="{esc(c["id"])}"><span>{esc(c["text"])}</span></label>'
+        for c in choices
+    )
+    transfer_options = "".join(
+        f'<label class="g9-answer-option"><input type="radio" name="{esc(group)}-transfer" '
+        f'data-g9-m2-transfer value="{esc(c["id"])}"><span>{esc(c["text"])}</span></label>'
+        for c in transfer
+    )
+    feedback = "".join(
+        f'<template data-g9-m2-message="{esc(kind)}"><p>{esc(messages[kind])}</p>'
+        + (_repair(ctx, q.get("repair_ref")) if kind == "MISCONCEPTION" else "")
+        + "</template>"
+        for kind in ("MISCONCEPTION", "SLIP", "NO_SIGNAL", "INCONCLUSIVE")
+    )
+    return (
+        f'<section data-g9-m2-probe hidden class="g9-attempt" '
+        f'data-g9-m2-expected="{esc(spec["arithmetic_expected"])}">'
+        '<h3>Check your reasoning after committing</h3>'
+        '<p>These separate checks look for a pattern, not a grade or certain diagnosis.</p>'
+        f'<fieldset><legend>{esc(spec["reason_prompt"])}</legend>{options}</fieldset>'
+        f'<fieldset><legend>{esc(spec["transfer_prompt"])}</legend>{transfer_options}</fieldset>'
+        f'<label>{esc(spec["arithmetic_prompt"])} '
+        '<input type="text" inputmode="numeric" autocomplete="off" '
+        'data-g9-m2-arithmetic></label>'
+        '<button type="button" data-g9-m2-check>Check my reasoning</button>'
+        '<div role="status" aria-live="polite" data-g9-m2-feedback></div>'
+        f'{feedback}</section>'
+    )
+
+
 def core2a(ctx: Ctx, q: dict) -> str:
     ans = q["answer"]
     roles = q.get("representation_roles") or {}
@@ -2353,7 +2418,8 @@ def core2a(ctx: Ctx, q: dict) -> str:
         "attempt": (block("stem", f"<h2>{esc(q['stem'])}</h2>")
                     + block("conditions", items(q.get("conditions")), title="Conditions")
                     + figure(ctx, roles.get("initial_ref"), "PRE_ATTEMPT", "CORE2A", q["id"], allowed=roles.get("stage_refs"))
-                    + attempt_box("Your attempt", response_for(q), q.get("options"), q["id"])),
+                    + attempt_box("Your attempt", response_for(q), q.get("options"), q["id"])
+                    + authored_m2_probe(ctx, q)),
         "support": _ladder(ctx, q, "CORE2A"),
         "reasoning": reveal("Reasoning route and full solution",
                             block("reasoning_route", f"<ol>{route}</ol>" if route else "")
@@ -2455,6 +2521,15 @@ def units_for(ctx: Ctx, role: str) -> list[dict]:
 # ------------------------------------------------------------------ page
 
 CSS = """
+[data-g9-m2-probe][hidden]{display:none!important}
+/* Opt-in A4 print: keep authored factor diagrams visible without shrinking
+   them into clipped side-by-side blueprint columns. Screen layout is unchanged. */
+@media print{
+ article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-split{display:block!important}
+ article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-col-support{position:static!important;max-height:none!important;overflow:visible!important}
+ article[data-g9-print-layout="SINGLE_COLUMN_A4"] .g9-diagram-scroll{overflow:visible!important}
+}
+
 [hidden]{display:none!important}
 :root{--g9-zoom:1;--g9-content-max:1380px;--g9-touch-min:48px;--g9-space:clamp(16px,2vw,28px);--g9-type-body:17px;--bg:#f6f7fb;--fg:#172033;--card:#fff;--line:#d5dce6;--accent:#1f5fae;--muted:#52627a;
 --soft:#fbfdff;--pill-bg:#eef2ff;--pill-fg:#4338ca;--src-bg:#ecfdf5;--src-fg:#047857;--info-bg:#f8fbff;--info-line:#93c5fd;--info-fg:#455d72;--warn-bg:#fff7f8;--warn-line:#ffc9d3;--warn-fg:#8a2942;--ok-bg:#f0fdf7;--ok-line:#bbf7d0;--ok-fg:#14532d}
@@ -2774,6 +2849,30 @@ q('[data-g9-commit]',a).forEach(b=>b.onclick=()=>{const box=b.closest('[data-g9-
 a.addEventListener('click',e=>{const b=e.target.closest('[data-g9-next-rung]');if(b&&a.contains(b)){markAssistance(a,'HINT_LADDER');nextRung(b.closest('.g9-ladder'));bindSupportRevealState(a);saveCore2State(a)}});attemptFields(a).forEach(el=>{el.addEventListener('input',()=>saveCore2State(a));el.addEventListener('change',()=>saveCore2State(a))});
 q('details[data-g9-payload-ref$="-wrong-route"]',a).forEach(d=>d.addEventListener('toggle',()=>{if(d.open){markAssistance(a,'WRONG_ROUTE');saveCore2State(a)}}));
 q('[data-g9-concept-link]',a).forEach(link=>link.addEventListener('click',()=>{markAssistance(a,'CONCEPT_NAV');saveCore2State(a);const key=returnKey(link.dataset.g9ConceptRef);if(key)store.set(key,link.dataset.g9QuestionRef||a.dataset.g9Unit);refreshReturnLinks()}))});
+// Authored M2: two distinct conceptual checks and a separate computation.
+q('[data-g9-m2-probe]').forEach(p=>{
+ const a=p.closest('article[data-g9-unit]');if(!a)return;
+ const show=()=>{p.hidden=!a.dataset.attempted};show();
+ q('[data-g9-commit]',a).forEach(b=>b.addEventListener('click',show));
+ const slot=q('[data-g9-m2-feedback]',p)[0];
+ q('[data-g9-m2-reason], [data-g9-m2-transfer], [data-g9-m2-arithmetic]',p).forEach(el=>{
+  el.addEventListener('input',()=>slot?.replaceChildren());
+  el.addEventListener('change',()=>slot?.replaceChildren());
+ });
+ q('[data-g9-m2-check]',p).forEach(b=>b.addEventListener('click',()=>{
+  if(!a.dataset.attempted)return;
+  const reason=q('[data-g9-m2-reason]:checked',p)[0]?.value;
+  const transfer=q('[data-g9-m2-transfer]:checked',p)[0]?.value;
+  const value=q('[data-g9-m2-arithmetic]',p)[0]?.value.trim()||'';
+  let outcome='INCONCLUSIVE';
+  if(reason&&transfer&&/^\d+$/.test(value)){
+   if(reason==='EXAMPLE_ONLY'&&transfer==='EXAMPLE_ONLY')outcome='MISCONCEPTION';
+   else if(reason==='UNIVERSAL'&&transfer==='UNIVERSAL')outcome=value===p.dataset.g9M2Expected?'NO_SIGNAL':'SLIP';
+  }
+  const payload=q('template[data-g9-m2-message]',p).find(t=>t.dataset.g9M2Message===outcome);
+  if(payload&&slot)slot.replaceChildren(payload.content.cloneNode(true));
+ }));
+});
 const practiceLinks=q('[data-g9-practice-link]');const practiceLabels=new Map(practiceLinks.map(link=>[link,link.textContent]));const navParams=new URLSearchParams(location.search);const navReturn=navParams.get('g9-return');const navConcept=navParams.get('g9-concept');
 function refreshReturnLinks(){practiceLinks.forEach(link=>{const key=returnKey(link.dataset.g9ConceptRef);const stored=!!key&&store.get(key)===link.dataset.g9QuestionRef;const routed=navReturn===link.dataset.g9QuestionRef&&navConcept===link.dataset.g9ConceptRef;const active=stored||routed;if(active){link.dataset.g9ReturnLink='';link.textContent='Return to question · '+practiceLabels.get(link)}else{delete link.dataset.g9ReturnLink;link.textContent=practiceLabels.get(link)}})}
 practiceLinks.forEach(link=>link.addEventListener('click',()=>{const key=returnKey(link.dataset.g9ConceptRef);if(key&&store.get(key)===link.dataset.g9QuestionRef)store.remove(key);refreshReturnLinks()}));refreshReturnLinks();
@@ -2994,8 +3093,13 @@ def page(ctx: Ctx, role: str, mode: str, digest: str) -> str:
     for rec in units_for(ctx, role):
         kind = "CONCEPT" if role in {"CORE1", "CORE1A", "CORE1B"} else "QUESTION"
         search_text = metadata_search_text(ctx, role, rec)
+        print_layout = (rec.get("extensions") or {}).get("grade9v3:print_layout")
+        if print_layout not in (None, "SINGLE_COLUMN_A4"):
+            ctx.gap("AUTHOR_PRINT_LAYOUT", rec["id"], "unsupported opt-in print layout", role)
+        print_attr = (' data-g9-print-layout="SINGLE_COLUMN_A4"'
+                      if print_layout == "SINGLE_COLUMN_A4" else "")
         articles += (f'<article id="{esc(rec["id"])}" data-g9-unit="{esc(rec["id"])}" data-g9-kind="{kind}"'
-                     f' data-g9-role="{esc(role)}" data-g9-search-text="{esc(search_text)}"{klass}>{RENDER[role](ctx, rec)}</article>')
+                     f' data-g9-role="{esc(role)}" data-g9-search-text="{esc(search_text)}"{print_attr}{klass}>{RENDER[role](ctx, rec)}</article>')
     header, crumbs = shell(ctx, role, mode)
     m = ctx.manifest
     # The blueprint says which theme its page opens in (the Core1A benchmark opens dark); a learner's own choice still wins.
