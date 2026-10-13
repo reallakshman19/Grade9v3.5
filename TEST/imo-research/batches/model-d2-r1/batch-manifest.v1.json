@@ -102,7 +102,8 @@
         "core1a_exit_radius_m": 5,
         "core1a_exit_height_m": 9
       },
-      "original_source_text_committed": false
+      "original_source_text_committed": false,
+      "authored_concept_staging": "TEST/imo-research/batches/model-d2-r1/q008-authored-model-construction.v1.json"
     }
   ],
   "review_artifact": {
@@ -110,7 +111,40 @@
     "zip_not_repo_published": true,
     "batch_index_sha256": "28bb651e98f45c7af4992ff640c67e484c63cb091a669341b2dffd612a5a5b80",
     "html_build_kind": "HAND_AUTHORED_DEMO_REUSING_OWNER_APPROVED_REVIEW_UI; NOT_NATIVE_RENDER_CORE_PRODUCT",
-    "note": "ZIP is a conversation artifact; persistence outside chat requires explicit export or future verified native input. GitHub stores this safe batch receipt only."
+    "note": "GitHub now also preserves the source-safe standalone HTML review pages under this batch's html/ folder. The chat ZIP is an offline copy, not the authoritative native renderer output.",
+    "repo_source_safe_html_directory": "TEST/imo-research/batches/model-d2-r1/html/",
+    "persisted_files": {
+      "batch_index.html": {
+        "bytes": 2123,
+        "sha256": "28bb651e98f45c7af4992ff640c67e484c63cb091a669341b2dffd612a5a5b80",
+        "git_blob": "6b4a63fcdcb393b47e9aea0c0c114f3c9e7ed3da"
+      },
+      "core2_authored_demo.html": {
+        "bytes": 32261,
+        "sha256": "90fa27ec928ef6121c0350cc469ef1bd98e13029d9f4e26b66b08813b4401ddb",
+        "git_blob": "e0599f5abcd27cbb31185c4ba3207a22f18eca22"
+      },
+      "core1a_authored_preview.html": {
+        "bytes": 21109,
+        "sha256": "d0e0670007734ba738f12a5f4aa88e63ffaa140a540fb51b1cf41d9348a899a3",
+        "git_blob": "a8c2ab5b85cacebd99dc3ef4ffc88fec6b5b3c67"
+      },
+      "core2_cone_model_authored.html": {
+        "bytes": 32158,
+        "sha256": "c7769d3b577ab5a924b1633bd0e0f6de19f96f192e2513c6a48dc060950db5f4",
+        "git_blob": "6999d3151dd60337012eca5876aeb28bbf764efd"
+      },
+      "core1a_cone_model_authored.html": {
+        "bytes": 21262,
+        "sha256": "691b18afe7d83e7ac41b0d724651c6ffe12def91b53e83b38a82c46aec47e0a2",
+        "git_blob": "afc8a42bb21c453be56ffbe3ac53ad8ba8e5ae3d"
+      },
+      "q003_preview_index.html": {
+        "bytes": 10736,
+        "sha256": "4056c6f37b59c06d25c451a56ae51ea6d6c526f03b3d43101607b57957bdfa45",
+        "git_blob": "8d5d8b0b6d7f7d80ae9b712403b2303f87cb8ebd"
+      }
+    }
   },
   "checks": {
     "static_pass": 32,
@@ -120,8 +154,9 @@
     "html_component_inventory": "PASS",
     "offline_relative_links": "PASS",
     "source_text_absence": "PASS",
-    "real_chromium": "NOT_RUN_BLOCKED_BROWSER_ADMIN_POLICY",
-    "native_render_Q008": "NOT_RUN_MISSING_EXACT_PRIVATE_SOURCE"
+    "real_chromium": "NOT_RUN_ENVIRONMENT_BLOCKED_ADMIN_ON_FILE_AND_LOOPBACK",
+    "native_render_Q008": "NOT_RUN_MISSING_EXACT_PRIVATE_SOURCE",
+    "static_evidence": "32/32 check_model_d2_static.py (local review files); inline JS passed node --check; geometry arithmetic and links checked"
   },
   "next_operator": {
     "method": "Owner-local source custody and native renderer only; no second native HTML builder",
@@ -141,5 +176,15 @@
     "keyboard_AX": "DEFERRED_BY_USER",
     "pr": "none",
     "main_shared_changes": false
+  },
+  "next_batch_research": {
+    "proposed_same_cell": "QRT-JUSTIFY-D3",
+    "questions": [
+      "SOF-IMO-G09-SAMPLE-2026-27-Q009",
+      "SOF-IMO-G09-SAMPLE-2026-27-Q010"
+    ],
+    "status": "HOLD_SOURCE_Q009_TRANSCRIPTION_CONFLICT_AND_Q010_FIGURE_FIDELITY; NO ORIGINAL_CORE2_GENERATION_WITHOUT_SOURCE_RECONCILIATION",
+    "semantic_concepts_distinct": "decimal/index claim verification versus geometric congruence inference",
+    "eligible_for_development_only": "AUTHOR_CREATED_DISTINCT_CORE1A_RESEARCH_NOT_ORIGINAL_SOFTCOPY"
   }
 }
