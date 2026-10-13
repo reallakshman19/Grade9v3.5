@@ -39,11 +39,13 @@ jobs:
           out=Path('build/imo182-qrt/d1/model')
           receipt=json.loads((out/'render-receipt.json').read_text())
           assert receipt['gaps']==[],receipt['gaps']
-          roles=['core1.html','core1a.html','core1b.html','core2a.html','core2b.html']
-          assert set(roles)<=set(receipt['pages'])
+          pages=['core1.html','core1a.html','core1b.html','core2a.html','core2b.html','index.html']
+          assert set(pages)==set(receipt['pages'])
+          independently_computed={x:hashlib.sha256((out/x).read_bytes()).hexdigest() for x in pages}
+          assert independently_computed==receipt['page_sha256'], 'Renderer receipt/page byte mismatch'
           j={'cell':'QRT-MODEL-D1','status':'RENDERED_TEST_ONLY','source':'AUTHORED_TEST',
              'accepted':'0/28','academic_review':'PENDING',
-             'pages':{x:hashlib.sha256((out/x).read_bytes()).hexdigest() for x in roles}}
+             'pages':independently_computed}
           (out/'d1-model-evidence.json').write_text(json.dumps(j,indent=2)+'\n')
           print(json.dumps(j,indent=2))
           PY
