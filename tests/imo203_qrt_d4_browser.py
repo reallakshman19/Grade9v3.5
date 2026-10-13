@@ -11,7 +11,9 @@ receipt=json.loads((root/"render-receipt.json").read_text())
 assert receipt["gaps"]==[],receipt["gaps"]
 screens=root/"browser";screens.mkdir(exist_ok=True)
 protected={
-    "retrieve":["Yes:9,17,33,49","9,17,33,49","criterion for k>=3: odd a≡1","a≡1 mod8"],
+    "retrieve":["Yes:9,17,33,49","9,17,33,49","criterion for k>=3: odd a≡1","a≡1 mod8",
+                "at k>=3 the criterion is1 modulo8","For k>=3 use1 modulo8",
+                "the weaker rule is exact only at exponent2"],
     "synthesize":["120384","130284","odd-position and even-position sums both9","odd and even positions each sum9"],
 }[cell]
 with sync_playwright() as p:
@@ -24,7 +26,7 @@ with sync_playwright() as p:
             assert page.locator("[data-blueprint-ref]").count()>0,(role,width)
             # Earlier teaching roles must not preview the main/transfer answer,
             # either visibly or through the accessibility projection.
-            if role in ("core1a","core1b") and width==1280:
+            if role in ("core1","core1a","core1b") and width==1280:
                 prior_visible=page.locator("body").inner_text()
                 prior_ax=page.locator("body").aria_snapshot()
                 for protected_word in protected:
