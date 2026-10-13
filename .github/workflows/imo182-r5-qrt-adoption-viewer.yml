@@ -1,0 +1,42 @@
+name: IMO182 r5 reconciled 28-cell native evidence viewer
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-r5-qrt-adoption-viewer.yml'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/**'
+      - 'tests/test_imo182_r5_28_artifact_ledger.py'
+      - 'tests/test_imo182_r5_matrix_viewer.py'
+      - 'tests/smoke_imo182_r5_matrix_viewer.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-safe-review-viewer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pin 28 exact artifacts and assert no false academic/Owner acceptance
+        run: python -m unittest tests.test_imo182_r5_28_artifact_ledger tests.test_imo182_r5_matrix_viewer -v
+      - name: Install scoped browser for administrative viewer smoke
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: Test all 28 select states across three widths against embedded exact SHA data
+        run: python tests/smoke_imo182_r5_matrix_viewer.py
+      - name: Upload administrative HTML and 28-row machine-readable SHA ledger
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-r5-28-cell-reconciled-admin-review
+          path: |
+            TEST/imo-research/qrt-tiles/reconciliation/index.html
+            TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json
+            TEST/imo-research/qrt-tiles/reconciliation/2026-10-14-r5-01-adoption-readback.md
+          if-no-files-found: error
