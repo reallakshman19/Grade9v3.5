@@ -184,11 +184,16 @@ class D4AdoptionEvidence(unittest.TestCase):
         self.assertEqual(challenge["as_of_utc_date"], "2026-10-14")
         self.assertEqual({p["cell_id"] for p in challenge["cells"]},
                          {"QRT-RETRIEVE-D4", "QRT-SYNTHESIZE-D4"})
+        handoff = json.loads((BASE / "d4-review/qualified-review-handoff.v1.json").read_text())
+        packets = {x["cell_id"]: x for x in handoff["cells"]}
         for audit in challenge["cells"]:
             cell = next(x for x in self.cells if x["cell_id"] == audit["cell_id"])
             with self.subTest(cell=cell["cell_id"]):
                 self.assertEqual(cell["academic_challenge_ref"],
                                  "academic-challenge-retrieve-synthesize.v1.json#" + cell["cell_id"])
+                self.assertEqual(packets[cell["cell_id"]]["academic_challenge_ref"],
+                                 cell["academic_challenge_ref"])
+                self.assertEqual(packets[cell["cell_id"]]["prior_learning_status"], "UNKNOWN")
                 self.assertEqual(audit["Y"]["status"], "UNKNOWN")
                 self.assertIsNone(audit["Y"]["learner_event_ref"])
                 self.assertEqual(cell["learner_profile"]["Y"]["status"], "UNKNOWN")
