@@ -72,7 +72,7 @@ function selectCell(row){
  field("demand",row.cognitive_demand_review);
  field("reviewer","PENDING independent academic review");
  field("owner","PENDING decision ID");
- field("rights",row.provenance.source_rights+"; no publisher/SOF admission");
+ field("rights",row.provenance.source_rights.replaceAll("_"," ")+"; no publisher/SOF admission");
  field("ci-baseline","153 parent-equivalent canonical failures; no new failing IDs; guardrails still red");
  const five=document.getElementById("five-roles");five.replaceChildren();
  for(const [role,data] of Object.entries(row.comparator.roles)){
