@@ -208,9 +208,10 @@ jobs:
         if: steps.generated_checks.outcome == 'failure' && github.event_name == 'pull_request'
         continue-on-error: true
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          BASE_SHA: 4dbedc6773482bbecb146ff8959614b2c32dcc6e
         run: |
           set -euo pipefail
+          # Pin the actual current main, not the PR event's stale base.sha.
           git fetch --no-tags --depth=1 origin "$BASE_SHA"
           git worktree add --detach /tmp/core1a-spec/exact-base "$BASE_SHA"
           (
