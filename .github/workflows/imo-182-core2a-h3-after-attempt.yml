@@ -1,0 +1,58 @@
+name: IMO 182 Owner H3 after-attempt disclosure (TEST only)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo-182-core2a-h3-after-attempt.yml'
+      - 'Shared/tools/render_core.py'
+      - 'Shared/tools/core2_v2.py'
+      - 'TEST/imo-research/pilots/core1a-render-qualified-divisibility.v1.json'
+      - 'TEST/imo-research/pilots/imo182-core2b-transfer-pilot.v1.json'
+      - 'TEST/products/imo-182-five-core-integrated-review.manifest.json'
+      - 'tests/test_imo182_core2a_h3_after_attempt.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core2a-typed-support:
+    name: H3 release requires written attempt; preserve five blueprint roles
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing schema validator
+        run: python -m pip install --quiet jsonschema
+      - name: Build the actual TEST five-role pages with sole registered renderer
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-182-five-core-integrated-review.manifest.json \
+            --out build/imo182-h3-after-attempt --draft --reference
+      - name: Verify authored H3 policy, protected marker and old golden preservation
+        run: python -m unittest tests.test_imo182_core2a_h3_after_attempt -v
+      - name: Publish SHA-linked actual renderer outputs, not composed HTML
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, hashlib
+          folder=Path('build/imo182-h3-after-attempt')
+          receipt=json.loads((folder/'render-receipt.json').read_text())
+          assert receipt['gaps']==[], receipt['gaps']
+          rows=[dict(name=n, sha256=hashlib.sha256((folder/n).read_bytes()).hexdigest()) for n in receipt['pages']]
+          record=dict(outcome='O2_DISCOURSE_PROTECTION_PREREQUISITE',owner_h3_timing='AFTER_ATTEMPT',
+                      qrt_accepted='0/28',snapshot='PRIOR_OWNER_GOLDEN_UNCHANGED',new_owner_golden='PENDING',
+                      source_core2='NOT_ADMITTED',actual_pages=rows)
+          (folder/'h3-evidence.json').write_text(json.dumps(record,indent=2)+'\n')
+          print(json.dumps(record,indent=2))
+          PY
+      - name: Upload real TEST HTML for Owner comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-core2a-h3-after-attempt-actual-html
+          path: build/imo182-h3-after-attempt/
+          if-no-files-found: warn

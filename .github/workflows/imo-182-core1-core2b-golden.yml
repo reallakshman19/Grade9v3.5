@@ -1,0 +1,93 @@
+name: IMO 182 Core1 and Core2B blueprint golden evidence (TEST only)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo-182-core1-core2b-golden.yml'
+      - 'TEST/products/imo-182-core1-orientation.manifest.json'
+      - 'TEST/products/imo-182-core2b-transfer.manifest.json'
+      - 'TEST/products/imo-182-five-core-integrated-review.manifest.json'
+      - 'TEST/imo-research/pilots/core1a-render-qualified-divisibility.v1.json'
+      - 'TEST/imo-research/pilots/imo182-core2b-transfer-pilot.v1.json'
+      - 'TEST/library/figures/core2b-four-consecutive-attempt-safe.svg'
+      - 'TEST/library/figures/core1a-consecutive-divisibility-staged.svg'
+      - 'tests/test_core1a_renderer_maturity.py'
+      - 'tests/imo_182_core1_core2b_golden.py'
+      - 'golden/units/G-IMO-G9-FIVE-CORE-20261012/**'
+      - 'golden/INDEX.md'
+      - 'tests/test_imo182_owner_golden_snapshot.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core1-core2b-golden:
+    name: Same-registry pages and independently checked golden moves
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing schema validator
+        run: python -m pip install --quiet jsonschema
+      - name: Build original TEST Core1 page from existing orientation blueprint
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-182-core1-orientation.manifest.json \
+            --out build/imo182-core1 --draft --reference
+      - name: Build original TEST Core2B changed-demand page and prior Core2A
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-182-core2b-transfer.manifest.json \
+            --out build/imo182-core2b --draft --reference
+      - name: Build integrated TEST five-role learner journey from current single head
+        run: |
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo-182-five-core-integrated-review.manifest.json \
+            --out build/imo182-five-core --draft --reference
+      - name: Render independent CANDIDATE golden from pinned fixture through sole renderer
+        run: python Shared/tools/build_golden.py --id G-MATH-LINEAR-CONSTRAINT
+      - name: Compare each actual page with golden technique and independent maths
+        run: python -m unittest tests.imo_182_core1_core2b_golden tests.test_core1a_renderer_maturity -v
+      - name: Validate frozen five-Core Owner golden without changing its bytes
+        run: |
+          python Shared/tools/build_golden.py --id G-IMO-G9-FIVE-CORE-20261012 --check
+          python -m unittest tests.test_imo182_owner_golden_snapshot -v
+      - name: Record explicit receipt and review/authority limits
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, hashlib
+          dirs=[Path('build/imo182-core1'),Path('build/imo182-core2b'),Path('build/imo182-five-core')]
+          output={'status':'TECHNICAL_CANDIDATE_ONLY','owner_golden_acceptance':'NOT_RUN',
+                  'qrt_accepted_numerator':0,'real_learners':'NOT_AVAILABLE',
+                  'owner_preview_approved_exact_original_187':'YES',
+                  'integrated_preview_academic_acceptance':'NOT_REVIEWED',
+                  'a4_print_owner_review':'PARKED','subject':'TEST','source_core2_admitted':False,
+                  'comparison':'INDEPENDENT_MATH_AND_GOLDEN_TECHNIQUES_NOT_PIXEL_IDENTITY',
+                  'artifacts':[]}
+          for folder in dirs:
+              receipt=json.loads((folder/'render-receipt.json').read_text())
+              assert receipt['gaps']==[], receipt['gaps']
+              for name in receipt['pages']:
+                  b=(folder/name).read_bytes()
+                  output['artifacts'].append({'role':folder.name,'name':name,'sha256':hashlib.sha256(b).hexdigest()})
+          Path('build/imo182-evidence.json').write_text(json.dumps(output,indent=2)+'\n')
+          print(json.dumps(output,indent=2))
+          PY
+      - name: Upload actual learner pages, candidate golden and receipts (review only)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-core1-core2b-blueprint-golden-review
+          path: |
+            build/imo182-core1/
+            build/imo182-core2b/
+            build/imo182-five-core/
+            build/imo182-evidence.json
+            golden/units/G-MATH-LINEAR-CONSTRAINT/rendered/core1.html
+            golden/units/G-MATH-LINEAR-CONSTRAINT/rendered/core2b.html
+          if-no-files-found: warn
