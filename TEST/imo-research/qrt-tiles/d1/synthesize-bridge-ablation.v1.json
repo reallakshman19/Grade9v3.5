@@ -1,0 +1,139 @@
+{
+  "schema": "imo-qrt-d1-bridge-ablation/v1",
+  "scope": "AUTHOR_SIDE_DIAGNOSTIC_PROTOCOL_ONLY_NOT_LEARNER_CONTENT_OR_ACADEMIC_VERDICT",
+  "cell_id": "QRT-SYNTHESIZE-D1",
+  "parent_issue": 200,
+  "baseline": {
+    "source_commit": "c967ff226516de25d6235c6c0f1749b39ffced7d",
+    "source_blob": "f9008c6dc4642d45798d23ddd06a51a4a33f540b",
+    "source_path": "TEST/imo-research/qrt-d1/synthesize.v1.json",
+    "current_question_id": "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
+    "prior_worked_question_id": "Q-TEST-IMO182-D1-SYN-CORE1A-WORKED",
+    "template_id": "QRT-SYNTHESIZE-D1",
+    "contrast_path": "TEST/imo-research/qrt-tiles/d1/synthesize-demand-contrast.v1.json",
+    "native_artifact": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38427757190/artifacts/11828784099"
+  },
+  "purpose": "Test whether the learner must coordinate an independent dependency rather than reuse the already-taught fixed-size equal-group template. The experimental prompts are NOT substitutes for blueprint-rendered pages.",
+  "conditions": [
+    {
+      "id": "A_CURRENT",
+      "kind": "ORIGINAL_TARGET",
+      "prompt": "Four identical banner units each contain three blue squares and two red squares. Write an expression counting all squares and explain why it includes every color in all four units.",
+      "values": {
+        "groups": 4,
+        "blue_per_group": 3,
+        "red_per_group": 2
+      },
+      "expected_total": 20,
+      "valid_expressions": [
+        "4*(3+2)",
+        "4*3+4*2"
+      ],
+      "reviewed_source_equivalent": true,
+      "diagnostic": "Ask for the independent bridge or model-choice statement, not only 20."
+    },
+    {
+      "id": "B_BRIDGE_SUPPLIED",
+      "kind": "ABLATION_FIXED_UNIT_SIZE",
+      "prompt": "Four identical banner units each contain five squares (three blue and two red). Find the total number of squares and explain the calculation.",
+      "values": {
+        "groups": 4,
+        "unit_total_given": 5,
+        "blue_per_group": 3,
+        "red_per_group": 2
+      },
+      "expected_total": 20,
+      "valid_expressions": [
+        "4*5",
+        "4*(3+2)",
+        "4*3+4*2"
+      ],
+      "reviewed_source_equivalent": false,
+      "diagnostic": "A/B difference isolates work in finding the unit size; it does not alone establish that this work is SYNTHESIZE."
+    },
+    {
+      "id": "C_ALREADY_TAUGHT",
+      "kind": "PRIOR_CORE1A_WORKED_ANCHOR",
+      "prompt": "Three badges each contain two circles and one triangle. Complete one badge unit and repeat it three times.",
+      "values": {
+        "groups": 3,
+        "first_per_group": 2,
+        "second_per_group": 1
+      },
+      "expected_total": 9,
+      "valid_expressions": [
+        "3*(2+1)",
+        "3*2+3*1"
+      ],
+      "reviewed_source_equivalent": true,
+      "diagnostic": "This is the existing Core1A anchor. Compare A after exposure to C; mere numeric variation is not evidence of a new bridge."
+    },
+    {
+      "id": "D_MISSING_COMPONENT_DIAGNOSIS",
+      "kind": "WRONG_ROUTE_EXPLANATION",
+      "prompt": "A learner writes 3+2*4=11 for A. Explain which quantities were counted and which were missed; do not merely say 'use parentheses'.",
+      "values": {
+        "groups": 4,
+        "blue_per_group": 3,
+        "red_per_group": 2,
+        "wrong_count": 11
+      },
+      "expected_total": 20,
+      "omitted_blue_count": 9,
+      "diagnostic": "Look for 'three blue squares omitted in each of the other three units' versus an arithmetic-precedence-only explanation."
+    },
+    {
+      "id": "E_CHANGED_COMPOSITION",
+      "kind": "EXPLORATORY_DIFFERENT_DEPENDENCY_NOT_CANDIDATE",
+      "prompt": "Three banner units contain three blue and two red squares each. A fourth contains three blue and one red square. Count all squares and explain why multiplying four by five is invalid.",
+      "values": {
+        "standard_units": 3,
+        "standard_blue": 3,
+        "standard_red": 2,
+        "changed_blue": 3,
+        "changed_red": 1
+      },
+      "expected_total": 19,
+      "invalid_uniform_total": 20,
+      "diagnostic": "Contrast with A to locate a genuine composition change; do not automatically call E D2 because it involves more operations."
+    }
+  ],
+  "protocol": {
+    "method": "Controlled human think-aloud task comparison, not automated grading.",
+    "exposure_record": "Record whether Core1A anchor C was taught/shown to each learner, and whether the same learner completed MODEL-D1 before A.",
+    "allocation": "Compare A versus B with matched prior exposure; counterbalance or separate groups to avoid revealing A through B; record order and cohort sizes.",
+    "required_observations": [
+      "Learner's first unprompted expression, explanation, and whether a bridge was independently named.",
+      "Specific difference between A and B after controlling for C exposure.",
+      "Whether D errors are diagnosed as omitted component repetition versus a mere parentheses rule.",
+      "Whether explanations honor BOTH valid A expressions.",
+      "Whether any genuinely new dependency is necessary in A but not B, compared with exploratory E."
+    ],
+    "disconfirmation": "If A is solved by direct transfer of C with no independently chosen bridge and B is equivalent except trivial 3+2, the claimed distinct SYNTHESIZE protected W is not supported by this probe.",
+    "nonconclusion": "Even if A/B performance differs, that may show addition/representation difficulty rather than SYNTHESIZE. Qualified reviewer must rule against MODEL-D1 and APPLY-D1 templates.",
+    "band_check": "Do not label D2 based solely on counting arithmetic operations; ask what additional connection remains learner-owned."
+  },
+  "review": {
+    "participants_count": null,
+    "exposure_cohorts": null,
+    "response_evidence_ids": [],
+    "qualified_reviewer": null,
+    "conflict_declaration": null,
+    "bridge_independent_of_prior_worked_anchor": null,
+    "A_vs_B_observation": null,
+    "D_diagnostic_observation": null,
+    "primary_demand_verdict": null,
+    "band_verdict": null,
+    "signed_at": null
+  },
+  "owner": {
+    "qrt_decision": "PENDING",
+    "decision_id": null
+  },
+  "restrictions": [
+    "No actual human responses were gathered in this authored record.",
+    "Arithmetic verification and source identity are not academic or cognitive demand sign-off.",
+    "Do not place prompts into Core learner HTML except via authorized native renderer/manifest.",
+    "Preserve QRT-MODEL/APPLY and D1/D2 alternative hypotheses until external disposition."
+  ]
+}
