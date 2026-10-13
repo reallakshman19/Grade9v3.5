@@ -28,6 +28,29 @@ class D1Synthesize(unittest.TestCase):
   self.assertEqual(qa["answer"]["crux_move_ref"],"SYN-D1-QA-ORDER")
   self.assertEqual([h["availability"] for h in core2_v2.project_support(qa)],["PRE_ATTEMPT_SAFE","PRE_ATTEMPT_SAFE","AFTER_ATTEMPT"])
   self.assertIn("data-g9-after-attempt-hint",self.pages["core2a.html"])
+ def test_preattempt_h2_does_not_choose_whole_unit_for_learner(self):
+  qa=self.source["questions"][1]
+  ladder=core2_v2.project_support(qa)
+  self.assertEqual([h["availability"] for h in ladder],["PRE_ATTEMPT_SAFE","PRE_ATTEMPT_SAFE","AFTER_ATTEMPT"])
+  self.assertEqual(qa["answer"]["crux_move_ref"],"SYN-D1-QA-ORDER")
+  pre=" ".join(x["text"] for x in qa["scaffolds"][:2]).lower()
+  self.assertIn("expression choice",pre)
+  for leak in ("both component kinds copied each time", "combine both parts before",
+               "whole-unit-first","4×(3+2)", "all components repeat"):
+   self.assertNotIn(leak,pre)
+  rendered=self.pages["core2a.html"]
+  self.assertIn(qa["scaffolds"][1]["text"],rendered)
+  self.assertNotIn("When a whole unit repeats, are both component kinds copied each time?",rendered)
+  self.assertIn("data-g9-after-attempt-hint",rendered)
+  self.assertIn("data-requires-attempt",rendered)
+  self.assertEqual(qa["answer"]["check"],"4×3+4×2=12+8=20.")
+  self.assertIn("4×3+4×2=20",qa["answer"]["acceptable_alternatives"])
+  self.assertIn("More than one equivalent expression may work.",qa["stem"])
+  self.assertIn("4×3+4×2=20",qa["extensions"]["grade9v3:analysis"]["equivalent_correct_warrants"])
+  self.assertIn("grouped and distributed counts are equivalent",self.source["microtopics"][0]["inferential_jump"])
+  # Accepted alternatives are a source-level review contract, not a required verbatim HTML string.\n  self.assertIn("A classroom banner repeats",self.pages["core2a.html"])
+
+
  def test_original_svg_stages_no_early_answer(self):
   self.assertEqual(len(self.source["representations"]),4)
   for r in self.source["representations"]:

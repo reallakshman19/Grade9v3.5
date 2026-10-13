@@ -39,9 +39,11 @@ jobs:
           out=Path('build/imo182-qrt/d1/synthesize')
           receipt=json.loads((out/'render-receipt.json').read_text())
           assert receipt['gaps']==[],receipt['gaps']
-          roles=['core1.html','core1a.html','core1b.html','core2a.html','core2b.html']
-          assert set(roles)<=set(receipt['pages'])
-          evidence={'cell':'QRT-SYNTHESIZE-D1','status':'RENDERED_TEST_ONLY','academic_review':'PENDING','accepted':'0/28','pages':{x:hashlib.sha256((out/x).read_bytes()).hexdigest() for x in roles}}
+          roles=['core1.html','core1a.html','core1b.html','core2a.html','core2b.html','index.html']
+          assert set(roles)==set(receipt['pages']),receipt['pages']
+          hashes={x:hashlib.sha256((out/x).read_bytes()).hexdigest() for x in roles}
+          assert hashes==receipt['page_sha256'],'SHA6 receipt differs from independently generated native HTML'
+          evidence={'cell':'QRT-SYNTHESIZE-D1','status':'RENDERED_TEST_ONLY','academic_review':'PENDING','accepted':'0/28','pages':hashes,'independent_sha6_receipt_match':True}
           (out/'d1-synthesize-evidence.json').write_text(json.dumps(evidence,indent=2)+'\n')
           print(json.dumps(evidence,indent=2))
           PY

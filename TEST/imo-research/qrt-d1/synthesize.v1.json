@@ -1,7 +1,7 @@
 {
   "schema_version": "0.2.0",
   "package_id": "TEST-IMO182-QRT-SYNTHESIZE-D1-AUTHORED",
-  "title": "Original TEST: choose unit-first dependent order for repeated mixed motifs",
+  "title": "Original TEST: justify complete repeated mixed-motif coverage with valid equivalent expressions",
   "version": "0.1.0",
   "status": "CANDIDATE",
   "subject": "TEST",
@@ -51,7 +51,7 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "BUCKET-TEST-IMO182-D1-SYN-GRID",
-      "title": "Whole unit must precede repeat count",
+      "title": "Count both motif components across every complete repeat",
       "topic": "Dependency of addition and multiplication for identical two-part motifs",
       "intrinsic_badge": "EASY",
       "badge_reason": "One protected dependency/ordering W; academic band review pending",
@@ -89,7 +89,7 @@
       "evidence_refs": [],
       "extensions": {},
       "id": "CAP-TEST-IMO182-D1-SYN-EQUAL-GROUPS-APPLICATION",
-      "action": "Synthesize a correct order: join two component counts into a complete motif and then repeat the entire unit.",
+      "action": "Construct and justify a count that covers both component kinds for each repeated motif, either by whole-unit grouping or by equivalent distribution.",
       "success_criterion": "Select 4×(3+2)=20 for four two-part units; reject 3+2×4 as counting only one type repeatedly; check 12 blue+8 red.",
       "prerequisite_refs": [],
       "curriculum_mappings": [],
@@ -117,7 +117,7 @@
         "Can multiply repeated identical units.",
         "Every repeated complete unit contains both component kinds."
       ],
-      "inferential_jump": "Choose to combine three blue plus two red as a whole unit before multiplying by four; not only multiply red.",
+      "inferential_jump": "Select and justify a mathematical expression that counts both blue and red components across four complete repeated motifs; grouped and distributed counts are equivalent, while repeating only one part is insufficient.",
       "teaching_path": [
         {
           "action": "Identify both components that belong to a whole motif.",
@@ -219,7 +219,7 @@
           }
         }
       },
-      "research_contribution": "Novel authored operation-order SYNTHESIZE-D1 proposed one-decision W, separate stages/false claim, singleton boundary, reverse block-count transfer; independent academic review mandatory.",
+      "research_contribution": "Novel authored operation-order SYNTHESIZE-D1 proposed one-decision W, separate stages/false claim, singleton boundary, reverse block-count transfer; independent academic review mandatory. The mathematical response rubric admits both grouped and distributed expressions; the primary-demand versus MODEL/APPLY distinction remains independently challenged.",
       "prerequisite_refs": [],
       "lineage": [],
       "construction_units": [
@@ -767,13 +767,13 @@
       ],
       "solution_structure": [
         "Identify one WHOLE motif with two parts.",
-        "Choose operation order that completes entire unit.",
+        "Choose a valid expression that counts both component kinds in every repeated copy (grouped whole-unit or separate distributed totals).",
         "Repeat all units and verify by separate part counts."
       ],
       "demand_dimensions": {
-        "model_choice": "The known motif-repeat family is given; choose a unit-first dependency rather than a new model.",
+        "model_choice": "A complete repeated mixed motif is given; justify coverage of both components by a grouped or distributive count. Qualified reviewer must decide whether this is genuinely SYNTHESIZE or routine MODEL/APPLY.",
         "representation_translation": "Preserve both kinds as one whole unit across repeated copies.",
-        "reasoning_steps": "One ordering bridge: combine both components before multiplying entire units.",
+        "reasoning_steps": "One coverage/dependency argument: every repeated copy contributes each component kind; grouping or distributing is valid.",
         "novelty": "Core2B reverses from total and full-unit size to unknown number of blocks."
       },
       "safe_variations": [
@@ -920,11 +920,21 @@
         "grade9v3:cognitive_demand": {
           "primary": "SYNTHESIZE",
           "secondary": [],
-          "basis": "One ordering/dependency bridge before elementary computation; reviewer adjudicates D1 vs D2."
+          "basis": "Possible one-bridge synthesis of a two-part complete unit across four repetitions; accepted grouped and distributed expressions are equivalent. Qualified reviewer must adjudicate versus simpler MODEL/APPLY and adjacent D2."
         },
         "grade9v3:analysis": {
-          "stable_crux_move": "Select 4×(3+2) whole-unit-first dependency, not just compute twenty.",
-          "common_wrong_route": "3+2×4=11 repeats only red components."
+          "stable_crux_move": "Account for both part kinds in all four repetitions using a justified whole-unit or distributed expression; not merely state 20.",
+          "common_wrong_route": "3+2×4=11 repeats only red components.",
+          "pre_attempt_H2_authoring_revision": {
+            "original_leading_prompt": "When a whole unit repeats, are both component kinds copied each time? Decide how your expression accounts for them.",
+            "reason": "Original preattempt hint asks if both component kinds are copied each time, which strongly suggests the protected grouping/order relation; revised H2 asks for an independent check without spelling out the unit-first dependency.",
+            "academic_classification": "UNDETERMINED_SYNTHESIZE_VS_MODEL_OR_APPLY_AND_D1_VS_D2"
+          },
+          "equivalent_correct_warrants": [
+            "4×(3+2)=20",
+            "(3+2)×4=20",
+            "4×3+4×2=20"
+          ]
         },
         "grade9v3:core2_support_plan": {
           "protected_move_refs": [
@@ -945,7 +955,7 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED",
       "original_identifier": "Q-TEST-IMO182-D1-SYN-CORE2A-EQUAL-GROUPS-APPLICATION",
-      "stem": "A classroom banner repeats an identical tile unit FOUR times. Each unit contains THREE blue squares AND TWO red squares. Write an expression counting ALL tiles. Decide the operation order, explain why and calculate the total.",
+      "stem": "A classroom banner repeats an identical tile unit FOUR times. Each unit contains THREE blue squares AND TWO red squares. Write a mathematical expression counting ALL tiles, explain why it counts every colored piece in every copy, and calculate the total. More than one equivalent expression may work.",
       "subparts": [],
       "options": [],
       "conditions": [
@@ -961,7 +971,7 @@
         "summary": "4×(3+2)=20 banner tiles.",
         "reasoning": [
           "The one complete unit has BOTH 3 blue and 2 red squares.",
-          "Choose to combine full-unit parts before repeating all units.",
+          "You may group the full unit before repeating, or repeat each colored component separately and add: both approaches count each part in all four units.",
           "Four full units give 4×(3+2)=20 tiles.",
           "The wrong 3+2×4=11 repeats only the red part."
         ],
@@ -981,13 +991,13 @@
           {
             "id": "SYN-D1-QA-ORDER",
             "kind": "DECIDE",
-            "action": "Choose unit-first operation order, preserving both component types.",
+            "action": "Choose an expression that preserves all four repeats of both part kinds, by grouping a whole unit or using a distributive count.",
             "why_valid": "Every component of one whole unit must be included per copy.",
             "inputs": [
               "whole unit parts",
               "number of copies"
             ],
-            "output": "4×(3+2)=20",
+            "output": "4×(3+2)=4×3+4×2=20",
             "source_ref": "SRC-TEST-IMO182-D1-SYN-GROUPS-AUTHORED"
           },
           {
@@ -1032,13 +1042,13 @@
           "supports_move_ref": "SYN-D1-QA-READ"
         },
         {
-          "text": "When a whole unit repeats, are both component kinds copied each time? Decide how your expression accounts for them.",
+          "text": "Think about how the quantities in the story should appear in an expression. What could you check to see whether your proposed expression accounts for the given pieces correctly? Make your own expression choice before calculating.",
           "support_kind": "CONNECT",
           "reveals": "CONCEPT",
           "supports_move_ref": "SYN-D1-QA-ORDER"
         },
         {
-          "text": "After attempting the ordering, count each part kind separately to check.",
+          "text": "After your attempt, check the total by separately counting the blue and red pieces; compare with your proposed expression.",
           "support_kind": "CONNECT",
           "reveals": "METHOD",
           "supports_move_ref": "SYN-D1-QA-ORDER"
@@ -1092,11 +1102,11 @@
           "algebra_computational_load": 1,
           "trap_exception_sensitivity": 0
         },
-        "basis": "One protected unit-first ordering decision, elementary arithmetic. Academic band verdict pending.",
+        "basis": "One protected coverage/dependency decision accounting for both motif components across all repeated copies; simple addition and multiplication. Grouped and distributed forms are equally valid. SYNTHESIZE primary demand and D1 band remain academic proposals.",
         "component_evidence": {
           "concept_model_selection": "Known repeat motif.",
           "representation_translation": "No separate translation bridge.",
-          "reasoning_chain_length": "Choose one order/dependency.",
+          "reasoning_chain_length": "Learner chooses a coherent all-component coverage/dependency relation; grouping full units or distributing copies are both valid. No separate hidden condition.",
           "algebra_computational_load": "Addition and small multiplication.",
           "trap_exception_sensitivity": "False precedence separately diagnosed."
         }
@@ -1301,7 +1311,7 @@
       ],
       "help_plan": [
         "Core1A teaches a DIFFERENT 3×(2+1)=9 badge construction, not the assessed banner.",
-        "Core2A H1/H2 orient whole-unit composition but leave the grouped expression/order W; H3 AFTER_ATTEMPT."
+        "Core2A H1/H2 orient whole-unit composition but leave the all-component expression-choice W; H3 AFTER_ATTEMPT."
       ],
       "reveal_plan": "Primary initial SVG prints only four units, three blue and two red parts per unit; no parentheses, operation or result. Core1A shows separate worked three-badge stages.",
       "source_preferences": [
