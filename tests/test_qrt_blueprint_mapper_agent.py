@@ -67,7 +67,7 @@ class QuestionFirstAgentContract(unittest.TestCase):
                 self.assertIn(term, self.playbook)
         for marker in (
             "DEMONSTRATED", "UNKNOWN", "NO_PREATTEMPT_SCAFFOLD",
-            "QRT-<DEMAND>-<D1..D4>", "cross-role", "precommit",
+            "QRT-<DEMAND>-<D1..D4>", "cross-role", "preattempt",
             "ACADEMIC_REVIEWED", "OWNER_QRT_ACCEPTED",
             "OWNER_GOLDEN_DESIGNATED", "RELEASED",
         ):
