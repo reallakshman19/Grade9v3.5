@@ -1,0 +1,232 @@
+{
+  "schema": "imo-qrt-justify-d1-human-feedback-probes/v1",
+  "cell_id": "QRT-JUSTIFY-D1",
+  "primary_demand": "JUSTIFY",
+  "source_origin": "AUTHORED_TEST_ORIGINAL_PRACTICE_003_NOT_SOF",
+  "scope": "MANUAL_REVIEW_ONLY_NOT_AUTOGRADED_NOT_ACADEMIC_SIGNOFF",
+  "owner_decision_id": null,
+  "academic_decision": "PENDING",
+  "source_quality_hold": "ALTITUDE_WORDING_CLARITY",
+  "w": "Explain equal triangle areas using common base 12 cm and equal perpendicular altitudes 7 cm despite different apex offsets; compute 42 cm² each.",
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Correctly identifies the same 12 cm base for both triangles",
+      "required_for_direct_proof": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Recognizes perpendicular 7 cm altitude to the base line, not the slanted side",
+      "required_for_direct_proof": true
+    },
+    {
+      "id": "R3",
+      "criterion": "Uses A=bh/2 or a mathematically equivalent independent area proof as the equality warrant",
+      "required_for_direct_proof": true
+    },
+    {
+      "id": "R4",
+      "criterion": "Computes both areas as 42 cm² with square units",
+      "required_for_direct_proof": true
+    },
+    {
+      "id": "R5",
+      "criterion": "Does not misinterpret sideways apex offset as changing perpendicular height",
+      "required_for_direct_proof": false
+    }
+  ],
+  "review_instructions": "A qualified reviewer must compare the learner's actual justification with the conceptual rubric; sample tokens, phrase similarity, numerical-only matching and nonblank-attempt gating are not automatic academic grading. Allow mathematically equivalent proofs and meaningful partial-credit distinctions. Sample probes are illustrative, never an exhaustive classifier.",
+  "cases": [
+    {
+      "id": "valid_direct",
+      "response": "Both triangles use base AB = 12 cm. The 7 cm distances are perpendicular heights, so the triangle area formula gives (12 × 7)/2 = 42 cm² for each. Horizontal position of the peaks does not change these values.",
+      "author_expected_manual_category": "FULL_WARRANT_AND_VALUE",
+      "reasoning_signals_to_check": [
+        "COMMON_BASE",
+        "PERPENDICULAR_HEIGHT",
+        "VALID_AREA_LAW",
+        "BOTH_VALUES"
+      ],
+      "proposed_human_feedback_after_commit": "Confirm the relation A=bh/2 and why it applies separately to both shapes.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "valid_det",
+      "response": "Place A=(0,0), B=(12,0), C=(2,7), D=(10,7). The absolute determinant area for both ABC and ABD is |12×7|/2=42 square cm, so the areas match.",
+      "author_expected_manual_category": "FULL_ALTERNATIVE_WARRANT",
+      "reasoning_signals_to_check": [
+        "COORDINATE_INDEPENDENT_CHECK",
+        "BOTH_VALUES"
+      ],
+      "proposed_human_feedback_after_commit": "Equivalent proof by determinant is mathematically valid even if the formula is shown through coordinates.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "valid_shear",
+      "response": "Moving the apex sideways keeps its distance at right angles to AB at 7 cm. Each has the same 12 cm baseline, and area is half base times height; both are 42 cm².",
+      "author_expected_manual_category": "FULL_WARRANT_AND_VALUE",
+      "reasoning_signals_to_check": [
+        "COMMON_BASE",
+        "PERPENDICULAR_HEIGHT",
+        "VALID_AREA_LAW",
+        "BOTH_VALUES"
+      ],
+      "proposed_human_feedback_after_commit": "Accept geometric shear/invariance phrasing that states the base-height warrant.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "numeric_only",
+      "response": "42 cm²",
+      "author_expected_manual_category": "PARTIAL_OR_UNJUSTIFIED",
+      "reasoning_signals_to_check": [
+        "BOTH_VALUES"
+      ],
+      "proposed_human_feedback_after_commit": "Ask why both figures have the same area; a number alone does not establish the warrant.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "answer_without_reason",
+      "response": "Yes, the areas are the same.",
+      "author_expected_manual_category": "PARTIAL_OR_UNJUSTIFIED",
+      "reasoning_signals_to_check": [],
+      "proposed_human_feedback_after_commit": "Ask for matched base and perpendicular height, the governing relation, and both areas.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "looks_same",
+      "response": "Yes, because the two triangles look almost the same.",
+      "author_expected_manual_category": "INCORRECT_REASONING",
+      "reasoning_signals_to_check": [],
+      "proposed_human_feedback_after_commit": "Visual resemblance is neither a sufficient criterion nor a proof; compare base and right-angle height.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "same_base_only",
+      "response": "They have the same base, so every triangle on that base has identical area.",
+      "author_expected_manual_category": "INCORRECT_REASONING",
+      "reasoning_signals_to_check": [
+        "COMMON_BASE"
+      ],
+      "proposed_human_feedback_after_commit": "Challenge with a shared 8 cm base and altitudes 5 and 4 cm; areas differ.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "wrong_slanted",
+      "response": "Both have a side going up 7 cm, so treat the slanted side as the height.",
+      "author_expected_manual_category": "INCORRECT_REASONING",
+      "reasoning_signals_to_check": [],
+      "proposed_human_feedback_after_commit": "Only a 90-degree distance to the chosen base line qualifies as altitude.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "different_slopes",
+      "response": "No. C and D are in different sideways locations, so their triangle areas must differ.",
+      "author_expected_manual_category": "INCORRECT_REASONING",
+      "reasoning_signals_to_check": [],
+      "proposed_human_feedback_after_commit": "Horizontal shifts do not change b or perpendicular h.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "addition_formula",
+      "response": "Both are equal because a triangle has area 12 + 7 = 19 square cm.",
+      "author_expected_manual_category": "INCORRECT_REASONING",
+      "reasoning_signals_to_check": [],
+      "proposed_human_feedback_after_commit": "Area is half the product of base and perpendicular altitude, not their sum.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "wrong_number",
+      "response": "Both heights are 7 and base is 12, so area is 84 cm² each.",
+      "author_expected_manual_category": "PARTIAL_WITH_CALCULATION_ERROR",
+      "reasoning_signals_to_check": [
+        "COMMON_BASE",
+        "PERPENDICULAR_HEIGHT"
+      ],
+      "proposed_human_feedback_after_commit": "The direction of the equality argument may be correct; divide the base-height product by two.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "wrong_unit",
+      "response": "Both use A=12×7/2 and so each area is 42 cm.",
+      "author_expected_manual_category": "PARTIAL_WITH_UNIT_ERROR",
+      "reasoning_signals_to_check": [
+        "COMMON_BASE",
+        "PERPENDICULAR_HEIGHT",
+        "VALID_AREA_LAW"
+      ],
+      "proposed_human_feedback_after_commit": "Area units are square centimetres, not centimetres.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "outside_foot",
+      "response": "If the perpendicular foot lies beyond the segment AB, you cannot measure a triangle height, so equal area cannot be justified.",
+      "author_expected_manual_category": "INCORRECT_REASONING",
+      "reasoning_signals_to_check": [],
+      "proposed_human_feedback_after_commit": "The altitude is measured to the infinite straight line through the base, extended if necessary.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "wrong_transfer",
+      "response": "For both triangles with area 36 cm² and base 12 cm, the height must be 36÷12=3 cm.",
+      "author_expected_manual_category": "INCORRECT_CONVERSE",
+      "reasoning_signals_to_check": [],
+      "proposed_human_feedback_after_commit": "The converse relation uses h=2A/b, so each perpendicular height is 6 cm.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "valid_transfer",
+      "response": "For each triangle A=bh/2. With A=36 cm² and positive b=12 cm, h=2×36/12=6 cm for both.",
+      "author_expected_manual_category": "FULL_CONVERSE",
+      "reasoning_signals_to_check": [
+        "VALID_AREA_LAW",
+        "INVERSE_HEIGHT",
+        "BOTH_VALUES"
+      ],
+      "proposed_human_feedback_after_commit": "Valid genuinely changed Core2B decision.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    },
+    {
+      "id": "counterexample",
+      "response": "The shared base of 8 cm does not guarantee equal areas if heights are 5 and 4 cm: their areas are 20 and 16 cm².",
+      "author_expected_manual_category": "VALID_COUNTEREXAMPLE",
+      "reasoning_signals_to_check": [
+        "BASE_ONLY_FALSIFIED",
+        "VALID_AREA_LAW"
+      ],
+      "proposed_human_feedback_after_commit": "Valid falsifying boundary for an overgeneralized common-base claim.",
+      "reviewer_verdict": null,
+      "reviewer_name": null,
+      "conflict_declaration": null
+    }
+  ]
+}
