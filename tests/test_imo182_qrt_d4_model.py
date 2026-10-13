@@ -9,6 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 SRC=ROOT/"TEST/imo-research/qrt-d4/model-d4.package.json"
 MANIFEST=ROOT/"TEST/products/imo182-qrt-d4-model.manifest.json"
 SCHEMA=ROOT/"Shared/library/package.schema.json"
+REVIEW=ROOT/"TEST/imo-research/qrt-d4/model-d4.review.json"
 GOLDEN=ROOT/"golden/units/G-IMO-G9-FIVE-CORE-20261012/snapshots"
 QID="Q-D4-MODEL-MAIN"
 
@@ -75,6 +76,31 @@ class ModelD4(unittest.TestCase):
             preamble=svg.split("</desc>",1)[0]
             for forbidden in ("A=16","A=24","chair count 16","chair count 24","n=12,e=12,c=8"):
                 self.assertNotIn(forbidden,preamble)
+
+    def test_earlier_core_cues_remain_an_explicit_academic_hold(self):
+        record=json.loads(REVIEW.read_text())
+        risk=record["cross_role_preattempt_w_risk"]
+        self.assertEqual(risk["status"],"PENDING_INDEPENDENT_QUALIFIED_REVIEW")
+        self.assertIsNone(risk["reviewer"])
+        self.assertIsNone(risk["verdict"])
+        self.assertIsNone(risk["owner_decision_id"])
+        self.assertFalse(record["accepted"])
+        self.assertEqual({x["role"] for x in risk["observed_source_cues"]},
+                         {"CORE1A", "CORE1B"})
+        source=SRC.read_text()
+        for cue in risk["observed_source_cues"]:
+            self.assertIn(cue["text"], source, cue["role"])
+
+    def test_safe_h2_does_not_paraphrase_model_exception(self):
+        h2=self.q["scaffolds"][1]["text"].lower()
+        # The safe bridge is seam accounting, not the learner-owned cavity move.
+        forbidden=("inaccessible", "sealed", "courtyard", "cavity", "inner void",
+                   "inside edge", "subtract c", "correction for hole",
+                   "are the sides reachable", "outside-accessible")
+        for cue in forbidden:
+            with self.subTest(cue=cue):
+                self.assertNotIn(cue, h2)
+        self.assertIn("what quantity does that subtraction count", h2)
 
     def test_independent_exterior_floodfill_on_closed_and_open_grids(self):
         self.assertEqual(geometry(["##","#."]),(3,2,0,8))
