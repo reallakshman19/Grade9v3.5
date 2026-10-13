@@ -3,9 +3,9 @@
   "primary_demand": "RETRIEVE",
   "band": "D4",
   "stage": "AUTHOR_SELF_AUDIT_NATIVE_RENDER_PENDING",
-  "X": "Identify the necessary and sufficient condition that distinguishes an odd square residue modulo 2^k; note the exceptional small exponent.",
-  "Y": "Previously reconstructed odd-square residues modulo 8 and basic reduction of squares modulo small powers of two.",
-  "Z": "Select the correct classification criterion for k>=3 instead of overgeneralizing oddness or the modulo4 case.",
+  "X": "HYPOTHESIS_ONLY: a learner may confuse a necessary odd-square residue condition with a sufficient condition; no observed learner misread or bottleneck event is supplied.",
+  "Y": "UNKNOWN: no demonstrated learner-event reference establishes that the full odd-square iff theorem for k>=3 was learned before this question; Core1A's modulo8 necessity anchor is not evidence of that prior mastery.",
+  "Z": "SAFE_PROPOSED_BRIDGE: use (2t+1)^2 to establish a necessary condition modulo8 and contrast a=5 at moduli4 and8, without supplying the full iff existence criterion or the main modulo128 classification.",
   "W": "Independently retrieve the correct threshold-specific criterion a≡1 (mod8) for k>=3, classify unfamiliar residues, and switch criterion at k=2.",
   "wrong_idea": "Every odd residue is a square, or residue 1 modulo4 is enough for every power of two.",
   "diagnostic": "Why is 5 an odd square class modulo4 but not modulo8?",
@@ -75,5 +75,43 @@
     "math": "Author independent exhaustive oracle, awaiting qualified second-person math proof signoff",
     "release": "NOT_AUTHORIZED",
     "classification": "D4 is a proposal; qualified reviewer must explicitly test D3 alternative"
+  },
+  "learner_evidence": {
+    "X": {
+      "status": "HYPOTHESIS_NOT_DEMONSTRATED",
+      "learner_event_ref": null
+    },
+    "Y": {
+      "status": "UNKNOWN",
+      "learner_event_ref": null,
+      "required_capability": "Prior demonstrable retrieval of full iff odd-square existence criterion modulo 2^k, k>=3, not merely necessity modulo8"
+    },
+    "Z": {
+      "status": "SAFE_BRIDGE_PROPOSED",
+      "protected_from_w": true
+    },
+    "W": {
+      "status": "PROTECTED_QUESTION_MOVE",
+      "move_ref": "D4-RET-MOVE-CRITERION"
+    }
+  },
+  "classification_hold": {
+    "primary_claim": "RETRIEVE-D4",
+    "status": "PENDING_QUALIFIED_REVIEW_AND_PRIOR_LEARNING_EVIDENCE",
+    "alternatives": [
+      "APPLY",
+      "JUSTIFY",
+      "EXPLAIN",
+      "D3"
+    ],
+    "reason": "If the theorem must be derived, the decisive act is not mere retrieval; if taught verbatim immediately beforehand, difficulty may be D2/D3. Neither interpretation is resolved by source-schema score.",
+    "no_owner_decision_inferred": true
+  },
+  "cross_role_audit_update": {
+    "observed_defect": "Corrected #210 artifact 11823696124 still shows the full k>=3 criterion and k=2 branch in Core1A Mistake clinic / Repair before the main Core2A attempt.",
+    "superseded_for_semantic_acceptance": "Artifact 11823696124: SHA-correct native render, but PREATTEMPT_W_LEAK_OBSERVED",
+    "observed_native_artifact_url": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38413546614/artifacts/11823696124",
+    "remedial_scope": "Author input only: microtopic misconception repair and exposed conceptual previews; registered blueprints/goldens unchanged.",
+    "new_native_render_status": "PENDING"
   }
 }
