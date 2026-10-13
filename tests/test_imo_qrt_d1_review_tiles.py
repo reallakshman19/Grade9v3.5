@@ -281,8 +281,8 @@ class D1EvidenceTiles(unittest.TestCase):
                  +code+"/"+gen["manifest_path"])
             same("source-blob-format",
                  bool(re.fullmatch(r"[0-9a-f]{40}",source["verified_sha"])),True)
-            run=re.search(r"/runs/(\\d+)$",gen["exact_head_ci_run"])
-            artifact=re.search(r"/runs/(\\d+)/artifacts/(\\d+)$",
+            run=re.search(r"/runs/([0-9]+)$",gen["exact_head_ci_run"])
+            artifact=re.search(r"/runs/([0-9]+)/artifacts/([0-9]+)$",
                                gen["artifact_url"])
             if not run or not artifact or run.group(1)!=artifact.group(1):
                 problems.append("run-artifact-identity")
