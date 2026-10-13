@@ -1,0 +1,1335 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO203-QRT-SYNTHESIZE-D4",
+  "title": "Authored TEST: digit-placement synthesis with changed divisibility condition",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Wholly authored Grade9 competition TEST puzzle, no official question source and no qualified QRT/Owner approval. Satisfy simultaneous digit-placement rules with independent minimization, then add a mod7 transfer.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-D4-SYNTHESIZE-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original six-digit multiple-constraint synthesis",
+      "origin": "AUTHORED",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 #203 SYNTHESIZE-D4",
+      "edition": "2026-10-12 authored TEST",
+      "section": "Digit permutations with divisibility by9,11,4 and added7",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Original TEST text/diagrams only; no official exam question, PDF, logo or KEY.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "The smallest six-digit number with digits0,1,2,3,4,8 exactly once divisible by4,9,11 is120384.",
+        "Adding divisibility by7 changes the minimum to130284."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Wholly original TEST example with exhaustive mathematical oracle; not publisher source.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-D4-SYNTHESIZE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Synthesize positional digit constraints",
+      "topic": "Number theory, combinatorics, divisibility, optimization",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "The learner must coordinate dependent position sums, a constrained suffix and lexicographic choice; added7 changes the optimum.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-D4-SYNTHESIZE-CORE1A",
+      "conventions": [
+        {
+          "id": "digit_multiset",
+          "statement": "Use exactly once each digit0,1,2,3,4,8."
+        },
+        {
+          "id": "no_leading_zero",
+          "statement": "A six-digit number cannot begin with0."
+        },
+        {
+          "id": "divisibility",
+          "statement": "Divisibility by4,9,11 simultaneously; transfer adds7."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-D4-SYNTHESIZE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "Coordinate dependent divisibility and digit-position constraints to construct and justify a least feasible integer.",
+      "success_criterion": "Derive least six-digit arrangement under4,9,11, prove no smaller arrangement works, then independently recompute with new divisor7.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-D4-SYNTHESIZE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Choose dependency order among alternating sums, suffix and minimal prefix",
+      "bucket_id": "BUCKET-D4-SYNTHESIZE",
+      "primary_capability_ref": "CAP-D4-SYNTHESIZE",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "The learner must coordinate dependent position sums, a constrained suffix and lexicographic choice; added7 changes the optimum.",
+      "entry_assumptions": [
+        "Sum-of-digits test for9.",
+        "Alternating digit-sum divisibility by11.",
+        "Last two digits determine divisibility by4.",
+        "A digit cannot appear twice."
+      ],
+      "inferential_jump": "Choose a constraint order that preserves digit multiset, positional sums and legal ending; prove lexicographic minimum, then reconsider under added7.",
+      "teaching_path": [
+        {
+          "id": "D4-SYN-STEP-GATE",
+          "role": "DECLARE",
+          "action": "Observe whether divisibility by9 is automatic from the digit multiset.",
+          "why_valid": "All permutations share digit sum18.",
+          "inputs": [],
+          "output": "The mod9 condition requires no separate search.",
+          "source_ref": "SRC-D4-SYNTHESIZE-ORIGINAL"
+        },
+        {
+          "id": "D4-SYN-STEP-PAIR",
+          "role": "TRANSFORM",
+          "action": "Using a separate short example, compare how decimal positions affect a divisibility test by11, without specifying the main six-digit partition.",
+          "why_valid": "Mod11 alternating positional weights are a conceptual test on any decimal numeral.",
+          "inputs": [
+            "digit multiset, divisibility rules"
+          ],
+          "output": "A positional condition may interact with a later ending; the six-digit required partition is not supplied.",
+          "source_ref": "SRC-D4-SYNTHESIZE-ORIGINAL"
+        },
+        {
+          "id": "D4-SYN-STEP-REDUCE",
+          "role": "TRANSFORM",
+          "action": "On the independent four-digit anchor, test whether a choice of final pair is compatible with the remaining givens.",
+          "why_valid": "One position can affect several properties; a valid ending alone does not prove a valid complete arrangement.",
+          "inputs": [
+            "digit multiset, divisibility rules"
+          ],
+          "output": "Small-case demonstration of coupled constraints, without giving the main six-digit solution route.",
+          "source_ref": "SRC-D4-SYNTHESIZE-ORIGINAL"
+        },
+        {
+          "id": "D4-SYN-STEP-VERIFY",
+          "role": "VERIFY",
+          "action": "Compare two four-digit candidates and decide which is a feasible smaller number; leave the six-digit minimum for the learner.",
+          "why_valid": "Minimality involves both feasibility and a lower-bound argument.",
+          "inputs": [
+            "digit multiset, divisibility rules"
+          ],
+          "output": "Independent short-case minimum requires ruling out a smaller compatible alternative.",
+          "source_ref": "SRC-D4-SYNTHESIZE-ORIGINAL"
+        }
+      ],
+      "relation_refs": [
+        "REL-D4-SYNTHESIZE"
+      ],
+      "representation_refs": [
+        "REP-D4-SYNTHESIZE-CORE1A"
+      ],
+      "question_family_refs": [
+        "FAM-D4-SYNTHESIZE"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "A smallest-looking prefix followed by any valid mod4 suffix automatically satisfies all digit rules.",
+          "diagnostic_prompt": "Using digits0,1,2,6, can a chosen smallest prefix10 be completed to a multiple of36?",
+          "repair": "A legal prefix must preserve a compatible suffix and all remaining constraints; compare 1026 and1260."
+        },
+        {
+          "wrong_idea": "Independently enforcing three divisibility tests is enough without checking digit positions.",
+          "diagnostic_prompt": "Can a suffix divisible by4 be appended freely without changing the modulo11 position sums?",
+          "repair": "Use one shared assignment of digits across all tests and verify every global condition."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Using digits0,2,3,4, find the smallest four-digit number divisible by9 and4 with no leading zero.",
+        "source_ref": "SRC-D4-SYNTHESIZE-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "2304 is the smallest.",
+          "reasoning": [
+            "Digit sum is9 so divisibility by9 is automatic.",
+            "A leading2 and second0 cannot be completed by3 and4 to a mod4 suffix; 2304 ends04 and is divisible4."
+          ],
+          "check": "2304/36=64; no permutation beginning20 satisfies mod4.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo203_qrt_d4_synthesize.py",
+            "bindings": {
+              "task": "SYNTHESIZE_D4_INDEPENDENT_EXIT",
+              "domain": "four_digit_permutations_0_2_3_4"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original QRT APPLY-D4 TEST candidate. Qualified academic/Owner acceptance not granted.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-D4-SYNTHESIZE-GCD",
+          "decision": "Teach constraint dependency on a distinct four-digit worked anchor without choosing the main six-digit arrangement.",
+          "step_refs": [
+            "D4-SYN-STEP-GATE",
+            "D4-SYN-STEP-PAIR",
+            "D4-SYN-STEP-REDUCE",
+            "D4-SYN-STEP-VERIFY"
+          ],
+          "representation_ref": "REP-D4-SYNTHESIZE-CORE1A",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-D4-SYNTHESIZE"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Enumerate all four-digit arrangements of0,1,2,6 and check divisibility by36.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "D4-SYN-ANCHOR-GIVEN",
+            "D4-SYN-ANCHOR-GCD",
+            "D4-SYN-ANCHOR-REDUCE"
+          ],
+          "worked_anchor_ref": "Q-D4-SYNTHESIZE-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "With digits0,1,2,6, find a four-digit number divisible by9 and4, keeping the first digit nonzero.",
+        "result": "1260 is a valid example: digits sum9 and last two digits60 are divisible by4.",
+        "representation_ref": "REP-D4-SYNTHESIZE-CORE1A"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A learner forms a small-looking four-digit prefix10 using digits0,1,2,6. Can every legal ending preserve divisibility by4 and9?",
+          "defensible_answer": "No. 1026 and1062 both fail mod4, whereas 1260 works."
+        },
+        "attempt": {
+          "produces": "Coordinate multiple digit constraints in a separate four-digit misconception-repair task without selecting the six-digit Core2A winning partition or minimum.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Check all digits exactly once in a four-place number.",
+              "evidence_of": "Uses independent 0,1,2,6 worked set."
+            },
+            {
+              "criterion": "Show why divisibility by9 is fixed by the four-digit sum.",
+              "evidence_of": "1+0+2+6=9."
+            },
+            {
+              "criterion": "Show how suffix choice can invalidate a candidate.",
+              "evidence_of": "1026 fails mod4; 1260 works."
+            },
+            {
+              "criterion": "Do not reuse a solved small example as the unknown six-digit minimum.",
+              "evidence_of": "Protects later independent synthesis."
+            }
+          ],
+          "accepted": [
+            "For independent four-digit digits 0,1,2,6, 1260 satisfies divisibility by9 and4, while 1026 fails the mod4 ending test."
+          ],
+          "rejected": [
+            "A legal smallest-looking prefix guarantees a compatible ending.",
+            "Checking a digit sum alone guarantees a mod4 ending."
+          ],
+          "task": {
+            "prompt": "A learner chooses the smallest apparent first digits then appends an arbitrary last-two-digit multiple of4. Why can this fail for digits0,1,2,6?",
+            "givens": [
+              "Use all four digits exactly once.",
+              "Require divisibility by9 and4."
+            ],
+            "representation_ref": "REP-D4-SYNTHESIZE-CORE1B",
+            "stage_refs": [
+              "D4-SYN-WRONG"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "In a four-digit task, which property is decided by the unchanged digit sum?",
+              "why_this_ask": "Identifies a safe fixed invariant.",
+              "from_step_ref": "D4-SYN-STEP-GATE"
+            },
+            {
+              "ask": "On a different short number, how does moving a digit between alternate positions affect the 11-test?",
+              "why_this_ask": "Elicits positional interactions without main partition.",
+              "from_step_ref": "D4-SYN-STEP-PAIR"
+            },
+            {
+              "ask": "Why might an otherwise legal last pair fail to complete your small digit set?",
+              "why_this_ask": "Diagnoses a greedy route.",
+              "from_step_ref": "D4-SYN-STEP-REDUCE"
+            },
+            {
+              "ask": "What must be excluded to justify a least valid four-digit arrangement?",
+              "why_this_ask": "Practises an independent minimality argument.",
+              "from_step_ref": "D4-SYN-STEP-VERIFY"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A uses four-digit anchoring; Core1B repairs illegal greedy construction; main puzzle requires an independent six-digit dependency order."
+        },
+        "boundary_test": {
+          "prompt": "Why is1026 not divisible by4 although its digits sum9? Give a valid arrangement using the same digits.",
+          "answer": "26 is not divisible4; 1260 is divisible by9 and4.",
+          "confirms": "Fixes a global-positional constraint misconception without disclosing the main six-digit solution."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-D4-SYNTHESIZE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "For six digits, 9 | N iff sum(digits) is a multiple of 9.",
+      "meaning": "A safe bridge: the six given digits always sum18, so mod9 is automatic; the protected synthesis of alternating positions and suffix remains to the learner.",
+      "symbols": [
+        {
+          "symbol": "N",
+          "meaning": "Six-digit arranged integer",
+          "unit_or_domain": "100000..999999"
+        },
+        {
+          "symbol": "d_i",
+          "meaning": "Digit in position i",
+          "unit_or_domain": "one of0,1,2,3,4,8"
+        }
+      ],
+      "conditions": [
+        "All six digits are used exactly once.",
+        "The first position is nonzero."
+      ],
+      "derivation": [
+        {
+          "id": "D4-SYN-REL-0",
+          "role": "DECLARE",
+          "action": "Observe whether divisibility by9 is automatic from the digit multiset.",
+          "why_valid": "All permutations share digit sum18.",
+          "inputs": [],
+          "output": "The mod9 condition requires no separate search."
+        },
+        {
+          "id": "D4-SYN-REL-1",
+          "role": "TRANSFORM",
+          "action": "Using a separate short example, compare how decimal positions affect a divisibility test by11, without specifying the main six-digit partition.",
+          "why_valid": "Mod11 alternating positional weights are a conceptual test on any decimal numeral.",
+          "inputs": [
+            "digit multiset, divisibility rules"
+          ],
+          "output": "A positional condition may interact with a later ending; the six-digit required partition is not supplied."
+        },
+        {
+          "id": "D4-SYN-REL-2",
+          "role": "TRANSFORM",
+          "action": "On the independent four-digit anchor, test whether a choice of final pair is compatible with the remaining givens.",
+          "why_valid": "One position can affect several properties; a valid ending alone does not prove a valid complete arrangement.",
+          "inputs": [
+            "digit multiset, divisibility rules"
+          ],
+          "output": "Small-case demonstration of coupled constraints, without giving the main six-digit solution route."
+        },
+        {
+          "id": "D4-SYN-REL-3",
+          "role": "VERIFY",
+          "action": "Compare two four-digit candidates and decide which is a feasible smaller number; leave the six-digit minimum for the learner.",
+          "why_valid": "Minimality involves both feasibility and a lower-bound argument.",
+          "inputs": [
+            "digit multiset, divisibility rules"
+          ],
+          "output": "Independent short-case minimum requires ruling out a smaller compatible alternative."
+        }
+      ],
+      "limits": [
+        "Digit sum alone gives no mod4/mod11 conclusion.",
+        "Minimization must be justified, not just guessed."
+      ],
+      "checks": [
+        "0+1+2+3+4+8=18."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>0</mn><mo>+</mo><mn>1</mn><mo>+</mo><mn>2</mn><mo>+</mo><mn>3</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>8</mn><mo>=</mo><mn>18</mn></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-D4-SYNTHESIZE-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Show four-slot lesson for a distinct small digit set.",
+      "required_elements": [
+        "digits0,1,2,6",
+        "four empty positions",
+        "mod9 and4"
+      ],
+      "relation_refs": [
+        "REL-D4-SYNTHESIZE"
+      ],
+      "read_order": [
+        "Read the digit set.",
+        "Place constraints on positions.",
+        "Write your own candidate, then verify."
+      ],
+      "instance_constraints": [
+        "Do not prefill the answer or winning prefix on main figure.",
+        "No answer-bearing SVG description."
+      ],
+      "accessibility": [
+        "Each figure lists given digits and relevant divisor.",
+        "Blank positions have accessible text labels."
+      ],
+      "misleading_alternatives": [
+        "A smallest-looking prefix need not be completable."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/synthesize-core1a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1A",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-D4-SYNTHESIZE",
+          "datum_refs": [
+            "D4-SYNTHESIZE-DATUM-CORE1A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/synthesize-core1a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unfilled decimal-position slots and given constraints.",
+            "caption": "Learner must construct a valid arrangement and prove minimality."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "digit position",
+          "symbol": "p_i",
+          "in_words": "An unfilled place in the decimal integer."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-SYN-ANCHOR-GIVEN",
+          "label": "Safe digit stage 1",
+          "purpose": "Present givens without choosing a candidate number.",
+          "visible_elements": [
+            "digits0,1,2,6"
+          ]
+        },
+        {
+          "id": "D4-SYN-ANCHOR-GCD",
+          "label": "Safe digit stage 2",
+          "purpose": "Present givens without choosing a candidate number.",
+          "visible_elements": [
+            "digits0,1,2,6",
+            "four empty positions"
+          ]
+        },
+        {
+          "id": "D4-SYN-ANCHOR-REDUCE",
+          "label": "Safe digit stage 3",
+          "purpose": "Present givens without choosing a candidate number.",
+          "visible_elements": [
+            "digits0,1,2,6",
+            "four empty positions",
+            "mod9 and4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-SYNTHESIZE-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Show a four-digit false greedy route.",
+      "required_elements": [
+        "digits0,1,2,6",
+        "prefix10?",
+        "ending unresolved"
+      ],
+      "relation_refs": [
+        "REL-D4-SYNTHESIZE"
+      ],
+      "read_order": [
+        "Read the digit set.",
+        "Place constraints on positions.",
+        "Write your own candidate, then verify."
+      ],
+      "instance_constraints": [
+        "Do not prefill the answer or winning prefix on main figure.",
+        "No answer-bearing SVG description."
+      ],
+      "accessibility": [
+        "Each figure lists given digits and relevant divisor.",
+        "Blank positions have accessible text labels."
+      ],
+      "misleading_alternatives": [
+        "A smallest-looking prefix need not be completable."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/synthesize-core1b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1B",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-D4-SYNTHESIZE",
+          "datum_refs": [
+            "D4-SYNTHESIZE-DATUM-CORE1B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/synthesize-core1b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unfilled decimal-position slots and given constraints.",
+            "caption": "Learner must construct a valid arrangement and prove minimality."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "digit position",
+          "symbol": "p_i",
+          "in_words": "An unfilled place in the decimal integer."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-SYN-WRONG",
+          "label": "Safe digit stage 1",
+          "purpose": "Present givens without choosing a candidate number.",
+          "visible_elements": [
+            "digits0,1,2,6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-SYNTHESIZE-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Show six blank positions, supplied digits and conditions but no partial solution.",
+      "required_elements": [
+        "digits0,1,2,3,4,8",
+        "six empty positions",
+        "divisibility4,9,11"
+      ],
+      "relation_refs": [
+        "REL-D4-SYNTHESIZE"
+      ],
+      "read_order": [
+        "Read the digit set.",
+        "Place constraints on positions.",
+        "Write your own candidate, then verify."
+      ],
+      "instance_constraints": [
+        "Do not prefill the answer or winning prefix on main figure.",
+        "No answer-bearing SVG description."
+      ],
+      "accessibility": [
+        "Each figure lists given digits and relevant divisor.",
+        "Blank positions have accessible text labels."
+      ],
+      "misleading_alternatives": [
+        "A smallest-looking prefix need not be completable."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/synthesize-core2a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2A",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-D4-SYNTHESIZE-MAIN",
+          "datum_refs": [
+            "D4-SYNTHESIZE-DATUM-CORE2A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/synthesize-core2a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unfilled decimal-position slots and given constraints.",
+            "caption": "Learner must construct a valid arrangement and prove minimality."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "digit position",
+          "symbol": "p_i",
+          "in_words": "An unfilled place in the decimal integer."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-SYN-MAIN-GIVEN",
+          "label": "Safe digit stage 1",
+          "purpose": "Present givens without choosing a candidate number.",
+          "visible_elements": [
+            "digits0,1,2,3,4,8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-SYNTHESIZE-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Show additional divisor7 and unchanged digits without old winning assignment.",
+      "required_elements": [
+        "same six digits",
+        "six empty positions",
+        "add divisibility7"
+      ],
+      "relation_refs": [
+        "REL-D4-SYNTHESIZE"
+      ],
+      "read_order": [
+        "Read the digit set.",
+        "Place constraints on positions.",
+        "Write your own candidate, then verify."
+      ],
+      "instance_constraints": [
+        "Do not prefill the answer or winning prefix on main figure.",
+        "No answer-bearing SVG description."
+      ],
+      "accessibility": [
+        "Each figure lists given digits and relevant divisor.",
+        "Blank positions have accessible text labels."
+      ],
+      "misleading_alternatives": [
+        "A smallest-looking prefix need not be completable."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/synthesize-core2b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2B",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-D4-SYNTHESIZE-TRANSFER",
+          "datum_refs": [
+            "D4-SYNTHESIZE-DATUM-CORE2B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/synthesize-core2b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Unfilled decimal-position slots and given constraints.",
+            "caption": "Learner must construct a valid arrangement and prove minimality."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "digit position",
+          "symbol": "p_i",
+          "in_words": "An unfilled place in the decimal integer."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-SYN-TRANSFER-GIVEN",
+          "label": "Safe digit stage 1",
+          "purpose": "Present givens without choosing a candidate number.",
+          "visible_elements": [
+            "same six digits"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-D4-SYNTHESIZE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Constraint-order synthesis for digit permutations",
+      "capability_refs": [
+        "CAP-D4-SYNTHESIZE"
+      ],
+      "solution_structure": [
+        "Use fixed digit sum for9.",
+        "Enforce alternating position sums for11.",
+        "Select compatible ending for4.",
+        "Prove smallest prefix.",
+        "Reopen selection after adding7."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Choose dependency order across constraints.",
+        "representation_translation": "Translate decimal positions into alternating group and suffix conditions.",
+        "reasoning_steps": "Construct and prove least arrangement.",
+        "novelty": "A new independent factor7 changes the optimum."
+      },
+      "safe_variations": [
+        "Other distinct digits with fixed sum and alternating position constraints."
+      ],
+      "transfer_boundaries": [
+        "Do not copy prior least number when divisor changes."
+      ],
+      "common_wrong_routes": [
+        "Greedy prefix independent of ending.",
+        "Use digit sum as if it implied all divisibility tests."
+      ],
+      "item_refs": [
+        "Q-D4-SYNTHESIZE-WORKED",
+        "Q-D4-SYNTHESIZE-MAIN",
+        "Q-D4-SYNTHESIZE-TRANSFER"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-D4-SYNTHESIZE-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-SYNTHESIZE-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-SYNTHESIZE-WORKED",
+      "stem": "Use digits0,1,2,6 exactly once to form any four-digit number divisible by9 and4. Explain how the two tests interact.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Use each digit once.",
+        "Leading digit nonzero.",
+        "This is an independent four-digit worked anchor, not the main six-digit task."
+      ],
+      "figure_refs": [
+        "REP-D4-SYNTHESIZE-CORE1A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "1260 is a valid constructed example.",
+        "reasoning": [
+          "Digit sum9 makes divisibility by9 automatic.",
+          "Last two digits60 are divisible4.",
+          "Leading digit1 is nonzero and all four digits are used exactly once."
+        ],
+        "check": "1260/36=35.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-SYNTHESIZE",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-SYNTHESIZE",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-D4-SYNTHESIZE-CORE1A",
+        "safe_ref": "REP-D4-SYNTHESIZE-CORE1A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-SYN-ANCHOR-GIVEN"
+        ]
+      },
+      "failure_signal": "A valid last pair alone is not sufficient without preserving other digit constraints.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-SYNTHESIZE",
+        "closure": "Teaches a small anchor, not the main six-digit position partition or minimum."
+      }
+    },
+    {
+      "id": "Q-D4-SYNTHESIZE-MAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "ISSUE203-AUTHORED-SYNTHESIZE",
+        "grade9v3:cognitive_demand": {
+          "primary": "SYNTHESIZE",
+          "secondary": [
+            "APPLY",
+            "JUSTIFY"
+          ],
+          "basis": "Independently decide to use the alternating-position partition before final-two-digit selection and place the earliest legal prefix, then revise that ordering under an added mod7 demand."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Independently decide to use the alternating-position partition before final-two-digit selection and place the earliest legal prefix, then revise that ordering under an added mod7 demand.",
+          "common_wrong_route": "Satisfy each divisibility condition independently then concatenate valid endings, or assume the smallest initial digits always yield a valid final number."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "D4-SYN-MOVE-ORDER"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "D4-SYN-MOVE-ORDER"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-SYNTHESIZE-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-SYNTHESIZE-MAIN",
+      "stem": "Use each of the six distinct digits 0,1,2,3,4,8 exactly once to make the smallest positive six-digit integer divisible by 9, 11 and 4. A six-digit number may not begin with zero. Establish that your result is minimal without simply citing a computer search.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Use each digit exactly once.",
+        "Leading zero is forbidden.",
+        "All three divisibility requirements must hold simultaneously."
+      ],
+      "figure_refs": [
+        "REP-D4-SYNTHESIZE-CORE2A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The least six-digit arrangement divisible by4,9,11 is120384.",
+        "reasoning": [
+          "Any arrangement has digit sum18. Its alternating digit sum is 2S_odd−18, an even integer from −18 to18; divisibility by11 forces it to be0, hence odd-position and even-position sums both9. Leading prefix10 fails because positions3 and5 would need to sum8 from {2,3,4,8}, impossible. Prefix12 with digit0 in position3 forces digit8 in position5, and remaining 3 and4 must occupy positions4 and6; ending84 works but 83 does not. Thus 120384 is minimal.",
+          "120384 has each digit once and is divisible by4,9,11.",
+          "The only smaller prefix10 family fails; among prefix12 completions120384 is the least."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-SYN-MOVE-SETUP",
+            "kind": "REPRESENT",
+            "action": "Translate given digits and divisibility tests into linked position constraints.",
+            "why_valid": "The digits are distinct and each must be used exactly once.",
+            "inputs": [
+              "digits0,1,2,3,4,8"
+            ],
+            "output": "Constrained six-place representation."
+          },
+          {
+            "id": "D4-SYN-MOVE-ANCHOR",
+            "kind": "CONNECT",
+            "action": "Recognize mod9 is automatic from sum18, and mod11 depends on alternate positions.",
+            "why_valid": "An integer is divisible11 exactly when the alternating digit sum is a multiple11.",
+            "inputs": [
+              "sum18"
+            ],
+            "output": "The positional requirement must be chosen."
+          },
+          {
+            "id": "D4-SYN-MOVE-ORDER",
+            "kind": "DECIDE",
+            "action": "Coordinate odd/even digit totals and the ending divisible4 before choosing the earliest feasible prefix.",
+            "why_valid": "The constraints share digit positions and cannot be solved independently.",
+            "inputs": [
+              "digit multiset",
+              "mod11 and4"
+            ],
+            "output": "A feasible minimization route."
+          },
+          {
+            "id": "D4-SYN-MOVE-VERIFY",
+            "kind": "VERIFY",
+            "action": "Prove no prefix below120384 is completable.",
+            "why_valid": "Prefix10 cannot meet the odd-position target; prefix12 gives the earliest legal ending.",
+            "inputs": [
+              "candidate prefixes"
+            ],
+            "output": "Minimum120384 proved."
+          }
+        ],
+        "crux_move_ref": "D4-SYN-MOVE-ORDER",
+        "check": "Independent exhaustive enumeration of all 720 permutations confirms 24 feasible permutations and minimum120384.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-SYNTHESIZE",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-SYNTHESIZE",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Which divisibility test becomes automatic from a fixed digit multiset?",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-SYN-MOVE-SETUP"
+        },
+        {
+          "text": "When you place one digit near the end, could it affect more than one of the familiar divisibility tests? Decide what must remain consistent, without choosing the complete route yet.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-SYN-MOVE-ANCHOR"
+        },
+        {
+          "text": "The six digits sum18, so mod9 is automatic. For mod11 the two alternating position sums must both be9; compare candidate prefixes lexicographically before fixing a mod4 suffix.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "D4-SYN-MOVE-ORDER"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-SYNTHESIZE-CORE2A",
+        "safe_ref": "REP-D4-SYNTHESIZE-CORE2A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-SYN-MAIN-GIVEN"
+        ]
+      },
+      "repair_ref": "D4-SYN-STEP-GATE",
+      "failure_signal": "A greedy prefix or mod4 suffix without shared position sums is not a valid simultaneous construction.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-SYNTHESIZE",
+        "closure": "Learner owns dependency order and proof of minimality."
+      },
+      "independent_check": {
+        "statement": "Enumerate all 720 digit permutations and test modulo4,9,11, minimality.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 9,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "Interlocking position assignment, one automatic condition, and changed mod7 constraint defeat a single fixed construction; D4 proposed for route novelty and exception-sensitive minimization.",
+        "component_evidence": {
+          "concept_model_selection": "Choose ordering of interlocked digit rules.",
+          "representation_translation": "Link decimal positions and alternating sums.",
+          "reasoning_chain_length": "Construct, check, then prove least prefix.",
+          "algebra_computational_load": "Only small divisibility tests.",
+          "trap_exception_sensitivity": "An added factor7 invalidates prior minimum."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-D4-SYNTHESIZE-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "ISSUE203-AUTHORED-SYNTHESIZE",
+        "grade9v3:cognitive_demand": {
+          "primary": "SYNTHESIZE",
+          "secondary": [
+            "APPLY",
+            "JUSTIFY"
+          ],
+          "basis": "Reopen minimization after adding an independent global factor; cannot simply keep the prior minimum."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Reopen minimization after adding an independent global factor; cannot simply keep the prior minimum.",
+          "common_wrong_route": "Copy previous minimum after new divisor."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-SYNTHESIZE-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-SYNTHESIZE-TRANSFER",
+      "stem": "Keep all three original divisibility conditions and digits, but additionally require divisibility by7. Find and justify the new smallest number.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "All six original digits unchanged.",
+        "All original divisibility tests remain.",
+        "New additional divisibility by7."
+      ],
+      "figure_refs": [
+        "REP-D4-SYNTHESIZE-CORE2B"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The new minimum is130284.",
+        "reasoning": [
+          "The only qualifying prefix12 candidates are 120384 and 128304; neither is divisible by7. The next possible prefix13 has valid 130284, divisible by4,7,9,11.",
+          "130284 has all six digits once, its digit sum18, alternating position sums9, last two digits84 and is divisible7.",
+          "Earlier qualifying numbers120384 and128304 are not divisible7."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-SYN-TRANSFER-SETUP",
+            "kind": "REPRESENT",
+            "action": "Retain the same digit multiset, add divisor7.",
+            "why_valid": "The stated change is one additional constraint.",
+            "inputs": [
+              "old feasible set",
+              "divisor7"
+            ],
+            "output": "Smaller candidate set."
+          },
+          {
+            "id": "D4-SYN-TRANSFER-ORDER",
+            "kind": "DECIDE",
+            "action": "Reopen the minimum rather than copy120384.",
+            "why_valid": "The previous least candidate need not satisfy7.",
+            "inputs": [
+              "earlier minima"
+            ],
+            "output": "Candidate130284."
+          },
+          {
+            "id": "D4-SYN-TRANSFER-CHECK",
+            "kind": "VERIFY",
+            "action": "Exclude earlier feasible candidates and test130284 against all four divisors.",
+            "why_valid": "A valid lower bound and direct check establish leastness.",
+            "inputs": [
+              "120384,128304,130284"
+            ],
+            "output": "130284 is least."
+          }
+        ],
+        "crux_move_ref": "D4-SYN-TRANSFER-ORDER",
+        "check": "Enumerate all 720 permutations with added7; minimum130284.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "rubric": [
+          {
+            "criterion": "Recognize added condition.",
+            "evidence_of": "Requires mod7 as well as original divisors."
+          },
+          {
+            "criterion": "Prove smaller old candidates fail.",
+            "evidence_of": "120384 and128304 excluded."
+          },
+          {
+            "criterion": "Give new minimum and check.",
+            "evidence_of": "130284 satisfies all four."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-D4-SYNTHESIZE",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-SYNTHESIZE",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "The extra factor7 may rule out your former minimum. Test new feasibility rather than assuming the old construction.",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-SYNTHESIZE-CORE2B",
+        "safe_ref": "REP-D4-SYNTHESIZE-CORE2B",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-SYN-TRANSFER-GIVEN"
+        ]
+      },
+      "repair_ref": "D4-SYN-STEP-GATE",
+      "failure_signal": "The previous 120384 cannot be assumed feasible after adding7.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-SYNTHESIZE",
+        "closure": "Genuinely changed divisibility demand with new optimum, not a copied answer."
+      },
+      "independent_check": {
+        "statement": "Exhaust all 720 digit permutations under4,9,11,7 and compare min.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 9,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "New factor7 changes global feasibility and minimum.",
+        "component_evidence": {
+          "concept_model_selection": "Choose ordering of interlocked digit rules.",
+          "representation_translation": "Link decimal positions and alternating sums.",
+          "reasoning_chain_length": "Construct, check, then prove least prefix.",
+          "algebra_computational_load": "Only small divisibility tests.",
+          "trap_exception_sensitivity": "An added factor7 invalidates prior minimum."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-D4-SYNTHESIZE-MAIN"
+        ],
+        "statement": "Add divisor7 to the prior arrangement conditions.",
+        "invariant": "Original digit multiset and divisibility4,9,11 remain.",
+        "novelty": {
+          "checked_against": [
+            "Q-D4-SYNTHESIZE-MAIN",
+            "MIC-D4-SYNTHESIZE:exit_task",
+            "MIC-D4-SYNTHESIZE:boundary_test"
+          ],
+          "why_new": "Global feasibility changes and the former minimum fails."
+        },
+        "protected_move_ref": "D4-SYN-TRANSFER-ORDER"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-D4-SYNTHESIZE",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Digit constraints, dependency order and changed minimum",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-D4-SYNTHESIZE"
+      ],
+      "entry_needs": [
+        "Divisibility tests4,9,11 and decimal place value."
+      ],
+      "learner_actions": [
+        "Build four-digit practice anchor.",
+        "Learn why greedy prefix may fail.",
+        "Independently solve six-digit minimality task.",
+        "Recompute after adding7."
+      ],
+      "help_plan": [
+        "Conceptual Core1A four-digit construction only.",
+        "Core2A protects dependent-rule ordering until commitment.",
+        "Core1B falsifies independent suffix selection."
+      ],
+      "reveal_plan": "Safe given constraints before attempt; chosen six-digit route/answer after written commit.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-D4-SYNTHESIZE-ORIGINAL",
+          "purpose": "Wholly authored TEST digits puzzle",
+          "reason": "No publisher question source."
+        }
+      ],
+      "when_not_suitable": [
+        "No signed independent academic D4 verdict or Owner QRT acceptance yet."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:qrt_cell": "QRT-SYNTHESIZE-D4",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "D4-SYNTHESIZE-DATUM-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "digit position",
+      "symbol": "p_i",
+      "meaning": "Unfilled digit slot; no winning arrangement exposed.",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #203"
+    },
+    {
+      "id": "D4-SYNTHESIZE-DATUM-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "digit position",
+      "symbol": "p_i",
+      "meaning": "Unfilled digit slot; no winning arrangement exposed.",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #203"
+    },
+    {
+      "id": "D4-SYNTHESIZE-DATUM-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "digit position",
+      "symbol": "p_i",
+      "meaning": "Unfilled digit slot; no winning arrangement exposed.",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #203"
+    },
+    {
+      "id": "D4-SYNTHESIZE-DATUM-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-SYNTHESIZE-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "digit position",
+      "symbol": "p_i",
+      "meaning": "Unfilled digit slot; no winning arrangement exposed.",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #203"
+    }
+  ]
+}

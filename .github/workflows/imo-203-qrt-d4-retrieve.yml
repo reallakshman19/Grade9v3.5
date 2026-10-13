@@ -1,0 +1,59 @@
+name: IMO 203 QRT RETRIEVE D4 native five-role TEST
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo-203-qrt-d4-retrieve.yml'
+      - 'TEST/imo-research/qrt-d4/retrieve-d4.package.json'
+      - 'TEST/imo-research/qrt-d4/figures/retrieve-*.svg'
+      - 'TEST/products/imo203-qrt-d4-retrieve.manifest.json'
+      - 'tests/test_imo203_qrt_d4_retrieve.py'
+      - 'tests/imo203_qrt_d4_browser.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retrieve-five-role:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing schema validator
+        run: python -m pip install --quiet jsonschema playwright
+      - name: Run schema, independent mathematics and native renderer unit checks
+        run: python -m unittest tests.test_imo203_qrt_d4_retrieve -v
+      - name: Render five registered learner HTML pages via sole renderer
+        run: python Shared/tools/render_core.py build --manifest TEST/products/imo203-qrt-d4-retrieve.manifest.json --out build/imo203-qrt/d4/retrieve --mode PAGES --reference
+      - name: Install Chromium for exact generated pages
+        run: python -m playwright install --with-deps chromium
+      - name: Verify blank/nonblank attempt, protected H3, AX and responsive views
+        run: python tests/imo203_qrt_d4_browser.py retrieve
+      - name: Independently record native-page SHA256 and zero-gap receipt
+        run: |
+          python - <<'PY'
+          import pathlib,json,hashlib
+          root=pathlib.Path("build/imo203-qrt/d4/retrieve")
+          r=json.loads((root/"render-receipt.json").read_text())
+          assert r["gaps"]==[],r["gaps"]
+          names=["core1.html","core1a.html","core1b.html","core2a.html","core2b.html","index.html"]
+          assert set(r["pages"])==set(names),r
+          proof={"cell":"QRT-RETRIEVE-D4","accepted":False,"source_rights":"AUTHORED_TEST_ONLY",
+                 "renderer":r["renderer"],"digest":r["digest"],"mode":r["mode"],
+                 "gaps":r["gaps"],"html":[]}
+          for name in names:
+              b=(root/name).read_bytes()
+              proof["html"].append({"role":name,"sha256":hashlib.sha256(b).hexdigest(),"bytes":len(b)})
+          (root/"retrieve-d4-evidence.json").write_text(json.dumps(proof,indent=2))
+          print(json.dumps(proof,indent=2))
+          PY
+      - name: Upload exact rendered candidate pages, not golden acceptance
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo203-qrt-retrieve-d4-native-html
+          path: build/imo203-qrt/d4/retrieve/
+          if-no-files-found: error
