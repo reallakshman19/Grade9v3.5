@@ -345,7 +345,7 @@ jobs:
       - name: Prepare seven D3 TEST renderer receipts and Chromium
         if: ${{ !cancelled() && hashFiles('TEST/products/imo182-qrt-d3-*.manifest.json') != '' }}
         run: |
-          python3 -m pip install --quiet playwright==1.56.1
+          python3 -m pip install --quiet playwright==1.56.0
           python3 -m playwright install --with-deps chromium
           for cell in apply explain justify model represent retrieve synthesize; do
             python3 Shared/tools/render_core.py build \
