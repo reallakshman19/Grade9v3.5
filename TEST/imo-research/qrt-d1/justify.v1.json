@@ -786,52 +786,55 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 original APPLY TEST",
+        "grade9v3:authored_by": "Issue 200 adapted earlier model-authored original-practice-003",
         "grade9v3:cognitive_demand": {
-          "primary": "APPLY",
-          "secondary": [],
-          "basis": "Given relevant dimensions and area rule, substitute, compute and label square units."
-        }
+          "primary": "JUSTIFY",
+          "secondary": [
+            "APPLY"
+          ],
+          "basis": "Learner must establish a conclusion by a valid base-height area warrant; arithmetic alone is insufficient."
+        },
+        "grade9v3:original_practice_candidate_ref": "IMO-G9-ORIGINAL-PRACTICE-003",
+        "grade9v3:source_quality_hold": "ALTITUDE_WORDING_CLARITY"
       },
       "id": "Q-TEST-IMO182-D1-JUS-CORE1A-WORKED",
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
       "original_identifier": "Q-TEST-IMO182-D1-JUS-CORE1A-WORKED",
-      "stem": "Worked DIFFERENT rectangle: a display card is 3 cm long and 5 cm wide. Apply the given A=length×width rule. How many 1 cm² tiles cover it, and what area unit should be written?",
+      "stem": "DISTINCT WORKED CASE: a triangle has a base of 10 cm and perpendicular altitude 4 cm. Calculate its area. If the apex slides sideways parallel to the baseline without changing altitude, determine whether its area changes.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Region is triangular.",
-        "Dimensions are in centimetres.",
-        "The area rule A=length×width is provided.",
-        "Wholly authored TEST item, no official source."
+        "All stated altitudes are perpendicular distances to the line of the base.",
+        "Measurements are in centimetres.",
+        "Wholly authored TEST practice adapted from IMO-G9-ORIGINAL-PRACTICE-003; no official SOF source rights."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-JUS-AREA-STAGES"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "3×5=15 cm².",
+        "summary": "Area 20 cm²; horizontal apex movement preserves that area.",
         "reasoning": [
-          "Three tiles across each of five rows give fifteen.",
-          "Apply A=l×w with 3 cm and 5 cm.",
-          "The covered area is 15 square centimetres."
+          "Use the 10 cm base and the perpendicular 4 cm altitude.",
+          "A=10×4/2=20 cm².",
+          "The base and perpendicular altitude are unchanged under a sideways shift."
         ],
         "reasoning_route": [
           {
-            "id": "JUS-D1-WORK-3-5",
+            "id": "JUS-D1-WORK-10-4",
             "kind": "DECIDE",
-            "action": "Multiply 3 and 5 for fifteen 1 cm² tiles.",
-            "why_valid": "The grid has 5 rows of 3 unit squares.",
+            "action": "Apply A=bh/2 and compare sideways-shifted peaks using the same height.",
+            "why_valid": "Both placements keep the same perpendicular altitude and base.",
             "inputs": [
-              "l=3 cm",
-              "w=5 cm"
+              "b=10 cm",
+              "h=4 cm"
             ],
-            "output": "15 cm²"
+            "output": "A=20 cm² in either placement"
           }
         ],
-        "crux_move_ref": "JUS-D1-WORK-3-5",
-        "check": "Count 5 rows of 3 one-centimetre squares.",
+        "crux_move_ref": "JUS-D1-WORK-10-4",
+        "check": "Coordinate determinant with base endpoints (0,0),(10,0) and apex at (2,4) or (7,4) equals 20 cm².",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -861,32 +864,32 @@
         ]
       },
       "repair_ref": "JUS-D1-TC-2",
-      "failure_signal": "Area counts square tiles, so multiply length and width rather than add.",
+      "failure_signal": "A slanted edge is not a perpendicular altitude to the chosen baseline.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-JUS-COUNTER-GROUPS",
-        "closure": "Correct substitution on one item does not establish independent transfer or academic acceptance."
+        "closure": "A correct numerical result is not independent academic acceptance of JUSTIFY-D1."
       },
       "independent_check": {
-        "statement": "Count repeated rows of unit squares to verify numeric area.",
-        "check_type": "EQUAL_ARRAY_COUNT"
+        "statement": "Use a coordinate determinant check for shifted peaks, or reverse A=bh/2.",
+        "check_type": "COORDINATE_AREA"
       },
       "difficulty": {
         "band": "D1",
-        "score": 2,
+        "score": 1,
         "components": {
           "concept_model_selection": 0,
-          "representation_translation": 1,
-          "reasoning_chain_length": 0,
-          "algebra_computational_load": 1,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
           "trap_exception_sensitivity": 0
         },
-        "basis": "The specific area rule is given, one substitution with whole-number multiplication and square units.",
+        "basis": "One claim-to-warrant implication from explicitly matched base and perpendicular altitudes.",
         "component_evidence": {
-          "concept_model_selection": "No rule selection required; rectangle and A=l×w given.",
-          "representation_translation": "Map measured length/width into stated formula.",
-          "reasoning_chain_length": "Single application with independent numeric check.",
-          "algebra_computational_load": "One whole-number multiplication or one exact division for inverse.",
-          "trap_exception_sensitivity": "Confusing area with addition is diagnosed separately."
+          "concept_model_selection": "Known area formula, no family choice.",
+          "representation_translation": "Base and perpendicular altitude explicitly stated.",
+          "reasoning_chain_length": "One meaningful warrant required.",
+          "algebra_computational_load": "Elementary multiplication is secondary.",
+          "trap_exception_sensitivity": "Slanted-side confusion is tested in Core1B."
         }
       },
       "learner_question_type": "constructed_response"
@@ -899,92 +902,97 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 original APPLY TEST",
+        "grade9v3:authored_by": "Issue 200 adapted earlier model-authored original-practice-003",
         "grade9v3:cognitive_demand": {
-          "primary": "APPLY",
-          "secondary": [],
-          "basis": "Given relevant dimensions and area rule, substitute, compute and label square units."
+          "primary": "JUSTIFY",
+          "secondary": [
+            "APPLY"
+          ],
+          "basis": "Learner must establish a conclusion by a valid base-height area warrant; arithmetic alone is insufficient."
         },
-        "grade9v3:analysis": {
-          "stable_crux_move": "Substitute measured rectangle dimensions into area=l×w and give 28 cm².",
-          "common_wrong_route": "Add 7+4 or label answer as linear cm."
-        },
+        "grade9v3:original_practice_candidate_ref": "IMO-G9-ORIGINAL-PRACTICE-003",
+        "grade9v3:source_quality_hold": "ALTITUDE_WORDING_CLARITY",
         "grade9v3:core2_support_plan": {
           "protected_move_refs": [
-            "JUS-D1-QA-SUBSTITUTE"
+            "JUS-D1-QA-WARRANT"
           ],
           "support_completions": [
             {
               "support_ref": "scaffolds[2]",
               "completed_move_refs": [
-                "JUS-D1-QA-SUBSTITUTE"
+                "JUS-D1-QA-WARRANT"
               ],
               "availability": "AFTER_ATTEMPT"
             }
           ]
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Justify equal areas from matching base and perpendicular altitude even with sideways displaced peaks.",
+          "common_wrong_route": "Assume different slanted sides force different areas."
         }
       },
       "id": "Q-TEST-IMO182-D1-JUS-CORE2A-TRIANGLE-AREA-APPLICATION",
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
       "original_identifier": "Q-TEST-IMO182-D1-JUS-CORE2A-TRIANGLE-AREA-APPLICATION",
-      "stem": "A school has a RECTANGULAR display mat measuring 7 cm along its length and 4 cm along its perpendicular width. Use the supplied rule A = length × width to calculate the area covered. Show your substitution and write the correct square-area unit.",
+      "stem": "Triangles ABC and ABD share base AB of 12 cm. The perpendicular distance from C to the straight line through AB is 7 cm; from D to the same line it is also 7 cm. Peaks C and D occupy different sideways positions. Must the two triangles have equal areas? Justify your decision using a mathematical warrant, then give both areas.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Region is triangular.",
-        "Dimensions are in centimetres.",
-        "The area rule A=length×width is provided.",
-        "Wholly authored TEST item, no official source."
+        "AB is the same 12 cm base for ABC and ABD.",
+        "Both given perpendicular altitudes to the line through AB are 7 cm.",
+        "Peaks are horizontally displaced; slanted edge lengths may differ.",
+        "Authored practice TEST candidate; source-quality ALTITUDE_WORDING_CLARITY review pending."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-JUS-AREA-DIMENSIONS-GIVEN"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "A = 7×4 = 28 cm².",
+        "summary": "Yes. Both areas are 42 cm² because each has b=12 cm and perpendicular h=7 cm in A=bh/2.",
         "reasoning": [
-          "The shape is a rectangle, and length 7 cm and width 4 cm are supplied.",
-          "Substitute into the area rule A=l×w: 7×4.",
-          "The mat covers 28 unit squares of 1 cm² each, so its area is 28 cm²."
+          "A chosen triangle base and its perpendicular altitude determine area.",
+          "Both triangles have the same 12 cm base and 7 cm perpendicular altitude.",
+          "A=12×7/2=42 cm² for each; horizontal peak displacement does not change that formula."
         ],
         "reasoning_route": [
           {
             "id": "JUS-D1-QA-GIVENS",
             "kind": "REPRESENT",
-            "action": "Read length 7 cm and width 4 cm as the two rule slots.",
-            "why_valid": "The dimensions are perpendicular side measurements of the rectangle.",
+            "action": "Identify common base AB and both perpendicular altitudes.",
+            "why_valid": "Distances were measured perpendicular to the same baseline.",
             "inputs": [
-              "7 cm long",
-              "4 cm wide"
+              "AB=12 cm",
+              "h_C=7 cm",
+              "h_D=7 cm"
             ],
-            "output": "l=7,w=4"
+            "output": "The two relevant input pairs match."
           },
           {
-            "id": "JUS-D1-QA-SUBSTITUTE",
+            "id": "JUS-D1-QA-WARRANT",
             "kind": "DECIDE",
-            "action": "Apply the supplied area rule and calculate 7×4 = 28 cm².",
-            "why_valid": "A triangular grid has width rows of length unit squares, so 7 times 4 is its area.",
+            "action": "Justify equal area by the area relation A=bh/2 for both triangles.",
+            "why_valid": "The product of matched base and perpendicular altitude is the same even for differently placed apexes.",
             "inputs": [
-              "A=l×w",
-              "l=7",
-              "w=4"
+              "b_C=b_D",
+              "h_C=h_D"
             ],
-            "output": "28 cm²"
+            "output": "Equal triangle areas"
           },
           {
-            "id": "JUS-D1-QA-CHECK",
+            "id": "JUS-D1-QA-VALUE",
             "kind": "VERIFY",
-            "action": "Check four rows of seven squares give 28.",
-            "why_valid": "The tile count matches 7×4, with area in squared units.",
+            "action": "Calculate the common 12×7/2 area.",
+            "why_valid": "Both applications give 42 cm²; a determinant check is independent.",
             "inputs": [
-              "four rows of seven"
+              "12 cm",
+              "7 cm"
             ],
-            "output": "28 unit squares"
+            "output": "42 cm² each"
           }
         ],
-        "crux_move_ref": "JUS-D1-QA-SUBSTITUTE",
-        "check": "Count 4 rows × 7 tiles = 28 unit squares.",
+        "crux_move_ref": "JUS-D1-QA-WARRANT",
+        "check": "A=(0,0),B=(12,0),C=(2,7),D=(10,7): both determinant areas are |12×7|/2=42 cm².",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -1003,22 +1011,22 @@
       "hints": [],
       "scaffolds": [
         {
-          "text": "The mat is triangular. Identify which given number is its LENGTH and which is its WIDTH; do not perform the calculation yet.",
+          "text": "Which measurements are given for both triangles? Identify the shared baseline and the two distances measured at 90° to it.",
           "support_kind": "REPRESENT",
           "reveals": "CONCEPT",
           "supports_move_ref": "JUS-D1-QA-GIVENS"
         },
         {
-          "text": "Use the displayed AREA rule, not a sum of two edges. What kind of area unit will result when centimetre dimensions are used?",
+          "text": "Which established relation connects the area of one triangle with a chosen base and a perpendicular altitude? Decide whether a sideways offset appears in that relation, without resolving the comparison yet.",
           "support_kind": "CONNECT",
           "reveals": "CONCEPT",
-          "supports_move_ref": "JUS-D1-QA-SUBSTITUTE"
+          "supports_move_ref": "JUS-D1-QA-WARRANT"
         },
         {
-          "text": "After writing your own calculation, compare its product with a tile grid of equal rows and verify the square-unit label.",
+          "text": "After making your own conclusion, apply your area relation separately to both triangles and check the claimed equality and units.",
           "support_kind": "CONNECT",
           "reveals": "METHOD",
-          "supports_move_ref": "JUS-D1-QA-SUBSTITUTE"
+          "supports_move_ref": "JUS-D1-QA-WARRANT"
         }
       ],
       "hint_ladder": [
@@ -1050,32 +1058,32 @@
         ]
       },
       "repair_ref": "JUS-D1-TC-2",
-      "failure_signal": "Area counts square tiles, so multiply length and width rather than add.",
+      "failure_signal": "A slanted edge is not a perpendicular altitude to the chosen baseline.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-JUS-COUNTER-GROUPS",
-        "closure": "Correct substitution on one item does not establish independent transfer or academic acceptance."
+        "closure": "A correct numerical result is not independent academic acceptance of JUSTIFY-D1."
       },
       "independent_check": {
-        "statement": "Count repeated rows of unit squares to verify numeric area.",
-        "check_type": "EQUAL_ARRAY_COUNT"
+        "statement": "Use a coordinate determinant check for shifted peaks, or reverse A=bh/2.",
+        "check_type": "COORDINATE_AREA"
       },
       "difficulty": {
         "band": "D1",
-        "score": 2,
+        "score": 1,
         "components": {
           "concept_model_selection": 0,
-          "representation_translation": 1,
-          "reasoning_chain_length": 0,
-          "algebra_computational_load": 1,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
           "trap_exception_sensitivity": 0
         },
-        "basis": "The specific area rule is given, one substitution with whole-number multiplication and square units.",
+        "basis": "One claim-to-warrant implication from explicitly matched base and perpendicular altitudes.",
         "component_evidence": {
-          "concept_model_selection": "No rule selection required; rectangle and A=l×w given.",
-          "representation_translation": "Map measured length/width into stated formula.",
-          "reasoning_chain_length": "Single application with independent numeric check.",
-          "algebra_computational_load": "One whole-number multiplication or one exact division for inverse.",
-          "trap_exception_sensitivity": "Confusing area with addition is diagnosed separately."
+          "concept_model_selection": "Known area formula, no family choice.",
+          "representation_translation": "Base and perpendicular altitude explicitly stated.",
+          "reasoning_chain_length": "One meaningful warrant required.",
+          "algebra_computational_load": "Elementary multiplication is secondary.",
+          "trap_exception_sensitivity": "Slanted-side confusion is tested in Core1B."
         }
       },
       "learner_question_type": "constructed_response"
@@ -1088,78 +1096,82 @@
       ],
       "evidence_refs": [],
       "extensions": {
-        "grade9v3:authored_by": "AGENT-D1 original APPLY TEST",
+        "grade9v3:authored_by": "Issue 200 adapted earlier model-authored original-practice-003",
         "grade9v3:cognitive_demand": {
-          "primary": "APPLY",
-          "secondary": [],
-          "basis": "Given relevant dimensions and area rule, substitute, compute and label square units."
+          "primary": "JUSTIFY",
+          "secondary": [
+            "APPLY"
+          ],
+          "basis": "Learner must establish a conclusion by a valid base-height area warrant; arithmetic alone is insufficient."
         },
+        "grade9v3:original_practice_candidate_ref": "IMO-G9-ORIGINAL-PRACTICE-003",
+        "grade9v3:source_quality_hold": "ALTITUDE_WORDING_CLARITY",
         "grade9v3:analysis": {
-          "stable_crux_move": "Apply inverse area rule with known area and width; divide instead of multiply.",
-          "common_wrong_route": "Treat area as length or multiply area by width."
+          "stable_crux_move": "Use converse of triangle area to infer height from equal area and common base.",
+          "common_wrong_route": "Treat slanted edge as altitude or divide by the area."
         }
       },
       "id": "Q-TEST-IMO182-D1-JUS-CORE2B-INVERSE-TRIANGLE-LENGTH",
       "origin": "AUTHORED",
       "origin_ref": "SRC-TEST-IMO182-D1-JUS-AREA-AUTHORED",
       "original_identifier": "Q-TEST-IMO182-D1-JUS-CORE2B-INVERSE-TRIANGLE-LENGTH",
-      "stem": "INVERSE APPLICATION: a triangular card covers 24 cm² and is 4 cm wide. Its length is NOT given. Apply the SAME rule A=length×width, this time to find the missing LENGTH in centimetres. Explain what mathematical operation undoes multiplying by width.",
+      "stem": "CHANGED CONVERSE: two triangles share base 12 cm and EACH has area 36 cm². Neither perpendicular altitude is stated. Use an area relation to determine each missing perpendicular altitude and justify why the heights agree.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "Region is triangular.",
-        "Dimensions are in centimetres.",
-        "The area rule A=length×width is provided.",
-        "Wholly authored TEST item, no official source."
+        "Each triangle has area 36 cm².",
+        "Both have the same positive 12 cm base.",
+        "Perpendicular altitudes are unknown.",
+        "Wholly authored converse transfer TEST; no organizer item used."
       ],
       "figure_refs": [
         "REP-TEST-IMO182-D1-JUS-INVERSE-AREA-GIVEN"
       ],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "Length = 24÷4 = 6 cm.",
+        "summary": "Both perpendicular altitudes are 6 cm, because h=2A/b=2×36/12.",
         "reasoning": [
-          "The known area is 24 cm² and width is 4 cm.",
-          "From A=l×w with nonzero width, divide the given area by width.",
-          "24÷4 = 6, so the missing length is 6 cm."
+          "Triangle area A=bh/2 holds for each.",
+          "With positive base, isolate h=2A/b.",
+          "Both have A=36 and b=12, so h=6 cm for each; 12×6/2 verifies area 36 cm²."
         ],
         "reasoning_route": [
           {
-            "id": "JUS-D1-QB-INVERSE-GIVEN",
+            "id": "JUS-D1-QB-AREA-BASE",
             "kind": "REPRESENT",
-            "action": "Identify the known area and one dimension as A=24 and w=4.",
-            "why_valid": "The triangular card uses the same area rule.",
+            "action": "Identify each A=36 cm² and b=12 cm.",
+            "why_valid": "The values are given for both triangles.",
             "inputs": [
-              "A=24 cm²",
-              "w=4 cm"
+              "A=36 cm²",
+              "b=12 cm"
             ],
-            "output": "l unknown"
+            "output": "h unknown"
           },
           {
             "id": "JUS-D1-QB-INVERSE",
             "kind": "DECIDE",
-            "action": "Reverse multiplication by nonzero width to calculate l=24÷4=6 cm.",
-            "why_valid": "If A=l×w then l=A÷w for w not zero.",
+            "action": "Reverse the relation to h=2A/b, then infer both heights are 6 cm.",
+            "why_valid": "The same positive base and area determine the same perpendicular altitude.",
             "inputs": [
-              "A=24",
-              "w=4"
+              "A=36",
+              "b=12"
             ],
-            "output": "l=6 cm"
+            "output": "h=6 cm in both"
           },
           {
             "id": "JUS-D1-QB-VERIFY",
             "kind": "VERIFY",
-            "action": "Check the recovered rectangle 6 by 4 covers 24 squares.",
-            "why_valid": "6×4=24 matches given area.",
+            "action": "Check 12×6/2=36 cm².",
+            "why_valid": "This reproduces the stated area for both triangles.",
             "inputs": [
-              "l=6",
-              "w=4"
+              "b=12",
+              "h=6"
             ],
-            "output": "A=24 cm²"
+            "output": "A=36 cm²"
           }
         ],
         "crux_move_ref": "JUS-D1-QB-INVERSE",
-        "check": "6 cm×4 cm=24 cm².",
+        "check": "Both equations 12×6/2=36 cm² match givens.",
         "acceptable_alternatives": [],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR"
@@ -1177,7 +1189,7 @@
       ],
       "hints": [
         {
-          "text": "Area equals length times nonzero width. Which operation reverses multiplication by the given width?",
+          "text": "The area and base are known, not the altitude. Which equation could be rearranged to isolate the distance perpendicular to that base?",
           "reveals": "CONCEPT"
         }
       ],
@@ -1199,32 +1211,32 @@
         ]
       },
       "repair_ref": "JUS-D1-TC-2",
-      "failure_signal": "Area counts square tiles, so multiply length and width rather than add.",
+      "failure_signal": "A slanted edge is not a perpendicular altitude to the chosen baseline.",
       "family_exposure": {
         "family_ref": "FAM-TEST-IMO182-D1-JUS-COUNTER-GROUPS",
-        "closure": "Correct substitution on one item does not establish independent transfer or academic acceptance."
+        "closure": "A correct numerical result is not independent academic acceptance of JUSTIFY-D1."
       },
       "independent_check": {
-        "statement": "Multiply the recovered length by the given width to recover 24 cm².",
-        "check_type": "INVERSE_OPERATION"
+        "statement": "Use a coordinate determinant check for shifted peaks, or reverse A=bh/2.",
+        "check_type": "COORDINATE_AREA"
       },
       "difficulty": {
         "band": "D1",
-        "score": 2,
+        "score": 1,
         "components": {
           "concept_model_selection": 0,
-          "representation_translation": 1,
-          "reasoning_chain_length": 0,
-          "algebra_computational_load": 1,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
           "trap_exception_sensitivity": 0
         },
-        "basis": "The specific area rule is given, one substitution with whole-number multiplication and square units.",
+        "basis": "One claim-to-warrant implication from explicitly matched base and perpendicular altitudes.",
         "component_evidence": {
-          "concept_model_selection": "No rule selection required; rectangle and A=l×w given.",
-          "representation_translation": "Map measured length/width into stated formula.",
-          "reasoning_chain_length": "Single application with independent numeric check.",
-          "algebra_computational_load": "One whole-number multiplication or one exact division for inverse.",
-          "trap_exception_sensitivity": "Confusing area with addition is diagnosed separately."
+          "concept_model_selection": "Known area formula, no family choice.",
+          "representation_translation": "Base and perpendicular altitude explicitly stated.",
+          "reasoning_chain_length": "One meaningful warrant required.",
+          "algebra_computational_load": "Elementary multiplication is secondary.",
+          "trap_exception_sensitivity": "Slanted-side confusion is tested in Core1B."
         }
       },
       "learner_question_type": "constructed_response",
@@ -1233,15 +1245,15 @@
         "builds_on": [
           "Q-TEST-IMO182-D1-JUS-CORE2A-TRIANGLE-AREA-APPLICATION"
         ],
-        "statement": "Core2A supplies both sides and asks area; Core2B supplies area and one side and asks for the other, reversing the known and unknown relation.",
-        "invariant": "The same A=l×w area relation and square-unit conventions apply.",
+        "statement": "Core2A infers equal areas from equal heights; Core2B infers equal unknown heights from equal areas and positive shared base.",
+        "invariant": "Triangle area A=bh/2, with h the perpendicular altitude.",
         "novelty": {
           "checked_against": [
             "Q-TEST-IMO182-D1-JUS-CORE2A-TRIANGLE-AREA-APPLICATION",
             "MIC-TEST-IMO182-D1-JUS-TRIANGLE-AREA:exit_task",
             "MIC-TEST-IMO182-D1-JUS-TRIANGLE-AREA:boundary_test"
           ],
-          "why_new": "Inversion of quantity and operation from direct multiplication to division, not merely substituting different dimensions."
+          "why_new": "Reverses the known and unknown quantity and direction of the logical implication."
         },
         "protected_move_ref": "JUS-D1-QB-INVERSE"
       }
