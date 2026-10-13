@@ -86,7 +86,8 @@ class SynthesizeD4(unittest.TestCase):
             self.assertNotIn("120384",html,role)
             self.assertNotIn("130284",html,role)
             self.assertNotIn("odd-position and even-position sums both9",html,role)
-        self.assertIn("D4-SYN-MOVE-ORDER",pages["core2a.html"])
+        # Internal authoring move IDs are not meant to be published in learner HTML.
+        self.assertIn("data-g9-after-attempt-hint",pages["core2a.html"])
         self.assertIn("data-g9-after-attempt-hint",pages["core2a.html"])
         self.assertIn("data-requires-attempt",pages["core2a.html"])
         self.assertNotEqual(pages["core2a.html"],pages["core2b.html"])
