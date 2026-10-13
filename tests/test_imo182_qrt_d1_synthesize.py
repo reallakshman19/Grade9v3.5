@@ -34,7 +34,7 @@ class D1Synthesize(unittest.TestCase):
   self.assertEqual([h["availability"] for h in ladder],["PRE_ATTEMPT_SAFE","PRE_ATTEMPT_SAFE","AFTER_ATTEMPT"])
   self.assertEqual(qa["answer"]["crux_move_ref"],"SYN-D1-QA-ORDER")
   pre=" ".join(x["text"] for x in qa["scaffolds"][:2]).lower()
-  self.assertIn("operation-order choice",pre)
+  self.assertIn("expression choice",pre)
   for leak in ("both component kinds copied each time", "combine both parts before",
                "whole-unit-first","4×(3+2)", "all components repeat"):
    self.assertNotIn(leak,pre)
@@ -45,6 +45,11 @@ class D1Synthesize(unittest.TestCase):
   self.assertIn("data-requires-attempt",rendered)
   self.assertEqual(qa["answer"]["check"],"4×3+4×2=12+8=20.")
   self.assertIn("4×3+4×2=20",qa["answer"]["acceptable_alternatives"])
+  self.assertIn("More than one equivalent expression may work.",qa["stem"])
+  self.assertIn("4×3+4×2=20",qa["extensions"]["grade9v3:analysis"]["equivalent_correct_warrants"])
+  self.assertIn("grouped and distributed counts are equivalent",self.source["microtopics"][0]["inferential_jump"])
+  self.assertIn("4×3+4×2=20",self.pages["core2a.html"])
+
 
  def test_original_svg_stages_no_early_answer(self):
   self.assertEqual(len(self.source["representations"]),4)
