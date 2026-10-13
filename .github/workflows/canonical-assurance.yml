@@ -106,6 +106,19 @@ jobs:
           python3 Shared/tools/diff_test_failures.py --base "$RUNNER_TEMP/base.json" --head "$RUNNER_TEMP/head.json" --enforce || status=1
           python3 Shared/tools/diff_test_failures.py --base "$RUNNER_TEMP/pinned-main.json" --head "$RUNNER_TEMP/head.json" --enforce || status=1
           exit "$status"
+      - name: Explain exact-ID failures and test collection differences (informational)
+        if: ${{ !cancelled() }}
+        env:
+          EXPECTED_PR_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python3 Shared/tools/ci_delta_summary.py \
+            --head "$RUNNER_TEMP/head.json" \
+            --base "$RUNNER_TEMP/base.json" \
+            --pinned-main "$RUNNER_TEMP/pinned-main.json" \
+            --checkout-sha "$(git rev-parse HEAD)" \
+            --expected-head-sha "$EXPECTED_PR_HEAD_SHA" \
+            --output "$RUNNER_TEMP/ci-delta-summary.json" \
+            --summary "$GITHUB_STEP_SUMMARY"
       - name: Preserve exact test ID evidence
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
@@ -116,6 +129,7 @@ jobs:
             ${{ runner.temp }}/head.json
             ${{ runner.temp }}/base.json
             ${{ runner.temp }}/pinned-main.json
+            ${{ runner.temp }}/ci-delta-summary.json
 
   release-status:
     # Informational. Whether a product is released is the Owner's decision, through accept_product.py, which refuses a product that is not eligible.

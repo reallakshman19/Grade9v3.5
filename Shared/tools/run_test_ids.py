@@ -5,7 +5,7 @@
 
 Run it from the root of the tree under test, so that one copy of this tool can measure the merge base as well as HEAD.
 
-The record is {"ran": N, "failed": [ids], "load_errors": [ids]}. A module that does not import is a load error, not a quiet absence: a suite that
+The record is {"ran": N, "failed": [ids], "load_errors": [ids], "test_ids": [collected IDs]}. A module that does not import is a load error, not a quiet absence: a suite that
 cannot be loaded has not passed, and the comparison treats it as the failure it is. The exit status is 0 whenever the run itself completed, so that the
 comparison, and not this step, decides what a failure means.
 """
@@ -29,10 +29,12 @@ def flatten(suite: unittest.TestSuite):
 def run(start_dir: str, pattern: str) -> dict:
     loader = unittest.TestLoader()
     suite = loader.discover(start_dir, pattern=pattern)
+    collected_ids = sorted(t.id() for t in flatten(suite))
     load_errors = sorted(t.id() for t in flatten(suite) if t.__class__.__name__ == "_FailedTest")
     result = unittest.TextTestRunner(stream=sys.stderr, verbosity=0, buffer=True).run(suite)
     failed = sorted({t.id() for t, _ in result.failures + result.errors})
-    return {"ran": result.testsRun, "failed": failed, "load_errors": load_errors}
+    return {"ran": result.testsRun, "failed": failed, "load_errors": load_errors,
+            "test_ids": collected_ids}
 
 
 def main(argv: list[str] | None = None) -> int:
