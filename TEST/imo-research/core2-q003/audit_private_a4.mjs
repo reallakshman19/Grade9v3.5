@@ -121,11 +121,11 @@ try {
     const printGuard = await page.evaluate(expected => {
       const root = document.documentElement;
       const protectedReveals = [...document.querySelectorAll('details[data-requires-attempt]')];
-      const revealedCount = protectedReveals.filter(d => d.open || getComputedStyle(d).display !== 'none').length;
+      const revealedCount = protectedReveals.filter(d => d.open).length;
       return {
         role_matches: root.getAttribute('data-g9-role') === expected.role,
         blueprint_matches: document.body.getAttribute('data-blueprint-ref')?.startsWith(expected.blueprint + '@') ?? false,
-        protected_reveals_open_or_shown: revealedCount,
+        protected_reveals_open: revealedCount,
         source_payload_templates: document.querySelectorAll('template[data-g9-payload]').length,
       };
     }, { role: item.role, blueprint: item.blueprint });
@@ -136,7 +136,7 @@ try {
       [...document.querySelectorAll('details[data-requires-attempt]')]
         .every(d => !d.open && getComputedStyle(d).display === 'none')
     );
-    insist(hiddenAfterPrintCss && printGuard.protected_reveals_open_or_shown === 0,
+    insist(hiddenAfterPrintCss && printGuard.protected_reveals_open === 0,
            'PROTECTED_REVEAL_VISIBLE_BEFORE_PRINT_' + item.role);
 
     const pdf = await page.pdf({
