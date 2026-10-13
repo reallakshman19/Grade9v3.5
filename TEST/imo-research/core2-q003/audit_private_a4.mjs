@@ -9,8 +9,8 @@
  * node TEST/imo-research/core2-q003/audit_private_a4.mjs
  * node TEST/imo-research/core2-q003/audit_private_a4.mjs --include-core2
  *
- * Requires a locally installed Playwright + its Chromium binary and pdfinfo
- * (Poppler). Everything stays under TEST/.../core2-q003/.private/a4-audit.
+ * Requires Playwright + its Chromium binary; no pdfinfo/Poppler or new
+ * dependency is needed. Everything stays in .private/a4-audit.
  */
 import { createRequire } from 'node:module';
 import { execFileSync } from 'node:child_process';
@@ -70,26 +70,83 @@ try {
   process.exit(2);
 }
 
-const pdfInfo = pdfPath => {
-  let output;
-  try {
-    output = execFileSync('pdfinfo', [pdfPath], { encoding: 'utf8', timeout: 15000 });
-  } catch {
-    throw new Error('PDFINFO_NOT_AVAILABLE_OR_PDF_INVALID');
+const pdfGeometry = pdf => {
+  // No Poppler install: traverse Chromium's PDF page tree, count each leaf and
+  // verify EVERY leaf MediaBox. Reject unrecognised structures, never guess.
+  const fail = code => { throw new Error(code); };
+  if (!Buffer.isBuffer(pdf) || pdf.subarray(0, 5).toString('ascii') !== '%PDF-')
+    fail('PDF_HEADER_INVALID');
+  const text = pdf.toString('latin1');
+  if (!/%%EOF\s*$/.test(text.slice(-1024))) fail('PDF_EOF_MISSING');
+  const objects = new Map();
+  const objectPattern = /(?:^|[\r\n])(\d+)\s+(\d+)\s+obj\b([\s\S]*?)\bendobj\b/g;
+  for (const match of text.matchAll(objectPattern)) {
+    const key = match[1] + ':' + match[2];
+    if (objects.has(key)) fail('PDF_OBJECT_DUPLICATED');
+    objects.set(key, match[3].split(/\bstream\r?\n/, 1)[0]);
   }
-  const pageCount = Number(output.match(/^Pages:\s*(\d+)/m)?.[1]);
-  const size = output.match(/^Page size:\s*([\d.]+) x ([\d.]+) pts/m);
-  insist(Number.isInteger(pageCount) && pageCount > 0 && size, 'PDF_GEOMETRY_NOT_READABLE');
-  const widthPt = Number(size[1]);
-  const heightPt = Number(size[2]);
-  // A4 portrait = 210 x 297 mm = 595.276 x 841.890 PDF points.
-  const a4 = Math.abs(widthPt - 595.276) < 1.5 && Math.abs(heightPt - 841.890) < 1.5;
+  const get = (id, generation) => {
+    const object = objects.get(id + ':' + generation);
+    if (!object) fail('PDF_PAGE_OBJECT_UNRESOLVED');
+    return object;
+  };
+  const catalogue = [...objects.entries()].filter(([, o]) => /\/Type\s*\/Catalog\b/.test(o));
+  if (catalogue.length !== 1) fail('PDF_CATALOGUE_NOT_UNIQUE');
+  const root = catalogue[0][1].match(/\/Pages\s+(\d+)\s+(\d+)\s+R\b/);
+  if (!root) fail('PDF_PAGE_TREE_MISSING');
+  const boxes = [];
+  const visited = new Set();
+  const parseBox = object => {
+    const value = object.match(/\/MediaBox\s*\[\s*([-+]?\d*\.?\d+)\s+([-+]?\d*\.?\d+)\s+([-+]?\d*\.?\d+)\s+([-+]?\d*\.?\d+)\s*\]/);
+    return value ? value.slice(1).map(Number) : null;
+  };
+  const walk = (id, gen, inheritedBox, parentKey = null) => {
+    const key = id + ':' + gen;
+    if (visited.has(key)) fail('PDF_PAGE_TREE_REPEATED_OR_CYCLIC');
+    visited.add(key);
+    const object = get(id, gen);
+    if (parentKey) {
+      const parent = object.match(/\/Parent\s+(\d+)\s+(\d+)\s+R\b/);
+      if (!parent || parent[1] + ':' + parent[2] !== parentKey)
+        fail('PDF_PAGE_PARENT_MISMATCH');
+    }
+    const rotate = object.match(/\/Rotate\s+(-?\d+)\b/);
+    if (rotate && Number(rotate[1]) % 360 !== 0) fail('PDF_PAGE_ROTATED');
+    const box = parseBox(object) || inheritedBox;
+    if (/\/Type\s*\/Pages\b/.test(object)) {
+      const kidsMatch = object.match(/\/Kids\s*\[([^\]]*)\]/);
+      const declared = object.match(/\/Count\s+(\d+)\b/);
+      if (!kidsMatch || !declared) fail('PDF_PAGE_TREE_MALFORMED');
+      const kidRegex = /(\d+)\s+(\d+)\s+R\b/g;
+      const kids = [...kidsMatch[1].matchAll(kidRegex)].map(m => [m[1], m[2]]);
+      if (!kids.length || kidsMatch[1].replace(kidRegex, '').trim())
+        fail('PDF_PAGE_KIDS_MALFORMED');
+      const observed = kids.reduce((sum, [child, generation]) =>
+        sum + walk(child, generation, box, key), 0);
+      if (Number(declared[1]) !== observed) fail('PDF_PAGE_COUNT_MISMATCH');
+      return observed;
+    }
+    if (!/\/Type\s*\/Page\b/.test(object)) fail('PDF_NON_PAGE_IN_PAGE_TREE');
+    if (!box || box.some(x => !Number.isFinite(x))) fail('PDF_MEDIA_BOX_MISSING');
+    const width = box[2] - box[0], height = box[3] - box[1];
+    if (!(width > 0 && height > 0)) fail('PDF_MEDIA_BOX_INVALID');
+    boxes.push([width, height]);
+    return 1;
+  };
+  const total = walk(root[1], root[2], null);
+  const allLeafPages = [...objects.values()].filter(o => /\/Type\s*\/Page\b/.test(o)).length;
+  if (total < 1 || total !== boxes.length || total !== allLeafPages)
+    fail('PDF_PAGE_COUNT_INCONSISTENT');
+  const [widthPt, heightPt] = boxes[0];
+  const a4 = boxes.every(([w, h]) => Math.abs(w - 595.276) < 1.5 &&
+                                     Math.abs(h - 841.890) < 1.5);
   return {
-    page_count: pageCount,
+    page_count: total,
     paper_size_pt: [widthPt, heightPt],
     paper_size_mm: [Math.round(widthPt * 25.4 / 72 * 10) / 10,
                     Math.round(heightPt * 25.4 / 72 * 10) / 10],
     a4_portrait_geometry: a4,
+    geometry_method: 'PDF_PAGE_TREE_ALL_LEAF_MEDIABOXES_NODE_BUILTIN',
   };
 };
 
@@ -99,7 +156,8 @@ insist(within(auditRoot, privateRoot), 'OUTPUT_NOT_PRIVATE');
 let browser;
 const entries = [];
 try {
-  browser = await playwright.chromium.launch();
+  try { browser = await playwright.chromium.launch(); }
+  catch { throw new Error('PLAYWRIGHT_CHROMIUM_UNAVAILABLE'); }
   const context = await browser.newContext({ viewport: { width: 794, height: 1123 } });
   await context.route(/^https?:\/\//, route => route.abort('blockedbyclient'));
   const page = await context.newPage();
@@ -147,9 +205,9 @@ try {
     const pdfName = item.role.toLowerCase() + '-native-a4.private.pdf';
     const pdfPath = path.join(auditRoot, pdfName);
     insist(within(pdfPath, privateRoot), 'PDF_OUTPUT_NOT_PRIVATE');
-    fs.writeFileSync(pdfPath, pdf, { mode: 0o600 });
-    const geometry = pdfInfo(pdfPath);
+    const geometry = pdfGeometry(pdf);
     insist(geometry.a4_portrait_geometry, 'PRINT_PDF_NOT_A4_' + item.role);
+    fs.writeFileSync(pdfPath, pdf, { mode: 0o600 });
     insist(sha256(fs.readFileSync(item.page)) === item.sha256, 'NATIVE_PAGE_CHANGED_DURING_PRINT_' + item.role);
     entries.push({
       role: item.role,
