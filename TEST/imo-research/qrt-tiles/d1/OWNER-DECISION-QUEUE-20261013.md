@@ -33,3 +33,14 @@ All 84 prompts in [`semantic-challenge-20261013.v1.json`](semantic-challenge-202
 - Main broad assurance, guardrails, regression delta already red at same check categories; do not waive without exact per-test baseline parity.
 
 **Owner action requested (not asserted):** Appoint/identify the applicable independent review authority or explicitly supply a QRT-specific waiver for a named cell; record 12 semantic verdicts and the cell decision ID, while keeping publication/rights/fixture routes separate.
+
+
+## 13 October 2026 — SYNTHESIZE equivalence / preattempt H2 update
+
+**Authored-source-only repair:** [draft PR #213](https://github.com/reallakshman19/Grade9v3.5/pull/213), source-producing code head `e41b06cc5056faa094dff7b239759edf74aeec67`; [sole-renderer scoped CI run 38426322845](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38426322845) **SUCCESS**; [real HTML artifact 11829090822](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38426322845/artifacts/11829090822). All five learner-role HTML files plus index independently SHA-256 match the new renderer receipt, zero gaps. Chromium tested actual CORE2A at 390/768/1366 px: no page errors/overflow, H2 accessible via Next hint without stating winning whole-unit order, H3 and solution refuse blank attempt and open after nonblank commitment.
+
+The original source H2 `When a whole unit repeats, are both component kinds copied each time?` was a leading preattempt yes/no toward W. It has been replaced with a neutral expression-check question. More importantly, the revised stem no longer demands **only** a unit-first expression: **both** `4×(3+2)=20` **and** `4×3+4×2=20` are mathematically valid when the explanation accounts for all repeated pieces. The source's acceptable-alternatives contract records both; native HTML remains a postattempt comparison tool, not an automatic grader.
+
+**Formal primary-demand problem remains unresolved:** canonical `Shared/quality/question-demand-templates.v1.json#QRT-SYNTHESIZE-D1` requires coordinating **dependent ideas or steps where route selection matters**. In this item, the 3+2 composition supplies an intermediate full-unit count, but the overall quantity is isomorphic to `T = n·g` with given `n=4` and `g=3+2=5`. Compare against MODEL-D1's known 6 trays × 4 items and APPLY-D1's supplied relation. The named SYNTHESIZE label is still **a proposal**; it may need reclassification or a new task only **after** qualified primary-demand review. Do not infer SYNTHESIZE acceptance from the now-correct 20 result.
+
+**Owner choice:** request a qualified reviewer/authorized QRT-specific waiver, review the SYNTHESIZE/ MODEL/ APPLY distinction and D1-vs-D2 difficulty, then record an explicit per-cell ACCEPT/REVISE/REJECT with evidence and decision ID. **Nothing was merged, released, newly designated golden, or accepted academically by this author-side fix.**
