@@ -1,0 +1,72 @@
+{
+  "cell": "QRT-SYNTHESIZE-D4",
+  "primary_demand": "SYNTHESIZE",
+  "band": "D4",
+  "stage": "AUTHOR_SELF_AUDIT_NATIVE_RENDER_PENDING",
+  "X": "Determine the order in which the given digit-multiset, divisibility rules and minimality constrain positions.",
+  "Y": "Previously established divisibility by9, alternating sums for11, and last-two-digit divisibility by4.",
+  "Z": "Link the automatic digit-sum check, alternating position partition, final-two-digit constraint and lexicographic minimization without violating a previous dependency.",
+  "W": "Independently decide to use the alternating-position partition before final-two-digit selection and place the earliest legal prefix, then revise that ordering under an added mod7 demand.",
+  "wrong_idea": "Satisfy each divisibility condition independently then concatenate valid endings, or assume the smallest initial digits always yield a valid final number.",
+  "diagnostic": "Why can a six-digit assignment with a legal suffix still violate the alternating-position constraint?",
+  "replacement_rule": "Use the fixed digit sum, split positions to satisfy mod11, impose a compatible suffix divisible by4, then prove minimality by excluding all lexicographically smaller prefixes.",
+  "independent_check": "Exhaust all permutations of [0,1,2,3,4,8] with nonzero leading digit and verify mod4,mod9,mod11, then add mod7; assert min, count and analytical prefix exclusions.",
+  "math_results": {
+    "minimum": 120384,
+    "number_of_valid_permutations": 24,
+    "alternating_odd_and_even_position_sums": 9,
+    "necessary_last_two_digit_multiple_of4": true
+  },
+  "core2b_transfer": "Keep all three original divisibility conditions and digits, but additionally require divisibility by7. Find and justify the new smallest number.",
+  "adjacent_band": "If the constraints are provided in execution order, or a learner only fills a prepared table, it is likely D3. Reviewer must confirm independently selected dependency order and transfer warrant.",
+  "difficulty_five_components": {
+    "concept_model_selection": 2,
+    "representation_translation": 2,
+    "reasoning_chain_length": 2,
+    "algebra_computational_load": 1,
+    "trap_exception_sensitivity": 2
+  },
+  "source": "Entirely AUTHORED TEST; no #183 publisher original source custody, official IMO source or permission granted.",
+  "planned_roles": [
+    "BP-CORE1-ORIENTATION@1.1.0",
+    "BP-CORE1A-CONSTRUCTION@1.8.0",
+    "BP-CORE1B-RECONSTRUCTION@1.1.0",
+    "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+    "BP-CORE2B-TRANSFER@1.1.0"
+  ],
+  "candidate_math_oracle_ci": "https://github.com/reallakshman19/Grade9v3.5/actions/runs/38404571127",
+  "native_artifact_url": null,
+  "native_page_sha256": null,
+  "actual_browser_evidence": null,
+  "status": "ACADEMIC_REVIEW_PENDING",
+  "accepted": false,
+  "reviewer_verdict": null,
+  "reviewer_name": null,
+  "conflict_declaration": null,
+  "owner_decision": null,
+  "owner_decision_id": null,
+  "owner_golden_designation": null,
+  "review_asks": {
+    "H1": "PENDING independent qualified judgment: Question-specific safe orientation; no W",
+    "H2": "PENDING independent qualified judgment: Connect applicable prerequisite without selecting W",
+    "H3": "PENDING independent qualified judgment: After nonblank attempt if W-revealing; otherwise no premature conclusion",
+    "S1": "PENDING independent qualified judgment: Safe givens, meaningful stage or justified visual waiver",
+    "S2": "PENDING independent qualified judgment: Correlate prior representation without decisive exception/route",
+    "S3": "PENDING independent qualified judgment: Open a route, preserve W and gate if necessary",
+    "P1": "PENDING independent qualified judgment: No W in visible, options, image title/desc or AX before commit",
+    "P2": "PENDING independent qualified judgment: Real concept/repair link resolves to relevant teaching",
+    "P3": "PENDING independent qualified judgment: After attempt warranted reasoning and independent check",
+    "M1": "PENDING independent qualified judgment: Explicit plausible misconception",
+    "M2": "PENDING independent qualified judgment: Discriminating boundary not merely arithmetic slip",
+    "M3": "PENDING independent qualified judgment: Counterexample and replacement rule"
+  },
+  "checklist": {
+    "cross_role_answer_ownership": "REVIEW especially preceding Core1B elicitation accepted answers and Core1A teaching paths; student W must not be disclosed",
+    "render_provenance": "PENDING final exact-head independent receipt and six SHA256",
+    "comparator": "G-IMO-G9-FIVE-CORE-20261012 registered-role semantic slot test only; numerical/string parity across questions forbidden",
+    "visual_and_AX": "PENDING screenshot/AX review 390,768,1280 and precommit visual/metadata/keyboard assessment",
+    "math": "Author independent exhaustive oracle, awaiting qualified second-person math proof signoff",
+    "release": "NOT_AUTHORIZED",
+    "classification": "D4 is a proposal; qualified reviewer must explicitly test D3 alternative"
+  }
+}
