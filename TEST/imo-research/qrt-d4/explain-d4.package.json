@@ -1,0 +1,1365 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "TEST-IMO182-QRT-EXPLAIN-D4",
+  "title": "Authored EXPLAIN D4 digit-rotation invariance",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Wholly authored TEST cyclic digit rotation with variable-length parity exception; original figures and role tasks, pending academic and Owner review.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-D4-EXPLAIN-ORIGINAL",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original digit-rotation explanation for Grade9 modular arithmetic",
+      "origin": "AUTHORED",
+      "locator": "AUTHOR_CREATED: Grade9v3.5 issue #182 Tab7 QRT-EXPLAIN-D4",
+      "edition": "2026-10-12 TEST draft",
+      "section": "Fixed-width cyclic decimal digit shifts and modulo11 sign changes",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "All teaching words and diagrams authored for TEST; no official exam text, logo, PDF, KEY or rights admission.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "One-digit-left rotation of a multiple11 preserves divisibility iff original length is even",
+        "Two-digit-left rotation has an exceptional odd-length prefix divisible by11"
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Original integer-place-value explanation, no publisher question or answer key.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "id": "BUCKET-D4-EXPLAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Causal digit-rotation invariants and exceptional input lengths",
+      "topic": "Integer arithmetic and decimal place-value residues",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Learner must explain why a digit rotation's invariant depends on original length, then diagnose the distinct two-digit-prefix exception.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-D4-EXPLAIN-CORE1A",
+      "conventions": [
+        {
+          "id": "original_length",
+          "statement": "Original decimal digit string has fixed length L≥2, with nonzero first digit a; length is not recalculated after rotating."
+        },
+        {
+          "id": "zero_padding",
+          "statement": "Rotated digit string retains its fixed width even if it begins with a zero."
+        },
+        {
+          "id": "mod11",
+          "statement": "Ten is congruent to minus one modulo11."
+        },
+        {
+          "id": "prefix",
+          "statement": "For two-digit rotations L≥3 and the leading two-digit block A is between 10 and99."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-D4-EXPLAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "action": "Explain why an apparent divisibility invariant changes under a hidden length assumption and identify the causal source of a changed-operation exception.",
+      "success_criterion": "For an original multiple of11, explain one-digit left rotation's even-length preservation/odd-length obstruction and independently explain two-digit rotation's exceptional odd-length prefix case.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "id": "MIC-D4-EXPLAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Explaining a place-value invariant and its length-sensitive failure",
+      "bucket_id": "BUCKET-D4-EXPLAIN",
+      "primary_capability_ref": "CAP-D4-EXPLAIN",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Learner must explain why a digit rotation's invariant depends on original length, then diagnose the distinct two-digit-prefix exception.",
+      "entry_assumptions": [
+        "Decimal place value and powers of ten.",
+        "Modulo11 congruence.",
+        "Parity of integer exponents.",
+        "Fixed-width cyclic rotation with the original nonzero first digit."
+      ],
+      "inferential_jump": "Explain why changing original length changes a place-value sign and flips whether a rotation preserves divisibility; under two-digit rotation the odd-length exception is different.",
+      "teaching_path": [
+        {
+          "id": "D4-EXP-PLACE",
+          "role": "DECLARE",
+          "action": "Use the decimal identity 10 congruent to -1 modulo 11: each shift by one decimal place changes the residue sign.",
+          "why_valid": "10+1=11, and multiplication respects congruence.",
+          "inputs": [],
+          "output": "Sign-change mechanism independent of a particular digit string.",
+          "source_ref": "SRC-D4-EXPLAIN-ORIGINAL"
+        },
+        {
+          "id": "D4-EXP-TWO",
+          "role": "TRANSFORM",
+          "action": "Compare two-digit 10u+v with digit-swapped 10v+u as a neutral worked anchor.",
+          "why_valid": "Modulo11, the respective remainders are v-u and u-v.",
+          "inputs": [
+            "10≡-1 modulo11"
+          ],
+          "output": "For two positions, swapping negates residue, including zero.",
+          "source_ref": "SRC-D4-EXPLAIN-ORIGINAL"
+        },
+        {
+          "id": "D4-EXP-SPLIT",
+          "role": "TRANSFORM",
+          "action": "Represent a general L-digit input with leading digit a and remaining value B as N=a×10^(L−1)+B; its one-digit left rotation is R=10B+a.",
+          "why_valid": "Shifting the suffix left multiplies by ten and appending a adds its units value.",
+          "inputs": [
+            "10≡-1 modulo11"
+          ],
+          "output": "Exact positional equations, not the final parity classification.",
+          "source_ref": "SRC-D4-EXPLAIN-ORIGINAL"
+        },
+        {
+          "id": "D4-EXP-AUDIT",
+          "role": "VERIFY",
+          "action": "Identify the assumption that must be rechecked whenever a two-digit demonstration is generalized to another original length.",
+          "why_valid": "The contribution of a is multiplied by ten L−1 times; changing L changes that exponent.",
+          "inputs": [
+            "10≡-1 modulo11"
+          ],
+          "output": "Audit length and leading zero conventions before deciding the invariant.",
+          "source_ref": "SRC-D4-EXPLAIN-ORIGINAL"
+        }
+      ],
+      "relation_refs": [
+        "REL-D4-EXPLAIN"
+      ],
+      "representation_refs": [
+        "REP-D4-EXPLAIN-CORE1A"
+      ],
+      "question_family_refs": [
+        "FAM-D4-EXPLAIN"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "Rotating a multiple of11 preserves divisibility for every digit length because it works for 22 and 1210.",
+          "diagnostic_prompt": "Why does 121 rotate to 211, but 1210 rotates to 2101? Are these outcomes explained by the unchanged digit sum?",
+          "repair": "Use the positions of digits modulo11. N=a10^(L−1)+B and R=10B+a; exponent parity, not digit sum, controls sign changes."
+        },
+        {
+          "wrong_idea": "If rotation creates an initial zero, the original digit length changes and so should the rule.",
+          "diagnostic_prompt": "Does 110 rotating two digits to 011 make the original three-digit statement into a two-digit one?",
+          "repair": "Keep the original fixed-width L positions throughout each rotation; a new leading zero changes value but not the definition of the input operation."
+        }
+      ],
+      "exit_task": {
+        "prompt": "For any three-digit integer 100a+10b+c (a from1..9, b,c from0..9), explain why 11 divides it exactly when the alternating digit sum a-b+c is 0 OR 11, not just 0. Check 209.",
+        "source_ref": "SRC-D4-EXPLAIN-ORIGINAL",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "The alternating sum can equal 0 or11.",
+          "reasoning": [
+            "100≡1 and 10≡−1 modulo11, so 100a+10b+c≡a−b+c.",
+            "The allowed digit bounds make −8≤a−b+c≤18. The only multiples of11 in this interval are 0 and 11.",
+            "For 209, 2−0+9=11, and 209=19×11."
+          ],
+          "check": "121 has sum0; 209 has sum11; both are divisible by11.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo182_qrt_d4_explain.py",
+            "bindings": {
+              "domain": "all_three_digit_integers",
+              "expression": "100a+10b+c",
+              "divisor": "11",
+              "criterion": "a-b+c in {0,11}"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original digit-rotation EXPLAIN-D4 TEST candidate, subject and band suitability subject to independent qualified review.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-D4-EXPLAIN-ROTATE",
+          "decision": "Build place-value sign changes and a two-digit anchor; the protected even-versus-odd length classification remains learner-owned in Core2A.",
+          "step_refs": [
+            "D4-EXP-PLACE",
+            "D4-EXP-TWO",
+            "D4-EXP-SPLIT",
+            "D4-EXP-AUDIT"
+          ],
+          "representation_ref": "REP-D4-EXPLAIN-CORE1A",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-D4-EXPLAIN"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Check all pairs of 2 decimal digits for negated mod11 residues on swapping positions.",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "D4-EXP-STAGE-PLACE",
+            "D4-EXP-STAGE-TWO",
+            "D4-EXP-STAGE-SPLIT"
+          ],
+          "worked_anchor_ref": "Q-D4-EXPLAIN-WORKED"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "Why do two numbers 10u+v and 10v+u have opposite residues modulo11?",
+        "result": "10≡−1 modulo11, giving v−u and u−v.",
+        "representation_ref": "REP-D4-EXPLAIN-CORE1A"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "A classmate says two-digit and four-digit rotations show every multiple of11 survives rotation at any length. Why could this rule fail for three-digit 121?",
+          "defensible_answer": "121 rotates to211 and 211 is not divisible by11; tested even-digit cases do not establish all lengths."
+        },
+        "attempt": {
+          "produces": "Causal explanation of residue sign from place values, even/odd original length contrast and nonzero leading-digit obstruction.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Define a fixed-width left rotation with nonzero original leading digit.",
+              "evidence_of": "Keeps domain correct under leading zeros."
+            },
+            {
+              "criterion": "Explain 10≡−1 modulo11 and its dependence on an exponent.",
+              "evidence_of": "Causal place-value mechanism rather than digit-sum claim."
+            },
+            {
+              "criterion": "Explain why even L preserves zero residue and odd L yields nonzero 2a.",
+              "evidence_of": "Correct causal effect of changed assumption."
+            },
+            {
+              "criterion": "Use odd-length boundary and a changed input to diagnose the overgeneralization.",
+              "evidence_of": "Distinguishes conceptual exception from an arithmetic slip."
+            }
+          ],
+          "accepted": [
+            "For original N=a10^(L−1)+B with a nonzero first digit and rotation R=10B+a, modulo11 N≡a(-1)^(L−1)+B and R≡a−B. If L is even, R≡−N, so zero stays zero. If L is odd and N≡0, B≡−a, so R≡2a, nonzero because a is 1..9."
+          ],
+          "rejected": [
+            "Digit sum stays constant so mod11 divisibility always stays constant.",
+            "The odd-length counterexample 121 is an arithmetic accident."
+          ],
+          "task": {
+            "prompt": "Explain why the assertion that ALL left one-digit rotations preserve 11-divisibility is wrong; use 121 and 1210 and the decimal place-value mechanism, not a table of many cases.",
+            "givens": [
+              "L≥2, leading digit a in1..9.",
+              "Original N divisible by11.",
+              "Rotation keeps the original fixed width."
+            ],
+            "representation_ref": "REP-D4-EXPLAIN-CORE1B",
+            "stage_refs": [
+              "D4-EXP-WRONG"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "What exactly differs between 121→211 and 1210→2101?",
+              "why_this_ask": "Locates original digit length rather than computation.",
+              "from_step_ref": "D4-EXP-AUDIT"
+            },
+            {
+              "ask": "Why does shifting a decimal place change the sign modulo11?",
+              "why_this_ask": "Elicits positional cause.",
+              "from_step_ref": "D4-EXP-PLACE"
+            },
+            {
+              "ask": "Write N=a10^(L−1)+B and R=10B+a. Which exponent switches sign with L?",
+              "why_this_ask": "Connects abstract bridge to the operation.",
+              "from_step_ref": "D4-EXP-SPLIT"
+            },
+            {
+              "ask": "For odd L with 11|N, why is R congruent to 2a, and why is that nonzero?",
+              "why_this_ask": "Explains the whole exception family, not one sample.",
+              "from_step_ref": "D4-EXP-AUDIT"
+            },
+            {
+              "ask": "Test 110 and1232 by length before computing rotated values.",
+              "why_this_ask": "Checks transfer from rule, not copied counterexample.",
+              "from_step_ref": "D4-EXP-AUDIT"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A gives neutral sign-change and two-digit anchor; Core1B diagnoses a false all-length rule and reconstructs a length-sensitive causal explanation."
+        },
+        "boundary_test": {
+          "prompt": "Predict whether left one-digit rotations of 110 and 1232 preserve divisibility by11, using original lengths. Then check 101 and 2321.",
+          "answer": "110 has odd original length and becomes101, not divisible by11; 1232 has even original length and becomes2321, divisible by11.",
+          "confirms": "Repairs explanation on independent changed length and digits."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-D4-EXPLAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "expression": "10 ≡ −1 (mod 11).",
+      "meaning": "A one-place left shift reverses a digit's modular contribution. This is a conceptual bridge, not the learner's protected parity result.",
+      "symbols": [
+        {
+          "symbol": "L",
+          "meaning": "Original fixed decimal digit length",
+          "unit_or_domain": "integer≥2"
+        },
+        {
+          "symbol": "a",
+          "meaning": "Original nonzero leading decimal digit",
+          "unit_or_domain": "1..9"
+        },
+        {
+          "symbol": "B",
+          "meaning": "Padded trailing suffix interpreted as integer",
+          "unit_or_domain": "0..10^(L−1)-1"
+        }
+      ],
+      "conditions": [
+        "Retain original L positions under rotation.",
+        "Ten is congruent to minus one modulo11."
+      ],
+      "derivation": [
+        {
+          "id": "D4-EXP-REL-0",
+          "action": "Use the decimal identity 10 congruent to -1 modulo 11: each shift by one decimal place changes the residue sign.",
+          "why_valid": "10+1=11, and multiplication respects congruence.",
+          "inputs": [],
+          "output": "Sign-change mechanism independent of a particular digit string.",
+          "role": "DECLARE"
+        },
+        {
+          "id": "D4-EXP-REL-1",
+          "action": "Compare two-digit 10u+v with digit-swapped 10v+u as a neutral worked anchor.",
+          "why_valid": "Modulo11, the respective remainders are v-u and u-v.",
+          "inputs": [
+            "10≡-1 modulo11"
+          ],
+          "output": "For two positions, swapping negates residue, including zero.",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "D4-EXP-REL-2",
+          "action": "Represent a general L-digit input with leading digit a and remaining value B as N=a×10^(L−1)+B; its one-digit left rotation is R=10B+a.",
+          "why_valid": "Shifting the suffix left multiplies by ten and appending a adds its units value.",
+          "inputs": [
+            "10≡-1 modulo11"
+          ],
+          "output": "Exact positional equations, not the final parity classification.",
+          "role": "TRANSFORM"
+        },
+        {
+          "id": "D4-EXP-REL-3",
+          "action": "Identify the assumption that must be rechecked whenever a two-digit demonstration is generalized to another original length.",
+          "why_valid": "The contribution of a is multiplied by ten L−1 times; changing L changes that exponent.",
+          "inputs": [
+            "10≡-1 modulo11"
+          ],
+          "output": "Audit length and leading zero conventions before deciding the invariant.",
+          "role": "VERIFY"
+        }
+      ],
+      "limits": [
+        "An unchanged digit sum is not a valid explanation of modulo11 invariance.",
+        "A two-digit example alone proves no general length class."
+      ],
+      "checks": [
+        "For two-digit 10u+v versus 10v+u, residues are v-u and u-v."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>10</mn><mo>≡</mo><mo>−</mo><mn>1</mn></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "id": "REP-D4-EXPLAIN-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Staged conceptual sign bridge without revealing which digit lengths preserve 11 divisibility.",
+      "required_elements": [
+        "10≡−1 (mod11)",
+        "10u+v",
+        "N=a10^(L−1)+B"
+      ],
+      "relation_refs": [
+        "REL-D4-EXPLAIN"
+      ],
+      "read_order": [
+        "Read original digit length and operation.",
+        "Track positions without using an answer-bearing diagram.",
+        "Explain or contest the effect on modulo11."
+      ],
+      "instance_constraints": [
+        "Fixed width after rotation, even if zero leads.",
+        "No correct length class or two-digit prefix exception in SVG metadata."
+      ],
+      "accessibility": [
+        "Diagram title/description contain given symbols only.",
+        "Text SVG stage labels accessible independently of color."
+      ],
+      "misleading_alternatives": [
+        "Digit sum alone is not a modulo11 criterion."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/explain-core1a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1A",
+          "cores": [
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-D4-EXPLAIN",
+          "datum_refs": [
+            "D4-EXPLAIN-DATUM-CORE1A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/explain-core1a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Fixed-width decimal string and operation without revealed correct length class.",
+            "caption": "The learner must explain the residue outcome; the figure provides only the givens and the place-value bridge."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "digit positions",
+          "symbol": "a×10^(L−1)+B",
+          "in_words": "Original value under an explicitly defined fixed-width rotation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-EXP-STAGE-PLACE",
+          "label": "Place-value sign",
+          "purpose": "Show conceptual givens without protected answer.",
+          "visible_elements": [
+            "10≡−1 (mod11)"
+          ]
+        },
+        {
+          "id": "D4-EXP-STAGE-TWO",
+          "label": "Two digits",
+          "purpose": "Show conceptual givens without protected answer.",
+          "visible_elements": [
+            "10u+v"
+          ]
+        },
+        {
+          "id": "D4-EXP-STAGE-SPLIT",
+          "label": "General form",
+          "purpose": "Show conceptual givens without protected answer.",
+          "visible_elements": [
+            "N=a10^(L−1)+B"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-EXPLAIN-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Unmarked student overgeneralization for misconception reconstruction.",
+      "required_elements": [
+        "one-digit rotation",
+        "all original lengths?"
+      ],
+      "relation_refs": [
+        "REL-D4-EXPLAIN"
+      ],
+      "read_order": [
+        "Read original digit length and operation.",
+        "Track positions without using an answer-bearing diagram.",
+        "Explain or contest the effect on modulo11."
+      ],
+      "instance_constraints": [
+        "Fixed width after rotation, even if zero leads.",
+        "No correct length class or two-digit prefix exception in SVG metadata."
+      ],
+      "accessibility": [
+        "Diagram title/description contain given symbols only.",
+        "Text SVG stage labels accessible independently of color."
+      ],
+      "misleading_alternatives": [
+        "Digit sum alone is not a modulo11 criterion."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/explain-core1b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE1B",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-D4-EXPLAIN",
+          "datum_refs": [
+            "D4-EXPLAIN-DATUM-CORE1B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/explain-core1b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Fixed-width decimal string and operation without revealed correct length class.",
+            "caption": "The learner must explain the residue outcome; the figure provides only the givens and the place-value bridge."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "digit positions",
+          "symbol": "a×10^(L−1)+B",
+          "in_words": "Original value under an explicitly defined fixed-width rotation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-EXP-WRONG",
+          "label": "Unmarked givens",
+          "purpose": "Show conceptual givens without protected answer.",
+          "visible_elements": [
+            "one-digit rotation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-EXPLAIN-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Core2A safe original and rotated digit strings without parity classification.",
+      "required_elements": [
+        "L digit string a d2 ... dL",
+        "one-digit left rotation"
+      ],
+      "relation_refs": [
+        "REL-D4-EXPLAIN"
+      ],
+      "read_order": [
+        "Read original digit length and operation.",
+        "Track positions without using an answer-bearing diagram.",
+        "Explain or contest the effect on modulo11."
+      ],
+      "instance_constraints": [
+        "Fixed width after rotation, even if zero leads.",
+        "No correct length class or two-digit prefix exception in SVG metadata."
+      ],
+      "accessibility": [
+        "Diagram title/description contain given symbols only.",
+        "Text SVG stage labels accessible independently of color."
+      ],
+      "misleading_alternatives": [
+        "Digit sum alone is not a modulo11 criterion."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/explain-core2a.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2A",
+          "cores": [
+            "CORE2A"
+          ],
+          "question_ref": "Q-D4-EXPLAIN-ROTATE1",
+          "datum_refs": [
+            "D4-EXPLAIN-DATUM-CORE2A"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/explain-core2a.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Fixed-width decimal string and operation without revealed correct length class.",
+            "caption": "The learner must explain the residue outcome; the figure provides only the givens and the place-value bridge."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "digit positions",
+          "symbol": "a×10^(L−1)+B",
+          "in_words": "Original value under an explicitly defined fixed-width rotation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-EXP-ROTATE1",
+          "label": "Unmarked givens",
+          "purpose": "Show conceptual givens without protected answer.",
+          "visible_elements": [
+            "L digit string a d2 ... dL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-D4-EXPLAIN-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SYMBOLIC_DIAGRAM",
+      "purpose": "Core2B safe changed operation without exceptional prefix solution.",
+      "required_elements": [
+        "L digit string a b d3 ... dL",
+        "two-digit block moved to end"
+      ],
+      "relation_refs": [
+        "REL-D4-EXPLAIN"
+      ],
+      "read_order": [
+        "Read original digit length and operation.",
+        "Track positions without using an answer-bearing diagram.",
+        "Explain or contest the effect on modulo11."
+      ],
+      "instance_constraints": [
+        "Fixed width after rotation, even if zero leads.",
+        "No correct length class or two-digit prefix exception in SVG metadata."
+      ],
+      "accessibility": [
+        "Diagram title/description contain given symbols only.",
+        "Text SVG stage labels accessible independently of color."
+      ],
+      "misleading_alternatives": [
+        "Digit sum alone is not a modulo11 criterion."
+      ],
+      "rendered_asset_refs": [
+        "TEST/imo-research/qrt-d4/figures/explain-core2b.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "D4-SCENE-CORE2B",
+          "cores": [
+            "CORE2B"
+          ],
+          "question_ref": "Q-D4-EXPLAIN-ROTATE2",
+          "datum_refs": [
+            "D4-EXPLAIN-DATUM-CORE2B"
+          ],
+          "asset_ref": "TEST/imo-research/qrt-d4/figures/explain-core2b.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_FACTORS",
+            "frame": "Fixed-width decimal string and operation without revealed correct length class.",
+            "caption": "The learner must explain the residue outcome; the figure provides only the givens and the place-value bridge."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "digit positions",
+          "symbol": "a×10^(L−1)+B",
+          "in_words": "Original value under an explicitly defined fixed-width rotation."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "D4-EXP-ROTATE2",
+          "label": "Unmarked givens",
+          "purpose": "Show conceptual givens without protected answer.",
+          "visible_elements": [
+            "L digit string a b d3 ... dL"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "id": "FAM-D4-EXPLAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Why modulo11 divisibility changes under decimal digit rotation",
+      "capability_refs": [
+        "CAP-D4-EXPLAIN"
+      ],
+      "solution_structure": [
+        "Interpret original fixed-width digit string.",
+        "Use 10≡−1 mod11 and represent rotation in place values.",
+        "Explain why length parity changes residue sign.",
+        "Independently explain a changed two-digit rotation with a new prefix exception."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Choose modulo11 positional sign rather than digit sum.",
+        "representation_translation": "Convert string rotation into algebraic positional values.",
+        "reasoning_steps": "Explain both the invariant and the failure under changed length.",
+        "novelty": "Two-leading-digit rotation changes the odd-length exception."
+      },
+      "safe_variations": [
+        "Other length-sensitive cyclic rotations with a fixed-width domain."
+      ],
+      "transfer_boundaries": [
+        "Do not reuse one-digit rule for two-digit rotation.",
+        "A leading zero after rotation does not reset the original length."
+      ],
+      "common_wrong_routes": [
+        "Digit sums stay equal, so mod11 must.",
+        "Examples at even length prove all-length invariant.",
+        "Any odd-length rotation always fails even when two-digit block is a multiple11."
+      ],
+      "item_refs": [
+        "Q-D4-EXPLAIN-WORKED",
+        "Q-D4-EXPLAIN-ROTATE1",
+        "Q-D4-EXPLAIN-ROTATE2"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-D4-EXPLAIN-WORKED",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-JUSTIFY"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-EXPLAIN-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-EXPLAIN-WORKED",
+      "stem": "For decimal digits u and v, compare the modulo11 residues of 10u+v and 10v+u. Explain why exchanging their two places negates the residue, without generalizing to every digit length.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "u,v are digits 0..9; this identity is valid even when a digit is zero."
+      ],
+      "figure_refs": [
+        "REP-D4-EXPLAIN-CORE1A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Swapping two places negates modulo11 residue.",
+        "reasoning": [
+          "Since 10≡−1 modulo11, 10u+v≡v−u.",
+          "After swapping, 10v+u≡u−v, exactly the negative residue.",
+          "If the original residue is zero, its negative is zero, but this two-place anchor says nothing yet about all digit lengths."
+        ],
+        "check": "Compare 37 versus73 (opposite nonzero residues) and22 versus22 (zero residue).",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-EXPLAIN",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-EXPLAIN",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "WORKED_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-D4-EXPLAIN-CORE1A",
+        "safe_ref": "REP-D4-EXPLAIN-CORE1A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-EXP-STAGE-PLACE"
+        ]
+      },
+      "failure_signal": "Unchanged digit sum is not a valid modulo11 explanation; signed positional contributions are the bridge.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-EXPLAIN",
+        "closure": "A two-digit worked anchor teaches mechanism but not the Core2A parity explanation."
+      }
+    },
+    {
+      "id": "Q-D4-EXPLAIN-ROTATE1",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-EXPLAIN-D4",
+        "grade9v3:cognitive_demand": {
+          "primary": "EXPLAIN",
+          "secondary": [
+            "REPRESENT",
+            "JUSTIFY"
+          ],
+          "basis": "W is a causal place-value parity mechanism, not a selection from memorized categories."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Explain how changing L reverses leading-digit sign and creates odd-L 2a remainder.",
+          "common_wrong_route": "Digit-sum preservation or only even-length samples used to assert an all-length rule."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "D4-EXP-MOVE-CAUSE"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "D4-EXP-MOVE-CAUSE"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-EXPLAIN-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-EXPLAIN-ROTATE1",
+      "stem": "An L-digit positive integer N is divisible by 11. Move its nonzero FIRST digit to the right end, retaining all original L digit positions, including any new leading zero. Explain WHY divisibility by 11 is preserved whenever L is even but cannot be preserved when L is odd. Make the causal contrast between 1210 → 2101 and 121 → 211; giving only numerical checks is not an explanation.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "Original L≥2 and positive L-digit N is divisible by11.",
+        "Its leading digit a satisfies 1≤a≤9.",
+        "B represents the suffix of length L−1, with zeros permitted.",
+        "After rotation, a new leading zero is retained as a position."
+      ],
+      "figure_refs": [
+        "REP-D4-EXPLAIN-CORE2A"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "For an initial multiple of11, one-leading-digit left rotation preserves divisibility exactly at even original length.",
+        "reasoning": [
+          "Let original N=a10^(L−1)+B, with a in1..9 and suffix B of fixed length L−1. Rotated R=10B+a.",
+          "Because 10≡−1 modulo11, N≡a(-1)^(L−1)+B while R≡a−B.",
+          "If original L is even then N≡B−a and R≡a−B≡−N, so an initial zero remainder remains zero.",
+          "If L is odd and 11|N then 0≡N≡a+B, hence B≡−a and R≡2a, nonzero modulo11 because 1≤a≤9.",
+          "For four-digit 1210, rotation 2101 is divisible by11. For three-digit 121, rotation 211 is not."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-EXP-MOVE-DOMAIN",
+            "kind": "REPRESENT",
+            "action": "Maintain original L and leading digit a, with suffix B and zero-safe rotation.",
+            "why_valid": "The defined operation has a fixed original number of positions.",
+            "inputs": [
+              "L≥2",
+              "1≤a≤9",
+              "11|N"
+            ],
+            "output": "N and R retain comparable positions."
+          },
+          {
+            "id": "D4-EXP-MOVE-PLACE",
+            "kind": "CONNECT",
+            "action": "Express N=a10^(L−1)+B and R=10B+a and reduce modulo11.",
+            "why_valid": "Rotation shifts all suffix positions and appends a units digit; 10≡−1 modulo11.",
+            "inputs": [
+              "original and rotated strings"
+            ],
+            "output": "N≡a(-1)^(L−1)+B; R≡a−B."
+          },
+          {
+            "id": "D4-EXP-MOVE-CAUSE",
+            "kind": "DECIDE",
+            "action": "Explain why the exponent's parity makes R either −N or the nonzero 2a residue when 11|N.",
+            "why_valid": "For even L the sign on a is negative; for odd L it is positive, and a is 1..9 so 11∤2a.",
+            "inputs": [
+              "two modular expressions",
+              "11|N"
+            ],
+            "output": "Even original L preserves; odd L cannot."
+          },
+          {
+            "id": "D4-EXP-MOVE-VERIFY",
+            "kind": "VERIFY",
+            "action": "Compare 1210→2101 and 121→211 as independent changed-length checks.",
+            "why_valid": "Both inputs are divisible by11 but have different original length parity.",
+            "inputs": [
+              "explained mechanism"
+            ],
+            "output": "Observed results agree with causal rule."
+          }
+        ],
+        "crux_move_ref": "D4-EXP-MOVE-CAUSE",
+        "check": "1210→2101: 11 divides both; 121→211: only 121 is divisible by11; independently try 110→101 and 1232→2321.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-D4-EXPLAIN",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-EXPLAIN",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Name the original length L and first digit a. When a rotated string has a leading zero, has the original L changed?",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-EXP-MOVE-DOMAIN"
+        },
+        {
+          "text": "If 10≡−1 (mod11), what happens to the residue of a digit each time its positional weight is multiplied by ten?",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "D4-EXP-MOVE-PLACE"
+        },
+        {
+          "text": "After your written attempt is committed, compare N=a10^(L−1)+B and R=10B+a. Trace the sign for even and odd original L and explain the fate of the nonzero first digit.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "D4-EXP-MOVE-CAUSE"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-EXPLAIN-CORE2A",
+        "safe_ref": "REP-D4-EXPLAIN-CORE2A",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-EXP-ROTATE1"
+        ]
+      },
+      "repair_ref": "D4-EXP-AUDIT",
+      "failure_signal": "Preserved digit sum is irrelevant to modulo11, and favorable even-length examples do not explain the odd-length obstruction; a leading zero after rotation does not change original L.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-EXPLAIN",
+        "closure": "Independent EXPLAIN-D4 requires explaining the positional sign flip and both length outcomes; H3 help is assisted."
+      },
+      "independent_check": {
+        "statement": "Exhaust original 2..4 digit multiples of11 and independently test sampled 5..6 digit lengths with fixed-width rotation and nonzero initial a.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 8,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "A causal explanation of a place-value invariant breaking under changed original length; no long arithmetic.",
+        "component_evidence": {
+          "concept_model_selection": "Choose modulo11 positional weights, not digit-sum conservation.",
+          "representation_translation": "Map digit rotation to N=a10^(L−1)+B and R=10B+a.",
+          "reasoning_chain_length": "Explain sign change by length parity, then nonzero 2a obstruction for odd L.",
+          "algebra_computational_load": "Simple modular residues only.",
+          "trap_exception_sensitivity": "Odd original length and rotated leading-zero cases expose a hidden assumption."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-D4-EXPLAIN-ROTATE2",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D4-QRT-EXPLAIN-D4",
+        "grade9v3:cognitive_demand": {
+          "primary": "EXPLAIN",
+          "secondary": [
+            "MODEL",
+            "JUSTIFY"
+          ],
+          "basis": "Identify changed two-digit prefix mechanism and its odd-length exception."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Explain odd-length rotation remainder2A and why prefix divisibility by11 is decisive.",
+          "common_wrong_route": "Copy the one-digit claim that all odd lengths fail."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-D4-EXPLAIN-ORIGINAL",
+      "original_identifier": "AUTHORED-Q-D4-EXPLAIN-ROTATE2",
+      "stem": "The operation CHANGES: instead of moving ONE leading digit, move the first TWO digits as one block to the right end (original L≥3). An original L-digit integer N is divisible by11. Explain why the new rotation always preserves 11-divisibility at even L, while for odd L it survives exactly when the original two-digit prefix A is itself divisible by11. Account for the contrasting odd-length cases 110 → 011 and 121 → 112.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "L≥3 and the original L-digit positive integer is divisible by11.",
+        "Two-digit prefix A is between10 and99 and suffix C uses exactly L−2 digits, with zero padding allowed.",
+        "Rotate the first TWO digits as a block; retain the original width L.",
+        "Leading zeros produced by rotation do not change original L."
+      ],
+      "figure_refs": [
+        "REP-D4-EXPLAIN-CORE2B"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Two-leading-digit rotation preserves 11-divisibility for even L, or for odd L exactly when the original prefix A is divisible by11.",
+        "reasoning": [
+          "Write N=A10^(L−2)+C and R=100C+A for two-digit prefix A=10a+b and padded suffix C.",
+          "Modulo11, 100≡1 and R≡C+A. If L even, L−2 even, so N≡A+C and the rotated residue equals the original residue, preserving zero.",
+          "If L odd, N≡−A+C=0 gives C≡A; R≡2A. Because 2 and11 are coprime, this is zero iff A is divisible by11.",
+          "For odd length, 110 (A=11) rotates as 011=11 and succeeds; 121 (A=12) rotates to112 and fails."
+        ],
+        "reasoning_route": [
+          {
+            "id": "D4-EXP-TRANSFER-DOMAIN",
+            "kind": "REPRESENT",
+            "action": "Group first two digits as A and keep the original L−2 suffix C.",
+            "why_valid": "Block rotation means N=A10^(L−2)+C, R=100C+A.",
+            "inputs": [
+              "L≥3",
+              "A two-digit prefix"
+            ],
+            "output": "Exact new place-value model."
+          },
+          {
+            "id": "D4-EXP-TRANSFER-CAUSE",
+            "kind": "DECIDE",
+            "action": "Explain the even-length equality of residues and odd-length residue2A when N is divisible by11.",
+            "why_valid": "100≡1 modulo11; sign of 10^(L−2) depends on parity of L.",
+            "inputs": [
+              "new expressions",
+              "11|N"
+            ],
+            "output": "Even L always works; odd L depends on A."
+          },
+          {
+            "id": "D4-EXP-TRANSFER-EXCEPTION",
+            "kind": "CONNECT",
+            "action": "Identify the odd-length two-digit-prefix exception.",
+            "why_valid": "11|2A iff 11|A because 2 and11 are coprime.",
+            "inputs": [
+              "odd L",
+              "R≡2A"
+            ],
+            "output": "The original prefix A can equal 11,22,...,99."
+          },
+          {
+            "id": "D4-EXP-TRANSFER-CHECK",
+            "kind": "VERIFY",
+            "action": "Explain the difference between 110→011 and 121→112.",
+            "why_valid": "Both have odd original length but only the first prefix is multiple11.",
+            "inputs": [
+              "new exception"
+            ],
+            "output": "Changed-operation exception and countercase checked."
+          }
+        ],
+        "crux_move_ref": "D4-EXP-TRANSFER-CAUSE",
+        "check": "110→011 (11, divisible by11); 121→112 (not divisible); 11220→22011 (both divisible with A=11).",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "rubric": [
+          {
+            "criterion": "Define two-digit-block rotation in fixed width.",
+            "evidence_of": "Changed operation correctly modeled."
+          },
+          {
+            "criterion": "Explain why even original L preserves zero residue.",
+            "evidence_of": "R≡N because 100≡1 and L−2 even."
+          },
+          {
+            "criterion": "Explain odd-L residue2A and exact A multiple11 exception.",
+            "evidence_of": "New necessary/sufficient prefix mechanism and contrasting example."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-D4-EXPLAIN",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-D4-EXPLAIN",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Compare modulo11 the expressions N=A10^(L−2)+C and R=100C+A. Which power of ten changes with the original length?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-D4-EXPLAIN-CORE2B",
+        "safe_ref": "REP-D4-EXPLAIN-CORE2B",
+        "bound_ref": null,
+        "stage_refs": [
+          "D4-EXP-ROTATE2"
+        ]
+      },
+      "repair_ref": "D4-EXP-SPLIT",
+      "failure_signal": "Assuming every odd-length two-digit rotation fails ignores prefix A divisible by11; treating rotated 011 as a two-position input changes the operation.",
+      "family_exposure": {
+        "family_ref": "FAM-D4-EXPLAIN",
+        "closure": "True changed-demand EXPLAIN transfer requires the new A multiple11 exception and the distinct two-digit positional model."
+      },
+      "independent_check": {
+        "statement": "Check all original 3..4 digit multiples11 and sampled longer inputs, including prefix A=11 and A=12 at odd L.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D4",
+        "score": 8,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 2
+        },
+        "basis": "A changed two-digit-prefix rotation has a novel odd-length exception, requiring a fresh causal explanation.",
+        "component_evidence": {
+          "concept_model_selection": "Choose a two-digit-block decomposition rather than reuse first-digit model.",
+          "representation_translation": "Translate to N=A10^(L−2)+C, R=100C+A.",
+          "reasoning_chain_length": "Explain even-length invariant, odd-length residue2A, and precise prefix exception.",
+          "algebra_computational_load": "Short congruences only.",
+          "trap_exception_sensitivity": "Some odd L succeed when the two-digit prefix is a multiple of11."
+        }
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-D4-EXPLAIN-ROTATE1"
+        ],
+        "statement": "Changed rotation by two digits creates a new surviving odd-length case.",
+        "invariant": "Powers of ten change residue sign modulo11.",
+        "novelty": {
+          "checked_against": [
+            "Q-D4-EXPLAIN-ROTATE1",
+            "MIC-D4-EXPLAIN:exit_task",
+            "MIC-D4-EXPLAIN:boundary_test"
+          ],
+          "why_new": "Unlike a single digit a in1..9, the two-digit prefix A can be divisible by11 and make odd-length rotation survive."
+        },
+        "protected_move_ref": "D4-EXP-TRANSFER-CAUSE"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "id": "ROUTE-D4-EXPLAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Place-value explanation and length-dependent rotating digits",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-D4-EXPLAIN"
+      ],
+      "entry_needs": [
+        "Decimal place value, parity and congruences modulo11."
+      ],
+      "learner_actions": [
+        "Study the 10≡−1 bridge.",
+        "Check a two-digit swapped-anchor residue.",
+        "Describe a general cyclic digit movement.",
+        "Independently explain a three-digit alternating-sum exception."
+      ],
+      "help_plan": [
+        "Core1A stages reveal conceptual identity only.",
+        "Core2A must retain a written explanation before H3 or full answer.",
+        "Core1B reconstructs the odd-length misconception."
+      ],
+      "reveal_plan": "Concept bridge then independent exit; protected Core2A causal parity explanation and distinct Core2B two-digit prefix condition.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-D4-EXPLAIN-ORIGINAL",
+          "purpose": "Wholly authored digit-place-value task",
+          "reason": "No rights-cleared official source admitted."
+        }
+      ],
+      "when_not_suitable": [
+        "Curriculum/D4 and source-rights review not accepted."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:qrt_cell": "QRT-EXPLAIN-D4",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "D4-EXPLAIN-DATUM-CORE1A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 0,
+      "unit": "fixed decimal string position",
+      "symbol": "10u+v",
+      "meaning": "Original authored symbol for a rotation operation, without outcome.",
+      "locator": "AUTHOR_CREATED: QRT-EXPLAIN-D4"
+    },
+    {
+      "id": "D4-EXPLAIN-DATUM-CORE1B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 1,
+      "unit": "fixed decimal string position",
+      "symbol": "a|d₂…dL",
+      "meaning": "Original authored symbol for a rotation operation, without outcome.",
+      "locator": "AUTHOR_CREATED: QRT-EXPLAIN-D4"
+    },
+    {
+      "id": "D4-EXPLAIN-DATUM-CORE2A",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 2,
+      "unit": "fixed decimal string position",
+      "symbol": "a d₂…dL → d₂…dL a",
+      "meaning": "Original authored symbol for a rotation operation, without outcome.",
+      "locator": "AUTHOR_CREATED: QRT-EXPLAIN-D4"
+    },
+    {
+      "id": "D4-EXPLAIN-DATUM-CORE2B",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-D4-EXPLAIN-ORIGINAL"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 3,
+      "unit": "fixed decimal string position",
+      "symbol": "a b d₃…dL → d₃…dL a b",
+      "meaning": "Original authored symbol for a rotation operation, without outcome.",
+      "locator": "AUTHOR_CREATED: QRT-EXPLAIN-D4"
+    }
+  ]
+}
