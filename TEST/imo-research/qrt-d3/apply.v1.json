@@ -1,0 +1,1368 @@
+{
+  "schema_version": "0.2.0",
+  "package_id": "PKG-QRT-APPLY-D3",
+  "title": "Original authored TEST D3 APPLY: mixed powers and least divisibility witness",
+  "version": "1.0.0",
+  "status": "CANDIDATE",
+  "subject": "TEST",
+  "scope_summary": "Original author-created test: apply prime-power valuation theorem across simultaneous square/cube divisibility; no official IMO question/source, D3 academic band provisional.",
+  "curriculum_mappings": [],
+  "resources": [
+    {
+      "id": "SRC-TEST-QRT-APPLY-D3",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [],
+      "evidence_refs": [],
+      "extensions": {},
+      "title": "Original mixed-power divisibility APP TEST",
+      "origin": "AUTHORED",
+      "locator": "TEST/imo-research/qrt-d3/apply.v1.json",
+      "edition": "Authored TEST October 12 2026",
+      "section": "Prime valuations of squares and cubes, minimality under intersecting divisibility constraints",
+      "last_checked": "2026-10-12",
+      "access_status": "SECTION_INSPECTED",
+      "rights_status": "Entirely original mathematical item and SVG visuals; no borrowed official exam question or attached source material.",
+      "snapshot_ref": null,
+      "snapshot_digest": null,
+      "role": [
+        "AUTHOR_CREATED"
+      ],
+      "supports_claims": [
+        "Least positive n with 72|n² and 135|n³ is n=60.",
+        "Prime-exponent thresholds for p^a|n^r are exponent(n)>=ceil(a/r), and joint constraints take maxima.",
+        "Swapping the square/cube exponents for 72 and 135 changes the least integer to 90."
+      ],
+      "entry_capabilities": [],
+      "depth": [
+        "COMPETITION"
+      ],
+      "selection_reason": "Genuinely nonroutine APPLY demand applies a known valuation rule across two powers and constraints; protected W is selecting appropriate ceilings and joint max, not a routine LCM of divisors.",
+      "fallback": []
+    }
+  ],
+  "buckets": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "BUCKET-QRT-APPLY-D3",
+      "title": "Minimum integer under two distinct power-divisibility constraints",
+      "topic": "Number theory, valuations and divisibility by prime powers",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Different exponent thresholds must be inferred and combined across overlapping prime factors.",
+      "depth_overlay": "ADVANCED",
+      "curriculum_mappings": [],
+      "prerequisite_refs": [],
+      "primary_representation_ref": "REP-QRT-APPLY-D3-CONSTRUCTION",
+      "conventions": [
+        {
+          "id": "n-positive",
+          "statement": "Find the least POSITIVE integer satisfying both divisibility conditions."
+        },
+        {
+          "id": "p-valuation",
+          "statement": "v_p(n) is the nonnegative integer exponent of prime p in factorisation of positive n."
+        },
+        {
+          "id": "power",
+          "statement": "v_p(n^r)=r v_p(n) for positive integer r."
+        },
+        {
+          "id": "minimal",
+          "statement": "Minimum valid n has the least nonnegative exponent of each relevant prime that obeys ALL conditions."
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "CAP-QRT-APPLY-D3",
+      "action": "Apply prime-adic exponent thresholds to combined square and cube divisibility and derive the least positive integer with independent minimality proof.",
+      "success_criterion": "Find n=60 (not lcm 1080), justify each prime threshold and combine maxima, verify original divisibilities and show minimality; recompute changed swap as 90.",
+      "prerequisite_refs": [],
+      "curriculum_mappings": [],
+      "external_provider": null,
+      "acceptance_status": "CANDIDATE"
+    }
+  ],
+  "microtopics": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "MIC-QRT-APPLY-D3",
+      "title": "Apply prime-exponent ceilings to intersecting power constraints",
+      "bucket_id": "BUCKET-QRT-APPLY-D3",
+      "primary_capability_ref": "CAP-QRT-APPLY-D3",
+      "intrinsic_badge": "HARD",
+      "badge_reason": "Choose two different power divisibility rules and merge overlapping prime requirements.",
+      "entry_assumptions": [
+        "Prime factorisation uniqueness and divisibility.",
+        "Power law (p^e)^r=p^(er).",
+        "Ceiling of rational lower bound.",
+        "Basic proof that every valid integer has required prime factors."
+      ],
+      "inferential_jump": "Learner must independently bridge from 72|n² and 135|n³ to per-prime threshold ceilings and take a maximum for overlapping prime 3; simply computing lcm(72,135) is a plausible but overly restrictive wrong route. H1/H2 cannot select the joint exponent thresholds.",
+      "teaching_path": [
+        {
+          "id": "STEP-AD3-1",
+          "role": "DECLARE",
+          "action": "Write a positive integer as independent prime powers, p^e times factors not divisible by p.",
+          "why_valid": "Unique prime factorisation counts the copies of each prime.",
+          "inputs": [
+            "Prime p",
+            "Exponent e"
+          ],
+          "output": "The prime exponent in n is e."
+        },
+        {
+          "id": "STEP-AD3-2",
+          "role": "TRANSFORM",
+          "action": "On a non-target generic p^a dividing n^r, relate the exponent of p in n^r to its exponent in n.",
+          "why_valid": "Prime exponent of n^r is r times that in n.",
+          "inputs": [
+            "p^a|n^r",
+            "Integer r>=1"
+          ],
+          "output": "Necessary and sufficient: r e>=a, hence e>=ceil(a/r)."
+        },
+        {
+          "id": "STEP-AD3-3",
+          "role": "TRANSFORM",
+          "action": "Study two generic prime divisibility conditions and describe combining lower bounds only for primes that occur in both.",
+          "why_valid": "Each condition holds exactly when its prime exponent inequalities hold; the conjunction takes the larger bound for each prime.",
+          "inputs": [
+            "Two prime-exponent inequalities for n"
+          ],
+          "output": "Minimum joint prime exponent is maximum of the separate lower bounds."
+        },
+        {
+          "id": "STEP-AD3-4",
+          "role": "VERIFY",
+          "action": "Check a generic proposed minimum by the original divisibilities and show that reducing any mandatory prime exponent breaks one condition.",
+          "why_valid": "Removing one required prime copy makes the corresponding exponent strictly below its integer threshold.",
+          "inputs": [
+            "Valuation thresholds"
+          ],
+          "output": "An exact divisibility check and minimality proof, not a numerical guess."
+        }
+      ],
+      "relation_refs": [
+        "REL-QRT-APPLY-D3"
+      ],
+      "representation_refs": [
+        "REP-QRT-APPLY-D3-CONSTRUCTION"
+      ],
+      "question_family_refs": [
+        "FAM-QRT-APPLY-D3"
+      ],
+      "misconceptions": [
+        {
+          "wrong_idea": "If a divides n² and b divides n³, n must itself be divisible by lcm(a,b).",
+          "diagnostic_prompt": "For 16|u² and 27|u³, must u be divisible by 16 and 27 individually? Test smaller u using exponent counts.",
+          "repair": "Power divisibility needs only ceiling(a/r) prime copies in u, not all exponent copies from each divisor."
+        },
+        {
+          "wrong_idea": "Use the same square-root threshold for both power conditions, or add exponents instead of taking their maximum.",
+          "diagnostic_prompt": "If 3² divides u² and 3³ divides u³, does u require 3¹, 3², or 3³? Distinguish different powers and overlap.",
+          "repair": "Use exponent ceiling for each given power separately; their conjunction takes the MAXIMUM of lower bounds on the same prime."
+        }
+      ],
+      "exit_task": {
+        "prompt": "Independent EXIT, genuinely different primes/powers: Find the least positive m with 200 | m² and 81 | m³. Show per-prime threshold logic, prove minimality and verify both original divisibilities.",
+        "source_ref": "SRC-TEST-QRT-APPLY-D3",
+        "answer": {
+          "kind": "MODEL_RESPONSE",
+          "summary": "m=180 (2²·3²·5).",
+          "reasoning": [
+            "200=2³·5², so m² needs v2(m)>=ceil(3/2)=2 and v5(m)>=ceil(2/2)=1.",
+            "81=3^4, so m³ needs v3(m)>=ceil(4/3)=2.",
+            "Minimum m=2²·3²·5=180.",
+            "At 180, m²/200=162 and m³/81=72000; any smaller admissible integer must still contain all factors and cannot be less than 180."
+          ],
+          "check": "180²=32400 divisible by 200; 180³=5832000 divisible by 81.",
+          "acceptable_alternatives": [],
+          "subpart_answers": [],
+          "verification_status": "CHECKED_BY_AUTHOR"
+        },
+        "oracle": {
+          "verification": {
+            "validator_id": "tests/test_imo182_qrt_d3_apply.py",
+            "bindings": {
+              "domain": "positive integers",
+              "expected_minimum": "180",
+              "divisors_and_powers": "200|m² and 81|m³"
+            }
+          }
+        }
+      },
+      "research_contribution": "Original APPLY-D3 TEST hypothesis. Technical test cannot sign academic D3 determination.",
+      "prerequisite_refs": [],
+      "lineage": [],
+      "construction_units": [
+        {
+          "id": "CU-AD3-VALUATIONS",
+          "decision": "Construct generic prime exponent power and conjunction criteria independently of the target numbers.",
+          "step_refs": [
+            "STEP-AD3-1",
+            "STEP-AD3-2",
+            "STEP-AD3-3",
+            "STEP-AD3-4"
+          ],
+          "representation_ref": "REP-QRT-APPLY-D3-CONSTRUCTION",
+          "misconception_indexes": [
+            0,
+            1
+          ],
+          "relation_refs": [
+            "REL-QRT-APPLY-D3"
+          ],
+          "independent_checks": [
+            {
+              "statement": "Generic p^a | u^r iff r v_p(u)>=a; the least integer v_p is ceil(a/r).",
+              "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+            }
+          ],
+          "reveal_stage_refs": [
+            "AD3-PRIME",
+            "AD3-POWER",
+            "AD3-JOINT"
+          ],
+          "worked_anchor_ref": "Q-TEST-QRT-APPLY-D3-CONCEPT"
+        }
+      ],
+      "compact_anchor": {
+        "prompt": "In generic prime p, if p^5 divides n², how many copies of p must n carry?",
+        "result": "At least 3: 2e>=5, so e>=ceil(5/2)=3.",
+        "representation_ref": "REP-QRT-APPLY-D3-CONSTRUCTION"
+      },
+      "elicitation": {
+        "predict": {
+          "prompt": "Does d|u² always mean d|u? Try a perfect-square divisor and explain what the power changes.",
+          "defensible_answer": "No. 16|4² yet 16 does not divide 4; power multiplies the prime exponent."
+        },
+        "attempt": {
+          "produces": "On generic prime powers, formulate one ceiling threshold and explain why joint constraints require per-prime maximum instead of sums.",
+          "closure": "RUBRIC",
+          "rubric": [
+            {
+              "criterion": "Correct power exponent law",
+              "evidence_of": "v_p(u^r)=r v_p(u)."
+            },
+            {
+              "criterion": "Threshold rounding",
+              "evidence_of": "Minimum v_p(u)=ceil(a/r)."
+            },
+            {
+              "criterion": "Overlap under AND conditions",
+              "evidence_of": "Take max, not sum of bounds for a prime."
+            }
+          ],
+          "accepted": [
+            "For p^a dividing u^r, enough p factors in u are ceil(a/r); all constraints take strongest relevant bound for each prime."
+          ],
+          "rejected": [
+            "u must always have p^a factors, regardless of power; add requirements for repeated primes."
+          ],
+          "task": {
+            "prompt": "In a generic example (not 72 or 135), explain the difference between requiring p^5|u² and p^4|u³. State the integer exponents needed in u and how you would combine them IF both held.",
+            "givens": [
+              "Prime p and positive integer u.",
+              "Do not compute the later target n."
+            ],
+            "representation_ref": "REP-QRT-APPLY-D3-CONSTRUCTION",
+            "stage_refs": [
+              "AD3-PRIME",
+              "AD3-POWER",
+              "AD3-JOINT"
+            ],
+            "response": {
+              "type": "free_response",
+              "paper_ok": true
+            }
+          }
+        },
+        "reconstruct": {
+          "route": [
+            {
+              "ask": "Is the divisor itself required to divide u, or only u raised to the stated power?",
+              "why_this_ask": "Identify over-strong lcm assumption.",
+              "from_step_ref": "STEP-AD3-1"
+            },
+            {
+              "ask": "How many copies of a prime appear after raising u to r?",
+              "why_this_ask": "Reconstruct exponent multiplication.",
+              "from_step_ref": "STEP-AD3-2"
+            },
+            {
+              "ask": "If two inequalities constrain the same prime, what is their smallest common satisfying exponent?",
+              "why_this_ask": "Recover joint maximum, not sum.",
+              "from_step_ref": "STEP-AD3-3"
+            },
+            {
+              "ask": "What two pieces establish both divisibility and leastness?",
+              "why_this_ask": "Test original conditions plus proof mandatory factors.",
+              "from_step_ref": "STEP-AD3-4"
+            }
+          ],
+          "differs_from_teaching_path": "Core1A derives generic exponent ceiling with three visuals; Core1B deliberately commits to the over-strong LCM shortcut, tests a changed 16/27 scenario, then reconstructs the weaker proper conditions."
+        },
+        "boundary_test": {
+          "prompt": "Changed-boundary: Find the least positive u with 16 | u² and 27 | u³. The shortcut u must be multiple of lcm(16,27)=432 predicts a large number. Check whether u=12 works, and explain why 12 is actually the minimum.",
+          "answer": "16=2^4 demands v2(u)>=2 and 27=3³ demands v3(u)>=1; hence u contains 4·3=12. 12²=144 divisible by16 (9), 12³=1728 divisible by27 (64). Every valid u is a multiple of12, so 12 least; LCM(16,27)=432 is unnecessarily strong.",
+          "confirms": "Repairs exact power-versus-base divisibility criterion, rather than a mere multiplication error."
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REL-QRT-APPLY-D3",
+      "expression": "p^a | n^r iff r v_p(n)>=a iff v_p(n)>=ceil(a/r); joint constraints: v_p(n) >= max_j ceil(a_{pj}/r_j).",
+      "meaning": "Apply different powers separately, then impose the strongest lower bound for each prime.",
+      "symbols": [
+        {
+          "symbol": "p",
+          "meaning": "Prime divisor",
+          "unit_or_domain": "prime integer"
+        },
+        {
+          "symbol": "a",
+          "meaning": "Exponent required in divisor",
+          "unit_or_domain": "nonnegative integer"
+        },
+        {
+          "symbol": "r",
+          "meaning": "Positive power of the unknown",
+          "unit_or_domain": "positive integer"
+        },
+        {
+          "symbol": "v_p(n)",
+          "meaning": "Exponent of prime p in n",
+          "unit_or_domain": "nonnegative integer"
+        }
+      ],
+      "conditions": [
+        "n positive integer.",
+        "Each required divisor factored into primes.",
+        "Exponents in the two constraints need not be equal."
+      ],
+      "derivation": [
+        {
+          "id": "DER-AD3-0",
+          "role": "DECLARE",
+          "action": "Write a positive integer as independent prime powers, p^e times factors not divisible by p.",
+          "why_valid": "Unique prime factorisation counts the copies of each prime.",
+          "inputs": [
+            "Prime p",
+            "Exponent e"
+          ],
+          "output": "The prime exponent in n is e."
+        },
+        {
+          "id": "DER-AD3-1",
+          "role": "TRANSFORM",
+          "action": "On a non-target generic p^a dividing n^r, relate the exponent of p in n^r to its exponent in n.",
+          "why_valid": "Prime exponent of n^r is r times that in n.",
+          "inputs": [
+            "p^a|n^r",
+            "Integer r>=1"
+          ],
+          "output": "Necessary and sufficient: r e>=a, hence e>=ceil(a/r)."
+        },
+        {
+          "id": "DER-AD3-2",
+          "role": "TRANSFORM",
+          "action": "Study two generic prime divisibility conditions and describe combining lower bounds only for primes that occur in both.",
+          "why_valid": "Each condition holds exactly when its prime exponent inequalities hold; the conjunction takes the larger bound for each prime.",
+          "inputs": [
+            "Two prime-exponent inequalities for n"
+          ],
+          "output": "Minimum joint prime exponent is maximum of the separate lower bounds."
+        }
+      ],
+      "limits": [
+        "Demand d|n^r does NOT entail d|n.",
+        "For a repeated prime, requirements combine by MAX, not by SUM.",
+        "Changing which divisor is squared versus cubed can change least n."
+      ],
+      "checks": [
+        "Verify both divisibilities with integer quotients.",
+        "Prove every valid n divisible by constructed minimal prime product."
+      ],
+      "gate_relation_ref": null,
+      "mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><msub><mi>v</mi><mi>p</mi></msub><mo>(</mo><msup><mi>n</mi><mi>r</mi></msup><mo>)</mo><mo>=</mo><mi>r</mi><msub><mi>v</mi><mi>p</mi></msub><mo>(</mo><mi>n</mi><mo>)</mo></mrow></math>"
+    }
+  ],
+  "representations": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "REP-QRT-APPLY-D3-CONSTRUCTION",
+      "kind": "SCHEMATIC",
+      "purpose": "Generic staged prime factors, power-law compression and overlapping requirements without any target numbers.",
+      "required_elements": [
+        "Prime p with blank exponent e",
+        "Generic n^r exponent scaling",
+        "Two separate exponent lower bounds"
+      ],
+      "relation_refs": [
+        "REL-QRT-APPLY-D3"
+      ],
+      "read_order": [
+        "Read each condition in the order given.",
+        "Select a representation and apply valuation rules independently; no answer is encoded in the figure."
+      ],
+      "instance_constraints": [
+        "Author-created SVG uses text at minimum 24 svg units, no excessive text or clipping.",
+        "Before an attempt, target threshold vector and minimum value are not shown.",
+        "No official source derivation."
+      ],
+      "accessibility": [
+        "High contrast readable title and linework.",
+        "Accessible title and desc omit the answer and step ordering."
+      ],
+      "misleading_alternatives": [
+        "Use lcm of the original divisors as the minimum.",
+        "Use identical exponent thresholds for squared and cubed conditions."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-apply-construct.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-APPLY-D3-0",
+          "cores": [
+            "CORE1",
+            "CORE1A"
+          ],
+          "microtopic_ref": "MIC-QRT-APPLY-D3",
+          "datum_refs": [
+            "DATUM-QRT-APPLY-D3-1"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-apply-construct.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Power-divisibility prime-exponent requirements",
+            "caption": "Wholly authored mathematical schematic, learner chooses correct thresholds."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two independent prime-exponent demand panels",
+          "symbol": "v_p(n)",
+          "in_words": "Apply power law separately to each condition and combine only what each prime needs."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "AD3-PRIME",
+          "label": "Condition stage 1",
+          "purpose": "Generic necessary prime exponent or unsolved original requirement",
+          "visible_elements": [
+            "AD3-PRIME"
+          ]
+        },
+        {
+          "id": "AD3-POWER",
+          "label": "Condition stage 2",
+          "purpose": "Generic necessary prime exponent or unsolved original requirement",
+          "visible_elements": [
+            "AD3-POWER"
+          ]
+        },
+        {
+          "id": "AD3-JOINT",
+          "label": "Condition stage 3",
+          "purpose": "Generic necessary prime exponent or unsolved original requirement",
+          "visible_elements": [
+            "AD3-JOINT"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-APPLY-D3-TARGET",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Target shows original simultaneous 72|n² and 135|n³ as two requirements, with unfilled learner-work rows, no factorisation or answer.",
+      "required_elements": [
+        "72 divides n²; 135 divides n³",
+        "Empty slots for own prime exponent choice"
+      ],
+      "relation_refs": [
+        "REL-QRT-APPLY-D3"
+      ],
+      "read_order": [
+        "Read each condition in the order given.",
+        "Select a representation and apply valuation rules independently; no answer is encoded in the figure."
+      ],
+      "instance_constraints": [
+        "Author-created SVG uses text at minimum 24 svg units, no excessive text or clipping.",
+        "Before an attempt, target threshold vector and minimum value are not shown.",
+        "No official source derivation."
+      ],
+      "accessibility": [
+        "High contrast readable title and linework.",
+        "Accessible title and desc omit the answer and step ordering."
+      ],
+      "misleading_alternatives": [
+        "Use lcm of the original divisors as the minimum.",
+        "Use identical exponent thresholds for squared and cubed conditions."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-apply-attempt.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-APPLY-D3-1",
+          "cores": [
+            "CORE2A"
+          ],
+          "microtopic_ref": "MIC-QRT-APPLY-D3",
+          "datum_refs": [
+            "DATUM-QRT-APPLY-D3-2"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-apply-attempt.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Power-divisibility prime-exponent requirements",
+            "caption": "Wholly authored mathematical schematic, learner chooses correct thresholds."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two independent prime-exponent demand panels",
+          "symbol": "v_p(n)",
+          "in_words": "Apply power law separately to each condition and combine only what each prime needs."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "AD3-GIVEN",
+          "label": "Condition stage 1",
+          "purpose": "Generic necessary prime exponent or unsolved original requirement",
+          "visible_elements": [
+            "AD3-GIVEN"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-APPLY-D3-MISCONCEPTION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Changed boundary 16|u² and 27|u³ with independent blank exponent decisions to expose overstrict LCM shortcut.",
+      "required_elements": [
+        "16 divides u²; 27 divides u³",
+        "One blank summary for an independent least-u criterion"
+      ],
+      "relation_refs": [
+        "REL-QRT-APPLY-D3"
+      ],
+      "read_order": [
+        "Read each condition in the order given.",
+        "Select a representation and apply valuation rules independently; no answer is encoded in the figure."
+      ],
+      "instance_constraints": [
+        "Author-created SVG uses text at minimum 24 svg units, no excessive text or clipping.",
+        "Before an attempt, target threshold vector and minimum value are not shown.",
+        "No official source derivation."
+      ],
+      "accessibility": [
+        "High contrast readable title and linework.",
+        "Accessible title and desc omit the answer and step ordering."
+      ],
+      "misleading_alternatives": [
+        "Use lcm of the original divisors as the minimum.",
+        "Use identical exponent thresholds for squared and cubed conditions."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-apply-repair.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-APPLY-D3-2",
+          "cores": [
+            "CORE1B"
+          ],
+          "microtopic_ref": "MIC-QRT-APPLY-D3",
+          "datum_refs": [
+            "DATUM-QRT-APPLY-D3-3"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-apply-repair.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Power-divisibility prime-exponent requirements",
+            "caption": "Wholly authored mathematical schematic, learner chooses correct thresholds."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two independent prime-exponent demand panels",
+          "symbol": "v_p(n)",
+          "in_words": "Apply power law separately to each condition and combine only what each prime needs."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "AD3-MISCONCEPTION",
+          "label": "Condition stage 1",
+          "purpose": "Generic necessary prime exponent or unsolved original requirement",
+          "visible_elements": [
+            "AD3-MISCONCEPTION"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "REP-QRT-APPLY-D3-TRANSFER",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "SCHEMATIC",
+      "purpose": "Changed transfer 72|h³ and 135|h² reverses the powers: two condition panels without target threshold or answer.",
+      "required_elements": [
+        "72 divides h³; 135 divides h²",
+        "Empty prime exponent slots"
+      ],
+      "relation_refs": [
+        "REL-QRT-APPLY-D3"
+      ],
+      "read_order": [
+        "Read each condition in the order given.",
+        "Select a representation and apply valuation rules independently; no answer is encoded in the figure."
+      ],
+      "instance_constraints": [
+        "Author-created SVG uses text at minimum 24 svg units, no excessive text or clipping.",
+        "Before an attempt, target threshold vector and minimum value are not shown.",
+        "No official source derivation."
+      ],
+      "accessibility": [
+        "High contrast readable title and linework.",
+        "Accessible title and desc omit the answer and step ordering."
+      ],
+      "misleading_alternatives": [
+        "Use lcm of the original divisors as the minimum.",
+        "Use identical exponent thresholds for squared and cubed conditions."
+      ],
+      "rendered_asset_refs": [
+        "TEST/library/figures/qrt-d3-apply-transfer.svg"
+      ],
+      "scene_instances": [
+        {
+          "id": "SCENE-QRT-APPLY-D3-3",
+          "cores": [
+            "CORE2B"
+          ],
+          "microtopic_ref": "MIC-QRT-APPLY-D3",
+          "datum_refs": [
+            "DATUM-QRT-APPLY-D3-4"
+          ],
+          "asset_ref": "TEST/library/figures/qrt-d3-apply-transfer.svg",
+          "scene": {
+            "kind": "STAGED_SYMBOLIC_PROOF",
+            "frame": "Power-divisibility prime-exponent requirements",
+            "caption": "Wholly authored mathematical schematic, learner chooses correct thresholds."
+          }
+        }
+      ],
+      "correspondence": [
+        {
+          "element": "Two independent prime-exponent demand panels",
+          "symbol": "v_p(n)",
+          "in_words": "Apply power law separately to each condition and combine only what each prime needs."
+        }
+      ],
+      "reveal_stages": [
+        {
+          "id": "AD3-TRANSFER",
+          "label": "Condition stage 1",
+          "purpose": "Generic necessary prime exponent or unsolved original requirement",
+          "visible_elements": [
+            "AD3-TRANSFER"
+          ]
+        }
+      ]
+    }
+  ],
+  "question_families": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "FAM-QRT-APPLY-D3",
+      "title": "Least integer satisfying two mixed-power divisibility tests",
+      "capability_refs": [
+        "CAP-QRT-APPLY-D3"
+      ],
+      "solution_structure": [
+        "Prime-factor both divisors.",
+        "Convert EACH power constraint to integer exponent lower bounds.",
+        "For shared prime factors, choose max of required bounds.",
+        "Multiply minimal prime powers, verify two divisibilities and prove leastness."
+      ],
+      "demand_dimensions": {
+        "model_choice": "Apply valuations rather than blindly lcm original divisors.",
+        "representation_translation": "From divisors and square/cube symbols to prime exponent inequalities.",
+        "reasoning_steps": "Distinct power ceilings then joint per-prime maximum and minimality.",
+        "novelty": "Swap square/cube exponents between same divisors in transfer."
+      },
+      "safe_variations": [
+        "Other original divisor/power pairings with shared prime factor."
+      ],
+      "transfer_boundaries": [
+        "Changing powers changes per-prime ceilings.",
+        "Constructing valid witness alone does not prove smallest."
+      ],
+      "common_wrong_routes": [
+        "Use lcm(72,135) as least n.",
+        "Use square threshold for both constraints.",
+        "Add overlapping prime requirements rather than maximum."
+      ],
+      "item_refs": [
+        "Q-TEST-QRT-APPLY-D3-CLASSIFY",
+        "Q-TEST-QRT-APPLY-D3-BOUNDARY"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-TEST-QRT-APPLY-D3-CONCEPT",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3"
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-APPLY-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-APPLY-D3-CONCEPT",
+      "stem": "For prime p, apply the generic valuation rule to p^5|u² and p^4|u³, then explain how the two requirements combine for one unknown u without using the later target divisors.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "p is prime and u positive integer.",
+        "No target divisor 72 or 135 in this preliminary concept practice."
+      ],
+      "figure_refs": [
+        "REP-QRT-APPLY-D3-CONSTRUCTION"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "Both constraints together require at least three copies of p in u.",
+        "reasoning": [
+          "p^5|u² implies 2e>=5, hence e>=3.",
+          "p^4|u³ implies 3e>=4, hence e>=2.",
+          "Together e>=max(3,2)=3, not e>=5+4."
+        ],
+        "check": "u=p³ meets both: u² has exponent6>=5, u³ has exponent9>=4.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR"
+      },
+      "primary_capability_ref": "CAP-QRT-APPLY-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-APPLY-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE1A",
+          "role": "CONCEPT_ANCHOR",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [],
+      "hint_ladder": [],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-APPLY-D3-CONSTRUCTION",
+        "safe_ref": "REP-QRT-APPLY-D3-CONSTRUCTION",
+        "bound_ref": null,
+        "stage_refs": [
+          "AD3-PRIME",
+          "AD3-POWER",
+          "AD3-JOINT"
+        ]
+      },
+      "repair_ref": "STEP-AD3-2",
+      "failure_signal": "Mistakes exponent of u for exponent of u^r.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-APPLY-D3",
+        "closure": "General prerequisite not counted as main task."
+      },
+      "independent_check": {
+        "statement": "Check with u=p³, exponents6 and9.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D1",
+        "score": 2,
+        "components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        },
+        "basis": "Generic prerequisite with prompt describing method."
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-QRT-APPLY-D3-CLASSIFY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3",
+        "grade9v3:cognitive_demand": {
+          "primary": "APPLY",
+          "secondary": [
+            "JUSTIFY",
+            "SYNTHESIZE"
+          ],
+          "basis": "Apply known valuation theorem nonroutinely to mixed powers, use joint threshold and minimality; not deriving theorem from scratch."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Derive different prime exponent ceiling rules for square and cube and join constraints by maximum.",
+          "common_wrong_route": "Set n=lcm(72,135), overconstraining what only n² and n³ must satisfy."
+        },
+        "grade9v3:core2_support_plan": {
+          "protected_move_refs": [
+            "MOVE-APPLY-D3-VALUATION-BRIDGE"
+          ],
+          "support_completions": [
+            {
+              "support_ref": "scaffolds[2]",
+              "completed_move_refs": [
+                "MOVE-APPLY-D3-VALUATION-BRIDGE"
+              ],
+              "availability": "AFTER_ATTEMPT"
+            }
+          ]
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-APPLY-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-APPLY-D3-CLASSIFY",
+      "stem": "Find the LEAST positive integer n for which 72 divides n² AND 135 divides n³. Show why your answer is the smallest possible: use the necessary prime-factor conditions implied by BOTH statements and check each ORIGINAL divisibility. A learner who simply gives an integer that works without proving leastness has not completed the task.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "n positive integer; both constraints must hold.",
+        "You may use the basic prime-power exponent law.",
+        "No official exam source: this is original authored TEST."
+      ],
+      "figure_refs": [
+        "REP-QRT-APPLY-D3-TARGET"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The least positive n is 60, not lcm(72,135)=1080.",
+        "reasoning": [
+          "Factor 72=2³·3² and 135=3³·5.",
+          "From 72|n², 2v2(n)>=3 implies v2>=2, while 2v3(n)>=2 implies v3>=1.",
+          "From 135|n³, 3v3(n)>=3 implies v3>=1, and 3v5(n)>=1 implies v5>=1.",
+          "Joint lower bounds are (v2,v3,v5)>=(2,1,1), so the least n=2²·3·5=60.",
+          "At n=60, n²/72=50 and n³/135=1600; every admissible n must be divisible by60, hence no smaller positive works."
+        ],
+        "check": "60²=3600=72·50; 60³=216000=135·1600. Because every valid n is divisible by 2²·3·5, 60 is least.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "crux_move_ref": "MOVE-APPLY-D3-VALUATION-BRIDGE",
+        "reasoning_route": [
+          {
+            "id": "MOVE-AD3-FACTOR",
+            "kind": "REPRESENT",
+            "action": "Factor both given divisors into prime powers, keeping square and cube requirements separate.",
+            "why_valid": "72=2³·3² and 135=3³·5.",
+            "inputs": [
+              "72|n²",
+              "135|n³"
+            ],
+            "output": "Target exponents with associated power 2 or 3."
+          },
+          {
+            "id": "MOVE-APPLY-D3-VALUATION-BRIDGE",
+            "kind": "DECIDE",
+            "action": "Apply a distinct denominator 2 or 3 to each prime-exponent threshold, use integer ceilings, take MAX for overlapping prime 3, then choose the least product.",
+            "why_valid": "p^a|n^r iff v_p(n)>=ceil(a/r); AND requirements demand strongest bound per prime.",
+            "inputs": [
+              "72 factorisation and square power",
+              "135 factorisation and cube power"
+            ],
+            "output": "Minimum mandatory exponents v2=2,v3=1,v5=1; n=60."
+          },
+          {
+            "id": "MOVE-AD3-PROVE",
+            "kind": "VERIFY",
+            "action": "Check both quotients are integers and show all eligible integers are multiples of 60.",
+            "why_valid": "3600/72=50 and 216000/135=1600; factor constraints force 4·3·5 | every candidate.",
+            "inputs": [
+              "n=60",
+              "Minimum exponent vector"
+            ],
+            "output": "60 valid and minimum."
+          }
+        ],
+        "rubric": [
+          {
+            "criterion": "Apply distinct square and cube exponent thresholds correctly.",
+            "evidence_of": "v2>=2,v3>=1 from first, v3>=1,v5>=1 from second."
+          },
+          {
+            "criterion": "Combine prime bounds using AND, not lcm input divisors or addition.",
+            "evidence_of": "v2>=2, v3>=max(1,1)=1, v5>=1."
+          },
+          {
+            "criterion": "Show minimum and original divisibilities independently.",
+            "evidence_of": "n=60 with quotients 50 and 1600 and factor-based minimality proof."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-QRT-APPLY-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-APPLY-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2A",
+          "role": "SUPPORTED_PRACTICE",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [],
+      "scaffolds": [
+        {
+          "text": "Each condition speaks about a POWER of the unknown, not the unknown alone. Which representation keeps that distinction visible?",
+          "support_kind": "REPRESENT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-APPLY-D3-VALUATION-BRIDGE"
+        },
+        {
+          "text": "It may help to compare prime factors common to the two divisors, but you must decide the exact bound contributed by each exponent yourself.",
+          "support_kind": "CONNECT",
+          "reveals": "CONCEPT",
+          "supports_move_ref": "MOVE-APPLY-D3-VALUATION-BRIDGE"
+        },
+        {
+          "text": "After your committed attempt, construct a per-prime table: for a prime power p^a dividing n^r, require v_p(n)>=ceil(a/r), then combine BOTH bounds by max for repeated primes.",
+          "support_kind": "CONNECT",
+          "reveals": "METHOD",
+          "supports_move_ref": "MOVE-APPLY-D3-VALUATION-BRIDGE"
+        }
+      ],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "scaffolds[0]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 2,
+          "purpose": "CONNECT",
+          "from": "scaffolds[1]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        },
+        {
+          "order": 3,
+          "purpose": "CONNECT",
+          "from": "scaffolds[2]",
+          "provenance": "AUTHORED_SCAFFOLD"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-APPLY-D3-TARGET",
+        "safe_ref": "REP-QRT-APPLY-D3-TARGET",
+        "bound_ref": null,
+        "stage_refs": [
+          "AD3-GIVEN"
+        ]
+      },
+      "repair_ref": "STEP-AD3-2",
+      "failure_signal": "LCM shortcut 1080 or incorrect square-for-cube thresholds gives nonminimal/invalid answer.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-APPLY-D3",
+        "closure": "Supported APPLY item with attempt gating; independent QRT band review still pending."
+      },
+      "independent_check": {
+        "statement": "Check 60² mod72=0 and 60³ mod135=0, and every valid n has factors 2²·3·5.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Provisional APPLY-D3: select a familiar prime-power rule for different powers, translate two constraints and bridge overlapping valuation minima to a global minimum and proof; reviewer may downgrade to D2.",
+        "component_evidence": {
+          "concept_model_selection": "Select power valuation rather than LCM of raw divisors.",
+          "representation_translation": "Divisibility to prime exponents and integer ceilings.",
+          "reasoning_chain_length": "Two independent threshold vectors -> combine maxima -> check/minimality.",
+          "algebra_computational_load": "Arithmetic small; reasoning bridge is bottleneck.",
+          "trap_exception_sensitivity": "LCM raw divisors works but not least; sum of shared bounds wrong."
+        }
+      },
+      "learner_question_type": "constructed_response"
+    },
+    {
+      "id": "Q-TEST-QRT-APPLY-D3-BOUNDARY",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {
+        "grade9v3:authored_by": "AGENT-D3",
+        "grade9v3:cognitive_demand": {
+          "primary": "APPLY",
+          "secondary": [
+            "JUSTIFY",
+            "SYNTHESIZE"
+          ],
+          "basis": "Apply general valuation method to changed power pairing."
+        },
+        "grade9v3:analysis": {
+          "stable_crux_move": "Recalculate prime3 binding constraint after swapping powers, yielding h=90.",
+          "common_wrong_route": "Reuse n=60 despite changed powers."
+        }
+      },
+      "origin": "AUTHORED",
+      "origin_ref": "SRC-TEST-QRT-APPLY-D3",
+      "original_identifier": "AUTHORED-Q-TEST-QRT-APPLY-D3-BOUNDARY",
+      "stem": "TRANSFER—THE POWERS HAVE SWAPPED. Find the least positive h satisfying 72 | h³ AND 135 | h². Explain which prime-factor condition changes relative to the previous task, check both new divisibilities, and prove the minimum. A numerical answer without the changed condition and leastness explanation is incomplete.",
+      "subparts": [],
+      "options": [],
+      "conditions": [
+        "The divisors remain 72 and 135 but THEIR POWERS swap.",
+        "Positive integer h.",
+        "Derive a new minimum, not the previous number."
+      ],
+      "figure_refs": [
+        "REP-QRT-APPLY-D3-TRANSFER"
+      ],
+      "answer": {
+        "kind": "MODEL_RESPONSE",
+        "summary": "The least positive h is 90 after the powers are swapped.",
+        "reasoning": [
+          "72=2³·3² and 135=3³·5.",
+          "72|h³ gives v2(h)>=ceil(3/3)=1 and v3(h)>=ceil(2/3)=1.",
+          "135|h² gives v3(h)>=ceil(3/2)=2 and v5(h)>=ceil(1/2)=1.",
+          "Joint bounds v2>=1,v3>=2,v5>=1 produce h=2·3²·5=90.",
+          "90³/72=10125 and 90²/135=60, so both constraints hold; every valid h is multiple of 90."
+        ],
+        "check": "90³=729000=72·10125, 90²=8100=135·60; 90 divides every possible solution.",
+        "acceptable_alternatives": [],
+        "subpart_answers": [],
+        "verification_status": "CHECKED_BY_AUTHOR",
+        "crux_move_ref": "MOVE-APPLY-D3-SWAPPED-POWERS",
+        "reasoning_route": [
+          {
+            "id": "MOVE-AD3-SWAP",
+            "kind": "REPRESENT",
+            "action": "Reattach exponent 3 to divisor72 and exponent2 to divisor135.",
+            "why_valid": "Powers are part of conditions, not a property of the divisor alone.",
+            "inputs": [
+              "72|h³",
+              "135|h²"
+            ],
+            "output": "Two new distinct threshold sets."
+          },
+          {
+            "id": "MOVE-APPLY-D3-SWAPPED-POWERS",
+            "kind": "DECIDE",
+            "action": "Reapply ceilings and maximum for shared prime3 to obtain a changed minimum.",
+            "why_valid": "v3 from 135|h² now must be at least2, stronger than 72|h³ bound1.",
+            "inputs": [
+              "Cube constraint",
+              "Square constraint"
+            ],
+            "output": "v2>=1,v3>=2,v5>=1; h=90."
+          },
+          {
+            "id": "MOVE-AD3-SWAP-CHECK",
+            "kind": "VERIFY",
+            "action": "Check integer quotients and divisibility by every mandatory factor.",
+            "why_valid": "729000/72=10125; 8100/135=60.",
+            "inputs": [
+              "h=90"
+            ],
+            "output": "h=90 least."
+          }
+        ],
+        "rubric": [
+          {
+            "criterion": "Different task, different powers attached to respective divisors.",
+            "evidence_of": "72|h³ and 135|h²."
+          },
+          {
+            "criterion": "New shared prime bound must change.",
+            "evidence_of": "v3>=2 from 135 square constraint."
+          },
+          {
+            "criterion": "Prove minimality and verify both.",
+            "evidence_of": "h=90 and quotients10125,60."
+          }
+        ]
+      },
+      "primary_capability_ref": "CAP-QRT-APPLY-D3",
+      "secondary_capability_refs": [],
+      "family_ref": "FAM-QRT-APPLY-D3",
+      "adaptation": null,
+      "exposure": [
+        {
+          "core": "CORE2B",
+          "role": "TRANSFER",
+          "artifact_ref": null
+        }
+      ],
+      "hints": [
+        {
+          "text": "Do not reuse previous prime thresholds. Which POWER now belongs to each divisor?",
+          "reveals": "CONCEPT"
+        }
+      ],
+      "scaffolds": [],
+      "hint_ladder": [
+        {
+          "order": 1,
+          "purpose": "ORIENT",
+          "from": "hints[0]",
+          "provenance": "AUTHORED_HINT"
+        }
+      ],
+      "representation_roles": {
+        "initial_ref": "REP-QRT-APPLY-D3-TRANSFER",
+        "safe_ref": "REP-QRT-APPLY-D3-TRANSFER",
+        "bound_ref": null,
+        "stage_refs": [
+          "AD3-TRANSFER"
+        ]
+      },
+      "repair_ref": "STEP-AD3-3",
+      "failure_signal": "Reuses n=60 after swapping square/cube or applies both power constraints identically.",
+      "family_exposure": {
+        "family_ref": "FAM-QRT-APPLY-D3",
+        "closure": "Novel changed mathematical decision and renewed minimum proof."
+      },
+      "independent_check": {
+        "statement": "90³/72=10125 and 90²/135=60; factor-based minimality.",
+        "check_type": "EXHAUSTIVE_MODULAR_CHECK"
+      },
+      "difficulty": {
+        "band": "D3",
+        "score": 7,
+        "components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        },
+        "basis": "Changed powers shift threshold of the overlapping prime, reapplying conditions rather than cloning answer."
+      },
+      "learner_question_type": "constructed_response",
+      "transfer": {
+        "dimension": "novelty",
+        "builds_on": [
+          "Q-TEST-QRT-APPLY-D3-CLASSIFY"
+        ],
+        "statement": "Swap which divisor is squared/cubed; recompute new binding exponent requirements and prove a different minimum.",
+        "invariant": "Same prime factorisation of 72 and 135; valuation method remains.",
+        "novelty": {
+          "checked_against": [
+            "Q-TEST-QRT-APPLY-D3-CLASSIFY",
+            "MIC-QRT-APPLY-D3:exit_task"
+          ],
+          "why_new": "Required valuation of prime3 becomes2, prime2 becomes1; answer changes from60 to90."
+        },
+        "protected_move_ref": "MOVE-APPLY-D3-SWAPPED-POWERS"
+      }
+    }
+  ],
+  "teaching_routes": [
+    {
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "id": "ROUTE-QRT-APPLY-D3",
+      "title": "Apply generic prime exponent ceilings before mixed-power minimum challenge",
+      "cores": [
+        "CORE1A"
+      ],
+      "microtopic_refs": [
+        "MIC-QRT-APPLY-D3"
+      ],
+      "entry_needs": [
+        "Prime factorization",
+        "Exponent law and divisibility",
+        "Least positive integer proofs"
+      ],
+      "learner_actions": [
+        "Predict whether d|u² requires d|u.",
+        "Investigate generic p^5|u² and p^4|u³ thresholds.",
+        "Reject over-strong LCM shortcut in fresh example.",
+        "Find and prove a different independent exit m from divisibility by 200 and81."
+      ],
+      "help_plan": [
+        "Generic instruction discloses the known rule but does not compute target bounds.",
+        "H1/H2 request representation, not W method sequence.",
+        "H3 completes W only after committed attempt."
+      ],
+      "reveal_plan": "Stage prime power, power-multiplication, joint max on non-target data.",
+      "source_preferences": [
+        {
+          "resource_ref": "SRC-TEST-QRT-APPLY-D3",
+          "purpose": "Wholly authored number theory concept",
+          "reason": "No original exam source rights assumed."
+        }
+      ],
+      "when_not_suitable": [
+        "Not academically reviewed as Grade9 D3.",
+        "Not official IMO material."
+      ],
+      "practice_profile_ref": null
+    }
+  ],
+  "practice_profiles": [],
+  "evidence": [],
+  "known_issues": [],
+  "extensions": {
+    "grade9v3:imo_provenance": "AUTHORED_TEST_D3_APPLY_ISSUE182",
+    "grade9v3:qrt_admitted": false,
+    "grade9v3:core2_source_custody_granted": false,
+    "grade9v3:learner_published": false
+  },
+  "data": [
+    {
+      "id": "DATUM-QRT-APPLY-D3-1",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "generic p^e, p^a|u^r, threshold",
+      "meaning": "Generic valuation teaching stages",
+      "symbol": "v_p(u)",
+      "locator": "TEST/library/figures/qrt-d3-apply-construct.svg"
+    },
+    {
+      "id": "DATUM-QRT-APPLY-D3-2",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "72|n² AND 135|n³",
+      "meaning": "Unsolved target divisibility givens",
+      "symbol": "n²,n³",
+      "locator": "TEST/library/figures/qrt-d3-apply-attempt.svg"
+    },
+    {
+      "id": "DATUM-QRT-APPLY-D3-3",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "16|u² AND 27|u³",
+      "meaning": "Changed misconception boundary",
+      "symbol": "u²,u³",
+      "locator": "TEST/library/figures/qrt-d3-apply-repair.svg"
+    },
+    {
+      "id": "DATUM-QRT-APPLY-D3-4",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-QRT-APPLY-D3"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "72|h³ AND 135|h²",
+      "meaning": "Swapped powers transfer",
+      "symbol": "h³,h²",
+      "locator": "TEST/library/figures/qrt-d3-apply-transfer.svg"
+    }
+  ]
+}

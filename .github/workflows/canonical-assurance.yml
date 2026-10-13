@@ -61,7 +61,7 @@ jobs:
           node-version: "22"
       - name: Install test dependencies
         run: |
-          pip install --quiet jsonschema pypdf
+          pip install --quiet jsonschema pypdf playwright==1.56.0
           npm install -g playwright@1.56.1
           # Install the pinned Chromium browser without apt package-manager changes.
           npx playwright install chromium
@@ -78,6 +78,16 @@ jobs:
           fi
           echo "sha=$BASE" >> "$GITHUB_OUTPUT"
           echo "comparing $(git rev-parse HEAD) with $BASE"
+      # Run every new D3 TEST via the sole renderer before HEAD test-ID census.
+      # The exact base and pinned-main worktrees remain separate comparisons.
+      - name: Prepare D3 TEST page receipts for exact HEAD tests
+        if: ${{ hashFiles('TEST/products/imo182-qrt-d3-*.manifest.json') != '' }}
+        run: |
+          for cell in apply explain justify model represent retrieve synthesize; do
+            python3 Shared/tools/render_core.py build \
+              --manifest "TEST/products/imo182-qrt-d3-${cell}.manifest.json" \
+              --out "build/imo182-qrt/d3/${cell}" --draft --reference
+          done
       - name: Failing test ids at HEAD
         run: NODE_PATH="$(npm root -g)" python3 Shared/tools/run_test_ids.py --output "$RUNNER_TEMP/head.json"
       # The same copy of the tool measures the base, so a base that predates the tool is measured the same way.
