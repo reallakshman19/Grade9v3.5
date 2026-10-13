@@ -89,6 +89,12 @@ class JustifyD1(unittest.TestCase):
         self.assertIn("extended through A and B",desc.text)
         self.assertNotIn("42",ET.tostring(svg,encoding="unicode"))
         self.assertNotIn("same area",desc.text.lower())
+        # The native renderer uses a stage label for the accessible SVG name;
+        # source SVG <desc> text alone is insufficient to prove that name survives.
+        html=self.pages["core2a.html"]
+        self.assertIn('aria-label="AB base 12 cm; each peak 7 cm at 90° to its extended line"',html)
+        self.assertNotIn('aria-label="Both areas are equal',html)
+
 
     def test_cumulative_core1a_stages_do_not_redraw_geometry(self):
         # The sole renderer reveals SVG stages cumulatively, not exclusively.
