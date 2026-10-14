@@ -33,7 +33,7 @@ SOURCE_FIGURES = {
     "core2b": ("qrt-d3-explain-transfer.svg", "BP-CORE2B-TRANSFER@1.1.0"),
 }
 ORIGINAL_SVG_BLOBS = {
-    "core1a": "f7d43f1d88e27a440a794579191a815710927387",
+    "core1a": "d410fb1f3b0e34a9f759dc4a843c5a92b7d8d2a5",
     "core2a": "69358bf93fd2c0a064a93a1ef4d9572a7eaa7bec",
     "core2b": "0a8ca742d37c84863e55322f77199e852feeefeb",
 }
@@ -79,6 +79,8 @@ def browser_probe():
                 for role, (filename, bp) in SOURCE_FIGURES.items():
                     src = ROOT / "TEST/library/figures" / filename
                     source = source_label(src)
+                    require(source["source_svg_git_blob"] == ORIGINAL_SVG_BLOBS[role],
+                            f"{role} original authored figure drift")
                     require(source["source_title"] and source["source_description"],
                             f"source figure missing description; attribution differs {role}")
                     require(source["source_aria_label"] == source["source_title"],
