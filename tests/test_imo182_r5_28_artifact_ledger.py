@@ -54,6 +54,17 @@ class ReconciledNativeArtifactLedgerTest(unittest.TestCase):
             self.assertEqual(r["academic_review"], "QUALIFIED_INDEPENDENT_REVIEW_PENDING")
             self.assertEqual(r["frozen_golden"]["semantic_technique_verdict"], "UNREVIEWED")
 
+    def test_independent_reviewer_routing_remains_unassigned(self):
+        counts = {211: 0, 214: 0, 234: 0}
+        for r in self.doc["rows"]:
+            expected = 234 if r["band"] != "D2" else (211 if r["demand"] in ("RETRIEVE", "MODEL") else 214)
+            self.assertEqual(r["independent_reviewer_nomination_issue"], expected)
+            self.assertIsNone(r["nominated_independent_reviewer"])
+            self.assertIsNone(r["academic_signed_verdict_id"])
+            counts[expected] += 1
+        self.assertEqual(counts, {211: 2, 214: 5, 234: 21})
+        self.assertEqual(sum(r["critical_educational_review_hold"] for r in self.doc["rows"]), 8)
+
     def test_question_first_d3_classification_holds_are_preserved(self):
         by_id = {r["cell_id"]: r for r in self.doc["rows"]}
         for cell in ("QRT-RETRIEVE-D3", "QRT-MODEL-D3"):
