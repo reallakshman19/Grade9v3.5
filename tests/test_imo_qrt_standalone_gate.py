@@ -7,7 +7,7 @@ from Shared.tools.imo_qrt_standalone_gate import inspect_html, inspect_endpoints
 
 
 def card(*, qid="TEST-001", emphasized=False, summary="Teacher solution",
-         details_open=False, options=4, attempt=True):
+         details_open=False, details_hidden=True, options=4, attempt=True):
     option_html = "".join(
         '<div class="qb-option-card" style="%s"><span class="qb-option-badge">(%s)</span>sample</div>' %
         ("border-color: var(--success)" if emphasized and i == 1 else "", chr(65 + i))
@@ -17,8 +17,8 @@ def card(*, qid="TEST-001", emphasized=False, summary="Teacher solution",
         '<article class="qb-question" id="q-%s" data-band="D2">' % qid
         + '<div class="qb-options-grid">' + option_html + '</div>'
         + ('<div class="qb-attempt-box">Attempt here</div>' if attempt else "")
-        + '<details class="qb-disclosure" id="sol-disc-%s"%s>' % (
-            qid, " open" if details_open else "")
+        + '<details class="qb-disclosure" id="sol-disc-%s"%s%s>' % (
+            qid, " hidden" if details_hidden else "", " open" if details_open else "")
         + '<summary><span>%s</span></summary>' % summary
         + '<div class="qb-disclosure-body">Verified Answer: Option (B)</div>'
         + '</details></article>'
@@ -42,6 +42,10 @@ class DisclosureTests(unittest.TestCase):
     def test_closed_body_answer_is_not_visible_summary(self):
         self.assertNotIn("PREATTEMPT_ANSWER_IN_VISIBLE_SOLUTION_SUMMARY",
                          inspect_html(card())["findings"])
+
+    def test_closed_but_directly_openable_solution_is_rejected(self):
+        self.assertEqual(inspect_html(card(details_hidden=False))["findings"][
+            "SOLUTION_DIRECTLY_OPENABLE_BEFORE_ATTEMPT"], 1)
 
     def test_solution_default_open_fails(self):
         self.assertEqual(inspect_html(card(details_open=True))["findings"][
