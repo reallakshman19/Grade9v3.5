@@ -70,6 +70,34 @@ def main():
                 return {tag: el.tagName, cls: String(el.className).slice(0, 70),
                         id: el.id, right: Math.round(r.right), width: Math.round(r.width)};
               }).sort((a, b) => b.right - a.right).slice(0, 12)""")
+            layout = page.evaluate("""() => {
+              const root = document.documentElement;
+              const roots = ['.g9-shell', '.shell-inner', 'main.container', '#tab-core2',
+                '.qb-filter-panel', '.qb-question', '.qb-stem-box', '.qb-support-container',
+                '.qb-disclosure', '.qb-disclosure summary', '.qb-options-grid'];
+              const boxes = roots.map(sel => {
+                const el = document.querySelector(sel);
+                if (!el) return {selector: sel, found: false};
+                const b = el.getBoundingClientRect();
+                return {selector: sel, right: Math.round(b.right), left: Math.round(b.left),
+                  width: Math.round(b.width), scroll: el.scrollWidth, client: el.clientWidth,
+                  overflowX: getComputedStyle(el).overflowX};
+              });
+              const spill = Array.from(document.querySelectorAll('body *'))
+                .filter(el => !(el instanceof SVGElement) && !el.closest('.katex'))
+                .map(el => {const b=el.getBoundingClientRect();
+                  return {el, b, css:getComputedStyle(el)};})
+                .filter(x => x.b.width > 0 && x.b.right > innerWidth + 3 &&
+                   x.css.display !== 'none' && x.css.visibility !== 'hidden')
+                .sort((a,b) => a.b.width-b.b.width).slice(0,30)
+                .map(x => ({tag:x.el.tagName,id:x.el.id,cls:String(x.el.className).slice(0,90),
+                   right:Math.round(x.b.right),width:Math.round(x.b.width),
+                   overflowX:x.css.overflowX,whiteSpace:x.css.whiteSpace}));
+              return {windowWidth:innerWidth,rootScroll:root.scrollWidth,
+                rootClient:root.clientWidth,bodyScroll:document.body.scrollWidth,
+                boxes,spill};
+            }""")
+            print("LAYOUT " + json.dumps({"width": width, "layout": layout}), flush=True)
             print("DIAGNOSTIC " + json.dumps({"width": width, "katex": katex,
                 "overflow": overflow, "offenders": offenders}), flush=True)
             assert katex > 0, f"{width}: math was not rendered by KaTeX"
