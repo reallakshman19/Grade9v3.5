@@ -88,7 +88,8 @@ SENTINELS: dict[str, Sentinel] = {
     "QRT-REPRESENT-D3": Sentinel(
         "REPRESENT_D3_FULL_OVERLAP_CORRECTION_PREATTEMPT",
         (r"\b70\s*[-−]\s*30\s*[-−]\s*30\s*\+\s*9\s*=\s*19\b",
-         r"\b(?:overlap|both)\b"),
+         r"\b(?:overlap|both)\b",
+         r"\bavoiding\s+both\b"),
         "The routes through both points overlap, so 70-30-30+9=19 avoiding both.",
         "Paths through both marked vertices might overlap."
     ),
