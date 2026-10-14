@@ -94,7 +94,7 @@ def _one(browser, base: str, receipt: dict, width: int) -> dict:
             page, "a[data-g9-held-source-concept-link]",
             "button[data-g9-commit]"), "HQA_CONCEPT_LINK_NOT_TABBABLE", qid)
         page.keyboard.press("Enter")
-        page.wait_for_load_state("load")
+        page.wait_for_url("**/core1a.html?g9-held-return=*", wait_until="load")
         ensure(page.locator("html").get_attribute("data-g9-role") == "CORE1A",
                "HQA_KEYBOARD_CONCEPT_ROUTE_FAILED", qid)
         ensure(page.locator("article[data-g9-unit]").first.get_attribute(
@@ -119,7 +119,7 @@ def _one(browser, base: str, receipt: dict, width: int) -> dict:
         ensure(ret.evaluate("(e)=>document.activeElement===e"),
                "HQA_RETURN_FOCUS_FAILED", qid)
         page.keyboard.press("Enter")
-        page.wait_for_load_state("load")
+        page.wait_for_url("**/core2a.html#*", wait_until="load")
         article = page.locator(f"article[data-g9-unit='{qid}']")
         ensure(article.count() == 1 and
                article.get_attribute("data-g9-assisted") == "1" and
