@@ -229,6 +229,11 @@ def main() -> None:
         require("data-g9-after-attempt-hint" in core2a and
                 "data-requires-attempt" in core2a,
                 f"{demand}: H3 after-attempt markup missing")
+        if demand == "synthesize":
+            require(sup["corrected_field_value"] in core2a,
+                    "SYNTHESIZE corrected postattempt closure absent from ACTUAL native Core2A HTML")
+            require(sup["previous_field_value"] not in core2a,
+                    "SYNTHESIZE old REPRESENT label still present in ACTUAL native Core2A HTML")
         for role in ("core1b", "core2b"):
             html = (out / (role + ".html")).read_text(encoding="utf-8")
             require("data-g9-commit" in html and "data-requires-attempt" in html,
