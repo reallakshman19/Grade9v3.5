@@ -134,6 +134,34 @@ def _run_one(browser, html_path: Path, width: int, out: Path) -> dict:
               parent_tag:parent ? parent.tagName : null,
               parent_class:parent ? String(parent.className).slice(0,100) : null};
           }).sort((a,b) => b.right - a.right).slice(0,16)""") if page_overflow else []
+        # Isolation probes detect what actually expands document scrollWidth.
+        # Giant path geometry inside a tiny clipped KaTeX svg can be a false
+        # culprit; hiding groups temporarily is a diagnosis, never a source edit.
+        overflow_isolation = page.evaluate("""() => {
+          const groups = {
+            katex_svg: '.katex svg',
+            katex_whole: '.katex',
+            question_cards: '.qb-question',
+            core_topic_cards: '.topic-module-card',
+            sticky_topic_nav: '.topic-sticky-bar',
+            active_tab: '.tab-content.active',
+            all_svg: 'svg'
+          };
+          const base = document.documentElement.scrollWidth;
+          const result = {viewport:innerWidth, document_scroll_width:base, groups:{}};
+          for (const [name,selector] of Object.entries(groups)) {
+            const elems = Array.from(document.querySelectorAll(selector));
+            const prior = elems.map(el=>el.getAttribute('style'));
+            elems.forEach(el=>el.style.setProperty('display','none','important'));
+            result.groups[name] = {elements:elems.length,
+              width_without:document.documentElement.scrollWidth};
+            elems.forEach((el,i)=>{
+              if (prior[i]===null) el.removeAttribute('style');
+              else el.setAttribute('style',prior[i]);
+            });
+          }
+          return result;
+        }""") if page_overflow else {}
         if errors:
             raise AssertionError("Uncaught learner-side JavaScript errors: "+repr(errors[:5]))
         out.mkdir(parents=True, exist_ok=True)
@@ -147,6 +175,7 @@ def _run_one(browser, html_path: Path, width: int, out: Path) -> dict:
                 "attempt_paths": paths, "math_katex_nodes": math_count,
                 "document_horizontal_overflow": page_overflow,
                 "overflow_candidates": overflow_candidates,
+                "overflow_isolation": overflow_isolation,
                 "behavior_verdict": "FAIL_DOCUMENT_HORIZONTAL_OVERFLOW" if page_overflow else "PASS",
                 "javascript_errors": [], "reload_protection": "PASS"}
     finally:
