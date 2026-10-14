@@ -220,8 +220,12 @@ def adapt_pages(native_contract: dict, source_root: Path,
            "HELD_WRONG_CONCEPT_CAPABILITY_JOIN")
     ensure(set(original) == set(ROLES_AND_INDEX),
            "HELD_ALL_SIX_NATIVE_HTML_REQUIRED")
+    import hashlib
     for role in ROLES:
         filename = role.lower() + ".html"
+        ensure(hashlib.sha256(original[filename].encode("utf-8")).hexdigest() ==
+               n["native_evidence"]["roles"][role]["native_sha256"],
+               "HELD_MUTATED_ORIGINAL_HTML_INPUT", role)
         ensure(sha256(native_output / filename) ==
                n["native_evidence"]["roles"][role]["native_sha256"],
                "HELD_NATIVE_FILE_CHANGED_SINCE_P1", role)
@@ -232,7 +236,10 @@ def adapt_pages(native_contract: dict, source_root: Path,
                 sel["core2b"][0] if role == "CORE2B" else mic),
                "HELD_NATIVE_ARTICLE_ID_DRIFT", role)
     ensure(original["index.html"] == (native_output / "index.html").read_text(
-           encoding="utf-8"), "HELD_INDEX_CHANGED_SINCE_RENDER")
+           encoding="utf-8") and
+           hashlib.sha256(original["index.html"].encode("utf-8")).hexdigest() ==
+           n["native_evidence"]["index_sha256"],
+           "HELD_INDEX_CHANGED_SINCE_RENDER")
     q_html = original["core2a.html"]
     ensure(q_html.count("data-g9-attempt-box") >= 1 and
            q_html.count('data-g9-payload-ref="CORE2A-'+qid+'-reasoning"') == 1 and
