@@ -177,7 +177,7 @@ def generate_batch03():
             "secondary_demands": ["MODEL"],
             "crux": "Test 3 conditional rules on number 6540729; identify applicable condition for first even digit and last odd digit, swapping codes of prime digits",
             "stem": "Find the code for the number 6540729 based on the given digit-symbol key and conditional rules: Condition (iii) states that if the first digit is even and the last digit is odd, the codes for the first and last digits are not swapped, but prime digits are coded as their predecessor symbols.",
-            "options": {"A": "# $ % & * @ <", "B": "% # @ & * > <", "C": "# > α % T <", "D": "@ # $ % & * !"},
+            "options": {"A": "# \\$ % & * @ <", "B": "% # @ & * > <", "C": "# > α % T <", "D": "@ # \\$ % & * !"},
             "choice": "C",
             "answer_text": "# > α % T <",
             "figure_ref": None,
