@@ -141,7 +141,147 @@ def _click_a_route(context, origin: str, steps: tuple[str, ...],
         page.close()
 
 
-def test_navigation(browser, source_root: Path, output: Path,
+
+
+POSTCOMMIT_CHECKS = {
+    "attempt_blank_rejected": "NAV_POSTCOMMIT_BLANK_UNLOCKED",
+    "nonempty_attempt_committed": "NAV_POSTCOMMIT_VALID_ATTEMPT_NOT_COMMITTED",
+    "precommit_solution_locked": "NAV_POSTCOMMIT_PREATTEMPT_SOLUTION_LEAK",
+    "postcommit_context_link_present": "NAV_POSTCOMMIT_CONTEXT_LINK_MISSING",
+    "context_link_is_pinned": "NAV_POSTCOMMIT_CONTEXT_WRONG_CONCEPT",
+    "concept_reached": "NAV_POSTCOMMIT_CONCEPT_NOT_REACHED",
+    "concept_is_pinned": "NAV_POSTCOMMIT_CONCEPT_ID_DRIFT",
+    "return_link_present": "NAV_POSTCOMMIT_RETURN_LINK_MISSING",
+    "return_link_is_pinned": "NAV_POSTCOMMIT_RETURN_WRONG_QUESTION",
+    "same_question_reached": "NAV_POSTCOMMIT_SOURCE_QUESTION_LOST",
+    "attempt_text_restored": "NAV_POSTCOMMIT_SOURCE_DRAFT_NOT_RESTORED",
+    "assistance_marked": "NAV_POSTCOMMIT_ASSISTANCE_UNMARKED",
+}
+
+
+def classify_postcommit_journey(probe: dict) -> list[str]:
+    """One-way technical negatives, not claims of mathematical learning."""
+    findings = [code for field, code in POSTCOMMIT_CHECKS.items()
+                if probe.get(field) is not True]
+    if probe.get("independent_credit_claimed") is True:
+        findings.append("NAV_POSTCOMMIT_FALSE_INDEPENDENT_CREDIT")
+    return findings
+
+
+def probe_postcommit_native(context, base: str, qid: str, concept_id: str) -> dict:
+    """Real native Core2A commit -> selected Core1A -> same Core2A.
+
+    Missing contextual links fall back to the actual shell and remain a gap,
+    never synthetic links. The sentinel is NOT a correct mathematical answer.
+    """
+    page = context.new_page()
+    errors = []
+    page.on("pageerror", lambda exc: errors.append(str(exc)))
+    status = {
+        "attempt_blank_rejected": False,
+        "nonempty_attempt_committed": False,
+        "precommit_solution_locked": False,
+        "postcommit_context_link_present": False,
+        "context_link_is_pinned": False,
+        "concept_reached": False,
+        "concept_is_pinned": False,
+        "return_link_present": False,
+        "return_link_is_pinned": False,
+        "same_question_reached": False,
+        "attempt_text_restored": False,
+        "assistance_marked": False,
+        "independent_credit_claimed": False,
+    }
+    try:
+        response = page.goto(base + "/core2a.html", wait_until="load")
+        ensure(response and response.status == 200,
+               "P2_NAV_POSTCOMMIT_START_404", qid)
+        verify_role(page, "CORE2A")
+        article = page.locator(f"article[data-g9-unit='{qid}']")
+        ensure(article.count() == 1, "P2_NAV_POSTCOMMIT_PRIMARY_MISSING", qid)
+        attempt = article.locator("textarea[data-g9-attempt]").first
+        commit = article.locator("button[data-g9-commit]").first
+        solution = article.locator("details[data-requires-attempt]").first
+        ensure(attempt.count() == commit.count() == solution.count() == 1,
+               "P2_NAV_POSTCOMMIT_NATIVE_CONTROLS_MISSING", qid)
+        status["precommit_solution_locked"] = (
+            solution.get_attribute("data-locked") is not None)
+        commit.click()
+        status["attempt_blank_rejected"] = (
+            article.get_attribute("data-attempted") is None and
+            solution.get_attribute("data-locked") is not None)
+        sentinel = "NATIVE_R11_ATTEMPT_SENTINEL_NOT_MATH"
+        attempt.fill(sentinel)
+        commit.click()
+        status["nonempty_attempt_committed"] = (
+            article.get_attribute("data-attempted") == "1")
+        links = article.locator("a[data-g9-concept-link]")
+        ncontext = links.count()
+        status["postcommit_context_link_present"] = (
+            ncontext == 1 and links.first.is_visible())
+        if status["postcommit_context_link_present"]:
+            link = links.first
+            status["context_link_is_pinned"] = (
+                link.get_attribute("data-g9-concept-ref") == concept_id and
+                _same_local_anchor(link.get_attribute("href"),
+                                   "core1a.html", concept_id))
+        if status["context_link_is_pinned"]:
+            links.first.click()
+            page.wait_for_load_state("load")
+        else:
+            click_role(page, "CORE1A", base)
+        status["concept_reached"] = (
+            page.locator("html").get_attribute("data-g9-role") == "CORE1A")
+        verify_role(page, "CORE1A")
+        status["concept_is_pinned"] = (
+            page.locator("article[data-g9-unit]").first.get_attribute(
+                "data-g9-unit") == concept_id)
+        returns = page.locator("a[data-g9-practice-link][data-g9-return-link]")
+        nreturn = returns.count()
+        status["return_link_present"] = (
+            nreturn == 1 and returns.first.is_visible())
+        if status["return_link_present"]:
+            link = returns.first
+            status["return_link_is_pinned"] = (
+                link.get_attribute("data-g9-return-link") == qid and
+                _same_local_anchor(link.get_attribute("href"),
+                                   "core2a.html", qid))
+        if status["return_link_is_pinned"]:
+            returns.first.click()
+            page.wait_for_load_state("load")
+        else:
+            click_role(page, "CORE2A", base)
+        verify_role(page, "CORE2A")
+        restored_article = page.locator(f"article[data-g9-unit='{qid}']")
+        status["same_question_reached"] = restored_article.count() == 1
+        ensure(status["same_question_reached"],
+               "P2_NAV_POSTCOMMIT_WRONG_RETURN_QUESTION", qid)
+        status["attempt_text_restored"] = (
+            restored_article.locator("textarea[data-g9-attempt]").first.input_value()
+            == sentinel)
+        status["assistance_marked"] = (
+            restored_article.get_attribute("data-g9-assisted") == "1")
+        status["independent_credit_claimed"] = (
+            restored_article.get_attribute("data-g9-independent") == "1")
+        ensure(not errors, "P2_NAV_POSTCOMMIT_PAGEERROR", repr(errors))
+        return {
+            "schema": "imo182-r11-native-postcommit-technical-probe/v1",
+            "source_question_id": qid,
+            "selected_concept_id": concept_id,
+            "native_renderer_only": True,
+            "source_bytes_changed": False,
+            "meaningful_mathematical_answer_submitted": False,
+            "observed": status,
+            "findings": classify_postcommit_journey(status),
+            "technical_round_trip_complete": not classify_postcommit_journey(status),
+            "human_academic_evidence": False,
+            "release": "HOLD",
+        }
+    finally:
+        page.close()
+
+
+def test_navigation(browser: source_root: Path, output: Path,
                     contract: dict) -> dict:
     ensure(contract.get("native_evidence", {}).get("all_role_structure") ==
            "PASS", "P2_NAV_NEEDS_P1_PROOF")
@@ -280,6 +420,7 @@ def test_navigation(browser, source_root: Path, output: Path,
             "manual_shell_route_is_not_independent_mastery": True,
             "academic_verdict": "NOT_RUN",
         }
+        postcommit = probe_postcommit_native(context, base, qid, expected_concept)
         ensure(not errors, "P2_NAV_ASSISTED_JS_EXCEPTION", repr(errors))
         return {
             "schema": "imo182-r8-real-native-navigation/v1",
@@ -290,6 +431,7 @@ def test_navigation(browser, source_root: Path, output: Path,
             "assisted_return": contextual_result,
             "observed_integrity_gaps": classify_assisted_return(contextual_result),
             "target_identity_findings": target_findings,
+            "postcommit_native_journey": postcommit,
             "independence_from_return_visit": False,
             "qualified_semantic_review": "NOT_RUN",
             "owner_acceptance": False,
