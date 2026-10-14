@@ -11,11 +11,18 @@ Two-Tier & 3-Rung Hint Ladders, formal verification derivations, distractor rati
 and strict typography compliance (zero FONT_FLOOR findings, font >= 14px).
 """
 import os
+import sys
 import json
 import re
 import html
 import glob
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from Mathematics.research.topic_visual_svgs import generate_topic_svg, TOPIC_COLOR_PALETTES
 
 def get_figure_markup(figure_ref, qid):
     figures_dir = Path("Mathematics/library/figures")
@@ -164,6 +171,51 @@ TOPIC_TO_UNIT_FOLDER = {
 }
 
 
+def render_topic_jump_navigation(units: list, prefix: str) -> str:
+    if not units:
+        return ""
+    parts = []
+    nav_id = f"topic-nav-{prefix}"
+    indicator_id = f"topic-band-indicator-{prefix}"
+    active_label_id = f"active-topic-label-{prefix}"
+    dot_id = f"dot-{prefix}"
+    
+    first_pal = TOPIC_COLOR_PALETTES.get(units[0]["folder"], {"primary": "#38bdf8", "glow": "rgba(56,189,248,0.25)", "bg": "rgba(56,189,248,0.08)"})
+    first_name = units[0]["topic_name"]
+    
+    parts.append(f"""
+      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND -->
+      <div class="topic-sticky-bar" id="{nav_id}" data-prefix="{prefix}">
+        <!-- Dynamic Color Band Strip across the top -->
+        <div class="topic-band-strip" id="{indicator_id}" style="background-color: {first_pal['primary']}; box-shadow: 0 0 14px {first_pal['glow']}"></div>
+        
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="topic-pulse-dot" id="{dot_id}" style="background-color: {first_pal['primary']}; box-shadow: 0 0 8px {first_pal['primary']}"></span>
+            <span style="font-size:0.88rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em">Active Topic Band:</span>
+            <span id="{active_label_id}" style="font-size:0.95rem;font-weight:800;color:{first_pal['primary']};transition:color 0.3s ease">{html.escape(first_name)}</span>
+          </div>
+          <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">⚡ Dynamic Color Band Tracks Viewport</span>
+        </div>
+
+        <div class="topic-buttons-track" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);margin-right:4px">Jump to topic:</span>
+    """)
+    for idx, u in enumerate(units):
+        f = u["folder"]
+        pal = TOPIC_COLOR_PALETTES.get(f, {"primary": "#38bdf8", "glow": "rgba(56,189,248,0.25)", "bg": "rgba(56,189,248,0.08)"})
+        target_id = f"module-{prefix}-{f}"
+        active_cls = " active" if idx == 0 else ""
+        parts.append(f"""          <button type="button" class="topic-nav-btn{active_cls}" data-prefix="{prefix}" data-folder="{f}" data-target="{target_id}" data-color="{pal['primary']}" data-glow="{pal['glow']}" data-name="{html.escape(u['topic_name'])}" onclick="scrollToTopicModule('{target_id}')" style="--topic-color:{pal['primary']};--topic-glow:{pal['glow']};--topic-bg:{pal['bg']}">
+            <span class="btn-dot" style="background-color:{pal['primary']}"></span>
+            <span class="btn-title">{html.escape(u['topic_name'])}</span>
+          </button>\n""")
+    parts.append("""        </div>
+      </div>
+    """)
+    return "".join(parts)
+
+
 def render_topic_module_html(unit: dict, prefix: str = "") -> str:
     c1a = unit["c1a"]
     c1b = unit["c1b"]
@@ -202,26 +254,39 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
         "D4": "var(--purple)"
     }.get(band, "var(--accent)")
     
+    palette = TOPIC_COLOR_PALETTES.get(unit["folder"], {
+        "primary": "#38bdf8",
+        "glow": "rgba(56,189,248,0.25)",
+        "bg": "rgba(56,189,248,0.08)",
+        "label": topic_name
+    })
+    topic_svg_markup = generate_topic_svg(unit["folder"])
+    
     parts = []
     card_id = f"module-{prefix}-{unit['folder']}" if prefix else f"module-{unit['folder']}"
     radio_predict = f"predict-{prefix}-{unit['folder']}" if prefix else f"predict-{unit['folder']}"
     radio_boundary = f"boundary-{prefix}-{unit['folder']}" if prefix else f"boundary-{unit['folder']}"
     
-    # Topic Card Wrapper
+    # Topic Card Wrapper with Visual Color Band
     parts.append(f"""
-    <div class="topic-module-card" id="{card_id}" data-topic="{html.escape(topic_name)}" data-band="{band}" style="margin:28px 0;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,0.18)">
+    <div class="topic-module-card" id="{card_id}" data-topic="{html.escape(topic_name)}" data-band="{band}" data-folder="{unit['folder']}" style="margin:28px 0;background:var(--card);border:1.5px solid var(--border);border-top:6px solid {palette['primary']};border-radius:12px;padding:24px;box-shadow:0 6px 20px rgba(0,0,0,0.22);position:relative">
+      <!-- TOP VISUAL COLOR ACCENT BAR -->
+      <div style="height:4px;width:100%;background:linear-gradient(90deg, {palette['primary']}, transparent);border-radius:2px;margin-bottom:16px"></div>
+
       <!-- TOPIC HEADER -->
       <div style="border-bottom:1.5px solid var(--border);padding-bottom:16px;margin-bottom:20px">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
-          <div>
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px">
             <span class="qb-badge qb-badge-{band.lower()}" style="font-weight:800;font-size:0.88rem">{band} OLYMPIAD BAND</span>
             <span class="qb-badge qb-badge-qrt" style="font-weight:800;font-size:0.88rem">DEMAND: {demand}</span>
+            <span class="qb-badge" style="background:{palette['bg']};color:{palette['primary']};border:1.5px solid {palette['primary']};font-size:0.88rem;font-weight:800">{html.escape(palette.get('label', topic_name))}</span>
             <span class="qb-badge" style="background:rgba(56,189,248,0.12);color:var(--accent);border:1px solid rgba(56,189,248,0.25);font-size:0.88rem;font-weight:750">BP-CORE1A &amp; BP-CORE1B CERTIFIED</span>
           </div>
           <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">CODE: {html.escape(subtopic)}</span>
         </div>
-        <h2 style="font-size:1.45rem;font-weight:800;margin-top:10px;color:var(--text);display:flex;align-items:center;gap:10px">
-          <span style="color:{band_color}">◈</span> {html.escape(topic_name)}
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:12px;color:var(--text);display:flex;align-items:center;gap:10px">
+          <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:{palette['primary']};box-shadow:0 0 10px {palette['primary']}"></span>
+          {html.escape(topic_name)}
         </h2>
         <div style="margin-top:8px;font-size:0.92rem;color:var(--text-muted)">
           <strong>Mathematical Domain:</strong> {format_math_html(domain if domain else topic_name)}
@@ -326,13 +391,38 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
         </div>
         """)
         
+    # Bespoke Visual Representation & Invariant Section
+    if topic_svg_markup:
+        parts.append(f"""
+        <!-- BESPOKE TOPIC VISUAL REPRESENTATION & INVARIANT DIAGRAM -->
+        <div class="visual-representation-anchor" style="background:var(--surface);border:1.5px solid {palette['primary']};border-radius:12px;padding:18px;margin:20px 0;box-shadow:0 4px 16px {palette['glow']}">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:{palette['primary']};box-shadow:0 0 8px {palette['primary']}"></span>
+              <h4 style="font-size:1.02rem;font-weight:800;color:var(--text);margin:0">
+                📊 Topic Visual Representation &amp; Invariant Diagram
+              </h4>
+            </div>
+            <span class="qb-badge" style="background:{palette['bg']};color:{palette['primary']};border:1.5px solid {palette['primary']};font-size:0.88rem;font-weight:800">
+              SVG VECTOR RIGOR (&ge; 14px FONT)
+            </span>
+          </div>
+          <div style="display:flex;justify-content:center;align-items:center;background:#090e17;border-radius:8px;padding:14px;overflow-x:auto;border:1px solid var(--border)">
+            {topic_svg_markup}
+          </div>
+        </div>
+        """)
+
     # Representation Bridge
     if reps:
         parts.append("""
         <div class="representation-bridge" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
-          <h4 style="font-size:0.98rem;font-weight:800;color:var(--purple);margin-bottom:10px">
-            🌉 Representation Bridge (Symbolic &amp; Visual Mapping)
-          </h4>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+            <h4 style="font-size:0.98rem;font-weight:800;color:var(--purple);margin:0">
+              🌉 Representation Bridge (Symbolic &amp; Visual Mapping)
+            </h4>
+            <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">Anchor: Invariant Vector Diagram</span>
+          </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
         """)
         for r in reps:
@@ -1037,6 +1127,104 @@ def main():
 
     .qb-question.highlighted {
       box-shadow: 0 0 0 3px var(--accent), 0 8px 30px rgba(56, 189, 248, 0.3) !important;
+    }
+
+    /* ======================================================= */
+    /* DYNAMIC TOPIC COLOR BUTTONS & SCROLLSPY COLOR BAND     */
+    /* ======================================================= */
+    .topic-sticky-bar {
+      position: sticky;
+      top: 60px;
+      z-index: 85;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px 16px 18px;
+      margin: 18px 0 24px 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      transition: border-color 0.25s ease;
+    }
+
+    [data-theme="light"] .topic-sticky-bar {
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .topic-band-strip {
+      height: 5px;
+      width: calc(100% + 36px);
+      margin: -14px -18px 12px -18px;
+      border-radius: 12px 12px 0 0;
+      transition: background-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .topic-pulse-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .topic-buttons-track {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .topic-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1.5px solid var(--topic-color, var(--border));
+      background: var(--topic-bg, var(--card));
+      color: var(--text);
+      min-height: 36px;
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      text-decoration: none;
+    }
+
+    .topic-nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px var(--topic-glow, rgba(56, 189, 248, 0.25));
+      filter: brightness(1.15);
+    }
+
+    .topic-nav-btn.active {
+      background: var(--topic-color, var(--accent)) !important;
+      color: #090e17 !important;
+      font-weight: 800 !important;
+      box-shadow: 0 0 16px var(--topic-glow, rgba(56, 189, 248, 0.35)) !important;
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    .topic-nav-btn .btn-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+      background-color: var(--topic-color, var(--accent));
+      box-shadow: 0 0 6px var(--topic-color, var(--accent));
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .topic-nav-btn.active .btn-dot {
+      background-color: #090e17 !important;
+      box-shadow: none !important;
+      transform: scale(1.2);
+    }
+
+    .visual-representation-anchor {
+      transition: transform 0.2s ease;
     }
 
 .qb-filter-panel {
@@ -1794,7 +1982,7 @@ def main():
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
           <div>
             <span class="qb-badge" style="background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)">14 TOPIC PACKAGES · 100% CUSTODY</span>
-            <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">All 14 Core 1A &amp; Core 1B Learning Modules</h2>
+            <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">All 14 Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">(14 Topics)</span></h2>
             <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
               Blueprint-Standard Core 1A Declarative Proofs &amp; Core 1B 4-Stage Self-Tutor Reconstructions, segregated topic-wise.
             </p>
@@ -1811,11 +1999,14 @@ def main():
         tname = u["topic_name"]
         tbnd = u["band"]
         tfolder = u["folder"]
-        html_parts.append(f"""            <span class="filter-chip" data-folder="{tfolder}" onclick="filterCore1ByTopic('{tfolder}')">{html.escape(tname)} ({tbnd})</span>\n""")
+        pal = TOPIC_COLOR_PALETTES.get(tfolder, {"primary": "#38bdf8"})
+        html_parts.append(f"""            <span class="filter-chip" data-folder="{tfolder}" onclick="filterCore1ByTopic('{tfolder}')"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:{pal['primary']}"></span>{html.escape(tname)} ({tbnd})</span>\n""")
     html_parts.append("""          </div>
         </div>
       </div>
-
+    """)
+    html_parts.append(render_topic_jump_navigation(topic_units, prefix="all"))
+    html_parts.append("""
       <!-- Modules List -->
       <div id="core1-modules-list">
     """)
@@ -1827,88 +2018,80 @@ def main():
 
     # 2. TAB: D3 Core (6 Topics)
     d3_units = [u for u in topic_units if u["band"] == "D3"]
-    html_parts.append("""
+    html_parts.append(f"""
     <!-- ========================================== -->
-    <!-- TAB: D3 CORE 1A/1B (6 TOPICS) -->
+    <!-- TAB: D3 CORE 1A/1B ({len(d3_units)} TOPICS) -->
     <!-- ========================================== -->
     <section class="tab-content" id="tab-d3-core" role="tabpanel">
       <div class="panel" style="background:var(--surface);border:1.5px solid var(--warning);border-radius:12px;padding:24px;margin-bottom:24px">
         <span class="qb-badge qb-badge-d3">🏆 BAND D3 · HARD OLYMPIAD CORE</span>
-        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D3 Core 1A &amp; Core 1B Learning Modules (6 Topics)</h2>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D3 Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(d3_units)} Topics)</span></h2>
         <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
           Advanced algebraic, geometric, and functional olympiad reasoning modules segregated topic-wise.
         </p>
-        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
-          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);align-self:center">Jump to topic:</span>
-    """)
-    for u in d3_units:
-        html_parts.append(f"""          <span class="filter-chip" onclick="document.getElementById('module-d3-{u['folder']}').scrollIntoView({{behavior:'smooth'}})">{html.escape(u['topic_name'])}</span>\n""")
-    html_parts.append("""        </div>
       </div>
     """)
+    html_parts.append(render_topic_jump_navigation(d3_units, prefix="d3"))
     for u in d3_units:
         html_parts.append(render_topic_module_html(u, prefix="d3"))
     html_parts.append("""    </section>\n""")
 
     # 3. TAB: D4 Core (1 Topic)
     d4_units = [u for u in topic_units if u["band"] == "D4"]
-    html_parts.append("""
+    html_parts.append(f"""
     <!-- ========================================== -->
-    <!-- TAB: D4 CORE 1A/1B (1 TOPIC) -->
+    <!-- TAB: D4 CORE 1A/1B ({len(d4_units)} TOPIC) -->
     <!-- ========================================== -->
     <section class="tab-content" id="tab-d4-core" role="tabpanel">
       <div class="panel" style="background:var(--surface);border:1.5px solid var(--purple);border-radius:12px;padding:24px;margin-bottom:24px">
         <span class="qb-badge qb-badge-d4">💎 BAND D4 · ACHIEVERS SECTION</span>
-        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D4 Core 1A &amp; Core 1B Learning Modules</h2>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D4 Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(d4_units)} Topic)</span></h2>
         <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
           High-demand extremal geometric and cyclic structure proofs.
         </p>
       </div>
     """)
+    html_parts.append(render_topic_jump_navigation(d4_units, prefix="d4"))
     for u in d4_units:
         html_parts.append(render_topic_module_html(u, prefix="d4"))
     html_parts.append("""    </section>\n""")
 
     # 4. TAB: D2 Core (6 Topics)
     d2_units = [u for u in topic_units if u["band"] == "D2"]
-    html_parts.append("""
+    html_parts.append(f"""
     <!-- ========================================== -->
-    <!-- TAB: D2 CORE 1A/1B (6 TOPICS) -->
+    <!-- TAB: D2 CORE 1A/1B ({len(d2_units)} TOPICS) -->
     <!-- ========================================== -->
     <section class="tab-content" id="tab-d2-core" role="tabpanel">
       <div class="panel" style="background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;padding:24px;margin-bottom:24px">
         <span class="qb-badge qb-badge-d2">⚡ BAND D2 · STANDARD OLYMPIAD CORE</span>
-        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D2 Core 1A &amp; Core 1B Learning Modules (6 Topics)</h2>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D2 Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(d2_units)} Topics)</span></h2>
         <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
           Foundational algebraic manipulation, Euclidean reasoning, coordinate methods, and statistics.
         </p>
-        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
-          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);align-self:center">Jump to topic:</span>
-    """)
-    for u in d2_units:
-        html_parts.append(f"""          <span class="filter-chip" onclick="document.getElementById('module-d2-{u['folder']}').scrollIntoView({{behavior:'smooth'}})">{html.escape(u['topic_name'])}</span>\n""")
-    html_parts.append("""        </div>
       </div>
     """)
+    html_parts.append(render_topic_jump_navigation(d2_units, prefix="d2"))
     for u in d2_units:
         html_parts.append(render_topic_module_html(u, prefix="d2"))
     html_parts.append("""    </section>\n""")
 
     # 5. TAB: D1 Core (1 Topic)
     d1_units = [u for u in topic_units if u["band"] == "D1"]
-    html_parts.append("""
+    html_parts.append(f"""
     <!-- ========================================== -->
-    <!-- TAB: D1 CORE 1A/1B (1 TOPIC) -->
+    <!-- TAB: D1 CORE 1A/1B ({len(d1_units)} TOPIC) -->
     <!-- ========================================== -->
     <section class="tab-content" id="tab-d1-core" role="tabpanel">
       <div class="panel" style="background:var(--surface);border:1.5px solid var(--success);border-radius:12px;padding:24px;margin-bottom:24px">
         <span class="qb-badge qb-badge-d1">🌱 BAND D1 · FOUNDATIONAL CORE</span>
-        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D1 Core 1A &amp; Core 1B Learning Modules</h2>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D1 Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(d1_units)} Topic)</span></h2>
         <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
           Empirical and theoretical probability models and foundational arithmetic reasoning.
         </p>
       </div>
     """)
+    html_parts.append(render_topic_jump_navigation(d1_units, prefix="d1"))
     for u in d1_units:
         html_parts.append(render_topic_module_html(u, prefix="d1"))
     html_parts.append("""    </section>\n""")
@@ -1934,6 +2117,121 @@ def main():
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
       triggerKaTeX();
+      setTimeout(updateScrollSpyFallback, 80);
+    }
+
+    // Dynamic Topic Navigation & ScrollSpy
+    function scrollToTopicModule(cardId) {
+      const el = document.getElementById(cardId);
+      if (el) {
+        const yOffset = -140;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        el.classList.add('highlighted');
+        setTimeout(() => el.classList.remove('highlighted'), 2000);
+      }
+    }
+
+    function activateTopicInNav(prefix, folder) {
+      const nav = document.getElementById('topic-nav-' + prefix);
+      if (!nav) return;
+
+      const buttons = nav.querySelectorAll('.topic-nav-btn');
+      let activeBtn = null;
+      buttons.forEach(btn => {
+        if (btn.getAttribute('data-folder') === folder) {
+          btn.classList.add('active');
+          activeBtn = btn;
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      if (activeBtn) {
+        const color = activeBtn.getAttribute('data-color') || '#38bdf8';
+        const glow = activeBtn.getAttribute('data-glow') || 'rgba(56,189,248,0.25)';
+        const name = activeBtn.getAttribute('data-name') || '';
+
+        // Dynamic Color Band Strip
+        const strip = document.getElementById('topic-band-indicator-' + prefix);
+        if (strip) {
+          strip.style.backgroundColor = color;
+          strip.style.boxShadow = '0 0 14px ' + glow;
+        }
+
+        // Active Dot
+        const dot = document.getElementById('dot-' + prefix);
+        if (dot) {
+          dot.style.backgroundColor = color;
+          dot.style.boxShadow = '0 0 8px ' + color;
+        }
+
+        // Active Label
+        const label = document.getElementById('active-topic-label-' + prefix);
+        if (label) {
+          label.textContent = name;
+          label.style.color = color;
+        }
+      }
+    }
+
+    function initTopicScrollSpy() {
+      const observerOptions = {
+        root: null,
+        rootMargin: '-120px 0px -40% 0px',
+        threshold: [0, 0.2, 0.5]
+      };
+
+      const topicObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const card = entry.target;
+            const match = card.id.match(/^module-([^-]+)-(.+)$/);
+            if (match) {
+              activateTopicInNav(match[1], match[2]);
+            }
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.topic-module-card').forEach(card => {
+        topicObserver.observe(card);
+      });
+
+      let scrollTimeout = null;
+      window.addEventListener('scroll', () => {
+        if (scrollTimeout) return;
+        scrollTimeout = setTimeout(() => {
+          scrollTimeout = null;
+          updateScrollSpyFallback();
+        }, 60);
+      }, { passive: true });
+    }
+
+    function updateScrollSpyFallback() {
+      const activeTab = document.querySelector('.tab-content.active');
+      if (!activeTab) return;
+      const cards = Array.from(activeTab.querySelectorAll('.topic-module-card')).filter(c => c.style.display !== 'none');
+      if (!cards.length) return;
+
+      const viewportTop = 150;
+      let currentCard = cards[0];
+
+      for (let i = 0; i < cards.length; i++) {
+        const rect = cards[i].getBoundingClientRect();
+        if (rect.top <= viewportTop + 50) {
+          currentCard = cards[i];
+        } else {
+          break;
+        }
+      }
+
+      if (currentCard) {
+        const match = currentCard.id.match(/^module-([^-]+)-(.+)$/);
+        if (match) {
+          activateTopicInNav(match[1], match[2]);
+        }
+      }
     }
 
     // Core 1 Dynamic Topic Filtering
@@ -1952,6 +2250,7 @@ def main():
       if (folder !== 'ALL') {
         const target = document.getElementById('module-all-' + folder) || document.getElementById('module-' + folder);
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        activateTopicInNav('all', folder);
       }
     }
 
@@ -1972,6 +2271,7 @@ def main():
           mod.scrollIntoView({ behavior: 'smooth', block: 'start' });
           mod.classList.add('highlighted');
           setTimeout(() => mod.classList.remove('highlighted'), 2500);
+          activateTopicInNav('all', folder);
         }
       }, 100);
     }
@@ -2004,8 +2304,7 @@ def main():
           delimiters: [
             {left: "$$", right: "$$", display: true},
             {left: "\\[", right: "\\]", display: true},
-            {left: "$", right: "$", display: false},
-            {left: "\\(", right: "\\)", display: false}
+            {left: "$", right: "$", display: false}
           ],
           ignoredClasses: ["no-math", "katex-ignore"],
           throwOnError: false,
@@ -2199,7 +2498,7 @@ def main():
       } catch(e) {}
     }
 
-    // Auto-render KaTeX on DOM ready
+    // Auto-render KaTeX on DOM ready & initialize Topic ScrollSpy
     document.addEventListener("DOMContentLoaded", function() {
       try {
         const savedTheme = localStorage.getItem('g9_theme');
@@ -2213,14 +2512,17 @@ def main():
           delimiters: [
             {left: "$$", right: "$$", display: true},
             {left: "\\[", right: "\\]", display: true},
-            {left: "$", right: "$", display: false},
-            {left: "\\(", right: "\\)", display: false}
+            {left: "$", right: "$", display: false}
           ],
           ignoredClasses: ["no-math", "katex-ignore"],
           throwOnError: false,
           errorColor: "#ef4444"
         });
       }
+
+      // Initialize Dynamic Topic ScrollSpy & Visual Color Band
+      initTopicScrollSpy();
+      setTimeout(updateScrollSpyFallback, 150);
     });
   </script>
 </body>
