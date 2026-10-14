@@ -189,7 +189,8 @@ def test_navigation(browser, source_root: Path, output: Path,
         ensure(qid == contract["source_crux"]["primary"]["question_id"],
                "P2_NAV_PRIMARY_QID_NOT_RENDERED")
         links = source.locator("a[data-g9-concept-link]")
-        contextual = links.count() > 0
+        context_count = links.count()
+        contextual = context_count > 0
         entry_concept_refs = links.evaluate_all(
             "els => els.map(e => e.getAttribute('data-g9-concept-ref'))"
         )
@@ -213,7 +214,8 @@ def test_navigation(browser, source_root: Path, output: Path,
         concept = page.locator("article[data-g9-unit]").first
         concept_id = concept.get_attribute("data-g9-unit")
         targeted = page.locator("a[data-g9-practice-link][data-g9-return-link]")
-        targeted_exist = targeted.count() > 0
+        targeted_count = targeted.count()
+        targeted_exist = targeted_count > 0
         return_href = targeted.first.get_attribute("href") if targeted_exist else None
         return_ref = targeted.first.get_attribute("data-g9-return-link") if targeted_exist else None
         practice_count = page.locator("a[data-g9-practice-link]").count()
@@ -245,11 +247,11 @@ def test_navigation(browser, source_root: Path, output: Path,
             "expected_concept_id": expected_concept,
             "observed_concept_id": concept_id,
             "context_link_present": contextual,
-            "context_link_count": links.count(),
+            "context_link_count": context_count,
             "context_concept_ref": entry_concept_refs[0] if contextual else None,
             "context_href": context_href,
             "return_link_present": targeted_exist,
-            "return_link_count": targeted.count(),
+            "return_link_count": targeted_count,
             "return_question_ref": return_ref,
             "return_href": return_href,
             "return_state_assisted": marked,
