@@ -1,0 +1,97 @@
+name: IMO #263 local-only research KaTeX reconciliation (temporary)
+on:
+  push:
+    branches:
+      - agent/263-katex-local-only-20261014
+permissions:
+  contents: write
+jobs:
+  rebuild-local-only:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Enforce exact isolated branch and clean start
+        env:
+          TARGET: agent/263-katex-local-only-20261014
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/$TARGET"
+          test "$(git branch --show-current)" = "$TARGET"
+          test -z "$(git status --porcelain)"
+      - name: Regenerate only owned research Pages assets and verify with real tests
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_imo_pages_katex_assets.py' -v
+          python3 Mathematics/research/build_full_master_suite.py
+          python3 Shared/tools/build_pages_site.py
+          python3 Shared/tools/build_pages_site.py --check
+          python3 -m unittest tests.test_pages_site -v
+          python3 -m unittest tests.test_pr306_ui_regressions.Pr306UiRegressions.test_katex_vendor_dependency_closure_and_no_jsdelivr_runtime -v
+      - name: Fail closed on network fallback, broken local targets, and non-owned diff
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import os
+          import re
+          import subprocess
+          allowed = {
+              'standalone/mathematics-imo-grade9-master-suite.html',
+              'public/standalone/mathematics-imo-grade9-master-suite.html',
+              'public/test/imo-grade9/core2.html',
+              'docs/standalone/mathematics-imo-grade9-master-suite.html',
+              'docs/test/imo-grade9/core2.html',
+              'docs/test/imo-grade9/core1b.html',
+              'docs/.pages-manifest.json',
+          }
+          pages = (
+              'standalone/mathematics-imo-grade9-master-suite.html',
+              'public/standalone/mathematics-imo-grade9-master-suite.html',
+              'public/test/imo-grade9/core2.html',
+              'docs/standalone/mathematics-imo-grade9-master-suite.html',
+              'docs/test/imo-grade9/core2.html',
+          )
+          assets = ('katex.min.css', 'katex.min.js', 'contrib/auto-render.min.js')
+          for item in pages:
+              page = Path(item)
+              assert page.is_file(), f"MISSING_PAGE: {item}"
+              data = page.read_text(encoding='utf-8')
+              assert 'cdn.jsdelivr.net/npm/katex@0.16.8' not in data, f"CDN_RUNTIME_FORBIDDEN: {item}"
+              for asset in assets:
+                  refs = re.findall(
+                      r'["\x27]([^"\x27]*vendor/katex/0\.16\.8/' + re.escape(asset) + r')["\x27]',
+                      data,
+                  )
+                  assert len(refs) == 1, f"INVALID_LOCAL_KATEX_REFERENCE: {item}: {asset}: {len(refs)}"
+                  ref = refs[0]
+                  target = (page.parent / ref).resolve()
+                  assert target.is_file(), f"BROKEN_KATEX_REFERENCE: {item} -> {ref}"
+          changed = {
+              row[3:] for row in
+              subprocess.check_output(['git', 'status', '--porcelain=v1', '-uall'], text=True).splitlines()
+          }
+          illegal = sorted(changed - allowed)
+          if illegal:
+              raise SystemExit(f"OUT_OF_SCOPE_GENERATION: {illegal}")
+          if not changed:
+              raise SystemExit("NOTHING_REGENERATED: expected stale baseline with CDN attributes")
+          print("SCOPE_OK: regenerated artifacts:", *sorted(changed), sep="\n - ")
+          subprocess.run(['git', 'add', '--', *sorted(changed)], check=True)
+          PY
+      - name: Commit scoped generated HTML only to draft research branch
+        env:
+          TARGET: agent/263-katex-local-only-20261014
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "$TARGET"
+          git diff --cached --stat
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'build(#263): regenerate local-only research KaTeX Pages HTML and mirrors'
+          git push origin "HEAD:refs/heads/$TARGET"
