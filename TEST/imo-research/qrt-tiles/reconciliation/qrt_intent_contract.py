@@ -179,7 +179,12 @@ def validate_payload(source: dict, manifest: dict, matrix: dict,
         ensure(witness.get(f"{role}_crux_move_ref") == crux,
                "WITNESS_CRUX_DRIFT", f"{role} {qid}")
         if role == "primary":
-            ensure(rival in cognitive.get("secondary", []),
+            secondary = cognitive.get("secondary", [])
+            ensure(isinstance(secondary, list) and
+                   all(x in DEMANDS and x != demand for x in secondary),
+                   "SOURCE_RIVAL_VOCAB_INVALID",
+                   f"{qid}: {secondary!r} is not the canonical seven-demand vocabulary")
+            ensure(rival in secondary,
                    "RIVAL_NOT_GROUNDED_IN_SOURCE", rival)
         components = difficulty.get("components", {})
         ensure(len(components) == 5 and
@@ -313,7 +318,7 @@ def main() -> None:
     parser.add_argument("--adoption-ledger", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument(
-        "--expected-hold-code", choices=("RIVAL_NOT_GROUNDED_IN_SOURCE",),
+        "--expected-hold-code", choices=("RIVAL_NOT_GROUNDED_IN_SOURCE", "SOURCE_RIVAL_VOCAB_INVALID"),
         help="Fail closed with explicit reproducible HOLD record only on exact named review gap."
     )
     args = parser.parse_args()
