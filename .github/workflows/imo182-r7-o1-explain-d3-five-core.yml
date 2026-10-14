@@ -4,6 +4,7 @@ on:
     paths:
       - '.github/workflows/imo182-r7-o1-explain-d3-five-core.yml'
       - 'TEST/imo-research/qrt-tiles/reconciliation/o1_explain_d3_five_core.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/o1_explain_d3_proposed_labels.py'
   workflow_dispatch:
 
 permissions:
@@ -49,6 +50,9 @@ jobs:
       - name: Reuse D3-author exact-head Core2B changed-transfer/registered-golden verifier
         working-directory: d3-source
         run: python TEST/imo-research/qrt-d3-successor/core2b_o1_benchmark_217.py
+      - name: Test disposable source-label proposal through sole renderer and protected-W Chromium
+        run: |
+          python TEST/imo-research/qrt-tiles/reconciliation/o1_explain_d3_proposed_labels.py --repo d3-source
       - name: Preserve genuine D3-author source, registered fixture and new integration reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -61,5 +65,8 @@ jobs:
             d3-source/build/imo182-qrt/d3-successor/o1-core1a/
             d3-source/build/imo182-qrt/d3-successor/o1-core1b/
             d3-source/build/imo182-qrt/d3-successor/o1-core2b/
+            d3-source/build/imo182-qrt/d3-proposed-labels-o1/
+            d3-source/build/imo182-qrt/d3/explain-stage-label-proposed/*.html
+            d3-source/build/imo182-qrt/d3/explain-stage-label-proposed/render-receipt.json
           if-no-files-found: warn
           retention-days: 30
