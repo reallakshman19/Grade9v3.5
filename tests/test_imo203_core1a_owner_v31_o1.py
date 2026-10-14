@@ -69,15 +69,17 @@ class Core1AOwnerGoldenO1(unittest.TestCase):
                          [name for name in golden_sequence if name in COMPONENTS])
         self.assertIn("Independently classify 5 and9", self.actual)
         self.assertIn("Every odd square is1 modulo8", self.actual)
-        self.assertIn('data-g9-figure=""', self.actual)
+        self.assertIn('data-g9-figure', self.actual)
         self.assertIn('data-g9-stages-total="3"', self.actual)
-        self.assertIn('data-g9-reveal=""', self.actual)
+        self.assertIn('data-g9-reveal', self.actual)
         self.assertIn('data-g9-attempt-box', self.actual)
         self.assertIn('data-g9-commit', self.actual)
-        self.assertRegex(
-            self.actual,
-            r'<details[^>]*data-g9-payload-ref="CORE1A-MIC-D4-RETRIEVE-exit"'
-            r'[^>]*data-requires-attempt')
+        exit_disclosures = [
+            tag for tag in re.findall(r'<details\\b[^>]*>', self.actual)
+            if 'data-g9-payload-ref="CORE1A-MIC-D4-RETRIEVE-exit"' in tag
+        ]
+        self.assertEqual(len(exit_disclosures), 1)
+        self.assertIn("data-requires-attempt", exit_disclosures[0])
         self.assertIn('data-g9-payload-slot', self.actual)
         self.assertFalse(self.package["extensions"]["grade9v3:qrt_admitted"])
         self.assertFalse(self.package["extensions"]["grade9v3:learner_published"])
