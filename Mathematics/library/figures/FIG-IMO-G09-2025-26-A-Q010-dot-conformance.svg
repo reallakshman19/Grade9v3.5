@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" role="img" aria-label="Topological Boundary Intersection Dot Conformance Diagram" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title>Topological Boundary Intersection Dot Conformance</title>
+  <desc>Problem figure showing Circle, Triangle, and Square with two dots in specific topological intersections, alongside 4 option figures A, B, C, and D.</desc>
+  <defs>
+    <style>
+      .panel-bg { fill: rgba(15, 23, 42, 0.45); stroke: #334155; stroke-width: 1.5; rx: 10px; }
+      .opt-bg { fill: rgba(15, 23, 42, 0.35); stroke: #334155; stroke-width: 1.2; rx: 8px; }
+      .opt-bg-correct { fill: rgba(16, 185, 129, 0.08); stroke: #10b981; stroke-width: 2; rx: 8px; }
+      .shape-circle { fill: rgba(56, 189, 248, 0.15); stroke: #38bdf8; stroke-width: 2.2; }
+      .shape-tri { fill: rgba(129, 140, 248, 0.15); stroke: #818cf8; stroke-width: 2.2; }
+      .shape-sq { fill: rgba(52, 211, 153, 0.15); stroke: #34d399; stroke-width: 2.2; }
+      .dot-marker { fill: #f43f5e; stroke: #ffffff; stroke-width: 1.8; }
+      .title-text { font-size: 16px; font-weight: 750; fill: #f8fafc; }
+      .subtitle-text { font-size: 14px; font-weight: 600; fill: #94a3b8; }
+      .label-text { font-size: 14px; font-weight: 600; fill: #cbd5e1; }
+      .badge-correct { font-size: 14px; font-weight: 800; fill: #10b981; }
+    </style>
+  </defs>
+
+  <!-- LEFT: GIVEN PROBLEM FIGURE -->
+  <g transform="translate(16, 16)">
+    <rect width="360" height="368" class="panel-bg"/>
+    <text x="180" y="32" class="title-text" text-anchor="middle">GIVEN PROBLEM FIGURE</text>
+    <text x="180" y="52" class="subtitle-text" text-anchor="middle">Conditions of Placement of Dots</text>
+
+    <!-- Problem Shapes -->
+    <!-- Triangle -->
+    <polygon points="180,75 75,255 285,255" class="shape-tri"/>
+    <!-- Circle -->
+    <circle cx="140" cy="190" r="75" class="shape-circle"/>
+    <!-- Square -->
+    <rect x="160" y="165" width="130" height="110" class="shape-sq"/>
+
+    <!-- Dots in Problem Figure -->
+    <!-- Dot 1: Common to Circle and Triangle ONLY (strictly outside Square) -->
+    <circle cx="128" cy="155" r="6" class="dot-marker"/>
+    <text x="110" y="140" class="label-text" text-anchor="end">Dot 1</text>
+    <line x1="114" y1="142" x2="124" y2="152" stroke="#f43f5e" stroke-width="1.5"/>
+
+    <!-- Dot 2: In Square ONLY (outside Circle and Triangle) -->
+    <circle cx="260" cy="240" r="6" class="dot-marker"/>
+    <text x="272" y="265" class="label-text" text-anchor="start">Dot 2</text>
+    <line x1="262" y1="244" x2="270" y2="256" stroke="#f43f5e" stroke-width="1.5"/>
+
+    <!-- Legend Box -->
+    <g transform="translate(18, 290)">
+      <rect width="324" height="64" rx="6" fill="rgba(15, 23, 42, 0.6)" stroke="#475569" stroke-width="1"/>
+      <text x="12" y="24" class="label-text" fill="#38bdf8">• Dot 1: Inside (Circle ∩ Triangle) \ Square</text>
+      <text x="12" y="48" class="label-text" fill="#34d399">• Dot 2: Inside Square only (isolated)</text>
+    </g>
+  </g>
+
+  <!-- RIGHT: 4 OPTIONS (A, B, C, D) -->
+  <!-- Option A -->
+  <g transform="translate(396, 16)">
+    <rect width="265" height="176" class="opt-bg"/>
+    <text x="16" y="28" class="title-text">(A) Figure A</text>
+    <text x="16" y="46" class="subtitle-text" fill="#f87171">Circle ∩ Triangle fully inside Square</text>
+    <!-- Miniature Shapes A -->
+    <g transform="translate(25, 45)">
+      <polygon points="110,12 40,110 180,110" class="shape-tri"/>
+      <rect x="50" y="35" width="120" height="75" class="shape-sq"/>
+      <circle cx="110" cy="72" r="32" class="shape-circle"/>
+    </g>
+  </g>
+
+  <!-- Option B -->
+  <g transform="translate(680, 16)">
+    <rect width="265" height="176" class="opt-bg"/>
+    <text x="16" y="28" class="title-text">(B) Figure B</text>
+    <text x="16" y="46" class="subtitle-text" fill="#f87171">Square fully overlaps Triangle</text>
+    <!-- Miniature Shapes B -->
+    <g transform="translate(25, 45)">
+      <circle cx="70" cy="65" r="45" class="shape-circle"/>
+      <rect x="75" y="20" width="105" height="90" class="shape-sq"/>
+      <polygon points="125,30 90,95 160,95" class="shape-tri"/>
+    </g>
+  </g>
+
+  <!-- Option C (CORRECT) -->
+  <g transform="translate(396, 208)">
+    <rect width="265" height="176" class="opt-bg-correct"/>
+    <text x="16" y="28" class="title-text" fill="#10b981">(C) Figure C</text>
+    <text x="120" y="28" class="badge-correct">✓ CORRECT MATCH</text>
+    <text x="16" y="46" class="subtitle-text" fill="#34d399">Both required regions exist distinctly</text>
+    <!-- Miniature Shapes C -->
+    <g transform="translate(25, 45)">
+      <circle cx="75" cy="65" r="48" class="shape-circle"/>
+      <polygon points="105,10 50,110 160,110" class="shape-tri"/>
+      <rect x="115" y="40" width="85" height="70" class="shape-sq"/>
+      <!-- Verified valid dot placement regions in C -->
+      <circle cx="85" cy="45" r="5" class="dot-marker"/>
+      <circle cx="165" cy="85" r="5" class="dot-marker"/>
+    </g>
+  </g>
+
+  <!-- Option D -->
+  <g transform="translate(680, 208)">
+    <rect width="265" height="176" class="opt-bg"/>
+    <text x="16" y="28" class="title-text">(D) Figure D</text>
+    <text x="16" y="46" class="subtitle-text" fill="#f87171">Triangle disjoint from Circle</text>
+    <!-- Miniature Shapes D -->
+    <g transform="translate(25, 45)">
+      <circle cx="50" cy="65" r="40" class="shape-circle"/>
+      <polygon points="170,15 125,105 215,105" class="shape-tri"/>
+      <rect x="75" y="30" width="80" height="75" class="shape-sq"/>
+    </g>
+  </g>
+</svg>

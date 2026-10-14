@@ -1,0 +1,114 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-QUADRILATERALS-PARALLELOGRAM-DIAGONALS-MIDPOINTS",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Quadrilaterals",
+  "topic_name": "Quadrilaterals",
+  "subtopic": "QUADS-PARALLELOGRAM-PROPERTIES",
+  "target_demand": "JUSTIFY",
+  "target_band": "D4",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-B-Q046"
+  ],
+  "entry_assumptions": [
+    "Axiomatic properties of parallelograms: opposite sides are parallel and equal in length.",
+    "Sufficient condition for a quadrilateral to be a parallelogram: one pair of opposite sides is both parallel and equal.",
+    "Mid-Point Theorem and its Converse in Euclidean triangles."
+  ],
+  "inferential_jump": "Why establishing that a sub-quadrilateral has one pair of equal and parallel sides proves its diagonals bisect each other, and how the converse of the Mid-Point Theorem proves that parallel lines from midpoints double the exterior segment length rather than matching it.",
+  "relation_refs": {
+    "domain": "Euclidean Synthetic Geometry of Parallelograms and Triangle Midpoints",
+    "hypotheses": [
+      "Let ABCD be a parallelogram with AB = CD, AB || CD, and AD = BC, AD || BC.",
+      "If L in AB and M in CD satisfy AL = CM, then BL = AB - AL = CD - CM = DM.",
+      "Since BL || DM and BL = DM, quadrilateral BLDM is a parallelogram.",
+      "Diagonals of any parallelogram bisect each other => LM and BD bisect each other.",
+      "In triangle ABR, if P is midpoint of AB and PD || BR, then by converse of Mid-Point Theorem, D is midpoint of AR => AR = 2*AD = 2*BC."
+    ],
+    "excluded_values": [
+      "Assuming a quadrilateral is a parallelogram without verifying that opposite sides are both parallel AND equal.",
+      "Asserting AR = BC when AR is double AD (and AD = BC)."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "BL \\parallel DM \\land BL = DM",
+      "svg_element_ref": "sub-parallelogram-pair",
+      "word_meaning": "The sufficient criterion proving quadrilateral BLDM is a parallelogram."
+    },
+    {
+      "symbol": "LM \\cap BD = \\text{Mid}(LM) = \\text{Mid}(BD)",
+      "svg_element_ref": "diagonal-bisection-concurrency",
+      "word_meaning": "The common midpoint where the diagonals LM and BD mutually bisect."
+    },
+    {
+      "symbol": "AR = 2AD = 2BC",
+      "svg_element_ref": "converse-midpoint-doubling",
+      "word_meaning": "Deduction from the converse of the Mid-Point Theorem that AR is double the opposite side BC."
+    },
+    {
+      "symbol": "AR \\neq BC",
+      "svg_element_ref": "falsification-badge",
+      "word_meaning": "Geometric falsification showing the statement asserting AR = BC is false."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Prove that quadrilateral BLDM inside parallelogram ABCD is itself a parallelogram.",
+      "derivation": "Since ABCD is a parallelogram, AB || CD => BL || DM. Since AB = CD and AL = CM, subtracting equals gives BL = AB - AL = CD - CM = DM.",
+      "why_valid": "A quadrilateral having one pair of opposite sides both equal and parallel is a parallelogram (Euclid Elements I.33)."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Conclude that segment LM and diagonal BD bisect each other.",
+      "derivation": "LM and BD are the diagonals of parallelogram BLDM.",
+      "why_valid": "The diagonals of any parallelogram bisect each other (Euclid Elements I.34)."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Apply the converse of the Mid-Point Theorem to triangle ABR with PD || BR.",
+      "derivation": "P is the midpoint of AB and line PD is drawn parallel to base BR, intersecting side AR at D. By the converse of the Mid-Point Theorem, D must be the midpoint of AR.",
+      "why_valid": "The line drawn through the midpoint of one side of a triangle, parallel to another side, bisects the third side."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Deduce the true scalar relationship between AR and BC.",
+      "derivation": "Because D is the midpoint of AR, AR = 2*AD. In parallelogram ABCD, AD = BC. Therefore, AR = 2*BC.",
+      "why_valid": "Transitivity of equality and side lengths of a parallelogram."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "SUPERFICIAL_EQUALITY_ASSUMPTION",
+      "wrong_idea": "Assuming AR = BC because D lies on AD and looks equal to BC without applying the Mid-Point Theorem.",
+      "diagnostic_prompt": "If D is the midpoint of AR, what is the relation between AR and AD?",
+      "repair": "D being the midpoint means AR = 2*AD. Since AD = BC, AR must equal 2*BC, which is twice the length, never equal!"
+    },
+    {
+      "code": "MISSING_PARALLELOGRAM_CRITERION",
+      "wrong_idea": "Thinking one must prove BOTH pairs of opposite sides are parallel before concluding a figure is a parallelogram.",
+      "diagnostic_prompt": "If one pair of opposite sides is both equal and parallel, is that sufficient to declare a parallelogram?",
+      "repair": "Yes! One pair of opposite sides being both equal AND parallel is a fully sufficient condition to establish a parallelogram."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "In a parallelogram PQRS, points X and Y are taken on sides PQ and RS respectively such that PX = RY. Prove that: (i) XSYR is a parallelogram, and (ii) XY and SQ bisect each other.",
+    "model_answer": "In parallelogram PQRS, PQ = RS and PQ || RS.\nGiven PX = RY. Then QX = PQ - PX = RS - RY = SY.\nAlso, since PQ || RS, we have QX || SY.\nQuadrilateral XQYS has one pair of opposite sides equal and parallel (QX = SY and QX || SY).\nTherefore, XQYS is a parallelogram.\nSince the diagonals of a parallelogram bisect each other, the diagonals XY and QS bisect each other."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT. In triangle XYZ, M is the midpoint of XY. A line through M parallel to YZ intersects XZ at N. If XN = 4.5 cm and YZ = 12 cm, determine: (a) the length of XZ, and (b) the length of segment MN.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "XZ = 9 cm (by converse of Mid-Point Theorem); MN = 6 cm (by Mid-Point Theorem).",
+      "reasoning": [
+        "In triangle XYZ, M is midpoint of XY and MN || YZ.",
+        "By the converse of the Mid-Point Theorem, N is the midpoint of XZ => XZ = 2 * XN = 2 * 4.5 = 9 cm.",
+        "By the Mid-Point Theorem, segment joining midpoints of two sides is half the third side: MN = (1/2) * YZ = (1/2) * 12 = 6 cm."
+      ],
+      "check": "N is midpoint, XZ = 9 cm; MN = 6 cm = (1/2)*12 cm. Exact consistency."
+    }
+  }
+}

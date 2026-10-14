@@ -1,0 +1,114 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-LINEAR-EQUATIONS-CONSISTENCY-CLASSIFICATION",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Linear Equations in Two Variables",
+  "topic_name": "Linear Equations in Two Variables",
+  "subtopic": "ALG-SYSTEM-CONSISTENCY-CLASSIFICATION",
+  "target_demand": "JUSTIFY",
+  "target_band": "D4",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2024-25-B-Q050"
+  ],
+  "entry_assumptions": [
+    "Understanding of general bivariate linear equations in standard form a*x + b*y + c = 0.",
+    "Geometric interpretation of a linear equation as a straight line in the Cartesian plane R^2.",
+    "Basic mastery of ratio equality and the matrix determinant test for 2x2 linear systems."
+  ],
+  "inferential_jump": "Why comparing the coefficient ratios a1/a2, b1/b2, and c1/c2 rigorously determines the geometric configuration (intersecting, parallel, or coincident) and algebraic solvability (unique, inconsistent, or infinitely many solutions) without requiring explicit variable elimination.",
+  "relation_refs": {
+    "domain": "Linear Systems over R and Geometric-Algebraic Consistency Classification",
+    "hypotheses": [
+      "Let L1: a1*x + b1*y = c1 and L2: a2*x + b2*y = c2 be two lines in R^2 with (a1^2 + b1^2 != 0) and (a2^2 + b2^2 != 0).",
+      "The normal vectors are n1 = (a1, b1) and n2 = (a2, b2).",
+      "Condition for Unique Solution: n1 and n2 are linearly independent, i.e., a1/a2 != b1/b2 (or a1*b2 - a2*b1 != 0).",
+      "Condition for Infinitely Many Solutions (Coincident): a1/a2 = b1/b2 = c1/c2 (proportional lines).",
+      "Condition for Inconsistent System (Parallel, No Solution): a1/a2 = b1/b2 != c1/c2 (equal slope, distinct intercepts)."
+    ],
+    "excluded_values": [
+      "Zero denominators in ratio checks (treated by equivalent cross-multiplication form a1*b2 - a2*b1 = 0).",
+      "Assuming a system with a1/a2 = b1/b2 has solutions without verifying the constant term ratio c1/c2."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "a_1/a_2 \\neq b_1/b_2",
+      "svg_element_ref": "intersecting-lines",
+      "word_meaning": "Independent normal directions; lines intersect at exactly one point (Unique Solution, Consistent)."
+    },
+    {
+      "symbol": "a_1/a_2 = b_1/b_2 \\neq c_1/c_2",
+      "svg_element_ref": "parallel-lines",
+      "word_meaning": "Identical slopes with distinct intercepts; lines never intersect (No Solution, Inconsistent)."
+    },
+    {
+      "symbol": "a_1/a_2 = b_1/b_2 = c_1/c_2",
+      "svg_element_ref": "coincident-lines",
+      "word_meaning": "Line equations are scalar multiples of each other; every point is common (Infinitely Many Solutions, Dependent)."
+    },
+    {
+      "symbol": "\\Delta = a_1 b_2 - a_2 b_1",
+      "svg_element_ref": "determinant-bracket",
+      "word_meaning": "The algebraic determinant measuring whether the 2x2 coefficient matrix is invertible."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Transform both equations into standard bivariate linear form: a1*x + b1*y = c1 and a2*x + b2*y = c2.",
+      "derivation": "Identify the coefficient tuple (a1, b1, c1) and (a2, b2, c2) ensuring sign preservation.",
+      "why_valid": "Linear equations are uniquely defined up to scalar multiplication by their Cartesian coefficients."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Formulate the cross-multiplication determinant Delta = a1*b2 - a2*b1.",
+      "derivation": "From Cramer's rule, x = (c1*b2 - c2*b1)/Delta and y = (a1*c2 - a2*c1)/Delta.",
+      "why_valid": "Division by non-zero Delta guarantees a uniquely determined point (x, y) in the real plane R^2."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "For a system to possess a unique solution, the necessary and sufficient condition is Delta != 0, which corresponds to a1/a2 != b1/b2.",
+      "derivation": "If Delta = 0, the coefficient vector (a1, b1) is collinear with (a2, b2), meaning both lines share identical inclinations.",
+      "why_valid": "Lines with non-parallel directions must intersect at one and only one Euclidean point."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "When a parameter k is present in b1 or b2, solve the inequality a1/a2 != b1/b2 to find the exact forbidden value of k.",
+      "derivation": "Cross-multiplying a1*b2 != a2*b1 isolates k, yielding k != (a1*b2_alt)/a2.",
+      "why_valid": "The complementary set R \\ {k_critical} represents all parameter choices maintaining linear independence."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "CONFUSING_INCONSISTENT_WITH_DEPENDENT",
+      "wrong_idea": "Assuming a1/a2 = b1/b2 implies infinitely many solutions without checking the constant ratio c1/c2.",
+      "diagnostic_prompt": "If a1/a2 = b1/b2, can you immediately assert whether the system has no solution or infinitely many?",
+      "repair": "Equal coefficient ratios only prove parallelism. You must evaluate the constant term ratio: if != c1/c2 it is inconsistent (no solution); if == c1/c2 it is dependent (infinite solutions)."
+    },
+    {
+      "code": "SIGN_ERROR_IN_NEGATIVE_COEFFICIENT_RATIO",
+      "wrong_idea": "Ignoring negative signs when extracting b coefficients, e.g. treating 3x - 5y as b = +5.",
+      "diagnostic_prompt": "In the equation 3x - 5y = 7, what is the value of the y-coefficient b?",
+      "repair": "In standard form ax + by = c, the negative sign belongs to the coefficient: b = -5, so the ratio must carry the negative sign."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Determine the value of m for which the system of linear equations 3x + my = 4 and 6x - 8y = 9 has: (i) a unique solution, and (ii) no solution.",
+    "model_answer": "Extract coefficients: a1 = 3, b1 = m, c1 = 4; a2 = 6, b2 = -8, c2 = 9. Ratio of x-coefficients: a1/a2 = 3/6 = 1/2. Ratio of y-coefficients: b1/b2 = m/(-8). Ratio of constants: c1/c2 = 4/9 != 1/2. (i) For a unique solution, a1/a2 != b1/b2 => 1/2 != m/(-8) => m != -4. Thus, the system has a unique solution for all real m != -4. (ii) For no solution, a1/a2 = b1/b2 != c1/c2 => 1/2 = m/(-8) != 4/9 => m = -4. When m = -4, the lines are strictly parallel with no solution."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT. Consider the linear system: 4x + (p - 1)y = 6 and 8x + 6y = q. Determine: (a) the value of p for which the system does NOT have a unique solution, and (b) the value of q that makes this singular system consistent with infinitely many solutions.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "p = 4 causes the determinant to vanish (no unique solution); q = 12 creates coincident lines with infinitely many solutions.",
+      "reasoning": [
+        "Ratio of x-coefficients: a1/a2 = 4/8 = 1/2.",
+        "For non-unique solution: (p - 1)/6 = 1/2 => p - 1 = 3 => p = 4.",
+        "For infinitely many solutions: c1/c2 must also equal 1/2 => 6/q = 1/2 => q = 12."
+      ],
+      "check": "For p=4, q=12: 4x + 3y = 6 and 8x + 6y = 12. Equation 2 is exactly 2 * Equation 1, verifying infinite solutions."
+    }
+  }
+}
