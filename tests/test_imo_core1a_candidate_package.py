@@ -54,7 +54,11 @@ class Core1ACandidateTests(unittest.TestCase):
                             for _,symbol in pairs))
         self.assertIn("Parity guarantee shown independently, not blended with the modulo-3 table.",
                       rep["required_elements"])
-        self.assertEqual(p["data"],[])
+        self.assertEqual([r["id"] for r in p["data"]], ["DAT-TEST-IMO-G9-ORACLE-DOMAIN","DAT-TEST-IMO-G9-ORACLE-DIVISOR","DAT-TEST-IMO-G9-ORACLE-RESIDUES","DAT-TEST-IMO-G9-ORACLE-EXPRESSION"])
+        self.assertEqual(p["data"][1]["value"],24)
+        self.assertEqual(p["data"][1]["unit"],"dimensionless")
+        self.assertEqual(p["microtopics"][0]["exit_task"]["oracle"]["verification"]["bindings"],
+                         {"domain":"DAT-TEST-IMO-G9-ORACLE-DOMAIN","divisor":"DAT-TEST-IMO-G9-ORACLE-DIVISOR","residue_classes":"DAT-TEST-IMO-G9-ORACLE-RESIDUES","symbolic_expression":"DAT-TEST-IMO-G9-ORACLE-EXPRESSION"})
         self.assertEqual(p["questions"],[])
         self.assertFalse(p["extensions"]["grade9v3:qrt_admitted"])
         self.assertFalse(p["extensions"]["grade9v3:learner_published"])
@@ -79,6 +83,30 @@ class Core1ACandidateTests(unittest.TestCase):
 
     def test_separate_parity_warrant_cannot_be_erased(self):
         self.blocked(lambda x:x["representations"][0]["required_elements"].pop())
+
+    def test_exit_oracle_cannot_bind_ungoverned_string(self):
+        self.blocked(lambda x: x["microtopics"][0]["exit_task"]["oracle"]
+                     ["verification"]["bindings"].update(divisor="24"))
+
+    def test_divisor_must_remain_numeric_and_dimensionless(self):
+        self.blocked(lambda x: x["data"][1].update(value="24"))
+
+    def test_symbolic_domain_requires_parseable_mathml(self):
+        self.blocked(lambda x: x["data"][0].update(value="<math><mrow>"))
+
+    def test_semantic_oracle_domain_must_preserve_provenance(self):
+        self.blocked(lambda x: x["data"][0].update(source_refs=[]))
+
+    def test_test_adapter_table_kind_is_only_proposed(self):
+        adapter=json.loads((REPO/"TEST"/"adapter"/"CoreContracts.json")
+                           .read_text(encoding="utf-8"))
+        kinds=[k for k in adapter["representation_kinds"]
+               if k["id"]=="TABLE_OF_VALUES"]
+        self.assertEqual(len(kinds),1)
+        self.assertEqual(kinds[0]["status"],"PROPOSED")
+        self.assertTrue(kinds[0]["requires"])
+        self.assertEqual(json.loads(self.filename.read_text())
+                         ["representations"][0]["scene_instances"], [])
 
     def test_candidate_is_nonpublishing_and_canonical_refs_resolve(self):
         result=self.check()
