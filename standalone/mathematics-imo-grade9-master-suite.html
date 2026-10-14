@@ -35497,7 +35497,8 @@ statement-ii: the value of [∛(0.125) × ⁵√((0.00032)⁻²)] / [⁵√((0.0
         .replace(/[‘’]/g, "'")
         .replace(/[“”]/g, '"')
         .replace(/[–—]/g, '-')
-        .replace(/[$_{}\]/g, ' ')
+        .replace(/[$_{}]/g, ' ')
+        .split('\\').join(' ')
         .replace(/\s+/g, ' ')
         .trim();
     }
