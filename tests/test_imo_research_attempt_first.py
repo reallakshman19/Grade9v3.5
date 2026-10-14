@@ -70,7 +70,7 @@ class ResearchAttemptFirstTests(unittest.TestCase):
             "sof-imo-sample-2026-27.core2.json",
             "sof-imo-hots-olympiad-expansion.core2.json",
         )
-        normalize = lambda value: re.sub(r"[\\$\\\\\\s]", "", str(value)).lower()
+        normalize = lambda value: "".join(ch for ch in str(value).lower() if not ch.isspace() and ch not in ("$", chr(92)))
         records = []
         for filename in bank_files:
             src = ROOT / "Mathematics/question-bank" / filename
@@ -86,7 +86,7 @@ class ResearchAttemptFirstTests(unittest.TestCase):
                 if len(normalize(answer_value)) >= 5:
                     self.assertNotIn(normalize(answer_value), normalize(hints))
                 self.assertNotRegex(hints, re.compile(
-                    r"\\boption\\s*\\(?" + correct_letter + r"\\)?\\b", re.I))
+                    r"\boption\s*\(?" + correct_letter + r"\)?\b", re.I))
 
     def test_vendor_math_is_embedded_not_relative_to_document_location(self):
         html = self.built[0]
