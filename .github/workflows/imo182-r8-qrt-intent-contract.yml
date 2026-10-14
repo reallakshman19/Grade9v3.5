@@ -43,6 +43,24 @@ jobs:
           ref: 8ffa008e1bbd03898751af4380762178697fb715
           path: source-retrieve-d4
           persist-credentials: false
+      - name: P4 pinned MODEL-D1 source author checkout (academic classification held)
+        uses: actions/checkout@v4
+        with:
+          ref: 78645b0a6deb8c5a09e102731580132c78ebb0d2
+          path: source-model-d1
+          persist-credentials: false
+      - name: P4 pinned SYNTHESIZE-D1 source author checkout (academic classification held)
+        uses: actions/checkout@v4
+        with:
+          ref: c967ff226516de25d6235c6c0f1749b39ffced7d
+          path: source-synthesize-d1
+          persist-credentials: false
+      - name: P4 pinned JUSTIFY-D1 source author checkout
+        uses: actions/checkout@v4
+        with:
+          ref: d28ac2bea348412a0451d226e278d01531839932
+          path: source-justify-d1
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -161,6 +179,76 @@ jobs:
           print("R8 P2/P3: 36 live browser viewport probes, 20 cumulative path traces,"
                 " five known-bad mutants rejected, no QRT semantic/Owner promotion")
           PY
+      - name: P4 compile five additional elevated educational-risk source-bound QRT contracts
+        run: |
+          set -euo pipefail
+          for row in \
+            "QRT-MODEL-D1|source-model-d1|model-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "QRT-SYNTHESIZE-D1|source-synthesize-d1|synthesize-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "QRT-JUSTIFY-D1|source-justify-d1|justify-d1|NONE" \
+            "QRT-RETRIEVE-D3|source-explain-d3|retrieve-d3|NONE" \
+            "QRT-MODEL-D3|source-explain-d3|model-d3|NONE"; do
+            IFS='|' read -r cell root name expected <<< "$row"
+            extra=()
+            if [ "$expected" != NONE ]; then extra=(--expected-hold-code "$expected"); fi
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py \
+              --authority-root . --source-root "$root" --cell-id "$cell" \
+              --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json \
+              --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json \
+              --out "build/imo182-r8-intent/$name.json" "${extra[@]}"
+          done
+      - name: P4 render and verify three additional educational-hold cells with valid source-declared rivals
+        run: |
+          set -euo pipefail
+          for row in \
+            "source-justify-d1|TEST/products/imo182-qrt-d1-justify.manifest.json|justify-d1" \
+            "source-explain-d3|TEST/products/imo182-qrt-d3-retrieve.manifest.json|retrieve-d3" \
+            "source-explain-d3|TEST/products/imo182-qrt-d3-model.manifest.json|model-d3"; do
+            IFS='|' read -r root manifest cell <<< "$row"
+            (
+              cd "$root"
+              python Shared/tools/render_core.py gaps --manifest "$manifest" --reference
+              python Shared/tools/render_core.py build --manifest "$manifest" \
+                --out "build/imo182-qrt/r8/$cell" --mode PAGES --reference --draft
+            )
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py \
+              --contract "build/imo182-r8-intent/$cell.json" \
+              --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "build/imo182-r8-intent/$cell-native.json"
+          done
+      - name: P4 distinguish validated source contracts from two prohibited source-rival omissions
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          dest=Path("build/imo182-r8-intent")
+          files=["model-d1","synthesize-d1","justify-d1",
+                 "retrieve-d2","model-d2","retrieve-d3","model-d3","retrieve-d4"]
+          out={name:json.loads((dest/(name+".json")).read_text())
+               for name in files}
+          assert len(out)==8
+          for name in ("model-d1","synthesize-d1"):
+              r=out[name]
+              assert r["technical_contract"]=="BLOCKED_RIVAL_REVIEW"
+              assert r["blocking_error_code"]=="RIVAL_NOT_GROUNDED_IN_SOURCE"
+              assert r["owner_qrt_acceptance"]=="PENDING"
+              assert not (dest/(name+"-native.json")).exists()
+          for name in ("justify-d1","retrieve-d2","model-d2",
+                       "retrieve-d3","model-d3","retrieve-d4"):
+              r=out[name]
+              assert r["technical_contract"]=="VALIDATED_PROPOSAL"
+              assert r["semantic_review"]=="HOLD_REVIEW_REQUIRED"
+              assert r["qualified_academic_review"]=="PENDING"
+              assert r["owner_qrt_acceptance"]=="PENDING"
+          for name in ("justify-d1","retrieve-d3","model-d3"):
+              r=json.loads((dest/(name+"-native.json")).read_text())
+              assert r["native_evidence"]["all_role_structure"]=="PASS"
+              assert all(v["semantic"]=="NOT_RUN" for v in r["roles"].values())
+          print("P4 eight elevated holds covered: 6 source-provenance contracts "
+                "VALIDATED_PROPOSAL, 2 rival-declaration BLOCKED, 3 new five-Core "
+                "structural benchmark packages (15 native role pages), "
+                "0 independent/Owner acceptance")
+          PY
       - name: Keep review hypothesis evidence and immutable original source/manifest fingerprints
         if: always()
         uses: actions/upload-artifact@v4
@@ -176,5 +264,11 @@ jobs:
             source-retrieve-d2/build/imo182-qrt/r8/retrieve-d2/render-receipt.json
             source-retrieve-d4/build/imo182-qrt/r8/retrieve-d4/*.html
             source-retrieve-d4/build/imo182-qrt/r8/retrieve-d4/render-receipt.json
+            source-justify-d1/build/imo182-qrt/r8/justify-d1/*.html
+            source-justify-d1/build/imo182-qrt/r8/justify-d1/render-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/retrieve-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/retrieve-d3/render-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/model-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/model-d3/render-receipt.json
           if-no-files-found: warn
           retention-days: 30
