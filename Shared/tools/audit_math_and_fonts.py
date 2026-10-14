@@ -154,7 +154,7 @@ def _validate_katex_with_temp_files(blocks: List[Tuple[str, str, int]],
             try {{
                 const res = katex.renderToString(it.inner, {{
                     throwOnError: false,
-                    displayMode: it.raw.startsWith('$') || it.raw.startsWith('\\\\[')
+                    displayMode: it.raw.startsWith('$$') || it.raw.startsWith('\\\\[')
                 }});
                 if (res.includes('#cc0000') || res.includes('katex-error')) {{
                     errors.push({{
