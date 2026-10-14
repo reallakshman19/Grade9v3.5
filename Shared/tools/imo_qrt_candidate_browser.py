@@ -108,6 +108,18 @@ def _run_one(browser, html_path: Path, width: int, out: Path) -> dict:
         math_count = page.locator(".katex").count()
         page_overflow = page.evaluate(
             "document.documentElement.scrollWidth > window.innerWidth")
+        overflow_candidates = page.evaluate("""() => Array.from(document.querySelectorAll('body *'))
+          .filter(el => {
+            const r=el.getBoundingClientRect();
+            const cs=getComputedStyle(el);
+            return r.width>0 && r.right>innerWidth+2 && cs.display!=='none' &&
+              cs.visibility!=='hidden';
+          }).map(el => {
+            const r=el.getBoundingClientRect();
+            return {tag:el.tagName, id:String(el.id).slice(0,75),
+              class_name:String(el.className).slice(0,110),
+              right:Math.round(r.right), width:Math.round(r.width)};
+          }).sort((a,b) => b.right - a.right).slice(0,16)""") if page_overflow else []
         if errors:
             raise AssertionError("Uncaught learner-side JavaScript errors: "+repr(errors[:5]))
         out.mkdir(parents=True, exist_ok=True)
@@ -120,6 +132,8 @@ def _run_one(browser, html_path: Path, width: int, out: Path) -> dict:
                 "first_view_protected": corpus["protected"],
                 "attempt_paths": paths, "math_katex_nodes": math_count,
                 "document_horizontal_overflow": page_overflow,
+                "overflow_candidates": overflow_candidates,
+                "behavior_verdict": "FAIL_DOCUMENT_HORIZONTAL_OVERFLOW" if page_overflow else "PASS",
                 "javascript_errors": [], "reload_protection": "PASS"}
     finally:
         page.close()
@@ -154,8 +168,16 @@ def main(argv: list[str] | None = None) -> int:
                         _run_one(browser, html_path, width, args.screenshots))
             finally:
                 browser.close()
-        report["status"] = "BROWSER_BEHAVIOR_VERIFIED_UNREVIEWED"
-        status = 0
+        overflowing = [x["viewport"] for x in report["observations"]
+                       if x["document_horizontal_overflow"]]
+        if overflowing:
+            report["status"] = "FAIL"
+            report["failures"].append("DOCUMENT_HORIZONTAL_OVERFLOW_AT_VIEWPORTS:" +
+                                      ",".join(map(str, overflowing)))
+            status = 1
+        else:
+            report["status"] = "BROWSER_BEHAVIOR_VERIFIED_UNREVIEWED"
+            status = 0
     except Exception as exc:
         report["status"] = "FAIL"
         report["failures"].append(type(exc).__name__ + ": " + str(exc)[:800])
