@@ -312,16 +312,60 @@ def main() -> None:
     parser.add_argument("--witness-file", type=Path, required=True)
     parser.add_argument("--adoption-ledger", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument(
+        "--expected-hold-code", choices=("RIVAL_NOT_GROUNDED_IN_SOURCE",),
+        help="Fail closed with explicit reproducible HOLD record only on exact named review gap."
+    )
     args = parser.parse_args()
-    contract = compile_contract(args.authority_root, args.source_root,
-                                args.witness_file, args.adoption_ledger,
-                                args.cell_id)
+    try:
+        contract = compile_contract(args.authority_root, args.source_root,
+                                    args.witness_file, args.adoption_ledger,
+                                    args.cell_id)
+    except ContractError as exc:
+        code = str(exc).split(":", 1)[0]
+        if not args.expected_hold_code or code != args.expected_hold_code:
+            raise
+        bank = read_json(args.witness_file)
+        witness = next(x for x in bank["witnesses"]
+                       if x["cell_id"] == args.cell_id)
+        pin = witness["source_pin"]
+        # The only allowed held result occurs after the source+manifest byte
+        # pins and all preceding canonical/role/crux validations succeeded.
+        contract = {
+            "cell_id": args.cell_id,
+            "technical_contract": "BLOCKED_RIVAL_REVIEW",
+            "semantic_review": "HOLD_REVIEW_REQUIRED",
+            "blocking_error_code": code,
+            "blocking_error_detail": str(exc),
+            "strongest_rival_proposal": witness["strongest_rival"],
+            "source_primary_secondary_review_gap": True,
+            "reviewer_action": (
+                "Independently adjudicate proposed rival, request source-author "
+                "classification update with new signed source commit, then rerun "
+                "exact byte-pinned verification; do not repin silently."
+            ),
+            "source_identity": {
+                "commit": pin["commit"],
+                "path": pin["source_path"],
+                "git_blob_sha_verified": pin["source_blob"],
+                "manifest_path": pin["manifest_path"],
+                "manifest_git_blob_sha_verified": pin["manifest_blob"],
+            },
+            "whole_journey_W": {"status": "NOT_RUN"},
+            "qualified_academic_review": "PENDING",
+            "owner_qrt_acceptance": "PENDING",
+            "publication": "FORBIDDEN",
+        }
+    else:
+        ensure(args.expected_hold_code is None, "EXPECTED_HOLD_DISAPPEARED",
+               args.cell_id)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(contract, indent=2, ensure_ascii=False) + "\n",
                         encoding="utf-8")
-    print(f"{contract['cell_id']}: provenance+QRT Intent Contract VALIDATED_PROPOSAL; "
-          f"academic/Owner HOLD; five Core semantic roles NOT_RUN")
-    if contract["falsifier"]["specific_source_cue_observed"]:
+    print(f"{contract['cell_id']}: QRT Intent Contract "
+          f"{contract['technical_contract']}; "
+          "academic/Owner HOLD")
+    if contract.get("falsifier", {}).get("specific_source_cue_observed"):
         print("Existing learner method-cue falsifier OBSERVED; "
               "primary-vs-rival classification remains reviewer HOLD")
 
