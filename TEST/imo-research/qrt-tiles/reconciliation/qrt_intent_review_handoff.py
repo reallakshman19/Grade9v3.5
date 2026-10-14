@@ -131,6 +131,30 @@ def make_packet(ledger: dict, bank: dict, evidence_dir: Path,
                         a["whole_journey_W"]["paths_checked"],
                     "actual_end_to_end_navigation": False,
                 })
+            navpath = evidence_dir / (slug + "-real-navigation.json")
+            if navpath.is_file():
+                nav = read_json(navpath)
+                ensure(nav.get("cell_id") == cid and
+                       nav.get("owner_acceptance") is False and
+                       nav.get("qualified_semantic_review") == "NOT_RUN" and
+                       nav.get("status") == "HOLD_REVIEW_REQUIRED" and
+                       len(nav.get("native_role_paths", {})) == 4 and
+                       nav.get("clicked_actual_role_transitions") == 10,
+                       "P5_REAL_NAV_CANNOT_RECLASSIFY_QRT", cid)
+                browser_refs.append({
+                    "name": "TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL",
+                    "sha256": sha256(navpath),
+                    "clicked_actual_native_role_paths":
+                        list(nav["native_role_paths"]),
+                    "observed_integrity_gaps":
+                        nav["observed_integrity_gaps"],
+                    "assisted_return_verified": (
+                        not nav["observed_integrity_gaps"] and
+                        nav["assisted_return"]["return_state_assisted"] and
+                        nav["assisted_return"]["source_attempt_restored"]
+                    ),
+                    "learner_independence_established": False
+                })
             for rid in REVIEWS:
                 r = evidence["semantic_objectives"][rid]
                 ensure(r["verdict"] == "NOT_RUN" and not r["evidence"],
@@ -234,7 +258,12 @@ def make_packet(ledger: dict, bank: dict, evidence_dir: Path,
             "unresolved_learner_journey": {
                 "live_six_core_source": "TRACK_B_NOT_ADMITTED",
                 "core1a_assisted_return_is_independent": False,
-                "complete_real_browser_navigation_path": "NOT_RUN",
+                "complete_real_browser_navigation_path": (
+                    "NATIVE_SHELL_PATHS_CLICKED_CONTEXTUAL_ASSISTED_RETURN_HOLD"
+                    if any(x["name"] ==
+                           "TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL"
+                           for x in browser_refs) else "NOT_RUN"
+                ),
                 "semantic_human_role_review": "NOT_RUN",
             },
             "release": "HOLD",
