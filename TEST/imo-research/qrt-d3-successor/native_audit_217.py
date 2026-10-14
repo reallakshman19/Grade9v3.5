@@ -140,6 +140,15 @@ def main() -> None:
             require(question["family_exposure"]["closure"] == sup["corrected_field_value"]
                     and "REPRESENT question" not in question["family_exposure"]["closure"],
                     "SYNTHESIZE: stale or unauthorized post-attempt learner label")
+            transfer = next((q for q in pack["questions"]
+                             if q["id"] == manifest["selection"]["core2b"][0]), None)
+            require(transfer is not None
+                    and transfer["id"] == sup["transfer_primary_id"]
+                    and transfer["family_exposure"]["closure"]
+                        == sup["transfer_corrected_field_value"]
+                    and sup["transfer_previous_field_value"]
+                        not in transfer["family_exposure"]["closure"],
+                    "SYNTHESIZE: stale GEOMETRY closure in changed-divisor transfer")
         require(pack["extensions"]["grade9v3:core2_source_custody_granted"] is False,
                 f"{demand}: source rights changed")
         require(pack["extensions"]["grade9v3:learner_published"] is False,
@@ -179,6 +188,9 @@ def main() -> None:
             "original_pr193_source_blob_sha": row["source_blob_sha"],
             "source_supersession": {
                 "fix_pr": 221, "previous_artifact": "DO_NOT_ADOPT_ORIGINAL_SHA",
+                "pr221_intermediate_source_blob": sup["pr221_intermediate_source_blob_sha"],
+                "pr221_intermediate_artifact": "DO_NOT_ADOPT_INCOMPLETE_TRANSFER_LABEL",
+                "second_transfer_label_repair": "SUCCESSOR_ONLY",
                 "corrected_source_blob": actual_source_blob,
             } if demand == "synthesize" else None,
             "manifest_path": row["manifest_path"], "manifest_blob_sha": row["manifest_blob_sha"],
@@ -234,6 +246,11 @@ def main() -> None:
                     "SYNTHESIZE corrected postattempt closure absent from ACTUAL native Core2A HTML")
             require(sup["previous_field_value"] not in core2a,
                     "SYNTHESIZE old REPRESENT label still present in ACTUAL native Core2A HTML")
+            core2b = (out / "core2b.html").read_text(encoding="utf-8")
+            require(sup["transfer_corrected_field_value"] in core2b,
+                    "SYNTHESIZE corrected divisibility-six transfer closure absent from native Core2B")
+            require(sup["transfer_previous_field_value"] not in core2b,
+                    "SYNTHESIZE old geometry marker/intersection label persists in native Core2B")
         for role in ("core1b", "core2b"):
             html = (out / (role + ".html")).read_text(encoding="utf-8")
             require("data-g9-commit" in html and "data-requires-attempt" in html,
