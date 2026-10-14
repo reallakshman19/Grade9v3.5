@@ -772,6 +772,36 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
     
     return "".join(parts)
 
+def suite_output_targets():
+    """Research-only output pages and the vendor root for each site's depth."""
+    return (
+        (Path("standalone/mathematics-imo-grade9-master-suite.html"), Path("standalone/vendor")),
+        (Path("public/standalone/mathematics-imo-grade9-master-suite.html"), Path("public/vendor")),
+        (Path("public/test/imo-grade9/core2.html"), Path("public/vendor")),
+        (Path("docs/test/imo-grade9/core2.html"), Path("docs/vendor")),
+    )
+
+
+def render_output_katex(html_doc: str, out_file: Path, vendor_root: Path) -> str:
+    """Resolve the three local KaTeX links against the *actual* output location.
+
+    The research suite emits several copies at different depths; source HTML uses
+    a neutral library-relative token. Fail closed if a declared asset is absent
+    or the template no longer has precisely one link for that asset.
+    """
+    local_dir = Path(os.path.relpath(vendor_root, out_file.parent)).as_posix()
+    for asset in ("katex.min.css", "katex.min.js", "contrib/auto-render.min.js"):
+        source_ref = f'"vendor/katex/0.16.8/{asset}"'
+        if html_doc.count(source_ref) != 1:
+            raise ValueError(f"KATEX_SOURCE_REFERENCE_INVALID: {asset}")
+        if not (vendor_root / "katex" / "0.16.8" / asset).is_file():
+            raise FileNotFoundError(f"KATEX_VENDOR_ASSET_MISSING: {asset}")
+        html_doc = html_doc.replace(
+            source_ref, f'"{local_dir}/katex/0.16.8/{asset}"'
+        )
+    return html_doc
+
+
 def main():
     root = Path(".")
     
@@ -3161,17 +3191,12 @@ def main():
 </html>
 """)
 
-    out_files = [
-        Path("standalone/mathematics-imo-grade9-master-suite.html"),
-        Path("public/standalone/mathematics-imo-grade9-master-suite.html"),
-        Path("public/test/imo-grade9/core2.html"),
-        Path("docs/test/imo-grade9/core2.html")
-    ]
     full_html = "".join(html_parts)
-    for out_file in out_files:
+    for out_file, vendor_root in suite_output_targets():
+        out_html = render_output_katex(full_html, out_file, vendor_root)
         out_file.parent.mkdir(parents=True, exist_ok=True)
-        out_file.write_text(full_html, encoding="utf-8")
-        print(f"Saved {len(full_html)} bytes to {out_file}.")
+        out_file.write_text(out_html, encoding="utf-8")
+        print(f"Saved {len(out_html)} bytes to {out_file}.")
 
 if __name__ == '__main__':
     main()
