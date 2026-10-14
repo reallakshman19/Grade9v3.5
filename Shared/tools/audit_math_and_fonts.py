@@ -17,6 +17,7 @@ import json
 import re
 import subprocess
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from typing import List, Dict, Any, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -115,37 +116,31 @@ def audit_json_question_bank(fpath: Path) -> List[Dict[str, Any]]:
 
     return findings
 
-def audit_html_file(html_path: Path) -> List[Dict[str, Any]]:
-    """Audits a standalone HTML page for math parsing and typography/responsive layout."""
-    findings = []
-    text = html_path.read_text(encoding="utf-8", errors="replace")
+def _validate_katex_with_temp_files(blocks: List[Tuple[str, str, int]],
+                                    text: str, html_path: Path,
+                                    katex_js: Path) -> List[Dict[str, Any]]:
+    """Run the real KaTeX parser without fixed paths or repository scratch writes.
 
-    # 1. KaTeX Math Block Audit
-    blocks = extract_math_blocks(text)
-    
-    # Check each block for entities
-    for raw, inner, pos in blocks:
-        m_ent = ENTITY_IN_MATH_RE.search(inner)
-        if m_ent:
-            line_no = text.count("\n", 0, pos) + 1
-            findings.append({
-                "file": str(html_path),
-                "line": line_no,
-                "rule": "MATH_NO_HTML_ENTITIES",
-                "detail": f"HTML entity '{m_ent.group(0)}' inside math block: {raw!r}",
-                "severity": "BLOCK"
-            })
+    TemporaryDirectory gives concurrent audits independent JSON/script paths and
+    removes all intermediate math text, even when Node or parsing fails.
+    A failed validator is a blocking finding, never an academic pass.
+    """
+    findings: List[Dict[str, Any]] = []
 
-    # Validate math syntax via Node.js KaTeX if node is available
-    script_path = REPO_ROOT / "scratch" / "validate_katex_batch.js"
-    katex_js = REPO_ROOT / "standalone" / "vendor" / "katex" / "0.16.8" / "katex.min.js"
-    
-    if katex_js.exists():
-        # Prepare batch input
-        math_items = [{"raw": raw, "inner": inner, "pos": pos} for raw, inner, pos in blocks]
-        batch_input_path = REPO_ROOT / "scratch" / "_katex_input.json"
+    def unavailable(detail: str) -> List[Dict[str, Any]]:
+        return [{
+            "file": str(html_path),
+            "line": 1,
+            "rule": "MATH_SYNTAX_VALIDATOR_ERROR",
+            "detail": detail,
+            "severity": "BLOCK",
+        }]
+
+    math_items = [{"raw": raw, "inner": inner, "pos": pos} for raw, inner, pos in blocks]
+    with TemporaryDirectory(prefix="grade9-katex-audit-") as temporary:
+        batch_input_path = Path(temporary) / "_katex_input.json"
+        script_path = Path(temporary) / "validate_katex_batch.js"
         batch_input_path.write_text(json.dumps(math_items), encoding="utf-8")
-
         validator_js = f"""
         const fs = require('fs');
         const path = require('path');
@@ -159,7 +154,7 @@ def audit_html_file(html_path: Path) -> List[Dict[str, Any]]:
             try {{
                 const res = katex.renderToString(it.inner, {{
                     throwOnError: false,
-                    displayMode: it.raw.startsWith('$$') || it.raw.startsWith('\\\\[')
+                    displayMode: it.raw.startsWith('$') || it.raw.startsWith('\\\\[')
                 }});
                 if (res.includes('#cc0000') || res.includes('katex-error')) {{
                     errors.push({{
@@ -183,22 +178,65 @@ def audit_html_file(html_path: Path) -> List[Dict[str, Any]]:
         console.log(JSON.stringify(errors));
         """
         script_path.write_text(validator_js, encoding="utf-8")
-        
+
         try:
-            res = subprocess.run(["node", str(script_path)], capture_output=True, text=True, encoding="utf-8")
-            if res.returncode == 0 and res.stdout.strip():
-                errs = json.loads(res.stdout)
-                for err in errs:
-                    line_no = text.count("\n", 0, err["pos"]) + 1
-                    findings.append({
-                        "file": str(html_path),
-                        "line": line_no,
-                        "rule": "MATH_SYNTAX_VALID",
-                        "detail": f"KaTeX syntax failure in {err['raw']!r}: {err['reason']}",
-                        "severity": "BLOCK"
-                    })
-        except Exception:
-            pass
+            res = subprocess.run(
+                ["node", str(script_path)],
+                capture_output=True, text=True, encoding="utf-8", timeout=120,
+            )
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            return unavailable(f"KaTeX validator could not run: {exc}")
+        if res.returncode != 0:
+            return unavailable(
+                f"KaTeX validator exited {res.returncode}: {res.stderr.strip()[:400]}"
+            )
+        try:
+            errs = json.loads(res.stdout)
+            if not isinstance(errs, list):
+                raise ValueError("KaTeX validator output is not a JSON array")
+            for err in errs:
+                if not isinstance(err, dict) or not all(
+                    key in err for key in ("pos", "raw", "reason")
+                ):
+                    raise ValueError("KaTeX validator returned malformed finding")
+                line_no = text.count("\n", 0, err["pos"]) + 1
+                findings.append({
+                    "file": str(html_path),
+                    "line": line_no,
+                    "rule": "MATH_SYNTAX_VALID",
+                    "detail": f"KaTeX syntax failure in {err['raw']!r}: {err['reason']}",
+                    "severity": "BLOCK",
+                })
+        except (json.JSONDecodeError, ValueError, TypeError) as exc:
+            return unavailable(f"KaTeX validator output invalid: {exc}")
+
+    return findings
+
+def audit_html_file(html_path: Path) -> List[Dict[str, Any]]:
+    """Audits a standalone HTML page for math parsing and typography/responsive layout."""
+    findings = []
+    text = html_path.read_text(encoding="utf-8", errors="replace")
+
+    # 1. KaTeX Math Block Audit
+    blocks = extract_math_blocks(text)
+    
+    # Check each block for entities
+    for raw, inner, pos in blocks:
+        m_ent = ENTITY_IN_MATH_RE.search(inner)
+        if m_ent:
+            line_no = text.count("\n", 0, pos) + 1
+            findings.append({
+                "file": str(html_path),
+                "line": line_no,
+                "rule": "MATH_NO_HTML_ENTITIES",
+                "detail": f"HTML entity '{m_ent.group(0)}' inside math block: {raw!r}",
+                "severity": "BLOCK"
+            })
+
+    # Actual KaTeX syntax gate. Its scratch files never go inside the repo.
+    katex_js = REPO_ROOT / "standalone" / "vendor" / "katex" / "0.16.8" / "katex.min.js"
+    if katex_js.is_file():
+        findings.extend(_validate_katex_with_temp_files(blocks, text, html_path, katex_js))
 
     # 2. Font Floor Audit (< 14px / 0.88rem)
     font_matches = re.finditer(r'font-size\s*:\s*([0-9.]+)\s*(px|rem)', text, re.I)
