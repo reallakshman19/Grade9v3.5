@@ -14,6 +14,7 @@ import os
 import json
 import re
 import html
+import glob
 from pathlib import Path
 
 def get_figure_markup(figure_ref, qid):
@@ -109,6 +110,504 @@ def format_math_html(text: str) -> str:
             out.append(esc)
             
     return "".join(out)
+
+def load_all_topic_units(units_dir: str = "Mathematics/units") -> list[dict]:
+    units = []
+    folders = sorted(os.listdir(units_dir))
+    for f in folders:
+        fpath = os.path.join(units_dir, f)
+        if not os.path.isdir(fpath):
+            continue
+        c1a_files = sorted(glob.glob(os.path.join(fpath, "core1a-*.json")))
+        c1b_files = sorted(glob.glob(os.path.join(fpath, "core1b-*.json")))
+        if c1a_files and c1b_files:
+            with open(c1a_files[0], "r", encoding="utf-8") as fp:
+                c1a = json.load(fp)
+            with open(c1b_files[0], "r", encoding="utf-8") as fp:
+                c1b = json.load(fp)
+            units.append({
+                "folder": f,
+                "c1a": c1a,
+                "c1b": c1b,
+                "topic": c1a.get("topic", f),
+                "topic_name": c1a.get("topic_name", c1a.get("topic", f)),
+                "band": c1a.get("target_band", "D2"),
+                "demand": c1a.get("target_demand", "APPLY"),
+                "subtopic": c1a.get("subtopic", "")
+            })
+    return units
+
+
+TOPIC_TO_UNIT_FOLDER = {
+    "circles": "circles",
+    "commercial mathematics": "commercial-math",
+    "coordinate geometry": "coordinate-geometry",
+    "introduction to euclid's geometry": "euclid-geometry",
+    "introduction to euclid’s geometry": "euclid-geometry",
+    "heron's formula and surface area": "heron-formula",
+    "heron's formula": "heron-formula",
+    "area and perimeter": "heron-formula",
+    "linear equations in two variables": "linear-equations",
+    "lines and angles": "lines-and-angles",
+    "polynomials": "polynomials",
+    "algebraic identities": "polynomials",
+    "probability": "probability",
+    "introduction to probability": "probability",
+    "quadrilaterals": "quadrilaterals",
+    "areas of parallelograms and triangles": "quadrilaterals",
+    "verbal and non-verbal reasoning": "reasoning",
+    "quantitative aptitude": "reasoning",
+    "statistics": "statistics",
+    "surface areas and volumes": "surface-areas-volumes",
+    "triangles": "triangles",
+    "number systems": "polynomials"
+}
+
+
+def render_topic_module_html(unit: dict, prefix: str = "") -> str:
+    c1a = unit["c1a"]
+    c1b = unit["c1b"]
+    topic_name = c1a.get("topic_name", c1a.get("topic", unit["folder"]))
+    topic_code = c1a.get("topic", unit["folder"])
+    subtopic = c1a.get("subtopic", "")
+    band = c1a.get("target_band", "D2")
+    demand = c1a.get("target_demand", "APPLY")
+    linked_refs = c1a.get("linked_core2_refs", [])
+    
+    # 1A fields
+    assumptions = c1a.get("entry_assumptions", [])
+    inferential_jump = c1a.get("inferential_jump", "")
+    rel_refs = c1a.get("relation_refs", {})
+    domain = rel_refs.get("domain", "")
+    hypotheses = rel_refs.get("hypotheses", [])
+    excluded_values = rel_refs.get("excluded_values", [])
+    reps = c1a.get("representation", [])
+    teaching_path = c1a.get("completed_teaching_path", [])
+    misconceptions = c1a.get("misconceptions", [])
+    wca = c1a.get("worked_concept_anchor", {})
+    exit_task = c1a.get("exit_task", c1a.get("independent_exit_task", {}))
+    
+    # 1B fields
+    itf = c1b.get("interactive_tutor_flow", {})
+    stage1 = itf.get("stage_1_predict", {})
+    stage2 = itf.get("stage_2_attempt", {})
+    stage3 = itf.get("stage_3_reconstruct", {})
+    stage4 = itf.get("stage_4_boundary_test", {})
+    hint_ladder = c1b.get("hint_ladder", {})
+    
+    band_color = {
+        "D1": "var(--success)",
+        "D2": "var(--accent)",
+        "D3": "var(--warning)",
+        "D4": "var(--purple)"
+    }.get(band, "var(--accent)")
+    
+    parts = []
+    card_id = f"module-{prefix}-{unit['folder']}" if prefix else f"module-{unit['folder']}"
+    radio_predict = f"predict-{prefix}-{unit['folder']}" if prefix else f"predict-{unit['folder']}"
+    radio_boundary = f"boundary-{prefix}-{unit['folder']}" if prefix else f"boundary-{unit['folder']}"
+    
+    # Topic Card Wrapper
+    parts.append(f"""
+    <div class="topic-module-card" id="{card_id}" data-topic="{html.escape(topic_name)}" data-band="{band}" style="margin:28px 0;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,0.18)">
+      <!-- TOPIC HEADER -->
+      <div style="border-bottom:1.5px solid var(--border);padding-bottom:16px;margin-bottom:20px">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <div>
+            <span class="qb-badge qb-badge-{band.lower()}" style="font-weight:800;font-size:0.88rem">{band} OLYMPIAD BAND</span>
+            <span class="qb-badge qb-badge-qrt" style="font-weight:800;font-size:0.88rem">DEMAND: {demand}</span>
+            <span class="qb-badge" style="background:rgba(56,189,248,0.12);color:var(--accent);border:1px solid rgba(56,189,248,0.25);font-size:0.88rem;font-weight:750">BP-CORE1A &amp; BP-CORE1B CERTIFIED</span>
+          </div>
+          <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">CODE: {html.escape(subtopic)}</span>
+        </div>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:10px;color:var(--text);display:flex;align-items:center;gap:10px">
+          <span style="color:{band_color}">◈</span> {html.escape(topic_name)}
+        </h2>
+        <div style="margin-top:8px;font-size:0.92rem;color:var(--text-muted)">
+          <strong>Mathematical Domain:</strong> {format_math_html(domain if domain else topic_name)}
+        </div>
+    """)
+    
+    if linked_refs:
+        parts.append(f"""
+        <div style="margin-top:12px">
+          <details style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px">
+            <summary style="cursor:pointer;font-weight:700;font-size:0.90rem;color:var(--accent)">
+              🔗 Anchored to {len(linked_refs)} Authenticated Core 2 Questions (Click to expand list)
+            </summary>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+        """)
+        for ref in linked_refs:
+            parts.append(f'<span class="filter-chip" style="font-size:0.88rem" onclick="jumpToQuestion(\'{ref}\')">{html.escape(ref)}</span>')
+        parts.append("""
+            </div>
+          </details>
+        </div>
+        """)
+    
+    parts.append("""
+      </div>
+      
+      <!-- CORE 1A: DECLARATIVE STUDY & CONSTRUCTIVE UNIVERSAL PROOF -->
+      <div class="panel" style="margin-bottom:28px;border-left:4px solid var(--accent);padding-left:18px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <span class="qb-badge qb-badge-qrt" style="font-size:0.88rem">BLUEPRINT BP-CORE1A-CONSTRUCTION</span>
+          <h3 style="font-size:1.25rem;font-weight:800;color:var(--text);margin:0">
+            Core 1A · Constructive Universal Proof &amp; Declarative Anchor
+          </h3>
+        </div>
+    """)
+    
+    # Conventions & Scope
+    parts.append("""
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
+          <h4 style="font-size:0.98rem;font-weight:800;color:var(--accent);margin-bottom:8px">
+            📐 Conventions and Scope &amp; Entry Assumptions
+          </h4>
+    """)
+    if assumptions:
+        parts.append('<ul style="padding-left:22px;line-height:1.7;margin-bottom:8px">')
+        for asm in assumptions:
+            parts.append(f'<li style="font-size:0.92rem">{format_math_html(str(asm))}</li>')
+        parts.append('</ul>')
+    if hypotheses:
+        parts.append('<div style="font-size:0.92rem;margin-top:8px"><strong>Hypotheses:</strong><ul style="padding-left:22px;line-height:1.7;margin-top:4px">')
+        for hyp in hypotheses:
+            parts.append(f'<li>{format_math_html(str(hyp))}</li>')
+        parts.append('</ul></div>')
+    if excluded_values:
+        parts.append('<div style="font-size:0.92rem;margin-top:8px;color:#fca5a5"><strong>Excluded / Boundary Values:</strong><ul style="padding-left:22px;line-height:1.7;margin-top:4px">')
+        for ev in excluded_values:
+            parts.append(f'<li>{format_math_html(str(ev))}</li>')
+        parts.append('</ul></div>')
+    parts.append('</div>')
+    
+    # Inferential Leap (T02)
+    parts.append(f"""
+        <div class="inferential-leap trap-alert" style="border-left:4px solid var(--accent);background:rgba(56,189,248,0.08);margin:16px 0;padding:16px;border-radius:8px">
+          <strong style="color:var(--accent);font-size:1.0rem">⚡ The Inferential Leap (Technique T02):</strong>
+          <p style="margin-top:6px;line-height:1.7;font-size:0.95rem;color:var(--text)">
+            {format_math_html(inferential_jump)}
+          </p>
+        </div>
+    """)
+    
+    # Completed Teaching Path
+    if teaching_path:
+        parts.append("""
+        <div style="margin:20px 0">
+          <h4 style="font-size:1.02rem;font-weight:800;margin-bottom:12px;color:var(--text)">
+            🪜 Completed Teaching Path (Step-by-Step Rigorous Derivation)
+          </h4>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+        """)
+        for step in teaching_path:
+            s_ref = step.get("step_ref", step.get("step", "STEP"))
+            claim = step.get("claim", "")
+            deriv = step.get("derivation", "")
+            why_valid = step.get("why_valid", "")
+            parts.append(f"""
+            <div style="border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--surface)">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <span class="rung-tag rung-nudge">{html.escape(str(s_ref))}</span>
+                <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">WARRANT</span>
+              </div>
+              <p style="font-weight:750;margin-bottom:6px;font-size:0.95rem;color:var(--text)">{format_math_html(claim)}</p>
+              <div style="background:var(--card);padding:10px 12px;border-radius:6px;margin:8px 0;font-size:0.92rem;line-height:1.6">
+                {format_math_html(deriv)}
+              </div>
+              <p style="font-size:0.88rem;color:var(--success);font-weight:700;margin-top:6px">
+                ✅ <strong>Why valid:</strong> {format_math_html(why_valid)}
+              </p>
+            </div>
+            """)
+        parts.append("""
+          </div>
+        </div>
+        """)
+        
+    # Representation Bridge
+    if reps:
+        parts.append("""
+        <div class="representation-bridge" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
+          <h4 style="font-size:0.98rem;font-weight:800;color:var(--purple);margin-bottom:10px">
+            🌉 Representation Bridge (Symbolic &amp; Visual Mapping)
+          </h4>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+        """)
+        for r in reps:
+            sym = r.get("symbol", "")
+            wm = r.get("word_meaning", "")
+            parts.append(f"""
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px">
+              <div style="font-weight:800;color:var(--accent);font-size:0.95rem;margin-bottom:4px">{format_math_html(sym)}</div>
+              <div style="font-size:0.90rem;color:var(--text-muted);line-height:1.6">{format_math_html(wm)}</div>
+            </div>
+            """)
+        parts.append("""
+          </div>
+        </div>
+        """)
+        
+    # Misconception Clinic
+    if misconceptions:
+        parts.append("""
+        <div class="trap-clinic trap-alert" style="margin:20px 0;padding:16px;border-radius:10px">
+          <h4 style="font-size:1.02rem;font-weight:800;color:#f87171;margin-bottom:12px">
+            ⚠️ Trap Clinic &amp; Misconception Repair (Technique T06)
+          </h4>
+        """)
+        for m in misconceptions:
+            m_code = m.get("code", m.get("id", "MISC"))
+            w_idea = m.get("wrong_idea", "")
+            d_prompt = m.get("diagnostic_prompt", "")
+            repair = m.get("repair", "")
+            parts.append(f"""
+            <div style="background:var(--card);border:1px solid rgba(248,113,113,0.3);border-radius:8px;padding:14px;margin-bottom:12px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <span class="rung-tag" style="background:rgba(248,113,113,0.2);color:#fca5a5">{html.escape(str(m_code))}</span>
+                <span style="font-weight:750;color:#fca5a5;font-size:0.95rem">Fallacy: {format_math_html(w_idea)}</span>
+              </div>
+              <p style="margin-top:6px;font-size:0.92rem;line-height:1.65;color:var(--text)">
+                <strong>Diagnostic Context:</strong> {format_math_html(d_prompt)}
+              </p>
+              <div style="margin-top:8px;padding-top:8px;border-top:1px dashed rgba(248,113,113,0.3);font-size:0.92rem;line-height:1.65;color:var(--text)">
+                <strong>Refutation &amp; Repair Rule:</strong> {format_math_html(repair)}
+              </div>
+            </div>
+            """)
+        parts.append("</div>")
+        
+    # Worked Concept Anchor
+    if wca:
+        parts.append("""
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
+          <h4 style="font-size:0.98rem;font-weight:800;color:var(--success);margin-bottom:10px">
+            ⚓ Worked Concept Anchor (Canonical Olympiad Exemplar)
+          </h4>
+        """)
+        if "prompt" in wca:
+            parts.append(f'<p style="font-size:0.95rem;font-weight:700;margin-bottom:8px">{format_math_html(wca["prompt"])}</p>')
+        elif "problem_statement" in wca:
+            parts.append(f'<p style="font-size:0.95rem;font-weight:700;margin-bottom:8px">{format_math_html(wca["problem_statement"])}</p>')
+        if "conventions_declared" in wca:
+            parts.append(f'<p style="font-size:0.90rem;color:var(--text-muted);margin-bottom:6px"><em>Conventions:</em> {format_math_html(str(wca["conventions_declared"]))}</p>')
+        if "model_answer" in wca:
+            ma = wca["model_answer"]
+            if isinstance(ma, list):
+                parts.append('<div style="background:var(--card);padding:12px;border-radius:8px;margin-top:8px">')
+                for item in ma:
+                    parts.append(f'<div style="font-size:0.92rem;line-height:1.65;margin-bottom:6px">{format_math_html(str(item))}</div>')
+                parts.append('</div>')
+            elif isinstance(ma, dict):
+                parts.append('<div style="background:var(--card);padding:12px;border-radius:8px;margin-top:8px">')
+                for k, v in ma.items():
+                    parts.append(f'<div style="font-size:0.92rem;line-height:1.65;margin-bottom:6px"><strong>{html.escape(k)}:</strong> {format_math_html(str(v))}</div>')
+                parts.append('</div>')
+            else:
+                parts.append(f'<div style="background:var(--card);padding:12px;border-radius:8px;margin-top:8px;font-size:0.92rem;line-height:1.65">{format_math_html(str(ma))}</div>')
+        elif "deductive_chain" in wca:
+            chain = wca["deductive_chain"]
+            parts.append('<div style="background:var(--card);padding:12px;border-radius:8px;margin-top:8px">')
+            for step in chain:
+                parts.append(f'<div style="font-size:0.92rem;line-height:1.65;margin-bottom:6px">{format_math_html(str(step))}</div>')
+            parts.append('</div>')
+        if "invariant_proved" in wca:
+            parts.append(f'<p style="font-size:0.90rem;color:var(--success);font-weight:700;margin-top:8px">✅ Invariant Proved: {format_math_html(str(wca["invariant_proved"]))}</p>')
+        parts.append("</div>")
+        
+    # Independent Exit Task
+    if exit_task:
+        et_prompt = exit_task.get("prompt", "")
+        et_ans = exit_task.get("answer", exit_task.get("model_solution", ""))
+        parts.append(f"""
+        <div class="exit-task" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:20px">
+          <h4 style="font-size:0.98rem;font-weight:800;color:var(--accent);margin-bottom:8px">
+            🎯 Independent Exit Task (Technique T12)
+          </h4>
+          <p style="font-size:0.95rem;line-height:1.65;margin-bottom:8px">{format_math_html(et_prompt)}</p>
+          <textarea class="qb-textarea" placeholder="Formulate your independent proof or calculation here..."></textarea>
+          <details class="model-proof" style="margin-top:12px;background:var(--card);padding:14px;border-radius:8px;border:1px solid var(--border)">
+            <summary style="cursor:pointer;font-weight:700;color:var(--success)">Reveal Model Exit Solution</summary>
+            <div style="margin-top:10px;font-size:0.95rem;line-height:1.75">
+              {format_math_html(str(et_ans))}
+            </div>
+          </details>
+        </div>
+        """)
+        
+    parts.append("</div>")
+    
+    # CORE 1B: DUAL-STAGE RECALL & 4-STAGE SELF-TUTOR FLOW
+    parts.append(f"""
+      <!-- CORE 1B -->
+      <div class="panel" style="border-left:4px solid var(--warning);padding-left:18px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="qb-badge qb-badge-{band.lower()}" style="font-size:0.88rem">BLUEPRINT BP-CORE1B-RECONSTRUCTION</span>
+          <h3 style="font-size:1.25rem;font-weight:800;color:var(--text);margin:0">
+            Core 1B · Dual-Stage Recall &amp; 4-Stage Self-Tutor Flow
+          </h3>
+        </div>
+        <p style="color:var(--text-muted);font-size:0.92rem;margin-bottom:16px">
+          Complete the four unassisted retrieval gates to lock in procedural and conceptual mastery without teacher deferral.
+        </p>
+    """)
+    
+    # Stage 1: Predict
+    if stage1:
+        s1_prompt = stage1.get("prompt", "")
+        s1_opts = stage1.get("options", [])
+        s1_rat = stage1.get("predict_rationale", "")
+        parts.append(f"""
+        <div class="predict-gate" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span class="rung-tag rung-nudge">STAGE 1 · PREDICT GATE</span>
+            <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">UNASSISTED RECALL</span>
+          </div>
+          <p style="font-size:0.95rem;line-height:1.65;font-weight:700;margin-bottom:10px">{format_math_html(s1_prompt)}</p>
+        """)
+        if s1_opts:
+            parts.append('<div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:12px">')
+            for opt in s1_opts:
+                parts.append(f"""
+                <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:0.92rem">
+                  <input type="radio" name="{radio_predict}" value="{html.escape(str(opt)[:2])}">
+                  <span>{format_math_html(str(opt))}</span>
+                </label>
+                """)
+            parts.append('</div>')
+        if s1_rat:
+            parts.append(f"""
+            <details style="background:var(--card);padding:10px 14px;border-radius:6px;border:1px solid var(--border)">
+              <summary style="cursor:pointer;font-weight:700;font-size:0.90rem;color:var(--accent)">View Predict Rationale &amp; Mechanism</summary>
+              <p style="margin-top:6px;font-size:0.92rem;line-height:1.65">{format_math_html(s1_rat)}</p>
+            </details>
+            """)
+        parts.append("</div>")
+        
+    # Stage 2: Attempt
+    if stage2:
+        s2_task = stage2.get("task", "")
+        s2_closure = stage2.get("model_closure_revealed_post_attempt", {})
+        parts.append(f"""
+        <div class="attempt-box" style="background:var(--surface);border:1.5px dashed var(--border-light);border-radius:10px;padding:16px;margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span class="rung-tag rung-crux">STAGE 2 · ACTIVE ATTEMPT</span>
+            <span style="font-size:0.88rem;color:var(--warning);font-weight:700">LOCKED UNTIL COMMITMENT</span>
+          </div>
+          <p style="font-size:0.95rem;line-height:1.65;font-weight:700;margin-bottom:10px">{format_math_html(s2_task)}</p>
+          <textarea class="qb-textarea" placeholder="Formulate your complete unassisted derivation before revealing the model proof..."></textarea>
+          <details class="model-proof" style="margin-top:12px;background:var(--card);padding:14px;border-radius:8px;border:1px solid var(--border)">
+            <summary style="cursor:pointer;font-weight:700;color:var(--success)">Reveal Autonomous Model Proof (Post-Attempt)</summary>
+            <div style="margin-top:10px;font-size:0.95rem;line-height:1.75">
+        """)
+        if isinstance(s2_closure, dict):
+            for k, v in s2_closure.items():
+                parts.append(f'<div style="margin-bottom:6px"><strong>{html.escape(k)}:</strong> {format_math_html(str(v))}</div>')
+        elif isinstance(s2_closure, list):
+            for item in s2_closure:
+                parts.append(f'<div style="margin-bottom:6px">{format_math_html(str(item))}</div>')
+        else:
+            parts.append(f'<div>{format_math_html(str(s2_closure))}</div>')
+        parts.append("""
+            </div>
+          </details>
+        </div>
+        """)
+        
+    # Stage 3: Reverse Reconstruction
+    if stage3:
+        route = stage3.get("reconstruction_route", "STEP_RECONSTRUCTION")
+        d_steps = stage3.get("dialog_steps", [])
+        parts.append(f"""
+        <div class="step-reconstruction" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span class="rung-tag rung-represent">STAGE 3 · REVERSE RECONSTRUCTION</span>
+            <span style="font-size:0.88rem;color:var(--purple);font-weight:700">{html.escape(str(route))}</span>
+          </div>
+          <p style="font-size:0.92rem;color:var(--text-muted);margin-bottom:10px">
+            Reverse reconstruction stress-tests conceptual stability by solving via an alternative invariant route:
+          </p>
+        """)
+        for ds in d_steps:
+            inq = ds.get("inquiry", "")
+            exp_in = ds.get("expected_insight", "")
+            parts.append(f"""
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px">
+              <p style="font-size:0.92rem;font-weight:750;color:var(--accent)">💬 Inquiry: {format_math_html(inq)}</p>
+              <p style="font-size:0.92rem;line-height:1.65;margin-top:6px;color:var(--text)">
+                <strong>Key Invariant Insight:</strong> {format_math_html(exp_in)}
+              </p>
+            </div>
+            """)
+        parts.append("</div>")
+        
+    # Stage 4: Boundary Test
+    if stage4:
+        s4_prompt = stage4.get("prompt", "")
+        s4_opts = stage4.get("options", [])
+        s4_correct = stage4.get("correct_option", "")
+        s4_exp = stage4.get("explanation", "")
+        parts.append(f"""
+        <div class="boundary-test" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span class="rung-tag rung-verify">STAGE 4 · BOUNDARY TEST &amp; LIMITING CASE</span>
+            <span style="font-size:0.88rem;color:var(--success);font-weight:700">CHANGED GIVENS &amp; PERTURBATION</span>
+          </div>
+          <p style="font-size:0.95rem;line-height:1.65;font-weight:700;margin-bottom:10px">{format_math_html(s4_prompt)}</p>
+        """)
+        if s4_opts:
+            parts.append('<div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:12px">')
+            for opt in s4_opts:
+                parts.append(f"""
+                <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:0.92rem">
+                  <input type="radio" name="{radio_boundary}" value="{html.escape(str(opt)[:2])}">
+                  <span>{format_math_html(str(opt))}</span>
+                </label>
+                """)
+            parts.append('</div>')
+        parts.append(f"""
+          <details style="margin-top:10px;background:var(--card);padding:12px 14px;border-radius:6px;border:1px solid var(--border)">
+            <summary style="cursor:pointer;font-weight:700;font-size:0.90rem;color:var(--success)">Check Boundary Test &amp; Limiting Case Result</summary>
+            <p style="margin-top:6px;font-size:0.92rem;line-height:1.65;color:var(--text)">
+              <strong style="color:var(--success)">Correct Option ({html.escape(s4_correct)}):</strong> {format_math_html(s4_exp)}
+            </p>
+          </details>
+        </div>
+        """)
+        
+    # Hint Ladder
+    if hint_ladder:
+        h1 = hint_ladder.get("hint_1_conceptual_nudge", {})
+        h2 = hint_ladder.get("hint_2_tactical_step", {})
+        parts.append("""
+        <div style="margin-top:16px">
+          <h4 style="font-size:0.90rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px">
+            💡 2-Rung Scaffold Ladder (Non-Leaking Cognitive Anchors)
+          </h4>
+        """)
+        if h1:
+            parts.append(f"""
+            <div class="ladder-rung">
+              <span class="rung-tag rung-nudge">RUNG 1 · CONCEPTUAL NUDGE</span>
+              <p style="font-size:0.92rem;line-height:1.6;margin-top:4px">{format_math_html(h1.get("text", ""))}</p>
+            </div>
+            """)
+        if h2:
+            parts.append(f"""
+            <div class="ladder-rung">
+              <span class="rung-tag rung-tactical">RUNG 2 · TACTICAL STEP</span>
+              <p style="font-size:0.92rem;line-height:1.6;margin-top:4px">{format_math_html(h2.get("text", ""))}</p>
+            </div>
+            """)
+        parts.append("</div>")
+        
+    parts.append("""
+      </div>
+    </div>
+    """)
+    
+    return "".join(parts)
 
 def main():
     root = Path(".")
@@ -527,7 +1026,20 @@ def main():
     }
 
     /* Dynamic Search & Filter Bar (App Style) */
-    .qb-filter-panel {
+        .topic-module-card {
+      scroll-margin-top: 80px;
+      transition: all 0.25s ease;
+    }
+
+    .topic-module-card.highlighted {
+      box-shadow: 0 0 0 3px var(--accent), 0 8px 30px rgba(56, 189, 248, 0.3) !important;
+    }
+
+    .qb-question.highlighted {
+      box-shadow: 0 0 0 3px var(--accent), 0 8px 30px rgba(56, 189, 248, 0.3) !important;
+    }
+
+.qb-filter-panel {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -1027,10 +1539,12 @@ def main():
       </a>
 
       <nav class="nav-tabs">
-        <button type="button" class="tab-btn active" onclick="switchTab('core2')">📚 Core 2 Question Bank</button>
-        <button type="button" class="tab-btn" onclick="switchTab('d3-core')">🏆 D3 Core 1A/1B</button>
-        <button type="button" class="tab-btn" onclick="switchTab('d4-core')">💎 D4 Core 1A/1B</button>
-        <button type="button" class="tab-btn" onclick="switchTab('d1-core')">🌱 D1 Core 1A/1B</button>
+        <button type="button" class="tab-btn active" onclick="switchTab('core2')">📚 Core 2 Questions (210)</button>
+        <button type="button" class="tab-btn" onclick="switchTab('core1-all')">📖 All Core 1A/1B (14 Topics)</button>
+        <button type="button" class="tab-btn" onclick="switchTab('d3-core')">🏆 D3 Core (6 Topics)</button>
+        <button type="button" class="tab-btn" onclick="switchTab('d4-core')">💎 D4 Core (1 Topic)</button>
+        <button type="button" class="tab-btn" onclick="switchTab('d2-core')">⚡ D2 Core (6 Topics)</button>
+        <button type="button" class="tab-btn" onclick="switchTab('d1-core')">🌱 D1 Core (1 Topic)</button>
       </nav>
 
       <button type="button" class="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
@@ -1168,8 +1682,9 @@ def main():
         # Search index string
         search_blob = html.escape(f"{qid} {q['stem']} {title} {topic_name} {paper_label} {sec} {cell}").lower()
 
+        unit_folder = TOPIC_TO_UNIT_FOLDER.get(topic_name.lower().strip(), "polynomials")
         card_markup = f"""
-        <article class="qb-question" data-paper="{paper_label}" data-band="{band}" data-demand="{demand}" data-topic="{topic_name}" data-search="{search_blob}">
+        <article class="qb-question" id="q-{qid}" data-paper="{paper_label}" data-band="{band}" data-demand="{demand}" data-topic="{topic_name}" data-search="{search_blob}">
           <div class="qb-qheader">
             <div class="qb-top-row">
               <h2 class="qb-title">Q{idx}. {title}</h2>
@@ -1178,6 +1693,7 @@ def main():
                 <span class="qb-badge qb-badge-qrt" onclick="addActiveFilter('demand', '{demand}')" title="Filter by {cell}">{cell}</span>
                 <span class="qb-badge qb-badge-topic" onclick="addActiveFilter('topic', '{topic_name}')" title="Filter by {topic_name}">📚 {topic_name}</span>
                 <span class="qb-badge qb-badge-paper" onclick="addActiveFilter('paper', '{paper_label}')" title="Filter by {paper_label}">📄 {paper_label}</span>
+                <span class="qb-badge" style="background:rgba(56,189,248,0.12);color:var(--accent);border:1px solid rgba(56,189,248,0.25)" onclick="jumpToCore1('{unit_folder}')" title="Study Core 1A/1B for {topic_name}">📖 Core 1A/1B</span>
               </div>
             </div>
 
@@ -1265,20 +1781,137 @@ def main():
     </div>
 """)
 
-    # Append Existing Core 1A / 1B Tabs for D3, D4, and D1
-    with open("Mathematics/research/build_imo_master_suite.py", "r", encoding="utf-8") as orig:
-        orig_text = orig.read()
-    
-    # Extract tab-d3-core, tab-d4-core, and tab-d1-core from original builder
-    d3_pos = orig_text.find('<div id="tab-d3-core"')
-    scripts_pos = orig_text.find('<!-- ========================================== -->\n<!-- SCRIPTS: SEARCH, FILTERS, KATEX -->')
-    if d3_pos != -1 and scripts_pos != -1:
-        core1_tabs_markup = orig_text[d3_pos:scripts_pos]
-        # Fix any font-size issues in core1_tabs_markup: replace < 14px sizes with 0.88rem
-        for bad_size in ["0.72rem", "0.76rem", "0.78rem", "0.8rem", "0.82rem", "0.84rem", "0.85rem", "0.86rem"]:
-            core1_tabs_markup = core1_tabs_markup.replace(f"font-size:{bad_size}", "font-size:0.88rem")
-            core1_tabs_markup = core1_tabs_markup.replace(f"font-size: {bad_size}", "font-size: 0.88rem")
-        html_parts.append(core1_tabs_markup)
+    # Render all 14 Topic-Segregated Core 1A & Core 1B Modules
+    topic_units = load_all_topic_units("Mathematics/units")
+
+    # 1. TAB: All 14 Core 1 Topics
+    html_parts.append("""
+    <!-- ========================================== -->
+    <!-- TAB: ALL CORE 1A / 1B TOPIC MODULES (14) -->
+    <!-- ========================================== -->
+    <div id="tab-core1-all" class="tab-content">
+      <div class="panel" style="background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;padding:24px;margin-bottom:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div>
+            <span class="qb-badge" style="background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)">14 TOPIC PACKAGES · 100% CUSTODY</span>
+            <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">All 14 Core 1A &amp; Core 1B Learning Modules</h2>
+            <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
+              Blueprint-Standard Core 1A Declarative Proofs &amp; Core 1B 4-Stage Self-Tutor Reconstructions, segregated topic-wise.
+            </p>
+          </div>
+        </div>
+
+        <!-- Topic Quick-Filter Bar -->
+        <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="font-size:0.88rem;font-weight:750;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px">Filter by Topic:</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px" id="core1-topic-chips">
+            <span class="filter-chip active" data-folder="ALL" onclick="filterCore1ByTopic('ALL')">All 14 Topics (14)</span>
+    """)
+    for u in topic_units:
+        tname = u["topic_name"]
+        tbnd = u["band"]
+        tfolder = u["folder"]
+        html_parts.append(f"""            <span class="filter-chip" data-folder="{tfolder}" onclick="filterCore1ByTopic('{tfolder}')">{html.escape(tname)} ({tbnd})</span>\n""")
+    html_parts.append("""          </div>
+        </div>
+      </div>
+
+      <!-- Modules List -->
+      <div id="core1-modules-list">
+    """)
+    for u in topic_units:
+        html_parts.append(render_topic_module_html(u, prefix="all"))
+    html_parts.append("""      </div>
+    </div>
+    """)
+
+    # 2. TAB: D3 Core (6 Topics)
+    d3_units = [u for u in topic_units if u["band"] == "D3"]
+    html_parts.append("""
+    <!-- ========================================== -->
+    <!-- TAB: D3 CORE 1A/1B (6 TOPICS) -->
+    <!-- ========================================== -->
+    <section class="tab-content" id="tab-d3-core" role="tabpanel">
+      <div class="panel" style="background:var(--surface);border:1.5px solid var(--warning);border-radius:12px;padding:24px;margin-bottom:24px">
+        <span class="qb-badge qb-badge-d3">🏆 BAND D3 · HARD OLYMPIAD CORE</span>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D3 Core 1A &amp; Core 1B Learning Modules (6 Topics)</h2>
+        <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
+          Advanced algebraic, geometric, and functional olympiad reasoning modules segregated topic-wise.
+        </p>
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
+          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);align-self:center">Jump to topic:</span>
+    """)
+    for u in d3_units:
+        html_parts.append(f"""          <span class="filter-chip" onclick="document.getElementById('module-d3-{u['folder']}').scrollIntoView({{behavior:'smooth'}})">{html.escape(u['topic_name'])}</span>\n""")
+    html_parts.append("""        </div>
+      </div>
+    """)
+    for u in d3_units:
+        html_parts.append(render_topic_module_html(u, prefix="d3"))
+    html_parts.append("""    </section>\n""")
+
+    # 3. TAB: D4 Core (1 Topic)
+    d4_units = [u for u in topic_units if u["band"] == "D4"]
+    html_parts.append("""
+    <!-- ========================================== -->
+    <!-- TAB: D4 CORE 1A/1B (1 TOPIC) -->
+    <!-- ========================================== -->
+    <section class="tab-content" id="tab-d4-core" role="tabpanel">
+      <div class="panel" style="background:var(--surface);border:1.5px solid var(--purple);border-radius:12px;padding:24px;margin-bottom:24px">
+        <span class="qb-badge qb-badge-d4">💎 BAND D4 · ACHIEVERS SECTION</span>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D4 Core 1A &amp; Core 1B Learning Modules</h2>
+        <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
+          High-demand extremal geometric and cyclic structure proofs.
+        </p>
+      </div>
+    """)
+    for u in d4_units:
+        html_parts.append(render_topic_module_html(u, prefix="d4"))
+    html_parts.append("""    </section>\n""")
+
+    # 4. TAB: D2 Core (6 Topics)
+    d2_units = [u for u in topic_units if u["band"] == "D2"]
+    html_parts.append("""
+    <!-- ========================================== -->
+    <!-- TAB: D2 CORE 1A/1B (6 TOPICS) -->
+    <!-- ========================================== -->
+    <section class="tab-content" id="tab-d2-core" role="tabpanel">
+      <div class="panel" style="background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;padding:24px;margin-bottom:24px">
+        <span class="qb-badge qb-badge-d2">⚡ BAND D2 · STANDARD OLYMPIAD CORE</span>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D2 Core 1A &amp; Core 1B Learning Modules (6 Topics)</h2>
+        <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
+          Foundational algebraic manipulation, Euclidean reasoning, coordinate methods, and statistics.
+        </p>
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
+          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);align-self:center">Jump to topic:</span>
+    """)
+    for u in d2_units:
+        html_parts.append(f"""          <span class="filter-chip" onclick="document.getElementById('module-d2-{u['folder']}').scrollIntoView({{behavior:'smooth'}})">{html.escape(u['topic_name'])}</span>\n""")
+    html_parts.append("""        </div>
+      </div>
+    """)
+    for u in d2_units:
+        html_parts.append(render_topic_module_html(u, prefix="d2"))
+    html_parts.append("""    </section>\n""")
+
+    # 5. TAB: D1 Core (1 Topic)
+    d1_units = [u for u in topic_units if u["band"] == "D1"]
+    html_parts.append("""
+    <!-- ========================================== -->
+    <!-- TAB: D1 CORE 1A/1B (1 TOPIC) -->
+    <!-- ========================================== -->
+    <section class="tab-content" id="tab-d1-core" role="tabpanel">
+      <div class="panel" style="background:var(--surface);border:1.5px solid var(--success);border-radius:12px;padding:24px;margin-bottom:24px">
+        <span class="qb-badge qb-badge-d1">🌱 BAND D1 · FOUNDATIONAL CORE</span>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D1 Core 1A &amp; Core 1B Learning Modules</h2>
+        <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
+          Empirical and theoretical probability models and foundational arithmetic reasoning.
+        </p>
+      </div>
+    """)
+    for u in d1_units:
+        html_parts.append(render_topic_module_html(u, prefix="d1"))
+    html_parts.append("""    </section>\n""")
 
     # Append Interactive Client-Side JavaScript
     html_parts.append("""
@@ -1293,10 +1926,92 @@ def main():
       const target = document.getElementById('tab-' + tabId);
       if (target) target.classList.add('active');
 
-      const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => {
+        const oc = b.getAttribute('onclick') || '';
+        return oc.includes("'" + tabId + "'") || oc.includes('"' + tabId + '"');
+      });
       if (btn) btn.classList.add('active');
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      triggerKaTeX();
+    }
+
+    // Core 1 Dynamic Topic Filtering
+    function filterCore1ByTopic(folder) {
+      document.querySelectorAll('#core1-topic-chips .filter-chip').forEach(c => c.classList.remove('active'));
+      const activeChip = Array.from(document.querySelectorAll('#core1-topic-chips .filter-chip')).find(c => c.getAttribute('data-folder') === folder);
+      if (activeChip) activeChip.classList.add('active');
+
+      document.querySelectorAll('#tab-core1-all .topic-module-card').forEach(card => {
+        if (folder === 'ALL' || card.id === 'module-all-' + folder || card.id === 'module-' + folder) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      if (folder !== 'ALL') {
+        const target = document.getElementById('module-all-' + folder) || document.getElementById('module-' + folder);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Inter-Core Jump Functions
+    function jumpToCore1(folderOrTopic) {
+      const folder = folderOrTopic.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+      switchTab('core1-all');
+      filterCore1ByTopic('ALL');
+      setTimeout(() => {
+        let mod = document.getElementById('module-all-' + folder) || document.getElementById('module-' + folder);
+        if (!mod) {
+          mod = Array.from(document.querySelectorAll('#tab-core1-all .topic-module-card')).find(m => {
+            const t = (m.getAttribute('data-topic') || '').toLowerCase();
+            return t.includes(folderOrTopic.toLowerCase()) || folderOrTopic.toLowerCase().includes(t);
+          });
+        }
+        if (mod) {
+          mod.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          mod.classList.add('highlighted');
+          setTimeout(() => mod.classList.remove('highlighted'), 2500);
+        }
+      }, 100);
+    }
+
+    function jumpToQuestion(qid) {
+      switchTab('core2');
+      const searchInput = document.getElementById('qb-search-input');
+      if (searchInput) {
+        searchInput.value = qid;
+        applyFilters();
+      }
+      setTimeout(() => {
+        let card = document.getElementById('q-' + qid);
+        if (!card) {
+          card = Array.from(document.querySelectorAll('.qb-question')).find(c => {
+            return (c.getAttribute('data-search') || '').includes(qid.toLowerCase());
+          });
+        }
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('highlighted');
+          setTimeout(() => card.classList.remove('highlighted'), 2500);
+        }
+      }, 150);
+    }
+
+    function triggerKaTeX() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+          ],
+          ignoredClasses: ["no-math", "katex-ignore"],
+          throwOnError: false,
+          errorColor: "#ef4444"
+        });
+      }
     }
 
     // Active Filters State
@@ -1399,7 +2114,7 @@ def main():
 
     function normTopic(str) {
       if (!str) return '';
-      return str.replace(/[\u2018\u2019]/g, "'").replace(/\s+/g, ' ').trim().toLowerCase();
+      return str.replace(/[\u2018\u2019]/g, "'").replace(/\\s+/g, ' ').trim().toLowerCase();
     }
 
     function normalizeSearchText(str) {
@@ -1409,7 +2124,7 @@ def main():
         .replace(/[\u201C\u201D]/g, '"')
         .replace(/[\u2013\u2014]/g, '-')
         .replace(/[$_{}\\]/g, ' ')
-        .replace(/\s+/g, ' ')
+        .replace(/\\s+/g, ' ')
         .trim();
     }
 
