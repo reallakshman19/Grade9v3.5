@@ -1,0 +1,835 @@
+name: IMO182 R8 QRT Intent Contract P0 four real pinned five-Core sources
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-r8-qrt-intent-contract.yml'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_w_path_audit.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_all_native_gates.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_semantic_sentinels.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_copy.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_browser.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_keyboard_state.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_coverage.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_review_handoff.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_intent_contract.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  intent-contract-four-pinned-cells:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Integration branch (read-only canonical authority and verifier)
+        uses: actions/checkout@v4
+      - name: Exact EXPLAIN-D3 authored TEST source
+        uses: actions/checkout@v4
+        with:
+          ref: 40142fe06818e7a946d6296911d495f3f3323b12
+          path: source-explain-d3
+          persist-credentials: false
+      - name: Exact MODEL-D2 authored TEST source after held author revision
+        uses: actions/checkout@v4
+        with:
+          ref: d450d0f0cda25c51c0232db31e6592588634a90b
+          path: source-model-d2
+          persist-credentials: false
+      - name: Exact RETRIEVE-D2 authored TEST source from established method-cue benchmark
+        uses: actions/checkout@v4
+        with:
+          ref: 5b382356e792ae50884241fb047c328e304d011d
+          path: source-retrieve-d2
+          persist-credentials: false
+      - name: Exact corrected RETRIEVE-D4 authored TEST source (not superseded leaky version)
+        uses: actions/checkout@v4
+        with:
+          ref: 8ffa008e1bbd03898751af4380762178697fb715
+          path: source-retrieve-d4
+          persist-credentials: false
+      - name: P4 pinned MODEL-D1 source author checkout (academic classification held)
+        uses: actions/checkout@v4
+        with:
+          ref: 78645b0a6deb8c5a09e102731580132c78ebb0d2
+          path: source-model-d1
+          persist-credentials: false
+      - name: P4 pinned SYNTHESIZE-D1 source author checkout (academic classification held)
+        uses: actions/checkout@v4
+        with:
+          ref: c967ff226516de25d6235c6c0f1749b39ffced7d
+          path: source-synthesize-d1
+          persist-credentials: false
+      - name: P4 pinned JUSTIFY-D1 source author checkout
+        uses: actions/checkout@v4
+        with:
+          ref: d28ac2bea348412a0451d226e278d01531839932
+          path: source-justify-d1
+          persist-credentials: false
+      - name: P4 exact original source-retrieve-d1 authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 6db5ebdfa3cfcb9c6eacca49c3b4f850eb5ca60a
+          path: source-retrieve-d1
+          persist-credentials: false
+      - name: P4 exact original source-d1-common authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 089b57c98d697a0e19683c3d78e0d51220b9174a
+          path: source-d1-common
+          persist-credentials: false
+      - name: P4 exact original source-d2-common authored source
+        uses: actions/checkout@v4
+        with:
+          ref: eb3cf06646f00bf208084e794b41b4d8d83135b6
+          path: source-d2-common
+          persist-credentials: false
+      - name: P4 exact original source-d3-synthesize authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 4d4a074d9f93e1eeac612679784224d4e250fb49
+          path: source-d3-synthesize
+          persist-credentials: false
+      - name: P4 exact original source-d4-explain authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 6c00fae5c150cd580ab04c680414fba0a0c776e8
+          path: source-d4-explain
+          persist-credentials: false
+      - name: P4 exact original source-d4-apply authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 0d36673633e115ecaa261917ee2066a80c3accc2
+          path: source-d4-apply
+          persist-credentials: false
+      - name: P4 exact original source-d4-model authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 4064bd4c0c10c50263bdf3de29e9d10989f628d9
+          path: source-d4-model
+          persist-credentials: false
+      - name: P4 exact original source-d4-represent authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 84fe228c45c7fac0fd8ce56124b3a656e39cf802
+          path: source-d4-represent
+          persist-credentials: false
+      - name: P4 exact original source-d4-synthesize authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 9faa52d499e071e9e6d4c419b5afdf5fbc044455
+          path: source-d4-synthesize
+          persist-credentials: false
+      - name: P4 exact original source-d4-justify authored source
+        uses: actions/checkout@v4
+        with:
+          ref: e39db6a8607bf64b09274d38bb222ed90f22459a
+          path: source-d4-justify
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile P0 verifier and run self-mutating fail-closed unit controls
+        run: |
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py TEST/imo-research/qrt-tiles/reconciliation/test_qrt_intent_contract.py
+          python -m unittest discover -s TEST/imo-research/qrt-tiles/reconciliation -p test_qrt_intent_contract.py -v
+      - name: Issue 182 exact-source P0 contracts for four already benchmarked native cell packages
+        run: |
+          set -euo pipefail
+          mkdir -p build/imo182-r8-intent
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py --authority-root . --source-root source-explain-d3 --cell-id QRT-EXPLAIN-D3 --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json --out build/imo182-r8-intent/explain-d3.json
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py --authority-root . --source-root source-model-d2 --cell-id QRT-MODEL-D2 --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json --out build/imo182-r8-intent/model-d2.json
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py --authority-root . --source-root source-retrieve-d2 --cell-id QRT-RETRIEVE-D2 --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json --out build/imo182-r8-intent/retrieve-d2.json
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py --authority-root . --source-root source-retrieve-d4 --cell-id QRT-RETRIEVE-D4 --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json --out build/imo182-r8-intent/retrieve-d4.json
+      - name: Four-contract result and explicit non-acceptance assertion
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = sorted(Path('build/imo182-r8-intent').glob('*.json'))
+          assert len(files) == 4, files
+          results = [json.loads(f.read_text()) for f in files]
+          assert len({x["cell_id"] for x in results}) == 4
+          assert all(x["technical_contract"] == "VALIDATED_PROPOSAL" for x in results)
+          assert all(x["semantic_review"] == "HOLD_REVIEW_REQUIRED" for x in results)
+          assert all(x["qualified_academic_review"] == "PENDING" and x["owner_qrt_acceptance"] == "PENDING" for x in results)
+          assert all(len(x["roles"]) == 5 and all(z["semantic"] == "NOT_RUN" for z in x["roles"].values()) for x in results)
+          assert all(len(x["semantic_objectives"]) == 12 and all(z["verdict"] == "NOT_RUN" for z in x["semantic_objectives"].values()) for x in results)
+          r = next(x for x in results if x["cell_id"] == "QRT-RETRIEVE-D2")
+          assert r["falsifier"]["specific_source_cue_observed"]
+          print("R8 P0 four exact-source contracts PASS; known method cue falsified; 20 role semantics NOT_RUN; 0 Owner/academic acceptances")
+          PY
+      - name: Install existing native renderer schema dependencies (no substitute renderer)
+        run: python -m pip install --quiet jsonschema
+      - name: Build four exact authored source versions using ONLY the registered Core renderer
+        run: |
+          set -euo pipefail
+          for row in \
+            "source-explain-d3|TEST/products/imo182-qrt-d3-explain.manifest.json|explain-d3" \
+            "source-model-d2|TEST/products/imo182-qrt-d2-model.manifest.json|model-d2" \
+            "source-retrieve-d2|TEST/products/imo182-qrt-d2-retrieve.manifest.json|retrieve-d2" \
+            "source-retrieve-d4|TEST/products/imo203-qrt-d4-retrieve.manifest.json|retrieve-d4"; do
+            IFS='|' read -r root manifest cell <<< "$row"
+            (
+              cd "$root"
+              python Shared/tools/render_core.py gaps --manifest "$manifest" --reference
+              python Shared/tools/render_core.py build --manifest "$manifest" --out "build/imo182-qrt/r8/$cell" --mode PAGES --reference --draft
+            )
+          done
+      - name: P1 verify 20 real native Core HTML SHAs and immutable five-role golden structural comparisons
+        run: |
+          set -euo pipefail
+          for row in \
+            "source-explain-d3|explain-d3" \
+            "source-model-d2|model-d2" \
+            "source-retrieve-d2|retrieve-d2" \
+            "source-retrieve-d4|retrieve-d4"; do
+            IFS='|' read -r root cell <<< "$row"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py \
+              --contract "build/imo182-r8-intent/$cell.json" \
+              --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "build/imo182-r8-intent/$cell-native.json"
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = sorted(Path('build/imo182-r8-intent').glob('*-native.json'))
+          assert len(files) == 4
+          r = [json.loads(p.read_text()) for p in files]
+          assert all(x["native_evidence"]["all_role_structure"] == "PASS" for x in r)
+          assert sum(len(x["native_evidence"]["roles"]) for x in r) == 20
+          assert all(v["engineering_native_structure"] == "PASS"
+                     and v["engineering"] == "NOT_RUN"
+                     and v["semantic"] == "NOT_RUN"
+                     for x in r for v in x["roles"].values())
+          assert all(x["qualified_academic_review"] == "PENDING"
+                     and x["owner_qrt_acceptance"] == "PENDING" for x in r)
+          print("R8 P1 20 native Core pages and five frozen role structures per cell PASS; W/browser/maths NOT_RUN; Owner 0/28")
+          PY
+      - name: Install real Chromium for scoped learner-visible and SVG accessibility audits
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: P2/P3 five-Core path-aware W audit with five deliberate rejected defects
+        run: |
+          set -euo pipefail
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_w_path_audit.py
+          for row in \
+            "source-explain-d3|explain-d3" \
+            "source-model-d2|model-d2" \
+            "source-retrieve-d2|retrieve-d2" \
+            "source-retrieve-d4|retrieve-d4"; do
+            IFS='|' read -r root cell <<< "$row"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_w_path_audit.py \
+              --native-contract "build/imo182-r8-intent/$cell-native.json" \
+              --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "build/imo182-r8-intent/$cell-w-audit.json" --run-mutants
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          rows = [json.loads(f.read_text()) for f in
+                  sorted(Path("build/imo182-r8-intent").glob("*-w-audit.json"))]
+          assert len(rows) == 4
+          assert sum(len(x["p2_p3_live_evidence"]["browser_learner_role_viewports"])
+                     for x in rows) == 36
+          assert sum(x["p2_p3_live_evidence"]["mutants_rejected"] for x in rows) == 5
+          assert all(len(x["whole_journey_W"]["paths_checked"]) == 5 for x in rows)
+          assert all(x["whole_journey_W"]["assisted_retry_is_independent"] is False for x in rows)
+          assert all(x["semantic_review"] == "HOLD_REVIEW_REQUIRED" and
+                     x["owner_qrt_acceptance"] == "PENDING" for x in rows)
+          assert "RETRIEVE_D2_METHOD_SELECTION_ALREADY_CUED" in next(
+              x for x in rows if x["cell_id"] == "QRT-RETRIEVE-D2"
+          )["whole_journey_W"]["known_finding_ids"]
+          print("R8 P2/P3: 36 live browser viewport probes, 20 cumulative path traces,"
+                " five known-bad mutants rejected, no QRT semantic/Owner promotion")
+          PY
+      - name: P4 compile five additional elevated educational-risk source-bound QRT contracts
+        run: |
+          set -euo pipefail
+          for row in \
+            "QRT-MODEL-D1|source-model-d1|model-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "QRT-SYNTHESIZE-D1|source-synthesize-d1|synthesize-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "QRT-JUSTIFY-D1|source-justify-d1|justify-d1|NONE" \
+            "QRT-RETRIEVE-D3|source-explain-d3|retrieve-d3|NONE" \
+            "QRT-MODEL-D3|source-explain-d3|model-d3|NONE"; do
+            IFS='|' read -r cell root name expected <<< "$row"
+            extra=()
+            if [ "$expected" != NONE ]; then extra=(--expected-hold-code "$expected"); fi
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py \
+              --authority-root . --source-root "$root" --cell-id "$cell" \
+              --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json \
+              --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json \
+              --out "build/imo182-r8-intent/$name.json" "${extra[@]}"
+          done
+      - name: P4 render and verify three additional educational-hold cells with valid source-declared rivals
+        run: |
+          set -euo pipefail
+          for row in \
+            "source-justify-d1|TEST/products/imo182-qrt-d1-justify.manifest.json|justify-d1" \
+            "source-explain-d3|TEST/products/imo182-qrt-d3-retrieve.manifest.json|retrieve-d3" \
+            "source-explain-d3|TEST/products/imo182-qrt-d3-model.manifest.json|model-d3"; do
+            IFS='|' read -r root manifest cell <<< "$row"
+            (
+              cd "$root"
+              python Shared/tools/render_core.py gaps --manifest "$manifest" --reference
+              python Shared/tools/render_core.py build --manifest "$manifest" \
+                --out "build/imo182-qrt/r8/$cell" --mode PAGES --reference --draft
+            )
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py \
+              --contract "build/imo182-r8-intent/$cell.json" \
+              --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "build/imo182-r8-intent/$cell-native.json"
+          done
+      - name: P4 distinguish validated source contracts from two prohibited source-rival omissions
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          dest=Path("build/imo182-r8-intent")
+          files=["model-d1","synthesize-d1","justify-d1",
+                 "retrieve-d2","model-d2","retrieve-d3","model-d3","retrieve-d4"]
+          out={name:json.loads((dest/(name+".json")).read_text())
+               for name in files}
+          assert len(out)==8
+          for name in ("model-d1","synthesize-d1"):
+              r=out[name]
+              assert r["technical_contract"]=="BLOCKED_RIVAL_REVIEW"
+              assert r["blocking_error_code"]=="RIVAL_NOT_GROUNDED_IN_SOURCE"
+              assert r["owner_qrt_acceptance"]=="PENDING"
+              assert not (dest/(name+"-native.json")).exists()
+          for name in ("justify-d1","retrieve-d2","model-d2",
+                       "retrieve-d3","model-d3","retrieve-d4"):
+              r=out[name]
+              assert r["technical_contract"]=="VALIDATED_PROPOSAL"
+              assert r["semantic_review"]=="HOLD_REVIEW_REQUIRED"
+              assert r["qualified_academic_review"]=="PENDING"
+              assert r["owner_qrt_acceptance"]=="PENDING"
+          for name in ("justify-d1","retrieve-d3","model-d3"):
+              r=json.loads((dest/(name+"-native.json")).read_text())
+              assert r["native_evidence"]["all_role_structure"]=="PASS"
+              assert all(v["semantic"]=="NOT_RUN" for v in r["roles"].values())
+          print("P4 eight elevated holds covered: 6 source-provenance contracts "
+                "VALIDATED_PROPOSAL, 2 rival-declaration BLOCKED, 3 new five-Core "
+                "structural benchmark packages (15 native role pages), "
+                "0 independent/Owner acceptance")
+          PY
+      - name: P4 compile remaining 19 real pinned original TEST question-specific QRT hypotheses
+        run: |
+          set -euo pipefail
+          for row in \
+            "RETRIEVE-D1|source-retrieve-d1|retrieve-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "EXPLAIN-D1|source-d1-common|explain-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "APPLY-D1|source-d1-common|apply-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "REPRESENT-D1|source-d1-common|represent-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "EXPLAIN-D2|source-d2-common|explain-d2|NONE" \
+            "APPLY-D2|source-d2-common|apply-d2|NONE" \
+            "REPRESENT-D2|source-d2-common|represent-d2|SOURCE_RIVAL_VOCAB_INVALID" \
+            "SYNTHESIZE-D2|source-d2-common|synthesize-d2|NONE" \
+            "JUSTIFY-D2|source-d2-common|justify-d2|NONE" \
+            "APPLY-D3|source-explain-d3|apply-d3|NONE" \
+            "REPRESENT-D3|source-explain-d3|represent-d3|NONE" \
+            "SYNTHESIZE-D3|source-d3-synthesize|synthesize-d3|NONE" \
+            "JUSTIFY-D3|source-explain-d3|justify-d3|NONE" \
+            "EXPLAIN-D4|source-d4-explain|explain-d4|NONE" \
+            "APPLY-D4|source-d4-apply|apply-d4|NONE" \
+            "MODEL-D4|source-d4-model|model-d4|NONE" \
+            "REPRESENT-D4|source-d4-represent|represent-d4|NONE" \
+            "SYNTHESIZE-D4|source-d4-synthesize|synthesize-d4|NONE" \
+            "JUSTIFY-D4|source-d4-justify|justify-d4|NONE"; do
+            IFS='|' read -r cell root slug expected <<< "$row"
+            extra=()
+            if [ "$expected" != NONE ]; then extra=(--expected-hold-code "$expected"); fi
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py \
+              --authority-root . --source-root "$root" --cell-id "QRT-$cell" \
+              --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json \
+              --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json \
+              --out "build/imo182-r8-intent/$slug.json" "${extra[@]}"
+          done
+      - name: P4 render and SHA-verify all remaining 14 contract-eligible five-Core TEST packages
+        run: |
+          set -euo pipefail
+          for row in \
+            "source-d2-common|explain-d2" \
+            "source-d2-common|apply-d2" \
+            "source-d2-common|synthesize-d2" \
+            "source-d2-common|justify-d2" \
+            "source-explain-d3|apply-d3" \
+            "source-explain-d3|represent-d3" \
+            "source-d3-synthesize|synthesize-d3" \
+            "source-explain-d3|justify-d3" \
+            "source-d4-explain|explain-d4" \
+            "source-d4-apply|apply-d4" \
+            "source-d4-model|model-d4" \
+            "source-d4-represent|represent-d4" \
+            "source-d4-synthesize|synthesize-d4" \
+            "source-d4-justify|justify-d4"; do
+            IFS='|' read -r root slug <<< "$row"
+            manifest=$(python - "$slug" <<'PY'
+          import json,sys
+          from pathlib import Path
+          bank=json.loads(Path("TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json").read_text())
+          w=next(x for x in bank["witnesses"] if x["cell_id"]=="QRT-"+sys.argv[1].upper())
+          print(w["source_pin"]["manifest_path"])
+          PY
+            )
+            (
+              cd "$root"
+              python Shared/tools/render_core.py gaps --manifest "$manifest" --reference
+              python Shared/tools/render_core.py build --manifest "$manifest" \
+                --out "build/imo182-qrt/r8/$slug" --mode PAGES --reference --draft
+              # Duplicate by the SAME registered renderer from the SAME pinned
+              # source to guard pre-page-SHA legacy receipts (not second renderer).
+              python Shared/tools/render_core.py build --manifest "$manifest" \
+                --out "build/imo182-qrt/r8-repeat/$slug" --mode PAGES --reference --draft
+            )
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py \
+              --contract "build/imo182-r8-intent/$slug.json" \
+              --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$slug" \
+              --independent-rebuild "$root/build/imo182-qrt/r8-repeat/$slug" \
+              --out "build/imo182-r8-intent/$slug-native.json"
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path("build/imo182-r8-intent")
+          new=["explain-d2","apply-d2","synthesize-d2","justify-d2","apply-d3","represent-d3","synthesize-d3","justify-d3","explain-d4","apply-d4","model-d4","represent-d4","synthesize-d4","justify-d4"]
+          assert len(new)==14
+          assert all(json.loads((base/(cell+"-native.json")).read_text())
+                     ["native_evidence"]["all_role_structure"]=="PASS" for cell in new)
+          print("P4 fourteen NEW source-specific proposals with 70/70 actual Core pages checked against frozen owner structural snapshots")
+          PY
+      - name: P4 enumerate all 28 authored QRT cells without manufacturing 19 missing contracts
+        run: |
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_coverage.py \
+            --ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json \
+            --witness-bank TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json \
+            --evidence-dir build/imo182-r8-intent \
+            --out build/imo182-r8-qrt-intent-coverage.v1.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          j=json.loads(Path("build/imo182-r8-qrt-intent-coverage.v1.json").read_text())
+          assert len(j["cells"]) == 28
+          assert (j["contract_validated_proposals"],
+                  j["explicit_rival_declaration_holds"],
+                  j["not_yet_question_specific_contract_tested"]) == (21,7,0)
+          assert j["new_native_role_structural_witnesses"] == 105
+          assert j["qualified_academic_signatures"] == j["owner_accepted_cells"] == 0
+          print("P4 28/28 accounted, 21 validated, 7 source metadata HOLD, 0 pending;"
+                " academic/Owner zero, no artificial semantic pass")
+          PY
+      - name: R8 P2b click actual native role routes and measure assisted-return integrity
+        run: |
+          set -euo pipefail
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, "TEST/imo-research/qrt-tiles/reconciliation")
+          from qrt_intent_real_navigation import classify_assisted_return
+          names=("context_link_at_source","return_link_at_concept",
+                 "return_state_assisted","source_attempt_restored")
+          all_missing=classify_assisted_return({name:False for name in names})
+          assert len(all_missing)==4 and len(set(all_missing))==4
+          assert classify_assisted_return({name:True for name in names})==[]
+          for name in names:
+              result=classify_assisted_return({key:key != name for key in names})
+              assert len(result)==1 and result[0] in all_missing
+          print("P2b negative detector tests: 4 independent broken-route mutations caught")
+          PY
+          for row in \
+            "source-explain-d3|explain-d3" \
+            "source-model-d2|model-d2" \
+            "source-retrieve-d2|retrieve-d2" \
+            "source-retrieve-d4|retrieve-d4" \
+            "source-justify-d1|justify-d1" \
+            "source-explain-d3|retrieve-d3" \
+            "source-explain-d3|model-d3" \
+            "source-d2-common|explain-d2" \
+            "source-d2-common|apply-d2" \
+            "source-d2-common|synthesize-d2" \
+            "source-d2-common|justify-d2" \
+            "source-explain-d3|apply-d3" \
+            "source-explain-d3|represent-d3" \
+            "source-d3-synthesize|synthesize-d3" \
+            "source-explain-d3|justify-d3" \
+            "source-d4-explain|explain-d4" \
+            "source-d4-apply|apply-d4" \
+            "source-d4-model|model-d4" \
+            "source-d4-represent|represent-d4" \
+            "source-d4-synthesize|synthesize-d4" \
+            "source-d4-justify|justify-d4"; do
+            IFS='|' read -r root cell <<< "$row"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py \
+              --native-contract "build/imo182-r8-intent/$cell-native.json" \
+              --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "build/imo182-r8-intent/$cell-real-navigation.json"
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          reports=[json.loads(x.read_text()) for x in
+              sorted(Path("build/imo182-r8-intent").glob("*-real-navigation.json"))]
+          assert len(reports)==21
+          assert len({x['cell_id'] for x in reports})==21
+          assert all(len(x["observed_integrity_gaps"])==4 for x in reports)
+          assert all(not x["assisted_return"]["context_link_at_source"] and
+                     not x["assisted_return"]["return_link_at_concept"] and
+                     not x["assisted_return"]["return_state_assisted"] and
+                     not x["assisted_return"]["source_attempt_restored"]
+                     for x in reports)
+          assert sum(len(x["native_role_paths"]) for x in reports)==84
+          assert all(x["clicked_actual_role_transitions"] == 10 for x in reports)
+          assert sum(x['clicked_actual_role_transitions'] for x in reports)==210
+          assert all(x["independence_from_return_visit"] is False and
+              x["owner_acceptance"] is False and
+              x["status"]=="HOLD_REVIEW_REQUIRED" for x in reports)
+          print("P2b 21-cell native Chromium: 84 clicked routes/210 actual shell transitions,",
+                "do NOT count assisted route as independent mastery")
+          PY
+      - name: R8 P2c inspect all 21 source-pinned original native attempt boundaries
+        run: |
+          set -euo pipefail
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_all_native_gates.py TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_semantic_sentinels.py
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_semantic_sentinels.py
+          for row in \
+            "source-explain-d3|explain-d3" \
+            "source-model-d2|model-d2" \
+            "source-retrieve-d2|retrieve-d2" \
+            "source-retrieve-d4|retrieve-d4" \
+            "source-justify-d1|justify-d1" \
+            "source-explain-d3|retrieve-d3" \
+            "source-explain-d3|model-d3" \
+            "source-d2-common|explain-d2" \
+            "source-d2-common|apply-d2" \
+            "source-d2-common|synthesize-d2" \
+            "source-d2-common|justify-d2" \
+            "source-explain-d3|apply-d3" \
+            "source-explain-d3|represent-d3" \
+            "source-d3-synthesize|synthesize-d3" \
+            "source-explain-d3|justify-d3" \
+            "source-d4-explain|explain-d4" \
+            "source-d4-apply|apply-d4" \
+            "source-d4-model|model-d4" \
+            "source-d4-represent|represent-d4" \
+            "source-d4-synthesize|synthesize-d4" \
+            "source-d4-justify|justify-d4"; do
+            IFS='|' read -r root cell <<< "$row"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_all_native_gates.py \
+              --native-contract "build/imo182-r8-intent/$cell-native.json" \
+              --source-root "$root" \
+              --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "build/imo182-r8-intent/$cell-native-gates.json"
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files=list(Path("build/imo182-r8-intent").glob("*-native-gates.json"))
+          audits=[json.loads(f.read_text()) for f in files]
+          assert len(audits)==21 and len({a["cell_id"] for a in audits})==21
+          assert sum(a["nine_real_role_viewports"] for a in audits)==189
+          assert sum(a["simulated_exposure_paths_not_real_learner_journeys"] for a in audits)==105
+          assert sum(len(a["five_deliberate_technical_gate_mutants_rejected"])
+                     for a in audits)==105
+          assert all(a["technical_gate_findings"]==[] and
+                     a["qualified_academic_review"]=="NOT_RUN" and
+                     a["source_specific_w_preservation"]=="NOT_ESTABLISHED" and
+                     a["owner_acceptance"] is False and
+                     a["release"]=="HOLD" for a in audits)
+          source_oracles=[a for a in audits if a["narrow_known_source_semantic_oracle"] ==
+                          "RAN_NARROW_SENTINELS_NOT_ACCEPTANCE"]
+          assert len(source_oracles)==21
+          new_oracles=[a for a in audits if a["semantic_oracle_family"]==
+                        "SEVENTEEN_NEW_SOURCE_SPECIFIC_ONE_WAY_FALSIFIERS"]
+          legacy_oracles=[a for a in audits if a["semantic_oracle_family"]==
+                           "FOUR_ORIGINAL_RISK_ORACLES"]
+          assert len(new_oracles)==17 and len(legacy_oracles)==4
+          assert len({a["cell_id"] for a in new_oracles})==17
+          assert all(len(a["injected_new_source_specific_semantic_leak_tests"])==1
+                     and a["injected_new_source_specific_semantic_leak_tests"][0][
+                           "complete_answer_injected_in_accessible_svg"]
+                     and a["injected_new_source_specific_semantic_leak_tests"][0][
+                           "partial_prior_knowledge_not_flagged"]
+                     and a["source_specific_w_preservation"]=="NOT_ESTABLISHED"
+                     and a["release"]=="HOLD" for a in new_oracles)
+          retrieve=next(a for a in audits if a["cell_id"]=="QRT-RETRIEVE-D2")
+          assert "RETRIEVE_D2_METHOD_SELECTION_ALREADY_CUED" in retrieve["narrow_semantic_finding_ids"]
+          print("P2c 21 source-specific precommit one-way oracles (17 NEW), " +
+                "85 injected leak carriers, 34 partial/split decoys; semantic HOLDS")
+          print("P2c 189 real native Core gate viewport probes, 105 simulated path hypotheses, "
+                "105 injected technical gate defects rejected; W/academic/Owner HOLD")
+          PY
+      - name: R8 held-only adapter copied native Core HTML (NEVER renderer/golden source)
+        run: |
+          set -euo pipefail
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_copy.py TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_browser.py TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_keyboard_state.py
+          for row in \
+            "source-explain-d3|explain-d3" \
+            "source-model-d2|model-d2" \
+            "source-retrieve-d2|retrieve-d2" \
+            "source-retrieve-d4|retrieve-d4" \
+            "source-justify-d1|justify-d1" \
+            "source-explain-d3|retrieve-d3" \
+            "source-explain-d3|model-d3" \
+            "source-d2-common|explain-d2" \
+            "source-d2-common|apply-d2" \
+            "source-d2-common|synthesize-d2" \
+            "source-d2-common|justify-d2" \
+            "source-explain-d3|apply-d3" \
+            "source-explain-d3|represent-d3" \
+            "source-d3-synthesize|synthesize-d3" \
+            "source-explain-d3|justify-d3" \
+            "source-d4-explain|explain-d4" \
+            "source-d4-apply|apply-d4" \
+            "source-d4-model|model-d4" \
+            "source-d4-represent|represent-d4" \
+            "source-d4-synthesize|synthesize-d4" \
+            "source-d4-justify|justify-d4"; do
+            IFS='|' read -r root cell <<< "$row"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_copy.py \
+              --native-contract "build/imo182-r8-intent/$cell-native.json" \
+              --source-root "$root" \
+              --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "$root/build/imo182-r8-held/$cell"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_browser.py \
+              --native-contract "build/imo182-r8-intent/$cell-native.json" \
+              --source-root "$root" \
+              --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --held-output "$root/build/imo182-r8-held/$cell" \
+              --out "build/imo182-r8-intent/$cell-held-copy-browser.json"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_keyboard_state.py \
+              --source-root "$root" \
+              --held-output "$root/build/imo182-r8-held/$cell" \
+              --out "build/imo182-r8-intent/$cell-held-keyboard-state.json"
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          reports=[json.loads(f.read_text()) for f in
+                   Path("build/imo182-r8-intent").glob("*-held-copy-browser.json")]
+          assert len(reports)==21
+          assert all(x["precommit_link_hidden"] and x["solution_lock_after_return"] and
+                     x["source_draft_restored"] and x["return_marked_assisted"] and
+                     not x["independent_mastery"] and not x["owner_acceptance"] and
+                     x["academic_qrt"]=="NOT_RUN" and x["release"]=="HOLD"
+                     for x in reports)
+          assert all(x["negative_mutations"]["negative_controls_pass"] and
+                     len(x["negative_mutations"]["mutations"])==6 for x in reports)
+          assert sum(len(x["negative_mutations"]["mutations"]) for x in reports)==126
+          assert len({x["cell_id"] for x in reports})==21
+          more=[json.loads(f.read_text()) for f in
+                Path("build/imo182-r8-intent").glob("*-held-keyboard-state.json")]
+          assert len(more)==21 and len({x["cell_id"] for x in more})==21
+          assert {x["cell_id"] for x in more}=={x["cell_id"] for x in reports}
+          assert all(x["viewport_count"]==3 and
+                     [y["viewport_px"] for y in x["viewport_results"]]==[390,768,1280]
+                     and all(all(v is True for k,v in y.items() if k!="viewport_px")
+                             for y in x["viewport_results"])
+                     and x["keyboard_navigation_pass"] and
+                     x["browser_reload_state_pass"] and
+                     x["cross_tab_isolation_pass"] and
+                     x["query_tamper_rejected"] and
+                     x["human_assistive_technology_evaluation"]=="NOT_RUN" and
+                     x["registered_native_renderer_repair"] is False and
+                     x["owner_accepted"] is False and
+                     x["release"]=="HOLD" for x in more)
+          print("R8 21 held-copy keyboard/state journeys at 3 viewports each: "
+                "63 scoped browser probes; NOT WCAG/AT/academic/Owner approval")
+          print("R8 21/21 HELD COPY rounds-trip browser PASS, 126/126 negative mutants caught; "
+                "original native golden unchanged, semantic/Owner HOLD")
+          PY
+      - name: P5 independently reviewable 28-cell decision handoff without autogenerated approvals
+        run: |
+          set -euo pipefail
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_review_handoff.py
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_review_handoff.py \
+            --authority-root . \
+            --ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json \
+            --witness-bank TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json \
+            --evidence-dir build/imo182-r8-intent \
+            --coverage build/imo182-r8-qrt-intent-coverage.v1.json \
+            --out build/imo182-r8-review-handoff.v1.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path("build/imo182-r8-review-handoff.v1.json").read_text())
+          r=a["cells"]
+          assert len(r)==28 and a["counts"]=={
+            "source_bound_validated_proposals":21,
+            "source_rival_blocked":7,
+            "role_structural_witnesses":105,
+            "twelve_objective_records":336,
+            "qualified_signed_verdicts":0,
+            "owner_acceptances":0
+          }
+          assert all(len(x["twelve_separate_hspm_objectives"])==12 and
+                     all(o["verdict"]=="NOT_RUN" for o in x["twelve_separate_hspm_objectives"])
+                     for x in r)
+          assert all(x["qualified_independent_reviewer"]["signed_verdict_id"] is None
+                     and x["qualified_independent_reviewer"]["decision"] is None
+                     and x["owner_separate_disposition"]["decision"] is None
+                     and x["release"]=="HOLD" for x in r)
+          assert len([x for x in r if x["blocking_source_author_action"]]) == 7
+          navigation=[x for x in r if any(
+              z["name"]=="TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL"
+              for z in x["available_scoped_browser_proof"])]
+          native_gates=[x for x in r if any(z["name"]==
+             "NINE_ACTUAL_ORIGINAL_NATIVE_CORE_GATE_VIEWPORTS"
+             for z in x["available_scoped_browser_proof"])]
+          assert len(native_gates)==21
+          assert len([x for x in native_gates if any(
+            z["name"]=="NINE_ACTUAL_ORIGINAL_NATIVE_CORE_GATE_VIEWPORTS" and
+            z["source_specific_semantic_oracle"]==
+              "RAN_NARROW_SENTINELS_NOT_ACCEPTANCE"
+            for z in x["available_scoped_browser_proof"])])==21
+          assert len({x["cell_id"] for x in native_gates})==21
+          assert all(any(z["name"]==
+             "NINE_ACTUAL_ORIGINAL_NATIVE_CORE_GATE_VIEWPORTS" and
+             z["real_browser_role_viewports"]==9 and
+             z["five_technical_mutations_rejected"]==5 and
+             z["protected_W_and_academic_semantics"]=="NOT_ESTABLISHED" and
+             z["release"]=="HOLD"
+             for z in x["available_scoped_browser_proof"]) for x in native_gates)
+          assert len(navigation)==21
+          assert all(len(next(z for z in x["available_scoped_browser_proof"] if
+                     z["name"]=="TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL")["observed_integrity_gaps"])==4
+                     for x in navigation)
+          assert all(not any(
+              z.get("assisted_return_verified") is True for z in
+              x["available_scoped_browser_proof"]) for x in navigation)
+          prototype=[x for x in r if any(
+              z["name"]=="NONPRODUCTION_COPIED_HTML_ASSISTED_RETURN_PROTOTYPE"
+              for z in x["available_scoped_browser_proof"])]
+          assert len(prototype)==21
+          assert all(any(z["name"]==
+              "NONPRODUCTION_COPIED_HTML_ASSISTED_RETURN_PROTOTYPE" and
+              z["copy_only_never_renderer_receipt"] and
+              z["release"]=="HOLD" for z in x["available_scoped_browser_proof"])
+              for x in prototype)
+          observed=[x for x in prototype if any(z["name"]==
+              "NONPRODUCTION_COPIED_HTML_ASSISTED_RETURN_PROTOTYPE" and
+              z["original_native_assisted_return_status"]=="OBSERVED_DEFECT"
+              for z in x["available_scoped_browser_proof"])]
+          not_observed=[x for x in prototype if any(z["name"]==
+              "NONPRODUCTION_COPIED_HTML_ASSISTED_RETURN_PROTOTYPE" and
+              z["original_native_assisted_return_status"]=="NOT_RUN"
+              for z in x["available_scoped_browser_proof"])]
+          assert len(observed)==21 and len(not_observed)==0
+          keyboard=[x for x in r if any(z["name"]==
+             "HELD_COPY_KEYBOARD_VIEWPORT_RELOAD_ISOLATION_QA"
+             for z in x["available_scoped_browser_proof"])]
+          assert len(keyboard)==21
+          assert {x["cell_id"] for x in keyboard}=={x["cell_id"] for x in prototype}
+          assert all(any(z["name"]==
+             "HELD_COPY_KEYBOARD_VIEWPORT_RELOAD_ISOLATION_QA" and
+             z["keyboard_browser_only_not_human_AT_or_WCAG"] is True and
+             z["original_native_renderer_repair"] is False and
+             z["release"]=="HOLD"
+             for z in x["available_scoped_browser_proof"]) for x in keyboard)
+          assert all(any(z["name"]==
+              "TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL"
+              for z in x["available_scoped_browser_proof"]) for x in observed)
+          assert all(not any(z["name"]==
+              "TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL"
+              for z in x["available_scoped_browser_proof"]) for x in not_observed)
+          print("P5 28 separate reviewer handoffs, 336 question-level H/S/P/M reviews NOT_RUN, "
+                "7 source-author repair requests, 0 signatures/Owner acceptances")
+          PY
+      - name: Keep review hypothesis evidence and immutable original source/manifest fingerprints
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-r8-qrt-intent-contract-four-pinned-P0
+          path: |
+            build/imo182-r8-intent/*.json
+            build/imo182-r8-qrt-intent-coverage.v1.json
+            build/imo182-r8-review-handoff.v1.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            s/build/imo182-r8-held/o/*.html
+            s/build/imo182-r8-held/o/held-adaptation-receipt.json
+            source-explain-d3/build/imo182-r8-held/explain-d3/*.html
+            source-explain-d3/build/imo182-r8-held/explain-d3/held-adaptation-receipt.json
+            source-model-d2/build/imo182-r8-held/model-d2/*.html
+            source-model-d2/build/imo182-r8-held/model-d2/held-adaptation-receipt.json
+            source-retrieve-d2/build/imo182-r8-held/retrieve-d2/*.html
+            source-retrieve-d2/build/imo182-r8-held/retrieve-d2/held-adaptation-receipt.json
+            source-retrieve-d4/build/imo182-r8-held/retrieve-d4/*.html
+            source-retrieve-d4/build/imo182-r8-held/retrieve-d4/held-adaptation-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/explain-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/explain-d3/render-receipt.json
+            source-model-d2/build/imo182-qrt/r8/model-d2/*.html
+            source-model-d2/build/imo182-qrt/r8/model-d2/render-receipt.json
+            source-retrieve-d2/build/imo182-qrt/r8/retrieve-d2/*.html
+            source-retrieve-d2/build/imo182-qrt/r8/retrieve-d2/render-receipt.json
+            source-retrieve-d4/build/imo182-qrt/r8/retrieve-d4/*.html
+            source-retrieve-d4/build/imo182-qrt/r8/retrieve-d4/render-receipt.json
+            source-justify-d1/build/imo182-qrt/r8/justify-d1/*.html
+            source-justify-d1/build/imo182-qrt/r8/justify-d1/render-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/retrieve-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/retrieve-d3/render-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/model-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/model-d3/render-receipt.json
+            source-d2-common/build/imo182-qrt/r8/explain-d2/*.html
+            source-d2-common/build/imo182-qrt/r8/explain-d2/render-receipt.json
+            source-d2-common/build/imo182-qrt/r8/apply-d2/*.html
+            source-d2-common/build/imo182-qrt/r8/apply-d2/render-receipt.json
+            source-d2-common/build/imo182-qrt/r8/synthesize-d2/*.html
+            source-d2-common/build/imo182-qrt/r8/synthesize-d2/render-receipt.json
+            source-d2-common/build/imo182-qrt/r8/justify-d2/*.html
+            source-d2-common/build/imo182-qrt/r8/justify-d2/render-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/apply-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/apply-d3/render-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/represent-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/represent-d3/render-receipt.json
+            source-d3-synthesize/build/imo182-qrt/r8/synthesize-d3/*.html
+            source-d3-synthesize/build/imo182-qrt/r8/synthesize-d3/render-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/justify-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/justify-d3/render-receipt.json
+            source-d4-explain/build/imo182-qrt/r8/explain-d4/*.html
+            source-d4-explain/build/imo182-qrt/r8/explain-d4/render-receipt.json
+            source-d4-apply/build/imo182-qrt/r8/apply-d4/*.html
+            source-d4-apply/build/imo182-qrt/r8/apply-d4/render-receipt.json
+            source-d4-model/build/imo182-qrt/r8/model-d4/*.html
+            source-d4-model/build/imo182-qrt/r8/model-d4/render-receipt.json
+            source-d4-represent/build/imo182-qrt/r8/represent-d4/*.html
+            source-d4-represent/build/imo182-qrt/r8/represent-d4/render-receipt.json
+            source-d4-synthesize/build/imo182-qrt/r8/synthesize-d4/*.html
+            source-d4-synthesize/build/imo182-qrt/r8/synthesize-d4/render-receipt.json
+            source-d4-justify/build/imo182-qrt/r8/justify-d4/*.html
+            source-d4-justify/build/imo182-qrt/r8/justify-d4/render-receipt.json
+          if-no-files-found: warn
+          retention-days: 30

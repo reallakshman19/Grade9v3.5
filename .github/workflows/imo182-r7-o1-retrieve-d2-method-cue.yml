@@ -1,0 +1,58 @@
+name: IMO182 O1 RETRIEVE-D2 five Core method-cue falsifier
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-r7-o1-retrieve-d2-method-cue.yml'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/o1_retrieve_d2_method_cue.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/o1_model_d2_five_core.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  retrieve-d2-real-learner-method-cue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Exact integration verifier (not the source author)
+        uses: actions/checkout@v4
+      - name: Separately pin held D2 #205 source including source and golden SHA locks
+        uses: actions/checkout@v4
+        with:
+          ref: 5b382356e792ae50884241fb047c328e304d011d
+          path: d2-source
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile both exact proposed five-Core verifier modules
+        run: |
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/o1_model_d2_five_core.py
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/o1_retrieve_d2_method_cue.py
+      - name: Install the sole existing renderer schema dependencies and real Chromium
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Independently run authored RETRIEVE-D2 source/maths and QRT contract tests
+        working-directory: d2-source
+        run: |
+          python Shared/tools/question_review_matrix.py check
+          python -m unittest discover -s TEST/imo-research/qrt-d2 -p test_retrieve.py -v
+      - name: Build five existing Core blueprints and index by sole registered renderer
+        working-directory: d2-source
+        run: |
+          python Shared/tools/render_core.py gaps --manifest TEST/products/imo182-qrt-d2-retrieve.manifest.json --reference
+          python Shared/tools/render_core.py build --manifest TEST/products/imo182-qrt-d2-retrieve.manifest.json --out build/imo182-qrt/d2/retrieve --mode PAGES --reference --draft
+      - name: Test primary method cue against source and real learner DOM plus gates and frozen golden
+        run: python TEST/imo-research/qrt-tiles/reconciliation/o1_retrieve_d2_method_cue.py --repo d2-source
+      - name: Preserve original native receipts, role-specific screenshot hashes and classification HOLD
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-r7-o1-retrieve-d2-five-core-method-cue
+          path: |
+            d2-source/build/imo182-qrt/d2/retrieve/*.html
+            d2-source/build/imo182-qrt/d2/retrieve/render-receipt.json
+            d2-source/build/imo182-qrt/d2-retrieve-method-cue/
+          if-no-files-found: warn
+          retention-days: 30

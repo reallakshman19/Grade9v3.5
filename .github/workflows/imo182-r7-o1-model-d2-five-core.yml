@@ -1,0 +1,55 @@
+name: IMO182 O1 MODEL-D2 five native Core golden and protected-model audit
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-r7-o1-model-d2-five-core.yml'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/o1_model_d2_five_core.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  model-d2-actual-learner-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Integrator exact proposed checker
+        uses: actions/checkout@v4
+      - name: Pin unmerged corrected D2 source author #245 separately
+        uses: actions/checkout@v4
+        with:
+          ref: d450d0f0cda25c51c0232db31e6592588634a90b
+          path: d2-source
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile current integrator verifier
+        run: python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/o1_model_d2_five_core.py
+      - name: Install sole renderer schema dependencies and actual Chromium
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Check actual proposed MODEL-D2 source schema/math and QRT matrix
+        working-directory: d2-source
+        run: |
+          python Shared/tools/question_review_matrix.py check
+          python -m unittest discover -s TEST/imo-research/qrt-d2 -p test_model.py -v
+      - name: Build five real MODEL-D2 native learner Core pages and index via registered sole renderer
+        working-directory: d2-source
+        run: |
+          python Shared/tools/render_core.py gaps --manifest TEST/products/imo182-qrt-d2-model.manifest.json --reference
+          python Shared/tools/render_core.py build --manifest TEST/products/imo182-qrt-d2-model.manifest.json --out build/imo182-qrt/d2/model --mode PAGES --reference --draft
+      - name: O1 five-role immutable-golden, math, meaningful model-choice W and real browser
+        run: python TEST/imo-research/qrt-tiles/reconciliation/o1_model_d2_five_core.py --repo d2-source
+      - name: Archive exact rendered source, golden role witness and actual browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-r7-o1-model-d2-five-core-native-golden-w
+          path: |
+            d2-source/build/imo182-qrt/d2/model/*.html
+            d2-source/build/imo182-qrt/d2/model/render-receipt.json
+            d2-source/build/imo182-qrt/d2-model-five-core/
+          if-no-files-found: warn
+          retention-days: 30

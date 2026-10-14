@@ -1,0 +1,108 @@
+"""Validate the one reconciled administrative 7x4 QRT viewer.
+
+This does NOT test native learner HTML, semantic academic criteria, or Owner approval.
+"""
+import json
+import re
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+VIEWER = ROOT / "TEST/imo-research/qrt-tiles/reconciliation/index.html"
+LEDGER = ROOT / "TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json"
+DEMANDS = ("RETRIEVE", "EXPLAIN", "APPLY", "MODEL", "REPRESENT", "SYNTHESIZE", "JUSTIFY")
+
+
+class ReconciledMatrixViewerTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.html = VIEWER.read_text(encoding="utf-8")
+        script = re.search(r'<script id="qrt-evidence" type="application/json">(.+?)</script>', cls.html, re.S)
+        assert script, "viewer must embed current immutable, source-safe row projections"
+        cls.rows = json.loads(script.group(1))
+        cls.ledger = json.loads(LEDGER.read_text(encoding="utf-8"))["rows"]
+
+    def test_complete_current_28_cells(self):
+        ids = [r["id"] for r in self.rows]
+        self.assertEqual(len(ids), 28)
+        self.assertEqual(len(set(ids)), 28)
+        self.assertEqual(set(ids), {f"QRT-{d}-D{b}" for d in DEMANDS for b in (1, 2, 3, 4)})
+        self.assertEqual(set(ids), {r["cell_id"] for r in self.ledger})
+
+    def test_exact_artifact_and_all_six_hashes_match_ledger(self):
+        actual = {r["cell_id"]: r for r in self.ledger}
+        for r in self.rows:
+            with self.subTest(cell=r["id"]):
+                p = actual[r["id"]]
+                self.assertEqual(r["artifact"]["url"], p["artifact"]["url"])
+                self.assertEqual(r["artifact"]["native_html_sha256"], p["artifact"]["native_html_sha256"])
+                self.assertEqual(r["source"]["commit"], p["source"]["commit"])
+                self.assertEqual(r["manifest"]["git_blob_sha"], p["manifest"]["git_blob_sha"])
+                self.assertTrue(r["review_url"].startswith("https://github.com/reallakshman19/Grade9v3.5/"))
+
+    def test_educational_holds_and_d3_source_watch_match_ledger(self):
+        source = {r["cell_id"]: r for r in self.ledger}
+        self.assertEqual(sum(bool(r["classification_hold"]) for r in self.rows),
+                         sum(bool(r["critical_educational_review_hold"]) for r in self.ledger))
+        for row in self.rows:
+            with self.subTest(cell=row["id"]):
+                expected = source[row["id"]]
+                self.assertEqual(row["classification_hold"], expected["critical_educational_review_hold"])
+                self.assertEqual(row["educational_hold_reason"], expected.get("educational_hold_reason"))
+                self.assertEqual(row["source_supersession_watch"], expected.get("source_supersession_watch"))
+                self.assertEqual(row["independent_reviewer_nomination_issue"], expected["independent_reviewer_nomination_issue"])
+                self.assertIsNone(row["nominated_independent_reviewer"])
+                self.assertIsNone(row["qualified_independent_signed_verdict_id"])
+                self.assertEqual(row["ai_content_review"], expected.get("ai_content_review"))
+        synth = next(r for r in self.rows if r["id"] == "QRT-SYNTHESIZE-D3")
+        self.assertFalse(synth["classification_hold"])
+        self.assertEqual(synth["artifact"]["id"], 11862463956)
+        self.assertIn("a8168bb41f7133e40e3bcaa1389562361d68901e",
+                      json.dumps(synth["source_supersession_watch"]))
+        self.assertIn("Verified D3 source successor (M3 CI)", self.html)
+        self.assertIn("Nominate independent reviewer (#", self.html)
+        self.assertIn("Signed AI mathematical-content attestation (not qualified)", self.html)
+        self.assertIn("8 / 28", self.html)
+        self.assertIn("authored metadata not projected into native Core2B HTML", self.html)
+
+    def test_model_d2_latest_source_learner_choice_is_not_owner_acceptance(self):
+        row = next(r for r in self.rows if r["id"] == "QRT-MODEL-D2")
+        self.assertEqual(row["source"]["git_blob_sha"], "db87b5a4a7bc807e0680a64417f2c6ca5ca08cf3")
+        self.assertEqual(row["artifact"]["id"], 11872590321)
+        self.assertTrue(row["classification_hold"])
+        self.assertEqual(row["model_d2_source_choice_repair_provenance"]["repair_pr"], 245)
+        self.assertEqual(row["model_d2_source_choice_repair_provenance"]["prior_artifact_id"], 11773779616)
+        self.assertEqual(row["model_d2_source_choice_repair_provenance"]["corrected_six_html_sha256"],
+                         row["artifact"]["native_html_sha256"])
+        self.assertIn("MODEL-D2 repaired authored learner-owned variable choice", self.html)
+        self.assertFalse(row["owner_accepted"] if "owner_accepted" in row else False)
+        self.assertIsNone(row["qualified_independent_signed_verdict_id"])
+
+    def test_corrected_d4_retrieve_provenance_is_exposed_and_academic_hold_remains(self):
+        row = next(r for r in self.rows if r["id"] == "QRT-RETRIEVE-D4")
+        self.assertEqual(row["source"]["git_blob_sha"], "b9de3db24eb414075a50d0b36298a6306f26056b")
+        self.assertEqual(row["artifact"]["id"], 11842190265)
+        self.assertTrue(row["classification_hold"])
+        self.assertIn("Y=UNKNOWN", row["educational_hold_reason"])
+        proof = row["d4_retrieve_leak_repair_provenance"]
+        self.assertEqual(proof["old_native_artifact_id"], 11823696124)
+        self.assertEqual(proof["corrected_native_artifact_id"], row["artifact"]["id"])
+        self.assertEqual(proof["corrected_native_six_html_sha256"], row["artifact"]["native_html_sha256"])
+        self.assertIn("Old exact-native ZIP", self.html)
+        self.assertIn("D4 RETRIEVE native source repair", self.html)
+        self.assertEqual(row["qualified_independent_signed_verdict_id"], None)
+
+    def test_not_falsely_adopted_or_source_exposed(self):
+        self.assertIn("Original Q003", self.html)
+        self.assertIn("Academic reviewer + conflict declaration", self.html)
+        self.assertIn("Owner per-cell QRT decision ID", self.html)
+        self.assertIn("Independent verdict pending", self.html)
+        self.assertNotIn("6 rendered / 1 missing", self.html)
+        self.assertNotIn("5 rendered / 2 missing", self.html)
+        self.assertTrue(all(f'"{ask}"' in self.html for ask in ("H1","H2","H3","S1","S2","S3","P1","P2","P3","M1","M2","M3")))
+        self.assertTrue(all(p["owner_qrta_accepted"] is False for p in self.ledger))
+        self.assertTrue(all(p["owner_golden_designated"] is False for p in self.ledger))
+
+
+if __name__ == "__main__":
+    unittest.main()
