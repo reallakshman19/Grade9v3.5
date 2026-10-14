@@ -1,5 +1,6 @@
 """Browser smoke of a source-safe ADMIN evidence viewer, not native learner HTML."""
 import json
+import re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -37,6 +38,22 @@ def main():
     ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
     records = {row["cell_id"]: row for row in ledger["rows"]}
     assert len(records) == 28
+    script = re.search(
+        r'<script id="qrt-evidence" type="application/json">(.+?)</script>',
+        VIEWER.read_text(encoding="utf-8"), re.S
+    )
+    assert script, "missing source-safe HTML review evidence data"
+    projections = {r["id"]: r for r in json.loads(script.group(1))}
+    assert set(projections) == set(records)
+    for cell, r in records.items():
+        v = projections[cell]
+        assert v["artifact"]["native_html_sha256"] == r["artifact"]["native_html_sha256"]
+        assert v["artifact"]["url"] == r["artifact"]["url"]
+        assert v["source"] == r["source"]
+        assert v["manifest"] == r["manifest"]
+        assert v["classification_hold"] == r["critical_educational_review_hold"]
+        assert v.get("d4_retrieve_leak_repair_provenance") == r.get("d4_retrieve_leak_repair_provenance")
+        assert v["review_url"].startswith(REPO + "/blob/")
     errors = []
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -55,7 +72,7 @@ def main():
                     assert cell in page.locator("#selected-title").inner_text()
                     assert page.locator("#hashes tr").count() == 6
                     assert page.locator("#semantic .check").count() == 12
-                    row = records[cell]
+                    row = projections[cell]
                     actual = page.locator("#source-links a").evaluate_all(
                         "(items) => items.map(a => a.getAttribute('href'))"
                     )
@@ -68,7 +85,7 @@ def main():
                         ("core1.html", "core1a.html", "core1b.html", "core2a.html", "core2b.html", "index.html")
                     ]
                     assert page.locator("#selected-description").inner_text().startswith(
-                        "Technical artifact verified;" if row["critical_educational_review_hold"] else
+                        "Technical artifact verified;" if row["classification_hold"] else
                         "Technical artifact pinned."
                     )
                     if row.get("source_supersession_watch"):
