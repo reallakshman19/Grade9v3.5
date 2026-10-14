@@ -136,7 +136,7 @@ SENTINELS: dict[str, Sentinel] = {
         (r"\b3\s+(?:black\s+)?(?:cells|vertices|squares)\b",
          r"\b2\s+(?:white\s+)?neighbors?\b",
          r"\b(?:no\s+(?:complete\s+)?tiling|impossible\s+to\s+tile)\b"),
-        "Three black cells have only two white neighbors, so no complete tiling is possible for this specific board.",
+        "3 black cells have only 2 white neighbors, so no complete tiling is possible for this specific board.",
         "Equal numbers of black and white squares are necessary but not sufficient."
     ),
     "QRT-SYNTHESIZE-D4": Sentinel(
