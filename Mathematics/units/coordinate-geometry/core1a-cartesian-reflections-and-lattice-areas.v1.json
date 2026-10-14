@@ -1,10 +1,10 @@
 {
-  "schema": "imo-core1a-declarative-anchor/v1",
+  "schema": "grade9v3-core1a-construction/v1",
   "version": "1.0.0",
-  "package_id": "PKG-CORE1A-COORD-GEOM-REFLECTIONS-AREAS",
-  "blueprint_ref": "BP-CORE1A-CONSTRUCTION@1.8.0",
-  "topic": "COORD_GEOM",
-  "topic_name": "Coordinate Geometry",
+  "package_id": "CORE1A-MATH-COORD-GEOM-REFLECTIONS-AREAS",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Coordinate Geometry",
+  "topic_name": "Coordinate Geometry & Planar Reflections",
   "subtopic": "REFLECTIONS_DISTANCE_AND_LATTICE_POLYGONS",
   "target_demand": "SYNTHESIZE",
   "target_band": "D3",
@@ -12,61 +12,101 @@
     "SOF-IMO-G09-L1-2024-25-B-Q046",
     "SOF-IMO-G09-L1-2023-24-A-Q050"
   ],
-  "inferential_jump": "Synthesize coordinate transformations (axial reflections, sign-quadrant signatures, and Euclidean origin distance) with geometric area calculations of Cartesian lattice polygons.",
+  "entry_assumptions": [
+    "Understanding of the Cartesian plane with perpendicular axes Ox and Oy intersecting at origin (0, 0).",
+    "Familiarity with ordered pairs (x, y), quadrant signs, and Pythagorean distance formula."
+  ],
+  "inferential_jump": "Why axial reflection is an isometry that preserves distance and collinearity while inverting orientation by negating exactly the perpendicular coordinate, and how combining axial reflections with lattice coordinate bounds yields exact closed polygonal enclosure areas.",
   "relation_refs": {
-    "x_axis_reflection": "R_x(x, y) = (x, -y)",
-    "y_axis_reflection": "R_y(x, y) = (-x, y)",
-    "origin_distance": "d = \\sqrt{x^2 + y^2}",
-    "quadrant_signatures": "Q_1(+,+), \\; Q_2(-,+), \\; Q_3(-,-), \\; Q_4(+,-)",
-    "axis_aligned_area": "\\text{Area} = |x_2 - x_1| \\times |y_2 - y_1|"
+    "domain": "Cartesian Coordinate Plane R^2 and Orthogonal Reflections",
+    "hypotheses": [
+      "Reflection across x-axis: R_x(x, y) = (x, -y).",
+      "Reflection across y-axis: R_y(x, y) = (-x, y).",
+      "Euclidean distance from origin O(0,0): d = sqrt(x^2 + y^2).",
+      "Quadrant sign rules: Q1(+,+), Q2(-,+), Q3(-,-), Q4(+,-).",
+      "Area of axis-aligned rectangle: Area = |x_2 - x_1| * |y_2 - y_1|."
+    ],
+    "excluded_values": [
+      "Confusing x-axis reflection with y-coordinate preservation.",
+      "Negative distance quantities.",
+      "Assigning quadrant to points lying strictly on coordinate axes (axes do not belong to any quadrant)."
+    ]
   },
   "representation": [
-    "Cartesian 4-quadrant plane illustrating reflections across x and y axes with signed sign markers",
-    "Table of coordinate transformations and lattice polygon vertex bounding boxes"
+    {
+      "symbol": "R_x(x, y) = (x, -y)",
+      "svg_element_ref": "point-reflected-across-horizontal-axis",
+      "word_meaning": "Reflection in horizontal x-axis preserves abscissa x and inverts ordinate y."
+    },
+    {
+      "symbol": "R_y(x, y) = (-x, y)",
+      "svg_element_ref": "point-reflected-across-vertical-axis",
+      "word_meaning": "Reflection in vertical y-axis inverts abscissa x and preserves ordinate y."
+    },
+    {
+      "symbol": "Area = Delta x * Delta y",
+      "svg_element_ref": "axis-aligned-bounding-box-shaded-polygon",
+      "word_meaning": "Enclosed lattice area computed as product of horizontal and vertical spans."
+    }
   ],
   "completed_teaching_path": [
-    "1. Define the Cartesian plane, four quadrants, and coordinate sign signatures.",
-    "2. Formulate axial reflection operators: reflection across x-axis negates the ordinate (y); reflection across y-axis negates the abscissa (x).",
-    "3. Apply the Pythagorean Euclidean distance metric to determine origin separation: d = √(x² + y²).",
-    "4. Synthesize geometric area calculation for axis-aligned rectangles and squares from vertex coordinates."
+    {
+      "step_ref": "STEP-01",
+      "claim": "Reflection of a point P(x, y) across the x-axis maps P to P'(x, -y).",
+      "derivation": "The x-axis acts as a perpendicular bisector to the segment PP'. The x-coordinate represents horizontal displacement which is unchanged. The y-coordinate represents directed vertical distance from the x-axis, which is reflected to the opposite side: y becomes -y.",
+      "why_valid": "Definition of geometric reflection across the line y = 0."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Reflection of a point P(x, y) across the y-axis maps P to P''(-x, y).",
+      "derivation": "The y-axis acts as a perpendicular bisector to segment PP''. Vertical elevation y remains unchanged, while horizontal displacement x inverts sign: x becomes -x.",
+      "why_valid": "Definition of geometric reflection across the line x = 0."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "The distance from origin O(0, 0) to P(x, y) is d = sqrt(x^2 + y^2) and is strictly invariant under reflections.",
+      "derivation": "By the Pythagorean Theorem, in right triangle with legs |x| and |y|, hypotenuse d = sqrt(|x|^2 + |y|^2) = sqrt(x^2 + y^2). For P'(x, -y), d' = sqrt(x^2 + (-y)^2) = sqrt(x^2 + y^2) = d.",
+      "why_valid": "The square of any real number satisfies (-u)^2 = u^2; reflections are isometric transformations."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "The area of a polygon whose vertices are generated by reflections across both axes is 4 * |x_1 * y_1|.",
+      "derivation": "The four reflected vertices (x, y), (-x, y), (-x, -y), (x, -y) form a rectangle with horizontal length 2|x| and vertical width 2|y|. Area = 2|x| * 2|y| = 4|xy|.",
+      "why_valid": "Symmetry across orthogonal coordinate axes partitions the figure into four congruent quadrants."
+    }
   ],
   "misconceptions": [
     {
-      "id": "MISC-REFLECTION-AXIS-CONFUSION",
-      "error": "Negating x when reflecting in the x-axis, or negating y when reflecting in the y-axis.",
-      "correction": "Reflecting across the x-axis keeps the horizontal x position unchanged while inverting the vertical height: (x, y) -> (x, -y)."
+      "code": "AXIS_REFLECTION_COORD_INVERSION",
+      "wrong_idea": "Inverting the x-coordinate when reflecting in the x-axis, because the word 'x-axis' is mentioned.",
+      "diagnostic_prompt": "When looking into a wall mirror that stands vertically (like the y-axis), does your head become your feet, or does your left-right orientation reverse?",
+      "repair": "A vertical mirror (y-axis) flips left-to-right (x-coordinate). A floor mirror (x-axis) flips up-to-down (y-coordinate). The coordinate matching the axis stays SAME; the other flips sign."
     },
     {
-      "id": "MISC-NEGATIVE-DISTANCE-SQUARE",
-      "error": "Evaluating (-8)² as -64 when calculating distance from origin.",
-      "correction": "The square of any real number is non-negative: (-8)² = +64, so d = √(64 + 36) = √100 = 10."
+      "code": "QUADRANT_ORIGIN_SIGN_SLIP",
+      "wrong_idea": "Evaluating (-6)^2 as -36 when computing distance from origin.",
+      "diagnostic_prompt": "What is the product of two negative numbers (-6) * (-6)?",
+      "repair": "Negative squared is always POSITIVE. (-6)^2 = +36. Distance d = sqrt(36 + 64) = sqrt(100) = 10, never negative."
     }
   ],
   "worked_concept_anchor": {
-    "problem_statement": "In the Cartesian plane: (i) Find the image of A(4, -3) reflected across the y-axis. (ii) Calculate the distance of A from the origin. (iii) If a rectangle has vertices at (1, 1), (5, 1), (5, 4), and (1, 4), find its area.",
-    "conventions_declared": "Standard Cartesian coordinate system ℝ² with orthogonal axes Ox, Oy intersecting at O(0,0). Abscissa is x, ordinate is y.",
-    "deductive_chain": [
-      {
-        "step": 1,
-        "statement": "The reflection of A(4, -3) across the y-axis is A'(-4, -3).",
-        "why_valid": "Reflection in the y-axis negates the x-coordinate while preserving the y-coordinate: R_y(x, y) = (-x, y)."
-      },
-      {
-        "step": 2,
-        "statement": "Since both coordinates of A' are negative (-4 < 0, -3 < 0), A' lies in Quadrant III.",
-        "why_valid": "Definition of Cartesian quadrants: points with x < 0 and y < 0 lie strictly in Quadrant III."
-      },
-      {
-        "step": 3,
-        "statement": "The distance of A(4, -3) from the origin is d = \\sqrt{4^2 + (-3)^2} = \\sqrt{16 + 9} = \\sqrt{25} = 5\\text{ units}.",
-        "why_valid": "Euclidean distance formula from origin (0, 0) to (x, y) given by d = √(x² + y²)."
-      },
-      {
-        "step": 4,
-        "statement": "The rectangle length along x is |5 - 1| = 4 units and width along y is |4 - 1| = 3 units, giving Area = 4 × 3 = 12 sq. units.",
-        "why_valid": "Area of axis-aligned rectangle equals horizontal span times vertical span: Δx · Δy."
-      }
-    ],
-    "invariant_proved": "Axial reflections are isometries preserving distance from origin: d(R(P), O) = d(P, O). Axis-aligned polygon areas depend only on coordinate difference magnitudes."
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Point A(4, -3) is reflected in the y-axis to obtain A', and in the x-axis to obtain A''. Find: (i) coordinates of A' and A'', (ii) distance of A from origin, and (iii) area of rectangle formed by A, A', A'', and origin-reflected point.",
+    "model_answer": "1. Reflection in y-axis: negate x => A'(-4, -3). Lies in Quadrant III.\n2. Reflection in x-axis: negate y => A''(4, 3). Lies in Quadrant I.\n3. Distance from origin: d = sqrt(4^2 + (-3)^2) = sqrt(16 + 9) = sqrt(25) = 5 units.\n4. The four symmetric points are (4, 3), (-4, 3), (-4, -3), (4, -3). Length = 4 - (-4) = 8; Width = 3 - (-3) = 6. Area = 8 * 6 = 48 sq units."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT (modified case). Point P(-5, 12) is reflected in the origin to point Q. (i) State the coordinates of Q and its quadrant. (ii) Calculate the distance PQ. (iii) If points P, Q and point R(5, 12) form triangle PQR, find its area and show that it is a right-angled triangle.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "(i) Q(5, -12) in Quadrant IV; (ii) PQ = 26 units; (iii) Area = 120 sq units; right-angled at R.",
+      "reasoning": [
+        "Origin reflection negates both coordinates: P(-5, 12) -> Q(5, -12). Since x > 0, y < 0, Q lies in Quadrant IV.",
+        "Distance from origin to P: d_O = sqrt((-5)^2 + 12^2) = sqrt(25 + 144) = sqrt(169) = 13. Distance PQ = 2 * d_O = 26 units.",
+        "Point R is (5, 12). Segment PR is horizontal: y = 12, length = 5 - (-5) = 10 units. Segment QR is vertical: x = 5, length = 12 - (-12) = 24 units.",
+        "Since PR is horizontal and QR is vertical, they are perpendicular at R(5, 12). Angle PRQ = 90 deg.",
+        "Area of right triangle PQR = 1/2 * base * height = 1/2 * 10 * 24 = 120 sq units."
+      ],
+      "check": "Pythagorean check: PR^2 + QR^2 = 10^2 + 24^2 = 100 + 576 = 676. PQ^2 = 26^2 = 676. PR^2 + QR^2 = PQ^2 confirms right angle at R. Verified."
+    }
   }
 }

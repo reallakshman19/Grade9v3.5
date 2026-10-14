@@ -36,6 +36,10 @@
     "SOF-IMO-G09-L1-2023-24-A-Q045",
     "SOF-IMO-G09-SAMPLE-2026-27-Q008"
   ],
+  "entry_assumptions": [
+    "Understanding of Cartesian coordinates (x, y) and standard linear equations in one variable.",
+    "Basic mastery of algebraic balance operations (adding/subtracting equals, scalar multiplication)."
+  ],
   "inferential_jump": "Why translating word problem constraints into linear algebraic equations requires identifying independent invariant quantities, assigning dimensional variables, formulating simultaneous linear constraints ax + by = c, and proving that the algebraic intersection represents the unique physical state satisfying all conditions.",
   "relation_refs": {
     "domain": "Linear Systems over R and Real-World Constraint Modeling",
@@ -113,7 +117,20 @@
   ],
   "worked_concept_anchor": {
     "status": "CANONICAL_ANCHOR_PROOF",
-    "prompt": "The cost of 5 pens and 3 notebooks is Rs 125, while 3 pens and 4 notebooks cost Rs 120. Formulate the system of linear equations and find the cost of each item.",
-    "model_answer": "Let the cost of one pen be Rs x, and one notebook be Rs y. Condition 1 gives: 5x + 3y = 125. Condition 2 gives: 3x + 4y = 120. Multiplying (1) by 4: 20x + 12y = 500. Multiplying (2) by 3: 9x + 12y = 360. Subtracting gives 11x = 140 => x = 140/11 is not integer; if 5x + 3y = 105, 3x + 4y = 85: 20x + 12y = 420, 9x + 12y = 255 => 11x = 165 => x = 15. Then 3(15) + 4y = 85 => 4y = 40 => y = 10. The cost of one pen is Rs 15 and one notebook is Rs 10."
+    "prompt": "The cost of 5 pens and 3 notebooks is Rs 105, while 3 pens and 4 notebooks cost Rs 85. Formulate the system of linear equations and find the cost of each item.",
+    "model_answer": "Let the cost of one pen be Rs x, and one notebook be Rs y. Condition 1 gives: 5x + 3y = 105. Condition 2 gives: 3x + 4y = 85. Multiplying the first equation by 4 gives: 20x + 12y = 420. Multiplying the second equation by 3 gives: 9x + 12y = 255. Subtracting eliminates y: 11x = 165 => x = 15. Substituting x = 15 into 3(15) + 4y = 85 gives 45 + 4y = 85 => 4y = 40 => y = 10. The cost of one pen is Rs 15 and one notebook is Rs 10."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT (modified case). A transport provider offers two candidate pricing models for moving cargo distance d (km) with cost C (Rs): Model 1 is linear C = 12d + 50; Model 2 is square-offset C = d^2 + 100. For four observed trips (2, 74), (4, 98), (6, 122), and (8, 164), determine which model fits the first three trips, identify why the fourth trip is an exception, and state what C(8) should equal under that winning rule.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "Model 1 (C = 12d + 50) correctly predicts the first three observations; trip (8, 164) is the exception because 12(8) + 50 = 146.",
+      "reasoning": [
+        "Evaluate Model 1: for d=2, C = 12(2)+50 = 74 (matches); for d=4, C = 12(4)+50 = 98 (matches); for d=6, C = 12(6)+50 = 122 (matches).",
+        "Evaluate Model 2: for d=2, C = 2^2+100 = 104 != 74 (fails immediately).",
+        "For the fourth trip (d=8), Model 1 predicts C = 12(8)+50 = 96 + 50 = 146, whereas the observed cost was 164. The residual is +18."
+      ],
+      "check": "Residuals for Model 1: 74-74=0, 98-98=0, 122-122=0, 164-146=+18. Exactly 3 points fit the linear model with a unique non-zero outlier."
+    }
   }
 }

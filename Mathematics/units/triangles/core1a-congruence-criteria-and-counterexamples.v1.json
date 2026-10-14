@@ -13,30 +13,65 @@
   ],
   "inferential_jump": "Distinguish valid triangle congruence criteria (SAS, ASA, AAS, SSS, RHS) from angle-only similarity (AAA), proving by counterexample that equality of all three angles does not imply congruence without at least one corresponding side equality.",
   "relation_refs": {
+    "domain": "Euclidean Plane Geometry (R^2)",
+    "hypotheses": [
+      "Triangles ABC and RQP lie in the Euclidean plane.",
+      "Angle equality alone creates a dilation equivalence class, not a metric congruence."
+    ],
     "isosceles_base_angles": "AB = AC \\iff \\angle B = \\angle C",
     "similarity_dilation": "\\Delta ABC \\sim \\Delta RQP \\centernot\\implies \\Delta ABC \\cong \\Delta RQP",
     "aas_criterion": "\\angle A_1 = \\angle A_2, \\; \\angle B_1 = \\angle B_2, \\; s_1 = s_2 \\implies \\Delta_1 \\cong \\Delta_2"
   },
   "representation": [
-    "Geometric side-by-side comparison of dilated isosceles triangles sharing identical angles but different scales",
-    "Decision matrix contrasting valid congruence criteria (SSS, SAS, ASA, AAS, RHS) against invalid criteria (AAA, SSA)"
+    {
+      "symbol": "Delta ABC ~ Delta RQP vs Delta ABC = Delta RQP",
+      "visual": "Geometric side-by-side comparison of dilated isosceles triangles sharing identical angles but different scales.",
+      "word_meaning": "Visual representation bridge showing dilation preserves angles while scaling linear dimensions."
+    },
+    {
+      "symbol": "SAS, ASA, AAS, SSS, RHS",
+      "visual": "Decision matrix contrasting valid congruence criteria against invalid criteria (AAA, SSA).",
+      "word_meaning": "Taxonomy of necessary and sufficient conditions for Euclidean triangle congruence."
+    }
   ],
   "completed_teaching_path": [
-    "1. Define triangle congruence: two triangles are congruent iff there exists a rigid motion (isometry) mapping one onto the other.",
-    "2. State the canonical congruence axioms and theorems: SSS, SAS, ASA, AAS, RHS.",
-    "3. Construct counterexamples for AAA: scaling (dilation) preserves all three angles while altering side lengths by ratio k ≠ 1.",
-    "4. Prove altitude congruence in isosceles triangles using AAS: altitudes dropped to equal sides or from equal vertices are congruent."
+    {
+      "step": 1,
+      "claim": "Define triangle congruence via rigid motion isometries.",
+      "derivation": "Two triangles are congruent if and only if all corresponding angles and corresponding sides are equal.",
+      "why_valid": "Isometries in Euclidean space preserve distances and angle measures identically."
+    },
+    {
+      "step": 2,
+      "claim": "State the canonical congruence criteria requiring side measures.",
+      "derivation": "SSS, SAS, ASA, AAS, and RHS each contain at least one side length equality constraint.",
+      "why_valid": "A side constraint fixes the scale factor k = 1, converting similarity to congruence."
+    },
+    {
+      "step": 3,
+      "claim": "Construct counterexample for AAA.",
+      "derivation": "Two equilateral triangles with sides 3 and 6 have angles (60°, 60°, 60°) but different perimeters (9 vs 18).",
+      "why_valid": "A single valid counterexample disproves universal implication: AAA implies similarity, not congruence."
+    },
+    {
+      "step": 4,
+      "claim": "Prove altitude congruence in isosceles triangles using AAS.",
+      "derivation": "Altitudes to equal legs of an isosceles triangle create right triangles sharing the base angle and equal hypotenuse.",
+      "why_valid": "AAS Congruence Criterion holds for right triangles with shared base angles and congruent hypotenuses."
+    }
   ],
   "misconceptions": [
     {
       "id": "MISC-AAA-CONGRUENCE-FALLACY",
-      "error": "Believing that if two triangles have all three corresponding angles equal, they must be congruent.",
-      "correction": "AAA establishes similarity (equal shape, proportional sides), but not congruence (equal size). A scaled replica (e.g. 3-4-5 vs 6-8-10) has identical angles but different areas and perimeters."
+      "wrong_idea": "Believing that if two triangles have all three corresponding angles equal, they must be congruent.",
+      "diagnostic_prompt": "If a triangle has angles 30°, 60°, 90° with hypotenuse 2, is it congruent to a 30°-60°-90° triangle with hypotenuse 10?",
+      "repair": "Apply the replacement rule: AAA establishes similarity (equal shape, proportional sides), but NEVER congruence (equal size). To prove congruence, you must produce at least one corresponding side length equality."
     },
     {
       "id": "MISC-SSA-AMBIGUOUS-CASE",
-      "error": "Assuming equality of two sides and a non-included angle guarantees congruence.",
-      "correction": "SSA is the ambiguous case and does not guarantee congruence unless the angle is right (RHS) or opposite the longer side."
+      "wrong_idea": "Assuming equality of two sides and a non-included angle guarantees congruence.",
+      "diagnostic_prompt": "Can two non-congruent triangles share two side lengths and an angle opposite one of them?",
+      "repair": "SSA is the ambiguous case and does not guarantee congruence unless the angle is right (RHS) or opposite the strictly strictly longer side. Refute SSA unless the angle is confirmed right."
     }
   ],
   "worked_concept_anchor": {

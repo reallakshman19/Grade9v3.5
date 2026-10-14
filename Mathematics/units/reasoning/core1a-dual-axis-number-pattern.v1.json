@@ -11,6 +11,10 @@
   "linked_core2_refs": [
     "SOF-IMO-G09-L1-2024-25-B-Q011"
   ],
+  "entry_assumptions": [
+    "Understanding of integer arithmetic, difference operations, and integer powers/squares.",
+    "Familiarity with spatial cruciform/Cartesian axis orientations (Top-Bottom, Left-Right)."
+  ],
   "inferential_jump": "Why the central number cannot be derived from a single axis alone, but requires decomposing the 4-node peripheral system into two orthogonal directional differences (vertical difference and horizontal difference), synthesizing their linear sum, and composing with a non-linear squaring map to generate the invariant central value.",
   "relation_refs": {
     "domain": "Discrete Number Patterns & Planar Grid Coordinates",
@@ -91,5 +95,19 @@
     "status": "CANONICAL_ANCHOR_PROOF",
     "prompt": "Find the missing central number: Fig 1 (T:12, B:4, L:7, R:10 -> 121), Fig 2 (T:15, B:6, L:9, R:9 -> 81), Fig 3 (T:9, B:5, L:6, R:14 -> ?).",
     "model_answer": "In each figure, the central number is obtained by: C = [(Top - Bottom) + (Right - Left)]^2. Fig 1: [(12 - 4) + (10 - 7)]^2 = (8 + 3)^2 = 11^2 = 121. Fig 2: [(15 - 6) + (9 - 9)]^2 = (9 + 0)^2 = 9^2 = 81. Applying this to Fig 3: [(9 - 5) + (14 - 6)]^2 = (4 + 8)^2 = 12^2 = 144. Therefore, the missing number is 144."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT (modified case). In a modified 4-node matrix, the central value is governed by a product-difference rule: C = (T * B) - (R * L). For Figure 1: T=8, B=5, L=4, R=6 gives C = 16. For Figure 2: T=9, B=7, L=5, R=8 gives C = 23. Determine C for Figure 3 where T=11, B=6, L=7, R=7, and explain why a candidate rule C = (T+B) - (R+L) fails.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "C = 17 for Figure 3; additive rule fails on Figure 1 giving (8+5)-(6+4)=3 != 16.",
+      "reasoning": [
+        "Test product-difference rule on Fig 1: (8 * 5) - (6 * 4) = 40 - 24 = 16 (matches Fig 1).",
+        "Test on Fig 2: (9 * 7) - (8 * 5) = 63 - 40 = 23 (matches Fig 2).",
+        "Apply rule to Fig 3: C = (11 * 6) - (7 * 7) = 66 - 49 = 17.",
+        "Additive candidate rule test: Fig 1 gives (8+5)-(6+4) = 13 - 10 = 3 != 16; fails immediately."
+      ],
+      "check": "66 - 49 = 17. Backward check: 17 + 49 = 66 = 11 * 6. The product-difference invariant holds uniquely."
+    }
   }
 }

@@ -12,6 +12,10 @@
     "SOF-IMO-G09-L1-2025-26-A-Q032",
     "SOF-IMO-G09-L1-2025-26-B-Q021"
   ],
+  "entry_assumptions": [
+    "Understanding of circular degrees, complete circle rotation (360 degrees), and proportional scaling.",
+    "Familiarity with reading data from frequency tables, bar charts, and pie charts."
+  ],
   "inferential_jump": "Why reading and converting statistical visual representations (pie chart central angles and grouped bar heights) requires establishing the exact proportional metric scaling factor (Theta / 360 = Value / Total), mapping visual angular sectors to raw quantitative frequencies without distortion.",
   "relation_refs": {
     "domain": "Descriptive Statistics, Angular Sector Proportions, and Discrete Visual Metric Scaling",
@@ -86,5 +90,19 @@
     "status": "CANONICAL_ANCHOR_PROOF",
     "prompt": "A pie chart represents total marks of 720. Sectors are: Social Science 65 deg, Math 90 deg, English 55 deg, Hindi 70 deg, Science 80 deg. Which two subjects total 250 marks?",
     "model_answer": "Each degree represents 720 / 360 = 2 marks. To obtain 250 marks, the combined central angle must be 250 / 2 = 125 deg. Summing angles: English (55 deg) + Hindi (70 deg) = 125 deg. English marks = 55 * 2 = 110; Hindi marks = 70 * 2 = 140; Total = 250 marks. Therefore, the subjects are English and Hindi."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT (modified case). A family's monthly budget of Rs 54,000 is represented on a pie chart. The sector angle for Rent is 100 degrees, Food is 120 degrees, Education is 80 degrees, and the remainder is Savings. Find: (i) the sector angle for Savings, (ii) the exact amount spent on Education, and (iii) how much more money is spent on Food than on Rent.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "(i) Savings angle = 60 deg; (ii) Education expenditure = Rs 12,000; (iii) Food exceeds Rent by Rs 3,000.",
+      "reasoning": [
+        "Each degree represents 54,000 / 360 = Rs 150.",
+        "Sum of given angles = 100 + 120 + 80 = 300 deg. Therefore, Savings angle = 360 - 300 = 60 deg.",
+        "Education expenditure = 80 deg * Rs 150/deg = Rs 12,000.",
+        "Angle difference between Food and Rent = 120 - 100 = 20 deg. Monetary difference = 20 deg * Rs 150/deg = Rs 3,000."
+      ],
+      "check": "Sum of all amounts: Rent (15,000) + Food (18,000) + Education (12,000) + Savings (9,000) = Rs 54,000. Exactly 100% of budget accounted for."
+    }
   }
 }
