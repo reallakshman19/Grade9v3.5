@@ -148,6 +148,7 @@ def audit(*, root: Path = ROOT, baseline_sha: str,
     for p in pairs:
         folder_unit[p["folder"]].append(p)
     assignments = []
+    proposal_differences = []
     counts = Counter()
     for qid, q in sorted(questions.items()):
         taxonomy = q.get("taxonomy") or {}
@@ -168,6 +169,10 @@ def audit(*, root: Path = ROOT, baseline_sha: str,
                 if p["unit_id"] in linked:
                     if p["target_band"] != cls.get("difficulty_band") or p["target_demand"] != cls.get("primary_demand"):
                         counts["EXPLICIT_UNIT_QRT_DIFFERS_FROM_SOURCE_PROPOSAL"] += 1
+                        proposal_differences.append({"question_id": qid, "unit_id": p["unit_id"],
+                                                     "research_proposed": cls.get("qrt_cell"),
+                                                     "unit_target": "QRT-" + str(p["target_demand"]) + "-" + str(p["target_band"]),
+                                                     "verdict": "REVIEW_REQUIRED"})
         assignments.append({
             "id": qid, "declared_qrt": cls.get("qrt_cell"),
             "topic_label": raw,
@@ -190,7 +195,8 @@ def audit(*, root: Path = ROOT, baseline_sha: str,
         },
         "question_count": len(questions), "core1a_count": len(all_c1a),
         "core1b_count": len(all_c1b), "paired_units": len(pairs),
-        "relationship_counts": dict(sorted(counts.items())), "structural_findings": defects,
+        "relationship_counts": dict(sorted(counts.items())), "proposal_differences": proposal_differences,
+        "structural_findings": defects,
         "academic_approval": "NOT_GRANTED", "source_rights": "NOT_VERIFIED",
         "pairs": pairs, "questions": assignments,
     }
@@ -208,7 +214,7 @@ def main(argv: list[str] | None = None) -> int:
     print(json.dumps({k: result[k] for k in (
         "schema", "source_commit", "status", "question_count",
         "core1a_count", "core1b_count", "paired_units", "relationship_counts",
-        "structural_findings", "academic_approval")}, ensure_ascii=False, indent=2))
+        "structural_findings", "proposal_differences", "academic_approval")}, ensure_ascii=False, indent=2))
     return 1 if result["status"] == "FAIL" else 0
 
 
