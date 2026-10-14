@@ -101,8 +101,10 @@ def main():
             print("DIAGNOSTIC " + json.dumps({"width": width, "katex": katex,
                 "overflow": overflow, "offenders": offenders}), flush=True)
             assert katex > 0, f"{width}: math was not rendered by KaTeX"
-            # Overflow is independently recorded so the offending component can
-            # be corrected at its CSS source, not merely clipped by body overflow.
+            # Genuine narrow-screen containment: retain local scrolling for long
+            # formulae and the tab strip, but forbid document-wide overflow.
+            assert not overflow, f"{width}: document overflow: {layout}"
+            page.locator(".qb-question").first.scroll_into_view_if_needed()
             page.screenshot(path=str(OUT / f"research-attempt-{width}.png"), full_page=False)
             observations.append({"viewport": width, "question_count": cards.count(),
                 "first_last_commit": "PASS", "keyboard": "PASS",
