@@ -12,6 +12,10 @@
     "SOF-IMO-G09-L1-2025-26-A-Q041",
     "SOF-IMO-G09-L1-2025-26-B-Q047"
   ],
+  "entry_assumptions": [
+    "Familiarity with the Triangle Inequality theorem (sum of any two sides exceeds the third side).",
+    "Understanding of radical arithmetic and prime factorization for evaluating square roots."
+  ],
   "inferential_jump": "Synthesize triangular area decomposition using Heron's formula with perimeter-ratio constraints, radical factorization, and isoperimetric comparisons between regular polygons.",
   "relation_refs": {
     "domain": "Euclidean Metric Geometry & Heron Area Invariants",
@@ -26,13 +30,13 @@
   },
   "representation": [
     {
-      "symbol": "A = sqrt(s(s-a)(s-b)(s-c))",
-      "visual": "Composite polygon decomposed into triangular partitions with semiperimeter annotations.",
+      "symbol": "A = \\sqrt{s(s-a)(s-b)(s-c)}",
+      "svg_element_ref": "composite-triangle-semiperimeter-decomposition",
       "word_meaning": "Visual representation bridge connecting 3 side lengths to symmetric square root area factorization."
     },
     {
       "symbol": "s = P / 2",
-      "visual": "Table comparing radical area terms under Heron's formula against perimeter constraints.",
+      "svg_element_ref": "semiperimeter-tabular-ratio-mapping",
       "word_meaning": "Tabular mapping of side length ratios to explicit semiperimeter and radical area products."
     }
   ],
@@ -107,5 +111,10 @@
       }
     ],
     "invariant_proved": "Heron's formula reduces rational-ratio Pythagorean triangles to exact integer areas. For equal perimeter P, regular polygons enclose greater area than skewed triangles."
+  },
+  "exit_task": {
+    "prompt": "A triangular park has sides in the ratio 3 : 5 : 7 and a perimeter of 300 m. Find its area using Heron's formula in exact radical form.",
+    "answer": "Let the sides be 3x, 5x, 7x. Then 3x + 5x + 7x = 15x = 300 m, giving x = 20 m. The sides are a = 60 m, b = 100 m, c = 140 m. The semiperimeter is s = 300 / 2 = 150 m. The differences are s - a = 90, s - b = 50, s - c = 10. By Heron's formula, Area = √(150 × 90 × 50 × 10) = √(15 × 9 × 5 × 1 × 10⁴) = √(675 × 10⁴) = √(225 × 3 × 10⁴) = 1500√3 m².",
+    "check": "Verify that 1500√3 ≈ 2598.08 m² is strictly less than an equilateral triangle of side 100 m (A_eq = 2500√3 ≈ 4330.13 m²), satisfying the isoperimetric inequality."
   }
 }
