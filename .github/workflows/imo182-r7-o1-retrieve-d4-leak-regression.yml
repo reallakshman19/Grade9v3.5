@@ -1,0 +1,69 @@
+name: IMO182 O1 RETRIEVE-D4 old theorem leak negative control versus corrected native
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-r7-o1-retrieve-d4-leak-regression.yml'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/o1_retrieve_d4_leak_regression.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  d4-question-first-protected-w:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout existing #230 integration witness source
+        uses: actions/checkout@v4
+      - name: Checkout original SHA-valid but known-leaking RETRIEVE-D4 #210 negative control
+        uses: actions/checkout@v4
+        with:
+          ref: 9faa52d499e071e9e6d4c419b5afdf5fbc044455
+          path: d4-old
+          persist-credentials: false
+      - name: Checkout exact #242 current corrected RETRIEVE-D4 author/evidence head
+        uses: actions/checkout@v4
+        with:
+          ref: fa0b34d1a5ee0a8a7188c2c4871854e0b087d75c
+          path: d4-corrected
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate new integrator regression verifier syntax
+        run: python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/o1_retrieve_d4_leak_regression.py
+      - name: Install schema validator and real Chromium
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Independently check corrected maths, source and registered golden role invariants
+        working-directory: d4-corrected
+        run: |
+          python Shared/tools/question_review_matrix.py check
+          python -m unittest tests.test_imo203_qrt_d4_retrieve tests.test_imo203_core1a_owner_v31_o1 tests.test_imo203_core1b_owner_v31_o1 tests.test_imo182_core1_core2b_owner_v31_o1 -v
+      - name: Native-render old deliberately quarantined five-Core source, no adoption
+        working-directory: d4-old
+        run: |
+          python Shared/tools/render_core.py gaps --manifest TEST/products/imo203-qrt-d4-retrieve.manifest.json --reference
+          python Shared/tools/render_core.py build --manifest TEST/products/imo203-qrt-d4-retrieve.manifest.json --out build/imo182/qrt-d4-retrieve/old --mode PAGES --reference --draft
+      - name: Native-render corrected source through exact SAME sole registered renderer
+        working-directory: d4-corrected
+        run: |
+          python Shared/tools/render_core.py gaps --manifest TEST/products/imo203-qrt-d4-retrieve.manifest.json --reference
+          python Shared/tools/render_core.py build --manifest TEST/products/imo203-qrt-d4-retrieve.manifest.json --out build/imo182/qrt-d4-retrieve/corrected --mode PAGES --reference --draft
+      - name: Prove old SHA-valid full theorem leakage and corrected five-role AX/W guarded transfer
+        run: |
+          python TEST/imo-research/qrt-tiles/reconciliation/o1_retrieve_d4_leak_regression.py --old d4-old --corrected d4-corrected
+      - name: Archive actual old and corrected native HTML, role receipts, negative-control screenshots and maths proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-r7-o1-retrieve-d4-old-leak-versus-corrected-five-core
+          path: |
+            d4-old/build/imo182/qrt-d4-retrieve/old/*.html
+            d4-old/build/imo182/qrt-d4-retrieve/old/render-receipt.json
+            d4-corrected/build/imo182/qrt-d4-retrieve/corrected/*.html
+            d4-corrected/build/imo182/qrt-d4-retrieve/corrected/render-receipt.json
+            d4-corrected/build/imo182/qrt-d4-retrieve/r7-crossrole-w/
+          if-no-files-found: warn
+          retention-days: 30
