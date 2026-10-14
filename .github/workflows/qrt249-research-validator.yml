@@ -1,0 +1,61 @@
+name: QRT249 research validator (expected-failure baseline)
+
+on:
+  push:
+    branches:
+      - agent/issue249-qrt-validator-v1
+    paths:
+      - 'Shared/tools/imo_qrt_validator.py'
+      - 'tests/test_imo_qrt_validator.py'
+      - 'TEST/imo-qrt-validator/**'
+      - '.github/workflows/qrt249-research-validator.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qrt249-standalone-validator
+  cancel-in-progress: true
+
+jobs:
+  corpus:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fail-closed mutation unit tests
+        run: python -m unittest discover -s tests -p 'test_imo_qrt_validator.py' -v
+      - name: Run all 260 research questions and confirm the known negative baseline
+        shell: bash
+        run: |
+          set +e
+          python Shared/tools/imo_qrt_validator.py --baseline-sha "$GITHUB_SHA" --output build/imo-qrt-249/intake.json
+          rc=$?
+          set -e
+          if [ "$rc" != "1" ]; then
+            echo "Validator must return FAIL for this uncorrected research baseline"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path('build/imo-qrt-249/intake.json').read_text(encoding='utf-8'))
+          assert d['actual_total'] == d['unique_ids'] == 260
+          assert d['occupied_tiles'] == 19 and d['academic_approval'] == 'NOT_GRANTED'
+          assert d['finding_counts']['FIVE_FACTOR_SCORE_MISMATCH'] == 27
+          assert d['finding_counts']['FIVE_FACTOR_BAND_MISMATCH'] == 6
+          assert d['finding_counts']['FIVE_FACTOR_EVIDENCE_MISSING'] == 50
+          assert len(d['stale_audits']) == 1
+          assert d['stale_audits'][0]['reported_question_count'] == 184
+          print('260 records inventoried; expected blockers proven; no academic pass claimed')
+          PY
+      - name: Upload validator finding references only
+        uses: actions/upload-artifact@v4
+        with:
+          name: qrt249-exact-head-intake
+          path: build/imo-qrt-249/intake.json
+          if-no-files-found: error
