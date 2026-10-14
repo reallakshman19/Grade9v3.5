@@ -1,0 +1,81 @@
+"""Real Chromium smoke test of the Issue 254 source research portal (non-validator).
+
+Run: python tests/imo_issue254_browser.py
+Requires: pip install playwright; python -m playwright install chromium
+"""
+from __future__ import annotations
+import json
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+
+ROOT = Path(__file__).resolve().parents[1]
+HTML = ROOT / "public/test/imo-grade9/core2.html"
+OUT = ROOT / "TEST/imo-qrt-repair/browser-evidence"
+OUT.mkdir(parents=True, exist_ok=True)
+
+
+def main():
+    observations = []
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
+        for width in (320, 390, 768, 1280):
+            page = browser.new_page(viewport={"width": width, "height": 900})
+            errors = []
+            page.on("pageerror", lambda exc: errors.append(str(exc)))
+            page.goto(HTML.as_uri(), wait_until="domcontentloaded")
+            page.locator(".qb-question").first.wait_for()
+            cards = page.locator(".qb-question")
+            assert cards.count() == 260, f"{width}: missing questions"
+            for index in (0, 259):
+                card = cards.nth(index)
+                qid = card.get_attribute("id")[2:]
+                solution = page.locator("#sol-disc-" + qid)
+                diagnosis = page.locator("#diag-disc-" + qid)
+                button = page.locator("#commit-" + qid)
+                attempt = page.locator("#att-" + qid)
+                assert solution.get_attribute("hidden") is not None
+                assert diagnosis.get_attribute("hidden") is not None
+                assert not solution.is_visible()
+                assert not diagnosis.is_visible()
+                card.scroll_into_view_if_needed()
+                button.click()
+                assert not solution.is_visible(), f"{qid} leaked on empty commitment"
+                assert attempt.get_attribute("aria-invalid") == "true"
+                attempt.fill("I choose option A; I need to compare the given relationships.")
+                button.click()
+                assert solution.is_visible() and diagnosis.is_visible(), qid
+                assert solution.get_attribute("open") is not None, qid
+                assert attempt.get_attribute("readonly") is not None, qid
+                assert button.get_attribute("aria-expanded") == "true"
+                summary = solution.locator("summary")
+                assert summary.evaluate("(e) => e === document.activeElement"), qid
+                summary.press("Enter")
+                assert solution.get_attribute("open") is None, qid
+                summary.press("Enter")
+                assert solution.get_attribute("open") is not None, qid
+            # Navigation and filter should remain functional with committed responses.
+            page.evaluate("switchTab('core1-all')")
+            assert page.locator("#tab-core1-all").evaluate("(e) => e.classList.contains('active')")
+            page.evaluate("switchTab('core2')")
+            # Record viewport overflow, KaTeX rendering and console failures rather than concealing them.
+            katex = page.locator(".katex").count()
+            overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
+            page.screenshot(path=str(OUT / f"research-attempt-{width}.png"), full_page=False)
+            observations.append({"viewport": width, "question_count": cards.count(),
+                "first_last_commit": "PASS", "keyboard": "PASS",
+                "navigation": "PASS", "katex_nodes": katex,
+                "horizontal_overflow": overflow, "page_errors": errors})
+            assert not errors, f"{width}: {errors}"
+            page.reload(wait_until="domcontentloaded")
+            first_qid = cards.first.get_attribute("id")[2:]
+            assert not page.locator("#sol-disc-" + first_qid).is_visible(), "reload leakage"
+            page.close()
+        browser.close()
+    print(json.dumps({"scope": "RESEARCH_HTML_ONLY", "status": "PASS",
+        "observations": observations}, indent=2))
+    (OUT / "browser-evidence.json").write_text(json.dumps(observations, indent=2) + "\n",
+        encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()
