@@ -7,6 +7,7 @@ on:
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_w_path_audit.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_all_native_gates.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_copy.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_browser.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_keyboard_state.py'
@@ -488,6 +489,64 @@ jobs:
           print("P2b 21-cell native Chromium: 84 clicked routes/210 actual shell transitions,",
                 "do NOT count assisted route as independent mastery")
           PY
+      - name: R8 P2c inspect all 21 source-pinned original native attempt boundaries
+        run: |
+          set -euo pipefail
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_all_native_gates.py
+          for row in \
+            "source-explain-d3|explain-d3" \
+            "source-model-d2|model-d2" \
+            "source-retrieve-d2|retrieve-d2" \
+            "source-retrieve-d4|retrieve-d4" \
+            "source-justify-d1|justify-d1" \
+            "source-explain-d3|retrieve-d3" \
+            "source-explain-d3|model-d3" \
+            "source-d2-common|explain-d2" \
+            "source-d2-common|apply-d2" \
+            "source-d2-common|synthesize-d2" \
+            "source-d2-common|justify-d2" \
+            "source-explain-d3|apply-d3" \
+            "source-explain-d3|represent-d3" \
+            "source-d3-synthesize|synthesize-d3" \
+            "source-explain-d3|justify-d3" \
+            "source-d4-explain|explain-d4" \
+            "source-d4-apply|apply-d4" \
+            "source-d4-model|model-d4" \
+            "source-d4-represent|represent-d4" \
+            "source-d4-synthesize|synthesize-d4" \
+            "source-d4-justify|justify-d4"; do
+            IFS='|' read -r root cell <<< "$row"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_all_native_gates.py \
+              --native-contract "build/imo182-r8-intent/$cell-native.json" \
+              --source-root "$root" \
+              --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "build/imo182-r8-intent/$cell-native-gates.json"
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files=list(Path("build/imo182-r8-intent").glob("*-native-gates.json"))
+          audits=[json.loads(f.read_text()) for f in files]
+          assert len(audits)==21 and len({a["cell_id"] for a in audits})==21
+          assert sum(a["nine_real_role_viewports"] for a in audits)==189
+          assert sum(a["simulated_exposure_paths_not_real_learner_journeys"] for a in audits)==105
+          assert sum(len(a["five_deliberate_technical_gate_mutants_rejected"])
+                     for a in audits)==105
+          assert all(a["technical_gate_findings"]==[] and
+                     a["qualified_academic_review"]=="NOT_RUN" and
+                     a["source_specific_w_preservation"]=="NOT_ESTABLISHED" and
+                     a["owner_acceptance"] is False and
+                     a["release"]=="HOLD" for a in audits)
+          source_oracles=[a for a in audits if a["narrow_known_source_semantic_oracle"] ==
+                          "RAN_NARROW_SENTINELS_NOT_ACCEPTANCE"]
+          assert len(source_oracles)==4
+          assert len([a for a in audits if a["narrow_known_source_semantic_oracle"]==
+                      "NOT_RUN_FOR_THIS_CELL"])==17
+          retrieve=next(a for a in audits if a["cell_id"]=="QRT-RETRIEVE-D2")
+          assert "RETRIEVE_D2_METHOD_SELECTION_ALREADY_CUED" in retrieve["narrow_semantic_finding_ids"]
+          print("P2c 189 real native Core gate viewport probes, 105 simulated path hypotheses, "
+                "105 injected technical gate defects rejected; W/academic/Owner HOLD")
+          PY
       - name: R8 held-only adapter copied native Core HTML (NEVER renderer/golden source)
         run: |
           set -euo pipefail
@@ -602,6 +661,18 @@ jobs:
           navigation=[x for x in r if any(
               z["name"]=="TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL"
               for z in x["available_scoped_browser_proof"])]
+          native_gates=[x for x in r if any(z["name"]==
+             "NINE_ACTUAL_ORIGINAL_NATIVE_CORE_GATE_VIEWPORTS"
+             for z in x["available_scoped_browser_proof"])]
+          assert len(native_gates)==21
+          assert len({x["cell_id"] for x in native_gates})==21
+          assert all(any(z["name"]==
+             "NINE_ACTUAL_ORIGINAL_NATIVE_CORE_GATE_VIEWPORTS" and
+             z["real_browser_role_viewports"]==9 and
+             z["five_technical_mutations_rejected"]==5 and
+             z["protected_W_and_academic_semantics"]=="NOT_ESTABLISHED" and
+             z["release"]=="HOLD"
+             for z in x["available_scoped_browser_proof"]) for x in native_gates)
           assert len(navigation)==21
           assert all(len(next(z for z in x["available_scoped_browser_proof"] if
                      z["name"]=="TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL")["observed_integrity_gaps"])==4
