@@ -131,6 +131,44 @@ def make_packet(ledger: dict, bank: dict, evidence_dir: Path,
                         a["whole_journey_W"]["paths_checked"],
                     "actual_end_to_end_navigation": False,
                 })
+            gatepath = evidence_dir / (slug + "-native-gates.json")
+            if gatepath.is_file():
+                gates = read_json(gatepath)
+                ensure(gates["cell_id"] == cid and
+                       gates["original_native_rendered_pages"] is True and
+                       gates["nine_real_role_viewports"] == 9 and
+                       len(gates["observed_real_native_browser_role_viewports"]) == 9 and
+                       len(gates["five_cumulative_exposure_hypotheses"]) == 5 and
+                       len(gates["five_deliberate_technical_gate_mutants_rejected"]) == 5 and
+                       all(x["caught_by_same_gate_checker"] is True
+                           for x in gates["five_deliberate_technical_gate_mutants_rejected"]) and
+                       gates["technical_gate_findings"] == [] and
+                       gates["source_specific_w_preservation"] == "NOT_ESTABLISHED" and
+                       gates["qualified_academic_review"] == "NOT_RUN" and
+                       gates["human_screen_reader_review"] == "NOT_RUN" and
+                       gates["owner_acceptance"] is False and
+                       gates["release"] == "HOLD",
+                       "P5_ORIGINAL_NATIVE_GATE_PROOF_CANNOT_PROMOTE_QRT", cid)
+                browser_refs.append({
+                    "name": "NINE_ACTUAL_ORIGINAL_NATIVE_CORE_GATE_VIEWPORTS",
+                    "sha256": sha256(gatepath),
+                    "real_browser_role_viewports": 9,
+                    "five_technical_mutations_rejected": 5,
+                    "blank_attempt_and_boundary_gate_status":
+                        "MECHANICAL_SCOPED_PASS",
+                    "source_specific_semantic_oracle":
+                        gates["narrow_known_source_semantic_oracle"],
+                    "known_review_findings":
+                        gates["narrow_semantic_finding_ids"],
+                    "five_exposure_paths_are_simulated_not_navigation": True,
+                    "protected_W_and_academic_semantics":
+                        "NOT_ESTABLISHED",
+                    "human_AT": "NOT_RUN",
+                    "learner_independence_established": False,
+                    "academic_approved": False,
+                    "owner_approved": False,
+                    "release": "HOLD",
+                })
             navpath = evidence_dir / (slug + "-real-navigation.json")
             if navpath.is_file():
                 nav = read_json(navpath)
