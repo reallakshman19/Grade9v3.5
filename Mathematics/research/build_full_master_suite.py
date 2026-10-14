@@ -152,21 +152,44 @@ def load_all_topic_units(units_dir: str = "Mathematics/units") -> list[dict]:
         if not os.path.isdir(fpath):
             continue
         c1a_files = sorted(glob.glob(os.path.join(fpath, "core1a-*.json")))
-        c1b_files = sorted(glob.glob(os.path.join(fpath, "core1b-*.json")))
-        if c1a_files and c1b_files:
-            with open(c1a_files[0], "r", encoding="utf-8") as fp:
+        for c1a_path in c1a_files:
+            fname = os.path.basename(c1a_path)
+            prefix_match = fname.replace("core1a-", "core1b-")
+            c1b_path = os.path.join(fpath, prefix_match)
+            if not os.path.exists(c1b_path):
+                if ".v1.json" in prefix_match:
+                    alt = prefix_match.replace(".v1.json", ".json")
+                else:
+                    alt = prefix_match.replace(".json", ".v1.json")
+                if os.path.exists(os.path.join(fpath, alt)):
+                    c1b_path = os.path.join(fpath, alt)
+            if not os.path.exists(c1b_path):
+                continue
+            with open(c1a_path, "r", encoding="utf-8") as fp:
                 c1a = json.load(fp)
-            with open(c1b_files[0], "r", encoding="utf-8") as fp:
+            with open(c1b_path, "r", encoding="utf-8") as fp:
                 c1b = json.load(fp)
+            
+            slug = fname
+            if slug.startswith("core1a-"):
+                slug = slug[len("core1a-"):]
+            for ext in [".v1.json", ".json"]:
+                if slug.endswith(ext):
+                    slug = slug[:-len(ext)]
+            
+            topic_name = c1a.get("topic_name", c1a.get("topic", f))
+            subtopic = c1a.get("subtopic", "")
+            
             units.append({
+                "unit_id": slug,
                 "folder": f,
                 "c1a": c1a,
                 "c1b": c1b,
                 "topic": c1a.get("topic", f),
-                "topic_name": c1a.get("topic_name", c1a.get("topic", f)),
+                "topic_name": topic_name,
                 "band": c1a.get("target_band", "D2"),
                 "demand": c1a.get("target_demand", "APPLY"),
-                "subtopic": c1a.get("subtopic", "")
+                "subtopic": subtopic
             })
     return units
 
@@ -237,12 +260,15 @@ def render_topic_jump_navigation(units: list, prefix: str) -> str:
     """)
     for idx, u in enumerate(units):
         f = u["folder"]
+        uid = u.get("unit_id", f)
         pal = TOPIC_COLOR_PALETTES.get(f, {"primary": "#38bdf8", "glow": "rgba(56,189,248,0.25)", "bg": "rgba(56,189,248,0.08)"})
-        target_id = f"module-{prefix}-{f}"
+        target_id = f"module-{prefix}-{uid}"
         active_cls = " active" if idx == 0 else ""
-        parts.append(f"""          <button type="button" class="topic-nav-btn{active_cls}" data-prefix="{prefix}" data-folder="{f}" data-target="{target_id}" data-color="{pal['primary']}" data-glow="{pal['glow']}" data-name="{html.escape(u['topic_name'])}" onclick="scrollToTopicModule('{target_id}')" style="--topic-color:{pal['primary']};--topic-glow:{pal['glow']};--topic-bg:{pal['bg']}">
+        sub_raw = u.get("subtopic", "").replace("_", " ").replace("-", " ").title()
+        btn_label = f"{u['topic_name']} ({sub_raw})" if len([x for x in units if x["folder"] == f]) > 1 else u["topic_name"]
+        parts.append(f"""          <button type="button" class="topic-nav-btn{active_cls}" data-prefix="{prefix}" data-folder="{f}" data-unit-id="{uid}" data-target="{target_id}" data-color="{pal['primary']}" data-glow="{pal['glow']}" data-name="{html.escape(btn_label)}" onclick="scrollToTopicModule('{target_id}')" style="--topic-color:{pal['primary']};--topic-glow:{pal['glow']};--topic-bg:{pal['bg']}">
             <span class="btn-dot" style="background-color:{pal['primary']}"></span>
-            <span class="btn-title">{html.escape(u['topic_name'])}</span>
+            <span class="btn-title">{html.escape(btn_label)}</span>
           </button>\n""")
     parts.append("""        </div>
       </div>
@@ -297,13 +323,14 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
     topic_svg_markup = generate_topic_svg(unit["folder"])
     
     parts = []
-    card_id = f"module-{prefix}-{unit['folder']}" if prefix else f"module-{unit['folder']}"
-    radio_predict = f"predict-{prefix}-{unit['folder']}" if prefix else f"predict-{unit['folder']}"
-    radio_boundary = f"boundary-{prefix}-{unit['folder']}" if prefix else f"boundary-{unit['folder']}"
+    unit_id = unit.get("unit_id", unit["folder"])
+    card_id = f"module-{prefix}-{unit_id}" if prefix else f"module-{unit_id}"
+    radio_predict = f"predict-{prefix}-{unit_id}" if prefix else f"predict-{unit_id}"
+    radio_boundary = f"boundary-{prefix}-{unit_id}" if prefix else f"boundary-{unit_id}"
     
     # Topic Card Wrapper with Visual Color Band
     parts.append(f"""
-    <div class="topic-module-card" id="{card_id}" data-topic="{html.escape(topic_name)}" data-band="{band}" data-folder="{unit['folder']}" style="margin:28px 0;background:var(--card);border:1.5px solid var(--border);border-top:6px solid {palette['primary']};border-radius:12px;padding:24px;box-shadow:0 6px 20px rgba(0,0,0,0.22);position:relative">
+    <div class="topic-module-card" id="{card_id}" data-topic="{html.escape(topic_name)}" data-band="{band}" data-folder="{unit['folder']}" data-unit-id="{unit_id}" style="margin:28px 0;background:var(--card);border:1.5px solid var(--border);border-top:6px solid {palette['primary']};border-radius:12px;padding:24px;box-shadow:0 6px 20px rgba(0,0,0,0.22);position:relative">
       <!-- TOP VISUAL COLOR ACCENT BAR -->
       <div style="height:4px;width:100%;background:linear-gradient(90deg, {palette['primary']}, transparent);border-radius:2px;margin-bottom:16px"></div>
 
@@ -2209,6 +2236,13 @@ def main():
 <body>
 """)
 
+    # Pre-load topic units to populate dynamic navigation counts
+    topic_units = load_all_topic_units("Mathematics/units")
+    d4_units = [u for u in topic_units if u["band"] == "D4"]
+    d3_units = [u for u in topic_units if u["band"] == "D3"]
+    d2_units = [u for u in topic_units if u["band"] == "D2"]
+    d1_units = [u for u in topic_units if u["band"] == "D1"]
+
     html_parts.append(f"""
   <!-- FIXED CRISP HEADER SHELL (NO-MATH) -->
   <header class="g9-shell no-math">
@@ -2231,27 +2265,27 @@ def main():
         <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('core1-all')">
           <span class="tab-icon">🌐</span>
           <span class="tab-title">All Core 1</span>
-          <span class="tab-pill">14 Topics</span>
+          <span class="tab-pill">{len(topic_units)} Units</span>
         </button>
         <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('d3-core')">
           <span class="tab-icon">🏆</span>
           <span class="tab-title">D3 Core</span>
-          <span class="tab-pill tab-pill-d3">6 Topics</span>
+          <span class="tab-pill tab-pill-d3">{len(d3_units)} Units</span>
         </button>
         <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('d4-core')">
           <span class="tab-icon">💎</span>
           <span class="tab-title">D4 Core</span>
-          <span class="tab-pill tab-pill-d4">1 Topic</span>
+          <span class="tab-pill tab-pill-d4">{len(d4_units)} Units</span>
         </button>
         <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('d2-core')">
           <span class="tab-icon">⚡</span>
           <span class="tab-title">D2 Core</span>
-          <span class="tab-pill tab-pill-d2">6 Topics</span>
+          <span class="tab-pill tab-pill-d2">{len(d2_units)} Units</span>
         </button>
         <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('d1-core')">
           <span class="tab-icon">🌱</span>
           <span class="tab-title">D1 Core</span>
-          <span class="tab-pill tab-pill-d1">1 Topic</span>
+          <span class="tab-pill tab-pill-d1">{len(d1_units)} Unit</span>
         </button>
       </nav>
 
@@ -2523,20 +2557,25 @@ def main():
     </div>
 """)
 
-    # Render all 14 Topic-Segregated Core 1A & Core 1B Modules
-    topic_units = load_all_topic_units("Mathematics/units")
+    # Render all Topic-Segregated Core 1A & Core 1B Modules
+    unique_topics = []
+    seen_folders = set()
+    for u in topic_units:
+        if u["folder"] not in seen_folders:
+            seen_folders.add(u["folder"])
+            unique_topics.append(u)
 
-    # 1. TAB: All 14 Core 1 Topics
-    html_parts.append("""
+    # 1. TAB: All Core 1 Topics
+    html_parts.append(f"""
     <!-- ========================================== -->
-    <!-- TAB: ALL CORE 1A / 1B TOPIC MODULES (14) -->
+    <!-- TAB: ALL CORE 1A / 1B TOPIC MODULES ({len(topic_units)}) -->
     <!-- ========================================== -->
     <div id="tab-core1-all" class="tab-content">
       <div class="panel" style="background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;padding:24px;margin-bottom:24px">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
           <div>
-            <span class="qb-badge" style="background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)">14 TOPIC PACKAGES · 100% CUSTODY</span>
-            <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">All 14 Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">(14 Topics)</span></h2>
+            <span class="qb-badge" style="background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)">{len(topic_units)} MODULE PACKAGES · 100% CUSTODY</span>
+            <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">All {len(topic_units)} Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(unique_topics)} Topics)</span></h2>
             <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
               Blueprint-Standard Core 1A Declarative Proofs &amp; Core 1B 4-Stage Self-Tutor Reconstructions, segregated topic-wise.
             </p>
@@ -2547,14 +2586,14 @@ def main():
         <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
           <div style="font-size:0.88rem;font-weight:750;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px">Filter by Topic:</div>
           <div style="display:flex;flex-wrap:wrap;gap:8px" id="core1-topic-chips">
-            <span class="filter-chip active" data-folder="ALL" onclick="filterCore1ByTopic('ALL')">All 14 Topics (14)</span>
+            <span class="filter-chip active" data-folder="ALL" onclick="filterCore1ByTopic('ALL')">All {len(topic_units)} Modules ({len(unique_topics)} Topics)</span>
     """)
-    for u in topic_units:
+    for u in unique_topics:
         tname = u["topic_name"]
         tbnd = u["band"]
         tfolder = u["folder"]
         pal = TOPIC_COLOR_PALETTES.get(tfolder, {"primary": "#38bdf8"})
-        html_parts.append(f"""            <span class="filter-chip" data-folder="{tfolder}" onclick="filterCore1ByTopic('{tfolder}')"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:{pal['primary']}"></span>{html.escape(tname)} ({tbnd})</span>\n""")
+        html_parts.append(f"""            <span class="filter-chip" data-folder="{tfolder}" onclick="filterCore1ByTopic('{tfolder}')"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:{pal['primary']}"></span>{html.escape(tname)}</span>\n""")
     html_parts.append("""          </div>
         </div>
       </div>
@@ -2570,16 +2609,15 @@ def main():
     </div>
     """)
 
-    # 2. TAB: D3 Core (6 Topics)
-    d3_units = [u for u in topic_units if u["band"] == "D3"]
+    # 2. TAB: D3 Core
     html_parts.append(f"""
     <!-- ========================================== -->
-    <!-- TAB: D3 CORE 1A/1B ({len(d3_units)} TOPICS) -->
+    <!-- TAB: D3 CORE 1A/1B ({len(d3_units)} MODULES) -->
     <!-- ========================================== -->
     <section class="tab-content" id="tab-d3-core" role="tabpanel">
       <div class="panel" style="background:var(--surface);border:1.5px solid var(--warning);border-radius:12px;padding:24px;margin-bottom:24px">
         <span class="qb-badge qb-badge-d3">🏆 BAND D3 · HARD OLYMPIAD CORE</span>
-        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D3 Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(d3_units)} Topics)</span></h2>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D3 Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(d3_units)} Modules)</span></h2>
         <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
           Advanced algebraic, geometric, and functional olympiad reasoning modules segregated topic-wise.
         </p>
@@ -2590,18 +2628,17 @@ def main():
         html_parts.append(render_topic_module_html(u, prefix="d3"))
     html_parts.append("""    </section>\n""")
 
-    # 3. TAB: D4 Core (1 Topic)
-    d4_units = [u for u in topic_units if u["band"] == "D4"]
+    # 3. TAB: D4 Core
     html_parts.append(f"""
     <!-- ========================================== -->
-    <!-- TAB: D4 CORE 1A/1B ({len(d4_units)} TOPIC) -->
+    <!-- TAB: D4 CORE 1A/1B ({len(d4_units)} MODULES) -->
     <!-- ========================================== -->
     <section class="tab-content" id="tab-d4-core" role="tabpanel">
       <div class="panel" style="background:var(--surface);border:1.5px solid var(--purple);border-radius:12px;padding:24px;margin-bottom:24px">
         <span class="qb-badge qb-badge-d4">💎 BAND D4 · ACHIEVERS SECTION</span>
-        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D4 Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(d4_units)} Topic)</span></h2>
+        <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">Band D4 Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(d4_units)} Modules)</span></h2>
         <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
-          High-demand extremal geometric and cyclic structure proofs.
+          High-demand extremal geometric, algebraic, and cyclic structure proofs.
         </p>
       </div>
     """)
@@ -2708,20 +2745,27 @@ def main():
       }
     }
 
-    function activateTopicInNav(prefix, folder) {
+    function activateTopicInNav(prefix, unitId, folder) {
       const nav = document.getElementById('topic-nav-' + prefix);
       if (!nav) return;
 
       const buttons = nav.querySelectorAll('.topic-nav-btn');
       let activeBtn = null;
       buttons.forEach(btn => {
-        if (btn.getAttribute('data-folder') === folder) {
+        const btnUid = btn.getAttribute('data-unit-id');
+        const btnFolder = btn.getAttribute('data-folder');
+        if ((unitId && btnUid === unitId) || (!unitId && btnFolder === folder)) {
           btn.classList.add('active');
           activeBtn = btn;
         } else {
           btn.classList.remove('active');
         }
       });
+
+      if (!activeBtn && folder) {
+        activeBtn = Array.from(buttons).find(b => b.getAttribute('data-folder') === folder);
+        if (activeBtn) activeBtn.classList.add('active');
+      }
 
       if (activeBtn) {
         const color = activeBtn.getAttribute('data-color') || '#38bdf8';
@@ -2762,10 +2806,11 @@ def main():
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const card = entry.target;
-            const match = card.id.match(/^module-([^-]+)-(.+)$/);
-            if (match) {
-              activateTopicInNav(match[1], match[2]);
-            }
+            const cardIdParts = card.id.split('-');
+            const prefix = cardIdParts[1];
+            const unitId = card.getAttribute('data-unit-id');
+            const folder = card.getAttribute('data-folder');
+            activateTopicInNav(prefix, unitId, folder);
           }
         });
       }, observerOptions);
@@ -2803,10 +2848,11 @@ def main():
       }
 
       if (currentCard) {
-        const match = currentCard.id.match(/^module-([^-]+)-(.+)$/);
-        if (match) {
-          activateTopicInNav(match[1], match[2]);
-        }
+        const cardIdParts = currentCard.id.split('-');
+        const prefix = cardIdParts[1];
+        const unitId = currentCard.getAttribute('data-unit-id');
+        const folder = currentCard.getAttribute('data-folder');
+        activateTopicInNav(prefix, unitId, folder);
       }
     }
 
@@ -2817,16 +2863,16 @@ def main():
       if (activeChip) activeChip.classList.add('active');
 
       document.querySelectorAll('#tab-core1-all .topic-module-card').forEach(card => {
-        if (folder === 'ALL' || card.id === 'module-all-' + folder || card.id === 'module-' + folder) {
+        if (folder === 'ALL' || card.getAttribute('data-folder') === folder) {
           card.style.display = 'block';
         } else {
           card.style.display = 'none';
         }
       });
       if (folder !== 'ALL') {
-        const target = document.getElementById('module-all-' + folder) || document.getElementById('module-' + folder);
+        const target = Array.from(document.querySelectorAll('#tab-core1-all .topic-module-card')).find(c => c.getAttribute('data-folder') === folder);
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        activateTopicInNav('all', folder);
+        activateTopicInNav('all', null, folder);
       }
     }
 
@@ -2836,18 +2882,16 @@ def main():
       switchTab('core1-all');
       filterCore1ByTopic('ALL');
       setTimeout(() => {
-        let mod = document.getElementById('module-all-' + folder) || document.getElementById('module-' + folder);
-        if (!mod) {
-          mod = Array.from(document.querySelectorAll('#tab-core1-all .topic-module-card')).find(m => {
-            const t = (m.getAttribute('data-topic') || '').toLowerCase();
-            return t.includes(folderOrTopic.toLowerCase()) || folderOrTopic.toLowerCase().includes(t);
-          });
-        }
+        let mod = Array.from(document.querySelectorAll('#tab-core1-all .topic-module-card')).find(m => {
+          const f = m.getAttribute('data-folder') || '';
+          const t = (m.getAttribute('data-topic') || '').toLowerCase();
+          return f === folder || t.includes(folderOrTopic.toLowerCase()) || folderOrTopic.toLowerCase().includes(t);
+        });
         if (mod) {
           mod.scrollIntoView({ behavior: 'smooth', block: 'start' });
           mod.classList.add('highlighted');
           setTimeout(() => mod.classList.remove('highlighted'), 2500);
-          activateTopicInNav('all', folder);
+          activateTopicInNav('all', mod.getAttribute('data-unit-id'), mod.getAttribute('data-folder'));
         }
       }, 100);
     }

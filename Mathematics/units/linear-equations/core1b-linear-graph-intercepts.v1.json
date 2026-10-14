@@ -1,0 +1,68 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-LINEAR-EQUATIONS-GRAPH-INTERCEPTS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Linear Equations in Two Variables",
+  "subtopic": "LIN_EQ-GRAPH-AND-INTERCEPTS",
+  "target_demand": "SYNTHESIZE",
+  "target_band": "D4",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before computing: A linear equation 3x + 4y = 24 cuts the coordinate axes at points P and Q. Without solving, will the point where abscissa equals ordinate lie inside the triangle formed by the axes and line, on the hypotenuse, or outside?",
+      "options": [
+        "A. Outside the first quadrant entirely.",
+        "B. Directly on the hypotenuse segment PQ connecting the intercepts.",
+        "C. At the origin (0,0).",
+        "D. On the negative axis."
+      ],
+      "predict_rationale": "Directs focus to the fact that setting x = y finds the intersection of the diagonal ray y = x with the line segment PQ."
+    },
+    "stage_2_attempt": {
+      "task": "For the line 3x + 4y = 24: (1) Find coordinates of x-intercept P, (2) Find coordinates of y-intercept Q, (3) Find area of triangle OPQ, and (4) Find point R on the line where x = y.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "x-intercept: Set y = 0 => 3x = 24 => x = 8. P is (8, 0).",
+        "step_2": "y-intercept: Set x = 0 => 4y = 24 => y = 6. Q is (0, 6).",
+        "step_3": "Area of triangle: Legs are base = 8, height = 6. Area = (1/2) * 8 * 6 = 24 sq units.",
+        "conclusion": "Point where x = y: Substitute y = x => 3x + 4x = 24 => 7x = 24 => x = 24/7 ≈ 3.43. Point is (24/7, 24/7)."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "INTERCEPT_FORM_SYNTHESIS",
+      "dialog_steps": [
+        {
+          "inquiry": "If you divide both sides of Ax + By = C by C, you obtain x/(C/A) + y/(C/B) = 1. What does this intercept form directly tell you about the graph?",
+          "expected_insight": "The denominators a = C/A and b = C/B immediately yield the lengths of the x-intercept and y-intercept along the coordinate axes without separate substitution steps!"
+        },
+        {
+          "inquiry": "How can you immediately write down the triangle area directly from the intercept form x/a + y/b = 1?",
+          "expected_insight": "The area is simply (1/2) * |a * b| = (1/2) * |(C/A) * (C/B)|."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: If the line equation is modified to 3x - 4y = 24, which quadrant does the enclosed triangle occupy, and what are the new intercept coordinates?",
+      "options": [
+        "A. First quadrant; intercepts (8, 0) and (0, 6).",
+        "B. Fourth quadrant; intercepts (8, 0) and (0, -6).",
+        "C. Second quadrant; intercepts (-8, 0) and (0, 6).",
+        "D. Third quadrant; intercepts (-8, 0) and (0, -6)."
+      ],
+      "correct_option": "B",
+      "explanation": "Setting y = 0 gives x = 8 > 0. Setting x = 0 gives -4y = 24 => y = -6 < 0. The intercepts lie on the positive x-axis and negative y-axis, placing the right triangle in Quadrant IV."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Every point on the x-axis has y = 0, and every point on the y-axis has x = 0. Substituting these zeroes isolates each intercept."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "To find where abscissa equals ordinate, set x = y in the equation, combine like terms (A + B)x = C, and solve for x."
+    }
+  }
+}
