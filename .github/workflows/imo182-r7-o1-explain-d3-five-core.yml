@@ -1,0 +1,65 @@
+name: IMO182 O1 EXPLAIN-D3 five real Core pages vs Owner golden
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-r7-o1-explain-d3-five-core.yml'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/o1_explain_d3_five_core.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pinned-author-five-core-golden:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout #230 integration verifier (not a learner page)
+        uses: actions/checkout@v4
+      - name: Checkout exact unmerged D3 source-author commit separately
+        uses: actions/checkout@v4
+        with:
+          ref: dfe4bb6766b87132423b01ffaa914ade1145424f
+          path: d3-source
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate integration verifier is executable Python
+        run: python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/o1_explain_d3_five_core.py
+      - name: Install existing native renderer dependencies and real Chromium
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Sole-renderer reference build of D3 author source, zero gaps
+        working-directory: d3-source
+        run: |
+          python Shared/tools/question_review_matrix.py check
+          python Shared/tools/render_core.py gaps --manifest TEST/products/imo182-qrt-d3-explain.manifest.json --reference
+          python Shared/tools/render_core.py build --manifest TEST/products/imo182-qrt-d3-explain.manifest.json --out build/imo182-qrt/d3/explain --mode PAGES --reference --draft
+      - name: Integrator O1 five-role fixture integrity + NEW Core1 and Core2A real browser probes
+        run: |
+          python TEST/imo-research/qrt-tiles/reconciliation/o1_explain_d3_five_core.py --repo d3-source
+      - name: Reuse D3-author exact-head Core1A registered-golden/independent-exit verifier
+        working-directory: d3-source
+        run: python TEST/imo-research/qrt-d3-successor/core1a_o1_benchmark_217.py
+      - name: Reuse D3-author exact-head Core1B reconstructed/second-boundary attempt verifier
+        working-directory: d3-source
+        run: python TEST/imo-research/qrt-d3-successor/core1b_o1_benchmark_217.py
+      - name: Reuse D3-author exact-head Core2B changed-transfer/registered-golden verifier
+        working-directory: d3-source
+        run: python TEST/imo-research/qrt-d3-successor/core2b_o1_benchmark_217.py
+      - name: Preserve genuine D3-author source, registered fixture and new integration reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-r7-o1-explain-d3-five-core-actual-native-golden
+          path: |
+            d3-source/build/imo182-qrt/d3/explain/*.html
+            d3-source/build/imo182-qrt/d3/explain/render-receipt.json
+            d3-source/build/imo182-qrt/d3-o1-five-core-integrator/
+            d3-source/build/imo182-qrt/d3-successor/o1-core1a/
+            d3-source/build/imo182-qrt/d3-successor/o1-core1b/
+            d3-source/build/imo182-qrt/d3-successor/o1-core2b/
+          if-no-files-found: warn
+          retention-days: 30
