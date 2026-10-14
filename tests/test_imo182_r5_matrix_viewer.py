@@ -65,6 +65,19 @@ class ReconciledMatrixViewerTest(unittest.TestCase):
         self.assertIn("8 / 28", self.html)
         self.assertIn("authored metadata not projected into native Core2B HTML", self.html)
 
+    def test_model_d2_latest_source_learner_choice_is_not_owner_acceptance(self):
+        row = next(r for r in self.rows if r["id"] == "QRT-MODEL-D2")
+        self.assertEqual(row["source"]["git_blob_sha"], "db87b5a4a7bc807e0680a64417f2c6ca5ca08cf3")
+        self.assertEqual(row["artifact"]["id"], 11872590321)
+        self.assertTrue(row["classification_hold"])
+        self.assertEqual(row["model_d2_source_choice_repair_provenance"]["repair_pr"], 245)
+        self.assertEqual(row["model_d2_source_choice_repair_provenance"]["prior_artifact_id"], 11773779616)
+        self.assertEqual(row["model_d2_source_choice_repair_provenance"]["corrected_six_html_sha256"],
+                         row["artifact"]["native_html_sha256"])
+        self.assertIn("MODEL-D2 repaired authored learner-owned variable choice", self.html)
+        self.assertFalse(row["owner_accepted"] if "owner_accepted" in row else False)
+        self.assertIsNone(row["qualified_independent_signed_verdict_id"])
+
     def test_corrected_d4_retrieve_provenance_is_exposed_and_academic_hold_remains(self):
         row = next(r for r in self.rows if r["id"] == "QRT-RETRIEVE-D4")
         self.assertEqual(row["source"]["git_blob_sha"], "b9de3db24eb414075a50d0b36298a6306f26056b")
