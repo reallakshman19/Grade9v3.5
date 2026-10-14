@@ -63,7 +63,33 @@ class ReconciledNativeArtifactLedgerTest(unittest.TestCase):
             self.assertIsNone(r["qualified_independent_signed_verdict_id"])
             counts[expected] += 1
         self.assertEqual(counts, {211: 2, 214: 5, 234: 21})
-        self.assertEqual(sum(r["critical_educational_review_hold"] for r in self.doc["rows"]), 7)
+        self.assertEqual(sum(r["critical_educational_review_hold"] for r in self.doc["rows"]), 8)
+
+    def test_d4_retrieve_corrected_native_and_qrt_qualification_hold(self):
+        row = next(r for r in self.doc["rows"] if r["cell_id"] == "QRT-RETRIEVE-D4")
+        self.assertEqual(row["source"]["commit"], "8ffa008e1bbd03898751af4380762178697fb715")
+        self.assertEqual(row["source"]["git_blob_sha"], "b9de3db24eb414075a50d0b36298a6306f26056b")
+        self.assertEqual(row["manifest"]["git_blob_sha"], "c4ed1576da7880c9aaf04cfb1cdb2c775e1f9d12")
+        self.assertEqual(row["artifact"]["id"], 11842190265)
+        self.assertEqual(row["artifact"]["run"], 38455006076)
+        self.assertEqual(row["renderer"]["digest"], "431bd7078122a90d")
+        self.assertTrue(row["critical_educational_review_hold"])
+        self.assertIn("EDUCATIONAL_HOLD", row["technical_adoption_status"])
+        self.assertIn("Y=UNKNOWN", row["educational_hold_reason"])
+        self.assertTrue(any("DO_NOT_QRT_ADOPT_OLD_ARTIFACT_11823696124" in n
+                            for n in row["do_not_adopt_original_leaking_or_superseded"]))
+        old = row["d4_retrieve_leak_repair_provenance"]
+        self.assertEqual(old["old_native_artifact_id"], 11823696124)
+        self.assertEqual(old["corrected_native_artifact_id"], 11842190265)
+        self.assertEqual(old["source_old_blob"], "27791fbd4735ecdbfda107b0087c16a68bfd8753")
+        self.assertEqual(old["source_repaired_blob"], row["source"]["git_blob_sha"])
+        self.assertEqual(old["manifest_unchanged_blob"], row["manifest"]["git_blob_sha"])
+        self.assertEqual(set(old["old_native_six_html_sha256"]), ROLES)
+        self.assertEqual(old["corrected_native_six_html_sha256"], row["artifact"]["native_html_sha256"])
+        self.assertTrue(all(old["old_native_six_html_sha256"][k] !=
+                            row["artifact"]["native_html_sha256"][k] for k in ROLES))
+        self.assertEqual(old["qualified_review_status"], "PENDING_RETRIEVE_D4_Y_UNKNOWN")
+        self.assertFalse(row["owner_qrta_accepted"])
 
     def test_justify_d2_ai_content_review_does_not_impersonate_qualified_signature(self):
         signed = [(r["cell_id"], r["ai_content_review"]) for r in self.doc["rows"]
