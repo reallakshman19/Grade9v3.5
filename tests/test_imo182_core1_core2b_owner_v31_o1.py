@@ -90,7 +90,7 @@ class Core1AndCore2BRegisteredOwnerGoldenO1(unittest.TestCase):
 
     def test_core2b_preserves_new_modulus_and_sealed_answer(self):
         html=self.pages["core2b.html"]
-        self.assertIn('data-g9-role="CORE2B"',html)
+        self.assertIn('data-core="CORE2B"',html)
         self.assertIn("The modulus is now 4 instead of 128",html)
         self.assertIn("a=5,9,13",html)
         self.assertIn("contrast the result for a=5 modulo8",html)
