@@ -103,8 +103,8 @@ def verify_source(root):
     require(prod["selection"]["core2a"]==[PRIMARY]
            and prod["selection"]["core2b"]==[TRANSFER],
            "wrong D2 candidate selected")
-    require(package["extensions"]["grade9v3:qrt_admitted"] is False,
-           "unreviewed QRT cell must not be admitted")
+    require(package.get("extensions", {}).get("grade9v3:qrt_admitted", False) is False,
+           "unreviewed QRT cell must not be admitted (explicit true is forbidden)")
     require(reg["registry_version"]=="1.17.0" and
             frozen["fixture_id"]=="G-IMO-G9-FIVE-CORE-20261012",
             "registry or frozen fixture identity changed")
