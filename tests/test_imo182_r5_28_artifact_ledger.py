@@ -63,6 +63,26 @@ class ReconciledNativeArtifactLedgerTest(unittest.TestCase):
             self.assertIn("EDUCATIONAL_HOLD", row["technical_adoption_status"])
             self.assertTrue(any("DO_NOT_QRT_ADOPT" in x for x in row["do_not_adopt_original_leaking_or_superseded"]))
 
+    def test_synthesize_d3_first_repair_is_not_full_source_correction(self):
+        row = next(r for r in self.doc["rows"] if r["cell_id"] == "QRT-SYNTHESIZE-D3")
+        self.assertTrue(row["critical_educational_review_hold"])
+        self.assertIn("SOURCE_SUPERSEDED_REVIEW_HOLD", row["technical_adoption_status"])
+        self.assertTrue(any("NOT_FULL_SOURCE_CORRECTION" in n for n in
+                            row["do_not_adopt_original_leaking_or_superseded"]))
+        watch = row["source_supersession_watch"]
+        self.assertEqual(watch["archived_main_label_fixed_sha"],
+                         "b852966af06a54b7a594f6ab12653af341f6d836")
+        self.assertEqual(watch["successor_complete_source_sha"],
+                         "a8168bb41f7133e40e3bcaa1389562361d68901e")
+        self.assertEqual(set(watch["corrected_fields"]), {
+            "questions[1].family_exposure.closure",
+            "questions[2].family_exposure.closure",
+        })
+        self.assertEqual(watch["transfer_closure_projection"], "NOT_RENDERED_IN_NATIVE_CORE2B")
+        self.assertIsNone(watch["new_successor_artifact_id"])
+        self.assertEqual(watch["new_exact_head_verdict"], "PENDING")
+        self.assertFalse(watch["may_replace_archived_six_html_hashes"])
+
     def test_separate_d4_ledger_and_corrected_d3_supersession(self):
         self.assertEqual(
             sum(r["renderer"].get("adoption_ledger_sha256_matching", 0) for r in self.doc["rows"]),
