@@ -145,10 +145,27 @@ def _run_one(browser, html_path: Path, width: int, out: Path) -> dict:
             core_topic_cards: '.topic-module-card',
             sticky_topic_nav: '.topic-sticky-bar',
             active_tab: '.tab-content.active',
-            all_svg: 'svg'
+            all_svg: 'svg',
+            page_header: 'header',
+            header_shell: '.g9-shell',
+            header_inner: '.shell-inner',
+            header_brand: '.shell-inner .brand',
+            header_nav: '.nav-tabs',
+            header_actions: '.header-actions',
+            page_main: 'main',
+            page_footer: 'footer',
+            root_body_children: 'body > *'
           };
           const base = document.documentElement.scrollWidth;
-          const result = {viewport:innerWidth, document_scroll_width:base, groups:{}};
+          const result = {viewport:innerWidth, document_scroll_width:base, groups:{},
+            top_level: Array.from(document.body.children).map(el=>{
+              const r=el.getBoundingClientRect();
+              return {tag:el.tagName, id:el.id, class_name:String(el.className).slice(0,70),
+                left:Math.round(r.left), right:Math.round(r.right),
+                width:Math.round(r.width), scroll_width:el.scrollWidth,
+                min_width:getComputedStyle(el).minWidth,
+                position:getComputedStyle(el).position};
+            })};
           for (const [name,selector] of Object.entries(groups)) {
             const elems = Array.from(document.querySelectorAll(selector));
             const prior = elems.map(el=>el.getAttribute('style'));
