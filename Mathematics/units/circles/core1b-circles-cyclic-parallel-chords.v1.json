@@ -1,0 +1,72 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-CIRCLES-CYCLIC-PARALLEL-CHORDS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "CIRCLES",
+  "subtopic": "CIRCLES-CYCLIC-PARALLEL-CHORDS",
+  "target_demand": "JUSTIFY",
+  "target_band": "D4",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating or manipulating any equations: Look at the two intersecting circles C_1 and C_2. Which circle contains quadrilateral ABFE, and which circle contains quadrilateral ABCD? Name the exact theorem that connects an interior angle in C_1 to an exterior angle in C_2.",
+      "options": [
+        "A. Both quadrilaterals belong to C_1; theorem is Alternate Segment Theorem.",
+        "B. ABFE belongs to C_2 and ABCD belongs to C_1; theorem is Exterior Angle of Cyclic Quad equals Interior Opposite Angle.",
+        "C. ABFE is a parallelogram; theorem is Opposite Angles of a Parallelogram are Equal.",
+        "D. No circle contains both A and B; theorem is Thales Theorem."
+      ],
+      "predict_rationale": "Forces the learner to identify the topological membership of the two quadrilaterals in their respective circles before guessing parallelism."
+    },
+    "stage_2_attempt": {
+      "task": "Formulate the exact chain of two angle equalities that connects angle(ABF) to angle(DEF) and to angle(CDE), and state which parallel-line condition this satisfies.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "In circle C_2: quadrilateral ABFE is cyclic, so angle(DEF) = angle(ABF) (exterior angle equals interior opposite).",
+        "step_2": "In circle C_1: quadrilateral ABCD is cyclic, so opposite angles are supplementary: angle(ADC) + angle(ABF) = 180 deg.",
+        "step_3": "Substitute angle(ABF) = angle(DEF): angle(ADC) + angle(DEF) = 180 deg.",
+        "conclusion": "Since consecutive interior angles on the same side of transversal AD sum to 180 deg, chord EF is parallel to chord DC."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_ENGINEERING_FROM_GOAL",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose you are told EF is parallel to DC. Working BACKWARDS from the goal, what angle relationship between lines EF and DC across transversal AD would guarantee this?",
+          "expected_insight": "Either corresponding angles are equal (angle AEF = angle ADC if produced), or consecutive interior angles are supplementary (angle DEF + angle ADC = 180 deg)."
+        },
+        {
+          "inquiry": "Now look at angle ADC in outer circle C_1. What single angle in the diagram determines angle ADC?",
+          "expected_insight": "The opposite angle in cyclic quad ABCD, which is angle ABC (or angle ABF)."
+        },
+        {
+          "inquiry": "Finally, look at angle DEF. How does inner circle C_2 connect angle DEF to that exact same angle ABF?",
+          "expected_insight": "Because ABFE is cyclic in C_2, its exterior angle DEF must equal interior opposite angle ABF. The two independent circle constraints meet at the shared angle ABF!"
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: Suppose circle C_2 is continuously dilated until it coincides identically with circle C_1. What happens to points E and F, what does chord EF become, and does the parallel property still hold?",
+      "options": [
+        "A. Points E and F move to infinity; the lines cease to be parallel.",
+        "B. Point E approaches D and point F approaches C; chord EF becomes chord DC, and the relation DC || DC is trivially true.",
+        "C. Points E and F swap positions; the chords become perpendicular.",
+        "D. The quadrilateral becomes a non-cyclic trapezoid."
+      ],
+      "correct_option": "B",
+      "explanation": "At the boundary limit C_2 -> C_1, the secant intersection points E and F coincide with the outer circle endpoints D and C. The chord EF collapses onto DC. Every continuous perturbation preserves the angle invariant, confirming that the parallelism is robust and topologically intrinsic."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Notice that vertices A and B belong to BOTH circles simultaneously. Find an angle at vertex B that serves as the bridge between outer quadrilateral ABCD and inner quadrilateral ABFE."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Write down the cyclic quadrilateral exterior angle theorem for quad ABFE: angle(DEF) = angle(ABF). Then write the cyclic opposite-angle sum for quad ABCD: angle(ADC) + angle(ABF) = 180 deg. Combine them to find the sum of angle(DEF) and angle(ADC)."
+    }
+  }
+}

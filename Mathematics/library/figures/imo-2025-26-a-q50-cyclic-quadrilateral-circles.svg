@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" role="img" aria-label="Two intersecting circles with cyclic quadrilateral chords demonstrating parallelism" font-family="system-ui, sans-serif">
+  <title>Cyclic Quadrilaterals and Parallel Chords in Intersecting Circles</title>
+  <desc>Outer circle circumscribing quadrilateral ABCD, and an intersecting circle passing through A, B, E, and F, where E lies on AD and F lies on BC. Line segment EF is parallel to chord DC.</desc>
+  <style>
+    .circle-outer { fill: none; stroke: #1e293b; stroke-width: 3.5; }
+    .circle-inner { fill: none; stroke: #0284c7; stroke-width: 3; stroke-dasharray: 6,4; }
+    .chord-main { stroke: #1e293b; stroke-width: 3; }
+    .chord-parallel { stroke: #b91c1c; stroke-width: 3.5; stroke-dasharray: 8,4; }
+    .label { font-size: 22px; font-weight: 700; fill: #0f172a; }
+    .label-accent { font-size: 22px; font-weight: 700; fill: #b91c1c; }
+  </style>
+
+  <!-- Outer Circle with center (350, 250), radius 190 -->
+  <circle cx="350" cy="250" r="190" class="circle-outer"/>
+
+  <!-- Inner Circle passing through A, B, E, F -->
+  <!-- Center shifted: (310, 250), radius 155 -->
+  <circle cx="310" cy="250" r="155" class="circle-inner"/>
+
+  <!-- Vertices on Outer Circle -->
+  <!-- Top vertex A at (350, 60) -->
+  <!-- Bottom vertex B at (350, 440) -->
+  <!-- Right vertex D at (535, 210) -->
+  <!-- Bottom-right vertex C at (510, 350) -->
+  <circle cx="350" cy="60" r="5" fill="#0f172a"/>
+  <text x="345" y="45" class="label">A</text>
+
+  <circle cx="350" cy="440" r="5" fill="#0f172a"/>
+  <text x="345" y="475" class="label">B</text>
+
+  <!-- Line AD from (350, 60) to (535, 210) -->
+  <line x1="350" y1="60" x2="535" y2="210" class="chord-main"/>
+  <circle cx="535" cy="210" r="5" fill="#0f172a"/>
+  <text x="548" y="215" class="label">D</text>
+
+  <!-- Line BC from (350, 440) to (510, 350) -->
+  <line x1="350" y1="440" x2="510" y2="350" class="chord-main"/>
+  <circle cx="510" cy="350" r="5" fill="#0f172a"/>
+  <text x="525" y="360" class="label">C</text>
+
+  <!-- Chord DC connecting D and C -->
+  <line x1="535" y1="210" x2="510" y2="350" class="chord-main" stroke-width="4"/>
+
+  <!-- Point E on segment AD intersecting inner circle -->
+  <!-- E at roughly (420, 117) -->
+  <circle cx="420" cy="117" r="5" fill="#b91c1c"/>
+  <text x="415" y="100" class="label-accent">E</text>
+
+  <!-- Point F on segment BC intersecting inner circle -->
+  <!-- F at roughly (425, 398) -->
+  <circle cx="425" cy="398" r="5" fill="#b91c1c"/>
+  <text x="420" y="425" class="label-accent">F</text>
+
+  <!-- Chord EF (parallel to DC) -->
+  <line x1="420" y1="117" x2="425" y2="398" class="chord-parallel"/>
+
+  <!-- Legend Box -->
+  <rect x="40" y="50" width="220" height="75" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="55" y="80" font-size="16" font-weight="600" fill="#334155">ABCD is cyclic quad</text>
+  <text x="55" y="108" font-size="16" font-weight="700" fill="#b91c1c">Result: EF || DC</text>
+</svg>

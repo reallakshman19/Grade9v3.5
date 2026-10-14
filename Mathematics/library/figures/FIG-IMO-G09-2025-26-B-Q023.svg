@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 420" role="img" aria-label="Rectangle with inscribed triangle and square cutout" font-family="system-ui, sans-serif">
+  <title>Area Decomposition of Shaded Geometric Region</title>
+  <desc>A rectangle of length 40 cm and breadth 20 cm containing two shaded triangular regions with a 2 cm by 2 cm square cutout.</desc>
+  <style>
+    .boundary { fill: #ffffff; stroke: #1e293b; stroke-width: 3.5; }
+    .shaded-tri { fill: #e0f2fe; stroke: #0369a1; stroke-width: 3; }
+    .cutout-square { fill: #fee2e2; stroke: #b91c1c; stroke-width: 2.5; stroke-dasharray: 6,4; }
+    .dim-line { stroke: #64748b; stroke-width: 1.5; marker-start: url(#arrow-dim); marker-end: url(#arrow-dim); }
+    .dim-text { font-size: 19px; font-weight: 600; fill: #1e293b; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arrow-dim" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Outer Rectangle 40 cm x 20 cm -->
+  <rect x="120" y="90" width="500" height="250" class="boundary"/>
+  <polygon points="120,90 620,90 120,215" class="shaded-tri"/>
+  <polygon points="120,340 620,340 120,215" class="shaded-tri"/>
+  <polygon points="620,90 620,340 120,215" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Square Cutout 2 cm x 2 cm at Left -->
+  <rect x="140" y="195" width="40" height="40" class="cutout-square"/>
+
+  <!-- Dimension 40 cm (Top) -->
+  <line x1="120" y1="60" x2="620" y2="60" class="dim-line"/>
+  <text x="370" y="50" class="dim-text">40 cm</text>
+
+  <!-- Dimension 20 cm (Right) -->
+  <line x1="655" y1="90" x2="655" y2="340" class="dim-line"/>
+  <text x="700" y="222" class="dim-text">20 cm</text>
+
+  <!-- Dimension 2 cm on square -->
+  <text x="160" y="185" font-size="16" font-weight="600" fill="#b91c1c" text-anchor="middle">2 cm</text>
+  <text x="110" y="222" font-size="16" font-weight="600" fill="#b91c1c" text-anchor="middle">2 cm</text>
+</svg>
