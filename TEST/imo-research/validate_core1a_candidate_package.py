@@ -52,7 +52,7 @@ def validate_package(package: Path = PACKAGE) -> dict:
         "microtopics": (M,), "relations": (R,), "representations": (P,),
         "question_families": (F,), "teaching_routes": (T,),
         "questions": (), "practice_profiles": (), "evidence": (),
-        "known_issues": (), "data": ()
+        "known_issues": (), "data": ("DAT-TEST-IMO-G9-ORACLE-DOMAIN", "DAT-TEST-IMO-G9-ORACLE-DIVISOR", "DAT-TEST-IMO-G9-ORACLE-RESIDUES", "DAT-TEST-IMO-G9-ORACLE-EXPRESSION",)
     }
     ensure(d.get("schema_version") == "0.2.0"
            and d.get("package_id") == PACKAGE_ID
@@ -133,6 +133,50 @@ def validate_package(package: Path = PACKAGE) -> dict:
            and exit_task.get("oracle",{}).get("verification",{}).get("validator_id") ==
            "TEST/imo-research/validate_core1a_candidate_package.py",
            "exit task must have an authored full 24-divisibility closure and oracle")
+
+    # Authored semantic oracle inputs are real governed data, not raw strings.
+    from xml.etree import ElementTree
+    governed = d["data"]
+    bindings = exit_task["oracle"]["verification"].get("bindings")
+    ensure(bindings == {"domain":"DAT-TEST-IMO-G9-ORACLE-DOMAIN","divisor":"DAT-TEST-IMO-G9-ORACLE-DIVISOR","residue_classes":"DAT-TEST-IMO-G9-ORACLE-RESIDUES","symbolic_expression":"DAT-TEST-IMO-G9-ORACLE-EXPRESSION"},
+           "oracle must bind its four semantic inputs to declared datum IDs")
+    ensure([row.get("id") for row in governed] == ["DAT-TEST-IMO-G9-ORACLE-DOMAIN","DAT-TEST-IMO-G9-ORACLE-DIVISOR","DAT-TEST-IMO-G9-ORACLE-RESIDUES","DAT-TEST-IMO-G9-ORACLE-EXPRESSION"]
+           and all(row.get("status") == "CANDIDATE"
+                   and row.get("source_refs") == [S]
+                   and row.get("evidence_refs") == []
+                   and row.get("extensions") == {}
+                   and row.get("locator","").startswith("Author-created TEST")
+                   for row in governed),
+           "four mathematical oracle inputs must preserve author provenance")
+    ensure(governed[1].get("kind") == "DATUM"
+           and governed[1].get("value") == 24
+           and governed[1].get("unit") == "dimensionless",
+           "24 must be a governed numerical dimensionless divisor")
+    for idx, required in ((0, ("n","ℤ","1")),
+                          (2, ("r","23","0")),
+                          (3, ("P","n","3"))):
+        raw = governed[idx].get("value")
+        ensure(governed[idx].get("kind") == "EQUATION" and isinstance(raw,str),
+               "symbolic oracle input requires presentation MathML")
+        try:
+            parsed = ElementTree.fromstring(raw)
+        except ElementTree.ParseError as exc:
+            raise IMOCore1ACandidateError(f"unparsable MathML: {exc}") from exc
+        text_parts = "".join(parsed.itertext())
+        ensure(parsed.tag.endswith("}math") and
+               all(key in text_parts for key in required),
+               "semantic oracle input lost its domain, residue or product")
+    ensure(all(n*(n+1)*(n+2)*(n+3) % governed[1]["value"] == 0
+               for n in range(24)),
+           "governed divisor contradicts exhaustive modular check")
+    # PROPOSED representation does not claim a rendered or public asset.
+    adapter = read(REPO / "TEST" / "adapter" / "CoreContracts.json")
+    kinds = {r.get("id"):r for r in adapter.get("representation_kinds", [])}
+    ensure(kinds.get("TABLE_OF_VALUES",{}).get("status") == "PROPOSED"
+           and rep.get("scene_instances") == []
+           and rep.get("rendered_asset_refs") == [],
+           "declared TEST table kind is only proposed, not implemented")
+
     units = micro.get("construction_units")
     ensure(isinstance(units,list) and len(units) == 1
            and units[0].get("step_refs") == [s["id"] for s in steps]

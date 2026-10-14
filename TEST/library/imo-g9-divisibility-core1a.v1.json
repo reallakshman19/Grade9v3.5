@@ -193,10 +193,10 @@
           "verification": {
             "validator_id": "TEST/imo-research/validate_core1a_candidate_package.py",
             "bindings": {
-              "domain": "positive_integer",
-              "divisor": "24",
-              "residue_classes": "0..23",
-              "symbolic_expression": "n(n+1)(n+2)(n+3)"
+              "domain": "DAT-TEST-IMO-G9-ORACLE-DOMAIN",
+              "divisor": "DAT-TEST-IMO-G9-ORACLE-DIVISOR",
+              "residue_classes": "DAT-TEST-IMO-G9-ORACLE-RESIDUES",
+              "symbolic_expression": "DAT-TEST-IMO-G9-ORACLE-EXPRESSION"
             }
           }
         }
@@ -472,5 +472,67 @@
     "grade9v3:core2_source_custody_granted": false,
     "grade9v3:learner_published": false
   },
-  "data": []
+  "data": [
+    {
+      "id": "DAT-TEST-IMO-G9-ORACLE-DOMAIN",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>n</mi><mo>∈</mo><mi>ℤ</mi><mo>∧</mo><mi>n</mi><mo>≥</mo><mn>1</mn></mrow></math>",
+      "symbol": "n",
+      "meaning": "n ranges over all positive integers.",
+      "locator": "Author-created TEST mathematics; independently exhaustively verified modulo 24, not a publisher observation."
+    },
+    {
+      "id": "DAT-TEST-IMO-G9-ORACLE-DIVISOR",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "DATUM",
+      "value": 24,
+      "unit": "dimensionless",
+      "symbol": "24",
+      "meaning": "Divisor of the product of four consecutive integers.",
+      "locator": "Author-created TEST mathematics; independently exhaustively verified modulo 24, not a publisher observation."
+    },
+    {
+      "id": "DAT-TEST-IMO-G9-ORACLE-RESIDUES",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>r</mi><mo>∈</mo><mi>ℤ</mi><mo>∧</mo><mn>0</mn><mo>≤</mo><mi>r</mi><mo>≤</mo><mn>23</mn></mrow></math>",
+      "symbol": "r",
+      "meaning": "Exactly the exhaustive integer residues modulo 24.",
+      "locator": "Author-created TEST mathematics; independently exhaustively verified modulo 24, not a publisher observation."
+    },
+    {
+      "id": "DAT-TEST-IMO-G9-ORACLE-EXPRESSION",
+      "version": "0.1.0",
+      "status": "CANDIDATE",
+      "source_refs": [
+        "SRC-TEST-IMO-G9-NS-AUTHORED"
+      ],
+      "evidence_refs": [],
+      "extensions": {},
+      "kind": "EQUATION",
+      "value": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>P</mi><mo>(</mo><mi>n</mi><mo>)</mo><mo>=</mo><mi>n</mi><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>2</mn><mo>)</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>3</mn><mo>)</mo></mrow></math>",
+      "symbol": "P(n)",
+      "meaning": "Product of four consecutive positive integers.",
+      "locator": "Author-created TEST mathematics; independently exhaustively verified modulo 24, not a publisher observation."
+    }
+  ]
 }
