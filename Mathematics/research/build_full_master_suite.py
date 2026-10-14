@@ -14,6 +14,7 @@ import os
 import sys
 import json
 import re
+import base64
 import html
 import glob
 from pathlib import Path
@@ -353,7 +354,7 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
             <span class="qb-badge qb-badge-{band.lower()}" style="font-weight:800;font-size:0.88rem">{band} OLYMPIAD BAND</span>
             <span class="qb-badge qb-badge-qrt" style="font-weight:800;font-size:0.88rem">DEMAND: {demand}</span>
             <span class="qb-badge" style="background:{palette['bg']};color:{palette['primary']};border:1.5px solid {palette['primary']};font-size:0.88rem;font-weight:800">{html.escape(palette.get('label', topic_name))}</span>
-            <span class="qb-badge" style="background:rgba(56,189,248,0.12);color:var(--accent);border:1px solid rgba(56,189,248,0.25);font-size:0.88rem;font-weight:750">BP-CORE1A &amp; BP-CORE1B CERTIFIED</span>
+            <span class="qb-badge" style="background:rgba(56,189,248,0.12);color:var(--accent);border:1px solid rgba(56,189,248,0.25);font-size:0.88rem;font-weight:750">RESEARCH CORE 1A/1B DRAFT · APPROVAL PENDING</span>
           </div>
           <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">CODE: {html.escape(subtopic)}</span>
         </div>
@@ -371,7 +372,7 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
         <div style="margin-top:12px">
           <details style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px">
             <summary style="cursor:pointer;font-weight:700;font-size:0.90rem;color:var(--accent)">
-              🔗 Anchored to {len(linked_refs)} Authenticated Core 2 Questions (Click to expand list)
+              🔗 {len(linked_refs)} linked research question IDs · academic/source review pending (expand list)
             </summary>
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
         """)
@@ -772,6 +773,57 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
     
     return "".join(parts)
 
+def embed_standalone_katex(page_html: str) -> str:
+    """Embed the existing repository-vendored KaTeX in each byte-identical HTML.
+
+    Relative vendor URLs work only from standalone/, not public/standalone/ and
+    public/docs test routes. CDN fallback is also unsuitable for offline use.
+    This embeds the *existing* renderer and its WOFF2 faces (not a new engine).
+    """
+    vendor = Path("standalone/vendor/katex/0.16.8")
+    css = (vendor / "katex.min.css").read_text(encoding="utf-8")
+    katex_js = (vendor / "katex.min.js").read_text(encoding="utf-8")
+    auto_js = (vendor / "contrib/auto-render.min.js").read_text(encoding="utf-8")
+
+    embedded_faces = set()
+
+    def embed_font(match):
+        relative = match.group(1)
+        font_path = vendor / relative
+        if not font_path.is_file():
+            raise FileNotFoundError(f"Declared KaTeX font missing: {font_path}")
+        embedded_faces.add(relative)
+        payload = base64.b64encode(font_path.read_bytes()).decode("ascii")
+        return 'url("data:font/woff2;base64,' + payload + '")'
+
+    css = re.sub(r"url\((fonts/[^)]+\.woff2)\)", embed_font, css)
+    # Keep the WOFF2 face as the sole inline font source: alternate WOFF/TTF
+    # vendor files are not shipped in the four identical output locations.
+    css = re.sub(r',url\(fonts/[^)]+\.(?:woff|ttf)\) format\("(?:woff|truetype)"\)', "", css)
+    if len(embedded_faces) != 20:
+        raise RuntimeError(f"Expected 20 KaTeX font faces, got {len(embedded_faces)}")
+
+    previous = (
+        '<link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css" onerror="this.onerror=null;this.href=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css\';">\n'
+        '  <script src="vendor/katex/0.16.8/katex.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js\';"></script>\n'
+        '  <script src="vendor/katex/0.16.8/contrib/auto-render.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js\';"></script>'
+    )
+    # Data-URI resources preserve byte-identical offline paths while keeping
+    # minified KaTeX internals out of the source-question/math-text audit.
+    css_uri = base64.b64encode(css.encode("utf-8")).decode("ascii")
+    js_uri = base64.b64encode(katex_js.encode("utf-8")).decode("ascii")
+    auto_uri = base64.b64encode(auto_js.encode("utf-8")).decode("ascii")
+    replacement = (
+        '<!-- Repository-vendored KaTeX 0.16.8, MIT; license in standalone/vendor/katex/0.16.8/LICENSE -->\n'
+        '<link id="offline-katex-css" rel="stylesheet" href="data:text/css;base64,' + css_uri + '">\n'
+        '<script id="offline-katex-core" src="data:text/javascript;base64,' + js_uri + '"></script>\n'
+        '<script id="offline-katex-auto" src="data:text/javascript;base64,' + auto_uri + '"></script>'
+    )
+    if page_html.count(previous) != 1:
+        raise RuntimeError("STANDALONE_KATEX_VENDOR_MARKUP_DRIFT")
+    return page_html.replace(previous, replacement)
+
+
 def main():
     root = Path(".")
     
@@ -1021,7 +1073,7 @@ def main():
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Grade 9 IMO Mathematics · Core 2 Question Bank & Blueprints Suite</title>
-  <meta name="description" content="Complete Master Suite for Grade 9 IMO Mathematics: 184 authentic questions under Core 2 custody with vector SVGs, KaTeX typography, progressive hint ladders, and Core 1A/1B self-tutor modules.">
+  <meta name="description" content="Grade 9 IMO research suite: 260 draft questions with vector SVGs, KaTeX typography, progressive hint ladders and Core 1A/1B research modules. Academic, source and Blueprint acceptance pending.">
 
   <!-- KaTeX Typography (Local Vendor Primary + CDN Fallback) -->
   <link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css" onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css';">
@@ -2050,6 +2102,14 @@ def main():
 
     .btn-commit:hover { opacity: 0.92; }
 
+    /* Semantically hidden before a real attempt: not clickable or focusable. */
+    .qb-question [hidden] { display: none !important; }
+    .qb-attempt-feedback { margin-top: 8px; font-size: 0.9rem; min-height: 1.2em; }
+    .qb-attempt-feedback[data-state="invalid"] { color: var(--warning); }
+    .qb-attempt-feedback[data-state="committed"] { color: var(--success); }
+    .qb-hint-tier { margin: 8px 0; border: 1px solid var(--border); border-radius: 8px; }
+    .qb-hint-tier summary { font-weight: 650; }
+
     /* Support Disclosures (BP-CORE2 & T05) */
     .qb-support-container {
       margin-top: 16px;
@@ -2237,11 +2297,34 @@ def main():
       }
     }
 
-    /* Phone Fallback */
+    /* Phone Fallback — contain header/navigation and scroll long mathematics
+       locally rather than allowing a 320px viewport to expand to ~480px. */
     @media (max-width: 768px) {
       .shell-inner { flex-direction: column; align-items: stretch; gap: 8px; }
+      .shell-inner .brand { width: 100%; min-width: 0; flex-wrap: wrap; }
+      .brand-info { min-width: 0; flex: 1 1 150px; }
+      .brand-title, .brand-badge { white-space: normal; overflow-wrap: anywhere; }
+      .brand-badge { flex: 1 1 100%; }
+      .header-actions { width: 100%; min-width: 0; }
+      .nav-tabs { max-width: 100%; min-width: 0; }
+
+      .qb-question { min-width: 0; padding: 12px; }
+      .qb-stem-box { min-width: 0; padding: 12px; overflow-x: auto; }
+      .qb-disclosure-body { min-width: 0; overflow-x: auto; }
+      .qb-support-container { max-width: 100%; }
+      .qb-filter-panel { min-width: 0; }
+      .qb-option-card { min-width: 0; overflow-wrap: anywhere; padding: 8px; }
       .qb-options-grid { grid-template-columns: 1fr; }
       .qb-top-row { flex-direction: column; }
+
+      .qb-disclosure summary { padding: 10px 12px; gap: 4px; }
+      .qb-disclosure summary > span:first-child {
+        min-width: 0; flex: 1 1 100%; overflow-wrap: anywhere;
+      }
+      .qb-disclosure summary > span:last-child {
+        white-space: normal; min-width: 0; flex: 1 1 100%;
+        margin-left: 0; overflow-wrap: anywhere;
+      }
     }
   </style>
 </head>
@@ -2419,10 +2502,10 @@ def main():
             if opt_k in options:
                 opt_v = options[opt_k]
                 opt_v_html = format_math_html(str(opt_v))
-                is_correct = (opt_k == choice)
-                correct_style = "border-color: var(--success); background: rgba(52, 211, 153, 0.08);" if is_correct else ""
+                # Preserve source option order without pre-attempt answer styling.
+                # Answer identity is only rendered inside the post-commit solution.
                 opt_cards.append(f"""
-                  <div class="qb-option-card" style="{correct_style}">
+                  <div class="qb-option-card">
                     <span class="qb-option-badge">({opt_k})</span>
                     <span>{opt_v_html}</span>
                   </div>
@@ -2501,7 +2584,8 @@ def main():
           <div class="qb-attempt-box">
             <label for="att-{qid}"><strong>Your Solution Attempt / Working Notes:</strong></label>
             <textarea class="qb-textarea" id="att-{qid}" placeholder="Formulate equations, deduce intermediate invariants, and commit an answer..."></textarea>
-            <button type="button" class="btn-commit" onclick="document.getElementById('sol-disc-{qid}').open=true; document.getElementById('sol-disc-{qid}').scrollIntoView({{behavior:'smooth'}});">Commit Attempt & Reveal Solution</button>
+            <button type="button" class="btn-commit" id="commit-{qid}" aria-controls="sol-disc-{qid}" aria-expanded="false" onclick="commitResearchAttempt('{qid}')">Commit Attempt & Reveal Solution</button>
+            <p class="qb-attempt-feedback" id="feedback-{qid}" aria-live="polite"></p>
           </div>
 
           <!-- Grounded Support Accordion (BP-CORE2 & T05) -->
@@ -2512,22 +2596,19 @@ def main():
                 <span style="font-size:0.88rem;color:var(--text-muted)">Reveal step-by-step</span>
               </summary>
               <div class="qb-disclosure-body">
-                <div class="ladder-rung">
-                  <span class="rung-tag rung-nudge">Tier 1 · Conceptual Nudge</span>
-                  <p>{hint1}</p>
-                </div>
-                <div class="ladder-rung">
-                  <span class="rung-tag rung-tactical">Tier 2 · Tactical Intermediate Formulation</span>
-                  <p>{hint2}</p>
-                </div>
-                {f'''<div class="ladder-rung rung-crux-container">
-                  <span class="rung-tag rung-crux">Tier 3 · Crux Decisive Move</span>
-                  <p>{hint3}</p>
-                </div>''' if hint3 else ''}
+                <details class="qb-hint-tier" id="hint1-{qid}" ontoggle="unlockResearchHint('{qid}')">
+                  <summary>Tier 1 · Conceptual Nudge</summary>
+                  <div class="ladder-rung"><p>{hint1}</p></div>
+                </details>
+                <details class="qb-hint-tier" id="hint2-{qid}" hidden inert>
+                  <summary>Tier 2 · Tactical Intermediate Formulation</summary>
+                  <div class="ladder-rung"><p>{hint2}</p></div>
+                </details>
+                <p class="qb-support-note">The decisive move and full worked check become available only after you commit your own working.</p>
               </div>
             </details>
 
-            <details class="qb-disclosure">
+            <details class="qb-disclosure" id="diag-disc-{qid}" hidden inert>
               <summary>
                 <span>⚠️ Distractor Diagnostic & Misconceptions</span>
                 <span style="font-size:0.88rem;color:var(--warning)">Pitfall alert</span>
@@ -2537,10 +2618,10 @@ def main():
               </div>
             </details>
 
-            <details class="qb-disclosure" id="sol-disc-{qid}">
+            <details class="qb-disclosure" id="sol-disc-{qid}" hidden inert>
               <summary>
                 <span>✅ Teacher Solution · Complete Derivation & Formal Check</span>
-                <span style="font-size:0.88rem;color:var(--success)">Answer: ({choice})</span>
+                <span style="font-size:0.88rem;color:var(--text-muted)">Available after a committed attempt</span>
               </summary>
               <div class="qb-disclosure-body">
                 {f'''<div class="sol-crux-box">
@@ -2586,10 +2667,10 @@ def main():
       <div class="panel" style="background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;padding:24px;margin-bottom:24px">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
           <div>
-            <span class="qb-badge" style="background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)">{len(topic_units)} MODULE PACKAGES · 100% CUSTODY</span>
+            <span class="qb-badge" style="background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)">{len(topic_units)} RESEARCH MODULE PACKAGES · OWNER ACCEPTANCE PENDING</span>
             <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">All {len(topic_units)} Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(unique_topics)} Topics)</span></h2>
             <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
-              Blueprint-Standard Core 1A Declarative Proofs &amp; Core 1B 4-Stage Self-Tutor Reconstructions, segregated topic-wise.
+              Research-stage Core 1A declarative proofs and Core 1B four-stage self-tutor reconstructions, organized by topic; Blueprint and academic acceptance pending.
             </p>
           </div>
         </div>
@@ -2704,6 +2785,50 @@ def main():
   </main>
 
   <script>
+    // Research portal interaction only. This does not replace the native Core renderer.
+    function unlockResearchHint(questionId) {
+      const first = document.getElementById('hint1-' + questionId);
+      const second = document.getElementById('hint2-' + questionId);
+      if (!first || !second || !first.open) return;
+      second.hidden = false;
+      second.removeAttribute('inert');
+    }
+
+    function commitResearchAttempt(questionId) {
+      const attempt = document.getElementById('att-' + questionId);
+      const feedback = document.getElementById('feedback-' + questionId);
+      const solution = document.getElementById('sol-disc-' + questionId);
+      const diagnosis = document.getElementById('diag-disc-' + questionId);
+      const button = document.getElementById('commit-' + questionId);
+      if (!attempt || !solution || !diagnosis || !button || !feedback) return false;
+
+      // A whitespace-only or punctuation-only note is not a learner attempt.
+      const working = attempt.value.trim();
+      if (!working || !Array.from(working).some(ch => /[A-Za-z0-9]/.test(ch))) {
+        feedback.textContent = 'Write your reasoning or answer before committing.';
+        feedback.dataset.state = 'invalid';
+        attempt.setAttribute('aria-invalid', 'true');
+        attempt.focus();
+        return false;
+      }
+
+      attempt.removeAttribute('aria-invalid');
+      attempt.readOnly = true;
+      solution.hidden = false;
+      solution.removeAttribute('inert');
+      diagnosis.hidden = false;
+      diagnosis.removeAttribute('inert');
+      solution.open = true;
+      button.setAttribute('aria-expanded', 'true');
+      button.disabled = true;
+      button.textContent = 'Attempt committed · solution unlocked';
+      feedback.dataset.state = 'committed';
+      feedback.textContent = 'Your attempt is committed. The worked solution and diagnostic are now available.';
+      const summary = solution.querySelector('summary');
+      if (summary) summary.focus();
+      return true;
+    }
+
     // Tab Switching
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -3167,7 +3292,7 @@ def main():
         Path("public/test/imo-grade9/core2.html"),
         Path("docs/test/imo-grade9/core2.html")
     ]
-    full_html = "".join(html_parts)
+    full_html = embed_standalone_katex("".join(html_parts))
     for out_file in out_files:
         out_file.parent.mkdir(parents=True, exist_ok=True)
         out_file.write_text(full_html, encoding="utf-8")

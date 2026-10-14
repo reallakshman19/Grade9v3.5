@@ -563,7 +563,7 @@
       "figure_ref": null,
       "hint_ladder": {
         "hint1_conceptual_nudge": "Add the common middle segment $BC$ to both equal segments $AB$ and $CD$.",
-        "hint2_tactical_step": "$AB + BC = AC$ and $CD + BC = BD$. Since $AB = CD$, adding $BC$ to both sides yields $AC = BD$."
+        "hint2_tactical_step": "Write the lengths of the longer overlapping segments using adjacent non-overlapping pieces. Apply the common addition-to-equals principle, then decide which segment equality the construction supports."
       },
       "solution": {
         "derivation": "1. We are given $AB = CD$.\n2. The segment $BC$ is common to both composite segments $AC$ and $BD$.\n3. By Euclid's Common Notion 2: 'If equals be added to equals, the wholes are equal'.\n4. Adding $BC$ to both sides of $AB = CD$:\n   $AB + BC = CD + BC$.\n5. By segment addition (Common Notion 4, coincidence):\n   $AB + BC = AC$ and $CD + BC = BC + CD = BD$.\n6. Therefore, $AC = BD$.",
@@ -1187,7 +1187,7 @@
       "figure_ref": null,
       "hint_ladder": {
         "hint1_conceptual_nudge": "What is the sum of two interior angles on the same side of a transversal cutting parallel lines?",
-        "hint2_tactical_step": "If $\\angle BGH + \\angle GHD = 180^\\circ$, then half of their sum is $\\frac{1}{2}(\\angle BGH + \\angle GHD) = 90^\\circ$."
+        "hint2_tactical_step": "Label the two same-side interior angles alpha and beta. Their angle bisectors contribute alpha/2 and beta/2 to an auxiliary triangle; combine that with the parallel-line angle relation to solve for the remaining angle."
       },
       "solution": {
         "derivation": "1. Let $AB \\parallel CD$ and $EF$ be the transversal meeting them at $G$ and $H$.\n2. Consider the interior angles on the same side of the transversal: $\\angle BGH$ and $\\angle GHD$.\n3. Since $AB \\parallel CD$, the consecutive interior angles are supplementary:\n   $\\angle BGH + \\angle GHD = 180^\\circ$.\n4. $GP$ is the bisector of $\\angle BGH$, so $\\angle PGH = \\frac{1}{2} \\angle BGH$.\n5. $HP$ is the bisector of $\\angle GHD$, so $\\angle PHG = \\frac{1}{2} \\angle GHD$.\n6. In $\\triangle GPH$, the sum of angles is $180^\\circ$:\n   $\\angle PGH + \\angle PHG + \\angle GPH = 180^\\circ$.\n7. Substitute:\n   $\\angle PGH + \\angle PHG = \\frac{1}{2}(\\angle BGH + \\angle GHD) = \\frac{1}{2}(180^\\circ) = 90^\\circ$.\n8. Therefore, $\\angle GPH = 180^\\circ - 90^\\circ = 90^\\circ$.",
@@ -1222,7 +1222,7 @@
         "difficulty_band": "D4",
         "primary_demand": "JUSTIFY",
         "qrt_cell": "QRT-JUSTIFY-D4",
-        "crux_move": "Express the vertices of the outer triangles as exterior angles of the inner triangles to sum the five star tips to $180^\\circ$."
+        "crux_move": "For a nondegenerate pentagram formed from five strictly convex outer vertices joined in alternate order, show that the signed exterior turns sum to 720°, then subtract them from five straight angles to get the five tip-angle sum."
       },
       "title": "Five-Pointed Star Polygon Vertex Angle Sum Invariant",
       "stem": "In any general five-pointed star polygon formed by connecting five vertices $A, B, C, D, E$ across alternate edges, what is the exact sum of the five tip angles $\\angle A + \\angle B + \\angle C + \\angle D + \\angle E$?",
@@ -1238,14 +1238,14 @@
       },
       "figure_ref": null,
       "hint_ladder": {
-        "hint1_conceptual_nudge": "Consider one of the triangles formed by three star segments, for example $\\triangle ACE$ or an exterior angle triangle.",
-        "hint2_tactical_step": "Use the exterior angle theorem: an exterior angle of a triangle equals the sum of its two interior opposite angles. Show that the 5 tip angles can be collected into the three angles of a single triangle."
+        "hint1_conceptual_nudge": "Trace the five-point star in its alternating-edge order. At each tip, compare the small tip angle with the direction change made while travelling around the star.",
+        "hint2_tactical_step": "Trace the five alternating star edges in a single direction. Count how the path's direction turns as it closes, then relate each exterior turn to its supplementary tip angle. Do not assume the turn count is the same as the convex outer boundary."
       },
       "solution": {
-        "derivation": "1. Let the star points be $A, B, C, D, E$.\n2. Consider the segment $BD$ intersecting $AC$ at $P$ and $CE$ at $Q$.\n3. In $\\triangle BPD$, the exterior angle at $P$ with respect to $\\triangle ABP$ is $\\angle APD = \\angle A + \\angle B$? More precisely, consider $\\triangle ACE$ and lines intersecting.\n4. In $\\triangle BCD$, let $BD$ and $CE$ intersect at $X$. In $\\triangle XBE$, the exterior angle at $X$ is $\\angle B + \\angle D$.\n5. In another sub-triangle, the exterior angle is $\\angle C + \\angle E$.\n6. These two exterior angles together with $\\angle A$ form the three interior angles of a triangle with vertex $A$.\n7. Since the sum of angles in any Euclidean triangle is identically $180^\\circ$:\n   $\\angle A + (\\angle B + \\angle D) + (\\angle C + \\angle E) = 180^\\circ$.\n8. Thus, $\\angle A + \\angle B + \\angle C + \\angle D + \\angle E = 180^\\circ$.",
+        "derivation": "Take the usual nondegenerate five-point pentagram: its five outer points occur in strictly convex cyclic order, and the star traverses alternate vertices (for example A→C→E→B→D→A). This qualification matters: an arbitrary arrangement not forming that pentagram cannot be assumed to satisfy the claim.\n1. Let α_A, α_B, α_C, α_D, α_E denote the five small tip angles between the two incident star segments.\n2. Traverse the star along its alternating edges, always keeping the same orientation. At each tip the signed exterior change of direction is 180°−α_i (the adjacent straight and tip angles are supplementary).\n3. For this pentagram, the oriented edge direction winds twice in the same sense during the closed traversal. One can verify the turn count directly by tracing the five diagonals of any strictly convex outer pentagon; it is two full turns, not the one full turn of its convex outer boundary. Hence the sum of the five exterior turns is 2×360°=720°.\n4. Therefore Σ(180°−α_i)=720°, so 5×180°−Σα_i=720°, and Σα_i=180°.\n5. The argument uses only the star's nondegenerate two-turn geometry, not regularity or equal angles. It does NOT establish the result for arbitrary vertex configurations that cease to be the usual pentagram. Original-source diagram/wording clarification is still required for any broader meaning of 'any general five-pointed star'.",
         "independent_check": {
           "check_type": "CONSERVATION_INVARIANT",
-          "verification": "For a regular star pentagon (pentagram), each tip angle is $36^\\circ$. Total sum $= 5 \\times 36^\\circ = 180^\\circ$. By continuity and topological invariance, the sum remains $180^\\circ$ for any arbitrary star polygon."
+          "verification": "For a regular pentagram, five tips of 36° give 180° and five exterior turns of 144° give 720°. This is only a consistency check; the general argument is the exterior-turn invariant under the explicitly stated nondegenerate convex-pentagram hypothesis, not regularity alone."
         }
       },
       "distractor_rationale": {
@@ -1707,7 +1707,7 @@
       "figure_ref": null,
       "hint_ladder": {
         "hint1_conceptual_nudge": "In a parallelogram, adjacent angles are supplementary ($\\angle A + \\angle B = 180^\\circ$).",
-        "hint2_tactical_step": "Half-angles sum to $90^\\circ$, so in each formed triangle, the third angle is $180^\\circ - 90^\\circ = 90^\\circ$. A parallelogram with one (and thus all) right angles is a rectangle."
+        "hint2_tactical_step": "Draw the bisectors of two adjacent supplementary parallelogram angles. Determine the intersection angle from their half-angles, then justify the full classification of the inner quadrilateral."
       },
       "solution": {
         "derivation": "1. In parallelogram $ABCD$, consecutive angles are supplementary:\n   $\\angle A + \\angle B = 180^\\circ \\implies \\frac{1}{2}\\angle A + \\frac{1}{2}\\angle B = 90^\\circ$.\n2. The bisectors of $\\angle A$ and $\\angle B$ meet at $P$, forming $\\triangle APB$.\n3. In $\\triangle APB$, the third angle is:\n   $\\angle APB = 180^\\circ - \\left(\\frac{1}{2}\\angle A + \\frac{1}{2}\\angle B\\right) = 180^\\circ - 90^\\circ = 90^\\circ$.\n4. By vertical angles, the interior angle of $PQRS$ at $P$ is $90^\\circ$.\n5. By identical reasoning on the other three pairs of adjacent angles ($\\angle B$ and $\\angle C$, $\\angle C$ and $\\angle D$, $\\angle D$ and $\\angle A$):\n   All four interior angles of $PQRS$ are $90^\\circ$.\n6. A quadrilateral with all four interior angles equal to $90^\\circ$ is a rectangle.\n7. (Since $ABCD$ is not a rhombus, adjacent sides are unequal, meaning the diagonals are unequal, so it is strictly a rectangle and not a square).",
@@ -1811,7 +1811,7 @@
       "figure_ref": null,
       "hint_ladder": {
         "hint1_conceptual_nudge": "Recall Ptolemy's Theorem for any quadrilateral inscribed in a circle.",
-        "hint2_tactical_step": "Ptolemy's Theorem states: $AC \\cdot BD = (AB \\cdot CD) + (BC \\cdot DA)$."
+        "hint2_tactical_step": "Notice that cyclicity permits a special relationship between diagonal products and the products of opposite sides. Identify those opposite pairs first, then choose and write the relation yourself before substituting numbers."
       },
       "solution": {
         "derivation": "1. For any cyclic quadrilateral $ABCD$, Ptolemy's Theorem states that the product of the lengths of the diagonals is equal to the sum of the products of the lengths of the opposite pairs of sides:\n   $AC \\cdot BD = AB \\cdot CD + BC \\cdot DA$.\n2. Substitute the given side lengths:\n   $AB = 4\\text{ cm}$\n   $CD = 5\\text{ cm}$\n   $BC = 7\\text{ cm}$\n   $DA = 8\\text{ cm}$\n3. Product of first pair of opposite sides:\n   $AB \\cdot CD = 4 \\times 5 = 20$.\n4. Product of second pair of opposite sides:\n   $BC \\cdot DA = 7 \\times 8 = 56$.\n5. Therefore, by Ptolemy's Theorem:\n   $AC \\cdot BD = 20 + 56 = 76\\text{ cm}^2$.",
@@ -2366,7 +2366,7 @@
         "difficulty_band": "D4",
         "primary_demand": "JUSTIFY",
         "qrt_cell": "QRT-JUSTIFY-D4",
-        "crux_move": "Equate the volumetric discharge rate $Q = A \\cdot v$ to the required capacity fill volume $\\frac{1}{2} V_{\\text{hemisphere}}$."
+        "crux_move": "Convert pipe diameter to metres, derive volumetric flow Q = π(0.1 m)² × 0.35 m/s, and divide the FULL hemispherical capacity (2/3)π(3 m)³ by that rate."
       },
       "title": "Hemispherical Reservoir Fluid Flow Fill Time Invariant",
       "stem": "Water flows into a large hemispherical reservoir of radius $3\\text{ m}$ through a cylindrical pipe of internal diameter $20\\text{ cm}$ at the uniform speed of $0.35\\text{ m/s}$. Find the time taken (in minutes) to fill the reservoir completely. (Use $\\pi = \\frac{22}{7}$)",
@@ -2383,13 +2383,13 @@
       "figure_ref": null,
       "hint_ladder": {
         "hint1_conceptual_nudge": "Volume of hemispherical reservoir is $V = \\frac{2}{3} \\pi R^3$.",
-        "hint2_tactical_step": "Cross-sectional area of pipe is $\\pi r^2 = \\pi (0.1)^2 = 0.01\\pi\\text{ m}^2$. Rate of flow is $0.01\\pi \\times 3.5\\text{ m}^3/\\text{s} = 0.035\\pi\\text{ m}^3/\\text{s}$. Time is $V / \\text{Rate}$."
+        "hint2_tactical_step": "Convert 20 cm diameter to 0.10 m radius. The pipe area is $0.01\\pi\\text{ m}^2$ and the flow speed from the stem is $0.35\\text{ m/s}$ (not $3.5$). Use rate = area × speed, then compare units of capacity and flow."
       },
       "solution": {
-        "derivation": "1. Volume of hemispherical reservoir with radius $R = 3\\text{ m}$:\n   $V = \\frac{2}{3} \\pi R^3 = \\frac{2}{3} \\pi (3)^3 = \\frac{2}{3} \\pi (27) = 18\\pi\\text{ m}^3$.\n2. Pipe specifications:\n   Diameter $= 20\\text{ cm} = 0.2\\text{ m} \\implies$ radius $r = 0.1\\text{ m}$.\n   Cross-sectional area $A = \\pi r^2 = \\pi (0.1)^2 = 0.01\\pi\\text{ m}^2$.\n3. Flow velocity $v = 3.5\\text{ m/s}$.\n   Volumetric flow rate per second:\n   $Q = A \\times v = 0.01\\pi \\times 3.5 = 0.035\\pi\\text{ m}^3/\\text{s}$.\n4. Time taken to fill the tank in seconds:\n   $t = \\frac{V}{Q} = \\frac{18\\pi}{0.035\\pi} = \\frac{18}{0.035} = \\frac{18000}{35} = \\frac{3600}{7}\\text{ seconds}$.\n5. Convert to minutes:\n   $t_{\\text{min}} = \\frac{3600 / 7}{60} = \\frac{60}{7} \\approx 8.571\\text{ minutes}$? Wait!\n   $60 / 7 = 8.571\\text{ minutes}$! In options, it is $85.71$ or $8.57$?\n   Wait! If radius is $0.05$ ($d = 10\\text{ cm}$), then $r = 0.05$, $r^2 = 0.0025$, $Q = 0.0025 \\times 3.5 = 0.00875\\pi$.\n   Then $18 / 0.00875 = 2057$ seconds $= 34.28$ min.\n   If diameter is $10\\text{ cm}$ and $v = 2\\text{ m/s}$:\n   Let's check $t_{\\text{min}} = \\frac{600}{7} = 85.71\\text{ minutes}$! If velocity is $0.35\\text{ m/s}$ (or diameter is $20\\text{ cm}$ with velocity $0.35\\text{ m/s}$), then $t_{\\text{min}} = 85.71\\text{ minutes}$!\n   Let's set speed of water to $0.35\\text{ m/s}$:\n   Then $Q = 0.0035\\pi\\text{ m}^3/\\text{s}$.\n   $t = \\frac{18\\pi}{0.0035\\pi} = \\frac{18000}{3.5} = \\frac{36000}{7}\\text{ s}$.\n   In minutes: $\\frac{36000}{7 \\times 60} = \\frac{600}{7} \\approx 85.71\\text{ minutes}$! Exactly $85.71\\text{ minutes}$!",
+        "derivation": "1. The reservoir is a complete hemisphere of radius $R=3\\text{ m}$, so the entire capacity (not half of a hemisphere) is $V=\\frac{2}{3}\\pi R^3=\\frac{2}{3}\\pi(3)^3=18\\pi\\text{ m}^3$.\n2. The pipe diameter is $20\\text{ cm}=0.20\\text{ m}$, giving radius $r=0.10\\text{ m}$. Its cross-sectional area is $A=\\pi r^2=0.01\\pi\\text{ m}^2$.\n3. Use the given water speed $v=0.35\\text{ m/s}$. Thus the flow rate is $Q=Av=(0.01\\pi)(0.35)=0.0035\\pi\\text{ m}^3/\\text{s}$.\n4. Time in seconds is $t=V/Q=(18\\pi)/(0.0035\\pi)=36000/7\\text{ s}$; $\\pi$ cancels.\n5. Convert seconds to minutes: $t=(36000/7)/60=600/7\\text{ min}\\approx85.71\\text{ min}$. Therefore the given option is A.\n6. Dimensional check: $(\\text{m}^3)/(\\text{m}^3/\\text{s})=\\text{s}$, then divide by $60\\text{ s/min}$.",
         "independent_check": {
           "check_type": "SUBSTITUTION_BACK_CHECK",
-          "verification": "Volume filled in $600/7$ minutes ($36000/7$ seconds): $Q \\times t = (0.0035\\pi) \\times \\frac{36000}{7} = \\frac{3.5 \\times 36}{7} \\pi = 0.5 \\times 36 \\pi = 18\\pi\\text{ m}^3$. Matches hemispherical tank volume identically."
+          "verification": "Using the candidate $t=600/7$ minutes = $36000/7$ seconds, the delivered water is $Qt=(0.0035\\pi\\text{ m}^3/\\text{s})(36000/7\\text{ s})=18\\pi\\text{ m}^3$, equal to the whole hemisphere capacity. The incorrect velocity $3.5\\text{ m/s}$ would give a tenfold shorter time and contradict the stem."
         }
       },
       "distractor_rationale": {
