@@ -188,6 +188,44 @@ def make_packet(ledger: dict, bank: dict, evidence_dir: Path,
                     "owner_approved": False,
                     "release": "HOLD",
                 })
+            keyboard_path = evidence_dir / (slug + "-held-keyboard-state.json")
+            if keyboard_path.is_file():
+                key_proof = read_json(keyboard_path)
+                ensure(key_proof["cell_id"] == cid and
+                       key_proof["viewport_count"] == 3 and
+                       {x["viewport_px"] for x in key_proof["viewport_results"]} ==
+                       {390, 768, 1280} and
+                       key_proof["keyboard_navigation_pass"] is True and
+                       key_proof["browser_reload_state_pass"] is True and
+                       key_proof["cross_tab_isolation_pass"] is True and
+                       key_proof["query_tamper_rejected"] is True and
+                       key_proof["human_assistive_technology_evaluation"] ==
+                       "NOT_RUN" and
+                       key_proof["wcag_conformance_claim"] is False and
+                       key_proof["real_learner_attempt_or_outcome"] ==
+                       "NOT_RUN" and
+                       key_proof["registered_native_renderer_repair"] is False and
+                       key_proof["academic_qrt_accepted"] is False and
+                       key_proof["owner_accepted"] is False and
+                       key_proof["release"] == "HOLD",
+                       "P5_KEYBOARD_PROOF_NOT_APPROVAL", cid)
+                ensure(any(x["name"] ==
+                    "NONPRODUCTION_COPIED_HTML_ASSISTED_RETURN_PROTOTYPE"
+                    for x in browser_refs),
+                    "P5_KEYBOARD_NEEDS_HELD_COPY_BASE_PROOF", cid)
+                browser_refs.append({
+                    "name": "HELD_COPY_KEYBOARD_VIEWPORT_RELOAD_ISOLATION_QA",
+                    "sha256": sha256(keyboard_path),
+                    "tested_mobile_tablet_desktop_widths_px": [390, 768, 1280],
+                    "keyboard_qa": "SCOPED_BROWSER_PASS",
+                    "reloading_and_other_tab_isolation": "SCOPED_BROWSER_PASS",
+                    "keyboard_browser_only_not_human_AT_or_WCAG": True,
+                    "original_native_renderer_repair": False,
+                    "learner_independence_established": False,
+                    "academic_approved": False,
+                    "owner_approved": False,
+                    "release": "HOLD",
+                })
             for rid in REVIEWS:
                 r = evidence["semantic_objectives"][rid]
                 ensure(r["verdict"] == "NOT_RUN" and not r["evidence"],
