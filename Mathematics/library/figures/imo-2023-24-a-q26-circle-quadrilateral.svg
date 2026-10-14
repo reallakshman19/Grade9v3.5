@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340" width="100%" height="100%">
+  <title>Cyclic Quadrilateral Inscribed in Circle - IMO Class 9 2023-24 Set A Q26</title>
+  <desc>Circle with cyclic quadrilateral ABCD, diagonals AC and BD, angle CAD = 40 deg, angle BDC = 25 deg</desc>
+  <rect width="340" height="340" fill="#ffffff" />
+  
+  <!-- Circumscribed Circle: Center (170, 170), Radius 130 -->
+  <circle cx="170" cy="170" r="130" fill="#f8fafc" stroke="#0f172a" stroke-width="2.5" />
+  
+  <!-- Vertices of ABCD:
+       A: angle around 125 deg (top-left) -> cx - 130*cos(55 deg) = 170 - 74.5 = 95.5, cy - 130*sin(55 deg) = 170 - 106.5 = 63.5
+       D: angle around 55 deg (top-right) -> cx + 74.5 = 244.5, cy - 106.5 = 63.5
+       B: angle around 250 deg (bottom-left) -> cx - 130*cos(70 deg) = 170 - 44.5 = 125.5, cy + 130*sin(70 deg) = 170 + 122 = 292
+       C: angle around 290 deg (bottom-right) -> cx + 44.5 = 214.5, cy + 122 = 292
+  -->
+  <!-- Quadrilateral Edges -->
+  <polygon points="96,64 244,64 214,292 126,292" fill="#ffffff" stroke="#0f172a" stroke-width="2.2" stroke-linejoin="round" />
+  
+  <!-- Diagonals AC and BD -->
+  <line x1="96" y1="64" x2="214" y2="292" stroke="#0f172a" stroke-width="2" />
+  <line x1="244" y1="64" x2="126" y2="292" stroke="#0f172a" stroke-width="2" />
+  
+  <!-- Angle Arcs -->
+  <!-- Angle CAD = 40 deg at A: between AD (horizontal to right) and AC (diagonal to bottom-right) -->
+  <path d="M 136,64 A 40 40 0 0 1 123,115" fill="none" stroke="#2563eb" stroke-width="1.8" />
+  <text x="145" y="95" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#2563eb">40°</text>
+  
+  <!-- Angle BDC = 25 deg at D: between DB (diagonal to bottom-left) and DC (edge to bottom-right) -->
+  <path d="M 215,115 A 60 60 0 0 1 236,125" fill="none" stroke="#2563eb" stroke-width="1.8" />
+  <text x="200" y="150" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#2563eb">25°</text>
+  
+  <!-- Angle BCD arc at C to find -->
+  <path d="M 190,285 A 30 30 0 0 1 220,250" fill="none" stroke="#dc2626" stroke-width="2" />
+  <text x="175" y="270" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" fill="#dc2626">?</text>
+  
+  <!-- Vertex Labels -->
+  <g font-family="system-ui, sans-serif" font-size="18" font-style="italic" font-weight="bold" fill="#0f172a">
+    <text x="82" y="55">A</text>
+    <text x="256" y="55">D</text>
+    <text x="110" y="315">B</text>
+    <text x="225" y="315">C</text>
+  </g>
+</svg>

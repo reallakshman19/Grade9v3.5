@@ -48,6 +48,68 @@ def get_figure_markup(figure_ref, qid):
         
     return ""
 
+def format_math_html(text: str) -> str:
+    """
+    Safely formats text containing math expressions:
+    - Protects LaTeX math blocks ($...$, $$...$$, \\(...\\), \\[...]\\).
+    - Unescapes leaked HTML entities inside math (&lt; -> <, &gt; -> >, &#x27; -> ').
+    - Escapes bare % inside math to \\% so KaTeX does not treat it as a comment.
+    - Outside of math, escapes HTML and protects bare $ with <span class="no-math">&#36;</span>.
+    - Converts \\n to <br> for multi-step derivations.
+    """
+    if not text:
+        return ""
+    
+    # Matches $$...$$, $...$, \\[...\\], \\(...\\), or newlines
+    pattern = re.compile(r'(\$\$[\s\S]+?\$\$|\$(?:(?!\$)[^\n\r])+?\$|\\\[[\s\S]+?\\\]|\\\(.+?\\\)|\n)')
+    tokens = pattern.split(text)
+    
+    out = []
+    for tok in tokens:
+        if not tok:
+            continue
+        if tok == "\n":
+            out.append("<br>")
+            continue
+            
+        is_math = False
+        if (tok.startswith("$$") and tok.endswith("$$") and len(tok) >= 4) or \
+           (tok.startswith("$") and tok.endswith("$") and len(tok) >= 2) or \
+           (tok.startswith("\\[") and tok.endswith("\\]")) or \
+           (tok.startswith("\\(") and tok.endswith("\\)")):
+            is_math = True
+            
+        if is_math:
+            m = tok
+            m = (m.replace("&lt;", "<")
+                  .replace("&gt;", ">")
+                  .replace("&#x27;", "'")
+                  .replace("&apos;", "'")
+                  .replace("&quot;", '"')
+                  .replace("&amp;", "&"))
+            
+            # Extract inner and delimiters
+            if m.startswith("$$") and m.endswith("$$"):
+                prefix, suffix, inner = "$$", "$$", m[2:-2]
+            elif m.startswith("\\[") and m.endswith("\\]"):
+                prefix, suffix, inner = "\\[", "\\]", m[2:-2]
+            elif m.startswith("\\(") and m.endswith("\\)"):
+                prefix, suffix, inner = "\\(", "\\)", m[2:-2]
+            else:
+                prefix, suffix, inner = "$", "$", m[1:-1]
+                
+            # Escape raw % as \\% in math
+            cleaned_inner = re.sub(r'(?<!\\)%', r'\\%', inner)
+            out.append(f"{prefix}{cleaned_inner}{suffix}")
+        else:
+            # Outside math: escape HTML
+            esc = html.escape(tok)
+            # Protect lone $ outside of math
+            esc = esc.replace("$", '<span class="no-math">&#36;</span>')
+            out.append(esc)
+            
+    return "".join(out)
+
 def main():
     root = Path(".")
     
@@ -790,7 +852,7 @@ def main():
     }
 
     .qb-disclosure summary {
-      padding: 12px 18px;
+      padding: 14px 18px;
       background: var(--surface);
       cursor: pointer;
       font-weight: 700;
@@ -799,12 +861,27 @@ def main():
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .qb-disclosure summary > span:first-child {
+      flex: 1 1 240px;
+      min-width: 200px;
+    }
+
+    .qb-disclosure summary > span:last-child {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      margin-left: auto;
     }
 
     .qb-disclosure-body {
-      padding: 16px 20px;
+      padding: 18px 20px;
       background: var(--card);
-      line-height: 1.7;
+      line-height: 1.75;
+      overflow-wrap: break-word;
+      word-break: normal;
     }
 
     /* Hint Ladder Rung Styling */
@@ -814,6 +891,8 @@ def main():
       border-radius: 8px;
       background: var(--surface);
       border: 1px solid var(--border);
+      overflow-wrap: break-word;
+      word-break: normal;
     }
 
     .rung-tag {
@@ -830,17 +909,35 @@ def main():
     .rung-tactical { background: rgba(251, 191, 36, 0.18); color: var(--warning); }
     .rung-crux { background: rgba(192, 132, 252, 0.18); color: var(--purple); }
 
-    .sol-verified {
+    /* Formal Verification Box (BP-CORE2) */
+    .sol-verified-box {
+      margin-bottom: 14px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.28);
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+
+    .sol-verified-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: rgba(52, 211, 153, 0.15);
+      font-weight: 800;
+      font-size: 0.90rem;
       color: var(--success);
-      font-weight: 750;
-      font-size: 0.92rem;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .sol-verified-content {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--text);
+      overflow-wrap: break-word;
+      word-break: normal;
     }
 
     .trap-alert {
@@ -850,6 +947,20 @@ def main():
       border: 1px solid rgba(248, 113, 113, 0.3);
       color: #fca5a5;
       font-size: 0.95rem;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      padding: 4px 0;
+    }
+
+    .no-math {
+      font-family: inherit;
+      white-space: normal;
     }
 
     /* Responsive */
@@ -965,17 +1076,17 @@ def main():
         band = q["band"]
         demand = q["demand"]
         cell = q["cell"]
-        stem = q["stem"]
+        stem = format_math_html(q["stem"])
         options = q["options"]
         choice = q["choice"]
         ans_text = q["answer_text"]
         
-        hint1 = html.escape(str(q.get("hint1") or ""))
-        hint2 = html.escape(str(q.get("hint2") or ""))
-        hint3 = html.escape(str(q.get("hint3") or ""))
+        hint1 = format_math_html(str(q.get("hint1") or ""))
+        hint2 = format_math_html(str(q.get("hint2") or ""))
+        hint3 = format_math_html(str(q.get("hint3") or ""))
         
-        solution_txt = html.escape(str(q.get("solution") or "Verified mathematically from repository audit records."))
-        check_txt = html.escape(str(q.get("check") or "Verified via algebraic derivation."))
+        solution_txt = format_math_html(str(q.get("solution") or "Verified mathematically from repository audit records."))
+        check_txt = format_math_html(str(q.get("check") or "Verified via algebraic derivation."))
         check_type = html.escape(str(q.get("check_type") or "SUBSTITUTION_BACK_CHECK"))
         
         # Build SVG figure markup
@@ -986,12 +1097,13 @@ def main():
         for opt_k in ["A", "B", "C", "D"]:
             if opt_k in options:
                 opt_v = options[opt_k]
+                opt_v_html = format_math_html(str(opt_v))
                 is_correct = (opt_k == choice)
                 correct_style = "border-color: var(--success); background: rgba(52, 211, 153, 0.08);" if is_correct else ""
                 opt_cards.append(f"""
                   <div class="qb-option-card" style="{correct_style}">
                     <span class="qb-option-badge">({opt_k})</span>
-                    <span>{opt_v}</span>
+                    <span>{opt_v_html}</span>
                   </div>
                 """)
         options_html = f"""<div class="qb-options-grid">{''.join(opt_cards)}</div>""" if opt_cards else ""
@@ -1001,13 +1113,13 @@ def main():
         if isinstance(q["distractors"], dict):
             for dk, dv in q["distractors"].items():
                 if dk == "trap":
-                    distractors_markup.append(f"<div class='trap-alert'><strong>Pitfall:</strong> {html.escape(dv)}</div>")
+                    distractors_markup.append(f"<div class='trap-alert'><strong>Pitfall:</strong> {format_math_html(dv)}</div>")
                 else:
-                    distractors_markup.append(f"<div style='margin-bottom:6px'><strong>Option {dk}:</strong> {html.escape(dv)}</div>")
+                    distractors_markup.append(f"<div style='margin-bottom:6px'><strong>Option {dk}:</strong> {format_math_html(dv)}</div>")
         distractor_html = "".join(distractors_markup) if distractors_markup else "<p>Distractor diagnostic verified in repository custody register.</p>"
 
         # Search index string
-        search_blob = html.escape(f"{qid} {stem} {title} {topic_name} {paper_label} {sec} {cell}").lower()
+        search_blob = html.escape(f"{qid} {q['stem']} {title} {topic_name} {paper_label} {sec} {cell}").lower()
 
         card_markup = f"""
         <article class="qb-question" data-paper="{paper_label}" data-band="{band}" data-demand="{demand}" data-topic="{topic_name}" data-search="{search_blob}">
@@ -1084,15 +1196,15 @@ def main():
                 <span style="font-size:0.88rem;color:var(--success)">Answer: ({choice})</span>
               </summary>
               <div class="qb-disclosure-body">
-                <div class="sol-verified">
-                  <span>✓ Formal Verification ({check_type}):</span>
-                  <span>{check_txt}</span>
+                <div class="sol-verified-box">
+                  <div class="sol-verified-badge">✓ Formal Verification ({check_type})</div>
+                  <div class="sol-verified-content">{check_txt}</div>
                 </div>
                 <div style="font-size:1.02rem;line-height:1.75;margin-top:10px">
                   {solution_txt}
                 </div>
                 <div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--border);font-weight:750;color:var(--success)">
-                  Verified Answer: Option ({choice}) — {html.escape(str(ans_text))}
+                  Verified Answer: Option ({choice}) — {format_math_html(str(ans_text))}
                 </div>
               </div>
             </details>
@@ -1317,7 +1429,9 @@ def main():
             {left: "$", right: "$", display: false},
             {left: "\\(", right: "\\)", display: false}
           ],
-          throwOnError: false
+          ignoredClasses: ["no-math", "katex-ignore"],
+          throwOnError: false,
+          errorColor: "#ef4444"
         });
       }
     });
