@@ -91,7 +91,7 @@ def _run_one(browser, html_path: Path, width: int, out: Path) -> dict:
             if solution.is_visible() or diagnosis.is_visible():
                 raise AssertionError("Hint rung bypassed attempt gate: " + qid)
             second_hint.locator("summary").click()
-            if not second_hint.get_attribute("open") is not None:
+            if second_hint.get_attribute("open") is None:
                 raise AssertionError("Tier2 expansion failed: " + qid)
             if solution.is_visible() or diagnosis.is_visible():
                 raise AssertionError("Tier2 revealed solution before commit: " + qid)
