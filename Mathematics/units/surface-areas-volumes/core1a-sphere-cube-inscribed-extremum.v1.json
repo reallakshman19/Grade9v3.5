@@ -13,6 +13,11 @@
   ],
   "inferential_jump": "Establish geometric extrema for 3D solid enclosures, proving that the largest sphere inscribed within a cube of side a has diameter exactly a, and deduce volume conservation in multi-solid liquid transfers.",
   "relation_refs": {
+    "domain": "Euclidean Solid Metric Geometry (R^3)",
+    "hypotheses": [
+      "The inscribed sphere is contained within all 6 boundary planes of the cube of side a.",
+      "The shortest distance between opposing boundary planes of the cube is strictly a."
+    ],
     "cube_side": "a",
     "inscribed_sphere_radius": "r = a / 2",
     "inscribed_sphere_volume": "V_{sphere} = \\frac{4}{3}\\pi \\left(\\frac{a}{2}\\right)^3 = \\frac{\\pi a^3}{6}",
@@ -20,25 +25,55 @@
     "cylinder_volume": "V_{cyl} = \\pi R^2 H"
   },
   "representation": [
-    "Table comparing 3D solid bounding dimensions against maximum inscribed sub-solids",
-    "Residue and volumetric ratio formulas showing V_sphere / V_cube = pi / 6 ≈ 0.5236"
+    {
+      "symbol": "V_sphere / V_cube = pi / 6",
+      "visual": "Table comparing 3D solid bounding dimensions against maximum inscribed sub-solids.",
+      "word_meaning": "Visual representation bridge showing volumetric ratio of inscribed sphere to enclosing cube is constant pi/6 ≈ 0.5236."
+    },
+    {
+      "symbol": "V_cone = (1/3) pi r^2 h",
+      "visual": "Residue and volumetric ratio formulas showing geometric extremum bounds.",
+      "word_meaning": "Formula correspondence relating conical liquid transfer to cylindrical rise."
+    }
   ],
   "completed_teaching_path": [
-    "1. Define the geometric boundary constraint for a sphere bounded inside a hexahedron (cube).",
-    "2. Prove by tangency that maximum diameter cannot exceed the distance between opposing parallel faces: d_max = a.",
-    "3. Derive the exact volumetric fraction V_sphere / V_cube = (4/3 pi (a/2)^3) / a^3 = pi / 6.",
-    "4. Formulate the liquid transfer invariant: V_displaced = V_admitted across disparate cross-sections."
+    {
+      "step": 1,
+      "claim": "Define the geometric boundary constraint for a sphere bounded inside a cube of side a.",
+      "derivation": "The sphere's diameter cannot exceed the distance between opposing parallel faces of the cube, d_max = a.",
+      "why_valid": "A sphere has rotational symmetry in all directions; any diameter exceeding a breaches the planar faces."
+    },
+    {
+      "step": 2,
+      "claim": "Prove maximum inscribed sphere volume.",
+      "derivation": "With radius r = a / 2, V = (4/3) pi (a/2)^3 = (pi * a^3) / 6.",
+      "why_valid": "Standard Euclidean sphere volume formula V = (4/3) pi r^3 evaluated at maximal radius r = a/2."
+    },
+    {
+      "step": 3,
+      "claim": "Derive the volume of a right circular cone of equal radius and height equal to diameter.",
+      "derivation": "V_cone = (1/3) pi r^2 (2r) = (2/3) pi r^3, which is exactly half the volume of the sphere.",
+      "why_valid": "Cone volume formula V = (1/3) pi r^2 h with height h = 2r."
+    },
+    {
+      "step": 4,
+      "claim": "Formulate liquid transfer conservation across disparate cross-sections.",
+      "derivation": "V_cone = V_cylinder_rise implies (1/3) pi r_cone^2 h_cone = pi r_cyl^2 h_rise.",
+      "why_valid": "Incompressible fluid volume conservation law in rigid vessels."
+    }
   ],
   "misconceptions": [
     {
       "id": "MISC-DIAMETER-SPACE-DIAGONAL",
-      "error": "Assuming the largest sphere inside a cube can expand along the space diagonal to have diameter a√3.",
-      "correction": "A sphere is spherically symmetric; expanding along the space diagonal would cause the sphere to breach the six square planar faces. The limiting bottleneck is the shortest face-to-face separation, d = a."
+      "wrong_idea": "Assuming the largest sphere inside a cube can expand along the space diagonal to have diameter a√3.",
+      "diagnostic_prompt": "Can a sphere expand along the corner diagonal without bulging through the square side faces?",
+      "repair": "Apply the replacement rule: A sphere is spherically symmetric in all 3 dimensions. Expanding along the space diagonal would cause the sphere to breach the six square planar faces. The limiting bottleneck is the shortest face-to-face separation, d = a. Refute space-diagonal diameter assumptions."
     },
     {
       "id": "MISC-CYLINDER-CONE-EQUIVALENCE",
-      "error": "Forgetting the factor 1/3 when relating conical volumes to cylindrical water rise.",
-      "correction": "A cylinder of equal base and height has three times the volume of the cone: V_cyl = 3 V_cone."
+      "wrong_idea": "Forgetting the factor 1/3 when relating conical volumes to cylindrical water rise.",
+      "diagnostic_prompt": "Does a cone of radius r and height h have the same volume as a cylinder with identical dimensions?",
+      "repair": "Apply the replacement rule: A cylinder of equal base and height has three times the volume of the cone: V_cyl = 3 V_cone. Always include the (1/3) factor for conical volumes."
     }
   ],
   "worked_concept_anchor": {

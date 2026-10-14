@@ -13,6 +13,10 @@
     "SOF-IMO-G09-L1-2025-26-B-Q030",
     "SOF-IMO-G09-L1-2025-26-A-Q014"
   ],
+  "entry_assumptions": [
+    "Understanding of parallelogram definitions, opposite parallel sides, and adjacent supplementary angles.",
+    "Familiarity with angle bisectors and triangle interior angle sum (180 degrees)."
+  ],
   "inferential_jump": "Why the consecutive interior angles of any parallelogram sum to 180 degrees, forcing their bisected halves to sum to exactly 90 degrees, and how triangle angle sum transfers this invariant to prove that all four interior angles of the enclosed quadrilateral are strictly 90 degrees, forming a rectangle.",
   "relation_refs": {
     "domain": "Euclidean Plane Geometry (R^2)",
@@ -98,5 +102,20 @@
     "status": "CANONICAL_ANCHOR_PROOF",
     "prompt": "Prove that the quadrilateral formed by the bisectors of the four interior angles of any parallelogram is a rectangle.",
     "model_answer": "Let ABCD be a parallelogram. Since AD || BC, consecutive interior angles A and B satisfy angle(A) + angle(B) = 180 deg. The bisectors of angle A and B meet at point S. In triangle ASB, angle(SAB) + angle(SBA) = 1/2(angle(A) + angle(B)) = 90 deg. Hence angle(ASB) = 180 - 90 = 90 deg. Vertically opposite angle angle(PSR) = 90 deg. Repeating this for all four pairs of consecutive angles proves angle(P) = angle(Q) = angle(R) = angle(S) = 90 deg. Therefore, PQRS is a rectangle. Q.E.D."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT (modified case). Let ABCD be a convex quadrilateral whose angle bisectors of angles A, B, C, D intersect to form a cyclic quadrilateral EFGH. Prove that the opposite sides of quadrilateral ABCD either satisfy an angle sum condition or ABCD is a parallelogram, and state the exact angle sum equation connecting opposite angles.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "Angle bisectors of any convex quadrilateral form a cyclic quad EFGH if and only if opposite angles of the enclosed quad sum to 180 deg.",
+      "reasoning": [
+        "In triangle AEB, angle(E) = 180 - (A/2 + B/2). In triangle CGD, angle(G) = 180 - (C/2 + D/2).",
+        "Opposite angle sum in EFGH: angle(E) + angle(G) = 360 - 1/2(A + B + C + D).",
+        "Since ABCD is a convex quadrilateral, A + B + C + D = 360 deg.",
+        "Therefore, angle(E) + angle(G) = 360 - 1/2(360) = 360 - 180 = 180 deg.",
+        "Since opposite angles sum to 180 deg, EFGH is strictly cyclic for ANY convex quadrilateral."
+      ],
+      "check": "When ABCD is a rectangle (A=B=C=D=90 deg), angle(E) = 180 - (45+45) = 90 deg and angle(G) = 90 deg, so 90 + 90 = 180 deg, forming a square which is trivially cyclic. Verified."
+    }
   }
 }

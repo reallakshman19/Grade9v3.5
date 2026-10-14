@@ -11,32 +11,72 @@
   "linked_core2_refs": [
     "SOF-IMO-G09-SAMPLE-2026-27-Q005"
   ],
+  "entry_assumptions": [
+    "Familiarity with Euclid's parallel postulate, corresponding angles, and alternate interior angles across a transversal.",
+    "Understanding of the Linear Pair Axiom and angle partitioning."
+  ],
   "inferential_jump": "Transfer directional ray angles across dual parallel systems (l1 ∥ l2 and l3 ∥ l4) to establish linear and supplementary constraints on partitioned angle sectors.",
   "relation_refs": {
+    "domain": "Euclidean Plane Geometry (R^2)",
+    "hypotheses": [
+      "Lines p1 and p2 are parallel (p1 || p2).",
+      "Transversal lines q1 and q2 are parallel (q1 || q2).",
+      "Intersection points form a regular planar grid in Euclidean space."
+    ],
     "corresponding_parallel_transfer": "\\angle(l_2, l_4) = \\angle(l_1, l_3) = x",
     "linear_pair_supplement": "\\theta_{supp} = 180^\\circ - x",
     "symmetric_bisection": "2y = 180^\\circ - x \\implies y = 90^\\circ - \\frac{x}{2}"
   },
   "representation": [
-    "Dual-parallel transversal grid diagram mapping corresponding, alternate interior, and linear pair angle sectors",
-    "Algebraic constraint table tracking angle transfer from ray intersection to bisected sector"
+    {
+      "symbol": "p1 || p2, q1 || q2",
+      "visual": "Dual-parallel transversal grid diagram mapping corresponding, alternate interior, and linear pair angle sectors.",
+      "word_meaning": "Grid of intersection vertices where parallel translations preserve acute and obtuse orientation angles."
+    },
+    {
+      "symbol": "beta = (180 - alpha) / k",
+      "visual": "Algebraic constraint table tracking angle transfer from ray intersection to bisected sector.",
+      "word_meaning": "Linear partition rule mapping supplementary sector remainder to equal constituent angles."
+    }
   ],
   "completed_teaching_path": [
-    "1. State Euclid's fifth postulate and the corresponding angles theorem for parallel line pairs.",
-    "2. Demonstrate angle transfer across parallel grids: if l1 ∥ l2 and l3 ∥ l4, the intersection angles at all four vertices are congruent modulo orientation.",
-    "3. Apply the straight line linear pair axiom to identify supplementary sectors: θ + x = 180°.",
-    "4. Solve the partition equation when the supplementary sector is divided into equal sub-angles: ky = 180° - x."
+    {
+      "step": 1,
+      "claim": "State Euclid's parallel postulate and the corresponding angles theorem for parallel line pairs.",
+      "derivation": "Corresponding angles formed by parallel lines cut by a transversal are congruent: angle(p2, q1) = angle(p1, q1) = alpha.",
+      "why_valid": "A translation of parallel lines in the Euclidean plane preserves all directional intersection angles."
+    },
+    {
+      "step": 2,
+      "claim": "Transfer angles across the second parallel transversal pair q1 || q2.",
+      "derivation": "By translation along p2, the angle between p2 and q2 is identical: angle(p2, q2) = angle(p2, q1) = alpha.",
+      "why_valid": "Corresponding angles across transversal p2 intersected by parallel lines q1 and q2 are strictly congruent."
+    },
+    {
+      "step": 3,
+      "claim": "Identify the supplementary sector along straight line q2.",
+      "derivation": "The adjacent angle on the straight line q2 is theta = 180° - alpha.",
+      "why_valid": "Linear Pair Axiom: the sum of two adjacent angles forming a straight line is exactly 180 degrees."
+    },
+    {
+      "step": 4,
+      "claim": "Solve the partitioned sub-angle relation when theta is divided into k equal sectors.",
+      "derivation": "If theta is split into k equal angles beta, k*beta = 180° - alpha, yielding beta = (180° - alpha) / k.",
+      "why_valid": "Angle Addition Postulate applied to k contiguous congruent adjacent sectors."
+    }
   ],
   "misconceptions": [
     {
       "id": "MISC-VERTICAL-VS-SUPPLEMENTARY",
-      "error": "Equating the partitioned sector to the original angle x directly as vertically opposite, concluding y = x/2.",
-      "correction": "The target sector lies along a straight line opposite the transversal direction, making it supplementary (180° - x), not vertically opposite (x)."
+      "wrong_idea": "Equating the partitioned sector to the original angle alpha directly as vertically opposite, concluding beta = alpha / k.",
+      "diagnostic_prompt": "If alpha is acute (40°) and the ray partition lies on the adjacent straight line, can beta be equal to 40°/k?",
+      "repair": "Trace the straight line containing the adjacent angle. The target sector lies along a straight line opposite the transversal direction, making it supplementary (180° - alpha), not vertically opposite (alpha). The replacement rule is: always compute 180° - alpha before partitioning."
     },
     {
       "id": "MISC-UNPROVED-PARALLELISM",
-      "error": "Transferring angles between transversals without verifying that both pairs of lines are given as parallel.",
-      "correction": "Dual parallel transfer requires two independent parallel assertions: l1 ∥ l2 AND l3 ∥ l4."
+      "wrong_idea": "Transferring angles between transversals without verifying that both pairs of lines are given as parallel.",
+      "diagnostic_prompt": "If lines q1 and q2 converge, does angle(p2, q2) still equal angle(p1, q1)?",
+      "repair": "Verify parallel hypotheses explicitly. Dual parallel transfer requires two independent parallel assertions: p1 || p2 AND q1 || q2. Without both, corresponding angle invariance fails."
     }
   ],
   "worked_concept_anchor": {
@@ -65,5 +105,10 @@
       }
     ],
     "invariant_proved": "For any dual-parallel system with angle α, a supplementary sector partitioned into k equal parts obeys the universal invariant β = (180° - α) / k = (180°/k) - (α/k)."
+  },
+  "exit_task": {
+    "prompt": "Two parallel lines L1 || L2 are intersected by two parallel transversals T1 || T2. At intersection L1-T1, the interior angle is 64°. At intersection L2-T2, the adjacent supplementary sector is partitioned into 4 equal sub-angles delta. Determine the exact value of delta.",
+    "answer": "By dual parallel transfer, the corresponding angle at L2-T2 is 64°. The supplementary sector measures 180° - 64° = 116°. Partitioning into 4 equal sub-angles yields delta = 116° / 4 = 29°.",
+    "check": "Verify that 4 * delta + 64° = 4(29°) + 64° = 116° + 64° = 180°, satisfying the Linear Pair Axiom exactly."
   }
 }

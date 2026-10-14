@@ -4,24 +4,65 @@
   "package_id": "PKG-CORE1B-LINES-ANGLES-PARALLEL-TRANSFER",
   "blueprint_ref": "BP-CORE1B-RECONSTRUCTION@1.1.0",
   "paired_core1a_ref": "PKG-CORE1A-LINES-ANGLES-PARALLEL-TRANSFER",
-  "dialogue_stages": [
-    {
-      "stage": "PREDICT",
-      "tutor_prompt": "When two pairs of parallel lines intersect, how do the intersection angles at different vertices relate to each other?",
-      "student_response": "They must all be either equal to the given angle or supplementary to it, because translations keep lines parallel.",
-      "tutor_feedback": "Correct! Dual parallelism partitions all 16 planar angles across the four vertices into exactly two equivalence classes: acute angles of measure x and obtuse angles of measure 180° - x."
+  "topic": "LINES_ANGLES",
+  "target_demand": "JUSTIFY",
+  "target_band": "D3",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before solving or looking at formulas: When two pairs of parallel lines p1 || p2 and q1 || q2 intersect in a plane, how many distinct angle measures exist across all 16 planar angles formed at the four intersection vertices?",
+      "options": [
+        "A. Exactly 1 distinct measure (all angles must be equal).",
+        "B. At most 2 distinct measures: an acute/obtuse angle x and its supplement 180° - x.",
+        "C. 4 distinct measures, one unique measure for each vertex.",
+        "D. 8 distinct measures depending on the distances between the parallel lines."
+      ],
+      "predict_rationale": "Forces unassisted recall of directional angle conservation in parallel translation grids before algebraic calculation."
     },
-    {
-      "stage": "ATTEMPT",
-      "tutor_prompt": "If an angle between intersecting parallel lines is x, and the adjacent angle on a straight line is bisected into two equal angles y, write the formula expressing y in terms of x.",
-      "student_response": "The adjacent angle on the straight line is 180° - x. Since it is split into two equal angles y, we have y + y = 180° - x, so 2y = 180° - x, which gives y = (180° - x)/2 = 90° - x/2.",
-      "tutor_feedback": "Spot on derivation! You correctly identified the linear pair supplement and divided the remainder by 2."
+    "stage_2_attempt": {
+      "task": "In the attempt-box below, formulate the step-by-step derivation: If an angle between intersecting parallel lines is x, and the adjacent angle along a straight line is bisected into two equal sub-angles y, derive the explicit formula for y in terms of x.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Identify the adjacent linear pair: angle + adjacent_angle = 180°, so adjacent_angle = 180° - x.",
+        "step_2": "Partition into two equal angles: y + y = 180° - x, which gives 2y = 180° - x.",
+        "step_3": "Divide by 2: y = (180° - x) / 2 = 90° - x/2.",
+        "conclusion": "The bisected sub-angle y is strictly 90° - x/2."
+      }
     },
-    {
-      "stage": "BOUNDARY_TEST",
-      "tutor_prompt": "What happens as x approaches 90° (lines become perpendicular)? Does your formula hold?",
-      "student_response": "If x = 90°, then y = 90° - 90°/2 = 90° - 45° = 45°. Since the supplementary angle is 180° - 90° = 90°, bisecting 90° gives exactly 45°. The formula holds perfectly at the perpendicular boundary.",
-      "tutor_feedback": "Brilliant verification. Boundary testing at x = 90° confirms algebraic and geometric consistency."
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_ENGINEERING_FROM_GOAL",
+      "dialog_steps": [
+        {
+          "inquiry": "Working backwards from the formula y = 90° - x/2: Multiply both sides by 2 to get 2y = 180° - x. What geometric entity does 2y represent in the diagram?",
+          "expected_insight": "2y represents the entire supplementary sector adjacent to x on the straight line."
+        },
+        {
+          "inquiry": "What single geometric axiom guarantees that the adjacent angle plus x equals 180°?",
+          "expected_insight": "The Linear Pair Axiom: when two adjacent angles lie along a straight line, their measures sum to 180°."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Boundary test on limiting case: Suppose x approaches 90° (the lines become perpendicular). What value does y take, and does the geometry remain consistent?",
+      "options": [
+        "A. y = 0°, the angle collapses.",
+        "B. y = 45°, because the supplementary angle is 90°, and bisecting 90° gives 45°.",
+        "C. y = 90°, because perpendicular lines force all angles to 90°.",
+        "D. y is undefined because parallel lines cannot be perpendicular."
+      ],
+      "correct_option": "B",
+      "explanation": "At x = 90°, the supplementary angle is 180° - 90° = 90°. Bisecting 90° produces two equal 45° angles. Evaluating the formula y = 90° - 90°/2 = 45° confirms absolute consistency at the orthogonal boundary."
     }
-  ]
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Notice that parallel lines act as directional rigid translations. An angle measured at one intersection vertex transfers identically to the corresponding intersection vertex across the parallel grid."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Use the Linear Pair Axiom to express the total supplementary sector as 180° - x. If this sector is bisected into two equal sub-angles y, set 2y = 180° - x and divide by 2 to obtain y = 90° - x/2."
+    }
+  }
 }

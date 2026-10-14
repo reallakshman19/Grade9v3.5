@@ -12,6 +12,10 @@
     "SOF-IMO-G09-L1-2024-25-B-Q031",
     "SOF-IMO-G09-L1-2025-26-B-Q031"
   ],
+  "entry_assumptions": [
+    "Understanding of points, straight line segments, and collinear point ordering.",
+    "Familiarity with Euclid's Common Notions regarding equality and whole-part relations."
+  ],
   "inferential_jump": "Why segment equality between overlapping collinear segments PR and QS guarantees equality of the non-overlapping end segments PQ and RS by direct retrieval and application of Euclid's Third Common Notion: 'If equals be subtracted from equals, the remainders are equal'.",
   "relation_refs": {
     "domain": "Euclidean Axiomatic System & Synthetic Metric Geometry",
@@ -96,5 +100,20 @@
     "status": "CANONICAL_ANCHOR_PROOF",
     "prompt": "Points P, Q, R, S are collinear in order. Prove that if PR = QS, then PQ = RS, citing Euclid's exact common notions.",
     "model_answer": "Given PR = QS. Since Q lies between P and R, PR = PQ + QR. Since R lies between Q and S, QS = QR + RS. By Euclid's Common Notion 3 ('If equals are subtracted from equals, the remainders are equal'), we subtract QR from both sides: PR - QR = QS - QR. Since PR - QR = PQ and QS - QR = RS, it follows that PQ = RS. Q.E.D."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT (modified case). Points A, B, C, D, E lie on a line in alphabetical order such that AC = CE and BC = CD. Using Euclid's Common Notions, prove that AB = DE.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "Subtracting equal inner segments from equal outer segments yields AB = DE.",
+      "reasoning": [
+        "Given AC = CE (whole segment equality) and BC = CD (inner part equality).",
+        "By order of points, A-B-C means AC = AB + BC, so AC - BC = AB.",
+        "Similarly, C-D-E means CE = CD + DE, so CE - CD = DE.",
+        "By Euclid's Common Notion 3: 'If equals are subtracted from equals, the remainders are equal.'",
+        "Subtracting BC = CD from AC = CE gives AC - BC = CE - CD, hence AB = DE."
+      ],
+      "check": "Let C be the origin 0. B is at -b, D is at +b (BC=CD=b). A is at -a, E is at +a (AC=CE=a). Length AB = |-b - (-a)| = a - b. Length DE = |a - b| = a - b. Since lengths are equal for all 0 < b < a, the proof is verified."
+    }
   }
 }
