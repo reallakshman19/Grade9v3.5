@@ -7,6 +7,8 @@ on:
     paths:
       - 'Shared/tools/imo_qrt_validator.py'
       - 'tests/test_imo_qrt_validator.py'
+      - 'Shared/tools/imo_qrt_standalone_gate.py'
+      - 'tests/test_imo_qrt_standalone_gate.py'
       - 'TEST/imo-qrt-validator/**'
       - '.github/workflows/qrt249-research-validator.yml'
   workflow_dispatch:
@@ -53,9 +55,37 @@ jobs:
           assert d['stale_audits'][0]['reported_question_count'] == 184
           print('260 records inventoried; expected blockers proven; no academic pass claimed')
           PY
+      - name: Standalone pre-attempt disclosure mutation tests
+        run: python -m unittest discover -s tests -p 'test_imo_qrt_standalone_gate.py' -v
+      - name: Real rendered HTML and four-endpoint negative control
+        shell: bash
+        run: |
+          set +e
+          python Shared/tools/imo_qrt_standalone_gate.py --baseline-sha "$GITHUB_SHA" --output build/imo-qrt-249/standalone-disclosure.json
+          rc=$?
+          set -e
+          if [ "$rc" != "1" ]; then
+            echo "Uncorrected standalone HTML must NOT be accepted"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('build/imo-qrt-249/standalone-disclosure.json').read_text(encoding='utf-8'))
+          assert data['status'] == 'FAIL'
+          assert data['scope'] == 'RESEARCH_STANDALONE_HTML_ONLY'
+          assert len(data['endpoints']) == 4
+          assert data['rendered']['question_count'] == 260
+          assert data['rendered']['findings']['PREATTEMPT_CORRECT_OPTION_EMPHASIZED'] > 0
+          assert data['rendered']['findings']['PREATTEMPT_ANSWER_IN_VISIBLE_SOLUTION_SUMMARY'] > 0
+          assert data['academic_verdict'] == 'REVIEW_REQUIRED'
+          print('Known answer-disclosure failures detected; four output receipts recorded')
+          PY
       - name: Upload validator finding references only
         uses: actions/upload-artifact@v4
         with:
           name: qrt249-exact-head-intake
-          path: build/imo-qrt-249/intake.json
+          path: |
+            build/imo-qrt-249/intake.json
+            build/imo-qrt-249/standalone-disclosure.json
           if-no-files-found: error
