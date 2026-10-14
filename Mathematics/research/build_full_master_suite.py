@@ -1607,6 +1607,142 @@ def main():
       box-shadow: 0 4px 20px rgba(0,0,0,0.22);
     }
 
+    /* Enhanced Band D3 (Hard Olympiad) Card */
+    .qb-question[data-band="D3"] {
+      border-left: 5px solid #f59e0b;
+      border-top-color: rgba(245, 158, 11, 0.28);
+      border-right-color: rgba(245, 158, 11, 0.28);
+      border-bottom-color: rgba(245, 158, 11, 0.28);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.04) 0%, var(--card) 130px);
+    }
+
+    .qb-question[data-band="D3"]:hover {
+      border-color: rgba(245, 158, 11, 0.6);
+      border-left: 5px solid #f59e0b;
+      box-shadow: 0 6px 24px rgba(245, 158, 11, 0.16);
+    }
+
+    /* Enhanced Band D4 (Achievers Section / HOTS) Card */
+    .qb-question[data-band="D4"] {
+      border-left: 5px solid #38bdf8;
+      border-top-color: rgba(56, 189, 248, 0.35);
+      border-right-color: rgba(56, 189, 248, 0.35);
+      border-bottom-color: rgba(56, 189, 248, 0.35);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.06) 0%, var(--card) 150px);
+      box-shadow: 0 2px 16px rgba(56, 189, 248, 0.08);
+    }
+
+    .qb-question[data-band="D4"]:hover {
+      border-color: rgba(56, 189, 248, 0.7);
+      border-left: 5px solid #38bdf8;
+      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.22);
+    }
+
+    /* Distinctive D3 & D4 Badges */
+    .badge-hots-achievers {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(168, 85, 247, 0.22));
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.18);
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-hard-olympiad {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.20), rgba(239, 68, 68, 0.20));
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.15);
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    /* Crux Cognitive Leap Challenge Banners */
+    .crux-banner-d4 {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(168, 85, 247, 0.12));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .crux-banner-d3 {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.10), rgba(239, 68, 68, 0.08));
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .crux-banner-d4 .crux-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(56, 189, 248, 0.22);
+      color: #38bdf8;
+      font-weight: 800;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .crux-banner-d3 .crux-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(245, 158, 11, 0.22);
+      color: #f59e0b;
+      font-weight: 800;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* Tier 3 Crux Rung & Solution Crux Box */
+    .rung-crux-container {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(56, 189, 248, 0.08));
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-left: 4px solid var(--purple);
+    }
+
+    .sol-crux-box {
+      margin-bottom: 14px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: rgba(192, 132, 252, 0.10);
+      border: 1px solid rgba(192, 132, 252, 0.30);
+      border-left: 4px solid var(--purple);
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+
+    .sol-crux-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 0.90rem;
+      color: var(--purple);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
     .qb-qheader {
       margin-bottom: 16px;
       border-bottom: 1px solid var(--border);
@@ -2195,12 +2331,34 @@ def main():
         search_blob = html.escape(f"{qid} {q['stem']} {title} {topic_name} {paper_label} {sec} {cell}").lower()
 
         unit_folder = TOPIC_TO_UNIT_FOLDER.get(topic_name.lower().strip(), "polynomials")
+
+        # Distinctive D3/D4 badges & banners
+        d3_d4_badge = ""
+        crux_banner_html = ""
+        if band == "D4":
+            d3_d4_badge = f"""<span class="qb-badge badge-hots-achievers" onclick="addActiveFilter('band', 'D4')" title="HOTS Achievers Section Question (3 Marks)">💎 HOTS · ACHIEVERS SECTION (3 MARKS)</span>"""
+            crux_banner_html = f"""
+            <div class="crux-banner-d4">
+              <span class="crux-pill">💎 Achievers Section · HOTS Multi-Stage Synthesis</span>
+              <span>Demands coordinating multiple geometric/algebraic invariants with rigorous justification. <strong>Weightage: 3 Marks · Demand: {demand}.</strong></span>
+            </div>
+            """
+        elif band == "D3":
+            d3_d4_badge = f"""<span class="qb-badge badge-hard-olympiad" onclick="addActiveFilter('band', 'D3')" title="Hard Olympiad Question">🔥 HARD OLYMPIAD CHALLENGE</span>"""
+            crux_banner_html = f"""
+            <div class="crux-banner-d3">
+              <span class="crux-pill">🔥 Hard Olympiad · Composite Synthesis ({demand})</span>
+              <span>Multi-step Olympiad challenge requiring intermediate formulation and invariance deduction.</span>
+            </div>
+            """
+
         card_markup = f"""
         <article class="qb-question" id="q-{qid}" data-paper="{paper_label}" data-band="{band}" data-demand="{demand}" data-topic="{topic_name}" data-search="{search_blob}">
           <div class="qb-qheader">
             <div class="qb-top-row">
               <h2 class="qb-title">Q{idx}. {title}</h2>
               <div class="qb-badges">
+                {d3_d4_badge}
                 <span class="qb-badge qb-badge-{band.lower()}" onclick="addActiveFilter('band', '{band}')" title="Filter by {band}">{band}</span>
                 <span class="qb-badge qb-badge-qrt" onclick="addActiveFilter('demand', '{demand}')" title="Filter by {cell}">{cell}</span>
                 <span class="qb-badge qb-badge-topic" onclick="addActiveFilter('topic', '{topic_name}')" title="Filter by {topic_name}">📚 {topic_name}</span>
@@ -2216,6 +2374,7 @@ def main():
 
           <!-- Official Exam Question Stem Box -->
           <div class="qb-stem-box">
+            {crux_banner_html}
             <div style="font-weight:750;margin-bottom:8px;color:var(--accent);font-size:0.95rem;text-transform:uppercase;letter-spacing:0.04em">Official Exam Question:</div>
             <div class="qb-stem-text">{stem}</div>
             {fig_markup}
@@ -2248,8 +2407,8 @@ def main():
                   <span class="rung-tag rung-tactical">Tier 2 · Tactical Intermediate Formulation</span>
                   <p>{hint2}</p>
                 </div>
-                {f'''<div class="ladder-rung">
-                  <span class="rung-tag rung-crux">Tier 3 · Crux Relation</span>
+                {f'''<div class="ladder-rung rung-crux-container">
+                  <span class="rung-tag rung-crux">Tier 3 · Crux Decisive Move</span>
                   <p>{hint3}</p>
                 </div>''' if hint3 else ''}
               </div>
@@ -2271,6 +2430,10 @@ def main():
                 <span style="font-size:0.88rem;color:var(--success)">Answer: ({choice})</span>
               </summary>
               <div class="qb-disclosure-body">
+                {f'''<div class="sol-crux-box">
+                  <span class="sol-crux-tag">⚡ Key Olympiad Invariant / Crux Move</span>
+                  <p style="margin:6px 0 0 0;font-size:0.95rem;color:var(--text)">{hint3}</p>
+                </div>''' if hint3 else ''}
                 <div class="sol-verified-box">
                   <div class="sol-verified-badge">✓ Formal Verification ({check_type})</div>
                   <div class="sol-verified-content">{check_txt}</div>
