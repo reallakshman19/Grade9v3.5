@@ -1,0 +1,36 @@
+name: IMO182 R12 native review-handoff claim-boundary audit
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-r12-native-handoff.yml'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_postcommit_contract.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_review_handoff.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_r12_native_handoff.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review-evidence-failclosed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile all touched source-based QA and review handoff modules
+        run: |
+          python -m py_compile \
+            TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_postcommit_contract.py \
+            TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py \
+            TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_review_handoff.py \
+            TEST/imo-research/qrt-tiles/reconciliation/test_qrt_r12_native_handoff.py
+      - name: Fail closed on native technical proof forgery and false QRT promotion
+        run: |
+          python -m unittest discover \
+            -s TEST/imo-research/qrt-tiles/reconciliation \
+            -p test_qrt_r12_native_handoff.py -v

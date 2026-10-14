@@ -21,6 +21,7 @@ from playwright.sync_api import sync_playwright
 
 from qrt_intent_contract import BP, ROLES, blob_hash, ensure, read_json, resolve_under, sha256
 from qrt_intent_w_path_audit import RootAssets
+from qrt_intent_postcommit_contract import POSTCOMMIT_CHECKS, classify_postcommit_journey
 
 NAV_ROUTES = {
     "ORIENTATION_LEARN_APPLY": ("CORE1", "CORE1A", "CORE2A"),
@@ -141,31 +142,6 @@ def _click_a_route(context, origin: str, steps: tuple[str, ...],
         page.close()
 
 
-
-
-POSTCOMMIT_CHECKS = {
-    "attempt_blank_rejected": "NAV_POSTCOMMIT_BLANK_UNLOCKED",
-    "nonempty_attempt_committed": "NAV_POSTCOMMIT_VALID_ATTEMPT_NOT_COMMITTED",
-    "precommit_solution_locked": "NAV_POSTCOMMIT_PREATTEMPT_SOLUTION_LEAK",
-    "postcommit_context_link_present": "NAV_POSTCOMMIT_CONTEXT_LINK_MISSING",
-    "context_link_is_pinned": "NAV_POSTCOMMIT_CONTEXT_WRONG_CONCEPT",
-    "concept_reached": "NAV_POSTCOMMIT_CONCEPT_NOT_REACHED",
-    "concept_is_pinned": "NAV_POSTCOMMIT_CONCEPT_ID_DRIFT",
-    "return_link_present": "NAV_POSTCOMMIT_RETURN_LINK_MISSING",
-    "return_link_is_pinned": "NAV_POSTCOMMIT_RETURN_WRONG_QUESTION",
-    "same_question_reached": "NAV_POSTCOMMIT_SOURCE_QUESTION_LOST",
-    "attempt_text_restored": "NAV_POSTCOMMIT_SOURCE_DRAFT_NOT_RESTORED",
-    "assistance_marked": "NAV_POSTCOMMIT_ASSISTANCE_UNMARKED",
-}
-
-
-def classify_postcommit_journey(probe: dict) -> list[str]:
-    """One-way technical negatives, not claims of mathematical learning."""
-    findings = [code for field, code in POSTCOMMIT_CHECKS.items()
-                if probe.get(field) is not True]
-    if probe.get("independent_credit_claimed") is True:
-        findings.append("NAV_POSTCOMMIT_FALSE_INDEPENDENT_CREDIT")
-    return findings
 
 
 def probe_postcommit_native(context, base: str, qid: str, concept_id: str) -> dict:

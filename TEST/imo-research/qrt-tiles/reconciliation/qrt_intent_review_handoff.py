@@ -16,6 +16,7 @@ from pathlib import Path
 from qrt_intent_contract import (
     BP, BANDS, DEMANDS, REVIEWS, ROLES, canonical, ensure, read_json, sha256
 )
+from qrt_intent_postcommit_contract import verify_native_postcommit_handoff
 
 BLOCKS = {
     "RIVAL_NOT_GROUNDED_IN_SOURCE",
@@ -179,6 +180,15 @@ def make_packet(ledger: dict, bank: dict, evidence_dir: Path,
                        len(nav.get("native_role_paths", {})) == 4 and
                        nav.get("clicked_actual_role_transitions") == 10,
                        "P5_REAL_NAV_CANNOT_RECLASSIFY_QRT", cid)
+                technical_probe = verify_native_postcommit_handoff(
+                    nav, w["primary_question_id"],
+                    nav.get("assisted_return", {}).get(
+                        "target_identity_expected_concept"))
+                # The reviewer receives an exact, separately hash-bound
+                # native postcommit defect record; never a copied-HTML pass.
+                browser_refs.append({
+                    **technical_probe, "sha256": sha256(navpath),
+                })
                 browser_refs.append({
                     "name": "TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL",
                     "sha256": sha256(navpath),
@@ -188,6 +198,8 @@ def make_packet(ledger: dict, bank: dict, evidence_dir: Path,
                         nav["observed_integrity_gaps"],
                     "assisted_return_verified": (
                         not nav["observed_integrity_gaps"] and
+                        nav["assisted_return"].get("target_identity_proven") is True and
+                        technical_probe["technical_round_trip_complete"] is True and
                         nav["assisted_return"]["return_state_assisted"] and
                         nav["assisted_return"]["source_attempt_restored"]
                     ),
