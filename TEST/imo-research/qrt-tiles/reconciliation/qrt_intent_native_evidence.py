@@ -51,7 +51,8 @@ def parse(path: Path) -> NativeStructure:
 
 
 def attach_native_contract(
-    contract: dict, source_root: Path, output: Path
+    contract: dict, source_root: Path, output: Path,
+    independent_rebuild: Path | None = None
 ) -> dict:
     """Reject stale bytes, compare source pages to frozen snapshots, leave W HOLD."""
     contract = copy.deepcopy(contract)
@@ -85,18 +86,52 @@ def attach_native_contract(
            receipt.get("held_to") == "REFERENCE" and
            receipt.get("gaps") == [],
            "RENDERER_AUTHORITY_OR_GAPS")
+    all_pages = [r.lower() + ".html" for r in ROLES] + ["index.html"]
+    ensure(receipt.get("pages") == all_pages and
+           receipt.get("output_roles") == list(ROLES),
+           "RENDER_RECEIPT_ROLES_OR_PAGES")
+    page_shas = receipt.get("page_sha256")
+    has_receipt_sha = isinstance(page_shas, dict)
+    if has_receipt_sha:
+        ensure(set(page_shas) == set(all_pages),
+               "RENDER_RECEIPT_SHA_SET_DRIFT")
+    else:
+        # Certain earlier *exact pinned* authors use an older renderer receipt
+        # that lists pages but does not record per-page hashes. Never claim
+        # receipt-to-page SHA match. Require byte-identical independent rerender.
+        ensure(page_shas is None, "MALFORMED_RENDER_RECEIPT_SHAS")
+        ensure(independent_rebuild is not None,
+               "LEGACY_RECEIPT_REQUIRES_INDEPENDENT_RERENDER")
+        repeat_receipt = read_json(
+            independent_rebuild / "render-receipt.json")
+        for field in ("renderer", "mode", "held_to", "gaps",
+                      "pages", "output_roles", "digest", "semantic_digest"):
+            ensure(receipt.get(field) == repeat_receipt.get(field),
+                   "INDEPENDENT_RECEIPT_CHANGED", field)
     index = output / "index.html"
-    ensure(index.is_file() and
-           receipt.get("page_sha256", {}).get("index.html") == sha256(index),
-           "INDEX_SHA_NOT_RECEIPT")
+    ensure(index.is_file(), "INDEX_MISSING")
+    if has_receipt_sha:
+        ensure(page_shas.get("index.html") == sha256(index),
+               "INDEX_SHA_NOT_RECEIPT")
+    else:
+        repeated_index = independent_rebuild / "index.html"
+        ensure(repeated_index.is_file() and
+               sha256(repeated_index) == sha256(index),
+               "LEGACY_INDEX_NONDETERMINISTIC")
     proof = {}
     for role in ROLES:
         filename = role.lower() + ".html"
         page = output / filename
         ensure(page.is_file(), "MISSING_NATIVE_ROLE", filename)
         digest = sha256(page)
-        ensure(receipt["page_sha256"].get(filename) == digest,
-               "NATIVE_PAGE_SHA_NOT_RECEIPT", filename)
+        if has_receipt_sha:
+            ensure(page_shas.get(filename) == digest,
+                   "NATIVE_PAGE_SHA_NOT_RECEIPT", filename)
+        else:
+            repeated_page = independent_rebuild / filename
+            ensure(repeated_page.is_file() and
+                   sha256(repeated_page) == digest,
+                   "LEGACY_CORE_NONDETERMINISTIC", filename)
         frozen_records = [x for x in frozen["snapshots"]
                           if x["role"] == role]
         ensure(len(frozen_records) == 1,
@@ -122,7 +157,9 @@ def attach_native_contract(
                    "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
         proof[role] = {
             "native_sha256": digest,
-            "receipt_sha256_match": True,
+            "receipt_sha256_match": True if has_receipt_sha else None,
+            "independent_same_renderer_rebuild_sha_match":
+                True if not has_receipt_sha else None,
             "frozen_golden_sha256": frozen_rec["sha256"],
             "frozen_golden_sha256_match": True,
             "blueprint": BP[role],
@@ -147,6 +184,11 @@ def attach_native_contract(
         "scope": "NATIVE_STRUCTURE_ONLY",
         "renderer": "Shared/tools/render_core.py",
         "receipt_sha256": sha256(receipt_path),
+        "page_sha_authority": (
+            "EXACT_NATIVE_RENDER_RECEIPT" if has_receipt_sha else
+            "SAME_PINNED_SOLE_RENDERER_INDEPENDENT_BYTE_IDENTICAL_RERENDER"
+        ),
+        "receipt_contains_page_sha256": has_receipt_sha,
         "index_sha256": sha256(index),
         "roles": proof,
         "golden_immutability": "FIVE_SNAPSHOT_SHAS_CONFIRMED",
@@ -168,10 +210,13 @@ def main():
     parser.add_argument("--contract", required=True, type=Path)
     parser.add_argument("--source-root", required=True, type=Path)
     parser.add_argument("--native-output", required=True, type=Path)
+    parser.add_argument("--independent-rebuild", type=Path,
+                        help="Required for legacy pinned receipts without per-page hashes")
     parser.add_argument("--out", required=True, type=Path)
     args = parser.parse_args()
     report = attach_native_contract(
-        read_json(args.contract), args.source_root, args.native_output
+        read_json(args.contract), args.source_root, args.native_output,
+        args.independent_rebuild
     )
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n",
