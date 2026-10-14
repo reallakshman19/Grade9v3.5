@@ -12,11 +12,14 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import re
+import sys
 from typing import Any
 
-from Shared.tools import question_difficulty
-
+# Allow both direct script invocation and python -m execution from repository root.
 ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from Shared.tools import question_difficulty
 BANK_DIR = ROOT / "Mathematics" / "question-bank"
 VISUAL_MANIFEST = ROOT / "Mathematics" / "research" / "visual_cues_manifest.json"
 OLD_AUDIT = ROOT / "TEST" / "imo-research" / "audit" / "master_suite_qrt_alignment_audit.v1.json"
