@@ -2596,11 +2596,11 @@ def main():
                 <span style="font-size:0.88rem;color:var(--text-muted)">Reveal step-by-step</span>
               </summary>
               <div class="qb-disclosure-body">
-                <details class="qb-hint-tier">
+                <details class="qb-hint-tier" id="hint1-{qid}" ontoggle="unlockResearchHint('{qid}')">
                   <summary>Tier 1 · Conceptual Nudge</summary>
                   <div class="ladder-rung"><p>{hint1}</p></div>
                 </details>
-                <details class="qb-hint-tier">
+                <details class="qb-hint-tier" id="hint2-{qid}" hidden inert>
                   <summary>Tier 2 · Tactical Intermediate Formulation</summary>
                   <div class="ladder-rung"><p>{hint2}</p></div>
                 </details>
@@ -2786,6 +2786,14 @@ def main():
 
   <script>
     // Research portal interaction only. This does not replace the native Core renderer.
+    function unlockResearchHint(questionId) {
+      const first = document.getElementById('hint1-' + questionId);
+      const second = document.getElementById('hint2-' + questionId);
+      if (!first || !second || !first.open) return;
+      second.hidden = false;
+      second.removeAttribute('inert');
+    }
+
     function commitResearchAttempt(questionId) {
       const attempt = document.getElementById('att-' + questionId);
       const feedback = document.getElementById('feedback-' + questionId);
