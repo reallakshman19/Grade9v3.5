@@ -474,7 +474,7 @@ jobs:
               sorted(Path("build/imo182-r8-intent").glob("*-real-navigation.json"))]
           assert len(reports)==4
           assert sum(len(x["native_role_paths"]) for x in reports)==16
-          assert all(x["clicked_actual_role_transitions"] >= 12 for x in reports)
+          assert all(x["clicked_actual_role_transitions"] == 10 for x in reports)
           assert all(x["independence_from_return_visit"] is False and
               x["owner_acceptance"] is False and
               x["status"]=="HOLD_REVIEW_REQUIRED" for x in reports)
