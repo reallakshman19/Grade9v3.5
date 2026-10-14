@@ -65,6 +65,52 @@ with sync_playwright() as p:
                 assert locked_answer.get_attribute("open") is not None, "Model answer not disclosed on learner request"
                 assert "9 is an odd square modulo16" in locked_answer.inner_text()
                 page.screenshot(path=str(screens/"core1a-after-attempt.png"),full_page=True)
+            # Owner v3.1 O1: preserve Core1B's already-done blueprint/golden
+            # reconstruction with independent main and boundary attempt gates.
+            if cell == "retrieve" and role == "core1b" and width == 1280:
+                assert page.locator('body[data-blueprint-ref="BP-CORE1B-RECONSTRUCTION@1.1.0"]').count() == 1
+                slots = page.locator('section.blueprint-slot')
+                assert slots.count() == 3
+                assert [slots.nth(i).get_attribute("data-blueprint-slot") for i in range(3)] == [
+                    "identity", "attempt", "reconstruction"
+                ]
+                first = page.locator('[data-g9-attempt-box]:not([data-g9-attempt-stage])').first
+                reconstruct = page.locator(
+                    'details[data-requires-attempt][data-g9-payload-ref="CORE1B-MIC-D4-RETRIEVE-reconstruct"]'
+                )
+                assert reconstruct.count() == 1
+                main_payload = reconstruct.locator('[data-g9-payload-slot]')
+                assert not main_payload.text_content().strip()
+                first.locator('button[data-g9-commit]').click()
+                assert not main_payload.text_content().strip(), "Blank reconstruction attempt hydrated answer"
+                first.locator('textarea[data-g9-attempt]').fill(
+                    "Odd squares are 1 modulo8, so 5 is not an odd square there; modulo4, 5 is 1."
+                )
+                first.locator('button[data-g9-commit]').click()
+                assert "every odd square equals1 modulo8" in main_payload.inner_text().casefold()
+                assert reconstruct.get_attribute("open") is None
+                reconstruct.locator("summary").click()
+                assert reconstruct.get_attribute("open") is not None
+
+                boundary = page.locator('[data-g9-attempt-box][data-g9-attempt-stage="boundary"]')
+                boundary_answer = page.locator(
+                    'details[data-requires-attempt][data-g9-attempt-stage="boundary"]'
+                )
+                boundary_payload = boundary_answer.locator('[data-g9-payload-slot]')
+                assert boundary.count() == 1 and boundary_answer.count() == 1
+                assert not boundary_payload.text_content().strip()
+                boundary.locator('button[data-g9-commit]').click()
+                assert not boundary_payload.text_content().strip(), "Blank boundary attempt hydrated answer"
+                boundary.locator('textarea[data-g9-attempt]').fill(
+                    "a=5 is an odd square modulo4; it fails modulo8 and modulo16."
+                )
+                boundary.locator('button[data-g9-commit]').click()
+                assert "modulo4" in boundary_payload.inner_text()
+                assert "modulo16" in boundary_payload.inner_text()
+                assert boundary_answer.get_attribute("open") is None
+                boundary_answer.locator("summary").click()
+                assert boundary_answer.get_attribute("open") is not None
+                page.screenshot(path=str(screens/"core1b-after-boundary-attempt.png"), full_page=True)
             # Oversized drawings must scroll locally, not make the whole page unusable.
             if role=="core2a" and width==1280:
                 html=page.content()
