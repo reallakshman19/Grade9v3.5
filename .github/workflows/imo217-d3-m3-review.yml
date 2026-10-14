@@ -43,7 +43,7 @@ jobs:
             python Shared/tools/render_core.py build --manifest "TEST/products/imo182-qrt-d3-$d.manifest.json" --out "build/imo182-qrt/d3/$d" --mode PAGES --reference --draft
           done
       - name: Guard corrected SYNTHESIZE-D3 source label against old REPRESENT postattempt text
-        run: python -m unittest -v tests.test_imo182_qrt_d3_synthesize_exposure_label
+        run: python -m unittest -v tests.test_imo182_qrt_d3_synthesize_exposure_label tests.test_imo217_d3_synthesize_transfer_label
       - name: Prove original source blobs, owner snapshots, and 30 native HTML receipts
         env:
           EXPECTED_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
