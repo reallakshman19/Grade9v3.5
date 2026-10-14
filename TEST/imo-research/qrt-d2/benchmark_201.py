@@ -98,7 +98,7 @@ def browser_check(html: str, role: str, demand: str, browser) -> dict:
             if quick.count() != 1:
                 raise AssertionError("CORE1A_RETRIEVE_PREEXIT_QUICK_CHECK_MISSING")
             preexit_text = quick.inner_text()
-            if re.search(r"(?:17|23)\\s*m\\b", preexit_text, flags=re.I):
+            if re.search(r"(?:17|23)\s*m\b", preexit_text, flags=re.I):
                 raise AssertionError("CORE1A_RETRIEVE_EXIT_ANSWER_LEAK_IN_VISIBLE_QUICK_CHECK")
             result["core1a_retrieve_exit_quickcheck"] = "CHANGED_EXIT_ANSWERS_NOT_PREEXPOSED"
         if role == "core1a":
