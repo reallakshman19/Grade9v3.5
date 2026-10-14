@@ -1,4 +1,4 @@
-name: IMO217 O1 Core2 SVG projection accessibility diagnostic (NOT acceptance)
+name: IMO217 O1 safe preattempt SVG stage-label review (NOT acceptance)
 
 on:
   push:
@@ -21,7 +21,7 @@ permissions:
   contents: read
 
 jobs:
-  reproduce-shared-stage-figure-description-loss:
+  verify-safe-scrub-and-generic-authored-stage-labels:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -42,15 +42,15 @@ jobs:
           python Shared/tools/render_core.py build \
             --manifest TEST/products/imo182-qrt-d3-explain.manifest.json \
             --out build/imo182-qrt/d3/explain --mode PAGES --reference --draft
-      - name: Record source SVG description lost through Core2A/B stage projection in actual learner Chromium
+      - name: Verify protected-W metadata scrub and flag generic authored Stage 1 label in actual Chromium
         run: |
           python TEST/imo-research/qrt-d3-successor/core2b_o1_figure_diagnostic_217.py
-          echo 'NOTE: success means O1 accessibility defect reproduced; it is NOT a page acceptance.'
-      - name: Archive native page, source-to-DOM blocker JSON and pinned renderer receipt
+          echo 'NOTE: success confirms safe preattempt redaction and generic authored stage-label RISK; not QRT/accessibility acceptance.'
+      - name: Archive native page, protected-W stage-label risk JSON and pinned renderer receipt
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: imo217-o1-core2-stage-svg-metadata-accessibility-blocker
+          name: imo217-o1-core2-safe-preattempt-stage-label-review
           path: |
             build/imo182-qrt/d3/explain/core1a.html
             build/imo182-qrt/d3/explain/core2a.html
