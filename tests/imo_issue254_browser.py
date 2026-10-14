@@ -37,7 +37,17 @@ def main():
                 assert diagnosis.get_attribute("hidden") is not None
                 assert not solution.is_visible()
                 assert not diagnosis.is_visible()
+                first_hint = page.locator("#hint1-" + qid)
+                second_hint = page.locator("#hint2-" + qid)
+                assert first_hint.is_visible(), qid
+                assert second_hint.get_attribute("hidden") is not None, qid
+                assert not second_hint.is_visible(), qid
                 card.scroll_into_view_if_needed()
+                # Tier 2 is gated until Tier 1 is intentionally requested.
+                card.locator(".qb-disclosure").first.locator("summary").first.click()
+                first_hint.locator("summary").click()
+                second_hint.wait_for(state="visible")
+                assert not solution.is_visible(), qid
                 button.click()
                 assert not solution.is_visible(), f"{qid} leaked on empty commitment"
                 assert attempt.get_attribute("aria-invalid") == "true"
