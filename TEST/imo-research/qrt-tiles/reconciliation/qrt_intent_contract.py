@@ -251,9 +251,13 @@ def validate_payload(source: dict, manifest: dict, matrix: dict,
 
 
 def compile_contract(authority_root: Path, source_root: Path,
-                     witness_path: Path, ledger_path: Path) -> dict:
+                     witness_path: Path, ledger_path: Path, cell_id: str) -> dict:
     matrix, templates, _ = canonical(authority_root)
-    witness = read_json(witness_path)
+    witness_bank = read_json(witness_path)
+    matches = [item for item in witness_bank.get("witnesses", [])
+               if item.get("cell_id") == cell_id]
+    ensure(len(matches) == 1, "EXACT_WITNESS_REQUIRED", cell_id)
+    witness = matches[0]
     rows = read_json(ledger_path).get("rows", [])
     cell = witness.get("cell_id")
     row = next((x for x in rows if x.get("cell_id") == cell), None)
@@ -302,12 +306,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--authority-root", type=Path, default=Path("."))
     parser.add_argument("--source-root", type=Path, required=True)
+    parser.add_argument("--cell-id", required=True)
     parser.add_argument("--witness-file", type=Path, required=True)
     parser.add_argument("--adoption-ledger", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     contract = compile_contract(args.authority_root, args.source_root,
-                                args.witness_file, args.adoption_ledger)
+                                args.witness_file, args.adoption_ledger,
+                                args.cell_id)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(contract, indent=2, ensure_ascii=False) + "\n",
                         encoding="utf-8")
