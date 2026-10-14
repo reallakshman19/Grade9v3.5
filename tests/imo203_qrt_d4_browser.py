@@ -49,15 +49,21 @@ with sync_playwright() as p:
                 commit_exit = exit_card.locator('button[data-g9-commit]').first
                 locked_answer = exit_card.locator('details[data-requires-attempt]').first
                 assert locked_answer.count() == 1
-                assert not locked_answer.is_visible(), "Core1A exit answer visible before attempt"
+                answer_payload = locked_answer.locator('[data-g9-payload-slot]').first
+                # The collapsed "Model answer" summary is a valid visible control;
+                # it is NOT a disclosure. Check actual contents, not is_visible().
+                assert locked_answer.get_attribute("open") is None
+                assert not answer_payload.text_content().strip(), "Core1A exit payload existed before attempt"
                 commit_exit.click()
-                assert not locked_answer.is_visible(), "Core1A blank exit unlocked model answer"
+                assert not answer_payload.text_content().strip(), "Core1A blank exit hydrated answer"
+                assert locked_answer.get_attribute("open") is None, "Blank exit opened answer"
                 response.fill("Odd squares modulo16 are 1 or 9; 9 has an odd root and 5 does not. Both reduce to1 modulo4.")
                 commit_exit.click()
-                assert locked_answer.is_visible(), "Core1A nonblank exit did not unlock answer disclosure"
-                if locked_answer.get_attribute("open") is None:
-                    locked_answer.locator("summary").click()
-                assert "9" in locked_answer.inner_text()
+                assert "9 is an odd square modulo16" in answer_payload.text_content(), "Nonblank exit did not hydrate answer"
+                assert locked_answer.get_attribute("open") is None, "Core1A answer opened without explicit choice"
+                locked_answer.locator("summary").click()
+                assert locked_answer.get_attribute("open") is not None, "Model answer not disclosed on learner request"
+                assert "9 is an odd square modulo16" in locked_answer.inner_text()
                 page.screenshot(path=str(screens/"core1a-after-attempt.png"),full_page=True)
             # Oversized drawings must scroll locally, not make the whole page unusable.
             if role=="core2a" and width==1280:
