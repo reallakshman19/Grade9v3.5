@@ -57,8 +57,17 @@ jobs:
           git add public/test/imo-grade9/core2.html
           git add docs/test/imo-grade9/core2.html
           git diff --cached --stat
-          git diff --cached --quiet && { echo "ERROR: stale generated outputs"; exit 1; }
-          git commit -m "build(imo): regenerate all four protected 260-question research endpoints"
+          # An unchanged, deterministic re-build is success, not stale output.
+          # All four endpoints must be tracked and present at the exact head.
+          git ls-files --error-unmatch standalone/mathematics-imo-grade9-master-suite.html \
+            public/standalone/mathematics-imo-grade9-master-suite.html \
+            public/test/imo-grade9/core2.html \
+            docs/test/imo-grade9/core2.html
+          if git diff --cached --quiet; then
+            echo "Four generated endpoints are already byte-identical to HEAD"
+          else
+            git commit -m "build(imo): regenerate all four protected 260-question research endpoints"
+          fi
           git rev-parse HEAD
       - name: Capture generated HTML SHA-256 and deterministic build
         shell: bash
