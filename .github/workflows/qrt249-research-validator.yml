@@ -11,6 +11,8 @@ on:
       - 'tests/test_imo_qrt_standalone_gate.py'
       - 'Shared/tools/imo_qrt_canonical_evidence.py'
       - 'tests/test_imo_qrt_canonical_evidence.py'
+      - 'Shared/tools/imo_qrt_core_relationships.py'
+      - 'tests/test_imo_qrt_core_relationships.py'
       - 'TEST/imo-qrt-validator/**'
       - '.github/workflows/qrt249-research-validator.yml'
   workflow_dispatch:
@@ -123,6 +125,31 @@ jobs:
           assert d['native_product_admission'] == 'NOT_GRANTED'
           print('Native QRT evidence adapter: 260/260 research records correctly held; 0 invented native admissions')
           PY
+      - name: Core relationship independent synthetic falsifiers
+        run: python -m unittest discover -s tests -p 'test_imo_qrt_core_relationships.py' -v
+      - name: Real research Core1A/Core1B to 260 question mapping audit
+        shell: bash
+        run: |
+          set +e
+          python Shared/tools/imo_qrt_core_relationships.py --baseline-sha "$GITHUB_SHA" --output build/imo-qrt-249/core-relationships.json
+          rc=$?
+          set -e
+          CORE_REL_RC="$rc" python - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=json.loads(Path('build/imo-qrt-249/core-relationships.json').read_text(encoding='utf-8'))
+          assert d['question_count']==260
+          assert d['core1a_count']==d['core1b_count']==d['paired_units']==20
+          assert len(d['questions'])==260
+          assert d['academic_approval']=='NOT_GRANTED'
+          assert all(q['native_core_admission']=='NOT_GRANTED' for q in d['questions'])
+          assert os.environ['CORE_REL_RC']==('1' if d['status']=='FAIL' else '0')
+          kinds=('EXPLICIT_UNIT_ID','TOPIC_NAV_ONLY','UNDECLARED_TOPIC_FALLBACK','NO_CORE_UNITS_AT_ROUTED_FOLDER')
+          assert sum(d['relationship_counts'].get(k,0) for k in kinds)==260
+          print('Research 20 unit pairs × 260 Core2 records, no auto-approved concept links')
+          print('Relationship counts:', d['relationship_counts'])
+          print('Structural findings:',len(d['structural_findings']))
+          PY
       - name: Upload validator finding references only
         uses: actions/upload-artifact@v4
         with:
@@ -131,4 +158,5 @@ jobs:
             build/imo-qrt-249/intake.json
             build/imo-qrt-249/standalone-disclosure.json
             build/imo-qrt-249/native-readiness.json
+            build/imo-qrt-249/core-relationships.json
           if-no-files-found: error
