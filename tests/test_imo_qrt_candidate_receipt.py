@@ -70,6 +70,24 @@ class CandidateSourceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "DUPLICATE_QUESTION_ID"):
             _read_bank(json.dumps({"questions": [q(), q()]}).encode(), label="synth")
 
+    def test_double_escaped_numbered_steps_are_a_format_regression(self):
+        old = q()
+        new = copy.deepcopy(old)
+        old["solution"]["derivation"] = "1. Start\n2. Finish"
+        new["solution"]["derivation"] = r"1. Start\n2. Finish"
+        out = compare_source({old["id"]: old}, {new["id"]: new})
+        self.assertEqual(out["status"], "FAIL")
+        self.assertEqual(out["source_custody_drifts"], [])
+        self.assertEqual(out["solution_format_regressions"][0]["candidate_count"], 1)
+
+    def test_latex_neq_command_does_not_trigger_pseudo_newline_rule(self):
+        old = q()
+        new = copy.deepcopy(old)
+        new["solution"]["derivation"] = r"Use x \neq y for distinct numbers."
+        out = compare_source({old["id"]: old}, {new["id"]: new})
+        self.assertEqual(out["solution_format_regressions"], [])
+        self.assertEqual(out["status"], "SOURCE_CUSTODY_PRESERVED")
+
     def test_unreviewed_qrt_reclassification_not_automatic_approval(self):
         old = q()
         new = copy.deepcopy(old)
