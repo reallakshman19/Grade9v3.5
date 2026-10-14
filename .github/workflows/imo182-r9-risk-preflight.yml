@@ -1,0 +1,29 @@
+name: IMO182 R9 risk-ledger preflight (source-safe)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-r9-risk-preflight.yml'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_r9_risk_preflight.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  risk-evidence-no-promotion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fast fail-closed R8 source-pin and QRT HOLD preflight
+        run: |
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/test_qrt_r9_risk_preflight.py
+          python -m unittest discover \
+            -s TEST/imo-research/qrt-tiles/reconciliation \
+            -p test_qrt_r9_risk_preflight.py -v
