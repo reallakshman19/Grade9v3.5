@@ -30,17 +30,17 @@
 
 **Author-proposed five difficulty components (not independent scores):** `concept_model_selection=1`, `representation_translation=1`, `reasoning_chain_length=1`, `algebra_computational_load=0`, `trap_exception_sensitivity=1`; total 4, proposed D2. Challenge each with evidence.
 
-## Candidate B: QRT-MODEL-D2 — **MODEL versus APPLY; learner W preselected**
+## Candidate B: QRT-MODEL-D2 — **MODEL versus APPLY; author-side variable-choice revision remains UNSIGNED**
 
-**Source:** [model.v1.json](../model.v1.json), [manifest](../../../products/imo182-qrt-d2-model.manifest.json). Exact authored source git blob `eabc0626c978989a7a40dcc1d2dd22adf611b359`.
+**Source:** [model.v1.json](../model.v1.json), [manifest](../../../products/imo182-qrt-d2-model.manifest.json). Current revised authored source git blob `db87b5a4a7bc807e0680a64417f2c6ca5ca08cf3`; the original reviewed stem at historical Git blob `eabc0626c978989a7a40dcc1d2dd22adf611b359` explicitly preselected LARGE cups. That initial audit finding remains historical, not erased. A new exact-head native render/evidence run is required; historical screenshot/CI artifacts do not test this revision.
 
-**Current learner primary stem (verbatim):**
+**Revised learner primary stem (verbatim; author-side 14 Oct 2026, NOT qualified review):**
 
-> At a school stall exactly 9 drinks were sold: small cups cost 4 credits each and large cups 7 credits each. The stall collected exactly 48 credits. Choose a variable for the LARGE-cup count, form a one-variable model that links the number sold with the amount collected, solve both counts, and check they are whole and meet both givens.
+> At a school stall exactly 9 drinks were sold: small cups cost 4 credits each and large cups 7 credits each. The stall collected exactly 48 credits. Decide which cup-size count your variable represents, form a one-variable model that links the number sold with the amount collected, solve both counts, and check they are whole and meet both givens.
 
-**Correct independent mathematics:** if `x` large, `9−x` small, then `4(9−x)+7x=48` gives `x=4` large and 5 small; check `4×7+5×4=48` and `4+5=9`. **Changed Core2B:** 11 tickets with prices 5 and 9, claimed 74; `55+4x=74` yields `x=19/4` not an integer, so impossible. Feasible neighbors: 71 (4 premium, 7 ordinary) and 75 (5 premium, 6 ordinary).
+**Correct independent mathematics:** If `x` large, `9−x` small, then `4(9−x)+7x=48` gives `x=4` large and 5 small. Equally if `x` small and `9−x` large, `4x+7(9−x)=48` gives `x=5` small, 4 large; check `4×7+5×4=48` and `4+5=9`. **Changed Core2B:** 11 tickets with prices 5 and 9, claimed 74; `55+4x=74` yields `x=19/4` not an integer, so impossible. Feasible neighbors: 71 (4 premium, 7 ordinary) and 75 (5 premium, 6 ordinary).
 
-**The unresolved question:** The source claims learner-protected W includes **choosing which category x denotes**, but the prompt explicitly says **LARGE-cup count**. The learner may still genuinely **form** the complement `9−x` and weighted total and own a MODEL decision; an independent reviewer must determine whether that is enough to distinguish MODEL from an APPLY exercise.
+**The unresolved academic question after author revision:** The old stem preselected LARGE cups, contradicting the author claim that learners choose the count category; the 14 Oct revision now permits either cup size and the rubric accepts both. An **independent qualified** reviewer must still judge whether selecting the unknown and forming the complement/weighted revenue relation make MODEL the primary D2 demand rather than a familiar APPLY procedure. Assess whether H1/H2/H3 truly protect W. Do **not** mark the warning academically CLEARED or infer acceptance from the changed wording.
 
 **Observed pre-attempt Core2A H2 (actual browser text):**
 

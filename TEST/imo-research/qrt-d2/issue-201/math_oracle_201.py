@@ -110,6 +110,23 @@ class MathD2Oracles(unittest.TestCase):
         self.assertEqual(possible[71],[(7,4)])
         self.assertEqual(possible[75],[(6,5)])
 
+    def test_model_primary_leaves_count_role_to_learner_and_accepts_either_model(self):
+        # Authored source consistency/elementary arithmetic, NOT a qualified
+        # cognitive-demand or five-dimension QRT review.
+        package = json.loads((SOURCE / "model.v1.json").read_text(encoding="utf-8"))
+        q = next(q for q in package["questions"] if q["id"] == "Q-TEST-QRT-MODEL-D2-PRIMARY")
+        self.assertIn("Decide which cup-size count your variable represents", q["stem"])
+        self.assertNotIn("variable for the LARGE-cup count", q["stem"])
+        rubric = " ".join(row["criterion"] for row in q["answer"]["rubric"])
+        self.assertIn("x=4 large", rubric)
+        self.assertIn("x=5 small", rubric)
+        # x can denote either size, giving equivalent physical solutions.
+        large_x = [x for x in range(10) if 4*(9-x) + 7*x == 48]
+        small_x = [x for x in range(10) if 4*x + 7*(9-x) == 48]
+        self.assertEqual(large_x, [4])
+        self.assertEqual(small_x, [5])
+        self.assertEqual((9-large_x[0], large_x[0]), (small_x[0], 9-small_x[0]))
+
     def test_represent_actual_unit_sets_and_reverse_area(self):
         shaded_left={(r,c) for r in range(5) for c in range(2)}
         shaded_top_right={(r,c) for r in range(2) for c in range(2,7)}
