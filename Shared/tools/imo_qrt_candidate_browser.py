@@ -75,7 +75,26 @@ def _run_one(browser, html_path: Path, width: int, out: Path) -> dict:
             notes = page.locator("#att-" + qid)
             if solution.is_visible() or diagnosis.is_visible():
                 raise AssertionError("Uncommitted solution is visible: " + qid)
+            first_hint = page.locator("#hint1-" + qid)
+            second_hint = page.locator("#hint2-" + qid)
+            if first_hint.get_attribute("hidden") is not None:
+                raise AssertionError("Tier1 incorrectly hidden at load: " + qid)
+            if second_hint.get_attribute("hidden") is None or second_hint.is_visible():
+                raise AssertionError("Tier2 available without Tier1: " + qid)
             card.scroll_into_view_if_needed()
+            ladder = card.locator(".qb-support-container > details.qb-disclosure").first
+            ladder.locator("summary").first.click()
+            if not first_hint.is_visible() or second_hint.is_visible():
+                raise AssertionError("Initial hint ladder role drift: " + qid)
+            first_hint.locator("summary").click()
+            second_hint.wait_for(state="visible")
+            if solution.is_visible() or diagnosis.is_visible():
+                raise AssertionError("Hint rung bypassed attempt gate: " + qid)
+            second_hint.locator("summary").click()
+            if not second_hint.get_attribute("open") is not None:
+                raise AssertionError("Tier2 expansion failed: " + qid)
+            if solution.is_visible() or diagnosis.is_visible():
+                raise AssertionError("Tier2 revealed solution before commit: " + qid)
             button.focus()
             page.keyboard.press("Enter")
             if solution.is_visible() or notes.get_attribute("aria-invalid") != "true":
@@ -101,7 +120,8 @@ def _run_one(browser, html_path: Path, width: int, out: Path) -> dict:
                 raise AssertionError("Keyboard details-reopen ineffective: " + qid)
             paths.append({"index": index, "question_id": qid, "empty_refused": True,
                           "punctuation_refused": True, "committed_reveal": True,
-                          "keyboard_toggle": True})
+                          "keyboard_toggle": True,
+                          "tier1_to_tier2": True, "precommit_solution_hidden_after_hints": True})
 
         page.wait_for_function("document.querySelectorAll('.katex').length > 0",
                                timeout=12000)
