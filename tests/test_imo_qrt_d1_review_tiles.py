@@ -261,4 +261,118 @@ class D1EvidenceTiles(unittest.TestCase):
         self.assertEqual(p["academic_decision"],"PENDING")
         self.assertFalse(tile["review"]["automatic_free_response_grading"])
 
+
+    def test_d1_evidence_freshness_detects_stale_or_forged_refs(self):
+        """Cross-record consistency, not a new download/rehash of hosted ZIP bytes."""
+        def errors(t,v,row):
+            problems=[]
+            def same(label,*values):
+                if any(x!=values[0] for x in values[1:]):
+                    problems.append(label)
+            source=t["source"];gen=t["generation"];owner=t["owner"]
+            code=gen["repo_commit_sha"]
+            same("source-commit",source["source_code_commit"],code,
+                 v["head"],row["current_render_exact_head"])
+            same("source-path",v["source"],
+                 "https://github.com/reallakshman19/Grade9v3.5/blob/"
+                 +code+"/"+source["source_path"])
+            same("manifest-path",v["manifest"],
+                 "https://github.com/reallakshman19/Grade9v3.5/blob/"
+                 +code+"/"+gen["manifest_path"])
+            same("source-blob-format",
+                 bool(re.fullmatch(r"[0-9a-f]{40}",source["verified_sha"])),True)
+            run=re.search(r"/runs/([0-9]+)$",gen["exact_head_ci_run"])
+            artifact=re.search(r"/runs/([0-9]+)/artifacts/([0-9]+)$",
+                               gen["artifact_url"])
+            if not run or not artifact or run.group(1)!=artifact.group(1):
+                problems.append("run-artifact-identity")
+            same("run-url",gen["exact_head_ci_run"],v["ci"],
+                 row["current_renderer_ci_run"])
+            same("artifact-url",gen["artifact_url"],v["url"],
+                 row["current_render_artifact"])
+            same("cell-identity",t["cell_id"],v["id"],row["cell_id"])
+            same("technical-status",t["status_dimensions"]["technical"],
+                 v["state"],row["technical_status"])
+            role_shas={x["filename"]:x["sha256"] for x in gen["html"]}
+            if (len(gen["html"])!=6 or set(role_shas)!=set(ROLES) or
+                    not all(re.fullmatch(r"[0-9a-f]{64}",x)
+                            for x in role_shas.values())):
+                problems.append("six-role-digest-shape")
+            same("html-shas",role_shas,dict(v["role_html_sha256"]),
+                 {x["filename"]:x["sha256"]
+                  for x in row["current_html_shas_sha256"]})
+            same("verified-flags",gen["six_html_sha_verified"],
+                 v["renderer_verified"],row["technical_sha6_verified"])
+            same("registry",gen["registry_blob_sha"],v["registry_sha"])
+            same("source-hold",source["source_quality_hold"],
+                 v["source_quality_hold"])
+            same("owner-id",owner["qrt_decision_id"],v["owner_decision_id"],
+                 row["owner_decision_id"])
+            accepted=t["status_dimensions"]["owner_qrt_accepted"]
+            if accepted:
+                if (not owner["qrt_decision_id"] or
+                    owner["qrt_decision"]!="ACCEPT" or
+                    row["qrt_acceptance"]!="ACCEPTED" or
+                    not t["review"]["qualified_reviewer_name"] or
+                    not t["review"]["conflict_declaration"]):
+                    problems.append("ungated-acceptance")
+            elif (owner["qrt_decision"]!="PENDING" or
+                  row["qrt_acceptance"]!="UNACCEPTED" or
+                  owner["qrt_decision_id"] is not None or
+                  v["reviewer"] is not None or
+                  t["review"]["decision"]!="PENDING"):
+                problems.append("pending-disposition")
+            return problems
+
+        by_view={x["id"]:x for x in self.viewer["cells"]}
+        by_band={x["cell_id"]:x for x in self.band["cells"]}
+        for demand in DEMANDS:
+            t=self.tiles[demand]
+            v=by_view[t["cell_id"]];row=by_band[t["cell_id"]]
+            with self.subTest(cell=t["cell_id"]):
+                self.assertEqual(errors(t,v,row),[])
+
+        # Deliberate corruptions must fail even if the old 'verified' flag is True.
+        t=self.tiles["SYNTHESIZE"]
+        v=by_view[t["cell_id"]];row=by_band[t["cell_id"]]
+        def clone(x):
+            return json.loads(json.dumps(x))
+        stale=clone(t)
+        stale["source"]["source_code_commit"]="0"*40
+        self.assertIn("source-commit",errors(stale,v,row))
+        wrong_run=clone(t)
+        wrong_run["generation"]["artifact_url"]=(
+            wrong_run["generation"]["artifact_url"].replace("38427757190",
+                                                             "38427757191"))
+        self.assertIn("run-artifact-identity",errors(wrong_run,v,row))
+        bad_shas=clone(v)
+        bad_shas["role_html_sha256"][0][1]="0"*64
+        self.assertIn("html-shas",errors(t,bad_shas,row))
+        forged_accept=clone(t)
+        forged_accept["status_dimensions"]["owner_qrt_accepted"]=True
+        forged_accept["owner"]["qrt_decision"]="ACCEPT"
+        self.assertIn("ungated-acceptance",errors(forged_accept,v,row))
+
+
+    def test_qualified_academic_handoff_is_source_pinned_and_unsigned(self):
+        packet=TILES/"d1/QUALIFIED-REVIEW-HANDOFF-20261014.md"
+        text=packet.read_text()
+        self.assertIn("source-safe authored TEST review handoff",text)
+        self.assertIn("QUALIFIED_REVIEWER_UNVERIFIED",text)
+        self.assertIn("0/28",text)
+        self.assertIn("## 3. SYNTHESIZE-D1",text)
+        self.assertIn("## 4. JUSTIFY-D1",text)
+        self.assertIn("synthesize-bridge-ablation.v1.json",text)
+        self.assertIn("justify-feedback-review-sheet.v1.json",text)
+        for demand in ("SYNTHESIZE","JUSTIFY"):
+            with self.subTest(demand=demand):
+                t=self.tiles[demand]
+                self.assertEqual(t["review"]["qualified_reviewer_handoff"],
+                                 "d1/QUALIFIED-REVIEW-HANDOFF-20261014.md")
+                self.assertIn(t["source"]["verified_sha"],text)
+                self.assertIn(t["generation"]["artifact_url"],text)
+                self.assertIsNone(t["review"]["qualified_reviewer_name"])
+                self.assertIsNone(t["owner"]["qrt_decision_id"])
+                self.assertEqual(t["owner"]["qrt_decision"],"PENDING")
+
 if __name__=="__main__":unittest.main()
