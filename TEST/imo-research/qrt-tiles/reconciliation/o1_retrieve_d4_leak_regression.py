@@ -180,12 +180,6 @@ class AssetServer(SimpleHTTPRequestHandler):
         return super().translate_path(path)
     def log_message(self,*args):pass
 
-def save_screenshot(root,page,label,role,width,post=False):
-    out=root/"build/imo182/qrt-d4-retrieve"/label/"protected-w-audit"
-    out.mkdir(parents=True,exist_ok=True)
-    dest=out/f"{role}-{width}" + ("-post" if post else "") # no Path + str
-    return dest
-
 def math_proof():
     def classes(n):
         return sorted({(k*k)%n for k in range(1,n,2)})
@@ -244,13 +238,30 @@ def browser(root,kind,guard,reportdir):
                           "() => document.documentElement.scrollWidth <= innerWidth + 2"),
                           f"{kind}/{role}/{width} learner horizontal overflow")
                         check(not errors,f"{kind}/{role}/{width}: CSS/JS error {errors}")
+                        # The old disclosure leak is not in the initially
+                        # collapsed text. Any learner can open this SECONDARY
+                        # teaching disclosure without attempting Core2A. Test
+                        # that authentic preattempt action in BOTH sources.
+                        trap_opened=False
+                        if role=="core1a":
+                            trap=article.locator(
+                                'details[data-g9-secondary="core1a-trap-repair"]')
+                            check(trap.count()==1,
+                                  "Core1A real optional mistake clinic not found")
+                            check(not trap.evaluate("(e)=>e.open"),
+                                  "Core1A mistake clinic unexpectedly opens initially")
+                            trap.locator("summary").click()
+                            check(trap.evaluate("(e)=>e.open"),
+                                  "learner cannot open ungated Core1A mistake clinic")
+                            trap_opened=True
                         visible=article.inner_text()
                         aria=article.aria_snapshot()
                         matches=guard.cue_matches(visible+" "+aria)
                         observation={"role":role.upper(),"width":width,
                           "real_renderer_page":True,"site_stylesheets_loaded":True,
                           "golden_blueprint_ref":BP[role],
-                          "protected_iff_cues":matches}
+                          "protected_iff_cues":matches,
+                          "pre_Core2A_ungated_mistake_clinic_opened":trap_opened}
                         if role in ("core1","core1a","core1b"):
                             if kind=="old" and role=="core1a":
                                 if matches:old_leaks.append((role,width,matches))
