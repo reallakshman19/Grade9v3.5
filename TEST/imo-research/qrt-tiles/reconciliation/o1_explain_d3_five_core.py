@@ -290,14 +290,17 @@ def browser_roles(root: Path, out: Path):
                                 ensure(article.get_attribute("data-attempted") != "1",
                                        "Core2A blank attempt unlocks")
                                 rung = article.locator("[data-g9-ladder]").first
-                                ensure(rung.locator('[data-g9-rung="1"]').count() >= 1
-                                       and rung.locator('[data-g9-rung="2"]').count() >= 1,
-                                       "Core2A H1/H2 absent")
+                                ensure(rung.locator('[data-g9-rung="1"]').count() >= 1,
+                                       "Core2A first authored hint rung absent")
                                 rec["h1_text"] = rung.locator(
                                     '[data-g9-rung="1"]').first.inner_text()
                                 advance = article.locator("[data-g9-next-rung]").first
-                                ensure(advance.count() == 1, "Core2A progressive H2 absent")
+                                ensure(advance.count() == 1, "Core2A progressive H2 trigger absent")
+                                # H2 is progressively inserted by the actual page script.
+                                # It need not exist in the DOM until requested.
                                 advance.click()
+                                ensure(rung.locator('[data-g9-rung="2"]').count() >= 1,
+                                       "Core2A second hint did not appear after learner request")
                                 rec["h2_precommit_text"] = rung.locator(
                                     '[data-g9-rung="2"]').first.inner_text()
                                 gate = article.locator("details[data-requires-attempt]").filter(
