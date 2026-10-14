@@ -15,11 +15,11 @@ import threading
 from functools import partial
 from http.server import ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import sync_playwright
 
-from qrt_intent_contract import BP, ROLES, ensure, read_json, sha256
+from qrt_intent_contract import BP, ROLES, blob_hash, ensure, read_json, resolve_under, sha256
 from qrt_intent_w_path_audit import RootAssets
 
 NAV_ROUTES = {
@@ -42,6 +42,48 @@ def classify_assisted_return(navigation: dict) -> list[str]:
     if not navigation["source_attempt_restored"]:
         hits.append("CORE2A_SOURCE_ATTEMPT_NOT_RESTORED_ON_RETURN")
     return hits
+
+
+
+def _same_local_anchor(href: str | None, filename: str, unit_id: str) -> bool:
+    """Require a local role file and exact selected record fragment."""
+    if not isinstance(href, str) or not isinstance(unit_id, str):
+        return False
+    target = urlsplit(href)
+    return (not target.scheme and not target.netloc
+            and target.path in (filename, "./" + filename)
+            and unquote(target.fragment) == unit_id)
+
+
+def classify_target_identity(observed: dict) -> list[str]:
+    """One-way falsifiers: a link's existence never proves a safe return.
+
+    These checks are conditional on an actual native link being present; when
+    a link is entirely absent, classify_assisted_return reports that gap.
+    No human-academic / independent-work verdict is inferred.
+    """
+    problems = []
+    qid = observed["expected_primary_question_id"]
+    concept = observed["expected_concept_id"]
+    if observed["source_question_id"] != qid:
+        problems.append("NAV_SOURCE_QUESTION_ID_DRIFT")
+    if observed["observed_concept_id"] != concept:
+        problems.append("NAV_CONCEPT_ID_NOT_PINNED_SELECTION")
+    if observed["context_link_present"] and (
+            observed["context_link_count"] != 1
+            or observed["context_concept_ref"] != concept
+            or not _same_local_anchor(
+                observed["context_href"], "core1a.html", concept)):
+        problems.append("NAV_CONTEXT_LINK_WRONG_CONCEPT_OR_ORIGIN")
+    if observed["return_link_present"] and (
+            observed["return_link_count"] != 1
+            or observed["return_question_ref"] != qid
+            or not _same_local_anchor(
+                observed["return_href"], "core2a.html", qid)):
+        problems.append("NAV_RETURN_LINK_WRONG_QUESTION_OR_ORIGIN")
+    if observed["return_state_assisted"] and observed["return_state_independent"]:
+        problems.append("NAV_ASSISTED_RETURN_FALSE_INDEPENDENT_CREDIT")
+    return problems
 
 
 def verify_role(page, role: str) -> None:
@@ -103,6 +145,17 @@ def test_navigation(browser, source_root: Path, output: Path,
                     contract: dict) -> dict:
     ensure(contract.get("native_evidence", {}).get("all_role_structure") ==
            "PASS", "P2_NAV_NEEDS_P1_PROOF")
+    provenance = contract["provenance"]
+    manifest_path = resolve_under(source_root, provenance["manifest_path"])
+    ensure(blob_hash(manifest_path) == provenance["manifest_git_blob"],
+           "P2_NAV_MANIFEST_SOURCE_SHA_CHANGED")
+    manifest = read_json(manifest_path)
+    selected = manifest["selection"]["microtopics"]
+    ensure(len(selected) == 1 and
+           manifest["selection"]["core2a"] ==
+           [contract["source_crux"]["primary"]["question_id"]],
+           "P2_NAV_SOURCE_MANIFEST_QUESTION_DRIFT")
+    expected_concept = selected[0]
     for role in ROLES:
         digest = contract["native_evidence"]["roles"][role]["native_sha256"]
         ensure(sha256(output / (role.lower() + ".html")) == digest,
@@ -136,10 +189,12 @@ def test_navigation(browser, source_root: Path, output: Path,
         ensure(qid == contract["source_crux"]["primary"]["question_id"],
                "P2_NAV_PRIMARY_QID_NOT_RENDERED")
         links = source.locator("a[data-g9-concept-link]")
-        contextual = links.count() > 0
+        context_count = links.count()
+        contextual = context_count > 0
         entry_concept_refs = links.evaluate_all(
             "els => els.map(e => e.getAttribute('data-g9-concept-ref'))"
         )
+        context_href = links.first.get_attribute("href") if contextual else None
         # Use a nonanswer placeholder to test browser draft preservation, not
         # mathematical success; writing an answer is NEVER academic evidence.
         draft = "NAVIGATION_SENTINEL_NOT_A_LEARNER_MATH_ANSWER"
@@ -159,7 +214,10 @@ def test_navigation(browser, source_root: Path, output: Path,
         concept = page.locator("article[data-g9-unit]").first
         concept_id = concept.get_attribute("data-g9-unit")
         targeted = page.locator("a[data-g9-practice-link][data-g9-return-link]")
-        targeted_exist = targeted.count() > 0
+        targeted_count = targeted.count()
+        targeted_exist = targeted_count > 0
+        return_href = targeted.first.get_attribute("href") if targeted_exist else None
+        return_ref = targeted.first.get_attribute("data-g9-return-link") if targeted_exist else None
         practice_count = page.locator("a[data-g9-practice-link]").count()
         if targeted_exist:
             link = targeted.first
@@ -181,7 +239,25 @@ def test_navigation(browser, source_root: Path, output: Path,
         # This is the native Core2A article's assisted marker, distinct from
         # the legacy CORE2 per-question state shape.
         marked = source_return.get_attribute("data-g9-assisted") == "1"
+        independent = source_return.get_attribute("data-g9-independent") == "1"
         restored = source_return.locator("textarea[data-g9-attempt]").first.input_value() == draft
+        target_state = {
+            "expected_primary_question_id": contract["source_crux"]["primary"]["question_id"],
+            "source_question_id": qid,
+            "expected_concept_id": expected_concept,
+            "observed_concept_id": concept_id,
+            "context_link_present": contextual,
+            "context_link_count": context_count,
+            "context_concept_ref": entry_concept_refs[0] if contextual else None,
+            "context_href": context_href,
+            "return_link_present": targeted_exist,
+            "return_link_count": targeted_count,
+            "return_question_ref": return_ref,
+            "return_href": return_href,
+            "return_state_assisted": marked,
+            "return_state_independent": independent,
+        }
+        target_findings = classify_target_identity(target_state)
         # Read only flags, avoid storing learner/proprietary question text.
         contextual_result = {
             "primary_question_id": qid,
@@ -195,6 +271,12 @@ def test_navigation(browser, source_root: Path, output: Path,
             "native_concept_practice_link_count": practice_count,
             "return_state_assisted": marked,
             "source_attempt_restored": restored,
+            "target_identity_expected_concept": expected_concept,
+            "target_identity_findings": target_findings,
+            "target_identity_proven": (
+                contextual and targeted_exist and not target_findings and marked
+                and restored and not independent),
+            "attempt_submitted_before_concept_navigation": False,
             "manual_shell_route_is_not_independent_mastery": True,
             "academic_verdict": "NOT_RUN",
         }
@@ -207,6 +289,7 @@ def test_navigation(browser, source_root: Path, output: Path,
                 sum(len(v["route"]) - 1 for v in path_results.values()) + 2,
             "assisted_return": contextual_result,
             "observed_integrity_gaps": classify_assisted_return(contextual_result),
+            "target_identity_findings": target_findings,
             "independence_from_return_visit": False,
             "qualified_semantic_review": "NOT_RUN",
             "owner_acceptance": False,
