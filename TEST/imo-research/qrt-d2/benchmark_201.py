@@ -90,6 +90,17 @@ def browser_check(html: str, role: str, demand: str, browser) -> dict:
                 raise AssertionError("CORE2A_H2_PRECOMMIT_ANSWER_LEAK:" + ",".join(h2_leaks))
             result["precommit_hint_2_visible_text"] = h2_lines
             result["h2_before_commit"] = "VISIBLE_AND_SENTINEL_SAFE"
+        if role == "core1a" and demand == "retrieve":
+            # The independent 8x15-m exit requires the learner to compute
+            # 17m (diagonal) and 23m (two-edge route). The visible concept
+            # quick check must not pre-fill either result before the attempt.
+            quick = page.locator('[data-g9-block="independent_check"]')
+            if quick.count() != 1:
+                raise AssertionError("CORE1A_RETRIEVE_PREEXIT_QUICK_CHECK_MISSING")
+            preexit_text = quick.inner_text()
+            if re.search(r"(?:17|23)\s*m\b", preexit_text, flags=re.I):
+                raise AssertionError("CORE1A_RETRIEVE_EXIT_ANSWER_LEAK_IN_VISIBLE_QUICK_CHECK")
+            result["core1a_retrieve_exit_quickcheck"] = "CHANGED_EXIT_ANSWERS_NOT_PREEXPOSED"
         if role == "core1a":
             # The previous native benchmark compared CORE1A golden slots but
             # did NOT exercise its learner page. Test any real stage controls
