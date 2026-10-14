@@ -279,6 +279,13 @@ def in_viewport(root,reportdir):
                                 require("Decide which cup-size count your variable represents" in stem,
                                         "actual native core2a stem still fixes count variable")
                                 result["learner_variable_role_choice_visible"]=True
+                        # Screenshot of the untouched learner state comes before
+                        # any staged hint, commit or post-attempt revelation.
+                        initial_shot=reportdir/"screenshots"/f"{role}-{width}-initial.png"
+                        initial_shot.parent.mkdir(parents=True,exist_ok=True)
+                        page.screenshot(path=str(initial_shot),full_page=True,
+                                        animations="disabled")
+                        result["initial_screenshot_sha256"]=sha(initial_shot)
                         if width==390 and role!="core1":
                             gates=article.locator("details[data-g9-reveal][data-requires-attempt]")
                             require(gates.count()>=1,
@@ -355,10 +362,11 @@ def in_viewport(root,reportdir):
                                 result["postattempt_h3"]=True
                         require(not errors and not failed,
                                 f"{role}/{width}: actual CSS/runtime requests/errors {errors} {failed}")
-                        snap=reportdir/"screenshots"/f"{role}-{width}-initial.png"
-                        snap.parent.mkdir(parents=True,exist_ok=True)
-                        page.screenshot(path=str(snap),full_page=True,animations="disabled")
-                        result["screenshot_sha256"]=sha(snap)
+                        if width==390 and role!="core1":
+                            review_shot=reportdir/"screenshots"/f"{role}-{width}-after-response.png"
+                            page.screenshot(path=str(review_shot),full_page=True,
+                                            animations="disabled")
+                            result["after_response_screenshot_sha256"]=sha(review_shot)
                         observations.append(result)
                         page.close()
             finally:b.close()
