@@ -281,7 +281,7 @@ def probe_postcommit_native(context, base: str, qid: str, concept_id: str) -> di
         page.close()
 
 
-def test_navigation(browser: source_root: Path, output: Path,
+def test_navigation(browser, source_root: Path, output: Path,
                     contract: dict) -> dict:
     ensure(contract.get("native_evidence", {}).get("all_role_structure") ==
            "PASS", "P2_NAV_NEEDS_P1_PROOF")
