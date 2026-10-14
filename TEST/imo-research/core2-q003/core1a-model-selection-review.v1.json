@@ -1,0 +1,174 @@
+{
+  "schema": "imo-core1a-model-selection-review-candidate/v1",
+  "date_utc": "2026-10-14",
+  "issue": 183,
+  "question_ref": "SOF-IMO-G09-L1-2023-24-A-Q003",
+  "origin": "AUTHORED",
+  "scope": "ISOLATED_TEST_ACADEMIC_PROPOSAL_ONLY",
+  "academic_status": "PROVISIONAL_NOT_INDEPENDENTLY_REVIEWED",
+  "owner_qrt_status": "NOT_ACCEPTED",
+  "source_rights_status": "NOT_GRANTED",
+  "native_integration": "NOT_CONNECTED",
+  "intended_primary_demand": "MODEL",
+  "intended_band": "D2",
+  "purpose": "Test selecting a governing model against an alternative from new authored observations, before any computation of a source original answer.",
+  "original_item_data_included": false,
+  "assumptions": [
+    "Coordinates are ordered input-output pairs (x, y).",
+    "Choose only between the two declared candidate relations for the displayed observations.",
+    "A consistent candidate fits more observations, not an unproved universal rule."
+  ],
+  "worked_anchor": {
+    "id": "AUTH-IMO-Q003-MODEL-CHOICE-WORKED-01",
+    "origin": "AUTHORED",
+    "purpose": "Identify why two rival models survive early observations but later evidence distinguishes them.",
+    "student_prompt": "For the new ordered pairs (1, 10), (3, 18), (5, 34), (7, 36), choose which candidate relation is supported by three of the four pairs. Show which observation disambiguates the two candidates and which observation is exceptional. State why two agreeing pairs alone are insufficient.",
+    "candidates": [
+      {
+        "id": "W-LINEAR",
+        "kind": "LINEAR",
+        "formula": "y = 4x + 6",
+        "slope": 4,
+        "intercept": 6
+      },
+      {
+        "id": "W-SQUARE",
+        "kind": "SQUARE_OFFSET",
+        "formula": "y = x^2 + 9",
+        "offset": 9
+      }
+    ],
+    "pairs": [
+      [
+        1,
+        10
+      ],
+      [
+        3,
+        18
+      ],
+      [
+        5,
+        34
+      ],
+      [
+        7,
+        36
+      ]
+    ],
+    "teacher_answer": {
+      "chosen_model_id": "W-SQUARE",
+      "predicted_outputs": {
+        "W-LINEAR": [
+          10,
+          18,
+          26,
+          34
+        ],
+        "W-SQUARE": [
+          10,
+          18,
+          34,
+          58
+        ]
+      },
+      "matched_indices": {
+        "W-LINEAR": [
+          0,
+          1
+        ],
+        "W-SQUARE": [
+          0,
+          1,
+          2
+        ]
+      },
+      "first_discriminating_index": 2,
+      "exception_index": 3,
+      "reasoning": "Both candidate models fit the first two observations. The third supports the square-offset model but rejects the linear one. The final observation rejects the otherwise three-of-four square-offset rule. Matching finitely many observations does not prove a universal relation."
+    }
+  },
+  "independent_exit": {
+    "id": "AUTH-IMO-Q003-MODEL-CHOICE-EXIT-01",
+    "origin": "AUTHORED",
+    "purpose": "Select or reject a governing relation before computing its exception, with the opposite model winning from the worked case.",
+    "student_prompt": "A different set of ordered input-output pairs is (0, 3), (3, 12), (5, 18), (7, 49). Select the better-supported relation from the two candidates, using the observations as evidence. Explain which pair distinguishes the candidates, which pair does not obey the better-supported relation, and why a fit on only the first two pairs is inadequate. Make your selection before stating the exceptional pair.",
+    "candidates": [
+      {
+        "id": "E-LINEAR",
+        "kind": "LINEAR",
+        "formula": "y = 3x + 3",
+        "slope": 3,
+        "intercept": 3
+      },
+      {
+        "id": "E-SQUARE",
+        "kind": "SQUARE_OFFSET",
+        "formula": "y = x^2 + 3",
+        "offset": 3
+      }
+    ],
+    "pairs": [
+      [
+        0,
+        3
+      ],
+      [
+        3,
+        12
+      ],
+      [
+        5,
+        18
+      ],
+      [
+        7,
+        49
+      ]
+    ],
+    "teacher_answer": {
+      "chosen_model_id": "E-LINEAR",
+      "predicted_outputs": {
+        "E-LINEAR": [
+          3,
+          12,
+          18,
+          24
+        ],
+        "E-SQUARE": [
+          3,
+          12,
+          28,
+          52
+        ]
+      },
+      "matched_indices": {
+        "E-LINEAR": [
+          0,
+          1,
+          2
+        ],
+        "E-SQUARE": [
+          0,
+          1
+        ]
+      },
+      "first_discriminating_index": 2,
+      "exception_index": 3,
+      "reasoning": "Both candidates fit the first two observations; only the linear candidate also fits the third. The fourth observed output differs from the linear prediction of 24, so it is the exception. The successful candidate changes relative to the worked example, which prevents always choosing the square-offset form."
+    }
+  },
+  "review_questions": [
+    "Does Q003's authentic protected learner W demand model-selection as the primary act, as R4 MODEL-D2 proposes?",
+    "Are both candidate models plausible at the first two authored observations and genuinely distinguished by later evidence?",
+    "Does the changed winning model in the exit test actual transfer, or is additional unprompted model generation needed?",
+    "Would placing any of these examples before the original Q003 first attempt disclose that original W? Assess actual route timing.",
+    "If qualified review accepts a MODEL-D2 lesson, what native construction/exit updates and golden/browser gates are required?"
+  ],
+  "limits": [
+    "Only a conditional academic proposal; not connected to the existing Core1A records or private renderer manifest.",
+    "No genuinely independent qualified reviewer or Owner QRT verdict is claimed.",
+    "Finite samples support a candidate among the stated models; they do not prove uniqueness among all possible functions.",
+    "No source original question stem, options, keyed answer, figure or publisher PDF copied."
+  ]
+}
