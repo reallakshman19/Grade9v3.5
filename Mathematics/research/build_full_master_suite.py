@@ -284,7 +284,33 @@ def main():
 
     # Extract distinct facets for filtering
     papers = ["All Papers", "2025-26 Set A", "2025-26 Set B", "2024-25 Set B", "2023-24 Set A", "2026-27 Sample"]
-    topics = sorted(list(set(q["topic_name"] for q in unified_questions)))
+
+    # Normalize display topic labels to avoid duplicates from typographical variance (e.g. straight vs curly quotes)
+    def norm_topic_label(s: str) -> str:
+        return s.replace("’", "'").replace("‘", "'").strip()
+
+    topic_counts = {}
+    display_topics_map = {}
+    for q in unified_questions:
+        raw_name = q["topic_name"]
+        norm_name = norm_topic_label(raw_name)
+        if norm_name not in display_topics_map:
+            display_topics_map[norm_name] = norm_name
+        topic_counts[norm_name] = topic_counts.get(norm_name, 0) + 1
+
+    display_topics = sorted(list(display_topics_map.values()))
+
+    # Calculate counts for difficulty bands and cognitive demands
+    band_counts = {}
+    for q in unified_questions:
+        b = q["band"]
+        band_counts[b] = band_counts.get(b, 0) + 1
+
+    demand_counts = {}
+    for q in unified_questions:
+        d = q["demand"]
+        demand_counts[d] = demand_counts.get(d, 0) + 1
+
     bands = ["D1", "D2", "D3", "D4"]
     demands = ["RETRIEVE", "EXPLAIN", "APPLY", "MODEL", "REPRESENT", "SYNTHESIZE", "JUSTIFY"]
 
@@ -1039,10 +1065,10 @@ def main():
         <!-- Difficulty Row -->
         <div class="filter-chips-row">
           <span class="chip-label">Difficulty:</span>
-          <span class="filter-chip" data-filter="band" data-val="D1" onclick="toggleFilter('band', 'D1')">🌱 D1 (Foundations)</span>
-          <span class="filter-chip" data-filter="band" data-val="D2" onclick="toggleFilter('band', 'D2')">⚡ D2 (Standard Olympiad)</span>
-          <span class="filter-chip" data-filter="band" data-val="D3" onclick="toggleFilter('band', 'D3')">🔥 D3 (Hard Olympiad)</span>
-          <span class="filter-chip" data-filter="band" data-val="D4" onclick="toggleFilter('band', 'D4')">💎 D4 (Achievers Section)</span>
+          <span class="filter-chip" data-filter="band" data-val="D1" onclick="toggleFilter('band', 'D1')">🌱 D1 (Foundations) (47)</span>
+          <span class="filter-chip" data-filter="band" data-val="D2" onclick="toggleFilter('band', 'D2')">⚡ D2 (Standard Olympiad) (121)</span>
+          <span class="filter-chip" data-filter="band" data-val="D3" onclick="toggleFilter('band', 'D3')">🔥 D3 (Hard Olympiad) (34)</span>
+          <span class="filter-chip" data-filter="band" data-val="D4" onclick="toggleFilter('band', 'D4')">💎 D4 (Achievers Section) (8)</span>
         </div>
 
         <!-- Cognitive Demands Row -->
@@ -1051,7 +1077,8 @@ def main():
 """)
 
     for d in demands:
-        html_parts.append(f"""          <span class="filter-chip" data-filter="demand" data-val="{d}" onclick="toggleFilter('demand', '{d}')">{d}</span>\n""")
+        cnt = demand_counts.get(d, 0)
+        html_parts.append(f"""          <span class="filter-chip" data-filter="demand" data-val="{d}" onclick="toggleFilter('demand', '{d}')">{d} ({cnt})</span>\n""")
 
     html_parts.append("""        </div>
 
@@ -1060,8 +1087,9 @@ def main():
           <span class="chip-label">Topic:</span>
 """)
 
-    for top in topics:
-        html_parts.append(f"""          <span class="filter-chip" data-filter="topic" data-val="{html.escape(top)}" onclick="toggleFilter('topic', '{html.escape(top)}')">{html.escape(top)}</span>\n""")
+    for top in display_topics:
+        cnt = topic_counts.get(norm_topic_label(top), 0)
+        html_parts.append(f"""          <span class="filter-chip" data-filter="topic" data-val="{html.escape(top)}" onclick="toggleFilter('topic', '{html.escape(top)}')">{html.escape(top)} ({cnt})</span>\n""")
 
     html_parts.append("""        </div>
 
@@ -1369,12 +1397,37 @@ def main():
       bar.style.display = hasFilters ? 'flex' : 'none';
     }
 
+    function normTopic(str) {
+      if (!str) return '';
+      return str.replace(/[\u2018\u2019]/g, "'").replace(/\s+/g, ' ').trim().toLowerCase();
+    }
+
+    function normalizeSearchText(str) {
+      if (!str) return '';
+      return str.toLowerCase()
+        .replace(/[\u2018\u2019]/g, "'")
+        .replace(/[\u201C\u201D]/g, '"')
+        .replace(/[\u2013\u2014]/g, '-')
+        .replace(/[$_{}\\]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function matchTokens(searchBlob, rawQuery) {
+      const normQuery = normalizeSearchText(rawQuery);
+      if (!normQuery) return true;
+      const tokens = normQuery.split(' ').filter(t => t.length > 0);
+      const normBlob = normalizeSearchText(searchBlob);
+      return tokens.every(token => normBlob.includes(token));
+    }
+
     function applyFilters() {
       const searchInput = document.getElementById('qb-search-input');
-      const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      const query = searchInput ? searchInput.value : '';
 
       const questions = document.querySelectorAll('.qb-question');
       let visibleCount = 0;
+      const activeTopicNorm = activeFilters.topic ? normTopic(activeFilters.topic) : null;
 
       questions.forEach(q => {
         const qPaper = q.getAttribute('data-paper');
@@ -1394,17 +1447,12 @@ def main():
         if (activeFilters.demand && qDemand !== activeFilters.demand) {
           match = false;
         }
-        if (activeFilters.topic && qTopic !== activeFilters.topic) {
+        if (activeTopicNorm && normTopic(qTopic) !== activeTopicNorm) {
           match = false;
         }
 
-        if (match && query) {
-          try {
-            const regex = new RegExp(query, 'i');
-            if (!regex.test(qSearch)) match = false;
-          } catch(e) {
-            if (!qSearch.includes(query)) match = false;
-          }
+        if (match && query.trim()) {
+          if (!matchTokens(qSearch, query)) match = false;
         }
 
         if (match) {
@@ -1417,7 +1465,11 @@ def main():
 
       const counter = document.getElementById('result-counter');
       if (counter) {
-        counter.textContent = `Showing ${visibleCount} of ${questions.length} questions`;
+        if (query.trim() || (activeFilters.paper && activeFilters.paper !== 'ALL') || activeFilters.band || activeFilters.demand || activeFilters.topic) {
+          counter.innerHTML = `Showing <strong>${visibleCount}</strong> of ${questions.length} questions <span class="filter-matched-badge" style="display:inline-block;margin-left:8px;background:rgba(56,189,248,0.15);color:var(--accent);padding:2px 8px;border-radius:12px;font-size:0.88rem">Filtered</span>`;
+        } else {
+          counter.textContent = `Showing all ${questions.length} questions`;
+        }
       }
     }
 
@@ -1459,10 +1511,17 @@ def main():
 </html>
 """)
 
-    out_file = Path("standalone/mathematics-imo-grade9-master-suite.html")
+    out_files = [
+        Path("standalone/mathematics-imo-grade9-master-suite.html"),
+        Path("public/standalone/mathematics-imo-grade9-master-suite.html"),
+        Path("public/test/imo-grade9/core2.html"),
+        Path("docs/test/imo-grade9/core2.html")
+    ]
     full_html = "".join(html_parts)
-    out_file.write_text(full_html, encoding="utf-8")
-    print(f"Saved {len(full_html)} bytes to {out_file}.")
+    for out_file in out_files:
+        out_file.parent.mkdir(parents=True, exist_ok=True)
+        out_file.write_text(full_html, encoding="utf-8")
+        print(f"Saved {len(full_html)} bytes to {out_file}.")
 
 if __name__ == '__main__':
     main()
