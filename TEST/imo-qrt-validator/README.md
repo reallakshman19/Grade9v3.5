@@ -50,3 +50,23 @@ V5: exhaustive 260-record ledger with applicable V01-V28 decisions, frozen indep
 V6: one independent full-scope convergence with the separately owned content-repair lane.
 
 Protocol Common engineering-pr-delivery-v3.6 has an Owner-approved AIM label and label-bound plan prerequisite for managed lifecycle/child-evidence automation. No work-specific label is yet approved for #249. This draft implementation does not claim v3.6 managed lifecycle completion, nor merge, academic acceptance or product release.
+
+
+## Current V-lane implementation map: four independent inspectors
+
+- `Shared/tools/imo_qrt_validator.py`: six-bank / 260 denominator, five-factor metadata and stale audit. Structural findings; **never academic pass**.
+- `Shared/tools/imo_qrt_standalone_gate.py`: actual rendered 260-card HTML, three pre-attempt answer disclosures and parity of four standalone output bytes. **FAIL** on source PR #240 original builder; no renderer is replaced.
+- `Shared/tools/imo_qrt_canonical_evidence.py`: calls existing canonical QRT resolver and Blueprint role contract only when genuine reasoning route, profile and role evidence are available. **Never synthesizes native authority** from a research label.
+- `Shared/tools/imo_qrt_core_relationships.py`: reads builder's deployed topic mapping via AST, all 20 paired research Core1A/Core1B units and all 260 research question IDs. Distinguishes explicit linked_core2_refs from topic-only navigation, missing subtopic evidence, and proposal differences. No automatic academic interpretation or mass relabeling.
+
+Verified source relationship baseline at [Actions run 38621864341](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38621864341): **20 matched unit pairs; 260 unique questions; 83 explicit question links, 177 topic-navigation-only, four explicit unit/question PROPOSED QRT differences**. Five paired Core1B files omit a declared subtopic found in Core1A; later code labels this absence CORE1B_SUBTOPIC_UNDECLARED, not a proven concept conflict. The builder also emits unqualified research "CERTIFIED"/"Authenticated" labels; source/Owner-native certification is unverified. [Initial full evidence artifact](https://github.com/reallakshman19/Grade9v3.5/actions/runs/38621864341/artifacts/11921244008).
+
+Commands from the exact checked-out source tree:
+
+    python -m unittest discover -s tests -p 'test_imo_qrt_validator.py' -v
+    python -m unittest discover -s tests -p 'test_imo_qrt_standalone_gate.py' -v
+    python -m unittest discover -s tests -p 'test_imo_qrt_canonical_evidence.py' -v
+    python -m unittest discover -s tests -p 'test_imo_qrt_core_relationships.py' -v
+    python Shared/tools/imo_qrt_core_relationships.py --baseline-sha "$GIT_SHA" --output build/imo-qrt-249/core-relationships.json
+
+A real-report FAIL is correct when the research evidence is deficient. The hosted synthetic tests prove falsifier behavior, not mathematical acceptance. The content/code fixer is a separate assignment [#254](https://github.com/reallakshman19/Grade9v3.5/issues/254). See the single-read [concept map on main](https://github.com/reallakshman19/Grade9v3.5/blob/main/conceptmap.md). No mixed file ownership.
