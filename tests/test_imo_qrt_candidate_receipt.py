@@ -1,0 +1,84 @@
+"""Independent candidate source-custody falsifiers; no original question text."""
+import copy
+import json
+import unittest
+
+from Shared.tools.imo_qrt_candidate_receipt import compare_source, _read_bank
+
+
+def q():
+    return {
+        "id": "SYN-001", "stem": "Synthetic stem", "options": {"A": "1", "B": "2"},
+        "answer": {"choice": "B"}, "paper_origin_locator": {"paper": "SYN", "question_number": 1},
+        "figure_ref": "synthetic.svg", "hint_ladder": {"hint1_conceptual_nudge": "What relation?"},
+        "solution": {"derivation": "Synthetic check"},
+        "cognitive_classification": {"qrt_cell": "QRT-APPLY-D2"},
+    }
+
+
+class CandidateSourceTests(unittest.TestCase):
+    def test_authored_solution_correction_preserves_source(self):
+        old = q()
+        new = copy.deepcopy(old)
+        new["solution"]["derivation"] = "Corrected reasoning"
+        new["hint_ladder"]["hint1_conceptual_nudge"] = "Find the invariant."
+        report = compare_source({old["id"]: old}, {new["id"]: new})
+        self.assertEqual(report["status"], "SOURCE_CUSTODY_PRESERVED")
+        self.assertEqual(report["authored_changes"][0]["academic_review"], "REVIEW_REQUIRED")
+        self.assertEqual(report["source_custody_drifts"], [])
+
+    def test_original_stem_drift_requires_owner_authority(self):
+        old = q()
+        new = copy.deepcopy(old)
+        new["stem"] = "Silently changed source"
+        report = compare_source({old["id"]: old}, {new["id"]: new})
+        self.assertEqual(report["status"], "FAIL")
+        self.assertEqual(report["source_custody_drifts"][0]["field"], "stem")
+
+    def test_option_order_and_identity_are_protected(self):
+        old = q()
+        new = copy.deepcopy(old)
+        new["options"] = {"B": "2", "A": "1"}
+        self.assertEqual(compare_source({old["id"]: old}, {new["id"]: new})["status"], "FAIL")
+
+    def test_answer_key_may_not_drift_without_review(self):
+        old = q()
+        new = copy.deepcopy(old)
+        new["answer"]["choice"] = "A"
+        self.assertIn("answer", [f["field"] for f in
+            compare_source({old["id"]: old}, {new["id"]: new})["source_custody_drifts"]])
+
+    def test_figure_ref_and_source_locator_preserved(self):
+        old = q()
+        new = copy.deepcopy(old)
+        new["figure_ref"] = None
+        new["paper_origin_locator"]["paper"] = "DIFFERENT"
+        self.assertEqual({f["field"] for f in compare_source(
+            {old["id"]: old}, {new["id"]: new})["source_custody_drifts"]},
+                         {"figure_ref", "paper_origin_locator"})
+
+    def test_replaced_question_ids_fail(self):
+        old = q()
+        new = copy.deepcopy(old)
+        new["id"] = "SYN-002"
+        result = compare_source({old["id"]: old}, {new["id"]: new})
+        self.assertEqual(result["status"], "FAIL")
+        self.assertEqual(result["removed_ids"], ["SYN-001"])
+        self.assertEqual(result["added_ids"], ["SYN-002"])
+
+    def test_duplicate_bank_id_fails_closed(self):
+        with self.assertRaisesRegex(ValueError, "DUPLICATE_QUESTION_ID"):
+            _read_bank(json.dumps({"questions": [q(), q()]}).encode(), label="synth")
+
+    def test_unreviewed_qrt_reclassification_not_automatic_approval(self):
+        old = q()
+        new = copy.deepcopy(old)
+        new["cognitive_classification"]["qrt_cell"] = "QRT-JUSTIFY-D4"
+        r = compare_source({old["id"]: old}, {new["id"]: new})
+        self.assertEqual(r["status"], "SOURCE_CUSTODY_PRESERVED")
+        self.assertIn("cognitive_classification", r["authored_changes"][0]["fields"])
+        self.assertEqual(r["authored_changes"][0]["academic_review"], "REVIEW_REQUIRED")
+
+
+if __name__ == "__main__":
+    unittest.main()
