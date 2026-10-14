@@ -114,7 +114,11 @@ def audit(*, root: Path = ROOT, baseline_sha: str,
                 explicit[ref].append(uid)
         if len(refs) != len(set(str(x) for x in refs)):
             defects.append({"rule": "CORE2_DUPLICATE_LINK_IN_UNIT", "ref": uid})
-        if a.get("subtopic") != b.get("subtopic") or a.get("topic") != b.get("topic"):
+        if a.get("topic") and b.get("topic") and a["topic"] != b["topic"]:
+            defects.append({"rule": "CORE1A_CORE1B_CONCEPT_ID_MISMATCH", "ref": uid})
+        if a.get("subtopic") and not b.get("subtopic"):
+            defects.append({"rule": "CORE1B_SUBTOPIC_UNDECLARED", "ref": uid})
+        elif a.get("subtopic") and b.get("subtopic") and a["subtopic"] != b["subtopic"]:
             defects.append({"rule": "CORE1A_CORE1B_CONCEPT_ID_MISMATCH", "ref": uid})
         if (a.get("target_band"), a.get("target_demand")) != (b.get("target_band"), b.get("target_demand")):
             defects.append({"rule": "CORE1A_CORE1B_QRT_TARGET_MISMATCH", "ref": uid})
