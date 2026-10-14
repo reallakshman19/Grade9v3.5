@@ -4,6 +4,7 @@ on:
     paths:
       - '.github/workflows/imo182-r8-qrt-intent-contract.yml'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json'
       - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_intent_contract.py'
   workflow_dispatch:
@@ -74,11 +75,67 @@ jobs:
           assert r["falsifier"]["specific_source_cue_observed"]
           print("R8 P0 four exact-source contracts PASS; known method cue falsified; 20 role semantics NOT_RUN; 0 Owner/academic acceptances")
           PY
+      - name: Install existing native renderer schema dependencies (no substitute renderer)
+        run: python -m pip install --quiet jsonschema
+      - name: Build four exact authored source versions using ONLY the registered Core renderer
+        run: |
+          set -euo pipefail
+          for row in \
+            "source-explain-d3|TEST/products/imo182-qrt-d3-explain.manifest.json|explain-d3" \
+            "source-model-d2|TEST/products/imo182-qrt-d2-model.manifest.json|model-d2" \
+            "source-retrieve-d2|TEST/products/imo182-qrt-d2-retrieve.manifest.json|retrieve-d2" \
+            "source-retrieve-d4|TEST/products/imo203-qrt-d4-retrieve.manifest.json|retrieve-d4"; do
+            IFS='|' read -r root manifest cell <<< "$row"
+            (
+              cd "$root"
+              python Shared/tools/render_core.py gaps --manifest "$manifest" --reference
+              python Shared/tools/render_core.py build --manifest "$manifest" --out "build/imo182-qrt/r8/$cell" --mode PAGES --reference --draft
+            )
+          done
+      - name: P1 verify 20 real native Core HTML SHAs and immutable five-role golden structural comparisons
+        run: |
+          set -euo pipefail
+          for row in \
+            "source-explain-d3|explain-d3" \
+            "source-model-d2|model-d2" \
+            "source-retrieve-d2|retrieve-d2" \
+            "source-retrieve-d4|retrieve-d4"; do
+            IFS='|' read -r root cell <<< "$row"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py \
+              --contract "build/imo182-r8-intent/$cell.json" \
+              --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "build/imo182-r8-intent/$cell-native.json"
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = sorted(Path('build/imo182-r8-intent').glob('*-native.json'))
+          assert len(files) == 4
+          r = [json.loads(p.read_text()) for p in files]
+          assert all(x["native_evidence"]["all_role_structure"] == "PASS" for x in r)
+          assert sum(len(x["native_evidence"]["roles"]) for x in r) == 20
+          assert all(v["engineering_native_structure"] == "PASS"
+                     and v["engineering"] == "NOT_RUN"
+                     and v["semantic"] == "NOT_RUN"
+                     for x in r for v in x["roles"].values())
+          assert all(x["qualified_academic_review"] == "PENDING"
+                     and x["owner_qrt_acceptance"] == "PENDING" for x in r)
+          print("R8 P1 20 native Core pages and five frozen role structures per cell PASS; W/browser/maths NOT_RUN; Owner 0/28")
+          PY
       - name: Keep review hypothesis evidence and immutable original source/manifest fingerprints
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: imo182-r8-qrt-intent-contract-four-pinned-P0
-          path: build/imo182-r8-intent/*.json
+          path: |
+            build/imo182-r8-intent/*.json
+            source-explain-d3/build/imo182-qrt/r8/explain-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/explain-d3/render-receipt.json
+            source-model-d2/build/imo182-qrt/r8/model-d2/*.html
+            source-model-d2/build/imo182-qrt/r8/model-d2/render-receipt.json
+            source-retrieve-d2/build/imo182-qrt/r8/retrieve-d2/*.html
+            source-retrieve-d2/build/imo182-qrt/r8/retrieve-d2/render-receipt.json
+            source-retrieve-d4/build/imo182-qrt/r8/retrieve-d4/*.html
+            source-retrieve-d4/build/imo182-qrt/r8/retrieve-d4/render-receipt.json
           if-no-files-found: warn
           retention-days: 30
