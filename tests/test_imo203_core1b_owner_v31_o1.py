@@ -73,7 +73,7 @@ class Core1BRegisteredOwnerGoldenO1(unittest.TestCase):
             self.assertEqual(sum('data-g9-payload-ref="'+ref+'"' in g for g in gates),1)
             self.assertIn('data-g9-payload="'+ref+'"',self.actual)
         self.assertIn('data-g9-attempt-stage="boundary"',self.actual)
-        self.assertEqual(self.actual.count('data-g9-payload-slot'),2)
+        self.assertEqual(self.actual.count('<div data-g9-payload-slot'),2)
         self.assertFalse(self.pkg["extensions"]["grade9v3:qrt_admitted"])
         self.assertFalse(self.pkg["extensions"]["grade9v3:learner_published"])
 
