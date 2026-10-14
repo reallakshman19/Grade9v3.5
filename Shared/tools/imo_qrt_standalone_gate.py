@@ -79,6 +79,10 @@ class DisclosureObserver(HTMLParser):
             self.card["attempt_box"] = True
         if tag == "details" and (a.get("id") or "").startswith("sol-disc-"):
             self.card["solution_details"] += 1
+            # Closed <details> remains directly user-openable via its summary.
+            # The solution must be initially hidden until a committed attempt.
+            if "hidden" not in a:
+                self.card["findings"].append("SOLUTION_DIRECTLY_OPENABLE_BEFORE_ATTEMPT")
 
     def handle_data(self, data: str) -> None:
         if self.summary is not None:
