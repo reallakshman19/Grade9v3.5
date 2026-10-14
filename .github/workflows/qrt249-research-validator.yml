@@ -1,4 +1,4 @@
-name: QRT249 research validator (expected-failure baseline)
+name: QRT249 source-bound standalone assurance (baseline or repair)
 
 on:
   push:
@@ -57,29 +57,45 @@ jobs:
           PY
       - name: Standalone pre-attempt disclosure mutation tests
         run: python -m unittest discover -s tests -p 'test_imo_qrt_standalone_gate.py' -v
-      - name: Real rendered HTML and four-endpoint negative control
+      - name: Actual standalone HTML baseline falsifier or post-repair evidence gate
         shell: bash
         run: |
           set +e
           python Shared/tools/imo_qrt_standalone_gate.py --baseline-sha "$GITHUB_SHA" --output build/imo-qrt-249/standalone-disclosure.json
           rc=$?
           set -e
-          if [ "$rc" != "1" ]; then
-            echo "Uncorrected standalone HTML must NOT be accepted"
-            exit 1
-          fi
-          python - <<'PY'
+          QRT_HTML_RC="$rc" python - <<'PY'
           import json
+          import os
           from pathlib import Path
+          import subprocess
           data = json.loads(Path('build/imo-qrt-249/standalone-disclosure.json').read_text(encoding='utf-8'))
-          assert data['status'] == 'FAIL'
           assert data['scope'] == 'RESEARCH_STANDALONE_HTML_ONLY'
           assert len(data['endpoints']) == 4
-          assert data['rendered']['question_count'] == 260
-          assert data['rendered']['findings']['PREATTEMPT_CORRECT_OPTION_EMPHASIZED'] > 0
-          assert data['rendered']['findings']['PREATTEMPT_ANSWER_IN_VISIBLE_SOLUTION_SUMMARY'] > 0
+          assert data['rendered']['question_count'] == data['rendered']['unique_question_ids'] == 260
           assert data['academic_verdict'] == 'REVIEW_REQUIRED'
-          print('Known answer-disclosure failures detected; four output receipts recorded')
+          source_blob = subprocess.check_output(
+              ['git','hash-object','Mathematics/research/build_full_master_suite.py'], text=True
+          ).strip()
+          baseline_blob = '6bbcc547b25ce0af5b3de5a7f367c5460420227c'
+          if source_blob == baseline_blob:
+              # This SHA is the exact known-defective builder, not an arbitrary workflow expectation.
+              assert os.environ['QRT_HTML_RC'] == '1'
+              assert data['status'] == 'FAIL'
+              for key in (
+                  'PREATTEMPT_CORRECT_OPTION_EMPHASIZED',
+                  'PREATTEMPT_ANSWER_IN_VISIBLE_SOLUTION_SUMMARY',
+                  'SOLUTION_DIRECTLY_OPENABLE_BEFORE_ATTEMPT',
+              ):
+                  assert data['rendered']['findings'].get(key) == 260, key
+              print('Known pinned builder correctly falsified across 260 question cards')
+          else:
+              # Any edited builder must generate genuinely safe, synchronized HTML.
+              assert os.environ['QRT_HTML_RC'] == '0'
+              assert data['status'] == 'REVIEW_REQUIRED'
+              assert not data['hard_findings'] and not data['rendered']['findings']
+              assert len({row['sha256'] for row in data['endpoints']}) == 1
+              print('Modified builder: 260 question cards, four byte-identical HTML outputs, zero structural disclosures; academic HOLD retained')
           PY
       - name: Upload validator finding references only
         uses: actions/upload-artifact@v4
