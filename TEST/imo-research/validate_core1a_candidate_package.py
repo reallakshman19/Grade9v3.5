@@ -148,10 +148,28 @@ def validate_package(package: Path = PACKAGE) -> dict:
            and rep.get("source_refs") == [S]
            and rep.get("relation_refs") == [R]
            and len(rep.get("required_elements",[])) == 5
-           and len(rep.get("correspondence",[])) == 2
+           and len(rep.get("correspondence",[])) == 4
            and rep.get("scene_instances") == []
            and rep.get("rendered_asset_refs") == [],
            "only the proposed verbal/symbolic representation exists; no live figure claim")
+    expected_correspondence = [
+        ("n modulo 3 has three rows: 0,1,2.", "n mod 3 ∈ {0,1,2}"),
+        ("For residue 0, n is divisible by 3.", "n"),
+        ("For residue 1, n+2 is divisible by 3.", "n+2"),
+        ("For residue 2, n+1 is divisible by 3.", "n+1"),
+    ]
+    correspondences = rep.get("correspondence", [])
+    ensure(
+        [(row.get("element"), row.get("symbol")) for row in correspondences]
+        == expected_correspondence
+        and all(row.get("element") in rep["required_elements"]
+                and str(row.get("in_words", "")).strip()
+                for row in correspondences)
+        and rep["required_elements"][-1]
+        == "Parity guarantee shown independently, not blended with the modulo-3 table.",
+        "residue correspondence must map every required row to its correct "
+        "guaranteed factor and preserve the separate parity warrant",
+    )
     ensure(family.get("capability_refs") == [C] and
            family.get("item_refs") == [],
            "authored conceptual family may not claim reviewed source questions")
