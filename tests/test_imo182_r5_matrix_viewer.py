@@ -40,6 +40,23 @@ class ReconciledMatrixViewerTest(unittest.TestCase):
                 self.assertEqual(r["manifest"]["git_blob_sha"], p["manifest"]["git_blob_sha"])
                 self.assertTrue(r["review_url"].startswith("https://github.com/reallakshman19/Grade9v3.5/"))
 
+    def test_educational_holds_and_d3_source_watch_match_ledger(self):
+        source = {r["cell_id"]: r for r in self.ledger}
+        self.assertEqual(sum(bool(r["classification_hold"]) for r in self.rows),
+                         sum(bool(r["critical_educational_review_hold"]) for r in self.ledger))
+        for row in self.rows:
+            with self.subTest(cell=row["id"]):
+                expected = source[row["id"]]
+                self.assertEqual(row["classification_hold"], expected["critical_educational_review_hold"])
+                self.assertEqual(row["educational_hold_reason"], expected.get("educational_hold_reason"))
+                self.assertEqual(row["source_supersession_watch"], expected.get("source_supersession_watch"))
+        synth = next(r for r in self.rows if r["id"] == "QRT-SYNTHESIZE-D3")
+        self.assertTrue(synth["classification_hold"])
+        self.assertIn("a8168bb41f7133e40e3bcaa1389562361d68901e",
+                      json.dumps(synth["source_supersession_watch"]))
+        self.assertIn("New D3 source successor (CI-gated)", self.html)
+        self.assertIn("Transfer closure is authored metadata", self.html)
+
     def test_not_falsely_adopted_or_source_exposed(self):
         self.assertIn("Original Q003", self.html)
         self.assertIn("Academic reviewer + conflict declaration", self.html)
