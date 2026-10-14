@@ -212,6 +212,10 @@ show("QRT-EXPLAIN-D3");
 
 def main():
     inv=load(SRC/"m0-adoption.v1.json")
+    supersession=load(SRC/"synthesize-source-supersession.v1.json")
+    need(supersession["cell"]=="QRT-SYNTHESIZE-D3"
+         and supersession["original_source_head"]==inv["pinned_source_head"]
+         and supersession["qrt_accepted"] is False, "unauthorized source revision")
     archives=load(SRC/"historical-held-receipts.v1.json")
     m1=load(ROOT/"build/imo182-qrt/d3-successor/m1-evidence.v1.json")
     need(m1["quality_claim"]=="M1_NATIVE_STRUCTURAL_ONLY","M1 not verified")
@@ -226,7 +230,13 @@ def main():
     for row in inv["all_7_cells"]:
         d=row["demand"];cell=row["cell"]
         source=ROOT/row["source_path"];manifest=ROOT/row["manifest_path"]
-        need(blob(source)==row["source_blob_sha"],cell+" source changed")
+        actual_blob=blob(source)
+        if d=="synthesize":
+            need(supersession["original_source_blob_sha"]==row["source_blob_sha"]
+                 and actual_blob==supersession["corrected_source_blob_sha"],
+                 "SYNTHESIZE source must equal PR221 one-field fix")
+        else:
+            need(actual_blob==row["source_blob_sha"],cell+" source changed")
         need(blob(manifest)==row["manifest_blob_sha"],cell+" manifest changed")
         pkg=load(source);man=load(manifest)
         need(man["selection"]["core2"]==[] and pkg["extensions"]["grade9v3:qrt_admitted"] is False,"source custody issue")
@@ -242,7 +252,7 @@ def main():
         else:
             need(mr["build"]=="NATIVE_RENDER_RECEIPT_AND_GOLDEN_SLOT_PASS","native not verified")
             hashes=mr["page_sha256"]
-            tech="M1_NATIVE_STRUCTURAL_PASS__ACADEMIC_PENDING"
+            tech="M1_NATIVE_CORRECTED_SOURCE_PASS__ACADEMIC_PENDING" if d=="synthesize" else "M1_NATIVE_STRUCTURAL_PASS__ACADEMIC_PENDING"
         need(len(hashes)==6 and all(len(v)==64 for v in hashes.values()),cell+" SHA incomplete")
         roles=[{"role":role,"registered_blueprint":BP[role],
            "page_sha256":hashes[role.lower()+".html"],
@@ -259,7 +269,10 @@ def main():
              "academic_review":"PENDING_INDEPENDENT","owner_qrt_accepted":False,
              "owner_golden_designated":False,"release":"NOT_AUTHORIZED"},
           "source":{"classification":"AUTHORED_TEST","path":row["source_path"],
-                    "verified_sha":row["source_blob_sha"],"custody":"WHOLLY_AUTHORED_TEST_ONLY",
+                    "verified_sha":actual_blob,
+                    "original_pr193_git_blob_sha":row["source_blob_sha"],
+                    "supersession_pr":221 if d=="synthesize" else None,
+                    "custody":"WHOLLY_AUTHORED_TEST_ONLY",
                     "rights":"AUTHORED_TEST_ONLY_NO_PUBLIC_CORE2","question_stem_embedded":False},
           "cognitive":{"X":COGNITIVE_MOVES[d]["X"],
                        "Y":"NOT_OBSERVED_NO_LEARNER_PROFILE",
@@ -274,7 +287,14 @@ def main():
              "manifest_path":row["manifest_path"],"manifest_blob_sha":row["manifest_blob_sha"],
              "renderer_version":"render_core/2","registry_blob_sha":inv["blueprint_registry_git_blob"],
              "mode":"PAGES","held_to":"REFERENCE","gaps":0 if not held else "HISTORIC_ZERO_GAPS_ONLY",
-             "historical_artifact_url":row["historical_scoped_workflow"]+"/artifacts/"+str(row["historical_artifact_id"]),
+             "historical_artifact_url":(
+                  REPO+"/actions/runs/"+str(supersession["corrected_run"])+"/artifacts/"+str(supersession["corrected_artifact_id"])
+                  if d=="synthesize" else
+                  row["historical_scoped_workflow"]+"/artifacts/"+str(row["historical_artifact_id"])),
+             "superseded_legacy_artifact": (
+                 row["historical_scoped_workflow"]+"/artifacts/"+str(row["historical_artifact_id"])
+                 if d=="synthesize" else None),
+             "superseded_legacy_artifact_status":"DO_NOT_ADOPT_WRONG_LABEL" if d=="synthesize" else None,
              "html":[{"name":k,"sha256":v,"verified_context":"M1_CURRENT_NATIVE" if not held else "HISTORIC_PR193_RECEIPT"} for k,v in hashes.items()],
              "six_html_sha_verified":not held},
           "golden":{"kind":"IMMUTABLE_OWNER_SNAPSHOT","id":inv["golden_id"],
@@ -293,7 +313,9 @@ def main():
                    "print_visual_decision_id":None,"release_decision_id":None},
           "viewer":{"tile_json":"tiles/"+d+".json",
                     "packet_url":"reviewer-packets/"+d+".md","links_checked":False},
-          "evidence":{"source_url":REPO+"/blob/"+inv["pinned_source_head"]+"/"+row["source_path"],
+          "evidence":{"source_url":REPO+"/blob/"+(head if d=="synthesize" else inv["pinned_source_head"])+"/"+row["source_path"],
+                      "original_pr193_source_url":REPO+"/blob/"+inv["pinned_source_head"]+"/"+row["source_path"],
+                      "corrected_source_pr":221 if d=="synthesize" else None,
                       "manifest_url":REPO+"/blob/"+inv["pinned_source_head"]+"/"+row["manifest_path"],
                       "math_m0":c[2],"hold":row["status"],
                       "figures":question.get("figure_refs",[])},
