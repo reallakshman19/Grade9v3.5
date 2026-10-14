@@ -60,10 +60,25 @@ class ReconciledNativeArtifactLedgerTest(unittest.TestCase):
             expected = 234 if r["band"] != "D2" else (211 if r["demand"] in ("RETRIEVE", "MODEL") else 214)
             self.assertEqual(r["independent_reviewer_nomination_issue"], expected)
             self.assertIsNone(r["nominated_independent_reviewer"])
-            self.assertIsNone(r["academic_signed_verdict_id"])
+            self.assertIsNone(r["qualified_independent_signed_verdict_id"])
             counts[expected] += 1
         self.assertEqual(counts, {211: 2, 214: 5, 234: 21})
         self.assertEqual(sum(r["critical_educational_review_hold"] for r in self.doc["rows"]), 8)
+
+    def test_justify_d2_ai_content_review_does_not_impersonate_qualified_signature(self):
+        signed = [(r["cell_id"], r["ai_content_review"]) for r in self.doc["rows"]
+                  if r.get("ai_content_review") is not None]
+        self.assertEqual(len(signed), 1)
+        cell, packet = signed[0]
+        self.assertEqual(cell, "QRT-JUSTIFY-D2")
+        self.assertEqual(packet["verdict"], "PASS_MATH_AND_COGNITIVE_D2")
+        self.assertEqual(packet["human_academic_credentials"], "UNVERIFIED")
+        self.assertEqual(packet["owner_qualification_ruling"], "PENDING")
+        self.assertIsNone(packet["owner_cell_decision_id"])
+        self.assertEqual(packet["reviewer_authored_or_fixed_cell"], False)
+        self.assertTrue(packet["source"].startswith("https://github.com/reallakshman19/Common/"))
+        self.assertTrue(all(r["qualified_independent_signed_verdict_id"] is None
+                            for r in self.doc["rows"]))
 
     def test_question_first_d3_classification_holds_are_preserved(self):
         by_id = {r["cell_id"]: r for r in self.doc["rows"]}
