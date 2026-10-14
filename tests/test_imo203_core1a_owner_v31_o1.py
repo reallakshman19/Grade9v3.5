@@ -62,8 +62,11 @@ class Core1AOwnerGoldenO1(unittest.TestCase):
                 self.assertIn(marker, self.golden)
                 self.assertIn(marker, self.actual)
         sequence = re.findall(r'data-g9-component="([A-Z_]+)"', self.actual)
-        indices = [sequence.index(name) for name in COMPONENTS]
-        self.assertEqual(indices, sorted(indices))
+        golden_sequence = re.findall(r'data-g9-component="([A-Z_]+)"', self.golden)
+        # Compare the observable Core1A technique order, not unrelated roles
+        # in the integrated frozen Owner fixture.
+        self.assertEqual([name for name in sequence if name in COMPONENTS],
+                         [name for name in golden_sequence if name in COMPONENTS])
         self.assertIn("Independently classify 5 and9", self.actual)
         self.assertIn("Every odd square is1 modulo8", self.actual)
         self.assertIn('data-g9-figure=""', self.actual)
