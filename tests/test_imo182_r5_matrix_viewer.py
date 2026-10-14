@@ -52,13 +52,15 @@ class ReconciledMatrixViewerTest(unittest.TestCase):
                 self.assertEqual(row["source_supersession_watch"], expected.get("source_supersession_watch"))
                 self.assertEqual(row["independent_reviewer_nomination_issue"], expected["independent_reviewer_nomination_issue"])
                 self.assertIsNone(row["nominated_independent_reviewer"])
-                self.assertIsNone(row["academic_signed_verdict_id"])
+                self.assertIsNone(row["qualified_independent_signed_verdict_id"])
+                self.assertEqual(row["ai_content_review"], expected.get("ai_content_review"))
         synth = next(r for r in self.rows if r["id"] == "QRT-SYNTHESIZE-D3")
         self.assertTrue(synth["classification_hold"])
         self.assertIn("a8168bb41f7133e40e3bcaa1389562361d68901e",
                       json.dumps(synth["source_supersession_watch"]))
         self.assertIn("New D3 source successor (CI-gated)", self.html)
         self.assertIn("Nominate independent reviewer (#", self.html)
+        self.assertIn("Signed AI mathematical-content attestation (not qualified)", self.html)
         self.assertIn("8 / 28", self.html)
         self.assertIn("Transfer closure is authored metadata", self.html)
 
