@@ -257,6 +257,26 @@ def verify(render_root: Path, run_browser: bool) -> dict:
                     golden_components = collect(reference, "data-g9-component")
                     assert slots == golden_slots, f"{role}:SLOT_ORDER_GOLDEN_MISMATCH"
                     assert components == golden_components, f"{role}:COMPONENT_ORDER_GOLDEN_MISMATCH"
+                    # A "data-g9-component" string also appears in the shared CSS,
+                    # so that comparison alone cannot prove the real learner DOM
+                    # preserved its reconstruction sequence. Check the rendered
+                    # Core1B data-g9-block attributes separately against the
+                    # immutable Owner Core1B snapshot.
+                    if role == "core1b":
+                        core1b_blocks = collect(text, "data-g9-block")
+                        golden_core1b_blocks = collect(reference, "data-g9-block")
+                        required_core1b = {
+                            "predict", "attempt_prompt", "reconstruct", "diagnose",
+                            "repair", "success_criteria", "model_response",
+                            "boundary_test", "boundary_answer",
+                        }
+                        assert golden_core1b_blocks, "CORE1B_OWNER_GOLDEN_HAS_NO_REAL_BLOCKS"
+                        assert required_core1b <= set(golden_core1b_blocks), (
+                            "CORE1B_OWNER_GOLDEN_MISSING_REQUIRED_LEARNER_BLOCK"
+                        )
+                        assert core1b_blocks == golden_core1b_blocks, (
+                            "CORE1B_REAL_DOM_BLOCK_ORDER_GOLDEN_MISMATCH"
+                        )
                     # Core2A's H3 policy intentionally changes after the old frozen snapshot.
                     if role == "core2a":
                         assert 'data-g9-after-attempt-hint' in text, "H3_AFTER_ATTEMPT_MISSING"
@@ -276,6 +296,9 @@ def verify(render_root: Path, run_browser: bool) -> dict:
                         "literal_html_equality": "NOT_APPLICABLE_DIFFERENT_QUESTION",
                         "h3_policy": "EXPECTED_POST_GOLDEN_AFTER_ATTEMPT_DELTA" if role == "core2a" else "NOT_APPLICABLE",
                     }
+                    if role == "core1b":
+                        row["role_checks"][role]["real_reconstruction_block_order"] = "MATCH_FROZEN_OWNER_GOLDEN"
+                        row["role_checks"][role]["real_reconstruction_block_count"] = len(core1b_blocks)
                     if browser is not None and role in ("core1a", "core1b", "core2a", "core2b"):
                         outcome = browser_check(text, role, demand, browser)
                         row["role_checks"][role]["browser"] = outcome
