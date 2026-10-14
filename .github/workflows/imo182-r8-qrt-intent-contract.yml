@@ -6,6 +6,7 @@ on:
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_w_path_audit.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_coverage.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json'
       - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_intent_contract.py'
   workflow_dispatch:
@@ -249,6 +250,26 @@ jobs:
                 "structural benchmark packages (15 native role pages), "
                 "0 independent/Owner acceptance")
           PY
+      - name: P4 enumerate all 28 authored QRT cells without manufacturing 19 missing contracts
+        run: |
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_coverage.py \
+            --ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json \
+            --witness-bank TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json \
+            --evidence-dir build/imo182-r8-intent \
+            --out build/imo182-r8-qrt-intent-coverage.v1.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          j=json.loads(Path("build/imo182-r8-qrt-intent-coverage.v1.json").read_text())
+          assert len(j["cells"]) == 28
+          assert (j["contract_validated_proposals"],
+                  j["explicit_rival_declaration_holds"],
+                  j["not_yet_question_specific_contract_tested"]) == (7,2,19)
+          assert j["new_native_role_structural_witnesses"] == 35
+          assert j["qualified_academic_signatures"] == j["owner_accepted_cells"] == 0
+          print("P4 28/28 accounted, 7 validated, 2 blocked, 19 pending;"
+                " academic/Owner zero, no artificial semantic pass")
+          PY
       - name: Keep review hypothesis evidence and immutable original source/manifest fingerprints
         if: always()
         uses: actions/upload-artifact@v4
@@ -256,6 +277,7 @@ jobs:
           name: imo182-r8-qrt-intent-contract-four-pinned-P0
           path: |
             build/imo182-r8-intent/*.json
+            build/imo182-r8-qrt-intent-coverage.v1.json
             source-explain-d3/build/imo182-qrt/r8/explain-d3/*.html
             source-explain-d3/build/imo182-qrt/r8/explain-d3/render-receipt.json
             source-model-d2/build/imo182-qrt/r8/model-d2/*.html
