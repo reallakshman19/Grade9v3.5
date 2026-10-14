@@ -2297,11 +2297,34 @@ def main():
       }
     }
 
-    /* Phone Fallback */
+    /* Phone Fallback — contain header/navigation and scroll long mathematics
+       locally rather than allowing a 320px viewport to expand to ~480px. */
     @media (max-width: 768px) {
       .shell-inner { flex-direction: column; align-items: stretch; gap: 8px; }
+      .shell-inner .brand { width: 100%; min-width: 0; flex-wrap: wrap; }
+      .brand-info { min-width: 0; flex: 1 1 150px; }
+      .brand-title, .brand-badge { white-space: normal; overflow-wrap: anywhere; }
+      .brand-badge { flex: 1 1 100%; }
+      .header-actions { width: 100%; min-width: 0; }
+      .nav-tabs { max-width: 100%; min-width: 0; }
+
+      .qb-question { min-width: 0; padding: 12px; }
+      .qb-stem-box { min-width: 0; padding: 12px; overflow-x: auto; }
+      .qb-disclosure-body { min-width: 0; overflow-x: auto; }
+      .qb-support-container { max-width: 100%; }
+      .qb-filter-panel { min-width: 0; }
+      .qb-option-card { min-width: 0; overflow-wrap: anywhere; padding: 8px; }
       .qb-options-grid { grid-template-columns: 1fr; }
       .qb-top-row { flex-direction: column; }
+
+      .qb-disclosure summary { padding: 10px 12px; gap: 4px; }
+      .qb-disclosure summary > span:first-child {
+        min-width: 0; flex: 1 1 100%; overflow-wrap: anywhere;
+      }
+      .qb-disclosure summary > span:last-child {
+        white-space: normal; min-width: 0; flex: 1 1 100%;
+        margin-left: 0; overflow-wrap: anywhere;
+      }
     }
   </style>
 </head>
