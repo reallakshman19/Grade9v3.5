@@ -11,6 +11,10 @@
   "linked_core2_refs": [
     "SOF-IMO-G09-SAMPLE-2026-27-Q010"
   ],
+  "entry_assumptions": [
+    "Familiarity with triangle angle sum theorem (sum is 180°) and properties of isosceles triangles.",
+    "Understanding of rigid motion isometries (translations, rotations, reflections) preserving side lengths and angle measures."
+  ],
   "inferential_jump": "Distinguish valid triangle congruence criteria (SAS, ASA, AAS, SSS, RHS) from angle-only similarity (AAA), proving by counterexample that equality of all three angles does not imply congruence without at least one corresponding side equality.",
   "relation_refs": {
     "domain": "Euclidean Plane Geometry (R^2)",
@@ -100,5 +104,10 @@
       }
     ],
     "invariant_proved": "Angle equality alone (AAA) establishes similarity, not congruence. Any valid congruence proof requires at least one corresponding side length constraint."
+  },
+  "exit_task": {
+    "prompt": "In ∆ABC and ∆DEF, ∠A = 40°, ∠B = 60°, and BC = 5 cm. In ∆DEF, ∠D = 40°, ∠E = 60°, and EF = 5 cm. Prove whether ∆ABC ≅ ∆DEF and name the exact criterion.",
+    "answer": "In ∆ABC, ∠A = 40°, ∠B = 60°, so ∠C = 180° - (40° + 60°) = 80°. In ∆DEF, ∠D = 40°, ∠E = 60°, so ∠F = 180° - (40° + 60°) = 80°. The side BC = 5 cm is opposite ∠A, and EF = 5 cm is opposite ∠D. Since two angles and a non-included corresponding side are equal (∠A = ∠D, ∠B = ∠E, BC = EF), ∆ABC ≅ ∆DEF by the AAS (Angle-Angle-Side) criterion.",
+    "check": "Verify that since BC = EF = 5 cm and the triangles are equiangular, the scaling ratio k = BC / EF = 1, ensuring all corresponding sides are equal."
   }
 }
