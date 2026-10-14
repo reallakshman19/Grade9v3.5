@@ -627,6 +627,17 @@ jobs:
               z["original_native_assisted_return_status"]=="NOT_RUN"
               for z in x["available_scoped_browser_proof"])]
           assert len(observed)==21 and len(not_observed)==0
+          keyboard=[x for x in r if any(z["name"]==
+             "HELD_COPY_KEYBOARD_VIEWPORT_RELOAD_ISOLATION_QA"
+             for z in x["available_scoped_browser_proof"])]
+          assert len(keyboard)==21
+          assert {x["cell_id"] for x in keyboard}=={x["cell_id"] for x in prototype}
+          assert all(any(z["name"]==
+             "HELD_COPY_KEYBOARD_VIEWPORT_RELOAD_ISOLATION_QA" and
+             z["keyboard_browser_only_not_human_AT_or_WCAG"] is True and
+             z["original_native_renderer_repair"] is False and
+             z["release"]=="HOLD"
+             for z in x["available_scoped_browser_proof"]) for x in keyboard)
           assert all(any(z["name"]==
               "TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL"
               for z in x["available_scoped_browser_proof"]) for x in observed)
