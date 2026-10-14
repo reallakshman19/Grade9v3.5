@@ -43,6 +43,8 @@ class ResearchAttemptFirstTests(unittest.TestCase):
                         self.assertEqual(markup.count('class="qb-option-card"'), 4)
                         self.assertNotIn('correct_style', markup)
                         self.assertNotRegex(markup, r'qb-option-card"[^>]*style="[^"]*--success')
+                        self.assertIn(f'id="hint1-{qid}"', markup)
+                        self.assertIn(f'id="hint2-{qid}" hidden inert', markup)
                         self.assertIn(f'id="att-{qid}"', markup)
                         self.assertIn(f'id="commit-{qid}"', markup)
                         self.assertIn(f'id="feedback-{qid}" aria-live="polite"', markup)
@@ -98,6 +100,8 @@ class ResearchAttemptFirstTests(unittest.TestCase):
 
     def test_commit_guard_and_keyboard_semantics_are_present(self):
         html = self.built[0]
+        self.assertIn('function unlockResearchHint(questionId)', html)
+        self.assertIn("second.removeAttribute('inert');", html)
         self.assertIn('function commitResearchAttempt(questionId)', html)
         self.assertIn('const working = attempt.value.trim();', html)
         self.assertIn("attempt.focus();", html)
