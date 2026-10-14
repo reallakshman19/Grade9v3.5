@@ -191,6 +191,7 @@ def main() -> None:
                 "pr221_intermediate_source_blob": sup["pr221_intermediate_source_blob_sha"],
                 "pr221_intermediate_artifact": "DO_NOT_ADOPT_INCOMPLETE_TRANSFER_LABEL",
                 "second_transfer_label_repair": "SUCCESSOR_ONLY",
+                "transfer_closure_projection": "SOURCE_METADATA_ONLY_NOT_NATIVE_CORE2B_IN_ARCHIVED_RENDER",
                 "corrected_source_blob": actual_source_blob,
             } if demand == "synthesize" else None,
             "manifest_path": row["manifest_path"], "manifest_blob_sha": row["manifest_blob_sha"],
@@ -246,11 +247,13 @@ def main() -> None:
                     "SYNTHESIZE corrected postattempt closure absent from ACTUAL native Core2A HTML")
             require(sup["previous_field_value"] not in core2a,
                     "SYNTHESIZE old REPRESENT label still present in ACTUAL native Core2A HTML")
+            # Unlike main Core2A, native Core2B currently does not project
+            # family_exposure.closure into learner HTML. The transfer's source
+            # metadata must be correct, and the incorrect text must never leak
+            # into generated role HTML, but do not falsely require visibility.
             core2b = (out / "core2b.html").read_text(encoding="utf-8")
-            require(sup["transfer_corrected_field_value"] in core2b,
-                    "SYNTHESIZE corrected divisibility-six transfer closure absent from native Core2B")
             require(sup["transfer_previous_field_value"] not in core2b,
-                    "SYNTHESIZE old geometry marker/intersection label persists in native Core2B")
+                    "SYNTHESIZE stale geometry metadata leaks into native Core2B")
         for role in ("core1b", "core2b"):
             html = (out / (role + ".html")).read_text(encoding="utf-8")
             require("data-g9-commit" in html and "data-requires-attempt" in html,
