@@ -322,9 +322,9 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
       </div>
       
       <!-- CORE 1A: DECLARATIVE STUDY & CONSTRUCTIVE UNIVERSAL PROOF -->
-      <div class="panel" style="margin-bottom:28px;border-left:4px solid var(--accent);padding-left:18px">
+      <div class="panel" style="margin-bottom:28px;border-left:5px solid {palette['primary']};padding-left:18px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <span class="qb-badge qb-badge-qrt" style="font-size:0.88rem">BLUEPRINT BP-CORE1A-CONSTRUCTION</span>
+          <span class="qb-badge" style="background:{palette['bg']};color:{palette['primary']};border:1.5px solid {palette['primary']};font-size:0.88rem;font-weight:800;box-shadow:0 0 10px {palette['glow']}">BLUEPRINT BP-CORE1A-CONSTRUCTION</span>
           <h3 style="font-size:1.25rem;font-weight:800;color:var(--text);margin:0">
             Core 1A · Constructive Universal Proof &amp; Declarative Anchor
           </h3>
@@ -332,9 +332,9 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
     """)
     
     # Conventions & Scope
-    parts.append("""
+    parts.append(f"""
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
-          <h4 style="font-size:0.98rem;font-weight:800;color:var(--accent);margin-bottom:8px">
+          <h4 style="font-size:0.98rem;font-weight:800;color:{palette['primary']};margin-bottom:8px">
             📐 Conventions and Scope &amp; Entry Assumptions
           </h4>
     """)
@@ -357,8 +357,8 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
     
     # Inferential Leap (T02)
     parts.append(f"""
-        <div class="inferential-leap trap-alert" style="border-left:4px solid var(--accent);background:rgba(56,189,248,0.08);margin:16px 0;padding:16px;border-radius:8px">
-          <strong style="color:var(--accent);font-size:1.0rem">⚡ The Inferential Leap (Technique T02):</strong>
+        <div class="inferential-leap trap-alert" style="border-left:5px solid {palette['primary']};background:{palette['bg']};margin:16px 0;padding:16px;border-radius:8px;box-shadow:0 0 14px {palette['glow']}">
+          <strong style="color:{palette['primary']};font-size:1.0rem">⚡ The Inferential Leap (Technique T02):</strong>
           <p style="margin-top:6px;line-height:1.7;font-size:0.95rem;color:var(--text)">
             {format_math_html(inferential_jump)}
           </p>
@@ -539,9 +539,9 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
     # CORE 1B: DUAL-STAGE RECALL & 4-STAGE SELF-TUTOR FLOW
     parts.append(f"""
       <!-- CORE 1B -->
-      <div class="panel" style="border-left:4px solid var(--warning);padding-left:18px">
+      <div class="panel" style="border-left:5px solid {palette['primary']};padding-left:18px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-          <span class="qb-badge qb-badge-{band.lower()}" style="font-size:0.88rem">BLUEPRINT BP-CORE1B-RECONSTRUCTION</span>
+          <span class="qb-badge" style="background:{palette['bg']};color:{palette['primary']};border:1.5px solid {palette['primary']};font-size:0.88rem;font-weight:800;box-shadow:0 0 10px {palette['glow']}">BLUEPRINT BP-CORE1B-RECONSTRUCTION</span>
           <h3 style="font-size:1.25rem;font-weight:800;color:var(--text);margin:0">
             Core 1B · Dual-Stage Recall &amp; 4-Stage Self-Tutor Flow
           </h3>
