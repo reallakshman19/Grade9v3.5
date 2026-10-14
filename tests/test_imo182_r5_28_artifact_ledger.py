@@ -65,6 +65,34 @@ class ReconciledNativeArtifactLedgerTest(unittest.TestCase):
         self.assertEqual(counts, {211: 2, 214: 5, 234: 21})
         self.assertEqual(sum(r["critical_educational_review_hold"] for r in self.doc["rows"]), 8)
 
+    def test_d2_model_choice_repair_native_source_and_academic_hold(self):
+        row = next(r for r in self.doc["rows"] if r["cell_id"] == "QRT-MODEL-D2")
+        self.assertEqual(row["source"]["commit"], "d450d0f0cda25c51c0232db31e6592588634a90b")
+        self.assertEqual(row["source"]["git_blob_sha"], "db87b5a4a7bc807e0680a64417f2c6ca5ca08cf3")
+        self.assertEqual(row["manifest"]["git_blob_sha"], "313320473b91968f599424b30561f035e9089aa8")
+        self.assertEqual(row["artifact"]["id"], 11872590321)
+        self.assertEqual(row["artifact"]["run"], 38517197094)
+        self.assertEqual(row["renderer"]["digest"], "0fb022852fc80858")
+        self.assertEqual(row["renderer"]["semantic_digest"], "480f365c7fb96c57")
+        self.assertTrue(row["critical_educational_review_hold"])
+        self.assertIn("EDUCATIONAL_HOLD", row["technical_adoption_status"])
+        self.assertIn("MODEL vs APPLY", row["educational_hold_reason"])
+        self.assertEqual(row["independent_reviewer_nomination_issue"], 211)
+        self.assertFalse(row["owner_qrta_accepted"])
+        proof = row["model_d2_source_choice_repair_provenance"]
+        self.assertEqual(proof["repair_pr"], 245)
+        self.assertEqual(proof["prior_artifact_id"], 11773779616)
+        self.assertEqual(proof["corrected_artifact_id"], row["artifact"]["id"])
+        self.assertEqual(proof["source_repaired_blob"], row["source"]["git_blob_sha"])
+        self.assertEqual(proof["manifest_unchanged_blob"], row["manifest"]["git_blob_sha"])
+        self.assertEqual(set(proof["prior_six_html_sha256"]), ROLES)
+        self.assertEqual(proof["corrected_six_html_sha256"], row["artifact"]["native_html_sha256"])
+        self.assertTrue(all(proof["prior_six_html_sha256"][k] !=
+                            row["artifact"]["native_html_sha256"][k] for k in ROLES))
+        self.assertEqual(proof["qualified_review_status"], "PENDING_MODEL_D2_VS_APPLY")
+        self.assertTrue(any("DO_NOT_QRT_ADOPT_PRIOR_MODEL_D2_ARTIFACT_11773779616" in n
+                            for n in row["do_not_adopt_original_leaking_or_superseded"]))
+
     def test_d4_retrieve_corrected_native_and_qrt_qualification_hold(self):
         row = next(r for r in self.doc["rows"] if r["cell_id"] == "QRT-RETRIEVE-D4")
         self.assertEqual(row["source"]["commit"], "8ffa008e1bbd03898751af4380762178697fb715")
