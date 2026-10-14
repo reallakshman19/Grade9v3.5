@@ -77,8 +77,10 @@ def coverage(ledger: dict, bank: dict, evidence_dir: Path) -> dict:
                     browser = "SCOPED_PATH_W_AUDIT_HUMAN_REVIEW_REQUIRED"
             else:
                 ensure(report["technical_contract"] == "BLOCKED_RIVAL_REVIEW" and
-                       report.get("blocking_error_code") ==
-                       "RIVAL_NOT_GROUNDED_IN_SOURCE",
+                       report.get("blocking_error_code") in (
+                           "RIVAL_NOT_GROUNDED_IN_SOURCE",
+                           "SOURCE_RIVAL_VOCAB_INVALID",
+                       ),
                        "P4_UNEXPECTED_RIVAL_BLOCK", cid)
                 status = STATUS[1]
                 reviewer_code = report["blocking_error_code"]
