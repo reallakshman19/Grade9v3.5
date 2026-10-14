@@ -41,8 +41,8 @@ def main():
             response=page.goto(base+"/build/imo182-qrt/d3-successor/m3/index.html",wait_until="load")
             assert response and response.status==200
             assert page.locator("button[data-cell]").count()==7
-            assert page.locator("#matrix tbody tr").count()==7
-            assert page.locator("#matrix tbody td").count()==28
+            assert page.locator("#matrix tr").count()==7
+            assert page.locator("#matrix td").count()==28
             assert page.locator("a[href*='/issues/200']").count()>0
             assert page.locator("a[href*='/issues/201']").count()>0
             assert page.locator("a[href*='/issues/203']").count()>0
