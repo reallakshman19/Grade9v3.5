@@ -60,6 +60,56 @@ with sync_playwright() as p:
                     assert protected_word not in prior_visible,(cell,role,"VISIBLE_PREVIEW",protected_word)
                     assert protected_word not in prior_ax,(cell,role,"AX_PREVIEW",protected_word)
             capture_evidence(page,f"{role}-{width}")
+            # Owner v3.1 O1 follow-on: inspect actual registered Core1
+            # orientation, not a hand-composed stand-in for the golden.
+            if cell == "retrieve" and role == "core1" and width == 1280:
+                assert page.locator('body[data-blueprint-ref="BP-CORE1-ORIENTATION@1.1.0"]').count() == 1
+                assert [x.get_attribute("data-g9-block") for x in page.locator('[data-g9-block]').all()] == [
+                    "scope", "hard_transition", "representation_bridge",
+                    "governing_relation", "compact_anchor", "exit_prompt"
+                ]
+                assert page.locator('[data-g9-stage-id]').count() >= 3
+                orientation_text = page.locator("body").inner_text()
+                assert "Independently classify 5 and9" in orientation_text
+                assert_no_protected_iff(orientation_text, "core1-orientation-O1")
+                assert_no_protected_iff(page.locator("body").aria_snapshot(), "core1-orientation-AX-O1")
+
+            # Same registered Core2B transfer page: the changed-modulus answer
+            # stays behind an actual nonblank commitment and explicit opening.
+            if cell == "retrieve" and role == "core2b" and width == 1280:
+                assert page.locator('body[data-blueprint-ref="BP-CORE2B-TRANSFER@1.1.0"]').count() == 1
+                assert page.locator('[data-g9-block="lineage_check"]').count() == 1
+                # These post-attempt teaching blocks live in the sealed
+                # solution <template>, so they must NOT be in the live DOM
+                # before a substantive learner commitment.
+                assert page.locator('[data-g9-block="changed_demand"]').count() == 0
+                assert page.locator('[data-g9-block="independent_check"]').count() == 0
+                gate = page.locator(
+                    'details[data-requires-attempt][data-g9-payload-ref="CORE2B-Q-D4-RETRIEVE-TRANSFER-review"]'
+                )
+                assert gate.count() == 1
+                answer = gate.locator('[data-g9-payload-slot]').first
+                assert gate.get_attribute("open") is None
+                assert not answer.text_content().strip(), "Core2B answer preloaded before attempt"
+                box = page.locator('[data-g9-attempt-box]').first
+                commit = box.locator('button[data-g9-commit]').first
+                commit.click()
+                assert not answer.text_content().strip(), "Core2B blank attempt unlocked transfer answer"
+                assert gate.get_attribute("open") is None
+                box.locator('textarea[data-g9-attempt]').fill(
+                    "Odd square classes modulo4 are 1; 5, 9, 13 all qualify, but 5 fails modulo8."
+                )
+                commit.click()
+                assert page.locator('[data-g9-block="changed_demand"]').count() == 1
+                assert page.locator('[data-g9-block="independent_check"]').count() == 1
+                answer_text = answer.text_content().casefold()
+                assert "5,9,13" in answer_text and "modulo4" in answer_text
+                assert "modulo8" in answer_text
+                assert gate.get_attribute("open") is None, "Core2B disclosure auto-opened"
+                gate.locator("summary").click()
+                assert gate.get_attribute("open") is not None
+                capture_evidence(page, "core2b-after-transfer-attempt")
+
             # Owner v3.1 O1: this is the actual registered Core1A learner
             # page and independent exit, not a separate hand-composed preview.
             if cell == "retrieve" and role == "core1a" and width == 1280:
