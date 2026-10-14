@@ -27,6 +27,10 @@ RIVAL_BLOCKED = frozenset({
     "QRT-REPRESENT-D2",
 })
 BLOCK_CODES = {"RIVAL_NOT_GROUNDED_IN_SOURCE", "SOURCE_RIVAL_VOCAB_INVALID"}
+# R8 compiler holds seven source contracts; two D1 failures are implicit
+# in author metadata, not declared via expected_source_hold_code.
+COMPILER_ONLY_HOLDS = frozenset({"QRT-MODEL-D1", "QRT-SYNTHESIZE-D1"})
+EXPLICIT_HOLD_MARKERS = RIVAL_BLOCKED - COMPILER_ONLY_HOLDS
 OWNER_GOLDEN = "G-IMO-G9-FIVE-CORE-20261012"
 GOLDEN_COMMIT = "6307e5dd97f9ae72a052fc7f3e88c368a4cc5434"
 SHA40 = re.compile(r"[0-9a-f]{40}\Z")
@@ -60,7 +64,9 @@ def verify(ledger: dict, witness_bank: dict) -> dict:
     risk = {k for k, row in rows.items() if row.get("critical_educational_review_hold") is True}
     require(risk == ELEVATED, "R9_EIGHT_ELEVATED_HOLD_DRIFT", repr(sorted(risk ^ ELEVATED)))
     blocked = {k for k, w in witnesses.items() if w.get("expected_source_hold_code")}
-    require(blocked == RIVAL_BLOCKED, "R9_SEVEN_SOURCE_BLOCKS_DRIFT", repr(sorted(blocked ^ RIVAL_BLOCKED)))
+    require(blocked == EXPLICIT_HOLD_MARKERS,
+            "R9_FIVE_EXPLICIT_SOURCE_BLOCK_MARKERS_DRIFT",
+            repr(sorted(blocked ^ EXPLICIT_HOLD_MARKERS)))
     require(ledger.get("authority") == "v3.1.0 / label_sha 2ff9246" and
             witness_bank.get("authority") == "TEST_PROPOSED_UNREVIEWED",
             "R9_AIM_OR_WITNESS_AUTHORITY_CHANGED")
@@ -109,6 +115,7 @@ def verify(ledger: dict, witness_bank: dict) -> dict:
                 golden.get("semantic_technique_verdict") == "UNREVIEWED",
                 "R9_GOLDEN_SCOPE_OR_STATUS_DRIFT", cid)
     return {"checked": 28, "elevated": 8, "source_blocked": 7,
+            "explicit_hold_markers": 5, "compiler_only_holds": 2,
             "contract_proposals": 21, "independent_approvals": 0,
             "owner_acceptances": 0, "release": "HOLD",
             "source_bytes_verified": False, "native_html_verified": False}
@@ -123,6 +130,7 @@ class R9RiskPreflightTests(unittest.TestCase):
     def test_real_r8_snapshot_passes_without_approving_anyone(self):
         self.assertEqual(verify(self.ledger, self.bank), {
             "checked": 28, "elevated": 8, "source_blocked": 7,
+            "explicit_hold_markers": 5, "compiler_only_holds": 2,
             "contract_proposals": 21, "independent_approvals": 0,
             "owner_acceptances": 0, "release": "HOLD",
             "source_bytes_verified": False, "native_html_verified": False})
@@ -143,7 +151,7 @@ class R9RiskPreflightTests(unittest.TestCase):
         self.reject("R9_EIGHT_ELEVATED_HOLD_DRIFT", lambda a, b: next(x for x in a["rows"] if x["cell_id"] == "QRT-MODEL-D2").update(critical_educational_review_hold=False))
 
     def test_negative_remove_rival_hold(self):
-        self.reject("R9_SEVEN_SOURCE_BLOCKS_DRIFT", lambda a, b: next(x for x in b["witnesses"] if x["cell_id"] == "QRT-REPRESENT-D2").pop("expected_source_hold_code"))
+        self.reject("R9_FIVE_EXPLICIT_SOURCE_BLOCK_MARKERS_DRIFT", lambda a, b: next(x for x in b["witnesses"] if x["cell_id"] == "QRT-REPRESENT-D2").pop("expected_source_hold_code"))
 
     def test_negative_forge_source_blob(self):
         self.reject("R9_SOURCE_MANIFEST_WITNESS_PIN_DRIFT", lambda a, b: a["rows"][0]["source"].update(git_blob_sha="0"*40))
