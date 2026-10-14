@@ -55,7 +55,13 @@ def compare_source(base: dict[str, dict[str, Any]],
     authored_updates = []
     for qid in sorted(b & c):
         for field in SOURCE_FIELDS:
-            if base[qid].get(field) != changed[qid].get(field):
+            old_val, new_val = base[qid].get(field), changed[qid].get(field)
+            drift = old_val != new_val
+            if field == "options" and isinstance(old_val, dict) and isinstance(new_val, dict):
+                # JSON object equality disregards order, but original option
+                # presentation order is a source-custody obligation.
+                drift = drift or list(old_val.keys()) != list(new_val.keys())
+            if drift:
                 drifts.append({"id": qid, "field": field,
                                "rule": "SOURCE_CUSTODY_CHANGE_REQUIRES_OWNER_AUTHORITY"})
         changed_fields = [key for key in REVISION_FIELDS
