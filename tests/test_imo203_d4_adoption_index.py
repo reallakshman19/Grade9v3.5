@@ -254,6 +254,36 @@ class D4AdoptionEvidence(unittest.TestCase):
         self.assertEqual(synth["mathematics"]["original_minimum"], feasible(12)[0])
         self.assertEqual(synth["mathematics"]["changed_minimum"], feasible(13)[0])
 
+    def test_synthesize_actual_native_cross_role_witness_is_sha_pinned_unsigned(self):
+        witness=json.loads((BASE/"d4-review/synthesize-native-semantic-witness.v1.json").read_text())
+        handoff=json.loads((BASE/"d4-review/qualified-review-handoff.v1.json").read_text())
+        challenge=json.loads((BASE/"d4-review/academic-challenge-retrieve-synthesize.v1.json").read_text())
+        cell=next(c for c in self.cells if c["demand"]=="SYNTHESIZE")
+        packet=next(p for p in handoff["cells"] if p["cell_id"]==cell["cell_id"])
+        author=next(c for c in challenge["cells"] if c["cell_id"]==cell["cell_id"])
+        self.assertEqual(witness["cell_id"],cell["cell_id"])
+        self.assertEqual(witness["source"]["artifact_id"],cell["render"]["artifact_id"])
+        self.assertEqual(witness["source"]["source_git_blob"],cell["source"]["package_blob_sha"])
+        self.assertEqual(witness["source"]["worker_head"],cell["source"]["verified_worker_commit"])
+        self.assertEqual(witness["source"]["sha_256_by_output"],cell["render"]["six_html_sha256"])
+        self.assertEqual(witness["source"]["receipt_gaps"],0)
+        self.assertEqual({r["role"] for r in witness["role_observations"]},
+                         {"CORE1","CORE1A","CORE1B","CORE2A","CORE2B"})
+        self.assertEqual(cell["native_semantic_witness_ref"],
+                         "synthesize-native-semantic-witness.v1.json")
+        self.assertEqual(packet["native_semantic_witness_ref"],cell["native_semantic_witness_ref"])
+        self.assertEqual(author["native_semantic_witness_ref"],cell["native_semantic_witness_ref"])
+        self.assertEqual(witness["learner_prerequisite"]["status"],"UNKNOWN")
+        self.assertIsNone(witness["learner_prerequisite"]["learner_event_ref"])
+        self.assertIsNone(witness["reviewer_qualification"])
+        self.assertIsNone(witness["conflict_declaration"])
+        self.assertIsNone(witness["independent_academic_verdict"])
+        self.assertIsNone(witness["owner_decision_id"])
+        self.assertFalse(witness["accepted"])
+        self.assertFalse(cell["assessment"]["accepted"])
+        self.assertIn("QUALIFIED_REVIEW_PENDING",cell["assessment"]["cross_role_semantic_security"])
+        self.assertTrue(any("file://" in q for q in witness["reading_method"]["limitation"].split(". ")))
+
     def test_model_has_distinct_corrected_exact_head_evidence(self):
         model = next(c for c in self.cells if c["demand"] == "MODEL")
         repaired = model["repaired_evidence"]
