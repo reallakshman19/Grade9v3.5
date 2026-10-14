@@ -75,7 +75,7 @@ class Core1AOwnerGoldenO1(unittest.TestCase):
         self.assertIn('data-g9-attempt-box', self.actual)
         self.assertIn('data-g9-commit', self.actual)
         exit_disclosures = [
-            tag for tag in re.findall(r'<details\\b[^>]*>', self.actual)
+            tag for tag in re.findall(r'<details\b[^>]*>', self.actual)
             if 'data-g9-payload-ref="CORE1A-MIC-D4-RETRIEVE-exit"' in tag
         ]
         self.assertEqual(len(exit_disclosures), 1)
