@@ -1,0 +1,117 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-LINEAR-EQUATIONS-GRAPH-INTERCEPTS",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Linear Equations in Two Variables",
+  "topic_name": "Linear Equations in Two Variables",
+  "subtopic": "LIN_EQ-GRAPH-AND-INTERCEPTS",
+  "target_demand": "SYNTHESIZE",
+  "target_band": "D4",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2023-24-A-Q048"
+  ],
+  "entry_assumptions": [
+    "Definition of Cartesian coordinates: abscissa (x) and ordinate (y).",
+    "Standard form of linear equation in two variables: Ax + By = C.",
+    "Formulas for triangle area in R^2 and substitution of geometric constraints into algebraic loci."
+  ],
+  "inferential_jump": "Why synthesizing the algebraic equation Ax + By = C across boundary planes (y=0, x=0, and y=x) reveals the complete geometric profile of the linear graph: the orthogonal intercept coordinates, the enclosed triangular area with the coordinate axes, and the diagonal intersection point.",
+  "relation_refs": {
+    "domain": "Coordinate Geometry and Bivariate Affine Locus Analysis",
+    "hypotheses": [
+      "Let L: Ax + By = C be a straight line with A != 0, B != 0, and C != 0.",
+      "The x-axis corresponds to the locus y = 0, intersecting L at (C/A, 0).",
+      "The y-axis corresponds to the locus x = 0, intersecting L at (0, C/B).",
+      "The triangle formed by L with the coordinate axes has vertices (0,0), (C/A, 0), and (0, C/B).",
+      "The diagonal bisector locus x = y intersects L at the unique point (C/(A+B), C/(A+B))."
+    ],
+    "excluded_values": [
+      "Lines passing through the origin (C = 0) where both intercepts degenerate into (0, 0).",
+      "Lines parallel to an axis (A = 0 or B = 0) where the intercept does not exist or triangle area is undefined."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "(C/A, 0)",
+      "svg_element_ref": "x-intercept-point",
+      "word_meaning": "The x-intercept where the line cuts the horizontal axis (y = 0)."
+    },
+    {
+      "symbol": "(0, C/B)",
+      "svg_element_ref": "y-intercept-point",
+      "word_meaning": "The y-intercept where the line cuts the vertical axis (x = 0)."
+    },
+    {
+      "symbol": "\\text{Area} = \\frac{1}{2} \\left| \\frac{C}{A} \\cdot \\frac{C}{B} \\right|",
+      "svg_element_ref": "triangle-enclosed-area",
+      "word_meaning": "The right-angled triangular region bounded by the line and both coordinate axes."
+    },
+    {
+      "symbol": "(x_d, y_d) = \\left(\\frac{C}{A+B}, \\frac{C}{A+B}\\right)",
+      "svg_element_ref": "equi-coordinate-point",
+      "word_meaning": "The unique point on the line lying on the identity ray where abscissa equals ordinate."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Calculate the x-intercept by setting y = 0 in the equation Ax + By = C.",
+      "derivation": "Ax + B(0) = C => Ax = C => x = C/A. Point is (C/A, 0).",
+      "why_valid": "Every point on the Cartesian x-axis has ordinate y = 0 by definition of the coordinate plane."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Calculate the y-intercept by setting x = 0 in the equation Ax + By = C.",
+      "derivation": "A(0) + By = C => By = C => y = C/B. Point is (0, C/B).",
+      "why_valid": "Every point on the Cartesian y-axis has abscissa x = 0 by definition of the coordinate plane."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Compute the area of the right triangle enclosed between the line and the coordinate axes.",
+      "derivation": "The coordinate axes are perpendicular, forming a right triangle with base |C/A| and height |C/B|. Area = (1/2) * |C/A| * |C/B| = C^2 / (2 * |A * B|).",
+      "why_valid": "Euclidean area of a right-angled triangle equals half the product of its orthogonal legs."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Determine the coordinates of the point on the line where abscissa equals ordinate.",
+      "derivation": "Impose the constraint y = x: Ax + Bx = C => (A + B)x = C => x = C / (A + B). Ordinate is also y = C / (A + B).",
+      "why_valid": "Simultaneous intersection of the line Ax + By = C and the identity line y = x yields the unique equi-coordinate point."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "ABSCISSA_ORDINATE_CONFUSION",
+      "wrong_idea": "Swapping abscissa and ordinate, setting x = 0 for x-intercept or thinking abscissa is y.",
+      "diagnostic_prompt": "Which coordinate is the abscissa, and what is its value along the y-axis?",
+      "repair": "Abscissa is the x-coordinate (horizontal); ordinate is the y-coordinate (vertical). At the x-axis, y = 0."
+    },
+    {
+      "code": "NEGATIVE_AREA_FALLACY",
+      "wrong_idea": "Leaving a negative sign in the area calculation when intercepts lie on negative axes.",
+      "diagnostic_prompt": "Can a geometric region have a negative area if an intercept is negative?",
+      "repair": "Area is strictly non-negative. Always take the absolute magnitude of lengths: Area = (1/2) * |x_int| * |y_int|."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "For the linear equation 4x + 5y = 20: (P) Find the x-intercept, (Q) Find the y-intercept, (R) Compute the area of the triangle formed with the axes, and (S) Find the point where abscissa equals ordinate.",
+    "model_answer": "1. x-intercept: Set y = 0 => 4x = 20 => x = 5. Coordinates: (5, 0).\n2. y-intercept: Set x = 0 => 5y = 20 => y = 4. Coordinates: (0, 4).\n3. Triangle area: Legs are 5 and 4. Area = (1/2) * 5 * 4 = 10 sq units.\n4. Abscissa = ordinate: Set y = x => 4x + 5x = 20 => 9x = 20 => x = 20/9 ≈ 2.22. Point is (20/9, 20/9)."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT. A line 3x + 2y = 18 forms a triangle with the coordinate axes. (a) State the coordinates of the mid-point of the segment joining the x-intercept and y-intercept. (b) Find the ratio of the area of the enclosed triangle to the square of the distance between the intercepts.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "Midpoint is (3, 4.5); area is 27 sq units, hypotenuse squared is 117, ratio is 27/117 = 3/13.",
+      "reasoning": [
+        "x-intercept: y=0 => 3x = 18 => A(6, 0).",
+        "y-intercept: x=0 => 2y = 18 => B(0, 9).",
+        "Midpoint M = ((6+0)/2, (0+9)/2) = (3, 4.5).",
+        "Area = (1/2) * 6 * 9 = 27.",
+        "Distance AB^2 = 6^2 + 9^2 = 36 + 81 = 117.",
+        "Ratio = 27 / 117 = 3 / 13."
+      ],
+      "check": "Legs are 6 and 9. Hypotenuse = sqrt(117). Ratio 27/117 simplifies by 9 to 3/13."
+    }
+  }
+}
