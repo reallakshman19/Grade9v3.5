@@ -53,6 +53,10 @@ def compare_source(base: dict[str, dict[str, Any]],
     removed, added = sorted(b - c), sorted(c - b)
     drifts = []
     authored_updates = []
+    solution_format_regressions = []
+    # A literal backslash+n before numbered steps is not an actual paragraph
+    # separator. Ignore existing baseline occurrences; flag new regressions.
+    numbered_pseudo_newline = re.compile(r"\\n(?=[1-9][.)])")
     for qid in sorted(b & c):
         for field in SOURCE_FIELDS:
             old_val, new_val = base[qid].get(field), changed[qid].get(field)
@@ -64,6 +68,18 @@ def compare_source(base: dict[str, dict[str, Any]],
             if drift:
                 drifts.append({"id": qid, "field": field,
                                "rule": "SOURCE_CUSTODY_CHANGE_REQUIRES_OWNER_AUTHORITY"})
+        old_derivation = ((base[qid].get("solution") or {}).get("derivation")
+                          if isinstance(base[qid].get("solution"), dict) else "")
+        new_derivation = ((changed[qid].get("solution") or {}).get("derivation")
+                          if isinstance(changed[qid].get("solution"), dict) else "")
+        if isinstance(old_derivation, str) and isinstance(new_derivation, str):
+            before = len(numbered_pseudo_newline.findall(old_derivation))
+            after = len(numbered_pseudo_newline.findall(new_derivation))
+            if after > before:
+                solution_format_regressions.append({
+                    "id": qid, "rule": "NEW_LITERAL_BACKSLASH_N_NUMBERED_STEPS",
+                    "baseline_count": before, "candidate_count": after
+                })
         changed_fields = [key for key in REVISION_FIELDS
                           if base[qid].get(key) != changed[qid].get(key)]
         if changed_fields:
@@ -72,8 +88,10 @@ def compare_source(base: dict[str, dict[str, Any]],
     return {"base_question_count": len(base), "candidate_question_count": len(changed),
             "removed_ids": removed, "added_ids": added,
             "source_custody_drifts": drifts,
+            "solution_format_regressions": solution_format_regressions,
             "authored_changes": authored_updates,
-            "status": "FAIL" if removed or added or drifts else "SOURCE_CUSTODY_PRESERVED"}
+            "status": "FAIL" if removed or added or drifts or solution_format_regressions
+                      else "SOURCE_CUSTODY_PRESERVED"}
 
 
 def inspect_candidate(*, candidate_root: Path, baseline_sha: str,
@@ -110,8 +128,11 @@ def inspect_candidate(*, candidate_root: Path, baseline_sha: str,
     html = inspect_endpoints(candidate_root, baseline_sha=candidate_sha, expected_questions=260)
 
     blockers = []
-    if source["status"] == "FAIL" or source["base_question_count"] != 260 or source["candidate_question_count"] != 260:
+    if (source["removed_ids"] or source["added_ids"] or source["source_custody_drifts"] or
+            source["base_question_count"] != 260 or source["candidate_question_count"] != 260):
         blockers.append("SOURCE_IDENTITY_OR_CUSTODY_DRIFT")
+    if source["solution_format_regressions"]:
+        blockers.append("LEARNER_SOLUTION_FORMAT_REGRESSION")
     if html["hard_findings"] or html["status"] != "REVIEW_REQUIRED":
         blockers.append("RENDERED_HTML_STRUCTURAL_OR_DISCLOSURE_FAILURE")
     if html["rendered"] and (html["rendered"]["question_count"] != 260 or
@@ -146,6 +167,7 @@ def main(argv: list[str] | None = None) -> int:
             result["source_custody"]["base_question_count"],
             result["source_custody"]["candidate_question_count"]],
         "source_drifts": result["source_custody"]["source_custody_drifts"],
+        "solution_format_regressions": result["source_custody"]["solution_format_regressions"],
         "authored_changes": result["source_custody"]["authored_changes"],
         "html_status": result["html"]["status"],
         "html_findings": (result["html"]["rendered"] or {}).get("findings", {}),
