@@ -730,6 +730,10 @@ def main():
     with open("Mathematics/question-bank/sof-imo-sample-2026-27.core2.json", "r", encoding="utf-8") as f:
         sample_data = json.load(f)["questions"]
 
+    # 6. Load HOTS & Hard Olympiad Expansion (50 items)
+    with open("Mathematics/question-bank/sof-imo-hots-olympiad-expansion.core2.json", "r", encoding="utf-8") as f:
+        expansion_data = json.load(f)["questions"]
+
     # Normalize all questions into a unified list
     unified_questions = []
 
@@ -873,14 +877,42 @@ def main():
             "distractors": q["distractor_rationale"]
         })
 
+    # Add HOTS & Hard Olympiad Expansion (50 items)
+    for q in expansion_data:
+        unified_questions.append({
+            "id": q["id"],
+            "num": q["paper_origin_locator"]["question_number"],
+            "paper": "SOF-IMO-G09-HOTS-OLYMPIAD-EXP",
+            "paper_label": "HOTS & Olympiad Expansion",
+            "section": q["section"],
+            "topic": q["taxonomy"]["topic"],
+            "topic_name": q["taxonomy"]["topic_label"],
+            "title": q["title"],
+            "band": q["cognitive_classification"]["difficulty_band"],
+            "demand": q["cognitive_classification"]["primary_demand"],
+            "cell": q["cognitive_classification"]["qrt_cell"],
+            "stem": q["stem"],
+            "options": q["options"],
+            "choice": q["answer"]["choice"],
+            "answer_text": q["answer"]["value"],
+            "figure_ref": q["figure_ref"],
+            "hint1": q["hint_ladder"]["hint1_conceptual_nudge"],
+            "hint2": q["hint_ladder"]["hint2_tactical_step"],
+            "hint3": q["cognitive_classification"]["crux_move"],
+            "solution": q["solution"]["derivation"],
+            "check": q["solution"]["independent_check"]["verification"],
+            "check_type": q["solution"]["independent_check"]["check_type"],
+            "distractors": q["distractor_rationale"]
+        })
+
     print(f"Total unified questions compiled: {len(unified_questions)}")
 
     # Sort questions: first by paper, then by question number
-    paper_order = ["2025-26 Set A", "2025-26 Set B", "2024-25 Set B", "2023-24 Set A", "2026-27 Sample"]
+    paper_order = ["2025-26 Set A", "2025-26 Set B", "2024-25 Set B", "2023-24 Set A", "2026-27 Sample", "HOTS & Olympiad Expansion"]
     unified_questions.sort(key=lambda x: (paper_order.index(x["paper_label"]) if x["paper_label"] in paper_order else 99, x["num"]))
 
     # Extract distinct facets for filtering
-    papers = ["All Papers", "2025-26 Set A", "2025-26 Set B", "2024-25 Set B", "2023-24 Set A", "2026-27 Sample"]
+    papers = ["All Papers", "2025-26 Set A", "2025-26 Set B", "2024-25 Set B", "2023-24 Set A", "2026-27 Sample", "HOTS & Olympiad Expansion"]
 
     # Normalize display topic labels to avoid duplicates from typographical variance (e.g. straight vs curly quotes)
     def norm_topic_label(s: str) -> str:
@@ -897,7 +929,12 @@ def main():
 
     display_topics = sorted(list(display_topics_map.values()))
 
-    # Calculate counts for difficulty bands and cognitive demands
+    # Calculate counts for papers, difficulty bands and cognitive demands
+    paper_counts = {}
+    for q in unified_questions:
+        p = q["paper_label"]
+        paper_counts[p] = paper_counts.get(p, 0) + 1
+
     band_counts = {}
     for q in unified_questions:
         b = q["band"]
@@ -2144,7 +2181,9 @@ def main():
   </style>
 </head>
 <body>
+""")
 
+    html_parts.append(f"""
   <!-- FIXED CRISP HEADER SHELL (NO-MATH) -->
   <header class="g9-shell no-math">
     <div class="shell-inner">
@@ -2154,14 +2193,14 @@ def main():
           <span class="brand-title">IMO Grade 9 Master Suite</span>
           <span class="brand-subtitle">OLYMPIAD RESEARCH BENCHMARK</span>
         </div>
-        <span class="brand-badge">210 QUESTIONS · CORE 2</span>
+        <span class="brand-badge">{len(unified_questions)} QUESTIONS · CORE 2</span>
       </a>
 
       <nav class="nav-tabs" role="tablist" aria-label="Master Suite Tabs">
         <button type="button" class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('core2')">
           <span class="tab-icon">📖</span>
           <span class="tab-title">Core 2</span>
-          <span class="tab-pill">210 Qs</span>
+          <span class="tab-pill">{len(unified_questions)} Qs</span>
         </button>
         <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('core1-all')">
           <span class="tab-icon">🌐</span>
@@ -2202,7 +2241,7 @@ def main():
   <main class="container">
 
     <!-- ========================================== -->
-    <!-- TAB 1: CORE 2 QUESTION BANK (210 Questions) -->
+    <!-- TAB 1: CORE 2 QUESTION BANK ({len(unified_questions)} Questions) -->
     <!-- ========================================== -->
     <div id="tab-core2" class="tab-content active">
 
@@ -2216,21 +2255,22 @@ def main():
         <!-- Papers Row -->
         <div class="filter-chips-row">
           <span class="chip-label">Paper:</span>
-          <span class="filter-chip active" data-filter="paper" data-val="ALL" onclick="toggleFilter('paper', 'ALL')">All Papers (210)</span>
-          <span class="filter-chip" data-filter="paper" data-val="2025-26 Set A" onclick="toggleFilter('paper', '2025-26 Set A')">2025-26 Set A (50)</span>
-          <span class="filter-chip" data-filter="paper" data-val="2025-26 Set B" onclick="toggleFilter('paper', '2025-26 Set B')">2025-26 Set B (50)</span>
-          <span class="filter-chip" data-filter="paper" data-val="2024-25 Set B" onclick="toggleFilter('paper', '2024-25 Set B')">2024-25 Set B (50)</span>
-          <span class="filter-chip" data-filter="paper" data-val="2023-24 Set A" onclick="toggleFilter('paper', '2023-24 Set A')">2023-24 Set A (50)</span>
-          <span class="filter-chip" data-filter="paper" data-val="2026-27 Sample" onclick="toggleFilter('paper', '2026-27 Sample')">2026-27 Sample (10)</span>
+          <span class="filter-chip active" data-filter="paper" data-val="ALL" onclick="toggleFilter('paper', 'ALL')">All Papers ({len(unified_questions)})</span>
+          <span class="filter-chip" data-filter="paper" data-val="2025-26 Set A" onclick="toggleFilter('paper', '2025-26 Set A')">2025-26 Set A ({paper_counts.get("2025-26 Set A", 0)})</span>
+          <span class="filter-chip" data-filter="paper" data-val="2025-26 Set B" onclick="toggleFilter('paper', '2025-26 Set B')">2025-26 Set B ({paper_counts.get("2025-26 Set B", 0)})</span>
+          <span class="filter-chip" data-filter="paper" data-val="2024-25 Set B" onclick="toggleFilter('paper', '2024-25 Set B')">2024-25 Set B ({paper_counts.get("2024-25 Set B", 0)})</span>
+          <span class="filter-chip" data-filter="paper" data-val="2023-24 Set A" onclick="toggleFilter('paper', '2023-24 Set A')">2023-24 Set A ({paper_counts.get("2023-24 Set A", 0)})</span>
+          <span class="filter-chip" data-filter="paper" data-val="2026-27 Sample" onclick="toggleFilter('paper', '2026-27 Sample')">2026-27 Sample ({paper_counts.get("2026-27 Sample", 0)})</span>
+          <span class="filter-chip" data-filter="paper" data-val="HOTS & Olympiad Expansion" onclick="toggleFilter('paper', 'HOTS & Olympiad Expansion')">HOTS & Olympiad Expansion ({paper_counts.get("HOTS & Olympiad Expansion", 0)})</span>
         </div>
 
         <!-- Difficulty Row -->
         <div class="filter-chips-row">
           <span class="chip-label">Difficulty:</span>
-          <span class="filter-chip" data-filter="band" data-val="D1" onclick="toggleFilter('band', 'D1')">🌱 D1 (Foundations) (47)</span>
-          <span class="filter-chip" data-filter="band" data-val="D2" onclick="toggleFilter('band', 'D2')">⚡ D2 (Standard Olympiad) (121)</span>
-          <span class="filter-chip" data-filter="band" data-val="D3" onclick="toggleFilter('band', 'D3')">🔥 D3 (Hard Olympiad) (34)</span>
-          <span class="filter-chip" data-filter="band" data-val="D4" onclick="toggleFilter('band', 'D4')">💎 D4 (Achievers Section) (8)</span>
+          <span class="filter-chip" data-filter="band" data-val="D1" onclick="toggleFilter('band', 'D1')">🌱 D1 (Foundations) ({band_counts.get("D1", 0)})</span>
+          <span class="filter-chip" data-filter="band" data-val="D2" onclick="toggleFilter('band', 'D2')">⚡ D2 (Standard Olympiad) ({band_counts.get("D2", 0)})</span>
+          <span class="filter-chip" data-filter="band" data-val="D3" onclick="toggleFilter('band', 'D3')">🔥 D3 (Hard Olympiad) ({band_counts.get("D3", 0)})</span>
+          <span class="filter-chip" data-filter="band" data-val="D4" onclick="toggleFilter('band', 'D4')">💎 D4 (Achievers Section) ({band_counts.get("D4", 0)})</span>
         </div>
 
         <!-- Cognitive Demands Row -->
@@ -2265,7 +2305,7 @@ def main():
 
       <!-- Result Counter -->
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:0.95rem;color:var(--text-muted)">
-        <span id="result-counter" style="font-weight:750;color:var(--text)">Showing all 210 questions</span>
+        <span id="result-counter" style="font-weight:750;color:var(--text)">Showing all """ + str(len(unified_questions)) + """ questions</span>
         <span style="font-size:0.88rem">Click any badge to filter dynamically</span>
       </div>
 
@@ -2328,7 +2368,8 @@ def main():
         distractor_html = "".join(distractors_markup) if distractors_markup else "<p>Distractor diagnostic verified in repository custody register.</p>"
 
         # Search index string
-        search_blob = html.escape(f"{qid} {q['stem']} {title} {topic_name} {paper_label} {sec} {cell}").lower()
+        stem_search_clean = re.sub(r'[\$\\]', ' ', q['stem'])
+        search_blob = html.escape(f"{qid} {stem_search_clean} {title} {topic_name} {paper_label} {sec} {cell}").lower()
 
         unit_folder = TOPIC_TO_UNIT_FOLDER.get(topic_name.lower().strip(), "polynomials")
 
