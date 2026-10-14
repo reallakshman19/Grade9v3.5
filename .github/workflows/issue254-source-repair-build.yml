@@ -40,6 +40,12 @@ jobs:
           python -m unittest tests/test_imo_research_attempt_first.py -v
           python -m unittest tests/test_imo_figure_reference_resolution.py -v
           python -m unittest tests/test_imo_math_and_font_quality.py -v
+      - name: Run all existing IMO research source regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scratch
+          python -m unittest discover -s tests -p 'test_imo_*.py' -v
       - name: Commit exactly four generated outputs to isolated repair branch
         shell: bash
         run: |
