@@ -2,7 +2,7 @@
 import json
 import sys
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, Error as PlaywrightError
 from imo203_d4_w_guard import assert_no_protected_iff
 
 cell=sys.argv[1].lower()
@@ -11,6 +11,29 @@ root=Path(f"build/imo203-qrt/d4/{cell}").resolve()
 receipt=json.loads((root/"render-receipt.json").read_text())
 assert receipt["gaps"]==[],receipt["gaps"]
 screens=root/"browser";screens.mkdir(exist_ok=True)
+
+def capture_evidence(page, stem):
+    """Prefer a full-page screenshot; accurately mark a viewport-only fallback.
+
+    Chrome sometimes refuses a tall full-page capture on hosted runners.
+    Preserve at least a real viewport PNG; never relabel it full-page.
+    """
+    whole=screens/(stem+".png")
+    for attempt in range(2):
+        try:
+            page.screenshot(path=str(whole), full_page=True,
+                            animations="disabled", timeout=15000)
+            return
+        except PlaywrightError:
+            if attempt==0:
+                page.wait_for_timeout(200)
+    short=screens/(stem+"-viewport-fallback.png")
+    try:
+        page.screenshot(path=str(short), full_page=False,
+                        animations="disabled", timeout=15000)
+        print("SCREENSHOT_VIEWPORT_ONLY_FALLBACK",stem,flush=True)
+    except PlaywrightError as exc:
+        raise AssertionError(f"Screenshot evidence unavailable for {stem}") from exc
 protected={
     "retrieve":["Yes:9,17,33,49","9,17,33,49","criterion for k>=3: odd a≡1","a≡1 mod8",
                 "at k>=3 the criterion is1 modulo8","For k>=3 use1 modulo8",
@@ -36,7 +59,7 @@ with sync_playwright() as p:
                 for protected_word in protected:
                     assert protected_word not in prior_visible,(cell,role,"VISIBLE_PREVIEW",protected_word)
                     assert protected_word not in prior_ax,(cell,role,"AX_PREVIEW",protected_word)
-            page.screenshot(path=str(screens/f"{role}-{width}.png"),full_page=True)
+            capture_evidence(page,f"{role}-{width}")
             # Owner v3.1 O1: this is the actual registered Core1A learner
             # page and independent exit, not a separate hand-composed preview.
             if cell == "retrieve" and role == "core1a" and width == 1280:
@@ -64,7 +87,7 @@ with sync_playwright() as p:
                 locked_answer.locator("summary").click()
                 assert locked_answer.get_attribute("open") is not None, "Model answer not disclosed on learner request"
                 assert "9 is an odd square modulo16" in locked_answer.inner_text()
-                page.screenshot(path=str(screens/"core1a-after-attempt.png"),full_page=True)
+                capture_evidence(page,"core1a-after-attempt")
             # Owner v3.1 O1: preserve Core1B's already-done blueprint/golden
             # reconstruction with independent main and boundary attempt gates.
             if cell == "retrieve" and role == "core1b" and width == 1280:
@@ -106,11 +129,11 @@ with sync_playwright() as p:
                 )
                 boundary.locator('button[data-g9-commit]').click()
                 assert "modulo4" in boundary_payload.text_content()
-                assert "modulo16" in boundary_payload.text_content()
+                assert "no modulo8 or16" in boundary_payload.text_content(), "Boundary answer lost higher-power exclusion"
                 assert boundary_answer.get_attribute("open") is None
                 boundary_answer.locator("summary").click()
                 assert boundary_answer.get_attribute("open") is not None
-                page.screenshot(path=str(screens/"core1b-after-boundary-attempt.png"), full_page=True)
+                capture_evidence(page,"core1b-after-boundary-attempt")
             # Oversized drawings must scroll locally, not make the whole page unusable.
             if role=="core2a" and width==1280:
                 html=page.content()
@@ -149,7 +172,7 @@ with sync_playwright() as p:
                 if wrapper.count() and wrapper.get_attribute('open') is None:
                     wrapper.locator("summary").click()
                 assert payload.is_visible(),"Decisive H3 did not unlock after nonblank commitment"
-                page.screenshot(path=str(screens/"core2a-after-attempt.png"),full_page=True)
+                capture_evidence(page,"core2a-after-attempt")
             page.close()
     browser.close()
 print("IMO203_D4_NATIVE_BROWSER_PASS",cell)
