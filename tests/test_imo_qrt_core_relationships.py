@@ -88,6 +88,14 @@ class RelationshipEvidenceTests(unittest.TestCase):
         self.assertIn("CORE1A_CORE1B_QRT_TARGET_MISMATCH",
                       {row["rule"] for row in r["structural_findings"]})
 
+    def test_missing_core1b_subtopic_is_undeclared_not_contradiction(self):
+        self.core_b.pop("subtopic")
+        self.flush()
+        r = self.inspect()
+        points = {row["rule"] for row in r["structural_findings"]}
+        self.assertIn("CORE1B_SUBTOPIC_UNDECLARED", points)
+        self.assertNotIn("CORE1A_CORE1B_CONCEPT_ID_MISMATCH", points)
+
     def test_unit_vs_question_tile_difference_is_review_not_automatic_error(self):
         self.question["cognitive_classification"]["primary_demand"] = "MODEL"
         self.flush()
