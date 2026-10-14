@@ -704,6 +704,8 @@
         <button class="tab-btn" onclick="switchTab('d3-core')" id="tab-btn-d3-core">🔥 D3 Core 1A/1B (Indices & Rates)</button>
         <button class="tab-btn" onclick="switchTab('d4-core')" id="tab-btn-d4-core">🏆 D4 Core 1A/1B (Surds & Circles)</button>
         <button class="tab-btn" onclick="switchTab('d1-core')" id="tab-btn-d1-core">🌱 D1/D2 Core 1A/1B (Divisibility)</button>
+          <button type="button" class="tab-btn" onclick="switchTab('d2-core')" id="tab-btn-d2-core">🎯 D2 Core 1A/1B (Quadrilaterals & Modeling)</button>
+        
       </nav>
     </div>
   </header>
@@ -9159,6 +9161,18 @@
           </p>
         </div>
 
+        <!-- Declared Conventions and Hypotheses -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
+          <h3>Declared Conventions and Hypotheses</h3>
+          <ul>
+            <li><strong>Domain:</strong> Real exponential mappings $f(x) = a^x$ with base $a > 0, a 
+e 1$.</li>
+            <li><strong>Injectivity:</strong> $a^u = a^v \iff u = v$.</li>
+            <li><strong>Linearizing Substitution:</strong> $t = 5^{2x} > 0$, converting exponential terms into linear fractions.</li>
+          </ul>
+        </div>
+
+
         <!-- Inferential Jump (T02) -->
         <div class="trap-alert" style="border-left-color:var(--accent);background:rgba(56, 189, 248, 0.08);margin:16px 0">
           <strong>The Inferential Leap (Technique T02):</strong>
@@ -9198,6 +9212,26 @@
             <p style="font-size:0.86rem;color:var(--text-muted)"><strong>Why valid:</strong> Exponential bases $a \ne 1$ are strictly injective.</p>
           </div>
         </div>
+
+        <!-- Representation Bridge Table -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
+          <h3>Representation Bridge Table</h3>
+          <table style="width:100%;border-collapse:collapse;margin-top:8px">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border);text-align:left">
+                <th style="padding:6px">Exponential Expression</th>
+                <th style="padding:6px">Linear Equivalent ($t = 5^{2x}$)</th>
+                <th style="padding:6px">Algebraic Invariant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px">$5^{2x-1}$</td><td style="padding:6px">$t / 5$</td><td style="padding:6px">Exponent difference rule $5^{2x}/5^1$</td></tr>
+              <tr><td style="padding:6px">$25^{x-1} = 5^{2x-2}$</td><td style="padding:6px">$t / 25$</td><td style="padding:6px">Base alignment $(5^2)^{x-1} = 5^{2x}/25$</td></tr>
+              <tr><td style="padding:6px">$rac{t}{5} - rac{t}{25} = 100$</td><td style="padding:6px">$4t / 25 = 100$</td><td style="padding:6px">Linear equation in single unknown $t$</td></tr>
+            </tbody>
+          </table>
+        </div>
+
 
         <!-- Trap Clinic (T06) -->
         <div class="trap-alert" style="margin:20px 0">
@@ -9309,6 +9343,17 @@
           </p>
         </div>
 
+        <!-- Declared Conventions and Hypotheses -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
+          <h3>Declared Conventions and Hypotheses</h3>
+          <ul>
+            <li><strong>Domain:</strong> Quadratic number field extension $\mathbb{Q}(\sqrt{d})$.</li>
+            <li><strong>Minimal Polynomial:</strong> Unique monic polynomial $m(x) \in \mathbb{Q}[x]$ of lowest degree satisfying $m(lpha) = 0$.</li>
+            <li><strong>Euclidean Reduction:</strong> High-degree powers reduced via $P(x) = Q(x)m(x) + R(x) = R(x)$.</li>
+          </ul>
+        </div>
+
+
         <!-- Inferential Jump (T02) -->
         <div style="background:rgba(248, 113, 113, 0.08);border-left:4px solid var(--danger);padding:16px;border-radius:0 8px 8px 0;margin:16px 0">
           <strong>The Inferential Leap (Technique T02):</strong>
@@ -9350,6 +9395,39 @@
         </div>
 
         <!-- Trap Clinic (T06) -->
+        
+        
+        <!-- Representation Bridge Table -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
+          <h3>Representation Bridge Table</h3>
+          <table style="width:100%;border-collapse:collapse;margin-top:8px">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border);text-align:left">
+                <th style="padding:6px">Surd / Radical</th>
+                <th style="padding:6px">Rational Invariant</th>
+                <th style="padding:6px">Polynomial Representation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px">$x = 2 + \sqrt{3}$</td><td style="padding:6px">$(x-2)^2 = 3$</td><td style="padding:6px">$x^2 - 4x + 1 = 0$</td></tr>
+              <tr><td style="padding:6px">$x^3 - 2x^2 - 7x + 5$</td><td style="padding:6px">Euclidean quotient + remainder</td><td style="padding:6px">$(x+2)(x^2-4x+1) + 3 = 3$</td></tr>
+              <tr><td style="padding:6px">$(\sqrt{6-\sqrt{11}} + \sqrt{6+\sqrt{11}})^2$</td><td style="padding:6px">$2a + 2\sqrt{a^2-b}$</td><td style="padding:6px">$12 + 2\sqrt{25} = 22 \implies \sqrt{22}$</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Independent Exit Task -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-top:20px">
+          <h4>Independent Exit Task</h4>
+          <p>For $x = 1 + \sqrt{2}$, find the value of $x^4 - 2x^3 - x + 7$ by constructing its minimal polynomial.</p>
+          <textarea class="qb-textarea" style="margin-top:8px" placeholder="Construct (x-1)^2 = 2 => x^2 - 2x - 1 = 0, divide polynomial, and evaluate..."></textarea>
+          <details style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
+            <summary style="cursor:pointer;font-weight:700">Reveal Model Exit Solution</summary>
+            <p style="margin-top:6px">$x - 1 = \sqrt{2} \implies x^2 - 2x + 1 = 2 \implies x^2 - 2x - 1 = 0$. Factoring: $x^2(x^2 - 2x - 1) + 0 - x + 7 = 0 - (1+\sqrt{2}) + 7 = 6 - \sqrt{2}$. ✅</p>
+          </details>
+        </div>
+
+
         <div class="trap-alert" style="margin:20px 0">
           <h3>⚠️ Trap Clinic: Universal Quantifier vs Counterexample (Technique T06)</h3>
           <p><strong>Fallacy:</strong> "Square root of a positive real number is always an irrational number."</p>
@@ -9397,93 +9475,313 @@
       <div class="panel">
         <span class="qb-badge qb-badge-d4">BLUEPRINT BP-CORE1B-RECONSTRUCTION</span>
         <h2 style="font-size:1.3rem;margin-top:8px">Core 1B · Dual-Stage Recall & Reconstruction (D4)</h2>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px">
-          <h3>Unassisted Reconstruction Gate</h3>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px">
+          <h3>Stage 1 · Predict Prompt Commitment</h3>
+          <p>Before computing minimal polynomials: For $x = 3 + \sqrt{5}$, does squaring $(x-3)^2$ or squaring $x^2$ directly produce a monic polynomial with integer coefficients?</p>
+          <textarea class="qb-textarea" placeholder="Isolate surd (x-3) before squaring to eliminate cross-terms..."></textarea>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px">
+          <h3>Stage 2 · Unassisted Reconstruction Gate</h3>
           <p>For $x = 3 + \sqrt{5}$, state the monic quadratic equation with integer coefficients that $x$ satisfies, and compute $x^2 - 6x + 12$.</p>
           <textarea class="qb-textarea" placeholder="State minimal polynomial and evaluate..."></textarea>
-          <details style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
+          <details class="model-proof" style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
             <summary style="cursor:pointer;font-weight:700">Check Result</summary>
             <p style="margin-top:6px">$(x - 3)^2 = 5 \implies x^2 - 6x + 9 = 5 \implies x^2 - 6x + 4 = 0$. Therefore $x^2 - 6x + 12 = (x^2 - 6x + 4) + 8 = 0 + 8 = 8$. ✅</p>
+          </details>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px">
+          <h3>Stage 3 · Boundary Test & Limiting Case Perturbation</h3>
+          <p><strong>Boundary Test:</strong> What happens when the radicand is a perfect square (e.g. $x = 3 + \sqrt{4}$)? Does the minimal polynomial degree drop from 2 to 1?</p>
+          <textarea class="qb-textarea" placeholder="Examine linear minimal polynomial over Q..."></textarea>
+          <details class="model-proof" style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
+            <summary style="cursor:pointer;font-weight:700">Check Boundary Result</summary>
+            <p style="margin-top:6px">When radicand is 4, $\sqrt{4} = 2 \in \mathbb{Q}$, so $x = 3 + 2 = 5 \in \mathbb{Q}$. The minimal polynomial over $\mathbb{Q}$ is linear: $x - 5 = 0$ (degree 1). The quadratic minimal polynomial is valid strictly when the radicand is square-free in $\mathbb{Q}$. ✅</p>
           </details>
         </div>
       </div>
     </section>
 
-    <!-- TAB 4: D1/D2 CORE MODULE (DIVISIBILITY) -->
+        <!-- TAB 4: D1 CORE MODULE (DIVISIBILITY) -->
     <section class="tab-content" id="tab-d1-core" role="tabpanel">
-      <div class="panel">
-        <div style="border:2px solid var(--success);border-radius:10px;padding:14px;background:var(--surface);margin-bottom:20px">
-          <span class="qb-badge qb-badge-d1">BLUEPRINT BP-CORE1A-CONSTRUCTION</span>
-          <span class="qb-badge qb-badge-qrt">QRT-JUSTIFY-D1</span>
-          <h2 style="font-size:1.3rem;margin-top:8px">Core 1A · Universal Proof: Divisibility of Three Consecutive Integers by 6</h2>
-          <p style="color:var(--text-muted);font-size:0.92rem;margin-top:4px">
-            Rigorous modular construction exhausting parity and modulo-3 residue classes.
-          </p>
-        </div>
 
-        <h3 style="margin-bottom:12px">Universal Divisibility Theorems (Properly Formatted KaTeX Mathematics)</h3>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;line-height:1.8">
-          <p>✅ <strong>Parity Lemma:</strong> Consecutive integers alternate parity: $n \equiv 0 \pmod 2$ or $n \equiv 1 \pmod 2$. In any pair $\{n, n+1\}$, exactly one is even, guaranteeing $2 \mid n(n+1)$, which implies $2 \mid P(n)$.</p>
-          <p style="margin-top:10px">✅ <strong>Modulo 3 Exhaustion:</strong> By the division algorithm, an arbitrary integer $n$ satisfies exactly one residue condition:</p>
-          <ul style="padding-left:24px;margin-top:6px">
-            <li>If $n \equiv 0 \pmod 3$, then $3 \mid n$.</li>
-            <li>If $n \equiv 1 \pmod 3$, then $n+2 \equiv 3 \equiv 0 \pmod 3$, so $3 \mid (n+2)$.</li>
-            <li>If $n \equiv 2 \pmod 3$, then $n+1 \equiv 3 \equiv 0 \pmod 3$, so $3 \mid (n+1)$.</li>
-          </ul>
-          <p style="margin-top:10px">✅ <strong>Coprimality Synthesis:</strong> If $a \mid N$ and $b \mid N$ with $\gcd(a, b) = 1$, then $ab \mid N$. Since $\gcd(2, 3) = 1$, $6 \mid P(n)$ holds rigorously for all $n \in \mathbb{Z}^+$.</p>
-        </div>
+<div class="panel">
+  <div style="border:2px solid var(--success);border-radius:10px;padding:14px;background:var(--surface);margin-bottom:20px">
+    <span class="qb-badge qb-badge-d1">BLUEPRINT BP-CORE1A-CONSTRUCTION</span>
+    <span class="qb-badge qb-badge-qrt">QRT-JUSTIFY-D1</span>
+    <h2 style="font-size:1.3rem;margin-top:8px">Core 1A · Universal Proof: Divisibility of Three Consecutive Integers by 6</h2>
+    <p style="color:var(--text-muted);font-size:0.92rem;margin-top:4px">
+      Rigorous modular construction exhausting parity and modulo-3 residue classes.
+    </p>
+  </div>
 
-        <!-- Trap Clinic (T06) -->
-        <div class="trap-alert" style="margin:20px 0">
-          <h3>⚠️ Trap Clinic: Non-Coprime Products (Technique T06)</h3>
-          <p><strong>Fallacy:</strong> "Since $4 \mid N$ and $6 \mid N$, it must follow that $24 \mid N$."</p>
-          <p><strong>Refutation:</strong> The product rule strictly requires coprimality: $\gcd(a, b) = 1$. Here $\gcd(4, 6) = 2 \ne 1$. For example, $N = 12$ is divisible by 4 and by 6, but $12$ is NOT divisible by 24! The least common multiple is $\operatorname{lcm}(4, 6) = 12$, not $24$.</p>
-        </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
+    <h3>Declared Conventions and Hypotheses</h3>
+    <ul>
+      <li><strong>Domain:</strong> Positive integers $\mathbb{Z}^+$.</li>
+      <li><strong>Consecutive Integers:</strong> $n, n+1, n+2$ for arbitrary start $n$.</li>
+      <li><strong>Divisibility:</strong> $d \mid N \iff \exists k \in \mathbb{Z}: N = dk$.</li>
+      <li><strong>Coprime Factorization:</strong> If $\gcd(a, b) = 1$, then $a \mid N \land b \mid N \iff ab \mid N$.</li>
+    </ul>
+  </div>
 
-        <!-- Exit Task (T12) -->
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-top:20px">
-          <h4>Independent Exit Task (Technique T12)</h4>
-          <p>Prove that for every integer $n$, $n^3 - n$ is divisible by 6.</p>
-          <textarea class="qb-textarea" style="margin-top:8px" placeholder="Factor n^3 - n into consecutive integers and apply the parity and mod-3 lemmas..."></textarea>
-          <details style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
-            <summary style="cursor:pointer;font-weight:700">Reveal Model Exit Solution</summary>
-            <div style="margin-top:8px;line-height:1.7">
-              <p>1. Factor: $n^3 - n = n(n^2 - 1) = (n-1)n(n+1)$.</p>
-              <p>2. These are three consecutive integers: $(n-1)$, $n$, and $(n+1)$.</p>
-              <p>3. Exactly as in the Core 1A construction, at least one factor is even ($2 \mid n^3 - n$) and exactly one is a multiple of 3 ($3 \mid n^3 - n$).</p>
-              <p>4. Since $\gcd(2, 3) = 1$, $6 \mid (n^3 - n)$ for all $n \in \mathbb{Z}$. Q.E.D. ✅</p>
-            </div>
-          </details>
-        </div>
+  <div style="background:rgba(52, 211, 153, 0.08);border-left:4px solid var(--success);padding:16px;border-radius:0 8px 8px 0;margin:16px 0">
+    <strong>Explicit Inferential Jump:</strong>
+    <p style="margin-top:6px">
+      Why testing particular starting integers is fundamentally insufficient, and how partitioning arbitrary $n$ across the complete residue classes modulo 2 and modulo 3 guarantees that at least one factor is even and one factor is a multiple of 3, synthesizing divisibility by 6 via coprimality $\gcd(2, 3) = 1$.
+    </p>
+  </div>
+
+  <h3 style="margin-bottom:12px">Universal Divisibility Theorems & Step-by-Step Proof</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin:16px 0">
+    <div style="border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--surface)">
+      <span class="rung-tag rung-orient">STEP 1 · ARBITRARY START</span>
+      <p style="margin-top:8px">Let $n \in \mathbb{Z}^+$ be an arbitrary starting integer. The product is $P(n) = n(n+1)(n+2)$.</p>
+      <p style="font-size:0.86rem;color:var(--text-muted)"><strong>Why valid:</strong> Universal generalization over $\mathbb{Z}^+$ guarantees conclusions apply to all positive integers.</p>
+    </div>
+
+    <div style="border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--surface)">
+      <span class="rung-tag rung-represent">STEP 2 · PARITY LEMMA</span>
+      <p style="margin-top:8px">In any pair of consecutive integers $\{n, n+1\}$, exactly one is even. Thus $2 \mid n(n+1) \implies 2 \mid P(n)$.</p>
+      <p style="font-size:0.86rem;color:var(--text-muted)"><strong>Why valid:</strong> Integers strictly alternate parity modulo 2.</p>
+    </div>
+
+    <div style="border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--surface)">
+      <span class="rung-tag rung-crux">STEP 3 · MODULO 3 EXHAUSTION</span>
+      <p style="margin-top:8px">By division algorithm, $n \equiv 0, 1,$ or $2 \pmod 3$. If $n \equiv 0$, $3 \mid n$. If $n \equiv 1$, $3 \mid (n+2)$. If $n \equiv 2$, $3 \mid (n+1)$. In every case, $3 \mid P(n)$.</p>
+      <p style="font-size:0.86rem;color:var(--text-muted)"><strong>Why valid:</strong> Division algorithm guarantees that $\{0, 1, 2\}$ is a complete residue system modulo 3.</p>
+    </div>
+
+    <div style="border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--surface)">
+      <span class="rung-tag rung-verify">STEP 4 · COPRIME SYNTHESIS</span>
+      <p style="margin-top:8px">Since $2 \mid P(n)$ and $3 \mid P(n)$, and $\gcd(2, 3) = 1$, by Euclid's lemma $2 	imes 3 = 6 \mid P(n)$ for all $n \in \mathbb{Z}^+$.</p>
+      <p style="font-size:0.86rem;color:var(--text-muted)"><strong>Why valid:</strong> Coprime divisors multiply to divide the product (Euclid's Lemma).</p>
+    </div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
+    <h3>Representation Bridge Table (Residues Modulo 3)</h3>
+    <table style="width:100%;border-collapse:collapse;margin-top:8px">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border);text-align:left">
+          <th style="padding:6px">Residue of n</th>
+          <th style="padding:6px">Factor Divisible by 3</th>
+          <th style="padding:6px">Algebraic Proof</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:6px">$n \equiv 0 \pmod 3$</td><td style="padding:6px">$n$</td><td style="padding:6px">$n = 3k \implies 3 \mid n$</td></tr>
+        <tr><td style="padding:6px">$n \equiv 1 \pmod 3$</td><td style="padding:6px">$n+2$</td><td style="padding:6px">$n+2 = 3k+1+2 = 3(k+1) \implies 3 \mid (n+2)$</td></tr>
+        <tr><td style="padding:6px">$n \equiv 2 \pmod 3$</td><td style="padding:6px">$n+1$</td><td style="padding:6px">$n+1 = 3k+2+1 = 3(k+1) \implies 3 \mid (n+1)$</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="trap-alert" style="margin:20px 0">
+    <h3>⚠️ Trap Clinic: Non-Coprime Products (Technique T06)</h3>
+    <p><strong>Plausible Wrong Path (Fallacy):</strong> "Since $4 \mid N$ and $6 \mid N$, it must follow that $24 \mid N$."</p>
+    <p><strong>Refutation and Repair:</strong> The product rule strictly requires coprimality: $\gcd(a, b) = 1$. Here $\gcd(4, 6) = 2 
+e 1$. For example, $N = 12$ is divisible by 4 and by 6, but $12$ is NOT divisible by 24! The least common multiple is $\operatorname{lcm}(4, 6) = 12$, not $24$.</p>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-top:20px">
+    <h4>Independent Exit Task (Technique T12)</h4>
+    <p>Prove that for every integer $n$, $n^3 - n$ is divisible by 6.</p>
+    <textarea class="qb-textarea" style="margin-top:8px" placeholder="Factor n^3 - n into consecutive integers and apply the parity and mod-3 lemmas..."></textarea>
+    <details style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
+      <summary style="cursor:pointer;font-weight:700">Reveal Model Exit Solution</summary>
+      <p style="margin-top:8px">Factor $n^3 - n = n(n^2 - 1) = (n-1)n(n+1)$. These are three consecutive integers. Exactly as in the Core 1A construction, at least one factor is even ($2 \mid n^3 - n$) and exactly one is a multiple of 3 ($3 \mid n^3 - n$). Since $\gcd(2, 3) = 1$, $6 \mid (n^3 - n)$ for all $n \in \mathbb{Z}$. Q.E.D. ✅</p>
+    </details>
+  </div>
+</div>
+
+      <!-- CORE 1B (D1 RECONSTRUCTION) -->
+
+<div class="panel">
+  <span class="qb-badge qb-badge-d1">BLUEPRINT BP-CORE1B-RECONSTRUCTION</span>
+  <h2 style="font-size:1.3rem;margin-top:8px">Core 1B · Dual-Stage Recall & Reconstruction (D1)</h2>
+  
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px">
+    <h3>Stage 1 · Predict Prompt Commitment</h3>
+    <p>Before computing: State the exact condition required for $a \mid N$ and $b \mid N$ to imply $ab \mid N$, and decide if $4 \mid N$ and $6 \mid N$ implies $24 \mid N$.</p>
+    <textarea class="qb-textarea" placeholder="Recall coprimality requirement and residue distribution modulo 3..."></textarea>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px">
+    <h3>Stage 2 · Autonomous Attempt & Model Closure</h3>
+    <p>Prove that for any integer $n \ge 1$, the product of four consecutive integers $Q(n) = n(n+1)(n+2)(n+3)$ is always divisible by 24.</p>
+    <textarea class="qb-textarea" placeholder="Decompose 24 into coprime factors 3 and 8. Prove 3 | Q(n) and 8 | Q(n)..."></textarea>
+    <details class="model-proof" style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
+      <summary style="cursor:pointer;font-weight:700">Check Stage 2 Model Proof</summary>
+      <div style="margin-top:8px;line-height:1.7">
+        <p>1. <strong>Divisibility by 3:</strong> Among any three consecutive integers, one is a multiple of 3. Since $n, n+1, n+2$ are three consecutive integers, $3 \mid Q(n)$.</p>
+        <p>2. <strong>Divisibility by 8:</strong> Among four consecutive integers, exactly two are even. Since they alternate with odd numbers, the two evens differ by 2: one is of the form $2(2k) = 4k$ (a multiple of 4) and the other is $2(2k+1)$ (at least a multiple of 2). Their product contains at least $4 	imes 2 = 8$. Hence $8 \mid Q(n)$.</p>
+        <p>3. <strong>Synthesis:</strong> Since $\gcd(3, 8) = 1$, $3 	imes 8 = 24 \mid Q(n)$ for all $n \ge 1$. Q.E.D. ✅</p>
       </div>
+    </details>
+  </div>
 
-      <!-- CORE 1B (D1/D2 RECALL) -->
-      <div class="panel">
-        <span class="qb-badge qb-badge-d1">BLUEPRINT BP-CORE1B-RECONSTRUCTION</span>
-        <h2 style="font-size:1.3rem;margin-top:8px">Core 1B · Dual-Stage Recall & Reconstruction (D1/D2)</h2>
-        <p class="lead-text">Complete the two unassisted retrieval gates:</p>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px">
+    <h3>Stage 3 · Complete Step Reconstruction</h3>
+    <p>Reconstruct the 4-step proof from scratch without referring to notes.</p>
+    <textarea class="qb-textarea" placeholder="Write Step 1 (Declare), Step 2 (Parity), Step 3 (Modulo 3), Step 4 (Coprime Synthesis)..."></textarea>
+  </div>
 
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px">
-          <h3>Gate 1 · Boundary Laws Recall</h3>
-          <p>1. State the exact condition required for $a \mid N$ and $b \mid N$ to imply $ab \mid N$.</p>
-          <p>2. In a sequence of 3 consecutive integers, can two of them be multiples of 3? Explain why or why not.</p>
-          <textarea class="qb-textarea" placeholder="Recall coprimality requirement and residue distribution modulo 3..."></textarea>
-        </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px">
+    <h3>Stage 4 · Boundary Test & Changed Givens</h3>
+    <p><strong>Boundary Test:</strong> Evaluate the limiting boundary case where $n \in \{0, -1, -2\}$ and explain whether divisibility by 6 holds over all $\mathbb{Z}$.</p>
+    <textarea class="qb-textarea" placeholder="Examine boundary limit at 0 and negative integers..."></textarea>
+    <details class="model-proof" style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
+      <summary style="cursor:pointer;font-weight:700">Check Boundary Test Result</summary>
+      <p style="margin-top:6px">At $n \in \{0, -1, -2\}$, the product is 0, which is divisible by 6 ($0 = 6 	imes 0$). For negative integers $n = -m$, factoring $(-1)^3$ yields $-m(m-1)(m-2)$, which preserves divisibility by 6 across all $\mathbb{Z}$. ✅</p>
+    </details>
+  </div>
+</div>
 
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px">
-          <h3>Gate 2 · Changed Givens Reconstruction (Technique T12)</h3>
-          <p>Prove that for any integer $n \ge 1$, the product of four consecutive integers $Q(n) = n(n+1)(n+2)(n+3)$ is always divisible by 24.</p>
-          <textarea class="qb-textarea" placeholder="Decompose 24 into coprime factors 3 and 8. Prove 3 | Q(n) and 8 | Q(n)..."></textarea>
-          <details style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
-            <summary style="cursor:pointer;font-weight:700">Check Gate 2 Result</summary>
-            <div style="margin-top:6px;line-height:1.7">
-              <p>1. <strong>Divisibility by 3:</strong> Among any three consecutive integers, one is a multiple of 3. Since $n, n+1, n+2$ are three consecutive integers, $3 \mid Q(n)$.</p>
-              <p>2. <strong>Divisibility by 8:</strong> Among four consecutive integers, exactly two are even. Since they alternate with odd numbers, the two evens differ by 2: one is of the form $2(2k) = 4k$ (a multiple of 4) and the other is $2(2k+1)$ (at least a multiple of 2). Their product contains at least $4 \times 2 = 8$. Hence $8 \mid Q(n)$.</p>
-              <p>3. <strong>Synthesis:</strong> Since $\gcd(3, 8) = 1$, $3 \times 8 = 24 \mid Q(n)$ for all $n \ge 1$. Q.E.D. ✅</p>
-            </div>
-          </details>
-        </div>
+    </section>
+
+    <!-- TAB: D2 CORE MODULE (QUADRILATERALS & LINEAR MODELING) -->
+    <section class="tab-content" id="tab-d2-core" role="tabpanel">
+
+<div class="panel">
+  <div style="border:2px solid var(--accent);border-radius:10px;padding:14px;background:var(--surface);margin-bottom:20px">
+    <span class="qb-badge qb-badge-d2">BLUEPRINT BP-CORE1A-CONSTRUCTION</span>
+    <span class="qb-badge qb-badge-qrt">QRT-JUSTIFY-D2</span>
+    <h2 style="font-size:1.3rem;margin-top:8px">Core 1A · Universal Proof: Parallelogram Interior Angle Bisector Enclosure Theorem</h2>
+    <p style="color:var(--text-muted);font-size:0.92rem;margin-top:4px">
+      Anchored to Quadrilaterals and Geometric Deductions (Q32 2024-25 Set B, Q30 2025-26 Set B, Q14 2025-26 Set A).
+    </p>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
+    <h3>Declared Conventions and Domain</h3>
+    <ul>
+      <li><strong>Domain:</strong> Euclidean Plane Geometry ($\mathbb{R}^2$).</li>
+      <li><strong>Hypotheses:</strong> $ABCD$ is a non-degenerate parallelogram with $AB \parallel CD$ and $AD \parallel BC$.</li>
+      <li><strong>Bisectors:</strong> Rays $AP, BP, CQ, DQ$ bisect interior angles $ngle A, ngle B, ngle C, ngle D$ respectively.</li>
+      <li><strong>Enclosure:</strong> The four angle bisectors intersect to form an enclosed quadrilateral $PQRS$.</li>
+    </ul>
+  </div>
+
+  <div style="background:rgba(56, 189, 248, 0.08);border-left:4px solid var(--accent);padding:16px;border-radius:0 8px 8px 0;margin:16px 0">
+    <strong>Explicit Inferential Jump:</strong>
+    <p style="margin-top:6px">
+      Why the consecutive interior angles of any parallelogram sum to 180 degrees, forcing their bisected halves to sum to exactly 90 degrees, and how triangle angle sum transfers this invariant to prove that all four interior angles of the enclosed quadrilateral are strictly 90 degrees, forming a rectangle.
+    </p>
+  </div>
+
+  <h3 style="margin:24px 0 12px">Formal 4-Stage Step-by-Step Construction Path</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin:16px 0">
+    <div style="border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--surface)">
+      <span class="rung-tag rung-orient">STEP 1 · CONSECUTIVE ANGLES</span>
+      <p style="margin-top:8px">Since $AB \parallel CD$ with transversal $AD$, consecutive interior angles sum to 180 degrees: $ngle A + ngle D = 180^\circ$ and $ngle A + ngle B = 180^\circ$.</p>
+      <p style="font-size:0.86rem;color:var(--text-muted)"><strong>Why valid:</strong> Euclid's Parallel Postulate directly warrants that consecutive interior angles across parallel lines sum to two right angles ($180^\circ$).</p>
+    </div>
+
+    <div style="border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--surface)">
+      <span class="rung-tag rung-represent">STEP 2 · BISECTION SUM</span>
+      <p style="margin-top:8px">Ray $AP$ bisects $ngle A$ and ray $DP$ bisects $ngle D$. In $	riangle APD$, the sum of base angles is: $ngle PAD + ngle PDA = rac{1}{2}(ngle A + ngle D) = rac{1}{2}(180^\circ) = 90^\circ$.</p>
+      <p style="font-size:0.86rem;color:var(--text-muted)"><strong>Why valid:</strong> Multiplying an algebraic equality by scalar factor $1/2$ preserves exact mathematical equivalence over $\mathbb{R}$.</p>
+    </div>
+
+    <div style="border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--surface)">
+      <span class="rung-tag rung-crux">STEP 3 · TRIANGLE APEX ANGLE</span>
+      <p style="margin-top:8px">In $	riangle APD$, triangle angle sum gives $ngle APD = 180^\circ - (ngle PAD + ngle PDA) = 180^\circ - 90^\circ = 90^\circ$.</p>
+      <p style="font-size:0.86rem;color:var(--text-muted)"><strong>Why valid:</strong> The angle sum property of any Euclidean triangle guarantees that the three interior angles sum to $180^\circ$.</p>
+    </div>
+
+    <div style="border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--surface)">
+      <span class="rung-tag rung-verify">STEP 4 · RECTANGLE INVARIANT</span>
+      <p style="margin-top:8px">By identical symmetry for all consecutive angle pairs, the four interior angles at $P, Q, R, S$ are right angles ($90^\circ$). Vertically opposite angles transfer $90^\circ$ to quadrilateral $PQRS$, proving $PQRS$ is a rectangle.</p>
+      <p style="font-size:0.86rem;color:var(--text-muted)"><strong>Why valid:</strong> A quadrilateral possessing four right angles satisfies the definitive invariant of a Euclidean rectangle.</p>
+    </div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0">
+    <h3>Representation Bridge Table</h3>
+    <table style="width:100%;border-collapse:collapse;margin-top:8px">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border);text-align:left">
+          <th style="padding:6px">Symbol</th>
+          <th style="padding:6px">Diagram Element</th>
+          <th style="padding:6px">Geometric Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:6px">$ngle A + ngle B = 180^\circ$</td><td style="padding:6px">Consecutive angles at transversal $AB$</td><td style="padding:6px">Co-interior supplementary angles</td></tr>
+        <tr><td style="padding:6px">$ngle SAB + ngle SBA = 90^\circ$</td><td style="padding:6px">Bisected angle rays $AS, BS$</td><td style="padding:6px">Half sum of supplementary angles</td></tr>
+        <tr><td style="padding:6px">$ngle ASB = ngle PSR = 90^\circ$</td><td style="padding:6px">Intersection vertex $S$</td><td style="padding:6px">Vertically opposite right angle</td></tr>
+        <tr><td style="padding:6px">$PQRS$ is a Rectangle</td><td style="padding:6px">Enclosed quadrilateral</td><td style="padding:6px">Four right angles guarantee rectangle</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="trap-alert" style="margin:20px 0">
+    <h3>⚠️ Trap Clinic: The Square Assumption Fallacy</h3>
+    <p><strong>Plausible Wrong Path (Fallacy):</strong> Assuming the enclosed quadrilateral must be a square because all four angles are 90 degrees and the parent figure is symmetrical.</p>
+    <p><strong>Refutation and Repair:</strong> Four 90-degree angles prove the figure is a RECTANGLE. Adjacent sides are equal if and only if $ABCD$ is a rhombus ($AB = AD$). In general parallelograms with unequal adjacent sides, the enclosed figure is strictly a non-square rectangle.</p>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-top:20px">
+    <h4>Worked Concept Anchor & Independent Exit Task</h4>
+    <p>Prove that the quadrilateral formed by the internal angle bisectors of a rectangle is a square.</p>
+    <textarea class="qb-textarea" style="margin-top:8px" placeholder="Write proof using 45-degree angle bisectors in a rectangle..."></textarea>
+    <details style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
+      <summary style="cursor:pointer;font-weight:700">Reveal Model Exit Solution</summary>
+      <p style="margin-top:8px">In a rectangle, each corner is $90^\circ$. Its bisectors create $45^\circ$ angles, forming congruent isosceles right triangles at each corner. This forces all four sides of the enclosed rectangle to be equal, proving it is a square. Q.E.D. ✅</p>
+    </details>
+  </div>
+</div>
+
+      <!-- CORE 1B (D2 RECONSTRUCTION) -->
+
+<div class="panel">
+  <span class="qb-badge qb-badge-d2">BLUEPRINT BP-CORE1B-RECONSTRUCTION</span>
+  <h2 style="font-size:1.3rem;margin-top:8px">Core 1B · Dual-Stage Recall & Conceptual Reconstruction (D2)</h2>
+  
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px">
+    <h3>Stage 1 · Predict Prompt Commitment</h3>
+    <p>Before computing: Suppose you draw a general parallelogram $ABCD$ with $AB 
+e BC$, and construct the bisectors of all four interior angles. What specific figure is always formed?</p>
+    <p><strong>Options:</strong> (A) Square, (B) Rectangle, (C) Rhombus, (D) Trapezium.</p>
+    <p style="color:var(--text-muted);font-size:0.88rem">Predict Rationale: Distinguishes right angles (rectangle) from equal sides (rhombus/square).</p>
+    <textarea class="qb-textarea" placeholder="Commit your answer and state why adjacent sides cannot be equal in general..."></textarea>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px">
+    <h3>Stage 2 · Autonomous Attempt & Model Closure</h3>
+    <p>Formulate the exact chain of geometric warrants that proves $ngle ASB = 90^\circ$, and state which parallel-line condition this satisfies.</p>
+    <textarea class="qb-textarea" placeholder="Write step 1 (supplementary sum), step 2 (bisection sum), step 3 (triangle sum)..."></textarea>
+    <details class="model-proof" style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
+      <summary style="cursor:pointer;font-weight:700">Commit Attempt & Reveal Model Proof</summary>
+      <div style="margin-top:8px;line-height:1.7">
+        <p>1. In parallelogram $ABCD$ with $AD \parallel BC$, consecutive interior angles satisfy $ngle A + ngle B = 180^\circ$.</p>
+        <p>2. Bisectors give $ngle SAB = rac{1}{2}ngle A$ and $ngle SBA = rac{1}{2}ngle B$, so $ngle SAB + ngle SBA = rac{1}{2}(180^\circ) = 90^\circ$.</p>
+        <p>3. In $	riangle ASB$, triangle angle sum gives $ngle ASB = 180^\circ - 90^\circ = 90^\circ$. Vertically opposite angle $ngle PSR = 90^\circ$.</p>
+        <p>Conclusion: Since all four angles are $90^\circ$, $PQRS$ is a rectangle. ✅</p>
       </div>
+    </details>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px">
+    <h3>Stage 3 · Coordinate Step Reconstruction</h3>
+    <p>Reconstruct perpendicularity using vector directions: if line $AS$ has inclination $	heta/2$ and line $BS$ has inclination $90^\circ + 	heta/2$, what is the angle between them?</p>
+    <textarea class="qb-textarea" placeholder="Compute (90 + theta/2) - (theta/2) = 90 degrees..."></textarea>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px">
+    <h3>Stage 4 · Boundary Test & Limiting Case Perturbation</h3>
+    <p><strong>Boundary Test:</strong> What happens to the enclosed quadrilateral $PQRS$ when parallelogram $ABCD$ is deformed into a rhombus ($AB = BC$)?</p>
+    <textarea class="qb-textarea" placeholder="Examine diagonals of rhombus and explain collapse of PQRS..."></textarea>
+    <details class="model-proof" style="margin-top:12px;background:var(--card);padding:12px;border-radius:8px">
+      <summary style="cursor:pointer;font-weight:700">Reveal Limiting Case Solution</summary>
+      <p style="margin-top:6px">In a rhombus, diagonals bisect opposite angles. Opposite angle bisectors coincide and all four bisectors are concurrent at the single center of symmetry. The enclosed quadrilateral $PQRS$ collapses to a single degenerate point of area 0. ✅</p>
+    </details>
+  </div>
+</div>
+
     </section>
 
   </main>

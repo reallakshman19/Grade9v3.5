@@ -1,0 +1,68 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-POLYNOMIALS-FACTOR-THEOREM-AND-IDENTITIES",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Polynomials",
+  "subtopic": "POLYNOMIAL-FACTOR-THEOREM-AND-IDENTITIES",
+  "target_demand": "APPLY",
+  "target_band": "D2",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating any coefficients: To determine if (2x - 1) is a factor of polynomial P(x) = 4x^3 - 4x^2 + x - 1, at what exact numerical value must you evaluate P(x)?",
+      "options": [
+        "A. Evaluate at x = -1/2",
+        "B. Evaluate at x = 1/2",
+        "C. Evaluate at x = 1",
+        "D. Evaluate at x = 2"
+      ],
+      "predict_rationale": "Forces the student to solve the linear divisor root 2x - 1 = 0 => x = 1/2, preventing the sign error of using -1/2."
+    },
+    "stage_2_attempt": {
+      "task": "Using the Factor Theorem, find the exact value of parameter k such that (x - 1) is a factor of P(x) = kx^2 - 3x + k.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Set the root of divisor x - 1 = 0 => x = 1.",
+        "step_2": "By the Factor Theorem, (x - 1) divides P(x) if and only if P(1) = 0.",
+        "step_3": "Substitute x = 1: P(1) = k(1)^2 - 3(1) + k = k - 3 + k = 2k - 3.",
+        "conclusion": "Set 2k - 3 = 0 => 2k = 3 => k = 3/2."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "COEFFICIENT_MATCHING_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose you solve the same problem without the Factor Theorem, by directly factoring P(x) = (x - 1)(kx - b). What must b be?",
+          "expected_insight": "Expanding (x - 1)(kx - b) = kx^2 - (k + b)x + b. Matching the constant term gives b = k."
+        },
+        {
+          "inquiry": "Now match the linear coefficient -(k + b) to the given linear coefficient -3.",
+          "expected_insight": "-(k + k) = -3 => -2k = -3 => k = 3/2. Synthetic coefficient matching confirms the exact same result independently!"
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: Suppose parameter k = 0. What happens to the polynomial P(x) = kx^2 - 3x + k, its degree, and can (x - 1) still be a factor?",
+      "options": [
+        "A. The polynomial becomes 0, with degree undefined.",
+        "B. The polynomial collapses to linear P(x) = -3x (degree 1), and P(1) = -3 != 0, so (x - 1) ceases to be a factor.",
+        "C. (x - 1) remains a factor for all k.",
+        "D. The degree increases to 3."
+      ],
+      "correct_option": "B",
+      "explanation": "At boundary k = 0, the leading quadratic term vanishes, degenerating P(x) to linear -3x. Its only zero is x = 0, so x - 1 cannot divide it. This confirms that k = 3/2 is the unique non-trivial value sustaining the factor property."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Recall the Factor Theorem: if (x - a) is a factor of P(x), then substituting x = a must make the polynomial equal to zero."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Set x = 1 in P(x) = kx^2 - 3x + k. You get k - 3 + k = 0. Combine the k terms and solve for k."
+    }
+  }
+}

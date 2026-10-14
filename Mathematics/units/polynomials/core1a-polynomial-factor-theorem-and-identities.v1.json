@@ -1,0 +1,113 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-POLYNOMIALS-FACTOR-THEOREM-AND-IDENTITIES",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Polynomials",
+  "topic_name": "Polynomials & Algebraic Identities",
+  "subtopic": "POLYNOMIAL-FACTOR-THEOREM-AND-IDENTITIES",
+  "target_demand": "APPLY",
+  "target_band": "D2",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-A-Q016",
+    "SOF-IMO-G09-L1-2025-26-A-Q017",
+    "SOF-IMO-G09-L1-2025-26-A-Q018",
+    "SOF-IMO-G09-L1-2025-26-A-Q021",
+    "SOF-IMO-G09-L1-2025-26-A-Q024",
+    "SOF-IMO-G09-L1-2025-26-A-Q036",
+    "SOF-IMO-G09-L1-2025-26-A-Q040",
+    "SOF-IMO-G09-L1-2025-26-B-Q016",
+    "SOF-IMO-G09-L1-2025-26-B-Q018",
+    "SOF-IMO-G09-L1-2025-26-B-Q027",
+    "SOF-IMO-G09-L1-2025-26-B-Q029",
+    "SOF-IMO-G09-L1-2025-26-B-Q036",
+    "SOF-IMO-G09-L1-2025-26-B-Q040",
+    "SOF-IMO-G09-L1-2025-26-B-Q041",
+    "SOF-IMO-G09-L1-2024-25-B-Q017",
+    "SOF-IMO-G09-L1-2024-25-B-Q033",
+    "SOF-IMO-G09-L1-2024-25-B-Q040",
+    "SOF-IMO-G09-L1-2024-25-B-Q044",
+    "SOF-IMO-G09-L1-2023-24-A-Q017",
+    "SOF-IMO-G09-L1-2023-24-A-Q018",
+    "SOF-IMO-G09-L1-2023-24-A-Q028",
+    "SOF-IMO-G09-L1-2023-24-A-Q029",
+    "SOF-IMO-G09-L1-2023-24-A-Q033",
+    "SOF-IMO-G09-L1-2023-24-A-Q034"
+  ],
+  "inferential_jump": "Why polynomial division P(x) = (x-a)Q(x) + R reduces the remainder to a single evaluation R = P(a), and how enforcing P(a) = 0 provides the exact algebraic warrant for linear factor divisibility and coefficient determination without executing long division.",
+  "relation_refs": {
+    "domain": "Polynomial Rings R[x] and Algebraic Factorization",
+    "hypotheses": [
+      "Let P(x) in R[x] be a polynomial of degree n >= 1.",
+      "The linear divisor is D(x) = x - a.",
+      "Euclidean Division Theorem guarantees unique polynomials Q(x) and constant R such that P(x) = (x - a)Q(x) + R.",
+      "Factor Theorem: (x - a) divides P(x) if and only if P(a) = 0."
+    ],
+    "excluded_values": [
+      "Zero divisor D(x) = 0.",
+      "Division by higher-degree divisors without linear degree reduction."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "P(x) = (x - a)Q(x) + R",
+      "svg_element_ref": "euclidean-division-identity",
+      "word_meaning": "The exact identity expressing dividend as divisor times quotient plus scalar remainder."
+    },
+    {
+      "symbol": "R = P(a)",
+      "svg_element_ref": "remainder-theorem-evaluation",
+      "word_meaning": "Evaluating at the root of the divisor vanishes the quotient, isolating the remainder."
+    },
+    {
+      "symbol": "P(a) = 0 <=> (x - a) | P(x)",
+      "svg_element_ref": "factor-theorem-biconditional",
+      "word_meaning": "A zero remainder is both necessary and sufficient for exact linear divisibility."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Write the Euclidean division decomposition: P(x) = (x - a)Q(x) + R.",
+      "derivation": "By polynomial division theorem in R[x], dividing a polynomial of degree n by a linear divisor of degree 1 leaves a remainder of degree strictly less than 1, which is a constant scalar R.",
+      "why_valid": "Euclidean division theorem in the polynomial ring R[x]."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Substitute x = a to eliminate the quotient term: P(a) = (a - a)Q(a) + R = 0 + R = R.",
+      "derivation": "Setting x equal to the zero of the linear divisor forces the product (x - a)Q(x) to evaluate to 0.",
+      "why_valid": "Ring multiplication by zero property: 0 * Q(a) = 0."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "State the Factor Theorem criterion: (x - a) is a factor of P(x) if and only if P(a) = 0.",
+      "derivation": "A polynomial (x - a) is a factor of P(x) if and only if the remainder R is zero, which means P(a) = 0.",
+      "why_valid": "Definition of algebraic divisibility in integral domains."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Determine the unknown parameter k by solving the algebraic equation P(a) = 0.",
+      "derivation": "Substitute x = a into the parametric expression of P(x), equate the resulting scalar to 0, and isolate k.",
+      "why_valid": "Equivalence-preserving algebraic operations over the field R."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "DIVISOR_ROOT_SIGN_ERROR",
+      "wrong_idea": "Evaluating P(-a) when the linear divisor is (x - a), or evaluating P(a) when the divisor is (x + a).",
+      "diagnostic_prompt": "What is the root of the divisor equation x - a = 0?",
+      "repair": "Always set the divisor to zero: x - a = 0 => x = a. For (x + a), x + a = 0 => x = -a."
+    },
+    {
+      "code": "LONG_DIVISION_COMPUTATIONAL_WASTE",
+      "wrong_idea": "Performing full multi-step polynomial long division by hand to find remainder or verify a factor.",
+      "diagnostic_prompt": "Is long division necessary to find the remainder of P(x) divided by a linear term?",
+      "repair": "Use the Remainder/Factor Theorem: evaluating P(a) directly gives the remainder in a single step with zero risk of division arithmetic drift."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Find the value of k if (x - 1) is a factor of P(x) = 2x^2 + kx + sqrt(2).",
+    "model_answer": "By the Factor Theorem, (x - 1) is a factor of P(x) if and only if P(1) = 0. Substituting x = 1: P(1) = 2(1)^2 + k(1) + sqrt(2) = 2 + k + sqrt(2). Setting P(1) = 0 gives: 2 + k + sqrt(2) = 0 => k = -(2 + sqrt(2)). Q.E.D."
+  }
+}

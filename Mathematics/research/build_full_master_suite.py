@@ -113,27 +113,25 @@ def format_math_html(text: str) -> str:
 def main():
     root = Path(".")
     
-    # 1. Load Batch 1 (2025-26 Set B)
+    # 1. Load Batch 1 (2025-26 Set B - 50 items)
     with open("Mathematics/question-bank/sof-imo-2025-26-set-b.core2.json", "r", encoding="utf-8") as f:
         set_b_data = json.load(f)["questions"]
         
-    # 2. Load Batch 2 (2025-26 Set A)
+    # 2. Load Batch 2 (2025-26 Set A - 50 items)
     with open("Mathematics/question-bank/sof-imo-2025-26-set-a.core2.json", "r", encoding="utf-8") as f:
         set_a_data = json.load(f)["questions"]
 
-    # 3. Load Batch 3 (2024-25 Set B)
+    # 3. Load Batch 3 (2024-25 Set B - 50 items)
     with open("Mathematics/question-bank/sof-imo-2024-25-set-b.core2.json", "r", encoding="utf-8") as f:
         set_24b_data = json.load(f)["questions"]
 
-    # 4. Load baseline 68 enhanced for 2023-24 Set A and 2026-27 Sample
-    enhanced_path = root / "Mathematics/research/imo_68_classified_enhanced.json"
-    stems_path = root / "Mathematics/research/imo_68_verbatim_stems.json"
-    base_data = json.load(open(enhanced_path, encoding="utf-8"))
-    stems_db = json.load(open(stems_path, encoding="utf-8"))
+    # 4. Load Batch 4 (2023-24 Set A - 50 items)
+    with open("Mathematics/question-bank/sof-imo-2023-24-set-a.core2.json", "r", encoding="utf-8") as f:
+        set_23a_data = json.load(f)["questions"]
 
-    set_a_ids = {q["id"] for q in set_a_data}
-    set_b_ids = {q["id"] for q in set_b_data}
-    set_24b_ids = {q["id"] for q in set_24b_data}
+    # 5. Load Official Sample (2026-27 Sample - 10 items)
+    with open("Mathematics/question-bank/sof-imo-sample-2026-27.core2.json", "r", encoding="utf-8") as f:
+        sample_data = json.load(f)["questions"]
 
     # Normalize all questions into a unified list
     unified_questions = []
@@ -222,40 +220,61 @@ def main():
             "distractors": q["distractor_rationale"]
         })
 
-    # Add other baseline papers (34 items: 2023-24 Set A [24], 2026-27 Sample [10])
-    for q in base_data:
-        qid = q["id"]
-        if qid not in set_a_ids and qid not in set_b_ids and qid not in set_24b_ids:
-            stem_rec = stems_db.get(qid, {})
-            paper = q["paper"]
-            paper_label = "2026-27 Sample" if "SAMPLE" in paper else "2023-24 Set A"
-            unified_questions.append({
-                "id": qid,
-                "num": q["num"],
-                "paper": paper,
-                "paper_label": paper_label,
-                "section": q["section"],
-                "topic": q["topic"],
-                "topic_name": q["topic_name"],
-                "title": q["summary"],
-                "band": q["band"],
-                "demand": q["demand"],
-                "cell": q["cell"],
-                "stem": stem_rec.get("stem", q["summary"]),
-                "options": stem_rec.get("options", {}),
-                "choice": stem_rec.get("choice", q.get("choice", "")),
-                "answer_text": stem_rec.get("answer", q.get("answer", "")),
-                "figure_ref": None,
-                "hint1": q.get("rung1", ""),
-                "hint2": q.get("rung2", ""),
-                "hint3": q.get("rung3", ""),
-                "solution": q.get("derivation", "Verified mathematically from repository audit records."),
-                "check": q.get("check", "Verified via algebraic derivation and official key confirmation."),
-                "check_type": "SUBSTITUTION_BACK_CHECK",
-                "distractors": {
-                    "trap": q.get("trap", "Common error diagnosed in repository audit.")
-                }
-            })
+    # Add Set A 2023-24 (50 items)
+    for q in set_23a_data:
+        unified_questions.append({
+            "id": q["id"],
+            "num": q["paper_origin_locator"]["question_number"],
+            "paper": "SOF-IMO-G09-L1-2023-24-A",
+            "paper_label": "2023-24 Set A",
+            "section": q["section"],
+            "topic": q["taxonomy"]["topic"],
+            "topic_name": q["taxonomy"]["topic_label"],
+            "title": q["title"],
+            "band": q["cognitive_classification"]["difficulty_band"],
+            "demand": q["cognitive_classification"]["primary_demand"],
+            "cell": q["cognitive_classification"]["qrt_cell"],
+            "stem": q["stem"],
+            "options": q["options"],
+            "choice": q["answer"]["choice"],
+            "answer_text": q["answer"]["value"],
+            "figure_ref": q["figure_ref"],
+            "hint1": q["hint_ladder"]["hint1_conceptual_nudge"],
+            "hint2": q["hint_ladder"]["hint2_tactical_step"],
+            "hint3": q["cognitive_classification"]["crux_move"],
+            "solution": q["solution"]["derivation"],
+            "check": q["solution"]["independent_check"]["verification"],
+            "check_type": q["solution"]["independent_check"]["check_type"],
+            "distractors": q["distractor_rationale"]
+        })
+
+    # Add Official Sample 2026-27 (10 items)
+    for q in sample_data:
+        unified_questions.append({
+            "id": q["id"],
+            "num": q["paper_origin_locator"]["question_number"],
+            "paper": "SOF-IMO-G09-SAMPLE-2026-27",
+            "paper_label": "2026-27 Sample",
+            "section": q["section"],
+            "topic": q["taxonomy"]["topic"],
+            "topic_name": q["taxonomy"]["topic_label"],
+            "title": q["title"],
+            "band": q["cognitive_classification"]["difficulty_band"],
+            "demand": q["cognitive_classification"]["primary_demand"],
+            "cell": q["cognitive_classification"]["qrt_cell"],
+            "stem": q["stem"],
+            "options": q["options"],
+            "choice": q["answer"]["choice"],
+            "answer_text": q["answer"]["value"],
+            "figure_ref": q["figure_ref"],
+            "hint1": q["hint_ladder"]["hint1_conceptual_nudge"],
+            "hint2": q["hint_ladder"]["hint2_tactical_step"],
+            "hint3": q["cognitive_classification"]["crux_move"],
+            "solution": q["solution"]["derivation"],
+            "check": q["solution"]["independent_check"]["verification"],
+            "check_type": q["solution"]["independent_check"]["check_type"],
+            "distractors": q["distractor_rationale"]
+        })
 
     print(f"Total unified questions compiled: {len(unified_questions)}")
 
@@ -978,7 +997,7 @@ def main():
     <div class="shell-inner">
       <a href="#" class="brand">
         <span>IMO Grade 9 Master Suite</span>
-        <span class="brand-badge">184 QUESTIONS · CORE 2 CUSTODY</span>
+        <span class="brand-badge">210 QUESTIONS · CORE 2 CUSTODY</span>
       </a>
 
       <nav class="nav-tabs">
@@ -995,7 +1014,7 @@ def main():
   <main class="container">
 
     <!-- ========================================== -->
-    <!-- TAB 1: CORE 2 QUESTION BANK (184 Questions) -->
+    <!-- TAB 1: CORE 2 QUESTION BANK (210 Questions) -->
     <!-- ========================================== -->
     <div id="tab-core2" class="tab-content active">
 
@@ -1009,11 +1028,11 @@ def main():
         <!-- Papers Row -->
         <div class="filter-chips-row">
           <span class="chip-label">Paper:</span>
-          <span class="filter-chip active" data-filter="paper" data-val="ALL" onclick="toggleFilter('paper', 'ALL')">All Papers (184)</span>
+          <span class="filter-chip active" data-filter="paper" data-val="ALL" onclick="toggleFilter('paper', 'ALL')">All Papers (210)</span>
           <span class="filter-chip" data-filter="paper" data-val="2025-26 Set A" onclick="toggleFilter('paper', '2025-26 Set A')">2025-26 Set A (50)</span>
           <span class="filter-chip" data-filter="paper" data-val="2025-26 Set B" onclick="toggleFilter('paper', '2025-26 Set B')">2025-26 Set B (50)</span>
           <span class="filter-chip" data-filter="paper" data-val="2024-25 Set B" onclick="toggleFilter('paper', '2024-25 Set B')">2024-25 Set B (50)</span>
-          <span class="filter-chip" data-filter="paper" data-val="2023-24 Set A" onclick="toggleFilter('paper', '2023-24 Set A')">2023-24 Set A (24)</span>
+          <span class="filter-chip" data-filter="paper" data-val="2023-24 Set A" onclick="toggleFilter('paper', '2023-24 Set A')">2023-24 Set A (50)</span>
           <span class="filter-chip" data-filter="paper" data-val="2026-27 Sample" onclick="toggleFilter('paper', '2026-27 Sample')">2026-27 Sample (10)</span>
         </div>
 
@@ -1056,7 +1075,7 @@ def main():
 
       <!-- Result Counter -->
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:0.95rem;color:var(--text-muted)">
-        <span id="result-counter" style="font-weight:750;color:var(--text)">Showing all 184 questions</span>
+        <span id="result-counter" style="font-weight:750;color:var(--text)">Showing all 210 questions</span>
         <span style="font-size:0.88rem">Click any badge to filter dynamically</span>
       </div>
 
