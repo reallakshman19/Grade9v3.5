@@ -510,14 +510,18 @@ def audit_item_inter_core_checkpoint(
                     refs = [r.upper() for r in data.get("linked_core2_refs", [])]
                     tgt_dem = data.get("target_demand", "")
                     tgt_bnd = data.get("target_band", "")
-                    unit_topic = data.get("topic", "")
-                    if qid.upper() in refs or (tgt_dem == demand and tgt_bnd == band) or (topic.lower() in unit_topic.lower()):
+                    topic_clean = re.sub(r"[^a-z0-9]", "", topic.lower())
+                    unit_topic_name = re.sub(r"[^a-z0-9]", "", str(data.get("topic_name", "")).lower())
+                    unit_topic_code = re.sub(r"[^a-z0-9]", "", str(data.get("topic", "")).lower())
+                    topic_matched = bool(topic_clean and (topic_clean in unit_topic_name or unit_topic_name in topic_clean or topic_clean in unit_topic_code))
+                    if qid.upper() in refs or (tgt_dem == demand and tgt_bnd == band) or topic_matched:
                         if not anchored_c1a:
                             anchored_c1a = audit_core1a_section(unit_file.read_text(encoding="utf-8"), f"Unit {unit_file.name}", f"QRT-{demand}-{band}")
                         paired_1b = unit_file.parent / unit_file.name.replace("core1a-", "core1b-")
                         if not anchored_c1b and paired_1b.is_file():
                             anchored_c1b = audit_core1b_section(paired_1b.read_text(encoding="utf-8"), f"Unit {paired_1b.name}", f"QRT-{demand}-{band}")
-                        break
+                        if anchored_c1a and anchored_c1b:
+                            break
                 except Exception:
                     pass
 

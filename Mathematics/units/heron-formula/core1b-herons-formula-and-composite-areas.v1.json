@@ -1,0 +1,27 @@
+{
+  "schema": "imo-core1b-self-tutor-dialogue/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1B-HERON-COMPOSITE-AREAS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+  "paired_core1a_ref": "PKG-CORE1A-HERON-COMPOSITE-AREAS",
+  "dialogue_stages": [
+    {
+      "stage": "PREDICT",
+      "tutor_prompt": "When calculating triangle area from side lengths using Heron's formula, why must we use semiperimeter s instead of total perimeter P?",
+      "student_response": "Because if we used total perimeter P, the differences P - a, P - b, P - c would be too large and change the dimensions.",
+      "tutor_feedback": "Exactly! Dimensionally, [s(s-a)(s-b)(s-c)] represents [Length⁴], whose square root gives [Length²] (Area). Furthermore, in any triangle, a + b > c, which ensures s - c = (a+b-c)/2 > 0. If you used P, you wouldn't capture the triangle inequality correctly."
+    },
+    {
+      "stage": "ATTEMPT",
+      "tutor_prompt": "A triangular plot has sides 6 m, 8 m, 10 m. Calculate its area using Heron's formula, and verify using the standard right-triangle formula.",
+      "student_response": "s = (6 + 8 + 10)/2 = 12. Differences are 12-6=6, 12-8=4, 12-10=2. Area = √(12 × 6 × 4 × 2) = √(576) = 24 m². By right triangle formula: (1/2) × 6 × 8 = 24 m². Both methods agree!",
+      "tutor_feedback": "Outstanding! Verifying Pythagorean triples against base-height formulas is the gold standard for sanity checks."
+    },
+    {
+      "stage": "BOUNDARY_TEST",
+      "tutor_prompt": "What happens to Heron's formula if the three sides form a degenerate triangle, like a = 3, b = 4, c = 7?",
+      "student_response": "s = (3+4+7)/2 = 7. Then s - c = 7 - 7 = 0. The product becomes zero, so Area = 0! That makes sense because a degenerate triangle is just a flat line segment with zero area.",
+      "tutor_feedback": "Brilliant deduction. The boundary case s = c detects degeneracy with zero enclosed area."
+    }
+  ]
+}

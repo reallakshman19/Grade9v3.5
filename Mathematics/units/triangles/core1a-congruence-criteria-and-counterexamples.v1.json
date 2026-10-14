@@ -1,0 +1,69 @@
+{
+  "schema": "imo-core1a-declarative-anchor/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1A-TRIANGLES-CONGRUENCE-COUNTEREXAMPLES",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION@1.8.0",
+  "topic": "TRIANGLES",
+  "topic_name": "Triangles",
+  "subtopic": "CONGRUENCE_CRITERIA_AND_SIMILARITY_TRAPS",
+  "target_demand": "JUSTIFY",
+  "target_band": "D3",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-SAMPLE-2026-27-Q010"
+  ],
+  "inferential_jump": "Distinguish valid triangle congruence criteria (SAS, ASA, AAS, SSS, RHS) from angle-only similarity (AAA), proving by counterexample that equality of all three angles does not imply congruence without at least one corresponding side equality.",
+  "relation_refs": {
+    "isosceles_base_angles": "AB = AC \\iff \\angle B = \\angle C",
+    "similarity_dilation": "\\Delta ABC \\sim \\Delta RQP \\centernot\\implies \\Delta ABC \\cong \\Delta RQP",
+    "aas_criterion": "\\angle A_1 = \\angle A_2, \\; \\angle B_1 = \\angle B_2, \\; s_1 = s_2 \\implies \\Delta_1 \\cong \\Delta_2"
+  },
+  "representation": [
+    "Geometric side-by-side comparison of dilated isosceles triangles sharing identical angles but different scales",
+    "Decision matrix contrasting valid congruence criteria (SSS, SAS, ASA, AAS, RHS) against invalid criteria (AAA, SSA)"
+  ],
+  "completed_teaching_path": [
+    "1. Define triangle congruence: two triangles are congruent iff there exists a rigid motion (isometry) mapping one onto the other.",
+    "2. State the canonical congruence axioms and theorems: SSS, SAS, ASA, AAS, RHS.",
+    "3. Construct counterexamples for AAA: scaling (dilation) preserves all three angles while altering side lengths by ratio k ≠ 1.",
+    "4. Prove altitude congruence in isosceles triangles using AAS: altitudes dropped to equal sides or from equal vertices are congruent."
+  ],
+  "misconceptions": [
+    {
+      "id": "MISC-AAA-CONGRUENCE-FALLACY",
+      "error": "Believing that if two triangles have all three corresponding angles equal, they must be congruent.",
+      "correction": "AAA establishes similarity (equal shape, proportional sides), but not congruence (equal size). A scaled replica (e.g. 3-4-5 vs 6-8-10) has identical angles but different areas and perimeters."
+    },
+    {
+      "id": "MISC-SSA-AMBIGUOUS-CASE",
+      "error": "Assuming equality of two sides and a non-included angle guarantees congruence.",
+      "correction": "SSA is the ambiguous case and does not guarantee congruence unless the angle is right (RHS) or opposite the longer side."
+    }
+  ],
+  "worked_concept_anchor": {
+    "problem_statement": "In ∆XYZ and ∆UVW, it is known that ∠X = ∠U = 50°, ∠Y = ∠V = 65°, and XY = 8 cm. Is ∆XYZ necessarily congruent to ∆UVW if (i) UV = 8 cm, (ii) no side length of ∆UVW is known? Justify each case with a formal criterion or counterexample.",
+    "conventions_declared": "Triangles XYZ and UVW lie in the Euclidean plane. Congruence requires identity of all corresponding side lengths and angles.",
+    "deductive_chain": [
+      {
+        "step": 1,
+        "statement": "In ∆XYZ, the third angle is \\angle Z = 180^\\circ - (50^\\circ + 65^\\circ) = 65^\\circ. Similarly, in ∆UVW, \\angle W = 180^\\circ - (50^\\circ + 65^\\circ) = 65^\\circ.",
+        "why_valid": "Angle sum property of triangles in Euclidean geometry: angles sum to 180°."
+      },
+      {
+        "step": 2,
+        "statement": "Since ∠Y = ∠Z = 65°, ∆XYZ is an isosceles triangle with XZ = XY = 8 cm. Likewise, ∆UVW has ∠V = ∠W = 65°, so it is isosceles with UW = UV.",
+        "why_valid": "Isosceles Triangle Theorem: sides opposite equal angles are equal."
+      },
+      {
+        "step": 3,
+        "statement": "Case (i): If UV = 8 cm, then XY = UV = 8 cm is the side included between ∠X = ∠U = 50° and ∠Y = ∠V = 65°. By the ASA congruence criterion, \\Delta XYZ \\cong \\Delta UVW.",
+        "why_valid": "ASA Congruence Criterion: two angles and the included side are respectively equal."
+      },
+      {
+        "step": 4,
+        "statement": "Case (ii): If no side of ∆UVW is known, let UV = 16 cm. Then ∆UVW has identical angles (50°, 65°, 65°) but sides twice as long (16, 16, 2·YZ). Thus ∆XYZ and ∆UVW are similar but NOT congruent.",
+        "why_valid": "A counterexample with scale factor k = 2 disproves congruence when side lengths are unconstrained."
+      }
+    ],
+    "invariant_proved": "Angle equality alone (AAA) establishes similarity, not congruence. Any valid congruence proof requires at least one corresponding side length constraint."
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema": "imo-core1a-declarative-anchor/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1A-LINES-ANGLES-PARALLEL-TRANSFER",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION@1.8.0",
+  "topic": "LINES_ANGLES",
+  "topic_name": "Lines and Angles",
+  "subtopic": "PARALLEL_GRID_ANGLE_TRANSFER",
+  "target_demand": "JUSTIFY",
+  "target_band": "D3",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-SAMPLE-2026-27-Q005"
+  ],
+  "inferential_jump": "Transfer directional ray angles across dual parallel systems (l1 ∥ l2 and l3 ∥ l4) to establish linear and supplementary constraints on partitioned angle sectors.",
+  "relation_refs": {
+    "corresponding_parallel_transfer": "\\angle(l_2, l_4) = \\angle(l_1, l_3) = x",
+    "linear_pair_supplement": "\\theta_{supp} = 180^\\circ - x",
+    "symmetric_bisection": "2y = 180^\\circ - x \\implies y = 90^\\circ - \\frac{x}{2}"
+  },
+  "representation": [
+    "Dual-parallel transversal grid diagram mapping corresponding, alternate interior, and linear pair angle sectors",
+    "Algebraic constraint table tracking angle transfer from ray intersection to bisected sector"
+  ],
+  "completed_teaching_path": [
+    "1. State Euclid's fifth postulate and the corresponding angles theorem for parallel line pairs.",
+    "2. Demonstrate angle transfer across parallel grids: if l1 ∥ l2 and l3 ∥ l4, the intersection angles at all four vertices are congruent modulo orientation.",
+    "3. Apply the straight line linear pair axiom to identify supplementary sectors: θ + x = 180°.",
+    "4. Solve the partition equation when the supplementary sector is divided into equal sub-angles: ky = 180° - x."
+  ],
+  "misconceptions": [
+    {
+      "id": "MISC-VERTICAL-VS-SUPPLEMENTARY",
+      "error": "Equating the partitioned sector to the original angle x directly as vertically opposite, concluding y = x/2.",
+      "correction": "The target sector lies along a straight line opposite the transversal direction, making it supplementary (180° - x), not vertically opposite (x)."
+    },
+    {
+      "id": "MISC-UNPROVED-PARALLELISM",
+      "error": "Transferring angles between transversals without verifying that both pairs of lines are given as parallel.",
+      "correction": "Dual parallel transfer requires two independent parallel assertions: l1 ∥ l2 AND l3 ∥ l4."
+    }
+  ],
+  "worked_concept_anchor": {
+    "problem_statement": "In a plane, two pairs of parallel lines p₁ ∥ p₂ and q₁ ∥ q₂ intersect to form a grid. At the intersection of p₁ and q₁, an acute angle measures α = 40°. At the intersection of p₂ and q₂, a line segment divides the supplementary angle into three equal sectors of measure β. Prove the relationship between α and β, and find the value of β.",
+    "conventions_declared": "Lines p₁ ∥ p₂ and q₁ ∥ q₂ lie in the Euclidean plane. Angles are measured in degrees on the interval (0°, 180°).",
+    "deductive_chain": [
+      {
+        "step": 1,
+        "statement": "By the corresponding angles theorem for p₁ ∥ p₂ cut by transversal q₁, the directed angle between p₂ and q₁ is α = 40°.",
+        "why_valid": "Corresponding angles formed by parallel lines cut by a transversal are equal."
+      },
+      {
+        "step": 2,
+        "statement": "By parallel transfer across q₁ ∥ q₂ cut by line p₂, the angle between the corresponding rays of p₂ and q₂ is also α = 40°.",
+        "why_valid": "A translation of parallel lines in the plane preserves all directional intersection angles."
+      },
+      {
+        "step": 3,
+        "statement": "The angle adjacent to α along the straight line q₂ is supplementary: \\theta = 180^\\circ - \\alpha = 180^\\circ - 40^\\circ = 140^\\circ.",
+        "why_valid": "Linear Pair Axiom: the sum of angles forming a straight line is 180°."
+      },
+      {
+        "step": 4,
+        "statement": "Since θ is partitioned into 3 equal sectors of measure β, we have 3\\beta = 180^\\circ - \\alpha = 140^\\circ \\implies \\beta = \\frac{140^\\circ}{3} = 46\\frac{2}{3}^\\circ.",
+        "why_valid": "Angle Addition Postulate applied to the 3 congruent adjacent sectors."
+      }
+    ],
+    "invariant_proved": "For any dual-parallel system with angle α, a supplementary sector partitioned into k equal parts obeys the universal invariant β = (180° - α) / k = (180°/k) - (α/k)."
+  }
+}

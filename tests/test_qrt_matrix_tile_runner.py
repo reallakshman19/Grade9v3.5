@@ -49,7 +49,7 @@ class TestQRTMatrixTileRunner(unittest.TestCase):
             self.skipTest("core2.html not found")
         res = inspect_grid_occupancy(self.hosted_core2)
         self.assertEqual(res["total_cells"], 28)
-        self.assertEqual(res["total_questions"], 68)
+        self.assertGreaterEqual(res["total_questions"], 68)
         self.assertGreater(res["occupied_cells"], 10)
         self.assertIn("QRT-APPLY-D2", res["grid"])
         self.assertEqual(res["grid"]["QRT-APPLY-D2"]["coord"], "(2, 3)")

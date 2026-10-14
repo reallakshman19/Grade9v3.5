@@ -1,0 +1,69 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-COMMERCIAL-MATH-RATE-SYSTEMS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "COMMERCIAL_MATH",
+  "subtopic": "COMM-RATE-SYSTEMS-AND-COMPOUND-INTEREST",
+  "target_demand": "MODEL",
+  "target_band": "D3",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating numerical values: If a sum of money amounts to A_2 after 2 years and A_3 after 3 years under annual compound interest, how do you determine whether the annual interest rate is higher than 15% without knowing the original principal P?",
+      "options": [
+        "A. You cannot determine it because P is an unknown free parameter.",
+        "B. Evaluate the ratio A_3 / A_2: if A_3 / A_2 > 1.15, the rate r exceeds 15% because A_3 / A_2 = 1 + r/100.",
+        "C. Subtract A_2 from A_3 and divide by 2.",
+        "D. Take the square root of A_3 / A_2."
+      ],
+      "predict_rationale": "Forces the learner to recognize that in geometric compounding, the quotient of adjacent terms isolates the common ratio 1 + r/100, completely independent of the initial scale factor P."
+    },
+    "stage_2_attempt": {
+      "task": "A cistern has two fill pipes P and Q which can fill it in 12 hours and 16 hours respectively. A waste pipe R empties the full cistern in 24 hours. Formulate the exact net hourly rate equation and determine the time required to fill the cistern when all three pipes are opened simultaneously.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Hourly fill rates: R_P = 1/12, R_Q = 1/16; hourly empty rate: R_R = 1/24.",
+        "step_2": "Net rate equation: R_{net} = 1/12 + 1/16 - 1/24. Common denominator of (12, 16, 24) is 48.",
+        "step_3": "R_{net} = (4/48) + (3/48) - (2/48) = (4 + 3 - 2)/48 = 5/48 cistern per hour.",
+        "step_4": "Total time to fill = 1 / R_{net} = 48 / 5 hours = 9.6 hours (or 9 hours 36 minutes).",
+        "conclusion": "The cistern will fill in 9 hours 36 minutes."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_ENGINEERING_FROM_LEAK_OBSERVATION",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose you measure that a tank took 8 hours to fill with an unnoticed leak, but its nominal fill time without the leak was 6 hours 40 minutes (20/3 hours). Working BACKWARDS from the observed delay, how do you isolate the leak's standalone emptying time?",
+          "expected_insight": "Convert the observed actual duration to net rate R_{actual} = 1/8. Convert nominal duration to nominal rate R_{nominal} = 3/20. The difference between nominal and actual rates is precisely the leak rate: R_{leak} = R_{nominal} - R_{actual} = 3/20 - 1/8 = 1/40. Thus the leak alone empties the tank in 40 hours!"
+        },
+        {
+          "inquiry": "Why must you subtract rates rather than subtracting the delay of 1 hour 20 minutes from the 6h 40m?",
+          "expected_insight": "Because time does not flow in a linear pool; during those extra 80 minutes, the inlet pipes were STILL pouring water in while the leak was leaking! Only rates quantify the instantaneous volumetric balance."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: Suppose the leak rate R_{leak} is continuously increased until it equals the combined inlet rate R_{in} (R_{leak} = R_{in}). What happens to the fill time T, and what happens if R_{leak} > R_{in}?",
+      "options": [
+        "A. If R_{leak} = R_{in}, T = 0; if R_{leak} > R_{in}, the tank fills instantly.",
+        "B. If R_{leak} = R_{in}, net rate is 0 and T -> infinity (tank never fills); if R_{leak} > R_{in}, net rate is negative and water level continuously falls.",
+        "C. The tank pressure explodes due to equilibrium.",
+        "D. Filling time becomes negative, which means it filled in the past."
+      ],
+      "correct_option": "B",
+      "explanation": "At R_{leak} = R_{in}, R_{net} = 0, so T = 1/0 -> infinity. For R_{leak} > R_{in}, net outflow exceeds inflow, proving that positive steady-state filling is only physically possible when R_{in} > R_{leak}."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Never add or subtract times directly in work/rate problems. Convert every action into fractional capacity per unit time (rates), combine rates linearly, and take the reciprocal of the net rate to find the total time."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "For compound interest, write down A_2 = P(1 + r/100)^2 and A_3 = P(1 + r/100)^3. Form the quotient A_3 / A_2 to eliminate P immediately."
+    }
+  }
+}
