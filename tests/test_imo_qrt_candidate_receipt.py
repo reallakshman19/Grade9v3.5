@@ -3,7 +3,8 @@ import copy
 import json
 import unittest
 
-from Shared.tools.imo_qrt_candidate_receipt import compare_source, _read_bank
+from Shared.tools.imo_qrt_candidate_receipt import (compare_source, _read_bank,
+    inspect_research_authority_claims)
 
 
 def q():
@@ -87,6 +88,26 @@ class CandidateSourceTests(unittest.TestCase):
         out = compare_source({old["id"]: old}, {new["id"]: new})
         self.assertEqual(out["solution_format_regressions"], [])
         self.assertEqual(out["status"], "SOURCE_CUSTODY_PRESERVED")
+
+    def test_source_ungoverned_certification_claims_all_reported(self):
+        html = ("BP-CORE1A &amp; BP-CORE1B CERTIFIED "
+                "Anchored to 8 Authenticated Core 2 Questions "
+                "20 MODULE PACKAGES · 100% CUSTODY")
+        result = inspect_research_authority_claims(html)
+        self.assertEqual(result, [
+            "UNQUALIFIED_AUTHENTIC_SOURCE",
+            "UNQUALIFIED_CORE_BLUEPRINT_CERTIFIED",
+            "UNQUALIFIED_CUSTODY_100_PERCENT"])
+
+    def test_research_scoped_copy_has_no_certification_issues(self):
+        html = ("Research Core1A/Core1B draft. "
+                "8 linked research question IDs (academic source pending). "
+                "20 research module packages (Owner acceptance pending).")
+        self.assertEqual(inspect_research_authority_claims(html), [])
+
+    def test_question_prose_certified_generic_not_a_copy_match(self):
+        self.assertEqual(inspect_research_authority_claims(
+            "Show that a certified relation holds in a synthetic question."), [])
 
     def test_unreviewed_qrt_reclassification_not_automatic_approval(self):
         old = q()
