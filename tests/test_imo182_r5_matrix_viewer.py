@@ -62,8 +62,22 @@ class ReconciledMatrixViewerTest(unittest.TestCase):
         self.assertIn("Verified D3 source successor (M3 CI)", self.html)
         self.assertIn("Nominate independent reviewer (#", self.html)
         self.assertIn("Signed AI mathematical-content attestation (not qualified)", self.html)
-        self.assertIn("7 / 28", self.html)
+        self.assertIn("8 / 28", self.html)
         self.assertIn("authored metadata not projected into native Core2B HTML", self.html)
+
+    def test_corrected_d4_retrieve_provenance_is_exposed_and_academic_hold_remains(self):
+        row = next(r for r in self.rows if r["id"] == "QRT-RETRIEVE-D4")
+        self.assertEqual(row["source"]["git_blob_sha"], "b9de3db24eb414075a50d0b36298a6306f26056b")
+        self.assertEqual(row["artifact"]["id"], 11842190265)
+        self.assertTrue(row["classification_hold"])
+        self.assertIn("Y=UNKNOWN", row["educational_hold_reason"])
+        proof = row["d4_retrieve_leak_repair_provenance"]
+        self.assertEqual(proof["old_native_artifact_id"], 11823696124)
+        self.assertEqual(proof["corrected_native_artifact_id"], row["artifact"]["id"])
+        self.assertEqual(proof["corrected_native_six_html_sha256"], row["artifact"]["native_html_sha256"])
+        self.assertIn("Old exact-native ZIP", self.html)
+        self.assertIn("D4 RETRIEVE native source repair", self.html)
+        self.assertEqual(row["qualified_independent_signed_verdict_id"], None)
 
     def test_not_falsely_adopted_or_source_exposed(self):
         self.assertIn("Original Q003", self.html)
