@@ -36,6 +36,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          mkdir -p scratch
           python -m unittest tests/test_imo_research_attempt_first.py -v
           python -m unittest tests/test_imo_figure_reference_resolution.py -v
           python -m unittest tests/test_imo_math_and_font_quality.py -v
