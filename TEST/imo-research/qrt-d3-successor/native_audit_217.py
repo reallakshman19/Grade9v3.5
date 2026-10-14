@@ -55,6 +55,12 @@ def load(path: Path) -> dict:
 
 def main() -> None:
     inventory = load(CATALOG)
+    sup = load(ROOT / "TEST/imo-research/qrt-d3-successor/synthesize-source-supersession.v1.json")
+    require(sup["cell"] == "QRT-SYNTHESIZE-D3" and sup["source_fix_pr"] == 221
+            and sup["original_source_head"] == inventory["pinned_source_head"],
+            "source supersession authority does not match pinned M0")
+    require(sup["qrt_accepted"] is False and sup["owner_qrt_decision_id"] is None,
+            "source correction cannot accept QRT")
     expected_checkout = os.environ.get("EXPECTED_SOURCE_HEAD")
     if expected_checkout:
         checkout = subprocess.check_output(
@@ -101,8 +107,14 @@ def main() -> None:
         demand = row["demand"]
         src = ROOT / row["source_path"]
         manifest_file = ROOT / row["manifest_path"]
-        require(blob(src) == row["source_blob_sha"],
-                f"{demand}: original source blob changed")
+        actual_source_blob = blob(src)
+        if demand == "synthesize":
+            require(row["source_blob_sha"] == sup["original_source_blob_sha"]
+                    and actual_source_blob == sup["corrected_source_blob_sha"],
+                    "SYNTHESIZE: only pinned PR #221 source correction is authorized")
+        else:
+            require(actual_source_blob == row["source_blob_sha"],
+                    f"{demand}: original source blob changed")
         require(blob(manifest_file) == row["manifest_blob_sha"],
                 f"{demand}: original manifest blob changed")
         require(row["source_rights"] == "WHOLLY_AUTHORED_TEST_ONLY",
@@ -124,6 +136,10 @@ def main() -> None:
                 f"{demand}: missing wholly authored primary")
         require(pack["extensions"]["grade9v3:qrt_admitted"] is False,
                 f"{demand}: QRT admission unexpectedly changed")
+        if demand == "synthesize":
+            require(question["family_exposure"]["closure"] == sup["corrected_field_value"]
+                    and "REPRESENT question" not in question["family_exposure"]["closure"],
+                    "SYNTHESIZE: stale or unauthorized post-attempt learner label")
         require(pack["extensions"]["grade9v3:core2_source_custody_granted"] is False,
                 f"{demand}: source rights changed")
         require(pack["extensions"]["grade9v3:learner_published"] is False,
@@ -159,7 +175,12 @@ def main() -> None:
         ]
         record = {
             "cell": row["cell"], "status": row["status"],
-            "source_path": row["source_path"], "source_blob_sha": row["source_blob_sha"],
+            "source_path": row["source_path"], "source_blob_sha": actual_source_blob,
+            "original_pr193_source_blob_sha": row["source_blob_sha"],
+            "source_supersession": {
+                "fix_pr": 221, "previous_artifact": "DO_NOT_ADOPT_ORIGINAL_SHA",
+                "corrected_source_blob": actual_source_blob,
+            } if demand == "synthesize" else None,
             "manifest_path": row["manifest_path"], "manifest_blob_sha": row["manifest_blob_sha"],
             "original_main_question_id": row["primary_id"],
             "original_transfer_question_id": manifest["selection"]["core2b"][0],
