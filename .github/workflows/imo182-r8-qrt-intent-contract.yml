@@ -374,10 +374,15 @@ jobs:
               python Shared/tools/render_core.py gaps --manifest "$manifest" --reference
               python Shared/tools/render_core.py build --manifest "$manifest" \
                 --out "build/imo182-qrt/r8/$slug" --mode PAGES --reference --draft
+              # Duplicate by the SAME registered renderer from the SAME pinned
+              # source to guard pre-page-SHA legacy receipts (not second renderer).
+              python Shared/tools/render_core.py build --manifest "$manifest" \
+                --out "build/imo182-qrt/r8-repeat/$slug" --mode PAGES --reference --draft
             )
             python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py \
               --contract "build/imo182-r8-intent/$slug.json" \
               --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$slug" \
+              --independent-rebuild "$root/build/imo182-qrt/r8-repeat/$slug" \
               --out "build/imo182-r8-intent/$slug-native.json"
           done
           python - <<'PY'
