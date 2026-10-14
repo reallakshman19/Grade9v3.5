@@ -192,7 +192,7 @@ else add("small",box,"Held: historical archive only, no new adoption");}
 $("links").replaceChildren();
 link($("links"),"Pinned original source",t.evidence.source_url);
 link($("links"),"Pinned manifest",t.evidence.manifest_url);
-link($("links"),"Historical native artifact",t.generation.historical_artifact_url);
+link($("links"),t.primary_demand==="SYNTHESIZE"?"PR221 intermediate artifact (transfer text stale; DO NOT ADOPT)":"Historical native artifact",t.generation.historical_artifact_url);
 link($("links"),"Protocol JSON",t.viewer.tile_json);
 link($("links"),"Unsigned academic reviewer packet",t.viewer.packet_url);
 link($("links"),"D3 successor issue", "https://github.com/reallakshman19/Grade9v3.5/issues/217");
@@ -239,6 +239,13 @@ def main():
             need(actual_blob==row["source_blob_sha"],cell+" source changed")
         need(blob(manifest)==row["manifest_blob_sha"],cell+" manifest changed")
         pkg=load(source);man=load(manifest)
+        if d=="synthesize":
+            primary=next(q for q in pkg["questions"] if q["id"]==supersession["affected_primary_id"])
+            transfer_q=next(q for q in pkg["questions"] if q["id"]==supersession["transfer_primary_id"])
+            need(primary["family_exposure"]["closure"]==supersession["corrected_field_value"],
+                 "SYNTHESIZE primary label correction absent")
+            need(transfer_q["family_exposure"]["closure"]==supersession["transfer_corrected_field_value"],
+                 "SYNTHESIZE transfer label correction absent")
         need(man["selection"]["core2"]==[] and pkg["extensions"]["grade9v3:qrt_admitted"] is False,"source custody issue")
         question=next(q for q in pkg["questions"] if q["id"]==row["primary_id"])
         transfer=next(q for q in pkg["questions"] if q["id"]==man["selection"]["core2b"][0])
@@ -272,6 +279,15 @@ def main():
                     "verified_sha":actual_blob,
                     "original_pr193_git_blob_sha":row["source_blob_sha"],
                     "supersession_pr":221 if d=="synthesize" else None,
+                    "source_fix_chain":({
+                       "original_pr193_blob":row["source_blob_sha"],
+                       "pr221_partial_fix_blob":supersession["pr221_intermediate_source_blob_sha"],
+                       "successor_two_label_fix_blob":actual_blob,
+                       "first_fix":"PRIMARY_CORE2A_CLOSURE_ONLY_IN_PR221",
+                       "second_fix":"TRANSFER_CORE2B_CLOSURE_SUCCESSOR_ONLY",
+                       "legacy_original_artifact":"DO_NOT_ADOPT",
+                       "pr221_intermediate_artifact":"DO_NOT_ADOPT_INCOMPLETE_TRANSFER_LABEL"
+                    } if d=="synthesize" else None),
                     "custody":"WHOLLY_AUTHORED_TEST_ONLY",
                     "rights":"AUTHORED_TEST_ONLY_NO_PUBLIC_CORE2","question_stem_embedded":False},
           "cognitive":{"X":COGNITIVE_MOVES[d]["X"],
@@ -294,7 +310,9 @@ def main():
              "superseded_legacy_artifact": (
                  row["historical_scoped_workflow"]+"/artifacts/"+str(row["historical_artifact_id"])
                  if d=="synthesize" else None),
-             "superseded_legacy_artifact_status":"DO_NOT_ADOPT_WRONG_LABEL" if d=="synthesize" else None,
+             "superseded_legacy_artifact_status":"DO_NOT_ADOPT_WRONG_PRIMARY_AND_TRANSFER_LABELS" if d=="synthesize" else None,
+             "intermediate_pr221_artifact_status":"DO_NOT_ADOPT_TRANSFER_LABEL_STILL_STALE" if d=="synthesize" else None,
+             "current_two_fix_successor_native_artifact":"THIS_M3_GENERATED_BUNDLE__REQUIRES_EXACT_HEAD_CI" if d=="synthesize" else None,
              "html":[{"name":k,"sha256":v,"verified_context":"M1_CURRENT_NATIVE" if not held else "HISTORIC_PR193_RECEIPT"} for k,v in hashes.items()],
              "six_html_sha_verified":not held},
           "golden":{"kind":"IMMUTABLE_OWNER_SNAPSHOT","id":inv["golden_id"],
