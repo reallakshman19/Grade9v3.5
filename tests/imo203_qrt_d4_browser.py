@@ -37,6 +37,28 @@ with sync_playwright() as p:
                     assert protected_word not in prior_visible,(cell,role,"VISIBLE_PREVIEW",protected_word)
                     assert protected_word not in prior_ax,(cell,role,"AX_PREVIEW",protected_word)
             page.screenshot(path=str(screens/f"{role}-{width}.png"),full_page=True)
+            # Owner v3.1 O1: this is the actual registered Core1A learner
+            # page and independent exit, not a separate hand-composed preview.
+            if cell == "retrieve" and role == "core1a" and width == 1280:
+                assert page.locator('body[data-blueprint-ref="BP-CORE1A-CONSTRUCTION@1.8.0"]').count() == 1
+                assert page.locator('[data-g9-component="CONSTRUCTION_STEPS"]').count() >= 1
+                assert page.locator('[data-g9-component="STAGED_VISUAL"]').count() >= 1
+                assert page.locator('[data-g9-component="EXIT_RECALL"]').count() == 1
+                exit_card = page.locator('[data-g9-component="EXIT_RECALL"]').first
+                response = exit_card.locator('textarea[data-g9-attempt]').first
+                commit_exit = exit_card.locator('button[data-g9-commit]').first
+                locked_answer = exit_card.locator('details[data-requires-attempt]').first
+                assert locked_answer.count() == 1
+                assert not locked_answer.is_visible(), "Core1A exit answer visible before attempt"
+                commit_exit.click()
+                assert not locked_answer.is_visible(), "Core1A blank exit unlocked model answer"
+                response.fill("Odd squares modulo16 are 1 or 9; 9 has an odd root and 5 does not. Both reduce to1 modulo4.")
+                commit_exit.click()
+                assert locked_answer.is_visible(), "Core1A nonblank exit did not unlock answer disclosure"
+                if locked_answer.get_attribute("open") is None:
+                    locked_answer.locator("summary").click()
+                assert "9" in locked_answer.inner_text()
+                page.screenshot(path=str(screens/"core1a-after-attempt.png"),full_page=True)
             # Oversized drawings must scroll locally, not make the whole page unusable.
             if role=="core2a" and width==1280:
                 html=page.content()
