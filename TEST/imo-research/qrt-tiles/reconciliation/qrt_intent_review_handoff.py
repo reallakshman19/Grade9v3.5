@@ -155,6 +155,37 @@ def make_packet(ledger: dict, bank: dict, evidence_dir: Path,
                     ),
                     "learner_independence_established": False
                 })
+            heldcopy = evidence_dir / (slug + "-held-copy-browser.json")
+            if heldcopy.is_file():
+                proto = read_json(heldcopy)
+                ensure(proto["cell_id"] == cid and
+                       proto["release"] == "HOLD" and
+                       proto["academic_qrt"] == "NOT_RUN" and
+                       proto["independent_mastery"] is False and
+                       proto["owner_acceptance"] is False and
+                       proto["precommit_link_hidden"] is True and
+                       proto["solution_lock_after_return"] is True and
+                       proto["source_draft_restored"] is True and
+                       proto["return_marked_assisted"] is True and
+                       proto["negative_mutations"]["negative_controls_pass"] is True,
+                       "P5_HELD_COPY_CANNOT_PROMOTE_OR_LEAK", cid)
+                ensure(any(x["name"] ==
+                           "TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL"
+                           for x in browser_refs),
+                       "P5_HELD_COPY_MUST_NOT_HIDE_NATIVE_GAP", cid)
+                browser_refs.append({
+                    "name": "NONPRODUCTION_COPIED_HTML_ASSISTED_RETURN_PROTOTYPE",
+                    "sha256": sha256(heldcopy),
+                    "copy_only_never_renderer_receipt": True,
+                    "original_native_pages_still_missing_assisted_return": True,
+                    "repaired_held_copy_browser_path": "SCOPED_PASS",
+                    "source_draft_restored": True,
+                    "assistance_explicitly_marked": True,
+                    "learner_independence_established": False,
+                    "academic_approved": False,
+                    "owner_approved": False,
+                    "release": "HOLD",
+                })
             for rid in REVIEWS:
                 r = evidence["semantic_objectives"][rid]
                 ensure(r["verdict"] == "NOT_RUN" and not r["evidence"],
