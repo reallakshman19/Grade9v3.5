@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""O1 learner-page diagnostic: original SVG title/description vs genuine native stage SVG.
+"""O1 protected-W-safe preattempt SVG label review on genuine native Core pages.
 
-A PASS means a reported defect has been independently reproduced, NOT the
-Core2A/Core2B lesson is accessible or academically accepted.
-Never edits renderer, registered blueprint, authored source or frozen Owner golden.
+The renderer INTENTIONALLY scrubs whole-SVG title/description before attempts
+because they may contain the protected learner move W. This proves whether
+authored stage labels provide a meaningful safe fallback, without requesting
+unsafe metadata restoration or claiming academic/Owner acceptance.
+Never edits renderer, source, registry or frozen Owner golden.
 """
 from __future__ import annotations
 
@@ -72,6 +74,7 @@ def browser_probe():
     thread = threading.Thread(target=srv.serve_forever, daemon=True)
     thread.start()
     observations = []
+    package = json.loads(SOURCE.read_text())
     try:
         with sync_playwright() as pl:
             browser = pl.chromium.launch(headless=True, args=["--no-sandbox"])
@@ -85,6 +88,10 @@ def browser_probe():
                             f"source figure missing description; attribution differs {role}")
                     require(source["source_aria_label"] == source["source_title"],
                             f"unexpected source accessible name {role}")
+                    rep = next((r for r in package["representations"]
+                                if src.relative_to(ROOT).as_posix() in r.get("rendered_asset_refs", [])), None)
+                    require(rep is not None, f"{role} source figure not bound to representation")
+                    stage_labels = {stage["id"]: stage["label"] for stage in rep.get("reveal_stages", [])}
                     for width in (390, 768, 1280):
                         page = browser.new_page(viewport={"width": width, "height": 900})
                         errors, failed = [], []
@@ -118,6 +125,7 @@ def browser_probe():
                         observational = {
                           "role": role.upper(), "width": width, "source_figure": src.relative_to(ROOT).as_posix(),
                           "source_metadata": source, "actual_native_figure": stages,
+                          "authored_safe_stage_labels": stage_labels,
                           "original_site_CSS_loaded": all(styles),
                           "source_description_preserved": any(s["description"]==source["source_description"]
                                                               for s in stages),
@@ -155,48 +163,56 @@ def main():
     probes=browser_probe()
     byrole={role:[p for p in probes if p["role"]==role.upper()] for role in SOURCE_FIGURES}
     require(all(len(a)==3 for a in byrole.values()),"not all real learner viewports checked")
-    # One real control role keeps its description, while stage-projected target roles
-    # drop their source metadata. When renderer behavior changes, this diagnostic
-    # should require reclassification; it must NOT silently pass stale defect text.
+    # The Core1A teaching-path control retains whole-SVG metadata; Core2A/B
+    # are PRE_ATTEMPT graphics and deliberately scrub potentially revealing
+    # whole-figure title/desc. The safe FALLBACK stage labels are the issue.
     require(all(p["source_description_preserved"] for p in byrole["core1a"]),
             "control Core1A source description missing; broader problem, update diagnosis")
     for role in ("core2a","core2b"):
         require(all(not p["source_description_preserved"] and
                         not p["source_title_preserved"] and
                         not p["source_label_preserved"] for p in byrole[role]),
-                f"{role} appears fixed or changed; re-evaluate before retaining blocker")
+                f"{role} preattempt protected-move scrub changed; review intent")
+        require(all(len(p["actual_native_figure"])==1 and
+                        p["actual_native_figure"][0]["name"]==
+                        p["authored_safe_stage_labels"][p["actual_native_figure"][0]["stage_ids"][0]]
+                        for p in byrole[role]),
+                f"{role} native accessible name not derived from authored safe stage label")
+        require(all(p["actual_native_figure"][0]["name"]=="Stage 1" for p in byrole[role]),
+                f"{role} generic stage label has changed; re-evaluate risk")
     head=subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
     result={
-        "schema":"imo217-owner-o1-figure-projection-defect/v1",
+        "schema":"imo217-owner-o1-preattempt-stage-label-review/v1",
         "aim_version":"v3.1.0","label_sha":"2ff9246","outcome":"O1 prerequisite",
         "cell":"QRT-EXPLAIN-D3","source_head":head,"qrt_accepted":False,
-        "verdict":"BLOCKED_INSTRUCTIONAL_SVG_DESCRIPTION_NOT_PROJECTED",
-        "checker_success_means_defect_reproduced_not_page_accepted":True,
+        "verdict":"SAFE_PREATTEMPT_SCRUB_EXPECTED__AUTHORED_STAGE_LABEL_GENERIC",
+        "checker_success_means_authoring_label_risk_reproduced_not_page_accepted":True,
         "input_source_and_renderer_authority":"TEST_AUTHORED_SVG_SHARED_REGISTERED_RENDERER",
         "source_blob":SRC_SHA,"manifest_blob":MAN_SHA,"registry_blob":REG_SHA,
         "owner_golden_lock_blob":LOCK_SHA,
         "native_and_original_owner_golden_receipts":receipts,
         "actual_http_chromium_source_to_native_observations":probes,
         "diagnosis":{
-            "control":"CORE1A preserves the same kind of SVG title, description and accessible name",
-            "defect":"CORE2A and CORE2B stage-projected SVGs reduce meaningful original source title+description to generic Stage 1 name with no SVG title or desc in the real DOM",
-            "owner":"SHARED_RENDERER_STAGE_PROJECTION",
+            "control":"CORE1A teaching-path SVG retains original title and desc",
+            "protected_move_rule":"Shared/tools/render_core.py figure() intentionally removes original whole-SVG title/desc for PRE_ATTEMPT staged graphics, even a single permitted stage, to avoid leaking W",
+            "authoring_risk":"CORE2A and CORE2B authored reveal_stages[].label is just Stage 1. Renderer safely uses this text as preattempt accessible name, but it does not name the visible graph",
+            "owner":"AUTHORED_TEST_REVEAL_STAGE_LABEL; separately consult Shared owner for possible safe stage-specific descriptions",
             "renderer_fix_authorized_here":False,
             "blueprint_O3_gap_demonstrated":False,
-            "source_authoring_gap_demonstrated":False,
+            "source_authoring_label_gap_observed":True,
             "owner_golden_snapshot_unchanged":True,
-            "accessibility_policy":"Shared/web/interactive-page-blueprints.v1.json representation_accessibility_policy: instructional_visual_requires_accessible_name and instructional_visual_requires_description",
-            "required_fix":"Separate Shared/platform owner inspect stage-splitting projection preserving accessible text without exposing target W; re-render then independently prove with same browser before claiming O1 accessible",
+            "accessibility_policy":"Shared/web/interactive-page-blueprints.v1.json representation_accessibility_policy requires names and descriptions; preattempt solution safety also mandatory",
+            "required_fix":"Review a non-answer-revealing replacement for two authored reveal_stages[].label strings with an independent W check before a separately pinned source overlay; DO NOT restore whole-SVG title/desc or show purposes preattempt",
         },
         "academic_reviewer":"UNASSIGNED",
         "academic_qrt_owner_decision_id":None,
         "source_rights":False,"publish_merge_release":False
     }
     OUT.mkdir(parents=True,exist_ok=True)
-    (OUT/"core2-figure-projection-defect.v1.json").write_text(json.dumps(result,indent=2)+"\n")
-    print("O1 ACCESSIBILITY BLOCKER REPRODUCED: CORE2A/CORE2B stage-projected source SVG")
-    print("meaningful title+desc stripped in actual styled browser; CORE1A control preserved.")
-    print("TECHNICAL DEFECT EVIDENCE ONLY; no Shared blueprint/renderer patch or academic/Owner acceptance.")
+    (OUT/"core2-preattempt-safe-stage-label-review.v1.json").write_text(json.dumps(result,indent=2)+"\n")
+    print("O1 SAFE REDACTION CONFIRMED: CORE2A/CORE2B PRE_ATTEMPT intentionally scrub")
+    print("whole-figure title/desc to protect W; authored stage labels are generic Stage 1.")
+    print("AUTHORING LABEL RISK ONLY; do not restore unsafe SVG metadata or self-accept QRT.")
 
 if __name__=="__main__":
     main()
