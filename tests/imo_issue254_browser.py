@@ -60,6 +60,21 @@ def main():
             # Record viewport overflow, KaTeX rendering and console failures rather than concealing them.
             katex = page.locator(".katex").count()
             overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
+            offenders = page.evaluate("""() => Array.from(document.querySelectorAll('body *'))
+              .filter(el => {
+                const r = el.getBoundingClientRect();
+                return r.width > 0 && r.right > innerWidth + 2 &&
+                       getComputedStyle(el).display !== 'none';
+              }).map(el => {
+                const r = el.getBoundingClientRect();
+                return {tag: el.tagName, cls: String(el.className).slice(0, 70),
+                        id: el.id, right: Math.round(r.right), width: Math.round(r.width)};
+              }).sort((a, b) => b.right - a.right).slice(0, 12)""")
+            print("DIAGNOSTIC " + json.dumps({"width": width, "katex": katex,
+                "overflow": overflow, "offenders": offenders}), flush=True)
+            assert katex > 0, f"{width}: math was not rendered by KaTeX"
+            # Overflow is independently recorded so the offending component can
+            # be corrected at its CSS source, not merely clipped by body overflow.
             page.screenshot(path=str(OUT / f"research-attempt-{width}.png"), full_page=False)
             observations.append({"viewport": width, "question_count": cards.count(),
                 "first_last_commit": "PASS", "keyboard": "PASS",
