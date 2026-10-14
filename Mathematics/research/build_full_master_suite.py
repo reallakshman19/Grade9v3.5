@@ -14,6 +14,7 @@ import os
 import sys
 import json
 import re
+import base64
 import html
 import glob
 from pathlib import Path
@@ -771,6 +772,49 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
     """)
     
     return "".join(parts)
+
+def embed_standalone_katex(page_html: str) -> str:
+    """Embed the existing repository-vendored KaTeX in each byte-identical HTML.
+
+    Relative vendor URLs work only from standalone/, not public/standalone/ and
+    public/docs test routes. CDN fallback is also unsuitable for offline use.
+    This embeds the *existing* renderer and its WOFF2 faces (not a new engine).
+    """
+    vendor = Path("standalone/vendor/katex/0.16.8")
+    css = (vendor / "katex.min.css").read_text(encoding="utf-8")
+    katex_js = (vendor / "katex.min.js").read_text(encoding="utf-8")
+    auto_js = (vendor / "contrib/auto-render.min.js").read_text(encoding="utf-8")
+
+    embedded_faces = set()
+
+    def embed_font(match):
+        relative = match.group(1)
+        font_path = vendor / relative
+        if not font_path.is_file():
+            raise FileNotFoundError(f"Declared KaTeX font missing: {font_path}")
+        embedded_faces.add(relative)
+        payload = base64.b64encode(font_path.read_bytes()).decode("ascii")
+        return 'url("data:font/woff2;base64,' + payload + '")'
+
+    css = re.sub(r"url\\((fonts/[^)]+\\.woff2)\\)", embed_font, css)
+    if len(embedded_faces) != 20:
+        raise RuntimeError(f"Expected 20 KaTeX font faces, got {len(embedded_faces)}")
+
+    previous = (
+        '<link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css" onerror="this.onerror=null;this.href=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css\';">\\n'
+        '  <script src="vendor/katex/0.16.8/katex.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js\';"></script>\\n'
+        '  <script src="vendor/katex/0.16.8/contrib/auto-render.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js\';"></script>'
+    )
+    replacement = (
+        '<!-- Repository-vendored KaTeX 0.16.8, MIT; license in standalone/vendor/katex/0.16.8/LICENSE -->\\n'
+        '<style id="offline-katex-css">' + css + '</style>\\n'
+        '<script id="offline-katex-core">' + katex_js.replace("</script", "<\\\\/script") + '</script>\\n'
+        '<script id="offline-katex-auto">' + auto_js.replace("</script", "<\\\\/script") + '</script>'
+    )
+    if page_html.count(previous) != 1:
+        raise RuntimeError("STANDALONE_KATEX_VENDOR_MARKUP_DRIFT")
+    return page_html.replace(previous, replacement)
+
 
 def main():
     root = Path(".")
@@ -3209,7 +3253,7 @@ def main():
         Path("public/test/imo-grade9/core2.html"),
         Path("docs/test/imo-grade9/core2.html")
     ]
-    full_html = "".join(html_parts)
+    full_html = embed_standalone_katex("".join(html_parts))
     for out_file in out_files:
         out_file.parent.mkdir(parents=True, exist_ok=True)
         out_file.write_text(full_html, encoding="utf-8")
