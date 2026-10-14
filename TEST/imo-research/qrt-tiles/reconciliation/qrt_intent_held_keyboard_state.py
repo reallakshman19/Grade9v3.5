@@ -80,9 +80,10 @@ def _one(browser, base: str, receipt: dict, width: int) -> dict:
         textarea = article.locator("textarea[data-g9-attempt]")
         ensure(committed.count() == textarea.count() == 1,
                "HQA_NONUNIQUE_INPUT_OR_COMMIT", qid)
-        ensure(article.locator(
-            "details[data-requires-attempt][data-locked]").count() == 1,
-            "HQA_PRECOMMIT_SOLUTION_VISIBLE", qid)
+        gated = article.locator("details[data-requires-attempt]").first
+        ensure(gated.count() == 1 and
+               gated.get_attribute("data-locked") is not None,
+               "HQA_PRECOMMIT_SOLUTION_VISIBLE", qid)
         sentinel = "QA_NAV_NONMATH_PLACEHOLDER_" + str(width)
         textarea.fill(sentinel)
         committed.click()
@@ -125,9 +126,10 @@ def _one(browser, base: str, receipt: dict, width: int) -> dict:
                article.locator("textarea[data-g9-attempt]").input_value()
                == sentinel,
                "HQA_KEYBOARD_RETURN_LOST_ASSISTED_STATE", qid)
-        ensure(article.locator(
-            "details[data-requires-attempt][data-locked]").count() == 1,
-            "HQA_RETURN_REVEALED_REASONING", qid)
+        gated = article.locator("details[data-requires-attempt]").first
+        ensure(gated.count() == 1 and
+               gated.get_attribute("data-locked") is not None,
+               "HQA_RETURN_REVEALED_REASONING", qid)
         # Check browser reload preserves the assistance label and the draft,
         # without re-committing or automatically unlocking reasoning.
         page.reload(wait_until="load")
@@ -136,7 +138,8 @@ def _one(browser, base: str, receipt: dict, width: int) -> dict:
                article.locator("textarea[data-g9-attempt]").input_value()
                == sentinel and
                article.locator(
-                   "details[data-requires-attempt][data-locked]").count() == 1,
+                   "details[data-requires-attempt]").first.get_attribute(
+                       "data-locked") is not None,
                "HQA_RELOAD_LOST_STATE_OR_EXPOSED_WORK", qid)
 
         # Same browser *context* but another top-level tab: sessionStorage must
