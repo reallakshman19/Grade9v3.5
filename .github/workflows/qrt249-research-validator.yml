@@ -9,6 +9,8 @@ on:
       - 'tests/test_imo_qrt_validator.py'
       - 'Shared/tools/imo_qrt_standalone_gate.py'
       - 'tests/test_imo_qrt_standalone_gate.py'
+      - 'Shared/tools/imo_qrt_canonical_evidence.py'
+      - 'tests/test_imo_qrt_canonical_evidence.py'
       - 'TEST/imo-qrt-validator/**'
       - '.github/workflows/qrt249-research-validator.yml'
   workflow_dispatch:
@@ -97,6 +99,30 @@ jobs:
               assert len({row['sha256'] for row in data['endpoints']}) == 1
               print('Modified builder: 260 question cards, four byte-identical HTML outputs, zero structural disclosures; academic HOLD retained')
           PY
+      - name: Native QRT/Blueprint evidence bridge synthetic negative tests
+        run: python -m unittest discover -s tests -p 'test_imo_qrt_canonical_evidence.py' -v
+      - name: Actual 260-question research-to-native readiness negative control
+        shell: bash
+        run: |
+          set +e
+          python Shared/tools/imo_qrt_canonical_evidence.py --baseline-sha "$GITHUB_SHA" --output build/imo-qrt-249/native-readiness.json
+          rc=$?
+          set -e
+          if [ "$rc" != "1" ]; then
+            echo "Unreviewed research bank must not auto-admit native questions"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path('build/imo-qrt-249/native-readiness.json').read_text(encoding='utf-8'))
+          assert d['total'] == d['unique_ids'] == 260
+          assert d['canonical_resolved'] == 0
+          assert d['missing_or_invalid_counts']['ACTUAL_LEARNER_PROFILE'] == 260
+          assert d['missing_or_invalid_counts']['NATIVE_CORE_ROLE_RECORD'] == 260
+          assert d['native_product_admission'] == 'NOT_GRANTED'
+          print('Native QRT evidence adapter: 260/260 research records correctly held; 0 invented native admissions')
+          PY
       - name: Upload validator finding references only
         uses: actions/upload-artifact@v4
         with:
@@ -104,4 +130,5 @@ jobs:
           path: |
             build/imo-qrt-249/intake.json
             build/imo-qrt-249/standalone-disclosure.json
+            build/imo-qrt-249/native-readiness.json
           if-no-files-found: error
