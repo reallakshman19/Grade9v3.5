@@ -2050,6 +2050,14 @@ def main():
 
     .btn-commit:hover { opacity: 0.92; }
 
+    /* Semantically hidden before a real attempt: not clickable or focusable. */
+    .qb-question [hidden] { display: none !important; }
+    .qb-attempt-feedback { margin-top: 8px; font-size: 0.9rem; min-height: 1.2em; }
+    .qb-attempt-feedback[data-state="invalid"] { color: var(--warning); }
+    .qb-attempt-feedback[data-state="committed"] { color: var(--success); }
+    .qb-hint-tier { margin: 8px 0; border: 1px solid var(--border); border-radius: 8px; }
+    .qb-hint-tier summary { font-weight: 650; }
+
     /* Support Disclosures (BP-CORE2 & T05) */
     .qb-support-container {
       margin-top: 16px;
@@ -2419,10 +2427,10 @@ def main():
             if opt_k in options:
                 opt_v = options[opt_k]
                 opt_v_html = format_math_html(str(opt_v))
-                is_correct = (opt_k == choice)
-                correct_style = "border-color: var(--success); background: rgba(52, 211, 153, 0.08);" if is_correct else ""
+                # Preserve source option order without pre-attempt answer styling.
+                # Answer identity is only rendered inside the post-commit solution.
                 opt_cards.append(f"""
-                  <div class="qb-option-card" style="{correct_style}">
+                  <div class="qb-option-card">
                     <span class="qb-option-badge">({opt_k})</span>
                     <span>{opt_v_html}</span>
                   </div>
@@ -2501,7 +2509,8 @@ def main():
           <div class="qb-attempt-box">
             <label for="att-{qid}"><strong>Your Solution Attempt / Working Notes:</strong></label>
             <textarea class="qb-textarea" id="att-{qid}" placeholder="Formulate equations, deduce intermediate invariants, and commit an answer..."></textarea>
-            <button type="button" class="btn-commit" onclick="document.getElementById('sol-disc-{qid}').open=true; document.getElementById('sol-disc-{qid}').scrollIntoView({{behavior:'smooth'}});">Commit Attempt & Reveal Solution</button>
+            <button type="button" class="btn-commit" id="commit-{qid}" aria-controls="sol-disc-{qid}" aria-expanded="false" onclick="commitResearchAttempt('{qid}')">Commit Attempt & Reveal Solution</button>
+            <p class="qb-attempt-feedback" id="feedback-{qid}" aria-live="polite"></p>
           </div>
 
           <!-- Grounded Support Accordion (BP-CORE2 & T05) -->
@@ -2512,22 +2521,19 @@ def main():
                 <span style="font-size:0.88rem;color:var(--text-muted)">Reveal step-by-step</span>
               </summary>
               <div class="qb-disclosure-body">
-                <div class="ladder-rung">
-                  <span class="rung-tag rung-nudge">Tier 1 · Conceptual Nudge</span>
-                  <p>{hint1}</p>
-                </div>
-                <div class="ladder-rung">
-                  <span class="rung-tag rung-tactical">Tier 2 · Tactical Intermediate Formulation</span>
-                  <p>{hint2}</p>
-                </div>
-                {f'''<div class="ladder-rung rung-crux-container">
-                  <span class="rung-tag rung-crux">Tier 3 · Crux Decisive Move</span>
-                  <p>{hint3}</p>
-                </div>''' if hint3 else ''}
+                <details class="qb-hint-tier">
+                  <summary>Tier 1 · Conceptual Nudge</summary>
+                  <div class="ladder-rung"><p>{hint1}</p></div>
+                </details>
+                <details class="qb-hint-tier">
+                  <summary>Tier 2 · Tactical Intermediate Formulation</summary>
+                  <div class="ladder-rung"><p>{hint2}</p></div>
+                </details>
+                <p class="qb-support-note">The decisive move and full worked check become available only after you commit your own working.</p>
               </div>
             </details>
 
-            <details class="qb-disclosure">
+            <details class="qb-disclosure" id="diag-disc-{qid}" hidden inert>
               <summary>
                 <span>⚠️ Distractor Diagnostic & Misconceptions</span>
                 <span style="font-size:0.88rem;color:var(--warning)">Pitfall alert</span>
@@ -2537,10 +2543,10 @@ def main():
               </div>
             </details>
 
-            <details class="qb-disclosure" id="sol-disc-{qid}">
+            <details class="qb-disclosure" id="sol-disc-{qid}" hidden inert>
               <summary>
                 <span>✅ Teacher Solution · Complete Derivation & Formal Check</span>
-                <span style="font-size:0.88rem;color:var(--success)">Answer: ({choice})</span>
+                <span style="font-size:0.88rem;color:var(--text-muted)">Available after a committed attempt</span>
               </summary>
               <div class="qb-disclosure-body">
                 {f'''<div class="sol-crux-box">
@@ -2704,6 +2710,42 @@ def main():
   </main>
 
   <script>
+    // Research portal interaction only. This does not replace the native Core renderer.
+    function commitResearchAttempt(questionId) {
+      const attempt = document.getElementById('att-' + questionId);
+      const feedback = document.getElementById('feedback-' + questionId);
+      const solution = document.getElementById('sol-disc-' + questionId);
+      const diagnosis = document.getElementById('diag-disc-' + questionId);
+      const button = document.getElementById('commit-' + questionId);
+      if (!attempt || !solution || !diagnosis || !button || !feedback) return false;
+
+      // A whitespace-only or punctuation-only note is not a learner attempt.
+      const working = attempt.value.trim();
+      if (!working || !Array.from(working).some(ch => /[A-Za-z0-9]/.test(ch))) {
+        feedback.textContent = 'Write your reasoning or answer before committing.';
+        feedback.dataset.state = 'invalid';
+        attempt.setAttribute('aria-invalid', 'true');
+        attempt.focus();
+        return false;
+      }
+
+      attempt.removeAttribute('aria-invalid');
+      attempt.readOnly = true;
+      solution.hidden = false;
+      solution.removeAttribute('inert');
+      diagnosis.hidden = false;
+      diagnosis.removeAttribute('inert');
+      solution.open = true;
+      button.setAttribute('aria-expanded', 'true');
+      button.disabled = true;
+      button.textContent = 'Attempt committed · solution unlocked';
+      feedback.dataset.state = 'committed';
+      feedback.textContent = 'Your attempt is committed. The worked solution and diagnostic are now available.';
+      const summary = solution.querySelector('summary');
+      if (summary) summary.focus();
+      return true;
+    }
+
     // Tab Switching
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
