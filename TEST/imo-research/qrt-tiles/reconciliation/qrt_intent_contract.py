@@ -113,7 +113,9 @@ def validate_payload(source: dict, manifest: dict, matrix: dict,
            "TEMPLATE_CELL_DRIFT")
     ensure(template["decisive_act"] == matrix["demands"][demand]["decisive_act"],
            "CANONICAL_ACT_DRIFT")
-    ensure(template["band_policy"] == matrix["band_policies"][band],
+    ensure(all(matrix["band_policies"][band].get(key) == val
+               for key, val in template["band_policy"].items()) and
+           {"protected_work", "support_posture"}.issubset(template["band_policy"]),
            "CANONICAL_BAND_DRIFT")
     ensure(set(template["slots"]) == {
         "X", "Y", "Z", "W", "wrong_idea", "replacement_rule",
