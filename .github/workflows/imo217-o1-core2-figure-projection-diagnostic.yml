@@ -1,0 +1,61 @@
+name: IMO217 O1 Core2 SVG projection accessibility diagnostic (NOT acceptance)
+
+on:
+  push:
+    branches:
+      - 'agent/issue-217-d3-native-evidence-20261014'
+    paths:
+      - '.github/workflows/imo217-o1-core2-figure-projection-diagnostic.yml'
+      - 'TEST/imo-research/qrt-d3-successor/core2b_o1_figure_diagnostic_217.py'
+      - 'TEST/imo-research/qrt-d3/explain.v1.json'
+      - 'TEST/library/figures/qrt-d3-explain-*.svg'
+  pull_request:
+    paths:
+      - '.github/workflows/imo217-o1-core2-figure-projection-diagnostic.yml'
+      - 'TEST/imo-research/qrt-d3-successor/core2b_o1_figure_diagnostic_217.py'
+      - 'TEST/imo-research/qrt-d3/explain.v1.json'
+      - 'TEST/library/figures/qrt-d3-explain-*.svg'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce-shared-stage-figure-description-loss:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install actual renderer and native browser runtime
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Re-render authored EXPLAIN-D3 via the registered sole renderer
+        run: |
+          python Shared/tools/render_core.py gaps \
+            --manifest TEST/products/imo182-qrt-d3-explain.manifest.json --reference
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d3-explain.manifest.json \
+            --out build/imo182-qrt/d3/explain --mode PAGES --reference --draft
+      - name: Record source SVG description lost through Core2A/B stage projection in actual learner Chromium
+        run: |
+          python TEST/imo-research/qrt-d3-successor/core2b_o1_figure_diagnostic_217.py
+          echo 'NOTE: success means O1 accessibility defect reproduced; it is NOT a page acceptance.'
+      - name: Archive native page, source-to-DOM blocker JSON and pinned renderer receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo217-o1-core2-stage-svg-metadata-accessibility-blocker
+          path: |
+            build/imo182-qrt/d3/explain/core1a.html
+            build/imo182-qrt/d3/explain/core2a.html
+            build/imo182-qrt/d3/explain/core2b.html
+            build/imo182-qrt/d3/explain/render-receipt.json
+            build/imo182-qrt/d3-successor/o1-core2-figure-diagnostic/
+          if-no-files-found: warn
+          retention-days: 30
