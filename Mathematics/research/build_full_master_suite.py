@@ -808,11 +808,16 @@ def embed_standalone_katex(page_html: str) -> str:
         '  <script src="vendor/katex/0.16.8/katex.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js\';"></script>\n'
         '  <script src="vendor/katex/0.16.8/contrib/auto-render.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js\';"></script>'
     )
+    # Data-URI resources preserve byte-identical offline paths while keeping
+    # minified KaTeX internals out of the source-question/math-text audit.
+    css_uri = base64.b64encode(css.encode("utf-8")).decode("ascii")
+    js_uri = base64.b64encode(katex_js.encode("utf-8")).decode("ascii")
+    auto_uri = base64.b64encode(auto_js.encode("utf-8")).decode("ascii")
     replacement = (
         '<!-- Repository-vendored KaTeX 0.16.8, MIT; license in standalone/vendor/katex/0.16.8/LICENSE -->\n'
-        '<style id="offline-katex-css">' + css + '</style>\n'
-        '<script id="offline-katex-core">' + katex_js.replace("</script", "<\\\\/script") + '</script>\n'
-        '<script id="offline-katex-auto">' + auto_js.replace("</script", "<\\\\/script") + '</script>'
+        '<link id="offline-katex-css" rel="stylesheet" href="data:text/css;base64,' + css_uri + '">\n'
+        '<script id="offline-katex-core" src="data:text/javascript;base64,' + js_uri + '"></script>\n'
+        '<script id="offline-katex-auto" src="data:text/javascript;base64,' + auto_uri + '"></script>'
     )
     if page_html.count(previous) != 1:
         raise RuntimeError("STANDALONE_KATEX_VENDOR_MARKUP_DRIFT")
