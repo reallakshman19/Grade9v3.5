@@ -61,6 +61,41 @@ class ResearchAttemptFirstTests(unittest.TestCase):
                             f'id="diag-disc-{qid}"', 1
                         )[0])
 
+    def test_precommit_hints_do_not_print_full_answer_or_name_correct_option(self):
+        bank_files = (
+            "sof-imo-2023-24-set-a.core2.json",
+            "sof-imo-2024-25-set-b.core2.json",
+            "sof-imo-2025-26-set-a.core2.json",
+            "sof-imo-2025-26-set-b.core2.json",
+            "sof-imo-sample-2026-27.core2.json",
+            "sof-imo-hots-olympiad-expansion.core2.json",
+        )
+        normalize = lambda value: re.sub(r"[\\$\\\\\\s]", "", str(value)).lower()
+        records = []
+        for filename in bank_files:
+            src = ROOT / "Mathematics/question-bank" / filename
+            records.extend(json.loads(src.read_text(encoding="utf-8"))["questions"])
+        self.assertEqual(len(records), 260)
+        for q in records:
+            answer_value = str(q["answer"]["value"])
+            correct_letter = q["answer"]["choice"]
+            ladder = q["hint_ladder"]
+            hints = " ".join((ladder["hint1_conceptual_nudge"],
+                              ladder["hint2_tactical_step"]))
+            with self.subTest(qid=q["id"]):
+                if len(normalize(answer_value)) >= 5:
+                    self.assertNotIn(normalize(answer_value), normalize(hints))
+                self.assertNotRegex(hints, re.compile(
+                    r"\\boption\\s*\\(?" + correct_letter + r"\\)?\\b", re.I))
+
+    def test_vendor_math_is_embedded_not_relative_to_document_location(self):
+        html = self.built[0]
+        self.assertIn('id="offline-katex-core"', html)
+        self.assertIn('id="offline-katex-css"', html)
+        self.assertIn('id="offline-katex-auto"', html)
+        self.assertNotIn('src="vendor/katex/', html)
+        self.assertNotIn('href="vendor/katex/', html)
+
     def test_commit_guard_and_keyboard_semantics_are_present(self):
         html = self.built[0]
         self.assertIn('function commitResearchAttempt(questionId)', html)
