@@ -789,6 +789,8 @@ def render_output_katex(html_doc: str, out_file: Path, vendor_root: Path) -> str
     a neutral library-relative token. Fail closed if a declared asset is absent
     or the template no longer has precisely one link for that asset.
     """
+    if "cdn.jsdelivr.net/npm/katex@0.16.8" in html_doc:
+        raise ValueError("KATEX_CDN_RUNTIME_FORBIDDEN: use checked-in vendor assets")
     local_dir = Path(os.path.relpath(vendor_root, out_file.parent)).as_posix()
     for asset in ("katex.min.css", "katex.min.js", "contrib/auto-render.min.js"):
         source_ref = f'"vendor/katex/0.16.8/{asset}"'
@@ -1053,10 +1055,10 @@ def main():
   <title>Grade 9 IMO Mathematics · Core 2 Question Bank & Blueprints Suite</title>
   <meta name="description" content="Complete Master Suite for Grade 9 IMO Mathematics: 184 authentic questions under Core 2 custody with vector SVGs, KaTeX typography, progressive hint ladders, and Core 1A/1B self-tutor modules.">
 
-  <!-- KaTeX Typography (Local Vendor Primary + CDN Fallback) -->
-  <link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css" onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css';">
-  <script src="vendor/katex/0.16.8/katex.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js';"></script>
-  <script src="vendor/katex/0.16.8/contrib/auto-render.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js';"></script>
+  <!-- KaTeX Typography (local vendor only; assets checked before generating) -->
+  <link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css">
+  <script src="vendor/katex/0.16.8/katex.min.js"></script>
+  <script src="vendor/katex/0.16.8/contrib/auto-render.min.js"></script>
 
   <style>
     :root {

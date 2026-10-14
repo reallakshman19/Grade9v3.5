@@ -150,6 +150,29 @@ class ResearchPagesKatexTests(unittest.TestCase):
         self.assertIn('../../vendor/katex/0.16.8/katex.min.js', mirrored)
         self.assertNotIn("cdn.jsdelivr.net", mirrored)
 
+    def test_local_vendor_template_declares_no_katex_cdn_fallback(self):
+        source = BUILDER.read_text(encoding="utf-8")
+        self.assertNotIn("cdn.jsdelivr.net/npm/katex@0.16.8/dist/", source)
+        self.assertIn("KATEX_CDN_RUNTIME_FORBIDDEN", source)
+
+    def test_remote_katex_fallback_is_rejected_before_writing(self):
+        page, vendor = self.outputs()[2]
+        unsafe = self.template.replace(
+            "</head>",
+            '<script onerror="this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js\'"></script></head>',
+        )
+        with self.assertRaisesRegex(ValueError, "KATEX_CDN_RUNTIME_FORBIDDEN"):
+            self._output(page, vendor, unsafe)
+
+    def test_generator_has_only_three_local_vendor_katex_runtime_tags(self):
+        source = BUILDER.read_text(encoding="utf-8")
+        opening = source.split("<!-- KaTeX Typography (local vendor only; assets checked before generating) -->", 1)[1]
+        tags = opening.split("<style>", 1)[0]
+        self.assertEqual(tags.count("vendor/katex/0.16.8/"), 3)
+        self.assertNotIn("onerror=", tags)
+        self.assertNotIn("https://", tags)
+
+
 
 if __name__ == "__main__":
     unittest.main()
