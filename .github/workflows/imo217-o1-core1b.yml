@@ -1,0 +1,69 @@
+name: IMO217 Owner v3.1.0 O1 Core1B reconstruction native golden benchmark
+
+on:
+  push:
+    branches:
+      - 'agent/issue-217-d3-native-evidence-20261014'
+    paths:
+      - '.github/workflows/imo217-o1-core1b.yml'
+      - 'TEST/imo-research/qrt-d3-successor/core1b_o1_benchmark_217.py'
+      - 'TEST/imo-research/qrt-d3-successor/core1a_o1_benchmark_217.py'
+      - 'TEST/imo-research/qrt-d3/explain.v1.json'
+      - 'TEST/products/imo182-qrt-d3-explain.manifest.json'
+  pull_request:
+    paths:
+      - '.github/workflows/imo217-o1-core1b.yml'
+      - 'TEST/imo-research/qrt-d3-successor/core1b_o1_benchmark_217.py'
+      - 'TEST/imo-research/qrt-d3-successor/core1a_o1_benchmark_217.py'
+      - 'TEST/imo-research/qrt-d3/explain.v1.json'
+      - 'TEST/products/imo182-qrt-d3-explain.manifest.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  owner-o1-core1b-protected-reconstruction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validator and actual Chromium browser
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Build existing TEST EXPLAIN-D3 journey only via the sole registered renderer
+        run: |
+          python Shared/tools/render_core.py gaps \
+            --manifest TEST/products/imo182-qrt-d3-explain.manifest.json \
+            --reference
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d3-explain.manifest.json \
+            --out build/imo182-qrt/d3/explain \
+            --mode PAGES --reference --draft
+      - name: Check actual Core1B versus immutable Owner reconstruction golden and separate main/boundary learner attempts
+        run: python TEST/imo-research/qrt-d3-successor/core1b_o1_benchmark_217.py
+      - name: Archive original site CSS and JS
+        if: success()
+        run: |
+          mkdir -p build/css build/js
+          cp public/css/modern-learner.css public/css/tablet-12-7.css build/css/
+          cp public/js/display-controls.js public/js/site-header.js build/js/
+      - name: Preserve native learner page with receipt, golden benchmark and browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo217-owner-v310-o1-explain-d3-native-core1b-golden-reconstruction
+          path: |
+            build/imo182-qrt/d3/explain/core1b.html
+            build/imo182-qrt/d3/explain/render-receipt.json
+            build/imo182-qrt/d3-successor/o1-core1b/
+            build/css/
+            build/js/
+          if-no-files-found: warn
+          retention-days: 30
