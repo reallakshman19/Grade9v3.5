@@ -6,6 +6,7 @@ on:
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_w_path_audit.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_coverage.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_review_handoff.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json'
@@ -450,6 +451,35 @@ jobs:
           assert len([x for x in r if x["blocking_source_author_action"]]) == 7
           print("P5 28 separate reviewer handoffs, 336 question-level H/S/P/M reviews NOT_RUN, "
                 "7 source-author repair requests, 0 signatures/Owner acceptances")
+          PY
+      - name: R8 P2b click actual native role routes and measure assisted-return integrity
+        run: |
+          set -euo pipefail
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py
+          for row in \
+            "source-explain-d3|explain-d3" \
+            "source-model-d2|model-d2" \
+            "source-retrieve-d2|retrieve-d2" \
+            "source-retrieve-d4|retrieve-d4"; do
+            IFS='|' read -r root cell <<< "$row"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py \
+              --native-contract "build/imo182-r8-intent/$cell-native.json" \
+              --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "build/imo182-r8-intent/$cell-real-navigation.json"
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          reports=[json.loads(x.read_text()) for x in
+              sorted(Path("build/imo182-r8-intent").glob("*-real-navigation.json"))]
+          assert len(reports)==4
+          assert sum(len(x["native_role_paths"]) for x in reports)==16
+          assert all(x["clicked_actual_role_transitions"] >= 12 for x in reports)
+          assert all(x["independence_from_return_visit"] is False and
+              x["owner_acceptance"] is False and
+              x["status"]=="HOLD_REVIEW_REQUIRED" for x in reports)
+          print("P2b four-cell real Chromium cross-Core navigation recorded;",
+                "do NOT count assisted route as independent mastery")
           PY
       - name: Keep review hypothesis evidence and immutable original source/manifest fingerprints
         if: always()
