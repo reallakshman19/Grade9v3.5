@@ -1,0 +1,84 @@
+name: IMO182 R8 QRT Intent Contract P0 four real pinned five-Core sources
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-r8-qrt-intent-contract.yml'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_intent_contract.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  intent-contract-four-pinned-cells:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Integration branch (read-only canonical authority and verifier)
+        uses: actions/checkout@v4
+      - name: Exact EXPLAIN-D3 authored TEST source
+        uses: actions/checkout@v4
+        with:
+          ref: 40142fe06818e7a946d6296911d495f3f3323b12
+          path: source-explain-d3
+          persist-credentials: false
+      - name: Exact MODEL-D2 authored TEST source after held author revision
+        uses: actions/checkout@v4
+        with:
+          ref: d450d0f0cda25c51c0232db31e6592588634a90b
+          path: source-model-d2
+          persist-credentials: false
+      - name: Exact RETRIEVE-D2 authored TEST source from established method-cue benchmark
+        uses: actions/checkout@v4
+        with:
+          ref: 5b382356e792ae50884241fb047c328e304d011d
+          path: source-retrieve-d2
+          persist-credentials: false
+      - name: Exact corrected RETRIEVE-D4 authored TEST source (not superseded leaky version)
+        uses: actions/checkout@v4
+        with:
+          ref: 8ffa008e1bbd03898751af4380762178697fb715
+          path: source-retrieve-d4
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile P0 verifier and run self-mutating fail-closed unit controls
+        run: |
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py TEST/imo-research/qrt-tiles/reconciliation/test_qrt_intent_contract.py
+          python -m unittest discover -s TEST/imo-research/qrt-tiles/reconciliation -p test_qrt_intent_contract.py -v
+      - name: Issue 182 exact-source P0 contracts for four already benchmarked native cell packages
+        run: |
+          set -euo pipefail
+          mkdir -p build/imo182-r8-intent
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py --authority-root . --source-root source-explain-d3 --cell-id QRT-EXPLAIN-D3 --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json --out build/imo182-r8-intent/explain-d3.json
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py --authority-root . --source-root source-model-d2 --cell-id QRT-MODEL-D2 --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json --out build/imo182-r8-intent/model-d2.json
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py --authority-root . --source-root source-retrieve-d2 --cell-id QRT-RETRIEVE-D2 --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json --out build/imo182-r8-intent/retrieve-d2.json
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py --authority-root . --source-root source-retrieve-d4 --cell-id QRT-RETRIEVE-D4 --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json --out build/imo182-r8-intent/retrieve-d4.json
+      - name: Four-contract result and explicit non-acceptance assertion
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = sorted(Path('build/imo182-r8-intent').glob('*.json'))
+          assert len(files) == 4, files
+          results = [json.loads(f.read_text()) for f in files]
+          assert len({x["cell_id"] for x in results}) == 4
+          assert all(x["technical_contract"] == "VALIDATED_PROPOSAL" for x in results)
+          assert all(x["semantic_review"] == "HOLD_REVIEW_REQUIRED" for x in results)
+          assert all(x["qualified_academic_review"] == "PENDING" and x["owner_qrt_acceptance"] == "PENDING" for x in results)
+          assert all(len(x["roles"]) == 5 and all(z["semantic"] == "NOT_RUN" for z in x["roles"].values()) for x in results)
+          assert all(len(x["semantic_objectives"]) == 12 and all(z["verdict"] == "NOT_RUN" for z in x["semantic_objectives"].values()) for x in results)
+          r = next(x for x in results if x["cell_id"] == "QRT-RETRIEVE-D2")
+          assert r["falsifier"]["specific_source_cue_observed"]
+          print("R8 P0 four exact-source contracts PASS; known method cue falsified; 20 role semantics NOT_RUN; 0 Owner/academic acceptances")
+          PY
+      - name: Keep review hypothesis evidence and immutable original source/manifest fingerprints
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-r8-qrt-intent-contract-four-pinned-P0
+          path: build/imo182-r8-intent/*.json
+          if-no-files-found: warn
+          retention-days: 30
