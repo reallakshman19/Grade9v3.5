@@ -5,6 +5,7 @@ on:
       - '.github/workflows/imo182-r8-qrt-intent-contract.yml'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_w_path_audit.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json'
       - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_intent_contract.py'
   workflow_dispatch:
@@ -121,6 +122,44 @@ jobs:
           assert all(x["qualified_academic_review"] == "PENDING"
                      and x["owner_qrt_acceptance"] == "PENDING" for x in r)
           print("R8 P1 20 native Core pages and five frozen role structures per cell PASS; W/browser/maths NOT_RUN; Owner 0/28")
+          PY
+      - name: Install real Chromium for scoped learner-visible and SVG accessibility audits
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: P2/P3 five-Core path-aware W audit with five deliberate rejected defects
+        run: |
+          set -euo pipefail
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_w_path_audit.py
+          for row in \
+            "source-explain-d3|explain-d3" \
+            "source-model-d2|model-d2" \
+            "source-retrieve-d2|retrieve-d2" \
+            "source-retrieve-d4|retrieve-d4"; do
+            IFS='|' read -r root cell <<< "$row"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_w_path_audit.py \
+              --native-contract "build/imo182-r8-intent/$cell-native.json" \
+              --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$cell" \
+              --out "build/imo182-r8-intent/$cell-w-audit.json" --run-mutants
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          rows = [json.loads(f.read_text()) for f in
+                  sorted(Path("build/imo182-r8-intent").glob("*-w-audit.json"))]
+          assert len(rows) == 4
+          assert sum(len(x["p2_p3_live_evidence"]["browser_learner_role_viewports"])
+                     for x in rows) == 36
+          assert sum(x["p2_p3_live_evidence"]["mutants_rejected"] for x in rows) == 5
+          assert all(len(x["whole_journey_W"]["paths_checked"]) == 5 for x in rows)
+          assert all(x["whole_journey_W"]["assisted_retry_is_independent"] is False for x in rows)
+          assert all(x["semantic_review"] == "HOLD_REVIEW_REQUIRED" and
+                     x["owner_qrt_acceptance"] == "PENDING" for x in rows)
+          assert "RETRIEVE_D2_METHOD_SELECTION_ALREADY_CUED" in next(
+              x for x in rows if x["cell_id"] == "QRT-RETRIEVE-D2"
+          )["whole_journey_W"]["known_finding_ids"]
+          print("R8 P2/P3: 36 live browser viewport probes, 20 cumulative path traces,"
+                " five known-bad mutants rejected, no QRT semantic/Owner promotion")
           PY
       - name: Keep review hypothesis evidence and immutable original source/manifest fingerprints
         if: always()
