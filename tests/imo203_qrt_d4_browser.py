@@ -79,8 +79,11 @@ with sync_playwright() as p:
             if cell == "retrieve" and role == "core2b" and width == 1280:
                 assert page.locator('body[data-blueprint-ref="BP-CORE2B-TRANSFER@1.1.0"]').count() == 1
                 assert page.locator('[data-g9-block="lineage_check"]').count() == 1
-                assert page.locator('[data-g9-block="changed_demand"]').count() == 1
-                assert page.locator('[data-g9-block="independent_check"]').count() == 1
+                # These post-attempt teaching blocks live in the sealed
+                # solution <template>, so they must NOT be in the live DOM
+                # before a substantive learner commitment.
+                assert page.locator('[data-g9-block="changed_demand"]').count() == 0
+                assert page.locator('[data-g9-block="independent_check"]').count() == 0
                 gate = page.locator(
                     'details[data-requires-attempt][data-g9-payload-ref="CORE2B-Q-D4-RETRIEVE-TRANSFER-review"]'
                 )
@@ -97,6 +100,8 @@ with sync_playwright() as p:
                     "Odd square classes modulo4 are 1; 5, 9, 13 all qualify, but 5 fails modulo8."
                 )
                 commit.click()
+                assert page.locator('[data-g9-block="changed_demand"]').count() == 1
+                assert page.locator('[data-g9-block="independent_check"]').count() == 1
                 answer_text = answer.text_content().casefold()
                 assert "5,9,13" in answer_text and "modulo4" in answer_text
                 assert "modulo8" in answer_text
