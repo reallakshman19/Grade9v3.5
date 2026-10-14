@@ -29,7 +29,19 @@ def get_figure_markup(figure_ref, qid, stem="", options=None):
     
     # 1. Check if figure_ref points to a file in Mathematics/library/figures
     if figure_ref:
-        fig_path = figures_dir / figure_ref
+        ref = Path(figure_ref)
+        if ref.is_absolute() or ".." in ref.parts or ref.suffix.lower() != ".svg":
+            raise ValueError(f"UNSAFE_FIGURE_REFERENCE: {figure_ref}")
+        prefix = Path("Mathematics/library/figures").parts
+        if ref.parts[:len(prefix)] == prefix:
+            ref = Path(*ref.parts[len(prefix):])
+        if len(ref.parts) != 1:
+            raise ValueError(f"FIGURE_NOT_IN_LIBRARY_FLAT_NAMESPACE: {figure_ref}")
+        fig_path = (figures_dir / ref).resolve()
+        if not fig_path.is_relative_to(figures_dir.resolve()):
+            raise ValueError(f"FIGURE_ESCAPES_LIBRARY: {figure_ref}")
+        if not fig_path.is_file():
+            raise FileNotFoundError(f"DECLARED_FIGURE_MISSING: {figure_ref}")
         if fig_path.exists():
             svg_content = fig_path.read_text(encoding="utf-8")
             # Strip xml declaration if present
