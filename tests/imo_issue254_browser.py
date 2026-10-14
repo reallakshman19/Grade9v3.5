@@ -39,12 +39,15 @@ def main():
                 assert not diagnosis.is_visible()
                 first_hint = page.locator("#hint1-" + qid)
                 second_hint = page.locator("#hint2-" + qid)
-                assert first_hint.is_visible(), qid
+                assert first_hint.get_attribute("hidden") is None, qid
                 assert second_hint.get_attribute("hidden") is not None, qid
                 assert not second_hint.is_visible(), qid
                 card.scroll_into_view_if_needed()
-                # Tier 2 is gated until Tier 1 is intentionally requested.
+                # The ladder itself starts closed: first open the outer disclosure,
+                # then confirm Tier 1 is available while Tier 2 is still protected.
                 card.locator(".qb-disclosure").first.locator("summary").first.click()
+                assert first_hint.is_visible(), qid
+                assert not second_hint.is_visible(), qid
                 first_hint.locator("summary").click()
                 second_hint.wait_for(state="visible")
                 assert not solution.is_visible(), qid
