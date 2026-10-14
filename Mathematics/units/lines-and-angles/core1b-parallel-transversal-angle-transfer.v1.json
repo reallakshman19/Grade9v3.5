@@ -1,0 +1,27 @@
+{
+  "schema": "imo-core1b-self-tutor-dialogue/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1B-LINES-ANGLES-PARALLEL-TRANSFER",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+  "paired_core1a_ref": "PKG-CORE1A-LINES-ANGLES-PARALLEL-TRANSFER",
+  "dialogue_stages": [
+    {
+      "stage": "PREDICT",
+      "tutor_prompt": "When two pairs of parallel lines intersect, how do the intersection angles at different vertices relate to each other?",
+      "student_response": "They must all be either equal to the given angle or supplementary to it, because translations keep lines parallel.",
+      "tutor_feedback": "Correct! Dual parallelism partitions all 16 planar angles across the four vertices into exactly two equivalence classes: acute angles of measure x and obtuse angles of measure 180° - x."
+    },
+    {
+      "stage": "ATTEMPT",
+      "tutor_prompt": "If an angle between intersecting parallel lines is x, and the adjacent angle on a straight line is bisected into two equal angles y, write the formula expressing y in terms of x.",
+      "student_response": "The adjacent angle on the straight line is 180° - x. Since it is split into two equal angles y, we have y + y = 180° - x, so 2y = 180° - x, which gives y = (180° - x)/2 = 90° - x/2.",
+      "tutor_feedback": "Spot on derivation! You correctly identified the linear pair supplement and divided the remainder by 2."
+    },
+    {
+      "stage": "BOUNDARY_TEST",
+      "tutor_prompt": "What happens as x approaches 90° (lines become perpendicular)? Does your formula hold?",
+      "student_response": "If x = 90°, then y = 90° - 90°/2 = 90° - 45° = 45°. Since the supplementary angle is 180° - 90° = 90°, bisecting 90° gives exactly 45°. The formula holds perfectly at the perpendicular boundary.",
+      "tutor_feedback": "Brilliant verification. Boundary testing at x = 90° confirms algebraic and geometric consistency."
+    }
+  ]
+}

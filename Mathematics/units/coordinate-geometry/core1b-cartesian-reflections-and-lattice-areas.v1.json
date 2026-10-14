@@ -1,0 +1,27 @@
+{
+  "schema": "imo-core1b-self-tutor-dialogue/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1B-COORD-GEOM-REFLECTIONS-AREAS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+  "paired_core1a_ref": "PKG-CORE1A-COORD-GEOM-REFLECTIONS-AREAS",
+  "dialogue_stages": [
+    {
+      "stage": "PREDICT",
+      "tutor_prompt": "When you reflect a point across the x-axis, which coordinate changes sign?",
+      "student_response": "I think the x-coordinate flips because it's called reflection in the x-axis?",
+      "tutor_feedback": "Careful! Think of the x-axis as a flat mirror on the ground. A point hovering above the axis reflects to an identical position directly below it. Its horizontal position (x) stays unchanged; only its vertical elevation (y) flips sign: (x, y) -> (x, -y)."
+    },
+    {
+      "stage": "ATTEMPT",
+      "tutor_prompt": "Find the reflection of Q(7, -9) in the y-axis, and state which quadrant the image point belongs to.",
+      "student_response": "Reflection in the y-axis inverts the horizontal position, so (7, -9) becomes (-7, -9). Since both x and y are negative, it lies in Quadrant III.",
+      "tutor_feedback": "Perfect! You accurately applied the transformation rule and identified the correct quadrant."
+    },
+    {
+      "stage": "BOUNDARY_TEST",
+      "tutor_prompt": "What happens if a point lies directly on the axis of reflection, such as (5, 0) reflected in the x-axis?",
+      "student_response": "The y-coordinate is 0, and -0 is 0, so the point stays at (5, 0). Points on the reflection line are invariant.",
+      "tutor_feedback": "Brilliant! Points lying on the line of reflection are fixed points of the isometry."
+    }
+  ]
+}

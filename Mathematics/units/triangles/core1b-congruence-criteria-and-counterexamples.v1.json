@@ -1,0 +1,27 @@
+{
+  "schema": "imo-core1b-self-tutor-dialogue/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1B-TRIANGLES-CONGRUENCE-COUNTEREXAMPLES",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+  "paired_core1a_ref": "PKG-CORE1A-TRIANGLES-CONGRUENCE-COUNTEREXAMPLES",
+  "dialogue_stages": [
+    {
+      "stage": "PREDICT",
+      "tutor_prompt": "If two triangles have all three angles equal, can you conclude they are congruent?",
+      "student_response": "I think so, because having all angles equal means they have the exact same shape.",
+      "tutor_feedback": "Same shape means SIMILARITY, not CONGRUENCE! Imagine an equilateral triangle with side 1 cm, and another equilateral triangle with side 10 cm. Both have angles 60°, 60°, 60°, but one is 100 times larger in area than the other. They are definitely not congruent."
+    },
+    {
+      "stage": "ATTEMPT",
+      "tutor_prompt": "What is the minimum requirement involving sides to upgrade an angle-equality (AAA) condition into an authentic congruence proof?",
+      "student_response": "You must establish that at least one pair of corresponding sides is equal in length. Then you can use ASA or AAS congruence.",
+      "tutor_feedback": "Spot on! One corresponding side length fixes the scale factor k = 1, converting similarity into congruence."
+    },
+    {
+      "stage": "BOUNDARY_TEST",
+      "tutor_prompt": "If two right triangles have equal hypotenuses and one equal acute angle, are they congruent?",
+      "student_response": "Yes! Both have a 90° angle, an equal acute angle, and equal hypotenuses. By AAS (or ASA by finding the third angle), they are congruent.",
+      "tutor_feedback": "Perfect! AAS applies directly here. You demonstrated sharp discernment between valid congruence criteria and similarity traps."
+    }
+  ]
+}

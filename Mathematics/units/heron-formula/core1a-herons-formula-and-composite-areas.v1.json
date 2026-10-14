@@ -1,0 +1,76 @@
+{
+  "schema": "imo-core1a-declarative-anchor/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1A-HERON-COMPOSITE-AREAS",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION@1.8.0",
+  "topic": "HERON_FORMULA",
+  "topic_name": "Heron's Formula and Surface Area",
+  "subtopic": "COMPOSITE_AREAS_AND_PERIMETER_CONSTRAINTS",
+  "target_demand": "SYNTHESIZE",
+  "target_band": "D3",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-A-Q041",
+    "SOF-IMO-G09-L1-2025-26-B-Q047"
+  ],
+  "inferential_jump": "Synthesize triangular area decomposition using Heron's formula with perimeter-ratio constraints, radical factorization, and isoperimetric comparisons between regular polygons.",
+  "relation_refs": {
+    "semiperimeter": "s = \\frac{a + b + c}{2}",
+    "herons_formula": "A = \\sqrt{s(s-a)(s-b)(s-c)}",
+    "equilateral_area": "A_{eq} = \\frac{\\sqrt{3}}{4}s^2",
+    "isoperimetric_scaling": "P = 4a_{sq} = 3s_{tri}"
+  },
+  "representation": [
+    "Composite polygon decomposed into triangular partitions with semiperimeter annotations",
+    "Table comparing radical area terms under Heron's formula against perimeter constraints"
+  ],
+  "completed_teaching_path": [
+    "1. State Heron's formula for arbitrary triangles given side lengths a, b, c.",
+    "2. Factor perimeter ratios into concrete side lengths via common ratio parameter k.",
+    "3. Apply prime factorization under the radical to extract square factors cleanly: √(s(s-a)(s-b)(s-c)).",
+    "4. Synthesize composite figure areas by partitioning into symmetric triangles and summing individual partition areas."
+  ],
+  "misconceptions": [
+    {
+      "id": "MISC-SEMI-PERIMETER-DOUBLING",
+      "error": "Using total perimeter P instead of semiperimeter s inside the radical of Heron's formula.",
+      "correction": "Heron's formula requires the semiperimeter s = P / 2, which halves the linear perimeter dimension."
+    },
+    {
+      "id": "MISC-EQUAL-PERIMETER-EQUAL-AREA",
+      "error": "Assuming figures with equal perimeter have equal area.",
+      "correction": "Isoperimetric inequality dictates that area depends on polygon geometry; regular polygons with more sides enclose strictly greater area for a fixed perimeter."
+    }
+  ],
+  "worked_concept_anchor": {
+    "problem_statement": "The sides of a triangle are in the ratio 5 : 12 : 13 and its perimeter is 150 cm. (i) Find its area using Heron's formula. (ii) If an equilateral triangle has the same perimeter (150 cm), find the difference in their areas. (Use √3 ≈ 1.732)",
+    "conventions_declared": "Let a, b, c denote side lengths in cm, with semiperimeter s = (a+b+c)/2. All dimensions are positive real numbers.",
+    "deductive_chain": [
+      {
+        "step": 1,
+        "statement": "Let the sides be 5x, 12x, 13x. Then 5x + 12x + 13x = 30x = 150 cm, giving x = 5 cm. The side lengths are a = 25 cm, b = 60 cm, c = 65 cm.",
+        "why_valid": "Perimeter is the sum of side lengths: P = a + b + c."
+      },
+      {
+        "step": 2,
+        "statement": "The semiperimeter is s = 150 / 2 = 75 cm. The differences are s - a = 50, s - b = 15, s - c = 10.",
+        "why_valid": "Definition of semiperimeter s = P / 2 and linear subtraction."
+      },
+      {
+        "step": 3,
+        "statement": "By Heron's formula, \\text{Area} = \\sqrt{75 \\times 50 \\times 15 \\times 10} = \\sqrt{(25 \\times 3) \\times (25 \\times 2) \\times (3 \\times 5) \\times (2 \\times 5)} = \\sqrt{25^2 \\times 3^2 \\times 2^2 \\times 5^2} = 25 \\times 3 \\times 2 \\times 5 = 750\\text{ cm}^2.",
+        "why_valid": "Heron's formula A = √(s(s-a)(s-b)(s-c)) with exact prime power factorization under the radical."
+      },
+      {
+        "step": 4,
+        "statement": "For an equilateral triangle with perimeter 150 cm, each side is s_{eq} = 150 / 3 = 50 cm. Its area is A_{eq} = \\frac{\\sqrt{3}}{4}(50^2) = \\frac{2500\\sqrt{3}}{4} = 625\\sqrt{3} \\approx 625(1.732) = 1082.5\\text{ cm}^2.",
+        "why_valid": "Standard equilateral triangle area formula A = (√3/4)s² evaluated at side 50 cm."
+      },
+      {
+        "step": 5,
+        "statement": "The difference in area is 1082.5 - 750 = 332.5 cm².",
+        "why_valid": "Linear area difference between the two isoperimetric figures."
+      }
+    ],
+    "invariant_proved": "Heron's formula reduces rational-ratio Pythagorean triangles to exact integer areas. For equal perimeter P, regular polygons enclose greater area than skewed triangles."
+  }
+}

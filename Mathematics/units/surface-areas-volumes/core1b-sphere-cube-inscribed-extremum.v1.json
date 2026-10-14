@@ -1,0 +1,27 @@
+{
+  "schema": "imo-core1b-self-tutor-dialogue/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1B-SURF-VOL-INSCRIBED-SPHERE-CUBE",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+  "paired_core1a_ref": "PKG-CORE1A-SURF-VOL-INSCRIBED-SPHERE-CUBE",
+  "dialogue_stages": [
+    {
+      "stage": "PREDICT",
+      "tutor_prompt": "If a sphere is carved out of a cube of edge length a, could the diameter of the sphere be a√2 or a√3 by orienting it diagonally?",
+      "student_response": "Since the space diagonal is a√3, maybe we can fit a larger sphere by centering it along the corner-to-corner diagonal?",
+      "tutor_feedback": "Recall that a sphere extends uniformly in all directions from its center. If its diameter were a√3, its radius would be (a√3)/2 ≈ 0.866a. But the distance from the cube center to any face is only a/2 = 0.5a. Therefore, the sphere would protrude out of the cube by over 0.36a on all six faces! The maximum diameter is strictly constrained by the face distance: d_max = a."
+    },
+    {
+      "stage": "ATTEMPT",
+      "tutor_prompt": "Suppose water from a full cone of radius 6 cm and height 12 cm is poured into a cylinder of radius 12 cm. What will be the rise in water level in the cylinder?",
+      "student_response": "Volume of cone is (1/3)π (6²) (12) = 144π. In the cylinder, V = π (12²) h = 144π h. Setting 144π h = 144π gives h = 1 cm.",
+      "tutor_feedback": "Excellent! You preserved the factor of 1/3 for the cone and recognized that the liquid volume remains invariant across different cross-sectional geometries."
+    },
+    {
+      "stage": "BOUNDARY_TEST",
+      "tutor_prompt": "What happens to the volume ratio of an inscribed sphere to its enclosing cube as the cube side a scales from 1 cm to 100 cm?",
+      "student_response": "Both volumes scale by a³, so the ratio V_sphere / V_cube = (π/6) a³ / a³ = π/6 remains completely constant, independent of the size.",
+      "tutor_feedback": "Exactly right. The volume utilization efficiency of an inscribed sphere is always π/6 ≈ 52.36%, confirming geometric scale invariance."
+    }
+  ]
+}
