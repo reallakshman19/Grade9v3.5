@@ -3,10 +3,10 @@
 Builds the complete Grade 9 IMO Master Suite HTML containing ALL Core 2 questions done till now:
 - SOF-IMO-G09-L1-2025-26-B (50 questions, Batch 1)
 - SOF-IMO-G09-L1-2025-26-A (50 questions, Batch 2)
-- SOF-IMO-G09-L1-2024-25-B (12 questions)
+- SOF-IMO-G09-L1-2024-25-B (50 questions, Batch 3)
 - SOF-IMO-G09-L1-2023-24-A (24 questions)
 - SOF-IMO-G09-SAMPLE-2026-27 (10 questions)
-Total: 146 authentic IMO questions under Core 2 custody with vector SVGs,
+Total: 184 authentic IMO questions under Core 2 custody with vector SVGs,
 Two-Tier & 3-Rung Hint Ladders, formal verification derivations, distractor rationales,
 and strict typography compliance (zero FONT_FLOOR findings, font >= 14px).
 """
@@ -59,7 +59,11 @@ def main():
     with open("Mathematics/question-bank/sof-imo-2025-26-set-a.core2.json", "r", encoding="utf-8") as f:
         set_a_data = json.load(f)["questions"]
 
-    # 3. Load baseline 68 enhanced for 2024-25 Set B, 2023-24 Set A, 2026-27 Sample
+    # 3. Load Batch 3 (2024-25 Set B)
+    with open("Mathematics/question-bank/sof-imo-2024-25-set-b.core2.json", "r", encoding="utf-8") as f:
+        set_24b_data = json.load(f)["questions"]
+
+    # 4. Load baseline 68 enhanced for 2023-24 Set A and 2026-27 Sample
     enhanced_path = root / "Mathematics/research/imo_68_classified_enhanced.json"
     stems_path = root / "Mathematics/research/imo_68_verbatim_stems.json"
     base_data = json.load(open(enhanced_path, encoding="utf-8"))
@@ -67,6 +71,7 @@ def main():
 
     set_a_ids = {q["id"] for q in set_a_data}
     set_b_ids = {q["id"] for q in set_b_data}
+    set_24b_ids = {q["id"] for q in set_24b_data}
 
     # Normalize all questions into a unified list
     unified_questions = []
@@ -99,7 +104,7 @@ def main():
             "distractors": q["distractor_rationale"]
         })
 
-    # Add Set B (50 items)
+    # Add Set B 2025-26 (50 items)
     for q in set_b_data:
         unified_questions.append({
             "id": q["id"],
@@ -127,13 +132,41 @@ def main():
             "distractors": q["distractor_rationale"]
         })
 
-    # Add other baseline papers (46 items)
+    # Add Set B 2024-25 (50 items)
+    for q in set_24b_data:
+        unified_questions.append({
+            "id": q["id"],
+            "num": q["paper_origin_locator"]["question_number"],
+            "paper": "SOF-IMO-G09-L1-2024-25-B",
+            "paper_label": "2024-25 Set B",
+            "section": q["section"],
+            "topic": q["taxonomy"]["topic"],
+            "topic_name": q["taxonomy"]["topic_label"],
+            "title": q["title"],
+            "band": q["cognitive_classification"]["difficulty_band"],
+            "demand": q["cognitive_classification"]["primary_demand"],
+            "cell": q["cognitive_classification"]["qrt_cell"],
+            "stem": q["stem"],
+            "options": q["options"],
+            "choice": q["answer"]["choice"],
+            "answer_text": q["answer"]["value"],
+            "figure_ref": q["figure_ref"],
+            "hint1": q["hint_ladder"]["hint1_conceptual_nudge"],
+            "hint2": q["hint_ladder"]["hint2_tactical_step"],
+            "hint3": q["cognitive_classification"]["crux_move"],
+            "solution": q["solution"]["derivation"],
+            "check": q["solution"]["independent_check"]["verification"],
+            "check_type": q["solution"]["independent_check"]["check_type"],
+            "distractors": q["distractor_rationale"]
+        })
+
+    # Add other baseline papers (34 items: 2023-24 Set A [24], 2026-27 Sample [10])
     for q in base_data:
         qid = q["id"]
-        if qid not in set_a_ids and qid not in set_b_ids:
+        if qid not in set_a_ids and qid not in set_b_ids and qid not in set_24b_ids:
             stem_rec = stems_db.get(qid, {})
             paper = q["paper"]
-            paper_label = "2026-27 Sample" if "SAMPLE" in paper else ("2024-25 Set B" if "2024-25-B" in paper else "2023-24 Set A")
+            paper_label = "2026-27 Sample" if "SAMPLE" in paper else "2023-24 Set A"
             unified_questions.append({
                 "id": qid,
                 "num": q["num"],
@@ -182,7 +215,7 @@ def main():
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Grade 9 IMO Mathematics · Core 2 Question Bank & Blueprints Suite</title>
-  <meta name="description" content="Complete Master Suite for Grade 9 IMO Mathematics: 146 authentic questions under Core 2 custody with vector SVGs, KaTeX typography, progressive hint ladders, and Core 1A/1B self-tutor modules.">
+  <meta name="description" content="Complete Master Suite for Grade 9 IMO Mathematics: 184 authentic questions under Core 2 custody with vector SVGs, KaTeX typography, progressive hint ladders, and Core 1A/1B self-tutor modules.">
 
   <!-- KaTeX Typography (Local Vendor Primary + CDN Fallback) -->
   <link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css" onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css';">
@@ -834,7 +867,7 @@ def main():
     <div class="shell-inner">
       <a href="#" class="brand">
         <span>IMO Grade 9 Master Suite</span>
-        <span class="brand-badge">146 QUESTIONS · CORE 2 CUSTODY</span>
+        <span class="brand-badge">184 QUESTIONS · CORE 2 CUSTODY</span>
       </a>
 
       <nav class="nav-tabs">
@@ -851,7 +884,7 @@ def main():
   <main class="container">
 
     <!-- ========================================== -->
-    <!-- TAB 1: CORE 2 QUESTION BANK (146 Questions) -->
+    <!-- TAB 1: CORE 2 QUESTION BANK (184 Questions) -->
     <!-- ========================================== -->
     <div id="tab-core2" class="tab-content active">
 
@@ -865,10 +898,10 @@ def main():
         <!-- Papers Row -->
         <div class="filter-chips-row">
           <span class="chip-label">Paper:</span>
-          <span class="filter-chip active" data-filter="paper" data-val="ALL" onclick="toggleFilter('paper', 'ALL')">All Papers (146)</span>
+          <span class="filter-chip active" data-filter="paper" data-val="ALL" onclick="toggleFilter('paper', 'ALL')">All Papers (184)</span>
           <span class="filter-chip" data-filter="paper" data-val="2025-26 Set A" onclick="toggleFilter('paper', '2025-26 Set A')">2025-26 Set A (50)</span>
           <span class="filter-chip" data-filter="paper" data-val="2025-26 Set B" onclick="toggleFilter('paper', '2025-26 Set B')">2025-26 Set B (50)</span>
-          <span class="filter-chip" data-filter="paper" data-val="2024-25 Set B" onclick="toggleFilter('paper', '2024-25 Set B')">2024-25 Set B (12)</span>
+          <span class="filter-chip" data-filter="paper" data-val="2024-25 Set B" onclick="toggleFilter('paper', '2024-25 Set B')">2024-25 Set B (50)</span>
           <span class="filter-chip" data-filter="paper" data-val="2023-24 Set A" onclick="toggleFilter('paper', '2023-24 Set A')">2023-24 Set A (24)</span>
           <span class="filter-chip" data-filter="paper" data-val="2026-27 Sample" onclick="toggleFilter('paper', '2026-27 Sample')">2026-27 Sample (10)</span>
         </div>
@@ -912,7 +945,7 @@ def main():
 
       <!-- Result Counter -->
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:0.95rem;color:var(--text-muted)">
-        <span id="result-counter" style="font-weight:750;color:var(--text)">Showing all 146 questions</span>
+        <span id="result-counter" style="font-weight:750;color:var(--text)">Showing all 184 questions</span>
         <span style="font-size:0.88rem">Click any badge to filter dynamically</span>
       </div>
 
