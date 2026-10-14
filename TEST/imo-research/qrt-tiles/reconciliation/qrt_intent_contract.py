@@ -57,7 +57,7 @@ def read_json(path: Path) -> dict:
 def blob_hash(path: Path) -> str:
     payload = path.read_bytes()
     return hashlib.sha1(b"blob " + str(len(payload)).encode("ascii") +
-                        b"\\0" + payload).hexdigest()
+                        b"\0" + payload).hexdigest()
 
 
 def sha256(path: Path) -> str:
@@ -207,7 +207,7 @@ def validate_payload(source: dict, manifest: dict, matrix: dict,
                "UNSUPPORTED_CUE_PROBE")
         stem = qmap[sel["core2a"][0]]["stem"]
         observed = bool(re.search(
-            r"\\bretrieve\\b.{0,50}\\bright.triangle distance relation\\b",
+            r"\bretrieve\b.{0,50}\bright.triangle distance relation\b",
             stem, flags=re.I
         ))
         ensure(observed, "METHOD_CUE_EXPECTATION_DRIFT",
@@ -309,7 +309,7 @@ def main() -> None:
     contract = compile_contract(args.authority_root, args.source_root,
                                 args.witness_file, args.adoption_ledger)
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(json.dumps(contract, indent=2, ensure_ascii=False) + "\\n",
+    args.out.write_text(json.dumps(contract, indent=2, ensure_ascii=False) + "\n",
                         encoding="utf-8")
     print(f"{contract['cell_id']}: provenance+QRT Intent Contract VALIDATED_PROPOSAL; "
           f"academic/Owner HOLD; five Core semantic roles NOT_RUN")
