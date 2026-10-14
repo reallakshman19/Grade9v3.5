@@ -22,6 +22,19 @@ from Shared.tools.imo_qrt_validator import BANKS
 from Shared.tools.imo_qrt_standalone_gate import inspect_endpoints
 
 SCHEMA = "imo-qrt-independent-candidate-receipt/v1"
+
+RESEARCH_UNQUALIFIED_CLAIMS = {
+    "UNQUALIFIED_CORE_BLUEPRINT_CERTIFIED": "BP-CORE1A &amp; BP-CORE1B CERTIFIED",
+    "UNQUALIFIED_AUTHENTIC_SOURCE": "Authenticated Core 2 Questions",
+    "UNQUALIFIED_CUSTODY_100_PERCENT": "100% CUSTODY",
+}
+
+
+def inspect_research_authority_claims(html_source: str) -> list[str]:
+    """Copy claims are not licenses or qualified native/academic certification."""
+    return sorted(key for key, literal in RESEARCH_UNQUALIFIED_CLAIMS.items()
+                  if literal in html_source)
+
 SOURCE_FIELDS = ("id", "paper_origin_locator", "stem", "options", "answer", "figure_ref")
 REVISION_FIELDS = ("hint_ladder", "solution", "distractor_rationale", "cognitive_classification", "difficulty")
 
@@ -126,6 +139,9 @@ def inspect_candidate(*, candidate_root: Path, baseline_sha: str,
                              "source_count": len(old), "candidate_count": len(new)})
     source = compare_source(all_base, all_new)
     html = inspect_endpoints(candidate_root, baseline_sha=candidate_sha, expected_questions=260)
+    rendered_source = (candidate_root / "standalone/mathematics-imo-grade9-master-suite.html")
+    copy_claims = inspect_research_authority_claims(
+        rendered_source.read_text(encoding="utf-8")) if rendered_source.exists() else []
 
     blockers = []
     if (source["removed_ids"] or source["added_ids"] or source["source_custody_drifts"] or
@@ -135,6 +151,8 @@ def inspect_candidate(*, candidate_root: Path, baseline_sha: str,
         blockers.append("LEARNER_SOLUTION_FORMAT_REGRESSION")
     if html["hard_findings"] or html["status"] != "REVIEW_REQUIRED":
         blockers.append("RENDERED_HTML_STRUCTURAL_OR_DISCLOSURE_FAILURE")
+    if copy_claims:
+        blockers.append("RESEARCH_PRODUCT_AUTHORITY_CLAIMS_UNSUBSTANTIATED")
     if html["rendered"] and (html["rendered"]["question_count"] != 260 or
                              html["rendered"]["unique_question_ids"] != 260):
         blockers.append("RENDERED_DENOMINATOR_MISMATCH")
@@ -143,6 +161,7 @@ def inspect_candidate(*, candidate_root: Path, baseline_sha: str,
         "status": "FAIL" if blockers else "STRUCTURAL_CANDIDATE_REVIEW_REQUIRED",
         "blockers": blockers, "scope": "RESEARCH_STANDALONE_ONLY",
         "source_custody": source, "banks": bank_reports, "html": html,
+        "unqualified_research_claims": copy_claims,
         "academic_verdict": "REVIEW_REQUIRED", "qrt_cell_acceptance": "NOT_GRANTED",
         "native_core_admission": "NOT_GRANTED", "source_rights": "NOT_VERIFIED",
         "chromium_user_flow": "NOT_RUN",
@@ -168,6 +187,7 @@ def main(argv: list[str] | None = None) -> int:
             result["source_custody"]["candidate_question_count"]],
         "source_drifts": result["source_custody"]["source_custody_drifts"],
         "solution_format_regressions": result["source_custody"]["solution_format_regressions"],
+        "unqualified_research_claims": result["unqualified_research_claims"],
         "authored_changes": result["source_custody"]["authored_changes"],
         "html_status": result["html"]["status"],
         "html_findings": (result["html"]["rendered"] or {}).get("findings", {}),
