@@ -62,6 +62,66 @@ jobs:
           ref: d28ac2bea348412a0451d226e278d01531839932
           path: source-justify-d1
           persist-credentials: false
+      - name: P4 exact original source-retrieve-d1 authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 6db5ebdfa3cfcb9c6eacca49c3b4f850eb5ca60a
+          path: source-retrieve-d1
+          persist-credentials: false
+      - name: P4 exact original source-d1-common authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 089b57c98d697a0e19683c3d78e0d51220b9174a
+          path: source-d1-common
+          persist-credentials: false
+      - name: P4 exact original source-d2-common authored source
+        uses: actions/checkout@v4
+        with:
+          ref: eb3cf06646f00bf208084e794b41b4d8d83135b6
+          path: source-d2-common
+          persist-credentials: false
+      - name: P4 exact original source-d3-synthesize authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 4d4a074d9f93e1eeac612679784224d4e250fb49
+          path: source-d3-synthesize
+          persist-credentials: false
+      - name: P4 exact original source-d4-explain authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 6c00fae5c150cd580ab04c680414fba0a0c776e8
+          path: source-d4-explain
+          persist-credentials: false
+      - name: P4 exact original source-d4-apply authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 0d36673633e115ecaa261917ee2066a80c3accc2
+          path: source-d4-apply
+          persist-credentials: false
+      - name: P4 exact original source-d4-model authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 4064bd4c0c10c50263bdf3de29e9d10989f628d9
+          path: source-d4-model
+          persist-credentials: false
+      - name: P4 exact original source-d4-represent authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 84fe228c45c7fac0fd8ce56124b3a656e39cf802
+          path: source-d4-represent
+          persist-credentials: false
+      - name: P4 exact original source-d4-synthesize authored source
+        uses: actions/checkout@v4
+        with:
+          ref: 9faa52d499e071e9e6d4c419b5afdf5fbc044455
+          path: source-d4-synthesize
+          persist-credentials: false
+      - name: P4 exact original source-d4-justify authored source
+        uses: actions/checkout@v4
+        with:
+          ref: e39db6a8607bf64b09274d38bb222ed90f22459a
+          path: source-d4-justify
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -250,6 +310,86 @@ jobs:
                 "structural benchmark packages (15 native role pages), "
                 "0 independent/Owner acceptance")
           PY
+      - name: P4 compile remaining 19 real pinned original TEST question-specific QRT hypotheses
+        run: |
+          set -euo pipefail
+          for row in \
+            "RETRIEVE-D1|source-retrieve-d1|retrieve-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "EXPLAIN-D1|source-d1-common|explain-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "APPLY-D1|source-d1-common|apply-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "REPRESENT-D1|source-d1-common|represent-d1|RIVAL_NOT_GROUNDED_IN_SOURCE" \
+            "EXPLAIN-D2|source-d2-common|explain-d2|NONE" \
+            "APPLY-D2|source-d2-common|apply-d2|NONE" \
+            "REPRESENT-D2|source-d2-common|represent-d2|SOURCE_RIVAL_VOCAB_INVALID" \
+            "SYNTHESIZE-D2|source-d2-common|synthesize-d2|NONE" \
+            "JUSTIFY-D2|source-d2-common|justify-d2|NONE" \
+            "APPLY-D3|source-explain-d3|apply-d3|NONE" \
+            "REPRESENT-D3|source-explain-d3|represent-d3|NONE" \
+            "SYNTHESIZE-D3|source-d3-synthesize|synthesize-d3|NONE" \
+            "JUSTIFY-D3|source-explain-d3|justify-d3|NONE" \
+            "EXPLAIN-D4|source-d4-explain|explain-d4|NONE" \
+            "APPLY-D4|source-d4-apply|apply-d4|NONE" \
+            "MODEL-D4|source-d4-model|model-d4|NONE" \
+            "REPRESENT-D4|source-d4-represent|represent-d4|NONE" \
+            "SYNTHESIZE-D4|source-d4-synthesize|synthesize-d4|NONE" \
+            "JUSTIFY-D4|source-d4-justify|justify-d4|NONE"; do
+            IFS='|' read -r cell root slug expected <<< "$row"
+            extra=()
+            if [ "$expected" != NONE ]; then extra=(--expected-hold-code "$expected"); fi
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_contract.py \
+              --authority-root . --source-root "$root" --cell-id "QRT-$cell" \
+              --witness-file TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json \
+              --adoption-ledger TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json \
+              --out "build/imo182-r8-intent/$slug.json" "${extra[@]}"
+          done
+      - name: P4 render and SHA-verify all remaining 14 contract-eligible five-Core TEST packages
+        run: |
+          set -euo pipefail
+          for row in \
+            "source-d2-common|explain-d2" \
+            "source-d2-common|apply-d2" \
+            "source-d2-common|synthesize-d2" \
+            "source-d2-common|justify-d2" \
+            "source-explain-d3|apply-d3" \
+            "source-explain-d3|represent-d3" \
+            "source-d3-synthesize|synthesize-d3" \
+            "source-explain-d3|justify-d3" \
+            "source-d4-explain|explain-d4" \
+            "source-d4-apply|apply-d4" \
+            "source-d4-model|model-d4" \
+            "source-d4-represent|represent-d4" \
+            "source-d4-synthesize|synthesize-d4" \
+            "source-d4-justify|justify-d4"; do
+            IFS='|' read -r root slug <<< "$row"
+            manifest=$(python - "$slug" <<'PY'
+          import json,sys
+          from pathlib import Path
+          bank=json.loads(Path("TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json").read_text())
+          w=next(x for x in bank["witnesses"] if x["cell_id"]=="QRT-"+sys.argv[1].upper())
+          print(w["source_pin"]["manifest_path"])
+          PY
+            )
+            (
+              cd "$root"
+              python Shared/tools/render_core.py gaps --manifest "$manifest" --reference
+              python Shared/tools/render_core.py build --manifest "$manifest" \
+                --out "build/imo182-qrt/r8/$slug" --mode PAGES --reference --draft
+            )
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_evidence.py \
+              --contract "build/imo182-r8-intent/$slug.json" \
+              --source-root "$root" --native-output "$root/build/imo182-qrt/r8/$slug" \
+              --out "build/imo182-r8-intent/$slug-native.json"
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path("build/imo182-r8-intent")
+          new=["explain-d2","apply-d2","synthesize-d2","justify-d2","apply-d3","represent-d3","synthesize-d3","justify-d3","explain-d4","apply-d4","model-d4","represent-d4","synthesize-d4","justify-d4"]
+          assert len(new)==14
+          assert all(json.loads((base/(cell+"-native.json")).read_text())
+                     ["native_evidence"]["all_role_structure"]=="PASS" for cell in new)
+          print("P4 fourteen NEW source-specific proposals with 70/70 actual Core pages checked against frozen owner structural snapshots")
+          PY
       - name: P4 enumerate all 28 authored QRT cells without manufacturing 19 missing contracts
         run: |
           python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_coverage.py \
@@ -264,10 +404,10 @@ jobs:
           assert len(j["cells"]) == 28
           assert (j["contract_validated_proposals"],
                   j["explicit_rival_declaration_holds"],
-                  j["not_yet_question_specific_contract_tested"]) == (7,2,19)
-          assert j["new_native_role_structural_witnesses"] == 35
+                  j["not_yet_question_specific_contract_tested"]) == (21,7,0)
+          assert j["new_native_role_structural_witnesses"] == 105
           assert j["qualified_academic_signatures"] == j["owner_accepted_cells"] == 0
-          print("P4 28/28 accounted, 7 validated, 2 blocked, 19 pending;"
+          print("P4 28/28 accounted, 21 validated, 7 source metadata HOLD, 0 pending;"
                 " academic/Owner zero, no artificial semantic pass")
           PY
       - name: Keep review hypothesis evidence and immutable original source/manifest fingerprints
@@ -292,5 +432,33 @@ jobs:
             source-explain-d3/build/imo182-qrt/r8/retrieve-d3/render-receipt.json
             source-explain-d3/build/imo182-qrt/r8/model-d3/*.html
             source-explain-d3/build/imo182-qrt/r8/model-d3/render-receipt.json
+            source-d2-common/build/imo182-qrt/r8/explain-d2/*.html
+            source-d2-common/build/imo182-qrt/r8/explain-d2/render-receipt.json
+            source-d2-common/build/imo182-qrt/r8/apply-d2/*.html
+            source-d2-common/build/imo182-qrt/r8/apply-d2/render-receipt.json
+            source-d2-common/build/imo182-qrt/r8/synthesize-d2/*.html
+            source-d2-common/build/imo182-qrt/r8/synthesize-d2/render-receipt.json
+            source-d2-common/build/imo182-qrt/r8/justify-d2/*.html
+            source-d2-common/build/imo182-qrt/r8/justify-d2/render-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/apply-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/apply-d3/render-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/represent-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/represent-d3/render-receipt.json
+            source-d3-synthesize/build/imo182-qrt/r8/synthesize-d3/*.html
+            source-d3-synthesize/build/imo182-qrt/r8/synthesize-d3/render-receipt.json
+            source-explain-d3/build/imo182-qrt/r8/justify-d3/*.html
+            source-explain-d3/build/imo182-qrt/r8/justify-d3/render-receipt.json
+            source-d4-explain/build/imo182-qrt/r8/explain-d4/*.html
+            source-d4-explain/build/imo182-qrt/r8/explain-d4/render-receipt.json
+            source-d4-apply/build/imo182-qrt/r8/apply-d4/*.html
+            source-d4-apply/build/imo182-qrt/r8/apply-d4/render-receipt.json
+            source-d4-model/build/imo182-qrt/r8/model-d4/*.html
+            source-d4-model/build/imo182-qrt/r8/model-d4/render-receipt.json
+            source-d4-represent/build/imo182-qrt/r8/represent-d4/*.html
+            source-d4-represent/build/imo182-qrt/r8/represent-d4/render-receipt.json
+            source-d4-synthesize/build/imo182-qrt/r8/synthesize-d4/*.html
+            source-d4-synthesize/build/imo182-qrt/r8/synthesize-d4/render-receipt.json
+            source-d4-justify/build/imo182-qrt/r8/justify-d4/*.html
+            source-d4-justify/build/imo182-qrt/r8/justify-d4/render-receipt.json
           if-no-files-found: warn
           retention-days: 30
