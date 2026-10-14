@@ -56,6 +56,10 @@ def validate_case(case):
     prompt = case['student_prompt'].lower()
     assert 'select' in prompt or 'choose' in prompt, 'NO_INDEPENDENT_MODEL_CHOICE'
     assert 'compare' in prompt or 'candidates' in prompt or 'candidate' in prompt or 'relation' in prompt, 'NO_MODEL_COMPARISON'
+    # A metadata-only model choice is impossible for a student who sees
+    # only the prompt. Show both formulas, but neither the winning ID
+    # nor the solved exception.
+    assert all(model['formula'].lower() in prompt for model in models), 'CANDIDATE_FORMULA_MISSING'
     # Student-facing instruction must not supply winner ID or exception ordinal.
     assert answer['chosen_model_id'].lower() not in prompt, 'WINNER_SPOILED_IN_PROMPT'
     assert 'fourth pair is the exception' not in prompt, 'EXCEPTION_SPOILED_IN_PROMPT'
@@ -107,6 +111,15 @@ class Q003ModelSelectionProposalTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             validate_proposal(bad)
 
+    def test_both_candidate_formulas_must_be_visible(self):
+        for case_name in ('worked_anchor', 'independent_exit'):
+            bad = deepcopy(self.data)
+            formula = bad[case_name]['candidates'][0]['formula']
+            bad[case_name]['student_prompt'] = bad[case_name]['student_prompt'].replace(formula, '[omitted]')
+            with self.subTest(case=case_name), self.assertRaisesRegex(
+                    AssertionError, 'CANDIDATE_FORMULA_MISSING'):
+                validate_proposal(bad)
+
     def test_leaked_winner_rejected(self):
         bad = deepcopy(self.data)
         bad['independent_exit']['student_prompt'] += ' E-LINEAR.'
@@ -141,7 +154,7 @@ class Q003ModelSelectionProposalTests(unittest.TestCase):
         }
         case['student_prompt'] = (
             'Choose between two rival relations for the new observations '
-            '(2, 16), (4, 28), (6, 48), (8, 50).')
+            '(2, 16), (4, 28), (6, 48), (8, 50). Compare y = 6x + 4 with y = x^2 + 12.')
         bad['independent_exit'] = case
         with self.assertRaisesRegex(AssertionError, 'SAME_MODEL_ALWAYS_WINS'):
             validate_proposal(bad)
