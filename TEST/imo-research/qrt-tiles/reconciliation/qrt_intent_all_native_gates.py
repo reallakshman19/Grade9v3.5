@@ -24,6 +24,9 @@ from qrt_intent_contract import ROLES, ensure, read_json, sha256
 from qrt_intent_w_path_audit import (
     PATHS, capture, gate_check, known_exposure,
 )
+from qrt_intent_semantic_sentinels import (
+    SENTINELS, detect, self_tests,
+)
 
 FOUR_NARROW_ORACLES = frozenset({
     "QRT-EXPLAIN-D3", "QRT-MODEL-D2",
@@ -84,13 +87,35 @@ def summarize(cell: str, states: dict, gates: dict,
             "mutation_applied_to_evidence_only": True,
         })
 
-    narrow = cell in FOUR_NARROW_ORACLES
+    legacy = cell in FOUR_NARROW_ORACLES
+    authored = cell in SENTINELS
+    ensure(legacy != authored, "P2C_SOURCE_SPECIFIC_SENTINEL_MISSING_OR_DUPLICATE", cell)
     findings = []
-    if narrow:
-        for role in ROLES:
-            findings.extend({"role":role,"finding":finding}
+    for role in ROLES:
+        if legacy:
+            findings.extend({"role":role,"finding":finding,
+                             "source":"ORIGINAL_FOUR_SPECIFIC_ORACLES"}
                             for finding in known_exposure(cell,role,states[role]))
+        else:
+            findings.extend({"role":role,
+                             "source":"SOURCE_SPECIFIC_ONE_WAY_FALSIFIER",
+                             **hit}
+                            for hit in detect(cell,states[role]))
+    narrow = True
     known = sorted({x["finding"] for x in findings})
+    sentinels = [] if legacy else [{
+        "source_specific_w_leak_code": SENTINELS[cell].code,
+        "complete_answer_injected_in_accessible_svg":
+            len(detect(cell,{"accessible_svg":
+                             SENTINELS[cell].bad_disclosure})) > 0,
+        "partial_prior_knowledge_not_flagged":
+            not detect(cell,{"visible":SENTINELS[cell].partial_decoy}),
+        "only_one_way_semantic_falsifier": True,
+        "academic_acceptance": False,
+    }]
+    ensure(all(x["complete_answer_injected_in_accessible_svg"] and
+               x["partial_prior_knowledge_not_flagged"]
+               for x in sentinels), "P2C_SEMANTIC_MUTATION_OR_DECOY_FAILED", cell)
     paths = []
     for key, roles in PATHS.items():
         paths.append({
@@ -98,9 +123,8 @@ def summarize(cell: str, states: dict, gates: dict,
             "roles": list(roles),
             "mechanically_inspected_roles":
                 list(dict.fromkeys(roles)),
-            "cumulative_w_semantics":
-                "KNOWN_NARROW_SENTINEL_ONLY" if narrow else
-                "NOT_RUN_SOURCE_SPECIFIC_ORACLE",
+            "cumulative_w_semantics": "KNOWN_NARROW_SENTINEL_ONLY",
+            "source_specific_semantic_decision": "REVIEW_REQUIRED_NOT_ACCEPTED",
             "independent_learner_math":
                 False if "ASSISTED_RETURN" in key else "NOT_ESTABLISHED",
             "not_a_real_replay":
@@ -120,8 +144,13 @@ def summarize(cell: str, states: dict, gates: dict,
         "simulated_exposure_paths_not_real_learner_journeys": 5,
         "five_deliberate_technical_gate_mutants_rejected": mutants,
         "narrow_known_source_semantic_oracle":
-            "RAN_NARROW_SENTINELS_NOT_ACCEPTANCE" if narrow
-            else "NOT_RUN_FOR_THIS_CELL",
+            "RAN_NARROW_SENTINELS_NOT_ACCEPTANCE",
+        "semantic_oracle_family":
+            "FOUR_ORIGINAL_RISK_ORACLES" if legacy else
+            "SEVENTEEN_NEW_SOURCE_SPECIFIC_ONE_WAY_FALSIFIERS",
+        "injected_new_source_specific_semantic_leak_tests": sentinels,
+        "source_specific_semantics_under_test":
+            "PREATTEMPT_COMPLETE_ANSWER_EXACT_FORM_ONLY",
         "narrow_semantic_finding_ids": known,
         "narrow_semantic_findings": findings,
         "accessible_text_svg_role_hashes": {
@@ -149,6 +178,8 @@ def main() -> None:
     for name in ("native-contract", "source-root", "native-output", "out"):
         ap.add_argument("--"+name, type=Path, required=True)
     args = ap.parse_args()
+    ensure(self_tests()["specific_rules"] == 17,
+           "P2C_SOURCE_SPECIFIC_ORACLES_SELF_TEST_FAILED")
     evidence = read_json(args.native_contract)
     cell = evidence["cell_id"]
     ensure(evidence["technical_contract"] == "VALIDATED_PROPOSAL" and
