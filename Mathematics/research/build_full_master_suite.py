@@ -972,36 +972,85 @@ def main():
       flex-direction: column;
     }
 
-    /* Fixed Header Shell */
+    /* Fixed Header Shell (Ultra-Crisp Retina) */
     header.g9-shell {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(10px);
+      background: rgba(10, 16, 28, 0.88);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.05);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      transition: all 0.25s ease;
+    }
+
+    [data-theme="light"] header.g9-shell {
+      background: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 0 rgba(0, 0, 0, 0.03);
     }
 
     .shell-inner {
-      max-width: 1260px;
+      max-width: min(95vw, 1640px);
       margin: 0 auto;
-      padding: 10px 18px;
-      min-height: 60px;
+      padding: 8px 18px;
+      min-height: 56px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 14px;
-      flex-wrap: wrap;
     }
 
+    /* Crisp Brand Identity */
     .brand {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-weight: 750;
-      font-size: 1.15rem;
-      color: var(--text);
+      gap: 10px;
       text-decoration: none;
+      color: var(--text);
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .brand-glyph {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #090e17;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.15rem;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+      flex-shrink: 0;
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .brand-subtitle {
+      font-size: 0.88rem;
+      font-weight: 750;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      text-transform: uppercase;
       white-space: nowrap;
     }
 
@@ -1009,68 +1058,147 @@ def main():
       font-size: 0.88rem;
       padding: 3px 10px;
       border-radius: 999px;
-      background: var(--accent);
-      color: #090e17;
-      font-weight: 800;
-      letter-spacing: 0.05em;
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      font-weight: 750;
+      letter-spacing: 0.03em;
       white-space: nowrap;
     }
 
+    /* Segmented Navigation Capsule */
     .nav-tabs {
       display: flex;
-      gap: 6px;
+      align-items: center;
+      gap: 4px;
+      background: rgba(17, 24, 39, 0.72);
+      padding: 4px 6px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
       overflow-x: auto;
-      padding: 4px 0;
+      scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
+      flex-shrink: 1;
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    [data-theme="light"] .nav-tabs {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
     }
 
     .tab-btn {
-      min-height: 44px;
-      padding: 8px 16px;
-      border-radius: 8px;
+      min-height: 38px;
+      padding: 6px 12px;
+      border-radius: 7px;
       border: 1px solid transparent;
       background: transparent;
       color: var(--text-muted);
-      font-weight: 600;
-      font-size: 0.95rem;
+      font-weight: 650;
+      font-size: 0.88rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       white-space: nowrap;
-      transition: all 0.18s;
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
     }
 
     .tab-btn:hover {
-      background: var(--card-hover);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    [data-theme="light"] .tab-btn:hover {
+      background: rgba(0, 0, 0, 0.04);
       color: var(--text);
     }
 
     .tab-btn.active {
-      background: var(--card);
-      border-color: var(--border);
+      background: var(--surface);
+      border-color: rgba(56, 189, 248, 0.4);
       color: var(--accent);
       font-weight: 750;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="light"] .tab-btn.active {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: var(--accent);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Structured Micro-Pills inside Tabs */
+    .tab-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      font-weight: 750;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active .tab-pill {
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--accent);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .tab-pill-d3 { color: var(--warning); border-color: rgba(251, 191, 36, 0.35); background: rgba(251, 191, 36, 0.12); }
+    .tab-pill-d4 { color: var(--purple); border-color: rgba(192, 132, 252, 0.35); background: rgba(192, 132, 252, 0.12); }
+    .tab-pill-d2 { color: var(--accent); border-color: rgba(56, 189, 248, 0.35); background: rgba(56, 189, 248, 0.12); }
+    .tab-pill-d1 { color: var(--success); border-color: rgba(52, 211, 153, 0.35); background: rgba(52, 211, 153, 0.12); }
+
+    /* Action Controls */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
     }
 
     .theme-toggle {
-      min-height: 44px;
-      padding: 8px 16px;
+      min-height: 38px;
+      padding: 6px 14px;
       border-radius: 8px;
       border: 1px solid var(--border);
       background: var(--card);
       color: var(--text);
       cursor: pointer;
-      font-weight: 650;
-      font-size: 0.90rem;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      user-select: none;
       white-space: nowrap;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      background: var(--card-hover);
+      transform: translateY(-1px);
     }
 
     /* Container */
     main.container {
-      max-width: 1260px;
+      max-width: min(95vw, 1640px);
       margin: 0 auto;
-      padding: 24px 18px 48px;
+      padding: 24px 20px 48px;
       flex: 1;
       width: 100%;
     }
@@ -1708,9 +1836,65 @@ def main():
       white-space: normal;
     }
 
-    /* Responsive */
+    /* ======================================================= */
+    /* 12.7" (2944 x 1840) RETINA DISPLAY OPTIMIZATION         */
+    /* ======================================================= */
+    @media screen and (min-width: 1360px) and (max-width: 2000px),
+           screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 1360px) {
+      body {
+        text-rendering: optimizeLegibility;
+      }
+      .shell-inner, main.container {
+        max-width: 1580px;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      .qb-options-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .qb-question {
+        padding: 26px 30px;
+        margin-bottom: 26px;
+        border-radius: 14px;
+      }
+      .qb-stem-text {
+        font-size: 1.08rem;
+        line-height: 1.75;
+      }
+      .topic-module-card {
+        padding: 28px 32px;
+        border-radius: 14px;
+      }
+      .topic-sticky-bar {
+        top: 56px;
+        padding: 14px 22px 16px 22px;
+      }
+    }
+
+    /* Tablet Portrait & Medium Screens */
+    @media screen and (max-width: 1080px) {
+      .shell-inner {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 8px 14px;
+      }
+      .nav-tabs {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+      }
+      .brand-subtitle {
+        display: none;
+      }
+      .qb-options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Phone Fallback */
     @media (max-width: 768px) {
-      .shell-inner { flex-direction: column; align-items: stretch; gap: 10px; }
+      .shell-inner { flex-direction: column; align-items: stretch; gap: 8px; }
       .qb-options-grid { grid-template-columns: 1fr; }
       .qb-top-row { flex-direction: column; }
     }
@@ -1718,24 +1902,57 @@ def main():
 </head>
 <body>
 
-  <!-- FIXED HEADER SHELL -->
-  <header class="g9-shell">
+  <!-- FIXED CRISP HEADER SHELL (NO-MATH) -->
+  <header class="g9-shell no-math">
     <div class="shell-inner">
-      <a href="#" class="brand">
-        <span>IMO Grade 9 Master Suite</span>
-        <span class="brand-badge">210 QUESTIONS · CORE 2 CUSTODY</span>
+      <a href="#" class="brand" aria-label="IMO Grade 9 Master Suite">
+        <span class="brand-glyph">∑</span>
+        <div class="brand-info">
+          <span class="brand-title">IMO Grade 9 Master Suite</span>
+          <span class="brand-subtitle">OLYMPIAD RESEARCH BENCHMARK</span>
+        </div>
+        <span class="brand-badge">210 QUESTIONS · CORE 2</span>
       </a>
 
-      <nav class="nav-tabs">
-        <button type="button" class="tab-btn active" onclick="switchTab('core2')">📚 Core 2 Questions (210)</button>
-        <button type="button" class="tab-btn" onclick="switchTab('core1-all')">📖 All Core 1A/1B (14 Topics)</button>
-        <button type="button" class="tab-btn" onclick="switchTab('d3-core')">🏆 D3 Core (6 Topics)</button>
-        <button type="button" class="tab-btn" onclick="switchTab('d4-core')">💎 D4 Core (1 Topic)</button>
-        <button type="button" class="tab-btn" onclick="switchTab('d2-core')">⚡ D2 Core (6 Topics)</button>
-        <button type="button" class="tab-btn" onclick="switchTab('d1-core')">🌱 D1 Core (1 Topic)</button>
+      <nav class="nav-tabs" role="tablist" aria-label="Master Suite Tabs">
+        <button type="button" class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('core2')">
+          <span class="tab-icon">📖</span>
+          <span class="tab-title">Core 2</span>
+          <span class="tab-pill">210 Qs</span>
+        </button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('core1-all')">
+          <span class="tab-icon">🌐</span>
+          <span class="tab-title">All Core 1</span>
+          <span class="tab-pill">14 Topics</span>
+        </button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('d3-core')">
+          <span class="tab-icon">🏆</span>
+          <span class="tab-title">D3 Core</span>
+          <span class="tab-pill tab-pill-d3">6 Topics</span>
+        </button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('d4-core')">
+          <span class="tab-icon">💎</span>
+          <span class="tab-title">D4 Core</span>
+          <span class="tab-pill tab-pill-d4">1 Topic</span>
+        </button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('d2-core')">
+          <span class="tab-icon">⚡</span>
+          <span class="tab-title">D2 Core</span>
+          <span class="tab-pill tab-pill-d2">6 Topics</span>
+        </button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('d1-core')">
+          <span class="tab-icon">🌱</span>
+          <span class="tab-title">D1 Core</span>
+          <span class="tab-pill tab-pill-d1">1 Topic</span>
+        </button>
       </nav>
 
-      <button type="button" class="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
+      <div class="header-actions">
+        <button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark or Light Theme">
+          <span class="theme-icon">🌓</span>
+          <span class="theme-title">Theme</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -2109,11 +2326,19 @@ def main():
       const target = document.getElementById('tab-' + tabId);
       if (target) target.classList.add('active');
 
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('active');
+        el.setAttribute('aria-selected', 'false');
+      });
+
       const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => {
         const oc = b.getAttribute('onclick') || '';
         return oc.includes("'" + tabId + "'") || oc.includes('"' + tabId + '"');
       });
-      if (btn) btn.classList.add('active');
+      if (btn) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+      }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
       triggerKaTeX();
@@ -2124,7 +2349,7 @@ def main():
     function scrollToTopicModule(cardId) {
       const el = document.getElementById(cardId);
       if (el) {
-        const yOffset = -140;
+        const yOffset = -124;
         const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
         el.classList.add('highlighted');
