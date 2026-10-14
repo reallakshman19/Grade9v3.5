@@ -353,4 +353,26 @@ class D1EvidenceTiles(unittest.TestCase):
         forged_accept["owner"]["qrt_decision"]="ACCEPT"
         self.assertIn("ungated-acceptance",errors(forged_accept,v,row))
 
+
+    def test_qualified_academic_handoff_is_source_pinned_and_unsigned(self):
+        packet=TILES/"d1/QUALIFIED-REVIEW-HANDOFF-20261014.md"
+        text=packet.read_text()
+        self.assertIn("source-safe authored TEST review handoff",text)
+        self.assertIn("QUALIFIED_REVIEWER_UNVERIFIED",text)
+        self.assertIn("0/28",text)
+        self.assertIn("## 3. SYNTHESIZE-D1",text)
+        self.assertIn("## 4. JUSTIFY-D1",text)
+        self.assertIn("synthesize-bridge-ablation.v1.json",text)
+        self.assertIn("justify-feedback-review-sheet.v1.json",text)
+        for demand in ("SYNTHESIZE","JUSTIFY"):
+            with self.subTest(demand=demand):
+                t=self.tiles[demand]
+                self.assertEqual(t["review"]["qualified_reviewer_handoff"],
+                                 "d1/QUALIFIED-REVIEW-HANDOFF-20261014.md")
+                self.assertIn(t["source"]["verified_sha"],text)
+                self.assertIn(t["generation"]["artifact_url"],text)
+                self.assertIsNone(t["review"]["qualified_reviewer_name"])
+                self.assertIsNone(t["owner"]["qrt_decision_id"])
+                self.assertEqual(t["owner"]["qrt_decision"],"PENDING")
+
 if __name__=="__main__":unittest.main()
