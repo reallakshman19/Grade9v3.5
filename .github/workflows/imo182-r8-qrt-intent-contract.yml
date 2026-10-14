@@ -545,6 +545,19 @@ jobs:
           assert all(not any(
               z.get("assisted_return_verified") is True for z in
               x["available_scoped_browser_proof"]) for x in navigation)
+          prototype=[x for x in r if any(
+              z["name"]=="NONPRODUCTION_COPIED_HTML_ASSISTED_RETURN_PROTOTYPE"
+              for z in x["available_scoped_browser_proof"])]
+          assert len(prototype)==4
+          assert all(any(z["name"]==
+              "TEN_ACTUAL_NATIVE_SHELL_CLICKS_NOT_CONTEXTUAL_QRT_APPROVAL"
+              for z in x["available_scoped_browser_proof"]) for x in prototype)
+          assert all(any(z["name"]==
+              "NONPRODUCTION_COPIED_HTML_ASSISTED_RETURN_PROTOTYPE" and
+              z["copy_only_never_renderer_receipt"] and
+              z["original_native_pages_still_missing_assisted_return"] and
+              z["release"]=="HOLD" for z in x["available_scoped_browser_proof"])
+              for x in prototype)
           print("P5 28 separate reviewer handoffs, 336 question-level H/S/P/M reviews NOT_RUN, "
                 "7 source-author repair requests, 0 signatures/Owner acceptances")
           PY
