@@ -41,13 +41,17 @@ class Core1ACandidateTests(unittest.TestCase):
         rep=p["representations"][0]
         pairs=[(x["element"],x["symbol"]) for x in rep["correspondence"]]
         self.assertEqual(pairs,[
-            ("n modulo 3 has three rows: 0,1,2.", "n mod 3 ∈ {0,1,2}"),
+            ("n modulo 3 has three rows: 0,1,2.", "n"),
             ("For residue 0, n is divisible by 3.", "n"),
             ("For residue 1, n+2 is divisible by 3.", "n+2"),
             ("For residue 2, n+1 is divisible by 3.", "n+1"),
         ])
         self.assertTrue(all(element in rep["required_elements"]
                             for element,_ in pairs))
+        declared=p["relations"][0]["symbols"]
+        self.assertEqual([entry["symbol"] for entry in declared],["n","n+1","n+2"])
+        self.assertTrue(all(symbol in {entry["symbol"] for entry in declared}
+                            for _,symbol in pairs))
         self.assertIn("Parity guarantee shown independently, not blended with the modulo-3 table.",
                       rep["required_elements"])
         self.assertEqual(p["data"],[])
@@ -65,6 +69,13 @@ class Core1ACandidateTests(unittest.TestCase):
 
     def test_residue_correspondence_cannot_omit_a_case(self):
         self.blocked(lambda x:x["representations"][0]["correspondence"].pop())
+
+    def test_correspondence_symbol_must_be_declared(self):
+        self.blocked(lambda x:x["relations"][0]["symbols"].pop())
+
+    def test_derived_relation_symbol_cannot_be_mislabeled(self):
+        self.blocked(lambda x:x["relations"][0]["symbols"][2].update(
+            symbol="n+3"))
 
     def test_separate_parity_warrant_cannot_be_erased(self):
         self.blocked(lambda x:x["representations"][0]["required_elements"].pop())
