@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" data-g9-shell data-g9-role="TEST" data-g9-test="sandbox-draft" data-g9-preview-core="CORE1B" data-g9-canonical-acceptance="false">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TEST Core 1B Reconstruction: Unassisted recall and dual-stage boundary reconstruction for Grade 9 IMO divisibility and number systems.">
+  <title>TEST Core 1B · Divisibility Recall & Reconstruction · Grade9V3.5</title>
+  <link rel="stylesheet" href="../../css/modern-learner.css">
+  <style>
+    :root {color-scheme:light dark}
+    .core-preview {max-width:1040px;margin:0 auto;padding:clamp(16px,3vw,36px)}
+    .review-banner {border:2px solid #557086;border-radius:12px;background:var(--bg-soft,#f6f8fc);padding:14px 18px;line-height:1.65;margin-bottom:24px}
+    .review-banner strong {display:inline-block;margin-right:10px}
+    .review-heading {font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.16;margin:12px 0}
+    .lead {font-size:1.09rem;line-height:1.6;max-width:72ch}
+    .review-panel {background:var(--bg-card,#fff);border:1px solid var(--border,#cbd5e1);border-radius:16px;padding:clamp(16px,3vw,27px);margin:22px 0}
+    .review-panel h2 {font-size:1.4rem;margin:0 0 12px}
+    .review-panel h3 {font-size:1.11rem;margin:0 0 8px}
+    .concept-display {border-left:4px solid #3a6f84;background:var(--bg-soft,#f8fafc);padding:14px 20px;border-radius:0 12px 12px 0;margin:20px 0}
+    .attempt-box {margin:18px 0;border:1px solid #cbd5e1;border-radius:12px;padding:16px;background:var(--bg-soft,#fafbfc)}
+    .exit-field {width:100%;box-sizing:border-box;min-height:130px;resize:vertical;border:1px solid #788597;border-radius:10px;padding:13px;background:var(--bg-card,#fff);color:inherit;font:inherit}
+    .commit-btn {display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 22px;margin-top:10px;font-weight:650;font-size:15px;border-radius:8px;background:#2563eb;color:#fff;border:none;cursor:pointer}
+    .commit-btn:hover {background:#1d4ed8}
+    .model-proof {margin-top:18px;border:1px solid var(--border,#b1b7c5);border-radius:12px;padding:15px;background:var(--bg-card,#fff)}
+    .model-proof summary {cursor:pointer;font-weight:760;min-height:44px;padding:9px 4px}
+    .reconstruction-steps {list-style:none;padding:0;counter-reset:recon-step}
+    .reconstruction-step {margin:14px 0;padding:14px;border:1px solid #e2e8f0;border-radius:10px;background:var(--bg-soft,#f8fafc)}
+    .step-badge {display:inline-block;padding:2px 8px;font-size:0.8rem;font-weight:700;border-radius:6px;background:#e2e8f0;margin-bottom:6px}
+    .smallprint {font-size:.89rem;line-height:1.6;color:var(--text-muted,#4d627c)}
+    code {font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  </style>
+</head>
+<body>
+  <header class="g9-shell-header">
+    <div class="g9-header-inner">
+      <a class="g9-brand" href="../../index.html"><span class="logo-icon" aria-hidden="true">⚡</span><span class="brand-title">Grade9V3.5</span><span class="g9-brand-badge">TEST Sandbox</span></a>
+      <nav class="g9-header-nav" aria-label="Portal Navigation">
+        <a href="../../index.html">Home</a>
+        <a href="../../mathematics/index.html">Mathematics</a>
+        <a href="../../mathematics/imo-grade9/index.html">IMO Topics</a>
+        <a href="core1a.html">Core 1A (Learn)</a>
+        <a href="core1b.html" style="font-weight:bold;text-decoration:underline">Core 1B (Recall)</a>
+        <a href="core2.html">Core 2 (Practice)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="core-preview">
+    <div class="review-banner">
+      <strong>CORE 1B RECONSTRUCTION · UNASSISTED RECALL</strong>
+      <p>Test your conceptual retention of the Core 1A divisibility principles without looking back at the lesson. Reconstruct the modular definitions, the parity lemma, and the coprimality conclusion from first principles.</p>
+    </div>
+
+    <h1 class="review-heading">Core 1B · Divisibility Proof Reconstruction</h1>
+    <p class="lead">In Core 1A, you learned why <code>n(n+1)(n+2)</code> is always divisible by 6 for any positive integer <code>n</code>. In Core 1B, you must reconstruct the proof unassisted through two cognitive retrieval gates.</p>
+
+    <!-- Stage 1: Boundary Recall -->
+    <section class="review-panel" id="stage1-boundary">
+      <h2>Stage 1 · Boundary Recall (Foundations)</h2>
+      <p>Without checking reference tables, answer these three foundational recall prompts:</p>
+      
+      <div class="attempt-box">
+        <h3>1.1 Parity Principle</h3>
+        <p>Why is at least one of <code>n</code> and <code>n+1</code> divisible by 2? Does this depend on whether <code>n</code> is prime or composite?</p>
+        <textarea class="exit-field" placeholder="State the mathematical law of consecutive integer parity..."></textarea>
+      </div>
+
+      <div class="attempt-box">
+        <h3>1.2 Modulo 3 Residue Classes</h3>
+        <p>List all possible remainders when an arbitrary positive integer <code>n</code> is divided by 3, and state for each remainder which term among <code>{n, n+1, n+2}</code> is a multiple of 3.</p>
+        <textarea class="exit-field" placeholder="Case r=0 -> term? Case r=1 -> term? Case r=2 -> term?..."></textarea>
+      </div>
+
+      <div class="attempt-box">
+        <h3>1.3 Coprime Multiplicative Divisibility</h3>
+        <p>If integer <code>a</code> divides <code>N</code> and integer <code>b</code> divides <code>N</code>, under what strict condition is <code>N</code> guaranteed to be divisible by <code>a * b</code>?</p>
+        <textarea class="exit-field" placeholder="State the coprimality condition: gcd(a, b) = ?..."></textarea>
+      </div>
+
+      <button class="commit-btn" onclick="document.getElementById('stage1-solution').style.display='block'">Check Stage 1 Foundation</button>
+
+      <div id="stage1-solution" class="model-proof" style="display:none;margin-top:16px">
+        <h3>Stage 1 Recall Reference</h3>
+        <ul>
+          <li><strong>Parity:</strong> Integers alternate between even and odd: <code>n ≡ 0 (mod 2)</code> or <code>n ≡ 1 (mod 2)</code>. If <code>n</code> is odd, <code>n+1</code> is even. Hence <code>2 | n(n+1)</code> holds universally regardless of compositeness.</li>
+          <li><strong>Residues mod 3:</strong>
+            <ul>
+              <li>If <code>n ≡ 0 (mod 3)</code>, then <code>3 | n</code>.</li>
+              <li>If <code>n ≡ 1 (mod 3)</code>, then <code>n+2 ≡ 3 ≡ 0 (mod 3)</code>, so <code>3 | (n+2)</code>.</li>
+              <li>If <code>n ≡ 2 (mod 3)</code>, then <code>n+1 ≡ 3 ≡ 0 (mod 3)</code>, so <code>3 | (n+1)</code>.</li>
+            </ul>
+          </li>
+          <li><strong>Coprimality:</strong> <code>a | N</code> and <code>b | N</code> implies <code>ab | N</code> <em>if and only if</em> <code>gcd(a, b) = 1</code>. Since <code>gcd(2, 3) = 1</code>, <code>6 | N</code> follows rigorously.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Stage 2: Dual-Stage Full Proof Reconstruction -->
+    <section class="review-panel" id="stage2-reconstruct">
+      <h2>Stage 2 · Complete Step Reconstruction</h2>
+      <p>Reconstruct the complete mathematical proof that <code>n(n+1)(n+2)</code> is divisible by 6 for all <code>n ∈ ℤ⁺</code>. Include the four standard verification moves: <strong>Declare, Transform Parity, Transform Modulo, and Coprime Synthesis</strong>.</p>
+      
+      <div class="attempt-box">
+        <label for="full-proof-attempt"><strong>Your Full Step-by-Step Proof:</strong></label>
+        <textarea class="exit-field" id="full-proof-attempt" style="min-height:180px" placeholder="Write Step 1 (Arbitrary start), Step 2 (Factor of 2), Step 3 (Factor of 3 cases), and Step 4 (Synthesis)..."></textarea>
+        <button class="commit-btn" onclick="document.getElementById('stage2-solution').style.display='block'">Commit Proof & Reveal Model</button>
+      </div>
+
+      <div id="stage2-solution" class="model-proof" style="display:none">
+        <h3>Model Proof Verification</h3>
+        <ol class="reconstruction-steps">
+          <li class="reconstruction-step">
+            <span class="step-badge">STEP 1 · DECLARE</span>
+            <p>Let <code>n ∈ ℤ⁺</code> be an arbitrary positive integer. The three consecutive integers are <code>n</code>, <code>n+1</code>, and <code>n+2</code>, and their product is <code>P(n) = n(n+1)(n+2)</code>.</p>
+          </li>
+          <li class="reconstruction-step">
+            <span class="step-badge">STEP 2 · PARITY</span>
+            <p>In any two consecutive integers <code>{n, n+1}</code>, exactly one is even. Thus <code>2 | n(n+1)</code>, which implies <code>2 | P(n)</code>.</p>
+          </li>
+          <li class="reconstruction-step">
+            <span class="step-badge">STEP 3 · MODULO 3</span>
+            <p>By division algorithm, <code>n</code> can be expressed as <code>3k</code>, <code>3k+1</code>, or <code>3k+2</code>.
+               If <code>n = 3k</code>, <code>3 | n</code>.
+               If <code>n = 3k+1</code>, <code>n+2 = 3k+3 = 3(k+1)</code>, so <code>3 | (n+2)</code>.
+               If <code>n = 3k+2</code>, <code>n+1 = 3k+3 = 3(k+1)</code>, so <code>3 | (n+1)</code>.
+               In every case, <code>3 | P(n)</code>.</p>
+          </li>
+          <li class="reconstruction-step">
+            <span class="step-badge">STEP 4 · COPRIME SYNTHESIS</span>
+            <p>Since <code>2 | P(n)</code> and <code>3 | P(n)</code>, and <code>gcd(2, 3) = 1</code>, it follows by Euclid's lemma that <code>(2 × 3) | P(n)</code>, i.e., <code>6 | n(n+1)(n+2)</code> for all <code>n ∈ ℤ⁺</code>. <strong>Q.E.D.</strong></p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Navigation links -->
+    <div style="display:flex;gap:12px;margin:24px 0">
+      <a href="core1a.html" class="commit-btn" style="background:#475569;text-decoration:none">← Return to Core 1A (Learn)</a>
+      <a href="core2.html" class="commit-btn" style="text-decoration:none">Proceed to Core 2 (Practice 68 Questions) →</a>
+    </div>
+  </main>
+
+  <footer class="g9-footer"><p>Grade9V3.5 · TEST Core 1B Reconstruction Review · Research Integrity Sandbox</p></footer>
+</body>
+</html>
