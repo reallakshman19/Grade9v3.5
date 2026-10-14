@@ -354,7 +354,7 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
             <span class="qb-badge qb-badge-{band.lower()}" style="font-weight:800;font-size:0.88rem">{band} OLYMPIAD BAND</span>
             <span class="qb-badge qb-badge-qrt" style="font-weight:800;font-size:0.88rem">DEMAND: {demand}</span>
             <span class="qb-badge" style="background:{palette['bg']};color:{palette['primary']};border:1.5px solid {palette['primary']};font-size:0.88rem;font-weight:800">{html.escape(palette.get('label', topic_name))}</span>
-            <span class="qb-badge" style="background:rgba(56,189,248,0.12);color:var(--accent);border:1px solid rgba(56,189,248,0.25);font-size:0.88rem;font-weight:750">BP-CORE1A &amp; BP-CORE1B CERTIFIED</span>
+            <span class="qb-badge" style="background:rgba(56,189,248,0.12);color:var(--accent);border:1px solid rgba(56,189,248,0.25);font-size:0.88rem;font-weight:750">RESEARCH CORE 1A/1B DRAFT · APPROVAL PENDING</span>
           </div>
           <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">CODE: {html.escape(subtopic)}</span>
         </div>
@@ -372,7 +372,7 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
         <div style="margin-top:12px">
           <details style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px">
             <summary style="cursor:pointer;font-weight:700;font-size:0.90rem;color:var(--accent)">
-              🔗 Anchored to {len(linked_refs)} Authenticated Core 2 Questions (Click to expand list)
+              🔗 {len(linked_refs)} linked research question IDs · academic/source review pending (expand list)
             </summary>
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
         """)
@@ -1073,7 +1073,7 @@ def main():
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Grade 9 IMO Mathematics · Core 2 Question Bank & Blueprints Suite</title>
-  <meta name="description" content="Complete Master Suite for Grade 9 IMO Mathematics: 184 authentic questions under Core 2 custody with vector SVGs, KaTeX typography, progressive hint ladders, and Core 1A/1B self-tutor modules.">
+  <meta name="description" content="Grade 9 IMO research suite: 260 draft questions with vector SVGs, KaTeX typography, progressive hint ladders and Core 1A/1B research modules. Academic, source and Blueprint acceptance pending.">
 
   <!-- KaTeX Typography (Local Vendor Primary + CDN Fallback) -->
   <link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css" onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css';">
@@ -2667,10 +2667,10 @@ def main():
       <div class="panel" style="background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;padding:24px;margin-bottom:24px">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
           <div>
-            <span class="qb-badge" style="background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)">{len(topic_units)} MODULE PACKAGES · 100% CUSTODY</span>
+            <span class="qb-badge" style="background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)">{len(topic_units)} RESEARCH MODULE PACKAGES · OWNER ACCEPTANCE PENDING</span>
             <h2 style="font-size:1.45rem;font-weight:800;margin-top:8px">All {len(topic_units)} Core 1A &amp; Core 1B Learning Modules <span class="no-math" style="color:var(--text-muted);font-weight:600">({len(unique_topics)} Topics)</span></h2>
             <p style="color:var(--text-muted);font-size:0.95rem;margin-top:4px">
-              Blueprint-Standard Core 1A Declarative Proofs &amp; Core 1B 4-Stage Self-Tutor Reconstructions, segregated topic-wise.
+              Research-stage Core 1A declarative proofs and Core 1B four-stage self-tutor reconstructions, organized by topic; Blueprint and academic acceptance pending.
             </p>
           </div>
         </div>
