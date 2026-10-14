@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Eight independent source-custody falsifiers
+      - name: Thirteen independent source and copy falsifiers
         run: python -m unittest discover -s tests -p 'test_imo_qrt_candidate_receipt.py' -v
       - name: Pin exact live PR259 repair candidate in read-only worktree
         shell: bash
@@ -64,10 +64,20 @@ jobs:
           assert report['source_custody']['base_question_count']==260
           assert len(report['html']['endpoints'])==4
           print('SOURCE-SAFE REVIEW RESULT:',report['status'])
-          print('FAIL/REVIEW is valid for an UNFROZEN source candidate; this CI never declares academic or merge acceptance.')
+          print('SOURCE-SAFE BLOCKERS:',report['blockers'])
+          assert report['status']=='STRUCTURAL_CANDIDATE_REVIEW_REQUIRED', report['blockers']
+          assert report['blockers']==[], report['blockers']
+          assert report['source_custody']['solution_format_regressions']==[]
+          assert report['unqualified_research_claims']==[]
+          assert report['html']['status']=='REVIEW_REQUIRED'
+          assert report['html']['rendered']['question_count']==260
+          assert report['html']['rendered']['unique_question_ids']==260
+          assert report['html']['rendered']['findings']=={}
+          assert len({row['sha256'] for row in report['html']['endpoints']})==1
+          print('PASS: structural, source custody, answer protection, four-output parity.')
+          print('Academic/QRT/rights/native-product approval remains independently ON HOLD.')
           PY
-          echo "Independent candidate inspector return code: $RECEIPT_EXIT"
-          # Source PR259 is not yet frozen; preserve adverse findings in artifact.
+          test "$RECEIPT_EXIT" -eq 0
       - name: Publish exact-head candidate report
         uses: actions/upload-artifact@v4
         if: always()
