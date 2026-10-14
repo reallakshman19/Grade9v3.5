@@ -124,9 +124,26 @@ class Q003ModelSelectionProposalTests(unittest.TestCase):
                 validate_proposal(bad)
 
     def test_opposite_models_must_win(self):
+        # A genuinely NEW independent set may still incorrectly reward
+        # the same winning family; isolate that error from duplicate-pair QA.
         bad = deepcopy(self.data)
-        bad['independent_exit'] = deepcopy(self.data['worked_anchor'])
-        with self.assertRaises(AssertionError):
+        case = deepcopy(self.data['worked_anchor'])
+        case['pairs'] = [[2, 16], [4, 28], [6, 48], [8, 50]]
+        case['candidates'] = [
+            {'id': 'W-LINEAR', 'kind': 'LINEAR', 'formula': 'y = 6x + 4',
+             'slope': 6, 'intercept': 4},
+            {'id': 'W-SQUARE', 'kind': 'SQUARE_OFFSET',
+             'formula': 'y = x^2 + 12', 'offset': 12},
+        ]
+        case['teacher_answer']['predicted_outputs'] = {
+            'W-LINEAR': [16, 28, 40, 52],
+            'W-SQUARE': [16, 28, 48, 76],
+        }
+        case['student_prompt'] = (
+            'Choose between two rival relations for the new observations '
+            '(2, 16), (4, 28), (6, 48), (8, 50).')
+        bad['independent_exit'] = case
+        with self.assertRaisesRegex(AssertionError, 'SAME_MODEL_ALWAYS_WINS'):
             validate_proposal(bad)
 
 
