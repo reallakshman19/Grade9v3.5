@@ -116,9 +116,9 @@ def coverage(ledger: dict, bank: dict, evidence_dir: Path) -> dict:
            sum(x["evidence"]["qrt_contract_status"] != STATUS[2]
                for x in holds) == 8,
            "P4_EIGHT_ELEVATED_HOLDS_MISSING")
-    ensure(counts[STATUS[0]] == 7 and
-           counts[STATUS[1]] == 2 and
-           counts[STATUS[2]] == 19,
+    ensure(counts[STATUS[0]] == 21 and
+           counts[STATUS[1]] == 7 and
+           counts[STATUS[2]] == 0,
            "P4_UNEXPECTED_COVERAGE_COUNTS", repr(counts))
     return {
         "schema": "imo182-qrt-intent-exhaustive-coverage/v1",
@@ -151,9 +151,9 @@ def main():
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n",
                         encoding="utf-8")
-    print("P4 exhaustive 28 authored TEST cell accounting: 7 validated proposed "
-          "with 35 native role structural witnesses; 2 explicit rival metadata "
-          "HOLD; 19 not source-specifically compiled; 0 academic/Owner acceptance")
+    print("P4 exhaustive 28 authored TEST cell accounting: 21 validated proposed "
+          "with 105 native role structural witnesses; 7 explicit rival metadata "
+          "HOLD; 0 not source-specifically compiled; 0 academic/Owner acceptance")
 
 
 if __name__ == "__main__":
