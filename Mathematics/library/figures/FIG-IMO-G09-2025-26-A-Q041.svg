@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 520" role="img" aria-label="Geometric kite partitioned into multi-region triangular sections with labeled dimensions" font-family="system-ui, sans-serif">
+  <title>Heron's Formula Multi-Region Polygonal Kite</title>
+  <desc>A kite composed of Region I (equilateral triangle, side 10 cm), Region II (symmetrical wing triangles with sides 10 cm, 9 cm, 3 cm), and Region IV (isosceles tail triangles with sides 20 cm, 20 cm, 4 cm).</desc>
+  <style>
+    .bg { fill: #101826; }
+    .region-i { fill: rgba(56, 189, 248, 0.25); stroke: #38bdf8; stroke-width: 2.5; }
+    .region-ii { fill: rgba(249, 115, 22, 0.25); stroke: #f97316; stroke-width: 2; }
+    .region-iv { fill: rgba(168, 85, 247, 0.25); stroke: #a855f7; stroke-width: 2; }
+    .white-paper { fill: #f8fafc; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4,3; }
+    .dim-text { font-size: 15px; font-weight: 700; fill: #f1f5f9; text-anchor: middle; dominant-baseline: central; }
+    .region-label { font-size: 17px; font-weight: 800; text-anchor: middle; dominant-baseline: central; }
+    .axis-line { stroke: #475569; stroke-width: 1.5; stroke-dasharray: 5,4; }
+  </style>
+
+  <rect width="600" height="520" class="bg" rx="12"/>
+
+  <!-- Vertical Axis of Symmetry -->
+  <line x1="300" y1="30" x2="300" y2="480" class="axis-line"/>
+
+  <!-- REGION I: Top Equilateral Triangle (Apex at 300, 40; Base from 220, 160 to 380, 160) -->
+  <polygon points="300,40 220,160 380,160" class="region-i"/>
+  <text x="300" y="115" class="region-label" fill="#38bdf8">Region I</text>
+  <text x="245" y="90" class="dim-text">10 cm</text>
+  <text x="355" y="90" class="dim-text">10 cm</text>
+  <text x="300" y="175" class="dim-text" fill="#38bdf8">Base: 10 cm</text>
+
+  <!-- REGION II: Symmetrical Side Wings (Sides 10 cm, 9 cm, 3 cm) -->
+  <!-- Left Wing -->
+  <polygon points="220,160 140,240 220,240" class="region-ii"/>
+  <text x="190" y="215" class="region-label" fill="#f97316">II (L)</text>
+  <text x="165" y="190" class="dim-text">9 cm</text>
+  <text x="235" y="200" class="dim-text">3 cm</text>
+
+  <!-- Right Wing -->
+  <polygon points="380,160 460,240 380,240" class="region-ii"/>
+  <text x="410" y="215" class="region-label" fill="#f97316">II (R)</text>
+  <text x="435" y="190" class="dim-text">9 cm</text>
+  <text x="365" y="200" class="dim-text">3 cm</text>
+
+  <!-- Center White Body (Free Paper) -->
+  <polygon points="220,160 380,160 300,320" class="white-paper"/>
+  <text x="300" y="235" font-size="15px" font-weight="700" fill="#64748b" text-anchor="middle">White Paper (Free)</text>
+
+  <!-- REGION IV: Tail Triangles (Sides 20 cm, 20 cm, 4 cm base) -->
+  <!-- Left Tail -->
+  <polygon points="280,320 260,460 300,460" class="region-iv"/>
+  <text x="260" y="400" class="dim-text">20 cm</text>
+
+  <!-- Right Tail -->
+  <polygon points="320,320 340,460 300,460" class="region-iv"/>
+  <text x="340" y="400" class="dim-text">20 cm</text>
+  
+  <text x="300" y="380" class="region-label" fill="#a855f7">Region IV</text>
+  <text x="300" y="475" class="dim-text" fill="#a855f7">Base: 4 cm</text>
+</svg>

@@ -179,27 +179,35 @@ def render_topic_jump_navigation(units: list, prefix: str) -> str:
     indicator_id = f"topic-band-indicator-{prefix}"
     active_label_id = f"active-topic-label-{prefix}"
     dot_id = f"dot-{prefix}"
+    collapse_btn_id = f"collapse-btn-{prefix}"
+    track_id = f"topic-track-{prefix}"
     
     first_pal = TOPIC_COLOR_PALETTES.get(units[0]["folder"], {"primary": "#38bdf8", "glow": "rgba(56,189,248,0.25)", "bg": "rgba(56,189,248,0.08)"})
     first_name = units[0]["topic_name"]
     
     parts.append(f"""
-      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND -->
+      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND & TOUCH-TO-COLLAPSE -->
       <div class="topic-sticky-bar" id="{nav_id}" data-prefix="{prefix}">
         <!-- Dynamic Color Band Strip across the top -->
         <div class="topic-band-strip" id="{indicator_id}" style="background-color: {first_pal['primary']}; box-shadow: 0 0 14px {first_pal['glow']}"></div>
         
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
-          <div style="display:flex;align-items:center;gap:10px">
+        <div class="topic-sticky-header" onclick="toggleTopicNavCollapse('{prefix}')" title="Touch or click to collapse/expand topic buttons">
+          <div class="topic-header-lead">
             <span class="topic-pulse-dot" id="{dot_id}" style="background-color: {first_pal['primary']}; box-shadow: 0 0 8px {first_pal['primary']}"></span>
-            <span style="font-size:0.88rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em">Active Topic Band:</span>
-            <span id="{active_label_id}" style="font-size:0.95rem;font-weight:800;color:{first_pal['primary']};transition:color 0.3s ease">{html.escape(first_name)}</span>
+            <span class="topic-header-title">Active Topic Band:</span>
+            <span id="{active_label_id}" class="topic-header-active-name" style="color:{first_pal['primary']}">{html.escape(first_name)}</span>
           </div>
-          <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">⚡ Dynamic Color Band Tracks Viewport</span>
+          <div class="topic-header-actions">
+            <span class="topic-header-hint">⚡ Color Band Tracks Viewport</span>
+            <button type="button" class="topic-collapse-btn" id="{collapse_btn_id}" onclick="event.stopPropagation(); toggleTopicNavCollapse('{prefix}')" aria-expanded="true" aria-controls="{track_id}" title="Touch or click to collapse topic buttons">
+              <span class="collapse-icon">▲</span>
+              <span class="collapse-text">Collapse Topics</span>
+            </button>
+          </div>
         </div>
 
-        <div class="topic-buttons-track" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);margin-right:4px">Jump to topic:</span>
+        <div class="topic-buttons-track" id="{track_id}">
+          <span class="topic-jump-label">Jump to topic:</span>
     """)
     for idx, u in enumerate(units):
         f = u["folder"]
@@ -1272,12 +1280,20 @@ def main():
       padding: 14px 18px 16px 18px;
       margin: 18px 0 24px 0;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-      transition: border-color 0.25s ease;
+      transition: padding 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     [data-theme="light"] .topic-sticky-bar {
       background: rgba(255, 255, 255, 0.94);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .topic-sticky-bar.collapsed {
+      padding: 10px 18px 10px 18px;
+    }
+
+    .topic-sticky-bar.collapsed .topic-buttons-track {
+      display: none !important;
     }
 
     .topic-band-strip {
@@ -1286,6 +1302,87 @@ def main():
       margin: -14px -18px 12px -18px;
       border-radius: 12px 12px 0 0;
       transition: background-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .topic-sticky-bar.collapsed .topic-band-strip {
+      margin: -10px -18px 10px -18px;
+    }
+
+    .topic-sticky-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      padding: 2px 0 10px 0;
+    }
+
+    .topic-sticky-bar.collapsed .topic-sticky-header {
+      padding-bottom: 0;
+    }
+
+    .topic-header-lead {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .topic-header-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .topic-header-active-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      transition: color 0.3s ease;
+    }
+
+    .topic-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .topic-header-hint {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .topic-collapse-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 750;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-height: 34px;
+      user-select: none;
+    }
+
+    .topic-collapse-btn:hover {
+      background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .topic-collapse-btn .collapse-icon {
+      font-size: 0.88rem;
+      transition: transform 0.2s ease;
     }
 
     .topic-pulse-dot {
@@ -1301,6 +1398,13 @@ def main():
       flex-wrap: wrap;
       gap: 8px;
       align-items: center;
+    }
+
+    .topic-jump-label {
+      font-size: 0.88rem;
+      font-weight: 750;
+      color: var(--text-muted);
+      margin-right: 4px;
     }
 
     .topic-nav-btn {
@@ -1869,6 +1973,9 @@ def main():
         top: 56px;
         padding: 14px 22px 16px 22px;
       }
+      .topic-sticky-bar.collapsed {
+        padding: 10px 22px 10px 22px;
+      }
     }
 
     /* Tablet Portrait & Medium Screens */
@@ -2345,7 +2452,21 @@ def main():
       setTimeout(updateScrollSpyFallback, 80);
     }
 
-    // Dynamic Topic Navigation & ScrollSpy
+    // Dynamic Topic Navigation Collapse & ScrollSpy
+    function toggleTopicNavCollapse(prefix) {
+      const nav = document.getElementById('topic-nav-' + prefix);
+      if (!nav) return;
+      const isCollapsed = nav.classList.toggle('collapsed');
+      const btn = document.getElementById('collapse-btn-' + prefix);
+      if (btn) {
+        btn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+        const icon = btn.querySelector('.collapse-icon');
+        const text = btn.querySelector('.collapse-text');
+        if (icon) icon.textContent = isCollapsed ? '▼' : '▲';
+        if (text) text.textContent = isCollapsed ? 'Expand Topics' : 'Collapse Topics';
+      }
+    }
+
     function scrollToTopicModule(cardId) {
       const el = document.getElementById(cardId);
       if (el) {

@@ -365,12 +365,20 @@
       padding: 14px 18px 16px 18px;
       margin: 18px 0 24px 0;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-      transition: border-color 0.25s ease;
+      transition: padding 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     [data-theme="light"] .topic-sticky-bar {
       background: rgba(255, 255, 255, 0.94);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .topic-sticky-bar.collapsed {
+      padding: 10px 18px 10px 18px;
+    }
+
+    .topic-sticky-bar.collapsed .topic-buttons-track {
+      display: none !important;
     }
 
     .topic-band-strip {
@@ -379,6 +387,87 @@
       margin: -14px -18px 12px -18px;
       border-radius: 12px 12px 0 0;
       transition: background-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .topic-sticky-bar.collapsed .topic-band-strip {
+      margin: -10px -18px 10px -18px;
+    }
+
+    .topic-sticky-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      padding: 2px 0 10px 0;
+    }
+
+    .topic-sticky-bar.collapsed .topic-sticky-header {
+      padding-bottom: 0;
+    }
+
+    .topic-header-lead {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .topic-header-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .topic-header-active-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      transition: color 0.3s ease;
+    }
+
+    .topic-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .topic-header-hint {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .topic-collapse-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 750;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-height: 34px;
+      user-select: none;
+    }
+
+    .topic-collapse-btn:hover {
+      background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .topic-collapse-btn .collapse-icon {
+      font-size: 0.88rem;
+      transition: transform 0.2s ease;
     }
 
     .topic-pulse-dot {
@@ -394,6 +483,13 @@
       flex-wrap: wrap;
       gap: 8px;
       align-items: center;
+    }
+
+    .topic-jump-label {
+      font-size: 0.88rem;
+      font-weight: 750;
+      color: var(--text-muted);
+      margin-right: 4px;
     }
 
     .topic-nav-btn {
@@ -962,6 +1058,9 @@
         top: 56px;
         padding: 14px 22px 16px 22px;
       }
+      .topic-sticky-bar.collapsed {
+        padding: 10px 22px 10px 22px;
+      }
     }
 
     /* Tablet Portrait & Medium Screens */
@@ -1379,6 +1478,96 @@
           <div class="qb-stem-box">
             <div style="font-weight:750;margin-bottom:8px;color:var(--accent);font-size:0.95rem;text-transform:uppercase;letter-spacing:0.04em">Official Exam Question:</div>
             <div class="qb-stem-text">Find the missing number, if same rule is followed in all the three figures: Fig 1 has outer numbers (74, 98, 148, 112) with central 6; Fig 2 has outer numbers (32, 25, 55, 16) with central 4; Fig 3 has outer numbers (92, 35, 81, 42) with central &#x27;?&#x27;.</div>
+            
+            <div class="qb-figure-wrap">
+              <div class="qb-figure-caption"><strong>Figure:</strong> Official Vector Geometry (FIG-IMO-G09-2025-26-A-Q003.svg)</div>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 320" role="img" aria-label="Three radial number puzzle figures with central values 6, 4, and question mark" font-family="system-ui, sans-serif">
+  <title>Radial Quadrilateral Number Puzzle</title>
+  <desc>Three diamond figures with outer corner numbers and a central circle: Figure 1 has outer numbers 74, 98, 148, 112 with central 6; Figure 2 has outer numbers 32, 25, 55, 16 with central 4; Figure 3 has outer numbers 92, 35, 81, 42 with central question mark.</desc>
+  <style>
+    .bg-box { fill: #101826; stroke: #263854; stroke-width: 2; rx: 12; }
+    .fig-diamond { fill: #172338; stroke: #38bdf8; stroke-width: 2.5; }
+    .center-circle { fill: #0284c7; stroke: #38bdf8; stroke-width: 2.5; }
+    .center-text { font-size: 24px; font-weight: 800; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+    .outer-circle { fill: #1e293b; stroke: #64748b; stroke-width: 1.5; }
+    .outer-text { font-size: 17px; font-weight: 700; fill: #f1f5f9; text-anchor: middle; dominant-baseline: central; }
+    .fig-label { font-size: 16px; font-weight: 750; fill: #94a3b8; text-anchor: middle; }
+    .spoke-line { stroke: #334155; stroke-width: 2; stroke-dasharray: 4,3; }
+  </style>
+
+  <!-- FIGURE 1 -->
+  <g transform="translate(40, 20)">
+    <rect width="230" height="270" class="bg-box"/>
+    <!-- Spokes -->
+    <line x1="115" y1="45" x2="115" y2="205" class="spoke-line"/>
+    <line x1="35" y1="125" x2="195" y2="125" class="spoke-line"/>
+    <!-- Diamond -->
+    <polygon points="115,45 195,125 115,205 35,125" class="fig-diamond"/>
+    <!-- Central Node -->
+    <circle cx="115" cy="125" r="28" class="center-circle"/>
+    <text x="115" y="125" class="center-text">6</text>
+    <!-- Outer Nodes: Top, Right, Bottom, Left -->
+    <circle cx="115" cy="45" r="22" class="outer-circle"/>
+    <text x="115" y="45" class="outer-text">74</text>
+    <circle cx="195" cy="125" r="22" class="outer-circle"/>
+    <text x="195" y="125" class="outer-text">98</text>
+    <circle cx="115" cy="205" r="22" class="outer-circle"/>
+    <text x="115" y="205" class="outer-text">148</text>
+    <circle cx="35" cy="125" r="22" class="outer-circle"/>
+    <text x="35" y="125" class="outer-text">112</text>
+    <!-- Label -->
+    <text x="115" y="248" class="fig-label">Figure 1</text>
+  </g>
+
+  <!-- FIGURE 2 -->
+  <g transform="translate(310, 20)">
+    <rect width="230" height="270" class="bg-box"/>
+    <!-- Spokes -->
+    <line x1="115" y1="45" x2="115" y2="205" class="spoke-line"/>
+    <line x1="35" y1="125" x2="195" y2="125" class="spoke-line"/>
+    <!-- Diamond -->
+    <polygon points="115,45 195,125 115,205 35,125" class="fig-diamond"/>
+    <!-- Central Node -->
+    <circle cx="115" cy="125" r="28" class="center-circle"/>
+    <text x="115" y="125" class="center-text">4</text>
+    <!-- Outer Nodes: Top, Right, Bottom, Left -->
+    <circle cx="115" cy="45" r="22" class="outer-circle"/>
+    <text x="115" y="45" class="outer-text">32</text>
+    <circle cx="195" cy="125" r="22" class="outer-circle"/>
+    <text x="195" y="125" class="outer-text">25</text>
+    <circle cx="115" cy="205" r="22" class="outer-circle"/>
+    <text x="115" y="205" class="outer-text">55</text>
+    <circle cx="35" cy="125" r="22" class="outer-circle"/>
+    <text x="35" y="125" class="outer-text">16</text>
+    <!-- Label -->
+    <text x="115" y="248" class="fig-label">Figure 2</text>
+  </g>
+
+  <!-- FIGURE 3 -->
+  <g transform="translate(580, 20)">
+    <rect width="230" height="270" class="bg-box"/>
+    <!-- Spokes -->
+    <line x1="115" y1="45" x2="115" y2="205" class="spoke-line"/>
+    <line x1="35" y1="125" x2="195" y2="125" class="spoke-line"/>
+    <!-- Diamond -->
+    <polygon points="115,45 195,125 115,205 35,125" class="fig-diamond"/>
+    <!-- Central Node -->
+    <circle cx="115" cy="125" r="28" fill="#f59e0b" stroke="#fbbf24" stroke-width="2.5"/>
+    <text x="115" y="125" class="center-text">?</text>
+    <!-- Outer Nodes: Top, Right, Bottom, Left -->
+    <circle cx="115" cy="45" r="22" class="outer-circle"/>
+    <text x="115" y="45" class="outer-text">92</text>
+    <circle cx="195" cy="125" r="22" class="outer-circle"/>
+    <text x="195" y="125" class="outer-text">35</text>
+    <circle cx="115" cy="205" r="22" class="outer-circle"/>
+    <text x="115" y="205" class="outer-text">81</text>
+    <circle cx="35" cy="125" r="22" class="outer-circle"/>
+    <text x="35" y="125" class="outer-text">42</text>
+    <!-- Label -->
+    <text x="115" y="248" class="fig-label">Figure 3</text>
+  </g>
+</svg>
+            </div>
             
             <div class="qb-options-grid">
                   <div class="qb-option-card" style="">
@@ -5879,6 +6068,65 @@
           <div class="qb-stem-box">
             <div style="font-weight:750;margin-bottom:8px;color:var(--accent);font-size:0.95rem;text-transform:uppercase;letter-spacing:0.04em">Official Exam Question:</div>
             <div class="qb-stem-text">Suman made a picture with some white paper and a single coloured paper as shown in the figure. White paper is available at her home and free of cost. The cost of coloured paper used is at the rate of 10 paise per cm². Find the total cost of the coloured paper used. (Take: √3 = 1.732 and √11 = 3.32)</div>
+            
+            <div class="qb-figure-wrap">
+              <div class="qb-figure-caption"><strong>Figure:</strong> Official Vector Geometry (FIG-IMO-G09-2025-26-A-Q041.svg)</div>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 520" role="img" aria-label="Geometric kite partitioned into multi-region triangular sections with labeled dimensions" font-family="system-ui, sans-serif">
+  <title>Heron's Formula Multi-Region Polygonal Kite</title>
+  <desc>A kite composed of Region I (equilateral triangle, side 10 cm), Region II (symmetrical wing triangles with sides 10 cm, 9 cm, 3 cm), and Region IV (isosceles tail triangles with sides 20 cm, 20 cm, 4 cm).</desc>
+  <style>
+    .bg { fill: #101826; }
+    .region-i { fill: rgba(56, 189, 248, 0.25); stroke: #38bdf8; stroke-width: 2.5; }
+    .region-ii { fill: rgba(249, 115, 22, 0.25); stroke: #f97316; stroke-width: 2; }
+    .region-iv { fill: rgba(168, 85, 247, 0.25); stroke: #a855f7; stroke-width: 2; }
+    .white-paper { fill: #f8fafc; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4,3; }
+    .dim-text { font-size: 15px; font-weight: 700; fill: #f1f5f9; text-anchor: middle; dominant-baseline: central; }
+    .region-label { font-size: 17px; font-weight: 800; text-anchor: middle; dominant-baseline: central; }
+    .axis-line { stroke: #475569; stroke-width: 1.5; stroke-dasharray: 5,4; }
+  </style>
+
+  <rect width="600" height="520" class="bg" rx="12"/>
+
+  <!-- Vertical Axis of Symmetry -->
+  <line x1="300" y1="30" x2="300" y2="480" class="axis-line"/>
+
+  <!-- REGION I: Top Equilateral Triangle (Apex at 300, 40; Base from 220, 160 to 380, 160) -->
+  <polygon points="300,40 220,160 380,160" class="region-i"/>
+  <text x="300" y="115" class="region-label" fill="#38bdf8">Region I</text>
+  <text x="245" y="90" class="dim-text">10 cm</text>
+  <text x="355" y="90" class="dim-text">10 cm</text>
+  <text x="300" y="175" class="dim-text" fill="#38bdf8">Base: 10 cm</text>
+
+  <!-- REGION II: Symmetrical Side Wings (Sides 10 cm, 9 cm, 3 cm) -->
+  <!-- Left Wing -->
+  <polygon points="220,160 140,240 220,240" class="region-ii"/>
+  <text x="190" y="215" class="region-label" fill="#f97316">II (L)</text>
+  <text x="165" y="190" class="dim-text">9 cm</text>
+  <text x="235" y="200" class="dim-text">3 cm</text>
+
+  <!-- Right Wing -->
+  <polygon points="380,160 460,240 380,240" class="region-ii"/>
+  <text x="410" y="215" class="region-label" fill="#f97316">II (R)</text>
+  <text x="435" y="190" class="dim-text">9 cm</text>
+  <text x="365" y="200" class="dim-text">3 cm</text>
+
+  <!-- Center White Body (Free Paper) -->
+  <polygon points="220,160 380,160 300,320" class="white-paper"/>
+  <text x="300" y="235" font-size="15px" font-weight="700" fill="#64748b" text-anchor="middle">White Paper (Free)</text>
+
+  <!-- REGION IV: Tail Triangles (Sides 20 cm, 20 cm, 4 cm base) -->
+  <!-- Left Tail -->
+  <polygon points="280,320 260,460 300,460" class="region-iv"/>
+  <text x="260" y="400" class="dim-text">20 cm</text>
+
+  <!-- Right Tail -->
+  <polygon points="320,320 340,460 300,460" class="region-iv"/>
+  <text x="340" y="400" class="dim-text">20 cm</text>
+  
+  <text x="300" y="380" class="region-label" fill="#a855f7">Region IV</text>
+  <text x="300" y="475" class="dim-text" fill="#a855f7">Base: 4 cm</text>
+</svg>
+            </div>
             
             <div class="qb-options-grid">
                   <div class="qb-option-card" style="">
@@ -12263,6 +12511,95 @@ statement-ii : $p$ is the mid-point of side $ab$ of a parallelogram $abcd$. if a
             <div style="font-weight:750;margin-bottom:8px;color:var(--accent);font-size:0.95rem;text-transform:uppercase;letter-spacing:0.04em">Official Exam Question:</div>
             <div class="qb-stem-text">Solve the following and select the correct option.<br>(i) In the given figure (not drawn to scale), $AB \parallel CD$. If $\angle ABR = 45^\circ$ and $\angle ROD = 105^\circ$, then find the value of $\angle ODC + \angle BOD$.<br>(ii) In the given figure (not drawn to scale), if $AB \parallel CF$ and $CD \parallel FE$, then find the value of $\angle GFE + \angle BCG - \angle BAC$.</div>
             
+            <div class="qb-figure-wrap">
+              <div class="qb-figure-caption"><strong>Figure:</strong> Official Vector Geometry (FIG-IMO-G09-2025-26-B-Q048.svg)</div>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 380" role="img" aria-label="Parallel ray zig-zag and multi-transversal angle synthesis diagrams for Part i and Part ii" font-family="system-ui, sans-serif">
+  <title>Parallel Ray Zig-Zag and Multi-Transversal Angles</title>
+  <desc>Part (i) shows parallel lines AB and CD with transversal zig-zag points B, R, O, D, angle ABR = 45 deg and angle ROD = 105 deg. Part (ii) shows dual parallel lines AB parallel to CF and CD parallel to FE with transversal intersecting ray GFE.</desc>
+  <style>
+    .bg-panel { fill: #101826; stroke: #263854; stroke-width: 2; rx: 12; }
+    .par-line { stroke: #38bdf8; stroke-width: 3; }
+    .trans-line { stroke: #f97316; stroke-width: 2.5; }
+    .aux-line { stroke: #34d399; stroke-width: 2; stroke-dasharray: 5,4; }
+    .node-pt { fill: #f1f5f9; stroke: #0284c7; stroke-width: 2; r: 5; }
+    .pt-label { font-size: 16px; font-weight: 800; fill: #f1f5f9; }
+    .angle-arc { fill: none; stroke: #fbbf24; stroke-width: 2; }
+    .angle-text { font-size: 15px; font-weight: 750; fill: #fbbf24; }
+    .panel-title { font-size: 17px; font-weight: 800; fill: #38bdf8; text-anchor: middle; }
+  </style>
+
+  <!-- PANEL 1: Part (i) Zig-Zag -->
+  <g transform="translate(30, 20)">
+    <rect width="380" height="340" class="bg-panel"/>
+    <text x="190" y="35" class="panel-title">Part (i): Zig-Zag Transversal (AB || CD)</text>
+
+    <!-- Top Parallel Line AB -->
+    <line x1="50" y1="80" x2="330" y2="80" class="par-line"/>
+    <text x="50" y="70" class="pt-label">A</text>
+    <text x="325" y="70" class="pt-label">B</text>
+
+    <!-- Bottom Parallel Line CD -->
+    <line x1="50" y1="280" x2="330" y2="280" class="par-line"/>
+    <text x="50" y="305" class="pt-label">C</text>
+    <text x="325" y="305" class="pt-label">D</text>
+
+    <!-- Intermediate Auxiliary Line OX -->
+    <line x1="120" y1="180" x2="330" y2="180" class="aux-line"/>
+    <text x="335" y="185" font-size="14px" font-weight="700" fill="#34d399">X (OX || AB || CD)</text>
+
+    <!-- Zig-Zag Transversal: B -> R(200, 130) -> O(140, 180) -> D(280, 280) -->
+    <polyline points="290,80 200,130 140,180 280,280" class="trans-line" fill="none"/>
+    
+    <circle cx="290" cy="80" class="node-pt"/>
+    <circle cx="200" cy="130" class="node-pt"/>
+    <text x="210" y="130" class="pt-label">R</text>
+
+    <circle cx="140" cy="180" class="node-pt"/>
+    <text x="115" y="185" class="pt-label">O</text>
+
+    <circle cx="280" cy="280" class="node-pt"/>
+    <text x="280" y="305" class="pt-label">D</text>
+
+    <!-- Angles -->
+    <text x="240" y="105" class="angle-text">45°</text>
+    <text x="155" y="210" class="angle-text">105° (ROD)</text>
+  </g>
+
+  <!-- PANEL 2: Part (ii) Multi-Transversal Intersecting Rays -->
+  <g transform="translate(440, 20)">
+    <rect width="380" height="340" class="bg-panel"/>
+    <text x="190" y="35" class="panel-title">Part (ii): Dual Parallel Pairs (AB || CF, CD || FE)</text>
+
+    <!-- Line AB -->
+    <line x1="50" y1="100" x2="200" y2="100" class="par-line"/>
+    <text x="45" y="90" class="pt-label">A</text>
+    <text x="195" y="90" class="pt-label">B</text>
+
+    <!-- Line CF (Parallel to AB) -->
+    <line x1="120" y1="200" x2="280" y2="200" class="par-line"/>
+    <text x="105" y="210" class="pt-label">C</text>
+    <text x="285" y="200" class="pt-label">F</text>
+
+    <!-- Line CD -->
+    <line x1="120" y1="200" x2="220" y2="290" stroke="#a855f7" stroke-width="2.5"/>
+    <text x="225" y="305" class="pt-label">D</text>
+
+    <!-- Line FE (Parallel to CD) -->
+    <line x1="280" y1="200" x2="350" y2="270" stroke="#a855f7" stroke-width="2.5"/>
+    <text x="355" y="285" class="pt-label">E</text>
+
+    <!-- Transversal Ray G-F-E -->
+    <line x1="80" y1="280" x2="310" y2="70" class="trans-line"/>
+    <text x="70" y="295" class="pt-label">G</text>
+
+    <circle cx="80" cy="100" class="node-pt"/>
+    <circle cx="120" cy="200" class="node-pt"/>
+    <circle cx="280" cy="200" class="node-pt"/>
+    <text x="180" y="170" class="angle-text">Apex: 40°</text>
+  </g>
+</svg>
+            </div>
+            
             <div class="qb-options-grid">
                   <div class="qb-option-card" style="">
                     <span class="qb-option-badge">(A)</span>
@@ -12488,6 +12825,68 @@ statement-ii : $p$ is the mid-point of side $ab$ of a parallelogram $abcd$. if a
           <div class="qb-stem-box">
             <div style="font-weight:750;margin-bottom:8px;color:var(--accent);font-size:0.95rem;text-transform:uppercase;letter-spacing:0.04em">Official Exam Question:</div>
             <div class="qb-stem-text">Fill in the blanks and select the correct option.<br>(i) In the given figure (not drawn to scale), $O$ is the centre of the circle. If $\angle CEA = 30^\circ$, then the value of $\frac{x - y - z}{20^\circ}$ is ______.<br>(ii) If the sum of a pair of opposite angles of a quadrilateral is $180^\circ$, then the quadrilateral is ______.<br>(iii) In the given figure (not drawn to scale), chord $ED$ is parallel to the diameter $AC$ of the circle. Given $\angle CBE = 25^\circ$. If $\angle DEC = \frac{1}{k} \times 455^\circ$, then the value of $k$ is ______.</div>
+            
+            <div class="qb-figure-wrap">
+              <div class="qb-figure-caption"><strong>Figure:</strong> Official Vector Geometry (FIG-IMO-G09-2025-26-B-Q050.svg)</div>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460" role="img" aria-label="Circle with diameter AC and parallel chord ED with inscribed angles CEA = 30 deg and CBE = 25 deg" font-family="system-ui, sans-serif">
+  <title>Circle Central Angle, Cyclic Invariant and Parallel Chords</title>
+  <desc>A circle with diameter AC and center O. Chord ED is parallel to AC. Inscribed angle CEA measures 30 degrees, inscribed angle CBE measures 25 degrees, angle in semicircle AEC is 90 degrees, and angle DEC measures 65 degrees.</desc>
+  <style>
+    .bg { fill: #101826; }
+    .circle-main { fill: rgba(15, 23, 42, 0.6); stroke: #38bdf8; stroke-width: 3; }
+    .diameter { stroke: #f59e0b; stroke-width: 3; }
+    .chord-parallel { stroke: #34d399; stroke-width: 2.5; stroke-dasharray: 6,4; }
+    .chord-line { stroke: #94a3b8; stroke-width: 2; }
+    .highlight-tri { fill: rgba(56, 189, 248, 0.12); stroke: #38bdf8; stroke-width: 2; }
+    .node-pt { fill: #f1f5f9; stroke: #0284c7; stroke-width: 2; r: 5; }
+    .pt-label { font-size: 17px; font-weight: 800; fill: #f1f5f9; }
+    .angle-text { font-size: 15px; font-weight: 750; fill: #fbbf24; }
+    .dim-note { font-size: 15px; font-weight: 700; fill: #34d399; }
+  </style>
+
+  <rect width="700" height="460" class="bg" rx="12"/>
+
+  <!-- Main Circle (Center 350, 230; Radius 170) -->
+  <circle cx="350" cy="230" r="170" class="circle-main"/>
+
+  <!-- Center O -->
+  <circle cx="350" cy="230" class="node-pt"/>
+  <text x="350" y="255" class="pt-label" fill="#f59e0b">O (Center)</text>
+
+  <!-- Diameter AC (Horizontal at y = 230: A at 180, 230; C at 520, 230) -->
+  <line x1="180" y1="230" x2="520" y2="230" class="diameter"/>
+  <circle cx="180" cy="230" class="node-pt"/>
+  <text x="155" y="235" class="pt-label">A</text>
+  <circle cx="520" cy="230" class="node-pt"/>
+  <text x="530" y="235" class="pt-label">C</text>
+
+  <!-- Parallel Chord ED at y = 110: E at 230, 110; D at 470, 110 -->
+  <line x1="230" y1="110" x2="470" y2="110" class="chord-parallel"/>
+  <circle cx="230" cy="110" class="node-pt"/>
+  <text x="215" y="100" class="pt-label">E</text>
+  <circle cx="470" cy="110" class="node-pt"/>
+  <text x="480" y="100" class="pt-label">D</text>
+
+  <!-- Chord Chaining: AEC forming right triangle inscribed in semicircle -->
+  <polygon points="180,230 230,110 520,230" class="highlight-tri"/>
+  <line x1="230" y1="110" x2="520" y2="230" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- Point B on Bottom Arc: B at 290, 390 -->
+  <circle cx="290" cy="390" class="node-pt"/>
+  <text x="280" y="415" class="pt-label">B</text>
+
+  <!-- Chords EB and CB -->
+  <line x1="230" y1="110" x2="290" y2="390" class="chord-line"/>
+  <line x1="520" y1="230" x2="290" y2="390" class="chord-line"/>
+
+  <!-- Angles annotations -->
+  <text x="250" y="145" class="angle-text">∠AEC = 90°</text>
+  <text x="295" y="360" class="angle-text">∠CBE = 25°</text>
+  <text x="350" y="100" class="dim-note">Chord ED || Diameter AC</text>
+  <text x="420" y="140" class="angle-text">∠DEC = 65°</text>
+  <text x="460" y="215" class="angle-text">∠ECA = 65°</text>
+</svg>
+            </div>
             
             <div class="qb-options-grid">
                   <div class="qb-option-card" style="">
@@ -26389,22 +26788,28 @@ statement-ii: the value of [∛(0.125) × ⁵√((0.00032)⁻²)] / [⁵√((0.0
         </div>
       </div>
     
-      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND -->
+      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND & TOUCH-TO-COLLAPSE -->
       <div class="topic-sticky-bar" id="topic-nav-all" data-prefix="all">
         <!-- Dynamic Color Band Strip across the top -->
         <div class="topic-band-strip" id="topic-band-indicator-all" style="background-color: #a855f7; box-shadow: 0 0 14px rgba(168,85,247,0.25)"></div>
         
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
-          <div style="display:flex;align-items:center;gap:10px">
+        <div class="topic-sticky-header" onclick="toggleTopicNavCollapse('all')" title="Touch or click to collapse/expand topic buttons">
+          <div class="topic-header-lead">
             <span class="topic-pulse-dot" id="dot-all" style="background-color: #a855f7; box-shadow: 0 0 8px #a855f7"></span>
-            <span style="font-size:0.88rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em">Active Topic Band:</span>
-            <span id="active-topic-label-all" style="font-size:0.95rem;font-weight:800;color:#a855f7;transition:color 0.3s ease">Circles and Cyclic Quadrilaterals</span>
+            <span class="topic-header-title">Active Topic Band:</span>
+            <span id="active-topic-label-all" class="topic-header-active-name" style="color:#a855f7">Circles and Cyclic Quadrilaterals</span>
           </div>
-          <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">⚡ Dynamic Color Band Tracks Viewport</span>
+          <div class="topic-header-actions">
+            <span class="topic-header-hint">⚡ Color Band Tracks Viewport</span>
+            <button type="button" class="topic-collapse-btn" id="collapse-btn-all" onclick="event.stopPropagation(); toggleTopicNavCollapse('all')" aria-expanded="true" aria-controls="topic-track-all" title="Touch or click to collapse topic buttons">
+              <span class="collapse-icon">▲</span>
+              <span class="collapse-text">Collapse Topics</span>
+            </button>
+          </div>
         </div>
 
-        <div class="topic-buttons-track" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);margin-right:4px">Jump to topic:</span>
+        <div class="topic-buttons-track" id="topic-track-all">
+          <span class="topic-jump-label">Jump to topic:</span>
               <button type="button" class="topic-nav-btn active" data-prefix="all" data-folder="circles" data-target="module-all-circles" data-color="#a855f7" data-glow="rgba(168,85,247,0.25)" data-name="Circles and Cyclic Quadrilaterals" onclick="scrollToTopicModule('module-all-circles')" style="--topic-color:#a855f7;--topic-glow:rgba(168,85,247,0.25);--topic-bg:rgba(168,85,247,0.08)">
             <span class="btn-dot" style="background-color:#a855f7"></span>
             <span class="btn-title">Circles and Cyclic Quadrilaterals</span>
@@ -31861,22 +32266,28 @@ statement-ii: the value of [∛(0.125) × ⁵√((0.00032)⁻²)] / [⁵√((0.0
         </p>
       </div>
     
-      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND -->
+      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND & TOUCH-TO-COLLAPSE -->
       <div class="topic-sticky-bar" id="topic-nav-d3" data-prefix="d3">
         <!-- Dynamic Color Band Strip across the top -->
         <div class="topic-band-strip" id="topic-band-indicator-d3" style="background-color: #10b981; box-shadow: 0 0 14px rgba(16,185,129,0.25)"></div>
         
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
-          <div style="display:flex;align-items:center;gap:10px">
+        <div class="topic-sticky-header" onclick="toggleTopicNavCollapse('d3')" title="Touch or click to collapse/expand topic buttons">
+          <div class="topic-header-lead">
             <span class="topic-pulse-dot" id="dot-d3" style="background-color: #10b981; box-shadow: 0 0 8px #10b981"></span>
-            <span style="font-size:0.88rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em">Active Topic Band:</span>
-            <span id="active-topic-label-d3" style="font-size:0.95rem;font-weight:800;color:#10b981;transition:color 0.3s ease">Commercial Mathematics, Compound Growth and Work Rate Systems</span>
+            <span class="topic-header-title">Active Topic Band:</span>
+            <span id="active-topic-label-d3" class="topic-header-active-name" style="color:#10b981">Commercial Mathematics, Compound Growth and Work Rate Systems</span>
           </div>
-          <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">⚡ Dynamic Color Band Tracks Viewport</span>
+          <div class="topic-header-actions">
+            <span class="topic-header-hint">⚡ Color Band Tracks Viewport</span>
+            <button type="button" class="topic-collapse-btn" id="collapse-btn-d3" onclick="event.stopPropagation(); toggleTopicNavCollapse('d3')" aria-expanded="true" aria-controls="topic-track-d3" title="Touch or click to collapse topic buttons">
+              <span class="collapse-icon">▲</span>
+              <span class="collapse-text">Collapse Topics</span>
+            </button>
+          </div>
         </div>
 
-        <div class="topic-buttons-track" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);margin-right:4px">Jump to topic:</span>
+        <div class="topic-buttons-track" id="topic-track-d3">
+          <span class="topic-jump-label">Jump to topic:</span>
               <button type="button" class="topic-nav-btn active" data-prefix="d3" data-folder="commercial-math" data-target="module-d3-commercial-math" data-color="#10b981" data-glow="rgba(16,185,129,0.25)" data-name="Commercial Mathematics, Compound Growth and Work Rate Systems" onclick="scrollToTopicModule('module-d3-commercial-math')" style="--topic-color:#10b981;--topic-glow:rgba(16,185,129,0.25);--topic-bg:rgba(16,185,129,0.08)">
             <span class="btn-dot" style="background-color:#10b981"></span>
             <span class="btn-title">Commercial Mathematics, Compound Growth and Work Rate Systems</span>
@@ -34192,22 +34603,28 @@ statement-ii: the value of [∛(0.125) × ⁵√((0.00032)⁻²)] / [⁵√((0.0
         </p>
       </div>
     
-      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND -->
+      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND & TOUCH-TO-COLLAPSE -->
       <div class="topic-sticky-bar" id="topic-nav-d4" data-prefix="d4">
         <!-- Dynamic Color Band Strip across the top -->
         <div class="topic-band-strip" id="topic-band-indicator-d4" style="background-color: #a855f7; box-shadow: 0 0 14px rgba(168,85,247,0.25)"></div>
         
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
-          <div style="display:flex;align-items:center;gap:10px">
+        <div class="topic-sticky-header" onclick="toggleTopicNavCollapse('d4')" title="Touch or click to collapse/expand topic buttons">
+          <div class="topic-header-lead">
             <span class="topic-pulse-dot" id="dot-d4" style="background-color: #a855f7; box-shadow: 0 0 8px #a855f7"></span>
-            <span style="font-size:0.88rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em">Active Topic Band:</span>
-            <span id="active-topic-label-d4" style="font-size:0.95rem;font-weight:800;color:#a855f7;transition:color 0.3s ease">Circles and Cyclic Quadrilaterals</span>
+            <span class="topic-header-title">Active Topic Band:</span>
+            <span id="active-topic-label-d4" class="topic-header-active-name" style="color:#a855f7">Circles and Cyclic Quadrilaterals</span>
           </div>
-          <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">⚡ Dynamic Color Band Tracks Viewport</span>
+          <div class="topic-header-actions">
+            <span class="topic-header-hint">⚡ Color Band Tracks Viewport</span>
+            <button type="button" class="topic-collapse-btn" id="collapse-btn-d4" onclick="event.stopPropagation(); toggleTopicNavCollapse('d4')" aria-expanded="true" aria-controls="topic-track-d4" title="Touch or click to collapse topic buttons">
+              <span class="collapse-icon">▲</span>
+              <span class="collapse-text">Collapse Topics</span>
+            </button>
+          </div>
         </div>
 
-        <div class="topic-buttons-track" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);margin-right:4px">Jump to topic:</span>
+        <div class="topic-buttons-track" id="topic-track-d4">
+          <span class="topic-jump-label">Jump to topic:</span>
               <button type="button" class="topic-nav-btn active" data-prefix="d4" data-folder="circles" data-target="module-d4-circles" data-color="#a855f7" data-glow="rgba(168,85,247,0.25)" data-name="Circles and Cyclic Quadrilaterals" onclick="scrollToTopicModule('module-d4-circles')" style="--topic-color:#a855f7;--topic-glow:rgba(168,85,247,0.25);--topic-bg:rgba(168,85,247,0.08)">
             <span class="btn-dot" style="background-color:#a855f7"></span>
             <span class="btn-title">Circles and Cyclic Quadrilaterals</span>
@@ -34637,22 +35054,28 @@ statement-ii: the value of [∛(0.125) × ⁵√((0.00032)⁻²)] / [⁵√((0.0
         </p>
       </div>
     
-      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND -->
+      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND & TOUCH-TO-COLLAPSE -->
       <div class="topic-sticky-bar" id="topic-nav-d2" data-prefix="d2">
         <!-- Dynamic Color Band Strip across the top -->
         <div class="topic-band-strip" id="topic-band-indicator-d2" style="background-color: #f59e0b; box-shadow: 0 0 14px rgba(245,158,11,0.25)"></div>
         
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
-          <div style="display:flex;align-items:center;gap:10px">
+        <div class="topic-sticky-header" onclick="toggleTopicNavCollapse('d2')" title="Touch or click to collapse/expand topic buttons">
+          <div class="topic-header-lead">
             <span class="topic-pulse-dot" id="dot-d2" style="background-color: #f59e0b; box-shadow: 0 0 8px #f59e0b"></span>
-            <span style="font-size:0.88rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em">Active Topic Band:</span>
-            <span id="active-topic-label-d2" style="font-size:0.95rem;font-weight:800;color:#f59e0b;transition:color 0.3s ease">Introduction to Euclid&#x27;s Geometry</span>
+            <span class="topic-header-title">Active Topic Band:</span>
+            <span id="active-topic-label-d2" class="topic-header-active-name" style="color:#f59e0b">Introduction to Euclid&#x27;s Geometry</span>
           </div>
-          <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">⚡ Dynamic Color Band Tracks Viewport</span>
+          <div class="topic-header-actions">
+            <span class="topic-header-hint">⚡ Color Band Tracks Viewport</span>
+            <button type="button" class="topic-collapse-btn" id="collapse-btn-d2" onclick="event.stopPropagation(); toggleTopicNavCollapse('d2')" aria-expanded="true" aria-controls="topic-track-d2" title="Touch or click to collapse topic buttons">
+              <span class="collapse-icon">▲</span>
+              <span class="collapse-text">Collapse Topics</span>
+            </button>
+          </div>
         </div>
 
-        <div class="topic-buttons-track" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);margin-right:4px">Jump to topic:</span>
+        <div class="topic-buttons-track" id="topic-track-d2">
+          <span class="topic-jump-label">Jump to topic:</span>
               <button type="button" class="topic-nav-btn active" data-prefix="d2" data-folder="euclid-geometry" data-target="module-d2-euclid-geometry" data-color="#f59e0b" data-glow="rgba(245,158,11,0.25)" data-name="Introduction to Euclid&#x27;s Geometry" onclick="scrollToTopicModule('module-d2-euclid-geometry')" style="--topic-color:#f59e0b;--topic-glow:rgba(245,158,11,0.25);--topic-bg:rgba(245,158,11,0.08)">
             <span class="btn-dot" style="background-color:#f59e0b"></span>
             <span class="btn-title">Introduction to Euclid&#x27;s Geometry</span>
@@ -37026,22 +37449,28 @@ statement-ii: the value of [∛(0.125) × ⁵√((0.00032)⁻²)] / [⁵√((0.0
         </p>
       </div>
     
-      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND -->
+      <!-- STICKY TOPIC NAVIGATION BAR WITH DYNAMIC COLOR BAND & TOUCH-TO-COLLAPSE -->
       <div class="topic-sticky-bar" id="topic-nav-d1" data-prefix="d1">
         <!-- Dynamic Color Band Strip across the top -->
         <div class="topic-band-strip" id="topic-band-indicator-d1" style="background-color: #84cc16; box-shadow: 0 0 14px rgba(132,204,22,0.25)"></div>
         
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
-          <div style="display:flex;align-items:center;gap:10px">
+        <div class="topic-sticky-header" onclick="toggleTopicNavCollapse('d1')" title="Touch or click to collapse/expand topic buttons">
+          <div class="topic-header-lead">
             <span class="topic-pulse-dot" id="dot-d1" style="background-color: #84cc16; box-shadow: 0 0 8px #84cc16"></span>
-            <span style="font-size:0.88rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em">Active Topic Band:</span>
-            <span id="active-topic-label-d1" style="font-size:0.95rem;font-weight:800;color:#84cc16;transition:color 0.3s ease">Introduction to Probability and Empirical Chance</span>
+            <span class="topic-header-title">Active Topic Band:</span>
+            <span id="active-topic-label-d1" class="topic-header-active-name" style="color:#84cc16">Introduction to Probability and Empirical Chance</span>
           </div>
-          <span style="font-size:0.88rem;color:var(--text-muted);font-weight:700">⚡ Dynamic Color Band Tracks Viewport</span>
+          <div class="topic-header-actions">
+            <span class="topic-header-hint">⚡ Color Band Tracks Viewport</span>
+            <button type="button" class="topic-collapse-btn" id="collapse-btn-d1" onclick="event.stopPropagation(); toggleTopicNavCollapse('d1')" aria-expanded="true" aria-controls="topic-track-d1" title="Touch or click to collapse topic buttons">
+              <span class="collapse-icon">▲</span>
+              <span class="collapse-text">Collapse Topics</span>
+            </button>
+          </div>
         </div>
 
-        <div class="topic-buttons-track" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-          <span style="font-size:0.88rem;font-weight:750;color:var(--text-muted);margin-right:4px">Jump to topic:</span>
+        <div class="topic-buttons-track" id="topic-track-d1">
+          <span class="topic-jump-label">Jump to topic:</span>
               <button type="button" class="topic-nav-btn active" data-prefix="d1" data-folder="probability" data-target="module-d1-probability" data-color="#84cc16" data-glow="rgba(132,204,22,0.25)" data-name="Introduction to Probability and Empirical Chance" onclick="scrollToTopicModule('module-d1-probability')" style="--topic-color:#84cc16;--topic-glow:rgba(132,204,22,0.25);--topic-bg:rgba(132,204,22,0.08)">
             <span class="btn-dot" style="background-color:#84cc16"></span>
             <span class="btn-title">Introduction to Probability and Empirical Chance</span>
@@ -37443,7 +37872,21 @@ statement-ii: the value of [∛(0.125) × ⁵√((0.00032)⁻²)] / [⁵√((0.0
       setTimeout(updateScrollSpyFallback, 80);
     }
 
-    // Dynamic Topic Navigation & ScrollSpy
+    // Dynamic Topic Navigation Collapse & ScrollSpy
+    function toggleTopicNavCollapse(prefix) {
+      const nav = document.getElementById('topic-nav-' + prefix);
+      if (!nav) return;
+      const isCollapsed = nav.classList.toggle('collapsed');
+      const btn = document.getElementById('collapse-btn-' + prefix);
+      if (btn) {
+        btn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+        const icon = btn.querySelector('.collapse-icon');
+        const text = btn.querySelector('.collapse-text');
+        if (icon) icon.textContent = isCollapsed ? '▼' : '▲';
+        if (text) text.textContent = isCollapsed ? 'Expand Topics' : 'Collapse Topics';
+      }
+    }
+
     function scrollToTopicModule(cardId) {
       const el = document.getElementById(cardId);
       if (el) {
