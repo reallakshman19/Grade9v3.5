@@ -44,6 +44,29 @@ CRUX = {
             "JUSTIFY-D2 if residue argument routine; D4 if novel warrant",
             "12|P iff n mod4 !=1; 24|P iff n even or n mod8=7")
 }
+COGNITIVE_MOVES = {
+ "retrieve":{"X":"Classifying by appearance or treating perpendicular diagonals alone as sufficient for square",
+             "Z":"Prove both diagonals bisect; establish rhombus from perpendicular bisectors and exclude square using unequal diagonal lengths",
+             "W":"Independently select sufficient diagonal certificates and exclude the narrower square class"},
+ "explain":{"X":"Treating a root of the squared equation as automatically solving the original",
+            "Z":"Show squaring is one-way here; apply principal-root range and verify candidates in original",
+            "W":"Explain the exact sign/implication failure and reject x=-1 on the unsquared equation"},
+ "apply":{"X":"Applying an lcm of divisors directly to n or ignoring distinct powers n² and n³",
+          "Z":"Derive prime valuation ceilings separately and combine maximum lower bounds for leastness",
+          "W":"Choose and intersect both power-dependent per-prime lower bound conditions; prove leastness"},
+ "model":{"X":"Missing the linked exponential bases and additive offset model",
+          "Z":"Choose t=16^u=4^(2u)>0, form 4t=t+192 and reverse-map/check",
+          "W":"Independently identify the common positive power and coefficient relationship: this is compromised by the original stem cue"},
+ "represent":{"X":"Subtracting through-point route families twice without accounting for paths through both",
+               "Z":"Use reachability/order to decide whether the two path sets intersect; count intersection then complement",
+               "W":"Independently translate checkpoint geometry into path-family intersection/disjointness"},
+ "synthesize":{"X":"Omitting decreasing or constant AP digits, admitting leading zero, or misapplying digit-sum divisibility",
+                "Z":"Relate AP to H+U=2T and digit sum=3T; enumerate signed gaps under all decimal bounds",
+                "W":"Combine three constraints into a complete disjoint signed-gap count and verify boundaries"},
+ "justify":{"X":"Inferring 12-divisibility from guaranteed divisibility by 6 for three consecutive factors",
+             "Z":"Provide n=1 counterexample, then prove an iff condition by modulo-4 / powers-of-two cases",
+             "W":"Derive necessary and sufficient residue classes for 12 | n(n+1)(n+2), not merely counterexamples"}
+}
 REVIEW_HELP = {
  "H1":"Clarifies X","H2":"Connects X to demonstrated Y",
  "H3":"Opens Z after commitment while preserving W",
@@ -238,8 +261,9 @@ def main():
           "source":{"classification":"AUTHORED_TEST","path":row["source_path"],
                     "verified_sha":row["source_blob_sha"],"custody":"WHOLLY_AUTHORED_TEST_ONLY",
                     "rights":"AUTHORED_TEST_ONLY_NO_PUBLIC_CORE2","question_stem_embedded":False},
-          "cognitive":{"X":"Question-specific misread or key distinction; independent reviewer to specify",
-                       "Y":"NOT_OBSERVED_NO_LEARNER_PROFILE","Z":c[0],"W":c[0],
+          "cognitive":{"X":COGNITIVE_MOVES[d]["X"],
+                       "Y":"NOT_OBSERVED_NO_LEARNER_PROFILE",
+                       "Z":COGNITIVE_MOVES[d]["Z"],"W":COGNITIVE_MOVES[d]["W"],
                        "primary_vs_alternative":c[1],
                        "adjacent_band_reason":"D3 needs unsupplied significant bridge; D2 short connection; D4 novel model or warrant",
                        "difficulty_five_component_evidence":{"author_proposal":question["difficulty"],
