@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/imo-182-owner-golden-lock.yml'
       - 'tests/test_imo182_owner_golden_snapshot.py'
+      - 'tests/test_imo182_owner_v31_qrt_identity.py'
       - 'golden/units/G-IMO-G9-FIVE-CORE-20261012/**'
       - 'TEST/products/imo-182-five-core-integrated-review.manifest.json'
       - 'TEST/imo-research/pilots/imo182-core2b-transfer-pilot.v1.json'
@@ -31,5 +32,7 @@ jobs:
         run: python -m pip install --quiet jsonschema
       - name: Compare all five Owner snapshot SHA and byte-exact TEST renderer output
         run: python -m unittest tests.test_imo182_owner_golden_snapshot -v
+      - name: Verify source-to-golden named-QRT identity without academic approval
+        run: python -m unittest tests.test_imo182_owner_v31_qrt_identity -v
       - name: Independently rebuild pinned golden fixture via sole registered renderer
         run: python Shared/tools/build_golden.py --id G-IMO-G9-FIVE-CORE-20261012 --check
