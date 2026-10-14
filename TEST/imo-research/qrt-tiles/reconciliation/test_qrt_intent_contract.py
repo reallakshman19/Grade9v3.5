@@ -103,6 +103,10 @@ class IntentContractMutationTests(unittest.TestCase):
 
     def test_validated_intent_never_auto_awards_role_or_owner_acceptance(self):
         for cell in self.witnesses:
+            if cell in ("QRT-MODEL-D1", "QRT-SYNTHESIZE-D1"):
+                # These actual pinned source questions declare NO secondary
+                # demand; intentionally never fabricate one to make a PASS.
+                continue
             with self.subTest(cell=cell):
                 c = self.checked(cell)
                 self.assertEqual(c["technical_contract"],
@@ -177,6 +181,25 @@ class IntentContractMutationTests(unittest.TestCase):
             "Choose an appropriate relationship, calculate the two routes."
         )
         self.rejects("METHOD_CUE_EXPECTATION_DRIFT", args)
+
+    def test_high_risk_source_rival_declaration_gaps_fail_closed(self):
+        for cell in ("QRT-MODEL-D1", "QRT-SYNTHESIZE-D1"):
+            with self.subTest(cell=cell):
+                args = list(self.fixture(cell))
+                args[0]["questions"][0]["extensions"][
+                    "grade9v3:cognitive_demand"]["secondary"] = []
+                self.rejects("RIVAL_NOT_GROUNDED_IN_SOURCE", args)
+
+    def test_three_additional_elevated_holds_remain_unaccepted(self):
+        for cell in ("QRT-JUSTIFY-D1", "QRT-RETRIEVE-D3",
+                     "QRT-MODEL-D3"):
+            with self.subTest(cell=cell):
+                result = self.checked(cell)
+                self.assertEqual(result["semantic_review"],
+                                 "HOLD_REVIEW_REQUIRED")
+                self.assertEqual(result["qualified_academic_review"],
+                                 "PENDING")
+                self.assertEqual(result["owner_qrt_acceptance"], "PENDING")
 
     def test_d4_prior_knowledge_is_not_artificially_certified(self):
         c = self.checked("QRT-RETRIEVE-D4")
