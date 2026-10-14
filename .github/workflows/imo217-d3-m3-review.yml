@@ -1,0 +1,71 @@
+name: IMO217 D3 M3 source-safe protocol tiles and 7x4 navigation
+
+on:
+  push:
+    branches:
+      - 'agent/issue-217-d3-native-evidence-20261014'
+    paths:
+      - '.github/workflows/imo217-d3-m3-review.yml'
+      - 'TEST/imo-research/qrt-d3-successor/**'
+  pull_request:
+    paths:
+      - '.github/workflows/imo217-d3-m3-review.yml'
+      - 'TEST/imo-research/qrt-d3-successor/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seven-unsigned-qrt-tiles:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install repository QA and browser
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Canonical QRT source consistency
+        run: |
+          python Shared/tools/question_review_matrix.py check
+          python Shared/tools/question_review_matrix.py write --check
+      - name: Five eligible native sole-renderer builds (never held MODEL/RETRIEVE)
+        run: |
+          set -eu
+          for d in explain apply represent synthesize justify; do
+            python Shared/tools/render_core.py gaps --manifest "TEST/products/imo182-qrt-d3-$d.manifest.json" --reference
+            python Shared/tools/render_core.py build --manifest "TEST/products/imo182-qrt-d3-$d.manifest.json" --out "build/imo182-qrt/d3/$d" --mode PAGES --reference --draft
+          done
+      - name: Guard corrected SYNTHESIZE-D3 source label against old REPRESENT postattempt text
+        run: python -m unittest -v tests.test_imo182_qrt_d3_synthesize_exposure_label tests.test_imo217_d3_synthesize_transfer_label
+      - name: Prove original source blobs, owner snapshots, and 30 native HTML receipts
+        env:
+          EXPECTED_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python TEST/imo-research/qrt-d3-successor/native_audit_217.py
+      - name: Generate seven protocol tiles and unsigned academic packets
+        run: python TEST/imo-research/qrt-d3-successor/make_tiles_217.py
+      - name: Chromium-check 7x4 administrative navigation and native URLs
+        run: python TEST/imo-research/qrt-d3-successor/browser_viewer_217.py
+      - name: Archive original unmodified linked CSS and JavaScript for extracted HTML
+        run: |
+          mkdir -p build/css build/js
+          cp public/css/modern-learner.css public/css/tablet-12-7.css build/css/
+          cp public/js/display-controls.js public/js/site-header.js build/js/
+      - name: Archive seven tiles, seven unsigned packets, 7x4 navigator, native pages
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo217-d3-seven-source-safe-tiles-native-review
+          path: |
+            build/imo182-qrt/d3/
+            build/imo182-qrt/d3-successor/
+            build/css/
+            build/js/
+          if-no-files-found: warn
+          retention-days: 30

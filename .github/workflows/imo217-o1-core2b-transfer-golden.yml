@@ -1,0 +1,67 @@
+name: IMO217 Owner v3.1.0 O1 Core2B native changed-transfer golden benchmark
+
+on:
+  push:
+    branches:
+      - 'agent/issue-217-d3-native-evidence-20261014'
+    paths:
+      - '.github/workflows/imo217-o1-core2b-transfer-golden.yml'
+      - 'TEST/imo-research/qrt-d3-successor/core2b_o1_benchmark_217.py'
+      - 'TEST/imo-research/qrt-d3-successor/core1a_o1_benchmark_217.py'
+      - 'TEST/imo-research/qrt-d3/explain.v1.json'
+      - 'TEST/products/imo182-qrt-d3-explain.manifest.json'
+  pull_request:
+    paths:
+      - '.github/workflows/imo217-o1-core2b-transfer-golden.yml'
+      - 'TEST/imo-research/qrt-d3-successor/core2b_o1_benchmark_217.py'
+      - 'TEST/imo-research/qrt-d3-successor/core1a_o1_benchmark_217.py'
+      - 'TEST/imo-research/qrt-d3/explain.v1.json'
+      - 'TEST/products/imo182-qrt-d3-explain.manifest.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  owner-o1-core2b-original-authored-changed-transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install renderer validator and actual Chromium
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Sole registered renderer build of existing authored EXPLAIN-D3 main and transfer pages
+        run: |
+          python Shared/tools/render_core.py gaps \
+            --manifest TEST/products/imo182-qrt-d3-explain.manifest.json --reference
+          python Shared/tools/render_core.py build \
+            --manifest TEST/products/imo182-qrt-d3-explain.manifest.json \
+            --out build/imo182-qrt/d3/explain --mode PAGES --reference --draft
+      - name: Prove actual Core2B role versus frozen Owner golden and changed original solution/attempt
+        run: python TEST/imo-research/qrt-d3-successor/core2b_o1_benchmark_217.py
+      - name: Preserve original site CSS and JS for native HTML reviewer
+        if: success()
+        run: |
+          mkdir -p build/css build/js
+          cp public/css/modern-learner.css public/css/tablet-12-7.css build/css/
+          cp public/js/display-controls.js public/js/site-header.js build/js/
+      - name: Archive actual sole-renderer learner page, original receipt, golden comparison and browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo217-owner-v310-o1-explain-d3-native-core2b-transfer-golden
+          path: |
+            build/imo182-qrt/d3/explain/core2b.html
+            build/imo182-qrt/d3/explain/render-receipt.json
+            build/imo182-qrt/d3-successor/o1-core2b/
+            build/css/
+            build/js/
+          if-no-files-found: warn
+          retention-days: 30

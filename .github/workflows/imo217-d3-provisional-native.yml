@@ -1,0 +1,79 @@
+name: IMO217 D3 provisional five native adoption audit
+
+on:
+  push:
+    branches:
+      - 'agent/issue-217-d3-native-evidence-20261014'
+    paths:
+      - '.github/workflows/imo217-d3-provisional-native.yml'
+      - 'TEST/imo-research/qrt-d3-successor/**'
+  pull_request:
+    paths:
+      - '.github/workflows/imo217-d3-provisional-native.yml'
+      - 'TEST/imo-research/qrt-d3-successor/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  five-only-native-qrt-m1:
+    name: Five provisional D3 role bundles (MODEL/RETRIEVE held)
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # PR-triggered GITHUB_SHA is synthetic merge; checkout actual head.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing schema and browser test dependencies
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Confirm QRT matrix source and checked generated projection
+        run: |
+          python Shared/tools/question_review_matrix.py check
+          python Shared/tools/question_review_matrix.py write --check
+      - name: Native sole-renderer five-only validation (no MODEL or RETRIEVE)
+        run: |
+          set -eu
+          for d in explain apply represent synthesize justify; do
+            manifest="TEST/products/imo182-qrt-d3-$d.manifest.json"
+            python Shared/tools/render_core.py gaps --manifest "$manifest" --reference
+            python Shared/tools/render_core.py build \
+              --manifest "$manifest" \
+              --out "build/imo182-qrt/d3/$d" \
+              --mode PAGES --reference --draft
+          done
+      - name: Run five original source-specific math, SVG, learner-commit and browser suites
+        run: |
+          python -m unittest -v \
+            tests.test_imo182_qrt_d3_explain \
+            tests.test_imo182_qrt_d3_apply \
+            tests.test_imo182_qrt_d3_represent \
+            tests.test_imo182_qrt_d3_synthesize \
+            tests.test_imo182_qrt_d3_synthesize_exposure_label \
+            tests.test_imo217_d3_synthesize_transfer_label \
+            tests.test_imo182_qrt_d3_justify
+      - name: Verify exact source blobs, native receipts, original golden role slots and holds
+        env:
+          EXPECTED_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python TEST/imo-research/qrt-d3-successor/native_audit_217.py
+      - name: Upload five authentic native role bundles and machine M1 audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo217-d3-provisional-five-m1-native
+          path: |
+            build/imo182-qrt/d3/explain/
+            build/imo182-qrt/d3/apply/
+            build/imo182-qrt/d3/represent/
+            build/imo182-qrt/d3/synthesize/
+            build/imo182-qrt/d3/justify/
+            build/imo182-qrt/d3-successor/m1-evidence.v1.json
+          if-no-files-found: warn
+          retention-days: 30
