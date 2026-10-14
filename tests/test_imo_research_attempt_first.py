@@ -90,6 +90,35 @@ class ResearchAttemptFirstTests(unittest.TestCase):
                 self.assertNotRegex(hints, re.compile(
                     r"\boption\s*\(?" + correct_letter + r"\)?\b", re.I))
 
+    def test_hots_numbered_derivations_have_actual_newline_separators(self):
+        data = json.loads((ROOT / "Mathematics/question-bank/"
+            "sof-imo-hots-olympiad-expansion.core2.json").read_text(encoding="utf-8"))
+        for suffix, step_count in (("Q024", 5), ("Q046", 6)):
+            with self.subTest(question=suffix):
+                q = next(q for q in data["questions"] if q["id"].endswith(suffix))
+                derivation = q["solution"]["derivation"]
+                self.assertNotRegex(derivation, r"\\n(?=\d+\.)")
+                self.assertEqual(
+                    len(re.findall(r"(?m)^\d+\.\s", derivation)), step_count,
+                    "Numbered worked steps must be separated by real line feeds",
+                )
+                self.assertGreaterEqual(derivation.count("\n"), step_count - 1)
+
+    def test_research_ui_rejects_unreviewed_source_and_blueprint_claims(self):
+        for output, html in zip(OUTPUTS, self.built):
+            with self.subTest(output=output):
+                for misleading in (
+                    "BP-CORE1A &amp; BP-CORE1B CERTIFIED",
+                    "Authenticated Core 2 Questions",
+                    "100% CUSTODY",
+                    "184 authentic questions under Core 2 custody",
+                ):
+                    self.assertNotIn(misleading, html)
+                self.assertIn("RESEARCH CORE 1A/1B DRAFT", html)
+                self.assertIn("linked research question IDs", html)
+                self.assertIn("RESEARCH MODULE PACKAGES", html)
+                self.assertIn("Academic, source and Blueprint acceptance pending", html)
+
     def test_vendor_math_is_embedded_not_relative_to_document_location(self):
         html = self.built[0]
         self.assertIn('id="offline-katex-core"', html)
