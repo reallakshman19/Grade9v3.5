@@ -796,19 +796,22 @@ def embed_standalone_katex(page_html: str) -> str:
         payload = base64.b64encode(font_path.read_bytes()).decode("ascii")
         return 'url("data:font/woff2;base64,' + payload + '")'
 
-    css = re.sub(r"url\\((fonts/[^)]+\\.woff2)\\)", embed_font, css)
+    css = re.sub(r"url\((fonts/[^)]+\.woff2)\)", embed_font, css)
+    # Keep the WOFF2 face as the sole inline font source: alternate WOFF/TTF
+    # vendor files are not shipped in the four identical output locations.
+    css = re.sub(r',url\(fonts/[^)]+\.(?:woff|ttf)\) format\("(?:woff|truetype)"\)', "", css)
     if len(embedded_faces) != 20:
         raise RuntimeError(f"Expected 20 KaTeX font faces, got {len(embedded_faces)}")
 
     previous = (
-        '<link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css" onerror="this.onerror=null;this.href=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css\';">\\n'
-        '  <script src="vendor/katex/0.16.8/katex.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js\';"></script>\\n'
+        '<link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css" onerror="this.onerror=null;this.href=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css\';">\n'
+        '  <script src="vendor/katex/0.16.8/katex.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js\';"></script>\n'
         '  <script src="vendor/katex/0.16.8/contrib/auto-render.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js\';"></script>'
     )
     replacement = (
-        '<!-- Repository-vendored KaTeX 0.16.8, MIT; license in standalone/vendor/katex/0.16.8/LICENSE -->\\n'
-        '<style id="offline-katex-css">' + css + '</style>\\n'
-        '<script id="offline-katex-core">' + katex_js.replace("</script", "<\\\\/script") + '</script>\\n'
+        '<!-- Repository-vendored KaTeX 0.16.8, MIT; license in standalone/vendor/katex/0.16.8/LICENSE -->\n'
+        '<style id="offline-katex-css">' + css + '</style>\n'
+        '<script id="offline-katex-core">' + katex_js.replace("</script", "<\\\\/script") + '</script>\n'
         '<script id="offline-katex-auto">' + auto_js.replace("</script", "<\\\\/script") + '</script>'
     )
     if page_html.count(previous) != 1:
