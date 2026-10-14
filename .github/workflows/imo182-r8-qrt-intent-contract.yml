@@ -9,6 +9,7 @@ on:
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_copy.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_browser.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_keyboard_state.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_coverage.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_review_handoff.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json'
@@ -490,7 +491,7 @@ jobs:
       - name: R8 held-only adapter copied native Core HTML (NEVER renderer/golden source)
         run: |
           set -euo pipefail
-          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_copy.py TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_browser.py
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_copy.py TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_browser.py TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_keyboard_state.py
           for row in \
             "source-explain-d3|explain-d3" \
             "source-model-d2|model-d2" \
@@ -525,6 +526,10 @@ jobs:
               --native-output "$root/build/imo182-qrt/r8/$cell" \
               --held-output "$root/build/imo182-r8-held/$cell" \
               --out "build/imo182-r8-intent/$cell-held-copy-browser.json"
+            python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_keyboard_state.py \
+              --source-root "$root" \
+              --held-output "$root/build/imo182-r8-held/$cell" \
+              --out "build/imo182-r8-intent/$cell-held-keyboard-state.json"
           done
           python - <<'PY'
           import json
@@ -541,6 +546,24 @@ jobs:
                      len(x["negative_mutations"]["mutations"])==6 for x in reports)
           assert sum(len(x["negative_mutations"]["mutations"]) for x in reports)==126
           assert len({x["cell_id"] for x in reports})==21
+          more=[json.loads(f.read_text()) for f in
+                Path("build/imo182-r8-intent").glob("*-held-keyboard-state.json")]
+          assert len(more)==21 and len({x["cell_id"] for x in more})==21
+          assert {x["cell_id"] for x in more}=={x["cell_id"] for x in reports}
+          assert all(x["viewport_count"]==3 and
+                     [y["viewport_px"] for y in x["viewport_results"]]==[390,768,1280]
+                     and all(all(v is True for k,v in y.items() if k!="viewport_px")
+                             for y in x["viewport_results"])
+                     and x["keyboard_navigation_pass"] and
+                     x["browser_reload_state_pass"] and
+                     x["cross_tab_isolation_pass"] and
+                     x["query_tamper_rejected"] and
+                     x["human_assistive_technology_evaluation"]=="NOT_RUN" and
+                     x["registered_native_renderer_repair"] is False and
+                     x["owner_accepted"] is False and
+                     x["release"]=="HOLD" for x in more)
+          print("R8 21 held-copy keyboard/state journeys at 3 viewports each: "
+                "63 scoped browser probes; NOT WCAG/AT/academic/Owner approval")
           print("R8 21/21 HELD COPY rounds-trip browser PASS, 126/126 negative mutants caught; "
                 "original native golden unchanged, semantic/Owner HOLD")
           PY
