@@ -63,7 +63,7 @@ class ReconciledNativeArtifactLedgerTest(unittest.TestCase):
             self.assertIsNone(r["qualified_independent_signed_verdict_id"])
             counts[expected] += 1
         self.assertEqual(counts, {211: 2, 214: 5, 234: 21})
-        self.assertEqual(sum(r["critical_educational_review_hold"] for r in self.doc["rows"]), 8)
+        self.assertEqual(sum(r["critical_educational_review_hold"] for r in self.doc["rows"]), 7)
 
     def test_justify_d2_ai_content_review_does_not_impersonate_qualified_signature(self):
         signed = [(r["cell_id"], r["ai_content_review"]) for r in self.doc["rows"]
@@ -89,24 +89,34 @@ class ReconciledNativeArtifactLedgerTest(unittest.TestCase):
             self.assertIn("EDUCATIONAL_HOLD", row["technical_adoption_status"])
             self.assertTrue(any("DO_NOT_QRT_ADOPT" in x for x in row["do_not_adopt_original_leaking_or_superseded"]))
 
-    def test_synthesize_d3_first_repair_is_not_full_source_correction(self):
+    def test_synthesize_d3_adopts_full_source_exact_head_without_owner_approval(self):
         row = next(r for r in self.doc["rows"] if r["cell_id"] == "QRT-SYNTHESIZE-D3")
-        self.assertTrue(row["critical_educational_review_hold"])
-        self.assertIn("SOURCE_SUPERSEDED_REVIEW_HOLD", row["technical_adoption_status"])
+        self.assertFalse(row["critical_educational_review_hold"])
+        self.assertEqual(row["source"]["commit"], "4d4a074d9f93e1eeac612679784224d4e250fb49")
+        self.assertEqual(row["source"]["git_blob_sha"], "a8168bb41f7133e40e3bcaa1389562361d68901e")
+        self.assertIn("TWO_FIELD_SOURCE_CORRECTED_NATIVE_SHA_VERIFIED", row["technical_adoption_status"])
+        self.assertEqual(row["artifact"]["id"], 11862463956)
+        self.assertEqual(row["artifact"]["run"], 38493751567)
+        self.assertEqual(row["artifact"]["member_prefix"], "imo182-qrt/d3/synthesize/")
+        self.assertEqual(row["artifact"]["scoped_native_artifact_id"], 11863710538)
+        self.assertTrue(row["artifact"]["archive_role_sha_equal_to_intermediate"])
+        self.assertFalse(row["owner_qrta_accepted"])
+        self.assertEqual(row["academic_review"], "QUALIFIED_INDEPENDENT_REVIEW_PENDING")
         self.assertTrue(any("NOT_FULL_SOURCE_CORRECTION" in n for n in
                             row["do_not_adopt_original_leaking_or_superseded"]))
         watch = row["source_supersession_watch"]
         self.assertEqual(watch["archived_main_label_fixed_sha"],
                          "b852966af06a54b7a594f6ab12653af341f6d836")
-        self.assertEqual(watch["successor_complete_source_sha"],
-                         "a8168bb41f7133e40e3bcaa1389562361d68901e")
+        self.assertEqual(watch["successor_complete_source_sha"], row["source"]["git_blob_sha"])
         self.assertEqual(set(watch["corrected_fields"]), {
             "questions[1].family_exposure.closure",
             "questions[2].family_exposure.closure",
         })
         self.assertEqual(watch["transfer_closure_projection"], "NOT_RENDERED_IN_NATIVE_CORE2B")
-        self.assertIsNone(watch["new_successor_artifact_id"])
-        self.assertEqual(watch["new_exact_head_verdict"], "PENDING")
+        self.assertEqual(watch["new_successor_artifact_id"], 11862463956)
+        self.assertEqual(watch["new_scoped_native_artifact_id"], 11863710538)
+        self.assertEqual(watch["new_exact_head_verdict"], "SUCCESS_M3_AND_SCOPED_NATIVE_6_OF_6_RECOMPUTED")
+        self.assertTrue(watch["identical_native_html_sha_as_intermediate"])
         self.assertFalse(watch["may_replace_archived_six_html_hashes"])
 
     def test_separate_d4_ledger_and_corrected_d3_supersession(self):
@@ -115,7 +125,7 @@ class ReconciledNativeArtifactLedgerTest(unittest.TestCase):
             30,
         )
         synth = next(r for r in self.doc["rows"] if r["cell_id"] == "QRT-SYNTHESIZE-D3")
-        self.assertEqual(synth["artifact"]["id"], 11859035196)
+        self.assertEqual(synth["artifact"]["id"], 11862463956)
         self.assertTrue(any("SUPERSEDED" in note for note in synth["do_not_adopt_original_leaking_or_superseded"]))
 
 
