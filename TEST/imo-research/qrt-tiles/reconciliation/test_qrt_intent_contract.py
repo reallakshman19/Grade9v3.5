@@ -103,7 +103,12 @@ class IntentContractMutationTests(unittest.TestCase):
 
     def test_validated_intent_never_auto_awards_role_or_owner_acceptance(self):
         for cell in self.witnesses:
-            if cell in ("QRT-MODEL-D1", "QRT-SYNTHESIZE-D1"):
+            if cell in (
+                "QRT-MODEL-D1", "QRT-SYNTHESIZE-D1",
+                "QRT-RETRIEVE-D1", "QRT-EXPLAIN-D1",
+                "QRT-APPLY-D1", "QRT-REPRESENT-D1",
+                "QRT-REPRESENT-D2",
+            ):
                 # These actual pinned source questions declare NO secondary
                 # demand; intentionally never fabricate one to make a PASS.
                 continue
@@ -200,6 +205,51 @@ class IntentContractMutationTests(unittest.TestCase):
                 self.assertEqual(result["qualified_academic_review"],
                                  "PENDING")
                 self.assertEqual(result["owner_qrt_acceptance"], "PENDING")
+
+    def test_all_28_source_question_review_hypotheses_are_unique(self):
+        expected = {f"QRT-{d}-{b}" for d in DEMANDS for b in BANDS}
+        self.assertEqual(len(self.witnesses), 28)
+        self.assertEqual(set(self.witnesses), expected)
+        for cell in expected:
+            witness = self.witnesses[cell]
+            self.assertGreater(len(witness["question_specific_W"]), 34)
+            self.assertGreater(len(witness["success_evidence"]), 44)
+            self.assertGreater(len(witness["falsifier"]["hypothesis"]), 29)
+            self.assertNotEqual(witness["primary_crux_move_ref"],
+                                witness["transfer_crux_move_ref"])
+
+    def test_four_more_d1_primary_sources_lack_rival_metadata(self):
+        for cell in ("QRT-RETRIEVE-D1", "QRT-EXPLAIN-D1",
+                     "QRT-APPLY-D1", "QRT-REPRESENT-D1"):
+            with self.subTest(cell=cell):
+                args = list(self.fixture(cell))
+                args[0]["questions"][0]["extensions"][
+                    "grade9v3:cognitive_demand"]["secondary"] = []
+                self.rejects("RIVAL_NOT_GROUNDED_IN_SOURCE", args)
+
+    def test_d2_represent_invalid_verify_demand_fails_closed(self):
+        args = list(self.fixture("QRT-REPRESENT-D2"))
+        args[0]["questions"][0]["extensions"][
+            "grade9v3:cognitive_demand"]["secondary"] = ["VERIFY"]
+        self.rejects("SOURCE_RIVAL_VOCAB_INVALID", args)
+
+    def test_fourteen_remaining_qualifying_source_contracts_still_hold(self):
+        for cell in (
+            "QRT-EXPLAIN-D2", "QRT-APPLY-D2",
+            "QRT-SYNTHESIZE-D2", "QRT-JUSTIFY-D2",
+            "QRT-APPLY-D3", "QRT-REPRESENT-D3",
+            "QRT-SYNTHESIZE-D3", "QRT-JUSTIFY-D3",
+            "QRT-EXPLAIN-D4", "QRT-APPLY-D4",
+            "QRT-MODEL-D4", "QRT-REPRESENT-D4",
+            "QRT-SYNTHESIZE-D4", "QRT-JUSTIFY-D4"
+        ):
+            with self.subTest(cell=cell):
+                c = self.checked(cell)
+                self.assertEqual(c["technical_contract"],
+                                 "VALIDATED_PROPOSAL")
+                self.assertEqual(c["owner_qrt_acceptance"], "PENDING")
+                self.assertTrue(all(x["semantic"] == "NOT_RUN"
+                                    for x in c["roles"].values()))
 
     def test_d4_prior_knowledge_is_not_artificially_certified(self):
         c = self.checked("QRT-RETRIEVE-D4")
