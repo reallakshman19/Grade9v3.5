@@ -54,6 +54,15 @@ class ReconciledNativeArtifactLedgerTest(unittest.TestCase):
             self.assertEqual(r["academic_review"], "QUALIFIED_INDEPENDENT_REVIEW_PENDING")
             self.assertEqual(r["frozen_golden"]["semantic_technique_verdict"], "UNREVIEWED")
 
+    def test_question_first_d3_classification_holds_are_preserved(self):
+        by_id = {r["cell_id"]: r for r in self.doc["rows"]}
+        for cell in ("QRT-RETRIEVE-D3", "QRT-MODEL-D3"):
+            row = by_id[cell]
+            self.assertTrue(row["critical_educational_review_hold"])
+            self.assertTrue(row.get("educational_hold_reason"))
+            self.assertIn("EDUCATIONAL_HOLD", row["technical_adoption_status"])
+            self.assertTrue(any("DO_NOT_QRT_ADOPT" in x for x in row["do_not_adopt_original_leaking_or_superseded"]))
+
     def test_separate_d4_ledger_and_corrected_d3_supersession(self):
         self.assertEqual(
             sum(r["renderer"].get("adoption_ledger_sha256_matching", 0) for r in self.doc["rows"]),
