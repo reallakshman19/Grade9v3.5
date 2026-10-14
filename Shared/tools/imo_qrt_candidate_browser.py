@@ -116,9 +116,23 @@ def _run_one(browser, html_path: Path, width: int, out: Path) -> dict:
               cs.visibility!=='hidden';
           }).map(el => {
             const r=el.getBoundingClientRect();
+            const svg=el.closest('svg');
+            const q=el.closest('.qb-question');
+            const katex=el.closest('.katex');
+            const parent=el.parentElement;
+            const root=svg ? svg.getBoundingClientRect() : null;
             return {tag:el.tagName, id:String(el.id).slice(0,75),
               class_name:String(el.className).slice(0,110),
-              right:Math.round(r.right), width:Math.round(r.width)};
+              right:Math.round(r.right), width:Math.round(r.width),
+              question_id:q ? q.id : null,
+              inside_katex:!!katex,
+              root_svg_id:svg ? svg.id : null,
+              svg_width:root ? Math.round(root.width) : null,
+              svg_viewbox:svg ? svg.getAttribute('viewBox') : null,
+              svg_parent_class:svg && svg.parentElement ?
+                  String(svg.parentElement.className).slice(0,110) : null,
+              parent_tag:parent ? parent.tagName : null,
+              parent_class:parent ? String(parent.className).slice(0,100) : null};
           }).sort((a,b) => b.right - a.right).slice(0,16)""") if page_overflow else []
         if errors:
             raise AssertionError("Uncaught learner-side JavaScript errors: "+repr(errors[:5]))
