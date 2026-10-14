@@ -8,6 +8,7 @@ on:
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_w_path_audit.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_real_navigation.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_all_native_gates.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_semantic_sentinels.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_copy.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_return_browser.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_keyboard_state.py'
@@ -492,7 +493,8 @@ jobs:
       - name: R8 P2c inspect all 21 source-pinned original native attempt boundaries
         run: |
           set -euo pipefail
-          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_all_native_gates.py
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_all_native_gates.py TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_semantic_sentinels.py
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_semantic_sentinels.py
           for row in \
             "source-explain-d3|explain-d3" \
             "source-model-d2|model-d2" \
@@ -539,11 +541,24 @@ jobs:
                      a["release"]=="HOLD" for a in audits)
           source_oracles=[a for a in audits if a["narrow_known_source_semantic_oracle"] ==
                           "RAN_NARROW_SENTINELS_NOT_ACCEPTANCE"]
-          assert len(source_oracles)==4
-          assert len([a for a in audits if a["narrow_known_source_semantic_oracle"]==
-                      "NOT_RUN_FOR_THIS_CELL"])==17
+          assert len(source_oracles)==21
+          new_oracles=[a for a in audits if a["semantic_oracle_family"]==
+                        "SEVENTEEN_NEW_SOURCE_SPECIFIC_ONE_WAY_FALSIFIERS"]
+          legacy_oracles=[a for a in audits if a["semantic_oracle_family"]==
+                           "FOUR_ORIGINAL_RISK_ORACLES"]
+          assert len(new_oracles)==17 and len(legacy_oracles)==4
+          assert len({a["cell_id"] for a in new_oracles})==17
+          assert all(len(a["injected_new_source_specific_semantic_leak_tests"])==1
+                     and a["injected_new_source_specific_semantic_leak_tests"][0][
+                           "complete_answer_injected_in_accessible_svg"]
+                     and a["injected_new_source_specific_semantic_leak_tests"][0][
+                           "partial_prior_knowledge_not_flagged"]
+                     and a["source_specific_w_preservation"]=="NOT_ESTABLISHED"
+                     and a["release"]=="HOLD" for a in new_oracles)
           retrieve=next(a for a in audits if a["cell_id"]=="QRT-RETRIEVE-D2")
           assert "RETRIEVE_D2_METHOD_SELECTION_ALREADY_CUED" in retrieve["narrow_semantic_finding_ids"]
+          print("P2c 21 source-specific precommit one-way oracles (17 NEW), " +
+                "85 injected leak carriers, 34 partial/split decoys; semantic HOLDS")
           print("P2c 189 real native Core gate viewport probes, 105 simulated path hypotheses, "
                 "105 injected technical gate defects rejected; W/academic/Owner HOLD")
           PY
@@ -665,6 +680,11 @@ jobs:
              "NINE_ACTUAL_ORIGINAL_NATIVE_CORE_GATE_VIEWPORTS"
              for z in x["available_scoped_browser_proof"])]
           assert len(native_gates)==21
+          assert len([x for x in native_gates if any(
+            z["name"]=="NINE_ACTUAL_ORIGINAL_NATIVE_CORE_GATE_VIEWPORTS" and
+            z["source_specific_semantic_oracle"]==
+              "RAN_NARROW_SENTINELS_NOT_ACCEPTANCE"
+            for z in x["available_scoped_browser_proof"])])==21
           assert len({x["cell_id"] for x in native_gates})==21
           assert all(any(z["name"]==
              "NINE_ACTUAL_ORIGINAL_NATIVE_CORE_GATE_VIEWPORTS" and
