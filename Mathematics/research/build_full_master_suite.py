@@ -24,7 +24,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from Mathematics.research.topic_visual_svgs import generate_topic_svg, TOPIC_COLOR_PALETTES
 
-def get_figure_markup(figure_ref, qid):
+def get_figure_markup(figure_ref, qid, stem="", options=None):
     figures_dir = Path("Mathematics/library/figures")
     
     # 1. Check if figure_ref points to a file in Mathematics/library/figures
@@ -54,6 +54,32 @@ def get_figure_markup(figure_ref, qid):
     except Exception:
         pass
         
+    # 3. If missing but requires visual figure, render non-silent Visual Asset Cue Box
+    search_text = f"{stem} " + " ".join(str(v) for v in (options or {}).values())
+    text_lower = search_text.lower()
+    
+    try:
+        from Shared.tools.audit_missing_svgs import ALL_PATTERNS, classify_visual_demand, FALSE_POSITIVE_EXCLUSIONS
+        is_visual = False
+        if not any(re.search(excl, text_lower) for excl in FALSE_POSITIVE_EXCLUSIONS):
+            is_visual = any(re.search(pat, text_lower) for pat in ALL_PATTERNS)
+        if is_visual:
+            demand_type = classify_visual_demand(search_text)
+            demand_label = demand_type.replace('_', ' ').title()
+            expected_filename = figure_ref or f"FIG-{qid}.svg"
+            return f"""
+            <div class="qb-figure-wrap qb-figure-cue-wrap" style="background:rgba(251,191,36,0.06);border:1.5px dashed rgba(251,191,36,0.45);border-radius:10px;padding:16px 20px;margin:16px 0;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                <span class="qb-badge" style="background:rgba(251,191,36,0.18);color:#fbbf24;border:1.5px solid #fbbf24;font-size:0.88rem;font-weight:750">⚠️ VISUAL DIAGRAM CUE</span>
+                <span style="font-size:0.9rem;font-weight:750;color:var(--text)">{html.escape(demand_label)}</span>
+              </div>
+              <p style="font-size:0.92rem;line-height:1.5;margin:0 0 8px 0;color:var(--text)">This question relies on visual analysis of diagrammatic relationships. Visual representation cue is active.</p>
+              <div style="font-size:0.88rem;color:var(--text-muted);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace">Expected Asset: <code style="color:var(--accent)">{html.escape(expected_filename)}</code></div>
+            </div>
+            """
+    except Exception:
+        pass
+
     return ""
 
 def format_math_html(text: str) -> str:
@@ -2339,7 +2365,7 @@ def main():
         check_type = html.escape(str(q.get("check_type") or "SUBSTITUTION_BACK_CHECK"))
         
         # Build SVG figure markup
-        fig_markup = get_figure_markup(q["figure_ref"], qid)
+        fig_markup = get_figure_markup(q["figure_ref"], qid, q["stem"], options)
         
         # Build options grid
         opt_cards = []
