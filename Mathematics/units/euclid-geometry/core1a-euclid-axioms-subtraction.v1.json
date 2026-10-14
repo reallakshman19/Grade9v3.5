@@ -1,0 +1,100 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-EUCLID-AXIOMS-SUBTRACTION",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Introduction to Euclid's Geometry",
+  "topic_name": "Introduction to Euclid's Geometry",
+  "subtopic": "EUCLID-AXIOMS-SUBTRACTION",
+  "target_demand": "RETRIEVE",
+  "target_band": "D2",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2024-25-B-Q031",
+    "SOF-IMO-G09-L1-2025-26-B-Q031"
+  ],
+  "inferential_jump": "Why segment equality between overlapping collinear segments PR and QS guarantees equality of the non-overlapping end segments PQ and RS by direct retrieval and application of Euclid's Third Common Notion: 'If equals be subtracted from equals, the remainders are equal'.",
+  "relation_refs": {
+    "domain": "Euclidean Axiomatic System & Synthetic Metric Geometry",
+    "hypotheses": [
+      "Points P, Q, R, S lie in strict collinear order on straight line L.",
+      "The compound line segments satisfy length equality: PR = QS.",
+      "The intermediate segment QR is strictly positive and internal: P * Q * R and Q * R * S."
+    ],
+    "excluded_values": [
+      "Non-collinear points in the plane.",
+      "Degenerate zero-length segments where P = Q or R = S."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "PR = PQ + QR",
+      "svg_element_ref": "collinear-partition-PR",
+      "word_meaning": "Point Q lies between P and R, so segment PR is the direct geometric sum of PQ and QR."
+    },
+    {
+      "symbol": "QS = QR + RS",
+      "svg_element_ref": "collinear-partition-QS",
+      "word_meaning": "Point R lies between Q and S, so segment QS is the direct geometric sum of QR and RS."
+    },
+    {
+      "symbol": "QR = QR",
+      "svg_element_ref": "shared-overlapping-segment",
+      "word_meaning": "Euclid's Common Notion 4: Things which coincide with one another are equal to one another."
+    },
+    {
+      "symbol": "PR - QR = QS - QR",
+      "svg_element_ref": "subtraction-of-equals",
+      "word_meaning": "Euclid's Common Notion 3: If equals be subtracted from equals, the remainders are equal."
+    },
+    {
+      "symbol": "PQ = RS",
+      "svg_element_ref": "deduced-end-segment-equality",
+      "word_meaning": "The resulting residual segments PQ and RS are strictly equal."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Compound segment lengths can be partitioned into consecutive sub-segments: PR = PQ + QR and QS = QR + RS.",
+      "derivation": "Because points P, Q, R, S are collinear in that sequence, point Q divides PR and point R divides QS. By Euclid's axiom of betweenness and segment addition, the whole equals the sum of its non-overlapping parts.",
+      "why_valid": "Euclid's Common Notion 5 ('The whole is greater than the part') establishes that collinear partitions sum strictly to the full length."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Given PR = QS, we state an initial equality between two whole magnitudes.",
+      "derivation": "This is the premise explicitly provided in the hypothesis of the problem: PR = QS.",
+      "why_valid": "A premise is an assumed antecedent equality in deductive logic."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Subtracting the identical segment QR from both sides preserves equality: PR - QR = QS - QR.",
+      "derivation": "Segment QR is identical to itself (Common Notion 4). When this common magnitude QR is removed from both equals (PR and QS), the remaining quantities must remain equal.",
+      "why_valid": "Euclid's Common Notion 3 explicitly warrants: 'If equals be subtracted from equals, the remainders are equal'."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Substituting the partitions yields the final theorem: PQ = RS.",
+      "derivation": "Since PR - QR = PQ and QS - QR = RS, substituting these into PR - QR = QS - QR gives PQ = RS.",
+      "why_valid": "Substitution of equivalent expressions over a field or metric space preserves truth value."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "CONFUSING_AXIOM_WITH_POSTULATE",
+      "wrong_idea": "Treating Common Notion 3 as a geometric postulate rather than a general axiom.",
+      "diagnostic_prompt": "What is the foundational difference between an Axiom (Common Notion) and a Postulate in Euclid's Elements?",
+      "repair": "Postulates are foundational assumptions specific to geometry (e.g., drawing a straight line, parallel lines). Common Notions (Axioms) are universal algebraic truths applicable to all mathematical magnitudes (numbers, lines, angles, areas)."
+    },
+    {
+      "code": "COMMUTATIVITY_SUBTRACTION_FALLACY",
+      "wrong_idea": "Assuming subtraction is commutative and writing QR - PR = QR - QS.",
+      "diagnostic_prompt": "Does the order of subtraction matter for directed geometric segments?",
+      "repair": "Subtraction of geometric magnitudes is non-commutative. Always subtract the smaller part from the whole (Whole - Part = Remainder)."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Points P, Q, R, S are collinear in order. Prove that if PR = QS, then PQ = RS, citing Euclid's exact common notions.",
+    "model_answer": "Given PR = QS. Since Q lies between P and R, PR = PQ + QR. Since R lies between Q and S, QS = QR + RS. By Euclid's Common Notion 3 ('If equals are subtracted from equals, the remainders are equal'), we subtract QR from both sides: PR - QR = QS - QR. Since PR - QR = PQ and QS - QR = RS, it follows that PQ = RS. Q.E.D."
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-LINEAR-EQUATIONS-CONSTRAINT-SYSTEM",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Linear Equations in Two Variables",
+  "subtopic": "LINEAR-CONSTRAINT-SYSTEM-MODELING",
+  "target_demand": "MODEL",
+  "target_band": "D2",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before computing any algebraic values: A taxi service charges a fixed flag-fall rate plus a constant rate per kilometer. For a journey of 10 km, the total charge is Rs 105; for 15 km, the charge is Rs 155. If x represents the fixed charge in Rs, and y represents the rate per km in Rs/km, which mathematical model correctly represents this real-world system?",
+      "options": [
+        "A. 10x + y = 105 and 15x + y = 155",
+        "B. x + 10y = 105 and x + 15y = 155",
+        "C. x + y = 105 and 10x + 15y = 155",
+        "D. 10x + 15y = 260 and x - y = 50"
+      ],
+      "predict_rationale": "Requires the student to correctly assign fixed overhead vs variable per-unit rate to their respective coefficients before attempting numerical evaluation."
+    },
+    "stage_2_attempt": {
+      "task": "Formulate the two linear constraint equations from the taxi problem, and use elimination to determine the exact values of the fixed charge x and the per-km rate y.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Model equation 1 for 10 km: x + 10y = 105.",
+        "step_2": "Model equation 2 for 15 km: x + 15y = 155.",
+        "step_3": "Subtract equation 1 from equation 2: (x + 15y) - (x + 10y) = 155 - 105 => 5y = 50 => y = 10 Rs/km.",
+        "conclusion": "Substitute y = 10 into equation 1: x + 10(10) = 105 => x + 100 = 105 => x = 5 Rs. Fixed charge is Rs 5, rate is Rs 10/km."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "RATE_OF_CHANGE_SLOPE_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose you look at the problem from the perspective of differential rate of change: as distance increases from 10 km to 15 km (+5 km), the total cost increases from Rs 105 to Rs 155 (+Rs 50). What does the quotient (Delta Cost) / (Delta Distance) represent?",
+          "expected_insight": "The slope m of the linear cost function, which is exactly the per-km variable charge y = 50 / 5 = 10 Rs/km."
+        },
+        {
+          "inquiry": "Once the slope y = 10 is known, how does evaluating at distance 0 yield the fixed charge x?",
+          "expected_insight": "At distance d = 0, Cost(0) = Cost(10) - 10 * y = 105 - 100 = Rs 5. The fixed charge is simply the y-intercept of the affine line!"
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: Suppose the two measured journeys were identical in distance (e.g. both 10 km), but one cost Rs 105 and the other cost Rs 115. What happens to the linear system and its solution?",
+      "options": [
+        "A. The system has infinitely many solutions.",
+        "B. The system becomes inconsistent (parallel lines with no intersection), proving that no single physical fixed-rate model can satisfy conflicting data.",
+        "C. The fixed charge becomes negative.",
+        "D. The rate per km becomes zero."
+      ],
+      "correct_option": "B",
+      "explanation": "If x + 10y = 105 and x + 10y = 115, the coefficient determinant is 0 and the lines are strictly parallel: 105 != 115. In real-world data modeling, conflicting measurements create inconsistent systems, emphasizing that a valid model requires non-singular, non-contradictory observations."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Notice that the fixed charge x is paid only once per trip, regardless of kilometers driven, while y is multiplied by the distance."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Write x + 10y = 105 and x + 15y = 155. Subtract the first equation from the second to eliminate x and solve for y."
+    }
+  }
+}

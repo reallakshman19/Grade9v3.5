@@ -1,0 +1,102 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-QUADRILATERALS-PARALLELOGRAM-ANGLE-BISECTORS",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "QUADRILATERALS",
+  "topic_name": "Quadrilaterals & Coordinate Enclosures",
+  "subtopic": "QUADRILATERALS-PARALLELOGRAM-ANGLE-BISECTORS",
+  "target_demand": "JUSTIFY",
+  "target_band": "D2",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2024-25-B-Q032",
+    "SOF-IMO-G09-L1-2025-26-B-Q030",
+    "SOF-IMO-G09-L1-2025-26-A-Q014"
+  ],
+  "inferential_jump": "Why the consecutive interior angles of any parallelogram sum to 180 degrees, forcing their bisected halves to sum to exactly 90 degrees, and how triangle angle sum transfers this invariant to prove that all four interior angles of the enclosed quadrilateral are strictly 90 degrees, forming a rectangle.",
+  "relation_refs": {
+    "domain": "Euclidean Plane Geometry (R^2)",
+    "hypotheses": [
+      "ABCD is a parallelogram with AB || CD and AD || BC.",
+      "Rays AP, BP, CQ, DQ bisect interior angles A, B, C, D respectively.",
+      "The four angle bisectors intersect at four points forming an enclosed quadrilateral PQRS.",
+      "Parallelogram ABCD is non-degenerate (angles are strictly between 0 and 180 degrees)."
+    ],
+    "excluded_values": [
+      "Degenerate collinear vertices with area zero.",
+      "Rhombus limit where angle bisectors pass through vertices."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "angle(A) + angle(B) = 180 deg",
+      "svg_element_ref": "consecutive-interior-angles A and B",
+      "word_meaning": "Consecutive interior angles on the same side of transversal AB across parallel lines AD and BC."
+    },
+    {
+      "symbol": "1/2 angle(A) + 1/2 angle(B) = 90 deg",
+      "svg_element_ref": "bisected-rays AP and BP",
+      "word_meaning": "The sum of the bisected angles at the base of triangle ASB."
+    },
+    {
+      "symbol": "angle(ASB) = 90 deg",
+      "svg_element_ref": "vertex S of enclosed quadrilateral",
+      "word_meaning": "Triangle ASB angle sum forces the apex angle to be 180 - 90 = 90 degrees."
+    },
+    {
+      "symbol": "angle(PSR) = angle(ASB) = 90 deg",
+      "svg_element_ref": "vertically-opposite-angle at S",
+      "word_meaning": "Vertically opposite angles are equal, establishing a 90-degree corner for the enclosed quadrilateral."
+    },
+    {
+      "symbol": "PQRS is a Rectangle",
+      "svg_element_ref": "enclosed-quadrilateral PQRS",
+      "word_meaning": "A quadrilateral with all four interior angles equal to 90 degrees is by definition a rectangle."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Consecutive interior angles of parallelogram ABCD are supplementary: angle(A) + angle(D) = 180 deg and angle(A) + angle(B) = 180 deg.",
+      "derivation": "Since AB || CD and AD acts as a transversal, consecutive interior angles lie on the same side of the transversal and sum to 180 degrees.",
+      "why_valid": "Euclid's Parallel Postulate directly warrants that consecutive interior angles across parallel lines sum to two right angles (180 deg)."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "In triangle formed by the bisectors of angle A and angle D (say triangle APD), the sum of base angles is 90 degrees.",
+      "derivation": "Ray AP bisects angle A, so angle(PAD) = 1/2 angle(A). Ray DP bisects angle D, so angle(PDA) = 1/2 angle(D). Therefore, angle(PAD) + angle(PDA) = 1/2 (angle(A) + angle(D)) = 1/2 (180 deg) = 90 deg.",
+      "why_valid": "Dividing an algebraic equality by 2 preserves exact mathematical equivalence over R."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "The angle formed at intersection point P is exactly 90 degrees.",
+      "derivation": "In triangle APD, the sum of all three angles is 180 degrees: angle(APD) = 180 deg - (angle(PAD) + angle(PDA)) = 180 deg - 90 deg = 90 deg.",
+      "why_valid": "The angle sum property of any Euclidean triangle guarantees that the three interior angles sum to 180 degrees."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "By symmetry, all four interior angles of the enclosed quadrilateral PQRS are right angles (90 degrees), proving PQRS is a rectangle.",
+      "derivation": "Applying the identical reasoning to consecutive pairs (A, B), (B, C), and (C, D) proves that the intersection angles at Q, R, and S are also 90 degrees. Vertically opposite angles transfer these 90-degree angles to the interior of quadrilateral PQRS. A quadrilateral whose four angles are 90 degrees is a rectangle.",
+      "why_valid": "A quadrilateral possessing four right angles satisfies the definitive invariant of a Euclidean rectangle."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "SQUARE_ASSUMPTION_FALLACY",
+      "wrong_idea": "Assuming the enclosed quadrilateral must be a square because all four angles are 90 degrees and the original figure is symmetrical.",
+      "diagnostic_prompt": "Are the adjacent sides of the enclosed quadrilateral PQRS necessarily equal in length when the parent parallelogram is not a rhombus (AB != AD)?",
+      "repair": "Four 90-degree angles prove the figure is a RECTANGLE. Equal adjacent sides require AB = AD (a rhombus). In a general parallelogram with unequal adjacent sides, the enclosed rectangle is strictly non-square."
+    },
+    {
+      "code": "COUNTEREXAMPLE_DISPROOF_OMISSION",
+      "wrong_idea": "Treating a claim as true because it holds for one sketch, rather than testing whether a counterexample exists.",
+      "diagnostic_prompt": "How do you disprove a universal claim in mathematics?",
+      "repair": "A universal claim for all cases is disproved by exhibiting exactly ONE valid counterexample where the hypothesis holds but the conclusion fails."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Prove that the quadrilateral formed by the bisectors of the four interior angles of any parallelogram is a rectangle.",
+    "model_answer": "Let ABCD be a parallelogram. Since AD || BC, consecutive interior angles A and B satisfy angle(A) + angle(B) = 180 deg. The bisectors of angle A and B meet at point S. In triangle ASB, angle(SAB) + angle(SBA) = 1/2(angle(A) + angle(B)) = 90 deg. Hence angle(ASB) = 180 - 90 = 90 deg. Vertically opposite angle angle(PSR) = 90 deg. Repeating this for all four pairs of consecutive angles proves angle(P) = angle(Q) = angle(R) = angle(S) = 90 deg. Therefore, PQRS is a rectangle. Q.E.D."
+  }
+}

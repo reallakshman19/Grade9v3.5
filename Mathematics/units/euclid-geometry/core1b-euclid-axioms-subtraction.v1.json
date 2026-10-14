@@ -1,0 +1,68 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-EUCLID-AXIOMS-SUBTRACTION",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Introduction to Euclid's Geometry",
+  "subtopic": "EUCLID-AXIOMS-SUBTRACTION",
+  "target_demand": "RETRIEVE",
+  "target_band": "D2",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating or substituting segments: You are given collinear points P, Q, R, S such that PR = QS. Which of Euclid's foundational Common Notions is the exact warrant for concluding that PQ = RS?",
+      "options": [
+        "A. Common Notion 1: Things which are equal to the same thing are equal to one another.",
+        "B. Common Notion 2: If equals be added to equals, the wholes are equal.",
+        "C. Common Notion 3: If equals be subtracted from equals, the remainders are equal.",
+        "D. Postulate 5: The parallel lines postulate."
+      ],
+      "predict_rationale": "Requires the student to retrieve and distinguish Euclid's Common Notions by operational role (subtraction vs addition vs transitivity) rather than guessing a geometric theorem."
+    },
+    "stage_2_attempt": {
+      "task": "Formulate the exact algebraic step showing how subtracting segment QR from compound segments PR and QS formally establishes PQ = RS, explicitly naming the common notion applied.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Express PR and QS in terms of their non-overlapping partitions: PR = PQ + QR and QS = QR + RS.",
+        "step_2": "Equate the two given equal quantities: PQ + QR = QR + RS.",
+        "step_3": "Subtract the common segment QR from both sides: (PQ + QR) - QR = (QR + RS) - QR.",
+        "conclusion": "By Euclid's Common Notion 3 ('If equals are subtracted from equals, the remainders are equal'), PQ = RS."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_ADDITION_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose you are given the reverse problem: you know PQ = RS. Which Euclid Common Notion allows you to prove that PR = QS?",
+          "expected_insight": "Common Notion 2 ('If equals be added to equals, the wholes are equal'). Adding the identical shared segment QR to both equals produces PQ + QR = RS + QR, which gives PR = QS."
+        },
+        {
+          "inquiry": "What does this bidirectional symmetry teach you about Euclid's axiomatic structure?",
+          "expected_insight": "Common Notion 2 (Addition) and Common Notion 3 (Subtraction) are exact dual operations that preserve equality across all metric decompositions."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: Suppose point Q is moved continuously along the line until it coincides identically with point R (i.e., the length of shared segment QR collapses to 0). What happens to segments PR, QS, PQ, and RS, and does Euclid's relation still hold?",
+      "options": [
+        "A. The relation becomes invalid because a segment cannot have length 0.",
+        "B. Segments PR and PQ coincide, QS and RS coincide, reducing the statement to PR = QS trivially by Common Notion 4.",
+        "C. PQ and RS become infinite.",
+        "D. The line segments become perpendicular."
+      ],
+      "correct_option": "B",
+      "explanation": "At the boundary limit where length(QR) -> 0, points Q and R merge. Segment PQ becomes PR, and segment RS becomes QS. The subtraction of equals reduces to subtracting 0: PR - 0 = QS - 0 => PR = QS. The continuous perturbation preserves equality throughout the entire parameter domain."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Look at the segment QR that lies in the middle of both PR and QS. What operation removes this middle part from both PR and QS?"
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Write PR = PQ + QR and QS = QR + RS. Subtract QR from both sides of PR = QS to isolate PQ and RS. Name Euclid's Common Notion 3."
+    }
+  }
+}
