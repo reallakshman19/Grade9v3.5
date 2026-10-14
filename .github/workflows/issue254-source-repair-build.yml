@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: issue254-source-repair-build
+  cancel-in-progress: true
+
 jobs:
   rebuild-research-suite:
     runs-on: ubuntu-latest
@@ -24,6 +28,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          git fetch origin repair/issue254-source-standalone-attempt-first
+          git checkout -B repair/issue254-source-standalone-attempt-first origin/repair/issue254-source-standalone-attempt-first
           git rev-parse HEAD
           python Mathematics/research/build_full_master_suite.py
       - name: Run source-owned P0 and academic correction regressions
