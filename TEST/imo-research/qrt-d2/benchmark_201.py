@@ -90,6 +90,26 @@ def browser_check(html: str, role: str, demand: str, browser) -> dict:
                 raise AssertionError("CORE2A_H2_PRECOMMIT_ANSWER_LEAK:" + ",".join(h2_leaks))
             result["precommit_hint_2_visible_text"] = h2_lines
             result["h2_before_commit"] = "VISIBLE_AND_SENTINEL_SAFE"
+        if role == "core1a":
+            # The previous native benchmark compared CORE1A golden slots but
+            # did NOT exercise its learner page. Test any real stage controls
+            # as rendered, rather than inventing stage controls for one-scene
+            # questions. Every Core1A independent exit must still refuse a
+            # blank attempt and unlock only after its own nonblank commit.
+            chips = page.locator("[data-g9-stage-goto]")
+            if chips.count() > 1:
+                chips.first.click()
+                if chips.first.get_attribute("aria-pressed") != "true":
+                    raise AssertionError("CORE1A_FIRST_STAGE_NOT_SELECTED")
+                chips.nth(1).click()
+                if chips.nth(1).get_attribute("aria-pressed") != "true":
+                    raise AssertionError("CORE1A_SECOND_STAGE_NOT_SELECTED")
+                chips.first.click()
+                if chips.first.get_attribute("aria-pressed") != "true":
+                    raise AssertionError("CORE1A_STAGE_RETURN_FAILED")
+                result["core1a_staged_navigation"] = "FIRST_SECOND_FIRST_BROWSER_PASS"
+            else:
+                result["core1a_staged_navigation"] = "NO_MULTI_STAGE_CONTROL_FOR_THIS_AUTHORED_FIGURE"
         targets = page.locator("details[data-g9-reveal][data-requires-attempt]")
         if not targets.count():
             raise AssertionError("NO_ATTEMPT_GATED_REVEAL")
@@ -142,7 +162,7 @@ def browser_check(html: str, role: str, demand: str, browser) -> dict:
         if errors:
             raise AssertionError("JAVASCRIPT_ERRORS: " + "; ".join(errors[:2]))
         result["status"] = "BROWSER_PASS"
-        result["evidence"] = "blank/nonblank commitment, inert payload, deferred H3 (Core2A), 390px viewport"
+        result["evidence"] = "CORE1A stage controls when present; blank/nonblank independent commitment, inert payload, deferred H3 (Core2A), 390px viewport"
     except Exception as ex:
         result["status"] = "BROWSER_FAIL"
         result["reason"] = str(ex)
@@ -245,7 +265,7 @@ def verify(render_root: Path, run_browser: bool) -> dict:
                         "literal_html_equality": "NOT_APPLICABLE_DIFFERENT_QUESTION",
                         "h3_policy": "EXPECTED_POST_GOLDEN_AFTER_ATTEMPT_DELTA" if role == "core2a" else "NOT_APPLICABLE",
                     }
-                    if browser is not None and role in ("core1b", "core2a", "core2b"):
+                    if browser is not None and role in ("core1a", "core1b", "core2a", "core2b"):
                         outcome = browser_check(text, role, demand, browser)
                         row["role_checks"][role]["browser"] = outcome
                         assert outcome["status"] == "BROWSER_PASS", f"{role}:{outcome.get('reason')}"
