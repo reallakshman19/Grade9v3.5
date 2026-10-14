@@ -8,6 +8,7 @@ on:
       - 'TEST/imo-research/qrt-d4/figures/retrieve-*.svg'
       - 'TEST/products/imo203-qrt-d4-retrieve.manifest.json'
       - 'tests/test_imo203_qrt_d4_retrieve.py'
+      - 'tests/test_imo203_core1a_owner_v31_o1.py'
       - 'tests/imo203_d4_w_guard.py'
       - 'tests/imo203_qrt_d4_browser.py'
   workflow_dispatch:
@@ -27,7 +28,7 @@ jobs:
       - name: Install existing schema validator
         run: python -m pip install --quiet jsonschema playwright
       - name: Run schema, independent mathematics and native renderer unit checks
-        run: python -m unittest tests.test_imo203_qrt_d4_retrieve -v
+        run: python -m unittest tests.test_imo203_qrt_d4_retrieve tests.test_imo203_core1a_owner_v31_o1 -v
       - name: Render five registered learner HTML pages via sole renderer
         run: python Shared/tools/render_core.py build --manifest TEST/products/imo203-qrt-d4-retrieve.manifest.json --out build/imo203-qrt/d4/retrieve --mode PAGES --reference
       - name: Install Chromium for exact generated pages
