@@ -87,7 +87,7 @@ with sync_playwright() as p:
                     "Odd squares are 1 modulo8, so 5 is not an odd square there; modulo4, 5 is 1."
                 )
                 first.locator('button[data-g9-commit]').click()
-                assert "every odd square equals1 modulo8" in main_payload.inner_text().casefold()
+                assert "every odd square equals1 modulo8" in main_payload.text_content().casefold()
                 assert reconstruct.get_attribute("open") is None
                 reconstruct.locator("summary").click()
                 assert reconstruct.get_attribute("open") is not None
@@ -105,8 +105,8 @@ with sync_playwright() as p:
                     "a=5 is an odd square modulo4; it fails modulo8 and modulo16."
                 )
                 boundary.locator('button[data-g9-commit]').click()
-                assert "modulo4" in boundary_payload.inner_text()
-                assert "modulo16" in boundary_payload.inner_text()
+                assert "modulo4" in boundary_payload.text_content()
+                assert "modulo16" in boundary_payload.text_content()
                 assert boundary_answer.get_attribute("open") is None
                 boundary_answer.locator("summary").click()
                 assert boundary_answer.get_attribute("open") is not None
