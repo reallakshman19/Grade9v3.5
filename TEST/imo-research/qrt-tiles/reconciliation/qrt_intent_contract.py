@@ -178,14 +178,6 @@ def validate_payload(source: dict, manifest: dict, matrix: dict,
                "UNRESOLVED_CRUX", f"{role} {qid}")
         ensure(witness.get(f"{role}_crux_move_ref") == crux,
                "WITNESS_CRUX_DRIFT", f"{role} {qid}")
-        if role == "primary":
-            secondary = cognitive.get("secondary", [])
-            ensure(isinstance(secondary, list) and
-                   all(x in DEMANDS and x != demand for x in secondary),
-                   "SOURCE_RIVAL_VOCAB_INVALID",
-                   f"{qid}: {secondary!r} is not the canonical seven-demand vocabulary")
-            ensure(rival in secondary,
-                   "RIVAL_NOT_GROUNDED_IN_SOURCE", rival)
         components = difficulty.get("components", {})
         ensure(len(components) == 5 and
                all(isinstance(v, int) and 0 <= v <= 2
@@ -207,6 +199,18 @@ def validate_payload(source: dict, manifest: dict, matrix: dict,
     ensure(outputs["primary"]["crux_move_ref"] !=
            outputs["transfer"]["crux_move_ref"],
            "TRANSFER_REUSED_PRIMARY_CRUX")
+
+    # Fail-closed rival holds are permitted ONLY after BOTH primary and transfer
+    # identities, valid move references, band components, and mathematics-route
+    # metadata have been checked. A missing rival must not mask a broken crux.
+    secondary = qmap[sel["core2a"][0]].get(
+        "extensions", {}).get("grade9v3:cognitive_demand", {}).get(
+            "secondary", [])
+    ensure(isinstance(secondary, list) and
+           all(x in DEMANDS and x != demand for x in secondary),
+           "SOURCE_RIVAL_VOCAB_INVALID",
+           f"{sel['core2a'][0]}: {secondary!r} is not the seven-demand vocabulary")
+    ensure(rival in secondary, "RIVAL_NOT_GROUNDED_IN_SOURCE", rival)
 
     observed = False
     if falsifier["probe_kind"] == "SOURCE_STEM_METHOD_CUE":
