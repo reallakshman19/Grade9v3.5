@@ -5,7 +5,7 @@
 Review entrypoints **after this PR is qualified and merged**:
 - Mathematics hub → [IMO Grade 9 by topic](../../../../docs/mathematics/imo-grade9/index.html) → *Study concept · TEST Core 1A candidate review*.
 - Direct local mirror: `docs/test/imo-grade9/core1a.html`; canonical published learner Core1A is **not** changed.
-- Authored academic draft source: `TEST/library/imo-g9-divisibility-core1a.v1.json` with pinned Git blob `31ec1141eaea2a0f49fffafa9dd2a740620c70b0`.
+- Authored academic draft source: `TEST/library/imo-g9-divisibility-core1a.v1.json` with pinned Git blob `51a38081e103f56204e373e5a50f7147c15db0c2`.
 - Exact test page bytes, public/docs page and Math-topic entrypoint blobs in `TEST/imo-research/intake/core1a-test-review-receipt.v1.json`.
 
 ## What can be reviewed now
