@@ -42446,6 +42446,170 @@ window.GRADE9V3 = {
               }
             ]
           }
+        },
+        {
+          "id": "BUCKET-TEST-IMO-G9-NS-DIVISIBILITY",
+          "title": "Universal divisibility with consecutive integers",
+          "topic": "Number Systems; proposed IMO-style divisibility proof enrichment",
+          "badge": "HARD",
+          "status": "CANDIDATE",
+          "prerequisites": [],
+          "curriculum": [],
+          "microtopics": [
+            {
+              "id": "MIC-TEST-IMO-G9-CONSECUTIVE-FACTOR-INVARIANTS",
+              "title": "Reasoning from exhaustive residue cases to a universal divisibility claim",
+              "badge": "HARD",
+              "status": "CANDIDATE",
+              "badge_reason": "A finite set of examples is not a universal proof; learners must connect parity, exhaustive modular cases and coprime divisibility across an arbitrary starting integer.",
+              "entry_assumptions": [
+                "Positive integer arithmetic and the meaning of a divisor.",
+                "Even and odd integers alternate when moving to the next integer.",
+                "A positive integer modulo 3 has residue 0, 1 or 2.",
+                "If two coprime integers divide a number then so does their product."
+              ],
+              "inferential_jump": "Convert finite observations into a universal argument by establishing a guaranteed factor of 2 and a guaranteed factor of 3 within any three consecutive integers, and then use coprimality to conclude divisibility by 6.",
+              "teaching_path": [
+                {
+                  "id": "TC-01",
+                  "action": "Let n denote an arbitrary positive starting integer; the three consecutive factors are n, n+1 and n+2.",
+                  "why_valid": "This representation includes every eligible triple, not merely three sampled values.",
+                  "role": "DECLARE",
+                  "output": "n(n+1)(n+2)",
+                  "inputs": []
+                },
+                {
+                  "id": "TC-02",
+                  "action": "Consider n and n+1: one is even, so the product of the three integers has at least one factor of 2.",
+                  "why_valid": "Parity alternates in adjacent integers. The statement holds for both possible parities of n.",
+                  "role": "TRANSFORM",
+                  "output": "2 divides n(n+1)(n+2)",
+                  "inputs": []
+                },
+                {
+                  "id": "TC-03",
+                  "action": "Separate n modulo 3 into cases 0, 1 and 2. Identify n, n+2 or n+1 respectively as divisible by 3.",
+                  "why_valid": "These three remainder classes are exhaustive and exactly one member of any three consecutive integers has remainder 0 modulo 3.",
+                  "role": "TRANSFORM",
+                  "output": "3 divides n(n+1)(n+2)",
+                  "inputs": []
+                },
+                {
+                  "id": "TC-04",
+                  "action": "Combine both divisors: since the whole product is divisible by 2 and 3 and these are coprime, it is divisible by 6.",
+                  "why_valid": "When coprime integers 2 and 3 divide the same whole number, their product 6 also divides that number; we have justified both divisibilities for every n.",
+                  "role": "VERIFY",
+                  "output": "6 divides n(n+1)(n+2)",
+                  "inputs": []
+                }
+              ],
+              "misconceptions": [
+                {
+                  "wrong_idea": "Checking a few starting integers proves the divisibility assertion for all future n.",
+                  "diagnostic_prompt": "If the starting integer is far larger than every sample you checked, what property guarantees divisibility without recalculation?",
+                  "repair": "Use complete residue cases modulo 2 and 3 to cover all possible starts; identify guaranteed factors and apply the coprime-product rule."
+                }
+              ],
+              "exit_task": {
+                "prompt": "Prove, for every positive integer n, that n(n+1)(n+2)(n+3) is divisible by 24. Give a general proof, not only examples.",
+                "source_ref": "SRC-TEST-IMO-G9-NS-AUTHORED",
+                "answer": {
+                  "kind": "MODEL_RESPONSE",
+                  "summary": "The product of four consecutive positive integers is divisible by 24.",
+                  "reasoning": [
+                    "Write the factors as n, n+1, n+2 and n+3, with n arbitrary and positive.",
+                    "Exactly one of these four has remainder 0 modulo 4, and another even factor has remainder 2 modulo 4. Their product is divisible by 8.",
+                    "Within any four consecutive integers there is a multiple of 3, so the full product is divisible by 3.",
+                    "Because 8 and 3 are coprime, the full product is divisible by 24 for every n."
+                  ],
+                  "check": "For each remainder n modulo 24, verify the four-factor product is a multiple of 24; this is an independent exhaustive modular check, not a replacement for the proof.",
+                  "acceptable_alternatives": [],
+                  "subpart_answers": [],
+                  "verification_status": "CHECKED_BY_AUTHOR"
+                },
+                "oracle": {
+                  "verification": {
+                    "validator_id": "TEST/imo-research/validate_core1a_candidate_package.py",
+                    "bindings": {
+                      "domain": "positive_integer",
+                      "divisor": "24",
+                      "residue_classes": "0..23",
+                      "symbolic_expression": "n(n+1)(n+2)(n+3)"
+                    }
+                  }
+                }
+              },
+              "prerequisites": []
+            }
+          ],
+          "relations": [
+            {
+              "id": "REL-TEST-IMO-G9-THREE-CONSECUTIVE-FACTORS",
+              "expression": "For every positive integer n, n(n+1)(n+2) ≡ 0 (mod 6).",
+              "meaning": "Consecutive factors include an even factor and a multiple of 3; their coprimality forces a multiple of 6.",
+              "conditions": [
+                "n is a positive integer.",
+                "2 and 3 are coprime."
+              ]
+            }
+          ],
+          "questions": [],
+          "capabilities": [
+            {
+              "id": "CAP-TEST-IMO-G9-UNIVERSAL-DIVISIBILITY",
+              "action": "Prove a divisibility statement for every allowed starting integer using exhaustive remainder classes and coprime factors.",
+              "provider": null,
+              "acceptance": "CANDIDATE"
+            }
+          ],
+          "record_count": 7,
+          "compile_preview": {
+            "compilable": true,
+            "supported_products": [
+              "CORE1",
+              "CORE1A"
+            ],
+            "atoms": 0,
+            "questions": 0,
+            "obligations": 2,
+            "authoring_requirements": [
+              {
+                "kind": "PRODUCT_UNSUPPORTED",
+                "core": "CORE2",
+                "detail": "the bucket has no reviewed/curated source-derived question with resolved question-level custody; authored practice does not become Core2"
+              },
+              {
+                "kind": "PRODUCT_UNSUPPORTED",
+                "core": "CORE1B",
+                "detail": "no teaching route claims this product for this bucket's microtopics"
+              },
+              {
+                "kind": "PRODUCT_UNSUPPORTED",
+                "core": "CORE2A",
+                "detail": "the library holds no question exposed to this product for this bucket"
+              },
+              {
+                "kind": "PRODUCT_UNSUPPORTED",
+                "core": "CORE2B",
+                "detail": "the library holds no question exposed to this product for this bucket"
+              },
+              {
+                "kind": "MICROTOPIC_UNBOUND",
+                "microtopic": "MIC-TEST-IMO-G9-CONSECUTIVE-FACTOR-INVARIANTS",
+                "detail": "no supported product or no data bound to its relations"
+              },
+              {
+                "kind": "FIGURE_AUTHORING",
+                "representation": "REP-TEST-IMO-G9-RESIDUE-TABLE",
+                "detail": "the representation states what a figure of this kind must show but holds no scene instance; a figure must be authored"
+              },
+              {
+                "kind": "PROSE_AUTHORING",
+                "core": "CORE1A",
+                "detail": "blocks carry library-held teaching text; connecting narrative still requires authoring"
+              }
+            ]
+          }
         }
       ],
       "matrices": [
@@ -43006,6 +43170,11 @@ window.GRADE9V3 = {
         }
       ],
       "packages": [
+        {
+          "package_id": "TEST-IMO-G9-CORE1A-NS-DIVISIBILITY-PILOT",
+          "status": "CANDIDATE",
+          "admitted": false
+        },
         {
           "package_id": "TEST-LIB-ISS55-POLY",
           "status": "CANDIDATE",
