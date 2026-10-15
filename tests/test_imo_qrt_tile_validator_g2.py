@@ -183,6 +183,40 @@ class TileMutations(unittest.TestCase):
                       {f["code"] for f in findings
                        if f["verdict"] == "REVIEW_REQUIRED"})
 
+    def test_semantic_desk_review_covers_current_exact_tile_without_approval(self):
+        path = SRC / "TEST/imo-qrt-tile/qrt-retrieve-d1-semantic-desk-review.v1.json"
+        review = json.loads(path.read_text(encoding="utf-8"))
+        expected = {
+            "SOF-IMO-G09-L1-" + s for s in (
+                "2023-24-A-Q020", "2023-24-A-Q021", "2023-24-A-Q027",
+                "2024-25-B-Q022", "2024-25-B-Q025", "2024-25-B-Q028",
+                "2025-26-A-Q022", "2025-26-A-Q025", "2025-26-A-Q028",
+                "2025-26-B-Q011", "2025-26-B-Q017", "2025-26-B-Q037")
+        }
+        actual = [r["question_id"] for r in review["core_links"]]
+        self.assertEqual(set(actual), expected)
+        self.assertEqual(len(actual), len(expected))
+        self.assertEqual(len(review["hints"]), 7)
+        self.assertEqual(review["counts"]["hint2_confirmed_mechanical_fail"], 1)
+        self.assertEqual(review["source_commit"],
+                         "cd139cae41435c313612919614b0b80605f0801b")
+        self.assertTrue(all(r["academic_status"] == "REVIEW_REQUIRED"
+                            for r in review["core_links"] + review["hints"]))
+        self.assertEqual(review["status"], "DESK_REVIEW_ONLY_NOT_ACADEMIC_ACCEPTANCE")
+
+    def test_semantic_review_flags_weak_links_and_h2_numeric_leak(self):
+        path = SRC / "TEST/imo-qrt-tile/qrt-retrieve-d1-semantic-desk-review.v1.json"
+        review = json.loads(path.read_text(encoding="utf-8"))
+        weak = {r["question_id"] for r in review["core_links"]
+                if r["desk_status"] == "EXACT_BRIDGE_WEAK_REVIEW_REQUIRED"}
+        self.assertEqual(weak, {
+            "SOF-IMO-G09-L1-2024-25-B-Q022",
+            "SOF-IMO-G09-L1-2025-26-B-Q017"
+        })
+        leaking = {r["question_id"] for r in review["hints"]
+                   if r["desk_status"] == "FAIL_KNOWN_PRECOMMIT_W"}
+        self.assertEqual(leaking, {"SOF-IMO-G09-L1-2024-25-B-Q022"})
+
     def test_reject_nonsha_even_on_synthetic_input(self):
         with self.assertRaises(ValueError):
             inspect(SRC, source_sha="main")
