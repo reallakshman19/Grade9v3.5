@@ -1,0 +1,65 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-ISOSCELES-BASE-ANGLES-AND-SAS",
+  "paired_core1a_ref": "CORE1A-MATH-ISOSCELES-BASE-ANGLES-AND-SAS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Triangles",
+  "subtopic": "TRI-ISOSCELES-CONGRUENCE",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "You know two sides and their INCLUDED angle match in two triangles. Which named criterion applies?",
+      "options": [
+        "A. ASA.",
+        "B. SAS.",
+        "C. AAA.",
+        "D. SSA."
+      ],
+      "predict_rationale": "Use this independent prediction to activate the concept; worked closure is kept behind the attempt gate."
+    },
+    "stage_2_attempt": {
+      "task": "Given isosceles triangle XYZ with XY=XZ, construct a bisector of angle YXZ meeting YZ at T. Prove that T is the midpoint of YZ and XT is perpendicular to YZ.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Compare triangles XYT and XZT: XY=XZ, XT=XT, and ∠YXT=∠TXZ.",
+        "step_2": "By SAS the two triangles are congruent.",
+        "step_3": "CPCT gives YT=ZT and ∠YTX=∠XTZ.",
+        "conclusion": "Since Y,T,Z are collinear, the two equal adjacent angles are each 90°."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_OR_DIFFERENT_CASE_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "From equal base angles in triangle LMN, how can you reconstruct equality of the opposite sides?",
+          "expected_insight": "The converse isosceles theorem says if ∠M=∠N, the opposite sides LN and LM are equal. This reverses the equal-legs→equal-angles route."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "In isosceles triangle ABC with AB=AC, what angle does the vertex-angle bisector make with BC?",
+      "options": [
+        "A. 30°.",
+        "B. 45°.",
+        "C. 90°.",
+        "D. It is always acute but variable."
+      ],
+      "correct_option": "C",
+      "explanation": "SAS congruence of the half-triangles makes adjacent angles at the base equal; each must then be 90°."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Trace which sides and which angles are known; an isosceles triangle makes base angles equal."
+    },
+    "hint_2_tactical_step": {
+      "role": "METHOD_NOT_ORIGINAL_OPTION",
+      "text": "Use the vertex-angle bisector to split into two smaller triangles and label SAS carefully before invoking CPCT."
+    }
+  }
+}

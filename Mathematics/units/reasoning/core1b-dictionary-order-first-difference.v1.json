@@ -1,0 +1,66 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-DICTIONARY-ORDER-FIRST-DIFFERENCE",
+  "paired_core1a_ref": "CORE1A-MATH-DICTIONARY-ORDER-FIRST-DIFFERENCE",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Verbal and Non-Verbal Reasoning",
+  "subtopic": "LOGIC-DICTIONARY-ORDER",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "How do 'plant' and 'planter' compare in dictionary order?",
+      "options": [
+        "A. planter first because it is longer.",
+        "B. plant first because it is a complete prefix.",
+        "C. Their order is undefined.",
+        "D. Compare their final letters first."
+      ],
+      "predict_rationale": "Use this independent prediction to activate the concept; worked closure is kept behind the attempt gate."
+    },
+    "stage_2_attempt": {
+      "task": "Sort the separate practice words 'track', 'tractor', 'trace', 'tracing' with first-difference annotations, then check if any word is a prefix.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "All words share 'tra'.",
+        "step_2": "Compare fourth letters: 'c' in trace, tracing, track, tractor, so inspect next letters carefully.",
+        "step_3": "For trace and tracing the fourth and fifth letters distinguish 'trace' (e) from 'traci...' (i); 'trace' comes before 'tracing'.",
+        "step_4": "For tractor and track, the fourth letter is c; their fifth letters are t and k respectively, so 'track' precedes 'tractor'.",
+        "conclusion": "Sorted order is trace, tracing, track, tractor."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_OR_DIFFERENT_CASE_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "If the last word in a sorted list has initial letters 'tw' while others begin 'ta', 'tr', and 'ts', why can its later letters not move it earlier?",
+          "expected_insight": "The first differing second letter is w, which is greater than a, r, and s; all later letters are irrelevant."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Which word sorts first: 'art' or 'artist'?",
+      "options": [
+        "A. artist.",
+        "B. art.",
+        "C. Both tie permanently.",
+        "D. Depends on last letter."
+      ],
+      "correct_option": "B",
+      "explanation": "The entire shorter token 'art' matches the prefix of 'artist'; shorter strict prefix sorts first."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Align letters in columns and cross out the common prefix mentally."
+    },
+    "hint_2_tactical_step": {
+      "role": "METHOD_NOT_ORIGINAL_OPTION",
+      "text": "Compare the first unequal character left to right; if none occurs before one word ends, place the shorter word first."
+    }
+  }
+}

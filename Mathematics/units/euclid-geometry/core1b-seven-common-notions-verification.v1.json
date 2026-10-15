@@ -1,0 +1,65 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-SEVEN-COMMON-NOTIONS-VERIFICATION",
+  "paired_core1a_ref": "CORE1A-MATH-SEVEN-COMMON-NOTIONS-VERIFICATION",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Introduction to Euclid's Geometry",
+  "subtopic": "EUCLID-AXIOMS-CANONICAL",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "If a=b and both are positive, what must hold?",
+      "options": [
+        "A. 2a=2b.",
+        "B. a+b=a/3.",
+        "C. a>b.",
+        "D. a=0."
+      ],
+      "predict_rationale": "Use this independent prediction to activate the concept; worked closure is kept behind the attempt gate."
+    },
+    "stage_2_attempt": {
+      "task": "Use equal lengths x=y=10 to test four proposed rules: add 3 to each, subtract 4 from each, divide each by 2, and claim their sum equals x/2. Name the invalid rule and explain.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Equal addition yields 10+3=10+3.",
+        "step_2": "Equal subtraction yields 10−4=10−4.",
+        "step_3": "Halving equals gives 5=5.",
+        "conclusion": "The invented claim 10+10=10/2 says 20=5; reject it by counterexample."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_OR_DIFFERENT_CASE_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "If two quantities have identical doubles, can we infer the originals are equal?",
+          "expected_insight": "Yes for real magnitudes: 2a=2b implies a=b after dividing each side by 2. The converse is an algebraic consequence, not a new independent axiom."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Does the rule 'whole greater than part' imply 0>0 when the 'part' equals the entire whole?",
+      "options": [
+        "A. Yes, always.",
+        "B. No, a proper part is required for strict inequality.",
+        "C. Yes, because zero is positive.",
+        "D. Only in triangle geometry."
+      ],
+      "correct_option": "B",
+      "explanation": "The whole/proper-part notion presupposes a genuine nonempty remaining part."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Sort axioms by the equality-preserving operation being used and distinguish whole-part relations."
+    },
+    "hint_2_tactical_step": {
+      "role": "METHOD_NOT_ORIGINAL_OPTION",
+      "text": "Challenge any surprising universal statement by choosing simple equal positive quantities and substituting."
+    }
+  }
+}

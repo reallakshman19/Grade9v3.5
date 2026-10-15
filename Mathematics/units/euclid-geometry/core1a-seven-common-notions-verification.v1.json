@@ -1,0 +1,101 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-SEVEN-COMMON-NOTIONS-VERIFICATION",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Introduction to Euclid's Geometry",
+  "topic_name": "Introduction to Euclid's Geometry",
+  "subtopic": "EUCLID-AXIOMS-CANONICAL",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-A-Q025"
+  ],
+  "entry_assumptions": [
+    "Equality of magnitudes is transitive and preserved by equal operations.",
+    "In Grade 9 pedagogy the commonly taught list has seven axioms/common notions; the original Elements is often counted as five classical common notions, with doubles/halves taught as extensions."
+  ],
+  "inferential_jump": "Verify a proposed Euclidean common notion against the school-list axioms: transitivity; adding or subtracting equals; coincidence; whole greater than part; and the school extensions that doubles or halves of equal magnitudes are equal. Reject arbitrary numerical claims by a valid counterexample.",
+  "relation_refs": {
+    "domain": "Introduction to Euclid's Geometry",
+    "hypotheses": [
+      "Quantities compared are magnitudes where the stated operation is defined; for 'whole > part' the part is proper and nonempty.",
+      "Tests for false universal claims can use positive real quantities."
+    ],
+    "excluded_values": [
+      "Classical historical numbering and textbook expanded numbering may differ; state the list used rather than misattribute a numbering.",
+      "Not every algebraic sentence about equal quantities is a named axiom."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "a=b ⇒ a+c=b+c",
+      "word_meaning": "Adding equals to equals yields equal wholes."
+    },
+    {
+      "symbol": "a=b ⇒ a−c=b−c",
+      "word_meaning": "Subtracting equals from equals yields equal remainders."
+    },
+    {
+      "symbol": "a=b ⇒ 2a=2b, a/2=b/2",
+      "word_meaning": "Doubles and halves of equals remain equal."
+    },
+    {
+      "symbol": "whole > proper part",
+      "word_meaning": "A proper positive part is strictly smaller than the whole."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Retrieve the equality rules.",
+      "derivation": "If a=b and b=c then a=c. Adding or subtracting the same c preserves equality.",
+      "why_valid": "Transitivity and the preservation of equality under identical operations."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Recognize the geometric common notions.",
+      "derivation": "Things coinciding are equal; a positive whole exceeds any proper part.",
+      "why_valid": "Coincidence yields equality and partition into positive parts establishes order."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Recognize textbook extended rules.",
+      "derivation": "Equal quantities have equal doubles and equal halves.",
+      "why_valid": "Multiplication by 2 or division by 2 is applied equally to both sides."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Reject an invented claim with a counterexample.",
+      "derivation": "If a=b=6, their sum is 12, not one third of either 6; a single contradiction disproves the proposed universal rule.",
+      "why_valid": "A mathematical axiom about all equal quantities cannot fail on one legitimate instance."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "HISTORICAL_NUMBERING",
+      "wrong_idea": "Every textbook labels exactly seven notions in Euclid's original list.",
+      "diagnostic_prompt": "Check whether doubles and halves appear as textbook additions.",
+      "repair": "Explain the Grade 9 expanded list versus the classical five."
+    },
+    {
+      "code": "ARBITRARY_EQUALITY",
+      "wrong_idea": "Any formula containing equal things is automatically an axiom.",
+      "diagnostic_prompt": "Substitute a=b=6 and compute both claimed sides.",
+      "repair": "Test universal statements; an absurd numerical relation is not an axiom."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "A student claims: If two lengths each measure 4 cm, their doubles may differ because they are drawn in different places. Is this compatible with the school-list common notions?",
+    "model_answer": "No. Doubles of equal magnitudes are equal: 2·4=8 cm for both. Position on a page does not change a length."
+  },
+  "exit_task": {
+    "prompt": "Which claim is inconsistent with the equality axioms: (i) halves of two equal magnitudes agree, (ii) subtracting the same amount preserves equality, (iii) the sum of two equal positive numbers is one quarter of either? Provide a counterexample.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "Claim (iii) is false: choose each equal number 8. Their sum is 16 but one quarter of either is 2. Claims (i) and (ii) follow equality-preserving operations.",
+      "check": "Verify the independent worked case from its definitions; no original linked multiple-choice answer is supplied."
+    }
+  }
+}

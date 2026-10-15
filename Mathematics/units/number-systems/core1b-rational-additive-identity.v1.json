@@ -1,0 +1,64 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-RATIONAL-ADDITIVE-IDENTITY",
+  "paired_core1a_ref": "CORE1A-MATH-RATIONAL-ADDITIVE-IDENTITY",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Number Systems",
+  "subtopic": "NS-RATIONAL-IDENTITY",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Which equation DEFINES an additive identity e for any rational t?",
+      "options": [
+        "A. t+e=t.",
+        "B. t+e=0 for every t.",
+        "C. t·e=t.",
+        "D. e=t²."
+      ],
+      "predict_rationale": "Use this independent prediction to activate the concept; worked closure is kept behind the attempt gate."
+    },
+    "stage_2_attempt": {
+      "task": "For the rational number −8/13, find both the additive identity and the additive inverse and prove which equation each satisfies.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "The identity equation is −8/13+e=−8/13, so cancellation yields e=0.",
+        "step_2": "The inverse equation is −8/13+v=0, giving v=8/13.",
+        "conclusion": "The identity and inverse are different properties even for the same rational number."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_OR_DIFFERENT_CASE_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose e satisfies 2/7+e=2/7. Without computing any unrelated product, prove e is the additive identity and why it must equal zero.",
+          "expected_insight": "Subtract 2/7 to obtain e=0; because adding zero preserves every rational number, it is the global additive identity."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "For r=0, are its additive identity and additive inverse numerically different?",
+      "options": [
+        "A. Yes, identity is 1.",
+        "B. No, both are 0, though their definitions differ.",
+        "C. Yes, inverse is undefined.",
+        "D. They are both 1."
+      ],
+      "correct_option": "B",
+      "explanation": "At zero, both operations happen to use 0: 0+0=0; do not confuse the general definitions."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Write the equation that leaves a rational quantity unchanged under addition."
+    },
+    "hint_2_tactical_step": {
+      "role": "METHOD_NOT_ORIGINAL_OPTION",
+      "text": "Cancel the arbitrary rational r from r+e=r before inspecting any numerical distractors."
+    }
+  }
+}
