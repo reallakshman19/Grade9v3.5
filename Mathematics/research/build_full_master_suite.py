@@ -229,7 +229,7 @@ TOPIC_TO_UNIT_FOLDER = {
     "statistics": "statistics",
     "surface areas and volumes": "surface-areas-volumes",
     "triangles": "triangles",
-    "number systems": "polynomials"
+    "number systems": "number-systems"
 }
 
 
