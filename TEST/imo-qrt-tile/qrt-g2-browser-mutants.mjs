@@ -22,6 +22,16 @@ check("H2 reverse declarative keyed class",
   q022HintPreservesProtectedWork(good+" Rational is the answer."), false);
 check("H2 unrelated text lacking tactical cue",
   q022HintPreservesProtectedWork("The answer is 7."), false);
+check("H2 numeric answer spelled out",
+  q022HintPreservesProtectedWork(good+" The numerical answer is seven."), false);
+check("H2 completed arithmetic written in words",
+  q022HintPreservesProtectedWork(good+" Nine minus two is seven."), false);
+check("H2 explicit classification",
+  q022HintPreservesProtectedWork(good+" The classification is rational."), false);
+check("H2 symbolic classification in double struck Q",
+  q022HintPreservesProtectedWork(good+" The result lies in ℚ."), false);
+check("H2 symbolic classification in TeX",
+  q022HintPreservesProtectedWork(good+" The result lies in \\mathbb{Q}."), false);
 const rendered = {katexApi:"function",katexNodes:2999,katexQuestionNodes:200,katexQuestionErrors:0};
 check("KaTeX render present",katexWitnessPasses(rendered),true);
 check("KaTeX no spans",katexWitnessPasses({...rendered,katexNodes:0}),false);
