@@ -69,31 +69,76 @@ def check_one(question: dict[str, Any], *, visual_needed: bool = False) -> dict[
     if cls.get("qrt_cell") != cell or demand not in DEMANDS or band not in BANDS:
         emit("V08", "FAIL", "DECLARED_QRT_CELL_INCONSISTENT")
 
+    # Numerical evidence is not academic acceptance: keep authored and derived fields
+    # distinct so a corrupt component cannot be silently clamped/relabelled.
     components = cls.get("difficulty_components")
     stored_score = cls.get("difficulty_score")
     derived_score: int | None = None
     derived_band: str | None = None
-    if not isinstance(components, dict):
+    factor_evidence: dict[str, Any] = {
+        "component_status": "MISSING" if components is None else "INVALID_TYPE",
+        "missing_keys": [], "extra_keys": [], "invalid_components": [],
+        "required_keys": list(question_difficulty.COMPONENT_KEYS),
+        "stored_score": stored_score, "derived_score": None,
+        "score_consistency": "NOT_DERIVABLE",
+        "stored_band": band, "derived_band": None,
+        "band_consistency": "NOT_DERIVABLE",
+        "academic_justification": "REVIEW_REQUIRED",
+    }
+    if components is None:
         emit("V06", "REVIEW_REQUIRED", "FIVE_FACTOR_EVIDENCE_MISSING")
-    elif set(components) != set(question_difficulty.COMPONENT_KEYS):
-        emit("V06", "FAIL", "FIVE_FACTOR_KEYS_INCOMPLETE_OR_EXTRA")
-    elif any(type(components[k]) is not int or not 0 <= components[k] <= 2
-             for k in question_difficulty.COMPONENT_KEYS):
-        emit("V06", "FAIL", "FIVE_FACTOR_VALUE_INVALID")
+    elif not isinstance(components, dict):
+        emit("V06", "FAIL", "FIVE_FACTOR_STRUCTURE_INVALID")
     else:
-        derived_score = sum(components[k] for k in question_difficulty.COMPONENT_KEYS)
-        derived_band = question_difficulty.band_for_score(derived_score)
-        # Delegate *semantic rules* to the canonical implementation.
-        difficulty = {"components": components, "score": stored_score, "band": band}
-        try:
-            question_difficulty.derive(difficulty, question_ref=qid)
-        except question_difficulty.DifficultyContractError:
-            if stored_score != derived_score:
-                emit("V06", "FAIL", "FIVE_FACTOR_SCORE_MISMATCH")
-            if band != derived_band:
-                emit("V06", "FAIL", "FIVE_FACTOR_BAND_MISMATCH")
-        # Author academic evidence for components: not mechanically certified.
-        emit("V06", "REVIEW_REQUIRED", "FIVE_FACTOR_ACADEMIC_JUSTIFICATION_UNREVIEWED")
+        required = set(question_difficulty.COMPONENT_KEYS)
+        factor_evidence["missing_keys"] = sorted(required - set(components))
+        factor_evidence["extra_keys"] = sorted(set(components) - required)
+        if factor_evidence["missing_keys"] or factor_evidence["extra_keys"]:
+            factor_evidence["component_status"] = "INVALID_KEYS"
+            emit("V06", "FAIL", "FIVE_FACTOR_KEYS_INCOMPLETE_OR_EXTRA")
+        else:
+            invalid = [key for key in question_difficulty.COMPONENT_KEYS
+                       if type(components[key]) is not int or not 0 <= components[key] <= 2]
+            if invalid:
+                factor_evidence["component_status"] = "INVALID_VALUES"
+                factor_evidence["invalid_components"] = [
+                    {"key": key, "value": components[key]} for key in invalid
+                ]
+                emit("V06", "FAIL", "FIVE_FACTOR_VALUE_INVALID")
+            else:
+                factor_evidence["component_status"] = "COMPLETE"
+                derived_score = sum(components[key] for key in question_difficulty.COMPONENT_KEYS)
+                derived_band = question_difficulty.band_for_score(derived_score)
+                factor_evidence["derived_score"] = derived_score
+                factor_evidence["derived_band"] = derived_band
+                if type(stored_score) is not int:
+                    factor_evidence["score_consistency"] = "INVALID_TYPE"
+                    emit("V06", "FAIL", "FIVE_FACTOR_SCORE_TYPE_INVALID")
+                elif stored_score != derived_score:
+                    factor_evidence["score_consistency"] = "MISMATCH"
+                    emit("V06", "FAIL", "FIVE_FACTOR_SCORE_MISMATCH")
+                else:
+                    factor_evidence["score_consistency"] = "MATCH"
+                if band != derived_band:
+                    factor_evidence["band_consistency"] = "MISMATCH"
+                    emit("V06", "FAIL", "FIVE_FACTOR_BAND_MISMATCH")
+                else:
+                    factor_evidence["band_consistency"] = "MATCH"
+                # Reuse the authoritative derivation, not a second band/scorer.
+                # A canonical rejection without a known mismatch must fail closed.
+                previous_defects = len(issues)
+                try:
+                    question_difficulty.derive(
+                        {"components": components, "score": stored_score, "band": band},
+                        question_ref=qid,
+                    )
+                except question_difficulty.DifficultyContractError:
+                    if len(issues) == previous_defects and (
+                        factor_evidence["score_consistency"] == "MATCH"
+                        and factor_evidence["band_consistency"] == "MATCH"
+                    ):
+                        emit("V06", "FAIL", "FIVE_FACTOR_CANONICAL_REJECTION")
+                emit("V06", "REVIEW_REQUIRED", "FIVE_FACTOR_ACADEMIC_JUSTIFICATION_UNREVIEWED")
 
     if not isinstance(cls.get("crux_move"), str) or not cls["crux_move"].strip():
         emit("V09", "FAIL", "RESEARCH_CRUX_MISSING")
@@ -140,6 +185,7 @@ def check_one(question: dict[str, Any], *, visual_needed: bool = False) -> dict[
         "declared_tile": cell,
         "derived_band": derived_band,
         "derived_score": derived_score,
+        "difficulty_evidence": factor_evidence,
         "figure_declared": bool(question.get("figure_ref")),
         "findings": issues,
         "academic_verdict": "REVIEW_REQUIRED",
@@ -195,6 +241,17 @@ def validate_bank_dir(bank_dir: Path = BANK_DIR, *, visual_manifest: Path = VISU
             stale_audits.append({"path": str(legacy_audit), "sha256": h,
                                  "reported_question_count": count, "actual_question_count": total,
                                  "verdict": "STALE"})
+    difficulty_summary = {
+        "components": dict(sorted(Counter(
+            r["difficulty_evidence"]["component_status"] for r in records
+        ).items())),
+        "scores": dict(sorted(Counter(
+            r["difficulty_evidence"]["score_consistency"] for r in records
+        ).items())),
+        "bands": dict(sorted(Counter(
+            r["difficulty_evidence"]["band_consistency"] for r in records
+        ).items())),
+    }
     findings = Counter(f["evidence"] for row in records for f in row["findings"])
     critical = Counter(f["evidence"] for row in records for f in row["findings"] if f["verdict"] == "FAIL")
     status = "FAIL" if bank_missing or duplicates or total != expected_total or critical or stale_audits else "REVIEW_REQUIRED"
@@ -206,7 +263,8 @@ def validate_bank_dir(bank_dir: Path = BANK_DIR, *, visual_manifest: Path = VISU
         "duplicate_ids": duplicates, "occupied_tiles": sum(bool(v) for v in tiles.values()),
         "tiles": {k: {"count": len(ids), "question_ids": ids} for k, ids in tiles.items()},
         "finding_counts": dict(sorted(findings.items())), "fail_counts": dict(sorted(critical.items())),
-        "stale_audits": stale_audits, "inputs": inputs, "questions": records,
+        "stale_audits": stale_audits, "difficulty_evidence_summary": difficulty_summary,
+        "inputs": inputs, "questions": records,
     }
 
 
