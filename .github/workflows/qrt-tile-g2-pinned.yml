@@ -22,7 +22,7 @@ on:
         description: 'Exact SHA from PR #270 repair ancestry, or baseline'
         required: true
         type: string
-        default: '17ba4dae624b981350925cd9b7fea4e02976ec52'
+        default: 'cd139cae41435c313612919614b0b80605f0801b'
 
 permissions:
   contents: read
@@ -33,7 +33,7 @@ jobs:
     timeout-minutes: 20
     env:
       BASELINE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
-      SOURCE_SHA: ${{ inputs.source_sha || '17ba4dae624b981350925cd9b7fea4e02976ec52' }}
+      SOURCE_SHA: ${{ inputs.source_sha || 'cd139cae41435c313612919614b0b80605f0801b' }}
       VALIDATOR_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@v4
