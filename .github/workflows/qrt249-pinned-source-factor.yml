@@ -12,6 +12,7 @@ on:
       - 'Shared/tools/imo_qrt_hots_review.py'
       - 'Shared/tools/imo_qrt_retrieve_d1.py'
       - 'tests/test_imo_qrt_retrieve_d1.py'
+      - 'tests/imo_qrt_retrieve_d1_browser.py'
       - 'tests/test_imo_qrt_hots_review.py'
       - '.github/workflows/qrt249-pinned-source-factor.yml'
   workflow_dispatch:
@@ -48,7 +49,7 @@ jobs:
           test "$(git rev-parse refs/remotes/origin/qrt249-repaired-source)" = "$SOURCE_SHA"
           git worktree add --detach "$RUNNER_TEMP/qrt249-pinned-repaired-source" "$SOURCE_SHA"
           test "$(git -C "$RUNNER_TEMP/qrt249-pinned-repaired-source" rev-parse HEAD)" = "$SOURCE_SHA"
-          for p in Shared/tools/imo_qrt_validator.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_factor_evidence.py Shared/tools/imo_qrt_core_relationships.py tests/test_imo_qrt_core_relationships.py Shared/tools/imo_qrt_hots_review.py tests/test_imo_qrt_hots_review.py Shared/tools/imo_qrt_standalone_gate.py Shared/tools/imo_qrt_retrieve_d1.py tests/test_imo_qrt_retrieve_d1.py; do
+          for p in Shared/tools/imo_qrt_validator.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_factor_evidence.py Shared/tools/imo_qrt_core_relationships.py tests/test_imo_qrt_core_relationships.py Shared/tools/imo_qrt_hots_review.py tests/test_imo_qrt_hots_review.py Shared/tools/imo_qrt_standalone_gate.py Shared/tools/imo_qrt_retrieve_d1.py tests/test_imo_qrt_retrieve_d1.py tests/imo_qrt_retrieve_d1_browser.py; do
             mkdir -p "$RUNNER_TEMP/qrt249-pinned-repaired-source/$(dirname "$p")"
             git show "$GITHUB_SHA:$p" > "$RUNNER_TEMP/qrt249-pinned-repaired-source/$p"
           done
@@ -186,6 +187,15 @@ jobs:
           print('Academic authority and native Core admission remain NOT_GRANTED.')
           PY
 
+      - name: Real Chromium RETRIEVE-D1 attempt-first and KaTeX witness at source SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt249-pinned-repaired-source"
+          python -m pip install --disable-pip-version-check 'playwright==1.56.0'
+          python -m playwright install chromium
+          python tests/imo_qrt_retrieve_d1_browser.py
+
       - name: Publish independent mechanical findings only
         uses: actions/upload-artifact@v4
         if: always()
@@ -196,4 +206,5 @@ jobs:
             ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/repaired-source-relationships.json
             ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/repaired-source-hots-review.json
             ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/tile-RETRIEVE-D1.json
+            ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/retrieve-d1-browser.json
           if-no-files-found: warn
