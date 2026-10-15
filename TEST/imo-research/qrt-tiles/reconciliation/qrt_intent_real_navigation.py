@@ -12,8 +12,10 @@ from __future__ import annotations
 import argparse
 import json
 import threading
+import tempfile
+import sys
 from functools import partial
-from http.server import ThreadingHTTPServer
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -257,6 +259,130 @@ def probe_postcommit_native(context, base: str, qid: str, concept_id: str) -> di
         page.close()
 
 
+
+def probe_postcommit_isolated(browser, base: str, qid: str, concept_id: str) -> dict:
+    """Keep the blank-commit probe independent of earlier saved learner drafts.
+
+    The strict native check is unchanged: an EMPTY click must leave both the
+    attempted marker absent and the protected solution locked. Reusing the
+    earlier precommit navigation context would restore its nonempty sentinel
+    from renderer-owned localStorage and invalidate the word 'blank'.
+    """
+    context = browser.new_context(viewport={"width": 390, "height": 900})
+    try:
+        return probe_postcommit_native(context, base, qid, concept_id)
+    finally:
+        context.close()
+
+
+def synthetic_blank_attempt_browser_test() -> None:
+    """Actual renderer JS + Chromium: red old-order control, green clean probe.
+
+    Only invented identifiers and inert placeholder UI are served. This test
+    makes NO R14 product claim and never loads original QRT content.
+    """
+    repo_root = Path(__file__).resolve().parents[4]
+    sys.path.insert(0, str(repo_root))
+    from Shared.tools.render_core import JS  # actual frozen renderer runtime
+    qid, concept = "SYNTHETIC-R14-Q", "SYNTHETIC-R14-C"
+    fake_draft = "R14_BROWSER_ORDER_SYNTHETIC_NOT_MATHEMATICS"
+    with tempfile.TemporaryDirectory(prefix="r14-blank-synthetic-") as folder:
+        root = Path(folder)
+        (root / "runtime.js").write_text(JS, encoding="utf-8")
+        def page(role: str) -> str:
+            if role == "CORE2A":
+                article = (
+                    f'<article data-g9-unit="{qid}" data-g9-role="CORE2A">'
+                    '<div data-g9-attempt-box data-g9-response-type="free_response">'
+                    '<textarea data-g9-attempt></textarea>'
+                    '<button type="button" data-g9-commit>Commit</button></div>'
+                    '<details data-requires-attempt><summary>Protected</summary></details>'
+                    '<nav data-g9-concept-nav hidden>'
+                    f'<a data-g9-aftercommit-concept-link data-g9-concept-ref="{concept}"'
+                    f' data-g9-question-ref="{qid}" href="core1a.html#{concept}">'
+                    'View concept</a></nav></article>'
+                )
+            else:
+                article = (
+                    f'<article data-g9-unit="{concept}" data-g9-role="CORE1A">'
+                    f'<a data-g9-practice-link data-g9-concept-ref="{concept}"'
+                    f' data-g9-question-ref="{qid}" href="core2a.html#{qid}">'
+                    'Return to question</a></article>'
+                )
+            return (
+                '<!doctype html>'
+                f'<html data-g9-role="{role}" data-g9-product="SYNTHETIC"'
+                ' data-g9-render-digest="R14-ORDER">'
+                f'<body data-blueprint-ref="{BP[role]}">'
+                + article + '<script src="runtime.js"></script></body></html>'
+            )
+        for role in ("CORE2A", "CORE1A"):
+            (root / (role.lower() + ".html")).write_text(
+                page(role), encoding="utf-8")
+        server = ThreadingHTTPServer(
+            ("127.0.0.1", 0),
+            partial(SimpleHTTPRequestHandler, directory=str(root)))
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        base = f"http://127.0.0.1:{server.server_port}"
+        try:
+            with sync_playwright() as impl:
+                browser = impl.chromium.launch(headless=True, args=["--no-sandbox"])
+                try:
+                    contaminated = browser.new_context(
+                        viewport={"width": 390, "height": 900})
+                    try:
+                        # Reproduce precommit stage from OLD test_navigation:
+                        # input saves a nonempty draft to renderer localStorage.
+                        seed = contaminated.new_page()
+                        try:
+                            seed.goto(base + "/core2a.html", wait_until="load")
+                            seed.locator("textarea[data-g9-attempt]").fill(fake_draft)
+                        finally:
+                            seed.close()
+                        restored = contaminated.new_page()
+                        try:
+                            restored.goto(base + "/core2a.html", wait_until="load")
+                            assert (restored.locator("textarea[data-g9-attempt]")
+                                    .input_value() == fake_draft)
+                            assert (restored.locator("details[data-requires-attempt]")
+                                    .get_attribute("data-locked") is not None)
+                        finally:
+                            restored.close()
+                        # RED CONTROL: old shared-context probe clicks commit
+                        # on RESTORED nonempty draft. The strict blank rule
+                        # fails, even though the renderer is behaving properly.
+                        legacy = probe_postcommit_native(
+                            contaminated, base, qid, concept)
+                        assert legacy["observed"]["precommit_solution_locked"]
+                        assert not legacy["observed"]["attempt_blank_rejected"]
+                        assert legacy["findings"] == [
+                            "NAV_POSTCOMMIT_BLANK_UNLOCKED"]
+                        assert not legacy["technical_round_trip_complete"]
+                    finally:
+                        contaminated.close()
+                    # GREEN CONTROL: EXACT production fixed wrapper creates
+                    # an independent browser storage context before blank click.
+                    fixed = probe_postcommit_isolated(browser, base, qid, concept)
+                    assert fixed["observed"]["precommit_solution_locked"]
+                    assert fixed["observed"]["attempt_blank_rejected"]
+                    assert fixed["observed"]["nonempty_attempt_committed"]
+                    assert fixed["observed"]["same_question_reached"]
+                    assert fixed["observed"]["attempt_text_restored"]
+                    assert fixed["observed"]["assistance_marked"]
+                    assert not fixed["observed"]["independent_credit_claimed"]
+                    assert not fixed["findings"]
+                    assert fixed["technical_round_trip_complete"]
+                finally:
+                    browser.close()
+        finally:
+            server.shutdown()
+            thread.join(timeout=5)
+            server.server_close()
+    print("R14 synthetic Chromium RED legacy shared-context blank / "
+          "GREEN isolated strict blank: PASS")
+
+
 def test_navigation(browser, source_root: Path, output: Path,
                     contract: dict) -> dict:
     ensure(contract.get("native_evidence", {}).get("all_role_structure") ==
@@ -396,7 +522,7 @@ def test_navigation(browser, source_root: Path, output: Path,
             "manual_shell_route_is_not_independent_mastery": True,
             "academic_verdict": "NOT_RUN",
         }
-        postcommit = probe_postcommit_native(context, base, qid, expected_concept)
+        postcommit = probe_postcommit_isolated(browser, base, qid, expected_concept)
         ensure(not errors, "P2_NAV_ASSISTED_JS_EXCEPTION", repr(errors))
         return {
             "schema": "imo182-r8-real-native-navigation/v1",

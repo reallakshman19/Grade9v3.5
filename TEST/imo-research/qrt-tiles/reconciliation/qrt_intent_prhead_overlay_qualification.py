@@ -805,6 +805,8 @@ def diagnostic_self_test() -> None:
     print("R14 owner-versioned CORE1A golden exact one-marker-only delta: PASS")
     fanout_self_test()
     cleanup_and_component_self_test()
+    from qrt_intent_real_navigation import synthetic_blank_attempt_browser_test
+    synthetic_blank_attempt_browser_test()
     print("R14 source-safe classifier + on-disk JSON round-trip + "
           "real imported-ContractError subprocess: PASS")
 
