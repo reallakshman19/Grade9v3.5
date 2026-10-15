@@ -10,6 +10,8 @@ on:
       - 'Shared/tools/imo_qrt_core_relationships.py'
       - 'tests/test_imo_qrt_core_relationships.py'
       - 'Shared/tools/imo_qrt_hots_review.py'
+      - 'Shared/tools/imo_qrt_retrieve_d1.py'
+      - 'tests/test_imo_qrt_retrieve_d1.py'
       - 'tests/test_imo_qrt_hots_review.py'
       - '.github/workflows/qrt249-pinned-source-factor.yml'
   workflow_dispatch:
@@ -46,7 +48,7 @@ jobs:
           test "$(git rev-parse refs/remotes/origin/qrt249-repaired-source)" = "$SOURCE_SHA"
           git worktree add --detach "$RUNNER_TEMP/qrt249-pinned-repaired-source" "$SOURCE_SHA"
           test "$(git -C "$RUNNER_TEMP/qrt249-pinned-repaired-source" rev-parse HEAD)" = "$SOURCE_SHA"
-          for p in Shared/tools/imo_qrt_validator.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_factor_evidence.py Shared/tools/imo_qrt_core_relationships.py tests/test_imo_qrt_core_relationships.py Shared/tools/imo_qrt_hots_review.py tests/test_imo_qrt_hots_review.py; do
+          for p in Shared/tools/imo_qrt_validator.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_factor_evidence.py Shared/tools/imo_qrt_core_relationships.py tests/test_imo_qrt_core_relationships.py Shared/tools/imo_qrt_hots_review.py tests/test_imo_qrt_hots_review.py Shared/tools/imo_qrt_retrieve_d1.py tests/test_imo_qrt_retrieve_d1.py; do
             mkdir -p "$RUNNER_TEMP/qrt249-pinned-repaired-source/$(dirname "$p")"
             git show "$GITHUB_SHA:$p" > "$RUNNER_TEMP/qrt249-pinned-repaired-source/$p"
           done
@@ -61,6 +63,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_imo_qrt_factor_evidence.py' -v
           python -m unittest discover -s tests -p 'test_imo_qrt_core_relationships.py' -v
           python -m unittest discover -s tests -p 'test_imo_qrt_hots_review.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_retrieve_d1.py' -v
       - name: Independently attest repaired 260 bank factors and four HTML Git blobs
         env:
           SOURCE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
@@ -152,6 +155,37 @@ jobs:
           print('HOTS Q024 broad/general claim vs qualified proof and missing source diagram: REVIEW_REQUIRED')
           print('HOTS Q035 direct Ptolemy cue vs SYNTHESIZE-D4; five factors missing: REVIEW_REQUIRED')
           PY
+      - name: Audit QRT-RETRIEVE-D1 exact-source standalone question cards
+        shell: bash
+        env:
+          SOURCE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt249-pinned-repaired-source"
+          set +e
+          python Shared/tools/imo_qrt_retrieve_d1.py --source-commit "$SOURCE_SHA" --output build/imo-qrt-249/tile-RETRIEVE-D1.json
+          tile_rc=$?
+          set -e
+          TILE_RC="$tile_rc" python - <<'PY'
+          import json, os
+          from pathlib import Path
+          v=json.loads(Path('build/imo-qrt-249/tile-RETRIEVE-D1.json').read_text(encoding='utf-8'))
+          assert v['source_commit']=='90c859705feb0dfcedc6d33a013d9e563b7cac9d'
+          assert v['tile']=='QRT-RETRIEVE-D1'
+          assert v['source_count']==len(v['records'])==12
+          assert v['html']['rendered_total']==260
+          assert len({x['sha256'] for x in v['html']['endpoint_receipts']})==1
+          assert not v['counts'].get('FAIL', 0) or os.environ['TILE_RC']=='1'
+          assert v['counts'].get('FAIL', 0) or os.environ['TILE_RC']=='0'
+          assert v['academic_approval']=='NOT_GRANTED'
+          print('QRT-RETRIEVE-D1: 12 immutable research questions; HTML location #q-ID')
+          for x in v['records']:
+              issues=','.join(y['rule']+'@'+y['element'] for y in x['findings']) or 'none'
+              num=x.get('numerical') or {}
+              print(x['id']+' | '+x['verdict']+' | '+issues+' | score='+str(num.get('stored_score'))+' derived='+str(num.get('derived_score'))+' ('+str(num.get('consistency'))+') | '+v['html']['path']+x['html_anchor'])
+          print('Academic authority and native Core admission remain NOT_GRANTED.')
+          PY
+
       - name: Publish independent mechanical findings only
         uses: actions/upload-artifact@v4
         if: always()
@@ -161,4 +195,5 @@ jobs:
             ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/repaired-source-factors.json
             ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/repaired-source-relationships.json
             ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/repaired-source-hots-review.json
+            ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/tile-RETRIEVE-D1.json
           if-no-files-found: warn
