@@ -248,7 +248,11 @@ class Q003SyntheticNativeSmoke(unittest.TestCase):
         print("SYNTHETIC Q003 native Core2/Golden/Core1A/Golden complete;"
               " all pages remain ignored and unreleased")
         print("Core2 gaps:", len(core2_receipt.get("gaps") or []),
-              "Core1A gaps:", len(core1a_receipt.get("gaps") or []))
+              "duties:", sorted({g["duty"] for g in core2_receipt.get("gaps") or []}),
+              "Core1A gaps:", len(core1a_receipt.get("gaps") or []),
+              "duties:", sorted({g["duty"] for g in core1a_receipt.get("gaps") or []}))
+        print("Core2 missing golden slots:", sorted(set(g2_markers["components"]) - set(c2["components"])))
+        print("Core1A missing golden slots:", sorted(set(g1_markers["components"]) - set(c1["components"])))
 
 
 if __name__ == "__main__":
