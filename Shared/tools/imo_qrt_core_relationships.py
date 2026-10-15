@@ -149,6 +149,7 @@ def audit(*, root: Path = ROOT, baseline_sha: str,
         folder_unit[p["folder"]].append(p)
     assignments = []
     proposal_differences = []
+    relationship_review_queue = []
     counts = Counter()
     for qid, q in sorted(questions.items()):
         taxonomy = q.get("taxonomy") or {}
@@ -164,6 +165,34 @@ def audit(*, root: Path = ROOT, baseline_sha: str,
             "UNDECLARED_TOPIC_FALLBACK" if not declared_folder else "NO_CORE_UNITS_AT_ROUTED_FOLDER"
         )
         counts[link_kind] += 1
+        # Only an explicit declared Core2→Core1A unit ref is structurally
+        # stronger than a topic-folder route; neither proves the same crux.
+        evidence_kind = {
+            "EXPLICIT_UNIT_ID": "DECLARED_CORE1A_LINK_ONLY",
+            "TOPIC_NAV_ONLY": "BUILDER_TOPIC_NAVIGATION_ONLY",
+            "UNDECLARED_TOPIC_FALLBACK": "BUILDER_DEFAULT_FOLDER_FALLBACK",
+            "NO_CORE_UNITS_AT_ROUTED_FOLDER": "NO_ROUTED_CORE_UNIT",
+        }[link_kind]
+        relationship_code = {
+            "EXPLICIT_UNIT_ID": "EXPLICIT_UNIT_INFERENTIAL_JUMP_UNREVIEWED",
+            "TOPIC_NAV_ONLY": "TOPIC_ONLY_NOT_CONCEPT_LINK",
+            "UNDECLARED_TOPIC_FALLBACK": "UNDECLARED_TOPIC_FALLBACK_NOT_CONCEPT_LINK",
+            "NO_CORE_UNITS_AT_ROUTED_FOLDER": "NO_CORE_UNITS_NOT_CONCEPT_LINK",
+        }[link_kind]
+        relationship_evidence = {
+            "rule": "V19", "code": relationship_code,
+            "verdict": "REVIEW_REQUIRED",
+            "source_basis": evidence_kind,
+            "question_id": qid, "topic_label": raw,
+            "question_subtopic": taxonomy.get("subtopic"),
+            "declared_navigation_folder": declared_folder,
+            "navigation_folder_used": applied_folder,
+            "explicit_unit_ids": sorted(set(linked)),
+            "candidate_unit_ids": [p["unit_id"] for p in routed],
+            "same_inferential_jump_proven": False,
+            "canonical_core_role_acceptance": "NOT_GRANTED",
+        }
+        relationship_review_queue.append(relationship_evidence)
         if linked:
             for p in pairs:
                 if p["unit_id"] in linked:
@@ -182,6 +211,7 @@ def audit(*, root: Path = ROOT, baseline_sha: str,
             "explicit_unit_ids": sorted(set(linked)),
             "candidate_unit_ids": [p["unit_id"] for p in routed],
             "academic_alignment": "REVIEW_REQUIRED",
+            "relationship_evidence": relationship_evidence,
             "native_core_admission": "NOT_GRANTED",
         })
 
@@ -196,6 +226,10 @@ def audit(*, root: Path = ROOT, baseline_sha: str,
         "question_count": len(questions), "core1a_count": len(all_c1a),
         "core1b_count": len(all_c1b), "paired_units": len(pairs),
         "relationship_counts": dict(sorted(counts.items())), "proposal_differences": proposal_differences,
+        "relationship_review_counts": dict(sorted(Counter(
+            entry["code"] for entry in relationship_review_queue
+        ).items())),
+        "relationship_review_queue": relationship_review_queue,
         "structural_findings": defects,
         "academic_approval": "NOT_GRANTED", "source_rights": "NOT_VERIFIED",
         "pairs": pairs, "questions": assignments,
