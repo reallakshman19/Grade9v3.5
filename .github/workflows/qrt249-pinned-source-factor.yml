@@ -1,0 +1,210 @@
+name: QRT249 pinned repaired-source factor witness
+
+on:
+  push:
+    branches:
+      - agent/issue249-qrt-validator-v1
+    paths:
+      - 'Shared/tools/imo_qrt_validator.py'
+      - 'tests/test_imo_qrt_factor_evidence.py'
+      - 'Shared/tools/imo_qrt_core_relationships.py'
+      - 'tests/test_imo_qrt_core_relationships.py'
+      - 'Shared/tools/imo_qrt_hots_review.py'
+      - 'Shared/tools/imo_qrt_retrieve_d1.py'
+      - 'tests/test_imo_qrt_retrieve_d1.py'
+      - 'tests/imo_qrt_retrieve_d1_browser.py'
+      - 'tests/test_imo_qrt_hots_review.py'
+      - '.github/workflows/qrt249-pinned-source-factor.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qrt249-pinned-source-factors
+  cancel-in-progress: true
+
+jobs:
+  independent-factors:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Preserve thirteen original candidate falsifiers
+        run: python -m unittest discover -s tests -p 'test_imo_qrt_candidate_receipt.py' -v
+      - name: Pin repaired source without merging and overlay only own-lane validator files
+        env:
+          SOURCE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
+          VALIDATOR_BASE_SHA: f49860ee1fe3f7fbcf30e3957576a2c74505758a
+        shell: bash
+        run: |
+          set -euo pipefail
+          git merge-base --is-ancestor "$VALIDATOR_BASE_SHA" "$GITHUB_SHA"
+          git fetch --no-tags origin refs/heads/feat/imo-grade9-68-questions-master-suite:refs/remotes/origin/qrt249-repaired-source
+          test "$(git rev-parse refs/remotes/origin/qrt249-repaired-source)" = "$SOURCE_SHA"
+          git worktree add --detach "$RUNNER_TEMP/qrt249-pinned-repaired-source" "$SOURCE_SHA"
+          test "$(git -C "$RUNNER_TEMP/qrt249-pinned-repaired-source" rev-parse HEAD)" = "$SOURCE_SHA"
+          for p in Shared/tools/imo_qrt_validator.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_factor_evidence.py Shared/tools/imo_qrt_core_relationships.py tests/test_imo_qrt_core_relationships.py Shared/tools/imo_qrt_hots_review.py tests/test_imo_qrt_hots_review.py Shared/tools/imo_qrt_standalone_gate.py Shared/tools/imo_qrt_retrieve_d1.py tests/test_imo_qrt_retrieve_d1.py tests/imo_qrt_retrieve_d1_browser.py; do
+            mkdir -p "$RUNNER_TEMP/qrt249-pinned-repaired-source/$(dirname "$p")"
+            git show "$GITHUB_SHA:$p" > "$RUNNER_TEMP/qrt249-pinned-repaired-source/$p"
+          done
+          echo "Source=$SOURCE_SHA | Validator=$GITHUB_SHA | Baseline validator=$VALIDATOR_BASE_SHA"
+          echo "Detached worktree only; no merge/cherry-pick/branch update."
+      - name: Execute isolated validator mutation tests on exact source tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt249-pinned-repaired-source"
+          python -m unittest discover -s tests -p 'test_imo_qrt_validator.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_factor_evidence.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_core_relationships.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_hots_review.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_retrieve_d1.py' -v
+      - name: Independently attest repaired 260 bank factors and four HTML Git blobs
+        env:
+          SOURCE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt249-pinned-repaired-source"
+          set +e
+          python Shared/tools/imo_qrt_validator.py --baseline-sha "$SOURCE_SHA" --output build/imo-qrt-249/repaired-source-factors.json
+          rc=$?
+          set -e
+          test "$rc" -eq 1
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('build/imo-qrt-249/repaired-source-factors.json').read_text(encoding='utf-8'))
+          assert r['baseline_commit']=='90c859705feb0dfcedc6d33a013d9e563b7cac9d'
+          assert r['actual_total']==r['unique_ids']==260
+          assert r['occupied_tiles']==19 and r['academic_approval']=='NOT_GRANTED'
+          assert r['difficulty_evidence_summary']['components']=={
+            'COMPLETE': 209, 'INVALID_VALUES': 1, 'MISSING': 50}
+          assert r['difficulty_evidence_summary']['scores']=={
+            'MATCH': 182, 'MISMATCH': 27, 'NOT_DERIVABLE': 51}
+          assert r['difficulty_evidence_summary']['bands']=={
+            'MATCH': 203, 'MISMATCH': 6, 'NOT_DERIVABLE': 51}
+          byid={q['id']:q for q in r['questions']}
+          bad=byid['SOF-IMO-G09-L1-2023-24-A-Q032']['difficulty_evidence']
+          assert bad['invalid_components'][0]['key']=='algebra_computational_load'
+          assert bad['invalid_components'][0]['value']==3
+          for n in (24,35):
+            qid=f'SOF-IMO-G09-HOTS-OLYMPIAD-Q{n:03d}'
+            assert byid[qid]['difficulty_evidence']['component_status']=='MISSING'
+            assert byid[qid]['academic_verdict']=='REVIEW_REQUIRED'
+          assert r['finding_counts']['FIVE_FACTOR_SCORE_MISMATCH']==27
+          assert r['finding_counts']['FIVE_FACTOR_BAND_MISMATCH']==6
+          print('Pinned 260/260 repaired-source factors: HOLD 50 missing, FAIL 1 invalid, 27 score, 6 band; no automatic QRT acceptance')
+          PY
+          one="standalone/mathematics-imo-grade9-master-suite.html"
+          two="public/standalone/mathematics-imo-grade9-master-suite.html"
+          three="public/test/imo-grade9/core2.html"
+          four="docs/test/imo-grade9/core2.html"
+          for p in "$one" "$two" "$three" "$four"; do
+            test "$(git hash-object "$p")" = "4b092f6b3e794a69748aed8c176cd6a013039770"
+          done
+          echo "Four source HTML Git blob identities match; semantic/browser disclosure still separately gated."
+      - name: Inspect 177 topic-only links and both HOTS academic HOLDs
+        shell: bash
+        env:
+          SOURCE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt249-pinned-repaired-source"
+          set +e
+          python Shared/tools/imo_qrt_core_relationships.py --baseline-sha "$SOURCE_SHA" --output build/imo-qrt-249/repaired-source-relationships.json
+          core_rc=$?
+          python Shared/tools/imo_qrt_hots_review.py --source-commit "$SOURCE_SHA" --output build/imo-qrt-249/repaired-source-hots-review.json
+          hots_rc=$?
+          set -e
+          CORE_RC="$core_rc" HOTS_RC="$hots_rc" python - <<'PY'
+          import json, os
+          from pathlib import Path
+          a=json.loads(Path('build/imo-qrt-249/repaired-source-relationships.json').read_text(encoding='utf-8'))
+          b=json.loads(Path('build/imo-qrt-249/repaired-source-hots-review.json').read_text(encoding='utf-8'))
+          assert a['source_commit']==b['source_commit']=='90c859705feb0dfcedc6d33a013d9e563b7cac9d'
+          assert a['question_count']==len(a['questions'])==len(a['relationship_review_queue'])==260
+          assert a['core1a_count']==a['core1b_count']==a['paired_units']==20
+          assert a['relationship_review_counts']['TOPIC_ONLY_NOT_CONCEPT_LINK']==177
+          assert a['relationship_review_counts']['EXPLICIT_UNIT_INFERENTIAL_JUMP_UNREVIEWED']==83
+          assert a['relationship_counts']['EXPLICIT_UNIT_QRT_DIFFERS_FROM_SOURCE_PROPOSAL']==4
+          assert all(x['verdict']=='REVIEW_REQUIRED' and not x['same_inferential_jump_proven']
+                     for x in a['relationship_review_queue'])
+          assert a['academic_approval']=='NOT_GRANTED'
+          assert os.environ['CORE_RC']==('1' if a['status']=='FAIL' else '0')
+          assert os.environ['HOTS_RC']=='0'
+          assert b['status']=='REVIEW_REQUIRED' and len(b['cases'])==2
+          by_id={x['id']:x for x in b['cases']}
+          q024=by_id['SOF-IMO-G09-HOTS-OLYMPIAD-Q024']
+          q035=by_id['SOF-IMO-G09-HOTS-OLYMPIAD-Q035']
+          assert q024['evidence']['broad_claim_in_stem']
+          assert q024['evidence']['bounded_warrant_declared']
+          assert not q024['evidence']['authoritative_source_diagram_verified']
+          assert 'Q024_BROAD_STEM_VS_BOUNDED_WARRANT' in {x['code'] for x in q024['findings']}
+          assert q035['evidence']['direct_ptolemy_application_cue']
+          assert not q035['evidence']['five_factor_object_complete']
+          assert q035['evidence']['declared_cell']=='QRT-SYNTHESIZE-D4'
+          assert all(x['academic_verdict']=='REVIEW_REQUIRED' for x in b['cases'])
+          assert b['qrt_classification_acceptance']=='NOT_GRANTED'
+          print('V19: 177 topic-only, 83 explicit but not crux-certified; 4 proposed QRT differences still held')
+          print('HOTS Q024 broad/general claim vs qualified proof and missing source diagram: REVIEW_REQUIRED')
+          print('HOTS Q035 direct Ptolemy cue vs SYNTHESIZE-D4; five factors missing: REVIEW_REQUIRED')
+          PY
+      - name: Audit QRT-RETRIEVE-D1 exact-source standalone question cards
+        shell: bash
+        env:
+          SOURCE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt249-pinned-repaired-source"
+          set +e
+          python Shared/tools/imo_qrt_retrieve_d1.py --source-commit "$SOURCE_SHA" --output build/imo-qrt-249/tile-RETRIEVE-D1.json
+          tile_rc=$?
+          set -e
+          TILE_RC="$tile_rc" python - <<'PY'
+          import json, os
+          from pathlib import Path
+          v=json.loads(Path('build/imo-qrt-249/tile-RETRIEVE-D1.json').read_text(encoding='utf-8'))
+          assert v['source_commit']=='90c859705feb0dfcedc6d33a013d9e563b7cac9d'
+          assert v['tile']=='QRT-RETRIEVE-D1'
+          assert v['source_count']==len(v['records'])==12
+          assert v['html']['rendered_total']==260
+          assert len({x['sha256'] for x in v['html']['endpoint_receipts']})==1
+          assert not v['counts'].get('FAIL', 0) or os.environ['TILE_RC']=='1'
+          assert v['counts'].get('FAIL', 0) or os.environ['TILE_RC']=='0'
+          assert v['academic_approval']=='NOT_GRANTED'
+          print('QRT-RETRIEVE-D1: 12 immutable research questions; HTML location #q-ID')
+          for x in v['records']:
+              issues=','.join(y['rule']+'@'+y['element'] for y in x['findings']) or 'none'
+              num=x.get('numerical') or {}
+              print(x['id']+' | '+x['verdict']+' | '+issues+' | score='+str(num.get('stored_score'))+' derived='+str(num.get('derived_score'))+' ('+str(num.get('consistency'))+') | '+v['html']['path']+x['html_anchor'])
+          print('Academic authority and native Core admission remain NOT_GRANTED.')
+          PY
+
+      - name: Real Chromium RETRIEVE-D1 attempt-first and KaTeX witness at source SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt249-pinned-repaired-source"
+          python -m pip install --disable-pip-version-check 'playwright==1.56.0'
+          python -m playwright install chromium
+          python tests/imo_qrt_retrieve_d1_browser.py
+
+      - name: Publish independent mechanical findings only
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qrt249-pinned-repaired-factor-evidence
+          path: |
+            ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/repaired-source-factors.json
+            ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/repaired-source-relationships.json
+            ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/repaired-source-hots-review.json
+            ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/tile-RETRIEVE-D1.json
+            ${{ runner.temp }}/qrt249-pinned-repaired-source/build/imo-qrt-249/retrieve-d1-browser.json
+          if-no-files-found: warn
