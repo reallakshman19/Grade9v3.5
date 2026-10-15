@@ -47,8 +47,11 @@ def validate_private(row, expected, raw):
         m.get("action") and m.get("why_valid") and m.get("output") for m in moves
     ):
         raise ValueError("INCOMPLETE_AUTHORED_REASONING")
-    if not isinstance(authored.get("scaffolds"), list) or len(authored["scaffolds"]) < 1:
-        raise ValueError("QUESTION_SPECIFIC_SUPPORT_MISSING")
+    # The Q003 support contract below binds EXACTLY three indexed rungs:
+    # neutral pre-attempt orientation, then two protected after-attempt moves.
+    # Reject fewer (dangling refs) or more (unguarded/undefined availability).
+    if not isinstance(authored.get("scaffolds"), list) or len(authored["scaffolds"]) != 3:
+        raise ValueError("QUESTION_SPECIFIC_SUPPORT_REQUIRES_THREE_GATED_RUNGS")
 
 def base_record(name, **fields):
     return dict(id=name, version="0.1.0", status="CANDIDATE",

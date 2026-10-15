@@ -1,0 +1,43 @@
+name: IMO183 Q003 synthetic native renderer and goldens (TEST only)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo183-q003-native-synthetic.yml'
+      - 'TEST/imo-research/core2-q003/**'
+      - 'tests/test_imo_q003_native_synthetic.py'
+      - 'tests/test_imo_q003_private_support_gate.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  q003-synthetic-native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install sole renderer's schema-validator dependency
+        run: python -m pip install --disable-pip-version-check 'jsonschema==4.23.0'
+      - name: Verify Python and local Node prerequisites
+        run: |
+          python --version
+          node --version
+          test -f Shared/tools/render_core.py
+          test -f Shared/web/interactive-page-blueprints.v1.json
+          test -f Shared/tools/build_golden.py
+          test -f public/vendor/katex/0.16.8/katex.min.js
+      - name: Execute synthetic Q003 through registered native Core2 and Core1A goldens
+        run: |
+          python -m unittest discover -s tests -p 'test_imo_q003_private_support_gate.py' -v
+          python -m unittest discover -s tests -p 'test_imo_q003_native_synthetic.py' -v
+      - name: Enforce no public HTML or protected original artifact
+        if: always()
+        run: |
+          git diff --exit-code
+          git diff --cached --exit-code
+          test ! -f TEST/imo-research/core2-q003/q003.source.private.json
