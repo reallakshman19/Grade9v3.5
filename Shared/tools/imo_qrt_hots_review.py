@@ -64,7 +64,7 @@ def inspect(questions: list[dict[str, Any]], *, source_sha256: str,
             flag("HOTS_DECLARED_QRT_INCONSISTENT", "FAIL")
 
         if qid.endswith("Q024"):
-            broad_claim = bool(re.search(r"\\b(any general|any arbitrary|all five.pointed stars)\\b", stem.lower()))
+            broad_claim = bool(re.search(r"\b(any general|any arbitrary|all five.pointed stars)\b", stem.lower()))
             bounded_warrant = (
                 "nondegenerate" in derivation.lower()
                 and "convex" in derivation.lower()
@@ -90,7 +90,7 @@ def inspect(questions: list[dict[str, Any]], *, source_sha256: str,
         else:
             crux = cls.get("crux_move")
             crux = crux if isinstance(crux, str) else ""
-            direct_apply_cue = bool(re.search(r"\\bapply\\s+ptolemy", crux.lower()))
+            direct_apply_cue = bool(re.search(r"\bapply\s+ptolemy", crux.lower()))
             factors = cls.get("difficulty_components")
             factor_complete = isinstance(factors, dict) and len(factors) == 5
             flag("Q035_PRIMARY_LEARNER_ACTION_NOT_ADJUDICATED")
