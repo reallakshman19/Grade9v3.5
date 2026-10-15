@@ -1,4 +1,4 @@
-name: QRT G2 coder concept-bridge freeze (one-shot)
+name: QRT G2 coder Q022 protected-work freeze (one-shot)
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD^)" = "b355598fb49e2ab31f40f1c15637470467328d48"
+          test "$(git rev-parse HEAD^)" = "cd139cae41435c313612919614b0b80605f0801b"
           test "${GITHUB_REF}" = "refs/heads/repair/qrt-tile-html-g2"
           test -z "$(git status --porcelain)"
           git rev-parse HEAD
@@ -68,6 +68,11 @@ jobs:
             assert b["interactive_tutor_flow"]["stage_2_attempt"]["lock_state"]=="LOCKED_UNTIL_STUDENT_COMMITMENT",qid
           print("EIGHT_PAIRED_EXACT_CONCEPT_BRIDGES_IN_SOURCE")
           PY
+      - name: Verify new compound-answer Hint 2 regression before builder
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests/test_imo_qrt_h2_compound_answer_coder.py -v
       - name: Build the four generated HTML endpoints and assert exact file set/hash parity
         shell: bash
         run: |
@@ -118,7 +123,7 @@ jobs:
           test "$(git diff --cached --name-only | wc -l)" -eq 4
           # The inherited HTML builder emits indentation-only lines; do not hand-edit its deterministic output.
           git -c core.whitespace=-blank-at-eol diff --cached --check
-          git commit -m "build(qrt-t1): freeze eight concept-linked Core lessons in four HTML mirrors"
+          git commit -m "build(qrt-t1): freeze Q022 protected-work hint in four HTML mirrors"
           git push origin HEAD:refs/heads/repair/qrt-tile-html-g2
           echo "FROZEN_REPAIR_SHA=$(git rev-parse HEAD)" | tee scratch/qrt-g2-coder-frozen-commit.txt
       - name: Verify committed HTML reproducibility
@@ -137,7 +142,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: qrt-g2-eight-concept-freeze-receipts
+          name: qrt-g2-q022-h2-freeze-receipts
           path: |
             scratch/qrt-g2-coder-builder.log
             scratch/qrt-g2-coder-four-hashes.txt
