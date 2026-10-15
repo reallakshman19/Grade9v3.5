@@ -100,6 +100,56 @@ CASE_LOCAL_FAILURE_CODES = frozenset((
 ))
 CASE_STATUSES = frozenset(("PASS", "FAIL", "NOT_REACHED"))
 
+# Every persisted systemic type/code is drawn from this fixed audited vocabulary.
+# Never serialize arbitrary exception names, args, paths, child output, or traceback.
+SAFE_CHILD_ASSERTION_TYPES = frozenset((
+    "ContractError", "AssertionError", "RuntimeError",
+    "ModuleNotFoundError", "FileNotFoundError", "KeyError",
+    "JSONDecodeError", "UNCLASSIFIED",
+))
+SAFE_CHILD_FAILURE_CODES = (
+    SAFE_NATIVE_FAILURE_CODES
+    | frozenset(code for _marker, code in SAFE_FAILURE_FALLBACKS)
+    | {"UNCLASSIFIED_SUBPROCESS_FAILURE"}
+)
+SAFE_HARNESS_ASSERTION_CODES = frozenset((
+    "R14_WRONG_CASE_EXCEPTION",
+    "R14_FANOUT_RECORD_INTEGRITY",
+    "R14_DIAGNOSTIC_PHASE_OR_CELL_NOT_PINNED",
+    "PR_HEAD_CASE_MAP_DRIFT_FROM_FROZEN_R8",
+    "SOURCE_COMMIT_CHANGED",
+    "SOURCE_MANIFEST_OR_PACKAGE_BLOB_CHANGED",
+    "ORIGINAL_QRT_28_WITNESSES_DRIFT",
+    "SOURCE_HELD_SEVEN_MUST_REMAIN_HELD",
+    "ORIGINAL_QRT_28_WITNESS_DUPLICATION",
+    "OVERLAY_MANIFEST_BLOB_CHANGED",
+    "OVERLAY_QUESTION_SOURCE_BLOB_CHANGED",
+    "SELECTED_ORIGINAL_QUESTION_DRIFT",
+    "PR_HEAD_SOURCE_QID_NOT_PINNED",
+    "ASSISTED_RETURN_FALSE_INDEPENDENT_CREDIT",
+))
+SYSTEMIC_BUILTIN_CODES = {
+    "AssertionError": "SYSTEMIC_ASSERTION_UNCLASSIFIED",
+    "RuntimeError": "SYSTEMIC_RUNTIME_ERROR_UNCLASSIFIED",
+    "FileNotFoundError": "SYSTEMIC_FILE_NOT_FOUND",
+    "PermissionError": "SYSTEMIC_PERMISSION_ERROR",
+    "KeyError": "SYSTEMIC_KEY_NOT_FOUND",
+    "JSONDecodeError": "SYSTEMIC_JSON_DECODE_FAILURE",
+    "ModuleNotFoundError": "SYSTEMIC_MODULE_NOT_FOUND",
+    "OSError": "SYSTEMIC_OS_ERROR",
+    "ValueError": "SYSTEMIC_VALUE_ERROR",
+    "TypeError": "SYSTEMIC_TYPE_ERROR",
+}
+SAFE_SYSTEMIC_FAILURE_CODES = (
+    SAFE_CHILD_FAILURE_CODES | SAFE_HARNESS_ASSERTION_CODES
+    | frozenset(SYSTEMIC_BUILTIN_CODES.values())
+    | {"SYSTEMIC_ABORT_UNCLASSIFIED"}
+)
+SAFE_SYSTEMIC_TYPES = SAFE_CHILD_ASSERTION_TYPES | frozenset(
+    SYSTEMIC_BUILTIN_CODES
+)
+
+
 
 class CaseLocalFailure(RuntimeError):
     """Explicit audited technical failure for one pinned case only."""
@@ -111,6 +161,36 @@ class CaseLocalFailure(RuntimeError):
         super().__init__(f"R14_CASE_LOCAL {phase} {cell_id} {kind}: {code}")
 
 
+class ChildProcessFailure(RuntimeError):
+    """A nonlocal child rejection with independently sanitized type/code only."""
+
+    def __init__(self, phase: str | None, kind: str, code: str):
+        if kind not in SAFE_CHILD_ASSERTION_TYPES or code not in SAFE_CHILD_FAILURE_CODES:
+            raise AssertionError("R14_CHILD_FAILURE_CLASSIFIER_NOT_ALLOWLISTED")
+        self.kind, self.code = kind, code
+        super().__init__(
+            f"R14 child rejected ({phase or 'unknown-phase'}): "
+            f"{kind}: {code} [untrusted detail redacted]"
+        )
+
+
+def source_safe_systemic_exception(exc: Exception) -> tuple[str, str]:
+    """Preserve REAL audited type/code, but neither detail nor guessed code.
+
+    A wrapped child already has a sanitized terminator classification.
+    A local AssertionError is admissible only when its entire message equals
+    an audited harness invariant. Any other exception gets a fixed safe code.
+    """
+    if isinstance(exc, ChildProcessFailure):
+        return exc.kind, exc.code
+    kind = type(exc).__name__
+    if kind not in SYSTEMIC_BUILTIN_CODES:
+        return "UNCLASSIFIED", "SYSTEMIC_ABORT_UNCLASSIFIED"
+    if kind == "AssertionError" and str(exc) in SAFE_HARNESS_ASSERTION_CODES:
+        return "AssertionError", str(exc)
+    return kind, SYSTEMIC_BUILTIN_CODES[kind]
+
+
 def case_receipt(out: Path, slug: str, record: dict) -> None:
     """Atomically persist one audited per-case JSON receipt, never raw HTML."""
     assert slug in {entry[1] for entry in CASES}
@@ -118,8 +198,9 @@ def case_receipt(out: Path, slug: str, record: dict) -> None:
     assert record["status"] in CASE_STATUSES
     if record["status"] == "FAIL":
         assert record["failure_code"] in (
-            CASE_LOCAL_FAILURE_CODES | {"SYSTEMIC_ABORT",
-                                       "TECHNICAL_ROUND_TRIP_INCOMPLETE"})
+            CASE_LOCAL_FAILURE_CODES | SAFE_SYSTEMIC_FAILURE_CODES
+            | {"TECHNICAL_ROUND_TRIP_INCOMPLETE"})
+        assert record.get("assertion_type", "UNCLASSIFIED") in SAFE_SYSTEMIC_TYPES
     target = out.with_name("prhead-overlay-" + slug + "-CASE.json")
     staging = target.with_name(target.name + ".tmp")
     staging.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
@@ -156,13 +237,17 @@ def fanout_cases(execute, verify_pin, persist) -> tuple[list[dict], bool]:
                               "assertion_type": failure.kind,
                               "failure_code": failure.code,
                               "candidate_round_trip": False}
-            except Exception:
-                # Never publish an unknown exception or its argument text:
-                # contract/provenance/infrastructure failures stop the fanout.
+            except Exception as exc:
+                # Keep the actual AUDITED class/code; never its raw message,
+                # child output, file path, question, or traceback. No recovery
+                # or further case execution after a systemic/custody failure.
                 systemic_abort = True
+                assertion_kind, code = source_safe_systemic_exception(exc)
                 record = {"cell_id": cell_id, "status": "FAIL",
                           "phase": "systemic-abort",
-                          "failure_code": "SYSTEMIC_ABORT",
+                          "abort_kind": "SYSTEMIC_ABORT",
+                          "assertion_type": assertion_kind,
+                          "failure_code": code,
                           "candidate_round_trip": False}
         if record["cell_id"] != cell_id or record["status"] not in CASE_STATUSES:
             raise AssertionError("R14_FANOUT_RECORD_INTEGRITY")
@@ -179,12 +264,14 @@ def fanout_self_test() -> None:
         output = Path(td) / "AGGREGATE.json"
         secret = "ORIGINAL_QUESTION_CONTENT_MUST_NOT_ESCAPE"
 
-        def execute_for(fails, systemic_at=None):
+        def execute_for(fails, systemic_at=None, systemic_error=None):
             visited = []
 
             def synthetic_execute(root, slug):
                 visited.append(slug)
                 if slug == systemic_at:
+                    if systemic_error is not None:
+                        raise systemic_error
                     raise RuntimeError(secret)
                 if slug in fails:
                     raise CaseLocalFailure("native-evidence", "QRT-" + slug.upper(),
@@ -221,11 +308,81 @@ def fanout_self_test() -> None:
         middle = CASES[10][1]
         records, stopped, visited = execute_for(set(), systemic_at=middle)
         assert stopped and len(visited) == 11
-        assert records[10]["failure_code"] == "SYSTEMIC_ABORT"
+        assert records[10]["abort_kind"] == "SYSTEMIC_ABORT"
+        assert records[10]["assertion_type"] == "RuntimeError"
+        assert records[10]["failure_code"] == "SYSTEMIC_RUNTIME_ERROR_UNCLASSIFIED"
         assert all(x["status"] == "NOT_REACHED" for x in records[11:])
         assert len(records) == 21
         assert all(not x["candidate_round_trip"] for x in records[10:])
-    print("R14 21-case diagnostic fanout synthetic controls: PASS")
+        # Do not leak secret through an unknown exception type or its args.
+        class UntrustedError(Exception):
+            pass
+        records, stopped, visited = execute_for(
+            set(), systemic_at=middle, systemic_error=UntrustedError(secret))
+        assert stopped and len(visited) == 11
+        assert records[10]["assertion_type"] == "UNCLASSIFIED"
+        assert records[10]["failure_code"] == "SYSTEMIC_ABORT_UNCLASSIFIED"
+        # Preserve ONLY an audited, exact harness-assertion code.
+        assert source_safe_systemic_exception(
+            AssertionError("SOURCE_MANIFEST_OR_PACKAGE_BLOB_CHANGED")) == (
+                "AssertionError", "SOURCE_MANIFEST_OR_PACKAGE_BLOB_CHANGED")
+        assert source_safe_systemic_exception(
+            AssertionError("SOURCE_COMMIT_CHANGED: " + secret)) == (
+                "AssertionError", "SYSTEMIC_ASSERTION_UNCLASSIFIED")
+        assert source_safe_systemic_exception(
+            FileNotFoundError(secret)) == (
+                "FileNotFoundError", "SYSTEMIC_FILE_NOT_FOUND")
+        assert source_safe_systemic_exception(
+            KeyError(secret)) == ("KeyError", "SYSTEMIC_KEY_NOT_FOUND")
+
+        # A real imported ContractError child (not a mocked return value)
+        # must preserve its allowlisted systemic code across the production
+        # call(), the individual case receipt, and the on-disk child receipt.
+        child = (
+            "from qrt_intent_contract import ContractError\n"
+            "raise ContractError('SOURCE_CHANGED_SINCE_CONTRACT: "
+            + secret + "')\n"
+        )
+        source_dir = Path(__file__).resolve().parent
+        native_diag = Path(td) / "real-systemic-child-FAILURE-CODE.json"
+        def real_systemic_case(_root, slug):
+            call([sys.executable, "-c", child], cwd=source_dir,
+                 phase="native-evidence", cell_id="QRT-" + slug.upper(),
+                 diagnostic_out=native_diag)
+            raise AssertionError("R14_REAL_SYSTEMIC_CHILD_UNEXPECTED_PASS")
+
+        def verified_pin(_root, _slug):
+            return None
+        visited = []
+        def execute_real_at_third(root, slug):
+            visited.append(slug)
+            if len(visited) == 3:
+                return real_systemic_case(root, slug)
+            return {"cell_id": "QRT-" + slug.upper(), "status": "PASS",
+                    "phase": "browser-navigation", "failure_code": None,
+                    "candidate_round_trip": True}
+        systemic_records, aborted = fanout_cases(
+            execute_real_at_third, verified_pin,
+            lambda slug, record: case_receipt(output, slug, record))
+        assert aborted and len(visited) == 3
+        third = systemic_records[2]
+        assert third["cell_id"] == "QRT-RETRIEVE-D2"
+        assert third["abort_kind"] == "SYSTEMIC_ABORT"
+        assert third["assertion_type"] == "ContractError"
+        assert third["failure_code"] == "SOURCE_CHANGED_SINCE_CONTRACT"
+        assert all(item["status"] == "NOT_REACHED"
+                   for item in systemic_records[3:])
+        child_written = native_diag.read_text(encoding="utf-8")
+        child_receipt = json.loads(child_written)
+        assert child_receipt["failure_code"] == "SOURCE_CHANGED_SINCE_CONTRACT"
+        assert child_receipt["assertion_type"] == "ContractError"
+        assert child_receipt["candidate_21_case_result"] == "NOT_QUALIFIED"
+        persisted = output.with_name(
+            "prhead-overlay-retrieve-d2-CASE.json").read_text(encoding="utf-8")
+        assert json.loads(persisted) == third
+        assert secret not in persisted and secret not in child_written
+        assert "Traceback" not in persisted and "Traceback" not in child_written
+    print("R14 21-case diagnostic fanout + source-safe systemic class/code: PASS")
 
 
 def source_safe_assertion(output: str) -> tuple[str, str]:
@@ -407,8 +564,7 @@ def call(args: list[str], *, cwd: Path | None = None,
                 and cell_id in {"QRT-" + slug.upper() for _, slug in CASES}
                 and code in CASE_LOCAL_FAILURE_CODES):
             raise CaseLocalFailure(phase, cell_id, assertion_kind, code)
-        raise RuntimeError(f"R14 child rejected ({phase or 'unknown-phase'}): "
-                           f"{assertion_kind}: {code} [untrusted detail redacted]")
+        raise ChildProcessFailure(phase, assertion_kind, code)
     return proc.stdout.strip()
 
 
