@@ -64,6 +64,38 @@ class RelationshipEvidenceTests(unittest.TestCase):
         self.assertEqual(r["relationship_counts"]["TOPIC_NAV_ONLY"], 1)
         self.assertEqual(r["questions"][0]["explicit_unit_ids"], [])
 
+    def test_topic_only_emits_per_id_review_not_a_concept_pass(self):
+        self.core_a["linked_core2_refs"] = []
+        self.flush()
+        r = self.inspect()
+        self.assertEqual(r["relationship_review_counts"]["TOPIC_ONLY_NOT_CONCEPT_LINK"], 1)
+        item = r["relationship_review_queue"][0]
+        self.assertEqual(item["question_id"], "SYN-Q1")
+        self.assertEqual(item["source_basis"], "BUILDER_TOPIC_NAVIGATION_ONLY")
+        self.assertEqual(item["verdict"], "REVIEW_REQUIRED")
+        self.assertFalse(item["same_inferential_jump_proven"])
+        self.assertEqual(item["explicit_unit_ids"], [])
+        self.assertEqual(item["candidate_unit_ids"], ["SYN-UNIT"])
+        self.assertEqual(r["questions"][0]["relationship_evidence"], item)
+
+    def test_explicit_ref_still_requires_crux_specific_review(self):
+        r = self.inspect()
+        item = r["relationship_review_queue"][0]
+        self.assertEqual(item["code"], "EXPLICIT_UNIT_INFERENTIAL_JUMP_UNREVIEWED")
+        self.assertEqual(item["source_basis"], "DECLARED_CORE1A_LINK_ONLY")
+        self.assertEqual(item["explicit_unit_ids"], ["SYN-UNIT"])
+        self.assertFalse(item["same_inferential_jump_proven"])
+        self.assertEqual(item["canonical_core_role_acceptance"], "NOT_GRANTED")
+
+    def test_unmapped_fallback_does_not_gain_topic_only_credit(self):
+        self.core_a["linked_core2_refs"] = []
+        self.question["taxonomy"]["topic_label"] = "not routed"
+        self.flush()
+        r = self.inspect()
+        self.assertEqual(r["relationship_review_counts"]["UNDECLARED_TOPIC_FALLBACK_NOT_CONCEPT_LINK"], 1)
+        self.assertEqual(r["relationship_review_queue"][0]["candidate_unit_ids"], [])
+        self.assertEqual(r["status"], "FAIL")
+
     def test_unmapped_topic_fallback_is_not_considered_a_link(self):
         self.question["taxonomy"]["topic_label"] = "Unmapped mathematical topic"
         self.core_a["linked_core2_refs"] = []
