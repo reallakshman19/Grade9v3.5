@@ -89,18 +89,31 @@ SAFE_FAILURE_FALLBACKS = (
 )
 
 
-def source_safe_failure_code(output: str) -> str:
-    """Extract only an audited literal code; arbitrary message bytes remain private."""
+def source_safe_assertion(output: str) -> tuple[str, str]:
+    """Return the child's REAL audited assertion class/code, never source text.
+
+    Do not mistake a code occurring in original question text or a traceback
+    argument for the assertion: match an exception terminator line only.
+    The detail after the code may be private and is deliberately discarded.
+    """
     import re
-    codes = re.findall(r"(?<![A-Z0-9_])[A-Z][A-Z0-9_]{6,}(?![A-Z0-9_])",
-                       output)
-    allowlisted = [code for code in codes if code in SAFE_NATIVE_FAILURE_CODES]
-    if allowlisted:
-        return allowlisted[-1]
+    matches = re.findall(
+        r"(?m)^[ \\t]*(ContractError|AssertionError|RuntimeError):[ \\t]*"
+        r"([A-Z][A-Z0-9_]{6,})(?=[: \\t]|$)",
+        output,
+    )
+    for kind, code in reversed(matches):
+        if code in SAFE_NATIVE_FAILURE_CODES:
+            return kind, code
     for error_kind, safe in SAFE_FAILURE_FALLBACKS:
         if error_kind in output:
-            return safe
-    return "UNCLASSIFIED_SUBPROCESS_FAILURE"
+            return error_kind.removesuffix(":"), safe
+    return "UNCLASSIFIED", "UNCLASSIFIED_SUBPROCESS_FAILURE"
+
+
+def source_safe_failure_code(output: str) -> str:
+    """Compatibility helper: sanitized code, NOT an arbitrary stdout token."""
+    return source_safe_assertion(output)[1]
 
 
 def diagnostic_self_test() -> None:
@@ -113,6 +126,11 @@ def diagnostic_self_test() -> None:
               "\\nContractError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
     classified = source_safe_failure_code(sample)
     assert classified == "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT"
+    assert source_safe_assertion(sample) == (
+        "ContractError", "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
+    assert source_safe_failure_code(
+        "original page says CORE1B_GOLDEN_RECONSTRUCTION_DRIFT") == (
+            "UNCLASSIFIED_SUBPROCESS_FAILURE")
     assert secret not in classified
     assert source_safe_failure_code(secret) == "UNCLASSIFIED_SUBPROCESS_FAILURE"
     assert source_safe_failure_code(
@@ -140,11 +158,14 @@ def diagnostic_self_test() -> None:
         assert receipt["phase"] == "native-evidence"
         assert receipt["cell_id"] == "QRT-EXPLAIN-D3"
         assert receipt["failure_code"] == "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT"
+        assert receipt["assertion_type"] == "ContractError"
         assert receipt["exit_code"] == 1
         assert receipt["candidate_21_case_result"] == "NOT_QUALIFIED"
         assert receipt["native_return_counts_admissible"] is False
         assert receipt["no_source_text_or_raw_traceback"] is True
         assert secret not in written
+        assert secret not in str(err)
+        assert "ContractError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT" in str(err)
     print("R14 source-safe classifier + on-disk JSON round-trip: PASS")
 
 
@@ -156,7 +177,7 @@ def call(args: list[str], *, cwd: Path | None = None,
                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     if proc.returncode:
         # Do NOT print proc.stdout/stderr: it can contain source question content.
-        code = source_safe_failure_code(proc.stdout)
+        assertion_kind, code = source_safe_assertion(proc.stdout)
         if phase is not None and diagnostic_out is not None:
             if phase not in {"renderer-build", "native-evidence",
                              "browser-navigation"} or cell_id not in {
@@ -169,6 +190,7 @@ def call(args: list[str], *, cwd: Path | None = None,
                 "phase": phase,
                 "cell_id": cell_id,
                 "failure_code": code,
+                "assertion_type": assertion_kind,
                 "exit_code": proc.returncode,
                 "no_source_text_or_raw_traceback": True,
                 "native_return_counts_admissible": False,
@@ -180,10 +202,11 @@ def call(args: list[str], *, cwd: Path | None = None,
             diagnostic_out.parent.mkdir(parents=True, exist_ok=True)
             diagnostic_out.write_text(json.dumps(receipt, indent=2) + "\n",
                                       encoding="utf-8")
-            print(f"R14_SOURCE_SAFE_FAILURE phase={phase} cell={cell_id} "
-                  f"code={code}; candidate 21 cases HOLD, no renderer verdict",
+            print(f"R14_SOURCE_SAFE_ASSERTION phase={phase} cell={cell_id} "
+                  f"{assertion_kind}: {code}; candidate 21 cases HOLD, no renderer verdict",
                   file=sys.stderr)
-        raise RuntimeError("R14_CHILD_REJECTED_CODE_" + code)
+        raise RuntimeError(f"R14 child rejected ({phase or 'unknown-phase'}): "
+                           f"{assertion_kind}: {code} [untrusted detail redacted]")
     return proc.stdout.strip()
 
 
