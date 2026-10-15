@@ -1,0 +1,30 @@
+name: IMO182 R13 source-SHA native engineering repair matrix
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/imo182-r13-native-repair-matrix.yml'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_repair_matrix.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_r13_native_repair_matrix.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-matrix-falsifiers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile and run exact-source repair matrix negative controls
+        run: |
+          python -m py_compile \
+            TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_repair_matrix.py \
+            TEST/imo-research/qrt-tiles/reconciliation/test_qrt_r13_native_repair_matrix.py
+          python -m unittest discover \
+            -s TEST/imo-research/qrt-tiles/reconciliation \
+            -p test_qrt_r13_native_repair_matrix.py -v
