@@ -25,7 +25,7 @@ FACTOR_NAMES = set(question_difficulty.COMPONENT_KEYS)
 
 
 def git_blob_sha(raw: bytes) -> str:
-    return hashlib.sha1(f"blob {len(raw)}\\0".encode().replace(b"\\0", b"\\x00") + raw).hexdigest()
+    return hashlib.sha1(f"blob {len(raw)}".encode("ascii") + bytes((0,)) + raw).hexdigest()
 
 
 class FiveFactorBatch01EvidenceTests(unittest.TestCase):
