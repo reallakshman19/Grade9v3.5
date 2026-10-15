@@ -339,9 +339,9 @@ def fanout_self_test() -> None:
         # must preserve its allowlisted systemic code across the production
         # call(), the individual case receipt, and the on-disk child receipt.
         child = (
-            "from qrt_intent_contract import ContractError\\n"
+            "from qrt_intent_contract import ContractError\n"
             "raise ContractError('SOURCE_CHANGED_SINCE_CONTRACT: "
-            + secret + "')\\n"
+            + secret + "')\n"
         )
         source_dir = Path(__file__).resolve().parent
         native_diag = Path(td) / "real-systemic-child-FAILURE-CODE.json"
