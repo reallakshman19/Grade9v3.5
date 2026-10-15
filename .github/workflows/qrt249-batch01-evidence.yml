@@ -1,4 +1,4 @@
-name: QRT249 frozen five-factor evidence regression
+name: QRT249 frozen five-factor evidence regressions
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout frozen evidence commit
         uses: actions/checkout@v4
         with:
-          ref: f7bdc05c061de074c2bc0d3c218154b4760af336
+          ref: 8eb5065175bf00469317e3992206776fa6b39d55
           persist-credentials: false
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -26,6 +26,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD)" = "f7bdc05c061de074c2bc0d3c218154b4760af336"
-      - name: Run Batch 01 source-side falsification test
-        run: python -m unittest tests/test_imo_five_factor_batch01.py -v
+          test "$(git rev-parse HEAD)" = "8eb5065175bf00469317e3992206776fa6b39d55"
+      - name: Run Batch 01 and Batch 02 source-side falsification tests
+        run: python -m unittest tests/test_imo_five_factor_batch01.py tests/test_imo_five_factor_batch02.py -v
