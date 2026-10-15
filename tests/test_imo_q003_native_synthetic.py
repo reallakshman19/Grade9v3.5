@@ -9,6 +9,7 @@ Run only inside a full Grade9v3.5 checkout, without network access:
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -177,6 +178,8 @@ def snapshot(path: Path) -> dict:
     }
 
 
+@unittest.skipUnless(importlib.util.find_spec('jsonschema') is not None,
+                     'native smoke requires jsonschema; run dedicated Q003 native workflow')
 class Q003SyntheticNativeSmoke(unittest.TestCase):
     def test_native_core2_then_core1a_against_golden(self):
         self.assertTrue((ROOT / "Shared/tools/render_core.py").is_file(),
