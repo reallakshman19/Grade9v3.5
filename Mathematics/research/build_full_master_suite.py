@@ -343,7 +343,7 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
     
     # Topic Card Wrapper with Visual Color Band
     parts.append(f"""
-    <div class="topic-module-card" id="{card_id}" data-topic="{html.escape(topic_name)}" data-band="{band}" data-folder="{unit['folder']}" data-unit-id="{unit_id}" style="margin:28px 0;background:var(--card);border:1.5px solid var(--border);border-top:6px solid {palette['primary']};border-radius:12px;padding:24px;box-shadow:0 6px 20px rgba(0,0,0,0.22);position:relative">
+    <div class="topic-module-card" id="{card_id}" data-topic="{html.escape(topic_name)}" data-band="{band}" data-folder="{unit['folder']}" data-unit-id="{unit_id}" data-package-id="{html.escape(str(c1a.get('package_id') or unit_id))}" style="margin:28px 0;background:var(--card);border:1.5px solid var(--border);border-top:6px solid {palette['primary']};border-radius:12px;padding:24px;box-shadow:0 6px 20px rgba(0,0,0,0.22);position:relative">
       <!-- TOP VISUAL COLOR ACCENT BAR -->
       <div style="height:4px;width:100%;background:linear-gradient(90deg, {palette['primary']}, transparent);border-radius:2px;margin-bottom:16px"></div>
 
@@ -2537,7 +2537,7 @@ def main():
         )
         if cell == "QRT-RETRIEVE-D1":
             if explicit_core_unit:
-                core_action = f"jumpToCoreUnit('{explicit_core_unit['unit_id']}')"
+                core_action = f"jumpToCoreUnit('{explicit_core_unit['c1a'].get('package_id') or explicit_core_unit['unit_id']}')"
                 core_label = "Linked Core 1A/1B"
             else:
                 core_action = f"jumpToCore1('{unit_folder}')"
@@ -3069,7 +3069,7 @@ def main():
       filterCore1ByTopic('ALL');
       setTimeout(() => {
         const mod = Array.from(document.querySelectorAll('#tab-core1-all .topic-module-card'))
-          .find(m => m.getAttribute('data-unit-id') === unitId);
+          .find(m => m.getAttribute('data-package-id') === unitId);
         if (mod) {
           mod.scrollIntoView({ behavior: 'smooth', block: 'start' });
           mod.classList.add('highlighted');
