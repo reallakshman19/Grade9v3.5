@@ -98,7 +98,7 @@ def source_safe_assertion(output: str) -> tuple[str, str]:
     """
     import re
     matches = re.findall(
-        r"(?m)^[ \t]*(?:qrt_intent_contract\\.)?"
+        r"(?m)^[ \t]*(?:qrt_intent_contract\.)?"
         r"(ContractError|AssertionError|RuntimeError):[ \t]*"
         r"([A-Z][A-Z0-9_]{6,})(?=[: \t]|$)",
         output,
@@ -179,9 +179,9 @@ def diagnostic_self_test() -> None:
     # Exercise a REAL Python child and the repository's imported exception;
     # a mocked bare 'ContractError:' previously missed the qualified traceback.
     child_script = (
-        "from qrt_intent_contract import ContractError\\n"
+        "from qrt_intent_contract import ContractError\n"
         "raise ContractError('CORE1B_GOLDEN_RECONSTRUCTION_DRIFT: "
-        + secret + "')\\n"
+        + secret + "')\n"
     )
     child_command = [sys.executable, "-c", child_script]
     child_cwd = Path(__file__).resolve().parent
