@@ -29,7 +29,7 @@ def html_card(*, reveal="", option_style="", band="D1", demand="RETRIEVE",
     attrs = f' data-band="{band}" data-demand="{demand}"'
     body = f'''
     <div class="qb-badge-qrt">QRT-{demand}-{band}</div>
-    <button onclick="{global_link}" class="qb-badge">Core 1A/1B</button>
+    <button onclick="{global_link}" class="qb-badge" data-core-unit-id="UNIT-Q">Core 1A/1B</button>
     <div class="qb-options-grid">
       <div class="qb-option-card" {option_style}>(A) 1/3</div>
       <div class="qb-option-card">(B) 1/2</div>
@@ -54,7 +54,8 @@ def html_card(*, reveal="", option_style="", band="D1", demand="RETRIEVE",
     return attrs, body
 
 
-CORE = {"same_inferential_jump_proven": True, "code": "EXPLICIT_CRUX_JUMP_WITNESSED"}
+CORE = {"same_inferential_jump_proven": False, "explicit_unit_ids": ["UNIT-Q"],
+        "code": "EXPLICIT_UNIT_INFERENTIAL_JUMP_UNREVIEWED"}
 
 
 class RetrieveD1Tests(unittest.TestCase):
