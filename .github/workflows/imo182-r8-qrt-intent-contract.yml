@@ -15,6 +15,8 @@ on:
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_coverage.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_review_handoff.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_repair_matrix.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_prhead_overlay_qualification.py'
+      - 'Shared/tools/render_core.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_r13_native_repair_matrix.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json'
       - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_intent_contract.py'
@@ -760,6 +762,15 @@ jobs:
           assert matrix["release"]=="HOLD"
           print("R13 real source-bound native repair matrix: 21 source-bound reports, 7 held source cases; no artificial release")
           PY
+      - name: R14 candidate harness syntax review (no product counts)
+        run: python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_prhead_overlay_qualification.py
+      - name: R14 PR-head native overlay qualification (manual AFTER Agent B exact-SHA harness PASS)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          set -euo pipefail
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_prhead_overlay_qualification.py \
+            --out build/imo182-r8-intent/prhead-overlay-CANDIDATE-UNREVIEWED.json
+          echo "Candidate file is not an accepted 21-cell result; Agent B exact-SHA review required."
       - name: Keep review hypothesis evidence and immutable original source/manifest fingerprints
         if: always()
         uses: actions/upload-artifact@v4
