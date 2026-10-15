@@ -1,0 +1,33 @@
+name: QRT249 frozen five-factor blueprint proofs
+
+on:
+  push:
+    branches:
+      - repair/qrt249-fivefactor-evidence-batch01
+
+permissions:
+  contents: read
+
+jobs:
+  frozen-batch01:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout frozen evidence commit
+        uses: actions/checkout@v4
+        with:
+          ref: db7da09b611414c2b74b054f270005de0eb0efb3
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assert exact tested source HEAD
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "db7da09b611414c2b74b054f270005de0eb0efb3"
+      - name: Run Batch 01 and Batch 02 falsifiers plus 28-record blueprint proof
+        run: python -m unittest tests/test_imo_five_factor_batch01.py tests/test_imo_five_factor_batch02.py tests/test_imo_five_factor_blueprint_proof_28.py -v
+      - name: Check QRT matrix canonical compilation
+        run: python Shared/tools/question_review_matrix.py check
