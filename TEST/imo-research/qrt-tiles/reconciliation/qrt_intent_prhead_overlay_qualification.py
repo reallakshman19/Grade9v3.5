@@ -89,6 +89,145 @@ SAFE_FAILURE_FALLBACKS = (
 )
 
 
+# A failure in a specific rendered role is diagnostic, not a source-pin override.
+# Provenance, receipt-integrity, unclassified errors and infrastructure errors
+# MUST abort the remaining executions; they can never be treated as case-local.
+CASE_LOCAL_FAILURE_CODES = frozenset((
+    "GOLDEN_COMPONENT_MISMATCH",
+    "GOLDEN_SLOT_MISMATCH",
+    "ROLE_BLUEPRINT_MISMATCH",
+    "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT",
+))
+CASE_STATUSES = frozenset(("PASS", "FAIL", "NOT_REACHED"))
+
+
+class CaseLocalFailure(RuntimeError):
+    """Explicit audited technical failure for one pinned case only."""
+
+    def __init__(self, phase: str, cell_id: str, kind: str, code: str):
+        assert code in CASE_LOCAL_FAILURE_CODES
+        self.phase, self.cell_id, self.kind, self.code = (
+            phase, cell_id, kind, code)
+        super().__init__(f"R14_CASE_LOCAL {phase} {cell_id} {kind}: {code}")
+
+
+def case_receipt(out: Path, slug: str, record: dict) -> None:
+    """Atomically persist one audited per-case JSON receipt, never raw HTML."""
+    assert slug in {entry[1] for entry in CASES}
+    assert record["cell_id"] == "QRT-" + slug.upper()
+    assert record["status"] in CASE_STATUSES
+    if record["status"] == "FAIL":
+        assert record["failure_code"] in (
+            CASE_LOCAL_FAILURE_CODES | {"SYSTEMIC_ABORT",
+                                       "TECHNICAL_ROUND_TRIP_INCOMPLETE"})
+    target = out.with_name("prhead-overlay-" + slug + "-CASE.json")
+    staging = target.with_name(target.name + ".tmp")
+    staging.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+    staging.replace(target)
+
+
+def fanout_cases(execute, verify_pin, persist) -> tuple[list[dict], bool]:
+    """Observe all 21 unless an actual systemic/custody failure stops work.
+
+    All statuses are diagnostic only. An aborted run still emits 21 records,
+    marking unattempted cells NOT_REACHED, without pretending they failed.
+    """
+    reports: list[dict] = []
+    systemic_abort = False
+    for root, slug in CASES:
+        cell_id = "QRT-" + slug.upper()
+        if systemic_abort:
+            record = {"cell_id": cell_id, "status": "NOT_REACHED",
+                      "phase": "systemic-abort", "failure_code": None,
+                      "candidate_round_trip": False}
+        else:
+            try:
+                try:
+                    record = execute(root, slug)
+                    verify_pin(root, slug)
+                except CaseLocalFailure as failure:
+                    # If the underlying source changed while processing, the
+                    # apparent local mismatch is a systemic source-custody fault.
+                    verify_pin(root, slug)
+                    if failure.cell_id != cell_id:
+                        raise AssertionError("R14_WRONG_CASE_EXCEPTION")
+                    record = {"cell_id": cell_id, "status": "FAIL",
+                              "phase": failure.phase,
+                              "assertion_type": failure.kind,
+                              "failure_code": failure.code,
+                              "candidate_round_trip": False}
+            except Exception:
+                # Never publish an unknown exception or its argument text:
+                # contract/provenance/infrastructure failures stop the fanout.
+                systemic_abort = True
+                record = {"cell_id": cell_id, "status": "FAIL",
+                          "phase": "systemic-abort",
+                          "failure_code": "SYSTEMIC_ABORT",
+                          "candidate_round_trip": False}
+        if record["cell_id"] != cell_id or record["status"] not in CASE_STATUSES:
+            raise AssertionError("R14_FANOUT_RECORD_INTEGRITY")
+        persist(slug, record)
+        reports.append(record)
+    assert len(reports) == 21
+    assert len({r["cell_id"] for r in reports}) == 21
+    return reports, systemic_abort
+
+
+def fanout_self_test() -> None:
+    """Case-specific early/middle/late failure and systemic-stop controls."""
+    with tempfile.TemporaryDirectory(prefix="r14-21-fanout-synthetic-") as td:
+        output = Path(td) / "AGGREGATE.json"
+        secret = "ORIGINAL_QUESTION_CONTENT_MUST_NOT_ESCAPE"
+
+        def execute_for(fails, systemic_at=None):
+            visited = []
+
+            def synthetic_execute(root, slug):
+                visited.append(slug)
+                if slug == systemic_at:
+                    raise RuntimeError(secret)
+                if slug in fails:
+                    raise CaseLocalFailure("native-evidence", "QRT-" + slug.upper(),
+                                           "ContractError", "GOLDEN_COMPONENT_MISMATCH")
+                return {"cell_id": "QRT-" + slug.upper(), "status": "PASS",
+                        "phase": "browser-navigation", "failure_code": None,
+                        "candidate_round_trip": True}
+
+            def verify_pin(_root, _slug):
+                return None
+
+            seen, aborted = fanout_cases(
+                synthetic_execute, verify_pin,
+                lambda slug, record: case_receipt(output, slug, record))
+            for root, slug in CASES:
+                receipt = json.loads(output.with_name(
+                    "prhead-overlay-" + slug + "-CASE.json").read_text(
+                        encoding="utf-8"))
+                assert receipt == next(x for x in seen
+                                       if x["cell_id"] == "QRT-" + slug.upper())
+                assert secret not in json.dumps(receipt)
+            return seen, aborted, visited
+
+        all_pass, stopped, visited = execute_for(set())
+        assert len(visited) == 21 and not stopped
+        assert sum(x["status"] == "PASS" for x in all_pass) == 21
+        for position in (0, 10, 20):
+            failing_slug = CASES[position][1]
+            records, stopped, visited = execute_for({failing_slug})
+            assert len(visited) == 21 and not stopped
+            assert sum(x["status"] == "FAIL" for x in records) == 1
+            assert records[position]["failure_code"] == "GOLDEN_COMPONENT_MISMATCH"
+            assert sum(x["status"] == "PASS" for x in records) == 20
+        middle = CASES[10][1]
+        records, stopped, visited = execute_for(set(), systemic_at=middle)
+        assert stopped and len(visited) == 11
+        assert records[10]["failure_code"] == "SYSTEMIC_ABORT"
+        assert all(x["status"] == "NOT_REACHED" for x in records[11:])
+        assert len(records) == 21
+        assert all(not x["candidate_round_trip"] for x in records[10:])
+    print("R14 21-case diagnostic fanout synthetic controls: PASS")
+
+
 def source_safe_assertion(output: str) -> tuple[str, str]:
     """Return the child's REAL audited assertion class/code, never source text.
 
@@ -223,6 +362,7 @@ def diagnostic_self_test() -> None:
         assert secret not in imported_error
         assert "Traceback" not in imported_bytes
         assert "Traceback" not in imported_error
+    fanout_self_test()
     print("R14 source-safe classifier + on-disk JSON round-trip + "
           "real imported-ContractError subprocess: PASS")
 
@@ -263,6 +403,10 @@ def call(args: list[str], *, cwd: Path | None = None,
             print(f"R14_SOURCE_SAFE_ASSERTION phase={phase} cell={cell_id} "
                   f"{assertion_kind}: {code}; candidate 21 cases HOLD, no renderer verdict",
                   file=sys.stderr)
+        if (phase in {"renderer-build", "native-evidence", "browser-navigation"}
+                and cell_id in {"QRT-" + slug.upper() for _, slug in CASES}
+                and code in CASE_LOCAL_FAILURE_CODES):
+            raise CaseLocalFailure(phase, cell_id, assertion_kind, code)
         raise RuntimeError(f"R14 child rejected ({phase or 'unknown-phase'}): "
                            f"{assertion_kind}: {code} [untrusted detail redacted]")
     return proc.stdout.strip()
@@ -320,110 +464,140 @@ def main() -> None:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     # Isolated git worktrees preserve source checkouts and all original R8
     # native HTML, per-page render receipts and frozen golden SHA receipts.
+    held = set(by_cell) - {"QRT-" + slug.upper() for _, slug in CASES}
+    if len(held) != 7:
+        raise AssertionError("SOURCE_HELD_SEVEN_MUST_REMAIN_HELD")
+    if len({r["cell_id"] for r in by_cell.values()}) != 28:
+        raise AssertionError("ORIGINAL_QRT_28_WITNESS_DUPLICATION")
     with tempfile.TemporaryDirectory(prefix="imo182-prhead-", dir=str(args.out.parent.resolve())) as td:
         temp = Path(td)
         overlays: dict[str, Path] = {}
+
+        def execute_case(root: str, slug: str) -> dict:
+            cid = "QRT-" + slug.upper()
+            witness = by_cell[cid]
+            original = Path(root).resolve()
+            original_source_is_pinned(original, witness)
+            expected_manifest = witness["source_pin"]["manifest_path"]
+            if root not in overlays:
+                shadow = temp / root
+                call(["git", "-C", str(original), "worktree", "add",
+                      "--detach", "-q", str(shadow), witness["source_pin"]["commit"]])
+                overlays[root] = shadow
+                (shadow / RENDERER).write_bytes(renderer.read_bytes())
+            shadow = overlays[root]
+            manifest = shadow / expected_manifest
+            if blob_sha(manifest) != witness["source_pin"]["manifest_blob"]:
+                raise AssertionError("OVERLAY_MANIFEST_BLOB_CHANGED")
+            if blob_sha(shadow / witness["source_pin"]["source_path"]) != (
+                witness["source_pin"]["source_blob"]
+            ):
+                raise AssertionError("OVERLAY_QUESTION_SOURCE_BLOB_CHANGED")
+            selected = json.loads(manifest.read_text(encoding="utf-8"))["selection"]
+            if selected["core2a"] != [witness["primary_question_id"]]:
+                raise AssertionError("SELECTED_ORIGINAL_QUESTION_DRIFT")
+            target = shadow / "build/imo182-qrt/prhead" / slug
+            alternate = shadow / "build/imo182-qrt/prhead-repeat" / slug
+            for where in (target, alternate):
+                call([sys.executable, str(shadow / RENDERER), "build",
+                      "--manifest", expected_manifest, "--out", str(where),
+                      "--mode", "PAGES", "--reference", "--draft"], cwd=shadow,
+                     phase="renderer-build", cell_id=cid,
+                     diagnostic_out=args.out.with_name("prhead-overlay-" + slug + "-FAILURE-CODE.json"))
+            candidate_contract = temp / (slug + "-prhead-native.json")
+            call([sys.executable, str(RECONCILIATION / "qrt_intent_native_evidence.py"),
+                  "--contract", str(Path("build/imo182-r8-intent") / (slug + ".json")),
+                  "--source-root", str(shadow), "--native-output", str(target),
+                  "--independent-rebuild", str(alternate), "--out", str(candidate_contract)],
+                 phase="native-evidence", cell_id=cid,
+                 diagnostic_out=args.out.with_name("prhead-overlay-" + slug + "-FAILURE-CODE.json"))
+            nav_path = temp / (slug + "-prhead-navigation.json")
+            call([sys.executable, str(RECONCILIATION / "qrt_intent_real_navigation.py"),
+                  "--native-contract", str(candidate_contract),
+                  "--source-root", str(shadow), "--native-output", str(target),
+                  "--out", str(nav_path)],
+                 phase="browser-navigation", cell_id=cid,
+                 diagnostic_out=args.out.with_name("prhead-overlay-" + slug + "-FAILURE-CODE.json"))
+            nav = json.loads(nav_path.read_text(encoding="utf-8"))
+            journey = nav["postcommit_native_journey"]
+            observed = journey["observed"]
+            if nav["cell_id"] != cid or journey["source_question_id"] != witness["primary_question_id"]:
+                raise AssertionError("PR_HEAD_SOURCE_QID_NOT_PINNED")
+            if observed["independent_credit_claimed"]:
+                raise AssertionError("ASSISTED_RETURN_FALSE_INDEPENDENT_CREDIT")
+            record = {
+                "cell_id": cid,
+                "status": "PASS" if journey["technical_round_trip_complete"] else "FAIL",
+                "phase": "browser-navigation",
+                "failure_code": (None if journey["technical_round_trip_complete"]
+                                 else "TECHNICAL_ROUND_TRIP_INCOMPLETE"),
+                "source_commit": witness["source_pin"]["commit"],
+                "original_source_blob": witness["source_pin"]["source_blob"],
+                "original_manifest_blob": witness["source_pin"]["manifest_blob"],
+                "renderer_head_sha": head,
+                "renderer_sha256": renderer_digest,
+                "page_sha256": json.loads(candidate_contract.read_text(
+                    encoding="utf-8"))["native_evidence"]["roles"]["CORE2A"]["native_sha256"],
+                "postcommit": {k: bool(observed[k]) for k in (
+                    "attempt_blank_rejected", "nonempty_attempt_committed",
+                    "precommit_solution_locked", "postcommit_context_link_present",
+                    "context_link_is_pinned", "concept_reached", "concept_is_pinned",
+                    "return_link_present", "return_link_is_pinned",
+                    "same_question_reached", "attempt_text_restored",
+                    "assistance_marked", "independent_credit_claimed")},
+                "candidate_round_trip": bool(journey["technical_round_trip_complete"]),
+                "finding_codes": list(journey["findings"]),
+                "academic_acceptance": False,
+                "owner_acceptance": False,
+            }
+            original_source_is_pinned(original, witness)
+            return record
+        def verify_case_pin(root: str, slug: str) -> None:
+            original_source_is_pinned(Path(root).resolve(),
+                                      by_cell["QRT-" + slug.upper()])
+
         try:
-            for root, slug in CASES:
-                cid = "QRT-" + slug.upper()
-                witness = by_cell[cid]
-                original = Path(root).resolve()
-                original_source_is_pinned(original, witness)
-                expected_manifest = witness["source_pin"]["manifest_path"]
-                if root not in overlays:
-                    shadow = temp / root
-                    call(["git", "-C", str(original), "worktree", "add",
-                          "--detach", "-q", str(shadow), witness["source_pin"]["commit"]])
-                    overlays[root] = shadow
-                    (shadow / RENDERER).write_bytes(renderer.read_bytes())
-                shadow = overlays[root]
-                manifest = shadow / expected_manifest
-                if blob_sha(manifest) != witness["source_pin"]["manifest_blob"]:
-                    raise AssertionError("OVERLAY_MANIFEST_BLOB_CHANGED")
-                if blob_sha(shadow / witness["source_pin"]["source_path"]) != (
-                    witness["source_pin"]["source_blob"]
-                ):
-                    raise AssertionError("OVERLAY_QUESTION_SOURCE_BLOB_CHANGED")
-                selected = json.loads(manifest.read_text(encoding="utf-8"))["selection"]
-                if selected["core2a"] != [witness["primary_question_id"]]:
-                    raise AssertionError("SELECTED_ORIGINAL_QUESTION_DRIFT")
-                target = shadow / "build/imo182-qrt/prhead" / slug
-                alternate = shadow / "build/imo182-qrt/prhead-repeat" / slug
-                for where in (target, alternate):
-                    call([sys.executable, str(shadow / RENDERER), "build",
-                          "--manifest", expected_manifest, "--out", str(where),
-                          "--mode", "PAGES", "--reference", "--draft"], cwd=shadow,
-                         phase="renderer-build", cell_id=cid,
-                         diagnostic_out=args.out.with_name("prhead-overlay-FAILURE-CODE.json"))
-                candidate_contract = temp / (slug + "-prhead-native.json")
-                call([sys.executable, str(RECONCILIATION / "qrt_intent_native_evidence.py"),
-                      "--contract", str(Path("build/imo182-r8-intent") / (slug + ".json")),
-                      "--source-root", str(shadow), "--native-output", str(target),
-                      "--independent-rebuild", str(alternate), "--out", str(candidate_contract)],
-                     phase="native-evidence", cell_id=cid,
-                     diagnostic_out=args.out.with_name("prhead-overlay-FAILURE-CODE.json"))
-                nav_path = temp / (slug + "-prhead-navigation.json")
-                call([sys.executable, str(RECONCILIATION / "qrt_intent_real_navigation.py"),
-                      "--native-contract", str(candidate_contract),
-                      "--source-root", str(shadow), "--native-output", str(target),
-                      "--out", str(nav_path)],
-                     phase="browser-navigation", cell_id=cid,
-                     diagnostic_out=args.out.with_name("prhead-overlay-FAILURE-CODE.json"))
-                nav = json.loads(nav_path.read_text(encoding="utf-8"))
-                journey = nav["postcommit_native_journey"]
-                observed = journey["observed"]
-                if nav["cell_id"] != cid or journey["source_question_id"] != witness["primary_question_id"]:
-                    raise AssertionError("PR_HEAD_SOURCE_QID_NOT_PINNED")
-                if observed["independent_credit_claimed"]:
-                    raise AssertionError("ASSISTED_RETURN_FALSE_INDEPENDENT_CREDIT")
-                reports.append({
-                    "cell_id": cid,
-                    "source_commit": witness["source_pin"]["commit"],
-                    "original_source_blob": witness["source_pin"]["source_blob"],
-                    "original_manifest_blob": witness["source_pin"]["manifest_blob"],
-                    "renderer_head_sha": head,
-                    "renderer_sha256": renderer_digest,
-                    "page_sha256": json.loads(candidate_contract.read_text(
-                        encoding="utf-8"))["native_evidence"]["roles"]["CORE2A"]["native_sha256"],
-                    "postcommit": {k: bool(observed[k]) for k in (
-                        "attempt_blank_rejected", "nonempty_attempt_committed",
-                        "precommit_solution_locked", "postcommit_context_link_present",
-                        "context_link_is_pinned", "concept_reached", "concept_is_pinned",
-                        "return_link_present", "return_link_is_pinned",
-                        "same_question_reached", "attempt_text_restored",
-                        "assistance_marked", "independent_credit_claimed")},
-                    "candidate_round_trip": bool(journey["technical_round_trip_complete"]),
-                    "finding_codes": list(journey["findings"]),
-                    "academic_acceptance": False,
-                    "owner_acceptance": False,
-                })
-                original_source_is_pinned(original, witness)
+            reports, systemic_abort = fanout_cases(
+                execute_case, verify_case_pin,
+                lambda slug, record: case_receipt(args.out, slug, record))
         finally:
             for root, shadow in overlays.items():
                 call(["git", "-C", str(Path(root).resolve()), "worktree", "remove",
                       "--force", str(shadow)])
-    if len(reports) != 21 or len({r["cell_id"] for r in reports}) != 21:
-        raise AssertionError("PR_HEAD_EXACTLY_21_UNIQUE_CASES_REQUIRED")
-    held = set(by_cell) - {r["cell_id"] for r in reports}
-    if len(held) != 7:
-        raise AssertionError("SOURCE_HELD_SEVEN_MUST_REMAIN_HELD")
+    summary = {status: sum(r["status"] == status for r in reports)
+               for status in ("PASS", "FAIL", "NOT_REACHED")}
+    assert sum(summary.values()) == 21
+    assert set(r["cell_id"] for r in reports) | held == set(by_cell)
+    failed = systemic_abort or summary["FAIL"] > 0 or summary["NOT_REACHED"] > 0
     result = {
-        "schema": "imo182-prhead-overlay-candidate/v1",
-        "disposition": "PROVISIONAL_NO_COUNTS_BEFORE_AGENT_B_EXACT_COMMIT_PASS",
+        "schema": "imo182-prhead-overlay-fanout-diagnostic/v1",
+        "disposition": ("FAIL_RUN_HOLD_ALL_21_NO_RENDERER_VERDICT" if failed
+                        else "PROVISIONAL_AGENT_B_AND_OWNER_GATES_REQUIRED"),
         "renderer_head_sha": head,
         "renderer_sha256": renderer_digest,
         "historical_r8_and_frozen_golden_unchanged": True,
         "source_pinned_original_cells": 21,
         "source_held_no_candidate_render": sorted(held),
+        "observed_diagnostic_counts": summary,
+        "native_returns_observed_not_accepted": sum(
+            bool(r["candidate_round_trip"]) for r in reports),
+        "candidate_counts_admissible_before_agent_b": False,
+        "systemic_abort": systemic_abort,
         "academic_accepted": 0,
         "owner_qrt_accepted": 0,
         "release": "HOLD",
         "cells": reports,
     }
-    args.out.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n",
-                        encoding="utf-8")
-    print("PRHEAD R14 candidate generated; NOT ADMISSIBLE until Agent B PASS "
-          "on exact harness SHA; source/golden unmodified; academic/Owner HOLD")
+    stage = args.out.with_name(args.out.name + ".tmp")
+    stage.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n",
+                     encoding="utf-8")
+    stage.replace(args.out)
+    print(f"R14_SOURCE_SAFE_FANOUT pass={summary['PASS']} fail={summary['FAIL']} "
+          f"not_reached={summary['NOT_REACHED']} held=7 "
+          f"systemic_abort={systemic_abort}; ALWAYS PROVISIONAL; "
+          "academic/Owner HOLD")
+    if failed:
+        raise SystemExit("R14_FANOUT_FAILED_CLOSED; no native 21-case acceptance")
 
 
 if __name__ == "__main__":
