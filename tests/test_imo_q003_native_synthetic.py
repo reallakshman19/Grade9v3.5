@@ -202,7 +202,15 @@ class Q003SyntheticNativeSmoke(unittest.TestCase):
         self.assertTrue(c2["has_synthetic_marker"])
         self.assertGreater(c2["attempts"], 0)
         self.assertGreater(c2["commits"], 0)
-        self.assertTrue("BP-CORE2-SOURCE-QUESTION" in core2_page.read_text())
+        core2_html = core2_page.read_text(encoding="utf-8")
+        self.assertIn("BP-CORE2-SOURCE-QUESTION", core2_html)
+        self.assertIn('data-g9-response-type="single_choice"', core2_html)
+        self.assertIn("data-requires-attempt", core2_html)
+        self.assertIn("<template data-g9-payload", core2_html)
+        self.assertNotIn("Official past paper", core2_html)
+        self.assertEqual(core2_receipt.get("gaps"), [], "Core2 reference gaps must fail CI")
+        self.assertTrue({"IDENTITY", "STEM", "ATTEMPT", "SOLUTION",
+                         "SOLUTION_STEPS", "ANSWER"} <= set(c2["components"]))
         # Native, exact registered golden; never an alternate HTML composer.
         subprocess.run([sys.executable, "-I",
                         str(ROOT / "Shared/tools/build_golden.py"),
@@ -220,7 +228,9 @@ class Q003SyntheticNativeSmoke(unittest.TestCase):
         c1 = snapshot(core1a_page)
         self.assertGreater(c1["attempts"], 0)
         self.assertGreater(c1["commits"], 0)
-        self.assertTrue("BP-CORE1A-CONSTRUCTION" in core1a_page.read_text())
+        self.assertIn("BP-CORE1A-CONSTRUCTION",
+                      core1a_page.read_text(encoding="utf-8"))
+        self.assertEqual(core1a_receipt.get("gaps"), [], "Core1A reference gaps must fail CI")
         subprocess.run([sys.executable, "-I",
                         str(ROOT / "Shared/tools/build_golden.py"),
                         "--id", "G-MATH-LINEAR-CONSTRAINT"], cwd=ROOT,
