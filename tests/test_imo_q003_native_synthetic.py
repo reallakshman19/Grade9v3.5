@@ -144,7 +144,9 @@ def render(manifest: Path, out: Path) -> dict:
     )
     if proc.returncode:
         # Logs show exit status only, never the source item or rendered HTML.
-        raise AssertionError("NATIVE_RENDER_FAILED_" + str(proc.returncode))
+        # Synthetic-only page: safe to report the underlying selection/contract failure.
+        raise AssertionError("NATIVE_RENDER_FAILED_" + str(proc.returncode)
+                             + ": " + (proc.stderr or proc.stdout)[-1700:])
     return json.loads((out / "render-receipt.json").read_text(encoding="utf-8"))
 
 
