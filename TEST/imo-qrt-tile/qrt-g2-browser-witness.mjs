@@ -4,6 +4,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
+import { q022HintPreservesProtectedWork, katexWitnessPasses, coreRouteVisible } from "./qrt-g2-browser-predicates.mjs";
 
 const qrtSha = process.env.QRT_SOURCE_SHA;
 const base = process.env.QRT_BASE_URL || "http://127.0.0.1:8777";
@@ -46,12 +47,15 @@ try {
     packages: document.querySelectorAll("#tab-core1-all .topic-module-card[data-package-id]").length,
     katexApi: typeof window.renderMathInElement,
     katexNodes: document.querySelectorAll(".katex").length,
+    katexQuestionNodes: document.querySelectorAll("#tab-core2 .qb-question .katex").length,
+    katexQuestionErrors: document.querySelectorAll("#tab-core2 .qb-question .katex-error").length,
   }));
   report.initial_dom = init;
   add("BROWSER_TABS_AND_QUESTION_RENDER", init.core2 && init.core1 && init.questions >= 12,
       "Core1A/Core2 tabs and 12+ rendered questions");
-  add("BROWSER_KATEX_RUNTIME", init.katexApi === "function",
-      "renderMathInElement="+init.katexApi+"; rendered KaTeX spans="+init.katexNodes);
+  add("BROWSER_KATEX_RUNTIME", katexWitnessPasses(init),
+      "renderMathInElement="+init.katexApi+"; rendered KaTeX spans="+init.katexNodes+
+      "; question spans="+init.katexQuestionNodes+"; question errors="+init.katexQuestionErrors);
   const known = new Set(ledger.core_links.map(x => x.question_id));
   add("BROWSER_EXACT_12_QUESTION_IDS", known.size === 12,
       "Review ledger question IDs="+known.size);
@@ -76,16 +80,44 @@ try {
       if (targetCount !== 1) throw Error("target package count=" + targetCount);
       await nav.focus();
       await page.keyboard.press("Enter");
+      // The card can be scrolled into view asynchronously; wait for its
+      // actual viewport intersection, not merely an inline display attribute.
       await page.waitForFunction(key => {
         const tab = document.querySelector("#tab-core1-all");
         const card = [...document.querySelectorAll("#tab-core1-all .topic-module-card")]
           .find(el => el.getAttribute("data-package-id") === key);
-        return !!(tab?.classList.contains("active") &&
-          card && card.classList.contains("highlighted") &&
-          card.style.display !== "none");
-      }, unitId, {timeout: 5000});
+        if (!tab?.classList.contains("active") || !card?.classList.contains("highlighted")) return false;
+        const r = card.getBoundingClientRect();
+        if (!(r.width > 0 && r.height > 0 && r.bottom > 0 && r.right > 0 &&
+              r.top < innerHeight && r.left < innerWidth)) return false;
+        for (let el = card; el; el = el.parentElement) {
+          const css = getComputedStyle(el);
+          if (css.display === "none" || css.visibility === "hidden" ||
+              css.visibility === "collapse" || Number(css.opacity) === 0) return false;
+        }
+        return true;
+      }, unitId, {timeout: 7000});
+      const visibility = await page.evaluate(key => {
+        const tab = document.querySelector("#tab-core1-all");
+        const card = [...document.querySelectorAll("#tab-core1-all .topic-module-card")]
+          .find(el => el.getAttribute("data-package-id") === key);
+        const ancestorStyles = [];
+        for (let el = card; el; el = el.parentElement) {
+          const css = getComputedStyle(el);
+          ancestorStyles.push({display:css.display,visibility:css.visibility,opacity:css.opacity});
+        }
+        const r = card.getBoundingClientRect();
+        return { tabActive:tab?.classList.contains("active") === true,
+          highlighted:card?.classList.contains("highlighted") === true,
+          ancestorStyles,
+          rect:{top:r.top,bottom:r.bottom,left:r.left,right:r.right,width:r.width,height:r.height},
+          viewport:{width:innerWidth,height:innerHeight}
+        };
+      }, unitId);
+      if (!coreRouteVisible(visibility)) throw Error("DESTINATION_NOT_COMPUTED_VISIBLE_IN_VIEWPORT: "+JSON.stringify(visibility));
       row.verdict = "PASS";
-      row.detail = "native Enter, Core tab, unique declared package, visible highlighted destination";
+      row.detail = "native Enter, Core tab, unique package, computed visible, layout and viewport intersection";
+      row.visibility = {rect:visibility.rect,viewport:visibility.viewport,ancestors:visibility.ancestorStyles.length};
     } catch (err) {
       row.detail = String(err?.message || err).slice(0, 1000);
     }
@@ -143,9 +175,8 @@ try {
   await hintTier.locator("> summary").click();
   const hintText = await hintTier.locator(".ladder-rung").innerText();
   add("BROWSER_Q022_REVISED_HINT_LEAVES_VALUE_TO_LEARNER",
-      hintText.includes("Carry out the difference of squares yourself") &&
-      !/9\s*[-−]\s*2\s*=\s*7/.test(hintText),
-      "Method-only hint present; numeric equation not present: "+hintText.slice(0,160));
+      q022HintPreservesProtectedWork(hintText),
+      "Method cue without keyed numeric/classification disclosure: "+hintText.slice(0,220));
   await card.locator("[id=" + JSON.stringify("att-"+qid) + "]")
     .fill("I will apply the difference-of-squares identity and test whether the result is rational.");
   await commitButton.focus();
