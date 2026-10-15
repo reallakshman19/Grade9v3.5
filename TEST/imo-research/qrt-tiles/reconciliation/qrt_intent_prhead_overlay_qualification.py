@@ -98,7 +98,8 @@ def source_safe_assertion(output: str) -> tuple[str, str]:
     """
     import re
     matches = re.findall(
-        r"(?m)^[ \t]*(ContractError|AssertionError|RuntimeError):[ \t]*"
+        r"(?m)^[ \t]*(?:qrt_intent_contract\\.)?"
+        r"(ContractError|AssertionError|RuntimeError):[ \t]*"
         r"([A-Z][A-Z0-9_]{6,})(?=[: \t]|$)",
         output,
     )
@@ -128,6 +129,14 @@ def diagnostic_self_test() -> None:
     assert classified == "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT"
     assert source_safe_assertion(sample) == (
         "ContractError", "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
+    assert source_safe_assertion(
+        "qrt_intent_contract.ContractError: "
+        "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT: " + secret) == (
+            "ContractError", "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
+    # Lookalike modules and non-exception content must NEVER gain audited status.
+    assert source_safe_failure_code(
+        "some_other_module.ContractError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT") == (
+            "CHILD_CONTRACT_ERROR_UNCLASSIFIED")
     assert source_safe_failure_code(
         "original page says CORE1B_GOLDEN_RECONSTRUCTION_DRIFT") == (
             "UNCLASSIFIED_SUBPROCESS_FAILURE")
@@ -167,7 +176,55 @@ def diagnostic_self_test() -> None:
         assert secret not in written
         assert secret not in caught
         assert "ContractError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT" in caught
-    print("R14 source-safe classifier + on-disk JSON round-trip: PASS")
+    # Exercise a REAL Python child and the repository's imported exception;
+    # a mocked bare 'ContractError:' previously missed the qualified traceback.
+    child_script = (
+        "from qrt_intent_contract import ContractError\\n"
+        "raise ContractError('CORE1B_GOLDEN_RECONSTRUCTION_DRIFT: "
+        + secret + "')\\n"
+    )
+    child_command = [sys.executable, "-c", child_script]
+    child_cwd = Path(__file__).resolve().parent
+    with tempfile.TemporaryDirectory(prefix="r14-imported-exception-") as td:
+        # Verify this is the module-qualified Python traceback B observed.
+        # Keep ALL raw stdout strictly in memory; do not print or write it.
+        actual = subprocess.run(
+            child_command, cwd=child_cwd, text=True, encoding="utf-8",
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+        )
+        assert actual.returncode == 1
+        assert ("qrt_intent_contract.ContractError: "
+                "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT: " + secret) in actual.stdout
+        assert source_safe_assertion(actual.stdout) == (
+            "ContractError", "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
+        imported_receipt = Path(td) / "IMPORTED-FAILURE-CODE.json"
+        try:
+            call(child_command, cwd=child_cwd, phase="native-evidence",
+                 cell_id="QRT-EXPLAIN-D3", diagnostic_out=imported_receipt)
+        except RuntimeError as error:
+            imported_error = str(error)
+        else:
+            raise AssertionError("R14_IMPORTED_EXCEPTION_MUST_FAIL_CLOSED")
+        imported_bytes = imported_receipt.read_text(encoding="utf-8")
+        assert imported_bytes.endswith("\\n") is False
+        assert imported_bytes.endswith("\n")
+        imported = json.loads(imported_bytes)
+        assert imported["schema"] == "imo182-prhead-overlay-failure-code/v1"
+        assert imported["phase"] == "native-evidence"
+        assert imported["cell_id"] == "QRT-EXPLAIN-D3"
+        assert imported["assertion_type"] == "ContractError"
+        assert imported["failure_code"] == "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT"
+        assert imported["exit_code"] == actual.returncode
+        assert imported["candidate_21_case_result"] == "NOT_QUALIFIED"
+        assert imported["native_return_counts_admissible"] is False
+        assert imported["release"] == "HOLD"
+        assert "ContractError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT" in imported_error
+        assert secret not in imported_bytes
+        assert secret not in imported_error
+        assert "Traceback" not in imported_bytes
+        assert "Traceback" not in imported_error
+    print("R14 source-safe classifier + on-disk JSON round-trip + "
+          "real imported-ContractError subprocess: PASS")
 
 
 
