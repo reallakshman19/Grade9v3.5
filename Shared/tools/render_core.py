@@ -1222,7 +1222,7 @@ def _core1a_practice_navigation(ctx: Ctx, m: dict) -> str:
             f'<li><a data-g9-practice-link data-g9-question-ref="{esc(question_id)}" '
             f'data-g9-concept-ref="{esc(m["id"])}" href="core2.html#{esc(question_id)}">{esc(label)}</a></li>'
         )
-    original = (block("practice_navigation", "<ul>" + "".join(rows) + "</ul",
+    original = (block("practice_navigation", "<ul>" + "".join(rows) + "</ul>",
                       title="Practice this concept in Core2") if rows else "")
     authored = []
     if "CORE2A" in product_manifest.selected_output_roles(ctx.manifest):
@@ -1235,7 +1235,7 @@ def _core1a_practice_navigation(ctx: Ctx, m: dict) -> str:
                 f'data-g9-concept-ref="{esc(m["id"])}" href="core2a.html#{esc(qid)}">'
                 f'Return to authored question {esc(qid)}</a></li>'
             )
-    return original + (block("authored_practice_navigation", "<ul>" + "".join(authored) + "</ul",
+    return original + (block("authored_practice_navigation", "<ul>" + "".join(authored) + "</ul>",
                              title="Authored practice and assisted return") if authored else "")
 
 
