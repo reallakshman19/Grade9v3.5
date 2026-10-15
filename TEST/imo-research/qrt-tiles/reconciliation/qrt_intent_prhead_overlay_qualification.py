@@ -73,7 +73,7 @@ def verify_old_r8_assignments() -> None:
     content = WORKFLOW.read_text(encoding="utf-8")
     start = content.index("- name: R8 P2b click actual native role routes")
     stop = content.index("- name: R8 P2c inspect all 21", start)
-    rows = re.findall(r'"(source-[a-z0-9-]+)\\|([a-z0-9-]+)"', content[start:stop])
+    rows = re.findall(r'"(source-[a-z0-9-]+)[|]([a-z0-9-]+)"', content[start:stop])
     if tuple(rows) != CASES or len(set(c for _, c in CASES)) != 21:
         raise AssertionError("PR_HEAD_CASE_MAP_DRIFT_FROM_FROZEN_R8")
 
