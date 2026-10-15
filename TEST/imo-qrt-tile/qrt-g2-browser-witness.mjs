@@ -161,6 +161,38 @@ try {
     report.navigation.push(row);
   }
   report.layout.core1_after_navigation = await geometry("core1");
+  // Diagnostic-only CSS probes in the isolated Chromium DOM. They do not
+  // change source HTML or decide PASS. A clipped document is not a repair.
+  if (profile === "mobile" && report.layout.core1_after_navigation.overflowPx > 1) {
+    report.mobile_css_probes = await page.evaluate(() => {
+      const candidates = {
+        card_min_width:"@media(max-width:768px){#tab-core1-all .topic-module-card{min-width:0;max-width:100%;}}",
+        card_local_scroll:"@media(max-width:768px){#tab-core1-all .topic-module-card{overflow-x:auto;}}",
+        paragraph_local_scroll:"@media(max-width:768px){#tab-core1-all .topic-module-card p{overflow-x:auto;}}",
+        inline_katex_local_scroll:"@media(max-width:768px){#tab-core1-all .topic-module-card .katex{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle;}}",
+        all_display_katex_local_scroll:"@media(max-width:768px){#tab-core1-all .katex-display{overflow-x:auto;max-width:100%;}}",
+        module_text_wrap:"@media(max-width:768px){#tab-core1-all .topic-module-card{overflow-wrap:anywhere;}}",
+        core_tab_scroll:"@media(max-width:768px){#tab-core1-all{overflow-x:auto;}}",
+        core_tab_clip_bad_control:"@media(max-width:768px){#tab-core1-all{overflow-x:clip;}}"
+      };
+      const out=[];
+      const body=document.documentElement;
+      const before={scrollWidth:body.scrollWidth,clientWidth:body.clientWidth};
+      for (const [id,css] of Object.entries(candidates)) {
+        const style=document.createElement("style");
+        style.textContent=css;
+        document.head.append(style);
+        const after={scrollWidth:body.scrollWidth,clientWidth:body.clientWidth,
+          overflowPx:Math.max(0,body.scrollWidth-body.clientWidth)};
+        // Find whether the viewport has useful local scrollable math rather than hidden text.
+        const scrollers=[...document.querySelectorAll("#tab-core1-all .topic-module-card, #tab-core1-all .topic-module-card p, #tab-core1-all .katex-display")]
+          .filter(el=>el.scrollWidth>el.clientWidth+4 && getComputedStyle(el).overflowX==="auto");
+        out.push({id,...after,local_scroll_containers:scrollers.length});
+        style.remove();
+      }
+      return {before,probes:out,note:"Diagnostics are temporary browser CSS, not accepted repair; clipping control is intentionally unsafe."};
+    });
+  }
   add("BROWSER_12_DIRECT_CORE_KEYBOARD_ROUTES",
       report.navigation.length === 12 &&
       report.navigation.every(x => x.verdict === "PASS"),
