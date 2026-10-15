@@ -1,4 +1,4 @@
-name: QRT G2 first tile exact-source witness
+name: QRT G2 exact-source tile witness
 on:
   push:
     branches:
@@ -9,6 +9,12 @@ on:
       - 'tests/test_imo_qrt_tile_validator_g2.py'
       - '.github/workflows/qrt-tile-g2-pinned.yml'
   workflow_dispatch:
+    inputs:
+      source_sha:
+        description: 'Exact SHA from PR #270 repair ancestry, or baseline'
+        required: true
+        type: string
+        default: '90c859705feb0dfcedc6d33a013d9e563b7cac9d'
 
 permissions:
   contents: read
@@ -16,7 +22,10 @@ permissions:
 jobs:
   qrt-retrieve-d1:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+    env:
+      BASELINE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
+      SOURCE_SHA: ${{ inputs.source_sha || '90c859705feb0dfcedc6d33a013d9e563b7cac9d' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,23 +33,36 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Freeze actual research source and overlay validator lane only
+      - name: Freeze source SHA and overlay validator-only files
         shell: bash
-        env:
-          SOURCE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
         run: |
           set -euo pipefail
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "SOURCE_SHA_NOT_EXACT"; exit 1; }
           git fetch --no-tags origin refs/heads/feat/imo-grade9-68-questions-master-suite:refs/remotes/origin/qrt-g2-research
-          test "$(git rev-parse refs/remotes/origin/qrt-g2-research)" = "$SOURCE_SHA"
+          git fetch --no-tags origin refs/heads/repair/qrt-tile-html-g2:refs/remotes/origin/qrt-g2-repair
+          test "$(git rev-parse refs/remotes/origin/qrt-g2-research)" = "$BASELINE_SHA"
+          if [ "$SOURCE_SHA" != "$BASELINE_SHA" ]; then
+            git merge-base --is-ancestor "$BASELINE_SHA" "$SOURCE_SHA" || { echo "SOURCE_NOT_DESCENDED_FROM_BASELINE"; exit 1; }
+            git merge-base --is-ancestor "$SOURCE_SHA" refs/remotes/origin/qrt-g2-repair || { echo "SOURCE_NOT_IN_REPAIR_PR_270"; exit 1; }
+          fi
           git worktree add --detach "$RUNNER_TEMP/qrt-g2-source" "$SOURCE_SHA"
           test "$(git -C "$RUNNER_TEMP/qrt-g2-source" rev-parse HEAD)" = "$SOURCE_SHA"
           for p in Shared/tools/imo_qrt_validator.py Shared/tools/imo_qrt_standalone_gate.py Shared/tools/imo_qrt_core_relationships.py Shared/tools/imo_qrt_tile_validator_g2.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_standalone_gate.py tests/test_imo_qrt_core_relationships.py tests/test_imo_qrt_tile_validator_g2.py TEST/imo-qrt-tile/qrt-retrieve-d1-review.v1.json; do
             mkdir -p "$RUNNER_TEMP/qrt-g2-source/$(dirname "$p")"
             git show "$GITHUB_SHA:$p" > "$RUNNER_TEMP/qrt-g2-source/$p"
           done
-          echo "SOURCE_SHA=$SOURCE_SHA"
-          echo "VALIDATOR_SHA=$GITHUB_SHA"
-          echo "No source/builder/HTML writes, detached worktree only."
+          echo "SOURCE_SHA=$SOURCE_SHA VALIDATOR_SHA=$GITHUB_SHA"
+      - name: Rebuild and compare four committed HTML endpoints in isolated worktree
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt-g2-source"
+          python Mathematics/research/build_full_master_suite.py > "$RUNNER_TEMP/qrt-g2-builder.log"
+          cat "$RUNNER_TEMP/qrt-g2-builder.log"
+          files=(standalone/mathematics-imo-grade9-master-suite.html public/standalone/mathematics-imo-grade9-master-suite.html public/test/imo-grade9/core2.html docs/test/imo-grade9/core2.html)
+          git diff --exit-code -- "${files[@]}" || { echo "STALE_COMMITTED_HTML_OR_NONDETERMINISTIC_BUILDER"; exit 1; }
+          sha256sum "${files[@]}"
+          echo "All four regenerated HTML outputs equal committed bytes."
       - name: Mutation checks at pinned source
         shell: bash
         run: |
@@ -50,10 +72,8 @@ jobs:
           python -m unittest discover -s tests -p 'test_imo_qrt_standalone_gate.py' -v
           python -m unittest discover -s tests -p 'test_imo_qrt_core_relationships.py' -v
           python -m unittest discover -s tests -p 'test_imo_qrt_tile_validator_g2.py' -v
-      - name: Execute real tile one on actual four standalone files
+      - name: Execute real tile on exact committed source
         shell: bash
-        env:
-          SOURCE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP/qrt-g2-source"
@@ -61,17 +81,19 @@ jobs:
           python Shared/tools/imo_qrt_tile_validator_g2.py --source-sha "$SOURCE_SHA" --tile QRT-RETRIEVE-D1 --output build/qrt-g2/tile1.json
           rc=$?
           set -e
-          test "$rc" -eq 1
-          python - <<'PY'
-          import json
+          test "$rc" -eq 0 -o "$rc" -eq 1
+          SOURCE_SHA="$SOURCE_SHA" python - <<'PY'
+          import json, os
           from pathlib import Path
           a=json.loads(Path("build/qrt-g2/tile1.json").read_text())
-          assert a["source_commit"]=="90c859705feb0dfcedc6d33a013d9e563b7cac9d"
-          assert a["tile"]=="QRT-RETRIEVE-D1"
-          assert a["question_count"]==12 and a["fail_questions"]>0
-          assert a["academic_approval"]=="NOT_GRANTED"
-          assert len({e["sha256"] for e in a["html_endpoints"]})==1
-          print("Pinned tile 1: 12 questions, nonzero actionable findings, four generated HTML files byte identical.")
+          assert a["source_commit"] == os.environ["SOURCE_SHA"]
+          assert a["tile"] == "QRT-RETRIEVE-D1"
+          assert a["question_count"] > 0
+          assert a["status"] in ("FAIL", "REVIEW_REQUIRED")
+          assert a["academic_approval"] == "NOT_GRANTED"
+          assert len({e["sha256"] for e in a["html_endpoints"]}) == 1
+          assert (a["status"] == "FAIL") == bool(a["fail_questions"])
+          print("Pinned-source tile status:", a["status"], a["fail_findings"])
           PY
           mkdir -p "$GITHUB_WORKSPACE/build/qrt-g2"
           cp build/qrt-g2/tile1.json "$GITHUB_WORKSPACE/build/qrt-g2/tile1.json"
