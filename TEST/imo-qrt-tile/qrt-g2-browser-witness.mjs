@@ -32,6 +32,8 @@ const report = {
   viewport_profile:profile,
   viewport,
   html: "standalone/mathematics-imo-grade9-master-suite.html",
+  protected_work_checker_scope: "BOUNDED_LEXICAL_TRIPWIRE",
+  protected_work_semantic_review: "REVIEW_REQUIRED",
   academic_approval: "NOT_GRANTED",
   source_rights: "NOT_VERIFIED",
   assertions: [],
@@ -250,7 +252,7 @@ try {
   const hintText = await hintTier.locator(".ladder-rung").innerText();
   add("BROWSER_Q022_REVISED_HINT_LEAVES_VALUE_TO_LEARNER",
       q022HintPreservesProtectedWork(hintText),
-      "Method cue without keyed numeric/classification disclosure: "+hintText.slice(0,220));
+      "Bounded lexical tripwire only; general protected-W semantic review REQUIRED: "+hintText.slice(0,220));
   await card.locator("[id=" + JSON.stringify("att-"+qid) + "]")
     .fill("I will apply the difference-of-squares identity and test whether the result is rational.");
   await commitButton.focus();
