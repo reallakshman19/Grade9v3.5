@@ -62,10 +62,30 @@ try {
   }));
   report.initial_dom = init;
   const geometry = async tabName => await page.evaluate(name => {
-    const doc=document.documentElement;
+    const doc=document.documentElement, overflowPx=Math.max(0,doc.scrollWidth-doc.clientWidth);
+    const culprits=[];
+    if (overflowPx > 1) {
+      // Diagnostics only: rank the actual visible descendants that extend
+      // beyond the viewport; do not convert these hints into pass assertions.
+      for(const el of document.querySelectorAll("#tab-core1-all *")) {
+        const rect=el.getBoundingClientRect();
+        if (!(rect.right > innerWidth + 1 && rect.width > 0 && rect.height > 0)) continue;
+        const css=getComputedStyle(el);
+        if(css.display==="none" || css.visibility==="hidden") continue;
+        const clip=el.closest(".topic-module-card");
+        culprits.push({
+          tag:el.tagName, id:(el.id||"").slice(0,95),
+          className:typeof el.className==="string"?el.className.slice(0,120):"",
+          right:Math.round(rect.right), left:Math.round(rect.left),
+          width:Math.round(rect.width), overflowX:css.overflowX,
+          packageId:clip?.getAttribute("data-package-id")||"",
+        });
+      }
+      culprits.sort((a,b)=>b.right-a.right);
+    }
     return {tab:name,width:innerWidth,height:innerHeight,
-      clientWidth:doc.clientWidth,scrollWidth:doc.scrollWidth,
-      overflowPx:Math.max(0,doc.scrollWidth-doc.clientWidth)};
+      clientWidth:doc.clientWidth,scrollWidth:doc.scrollWidth,overflowPx,
+      rightOverflowCulprits:culprits.slice(0,16)};
   },tabName);
   report.layout = {core2_before_navigation:await geometry("core2")};
   add("BROWSER_TABS_AND_QUESTION_RENDER", init.core2 && init.core1 && init.questions >= 12,
