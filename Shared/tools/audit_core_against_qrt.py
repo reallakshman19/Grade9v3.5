@@ -107,7 +107,18 @@ def audit_core2_question_card(art_html: str, index: int, qrt_matrix: dict[str, A
     )
     has_svg = "<svg" in clean_html
 
-    struct_checks = [has_stem, has_options, has_attempt, has_deriv, has_check, has_trap]
+    # These six are individually mandatory. A missing single element must
+    # fail closed, even if its weighted score would be below the 0.05 threshold.
+    critical_checks = {
+        "MISSING_EXAM_STEM": has_stem,
+        "MISSING_OPTIONS_GRID": has_options,
+        "MISSING_ATTEMPT_BOX": has_attempt,
+        "MISSING_STEP_BY_STEP_DERIVATION": has_deriv,
+        "MISSING_VERIFICATION_CHECK": has_check,
+        "MISSING_TRAP_DIAGNOSTIC": has_trap,
+    }
+    missing_critical = [code for code, present in critical_checks.items() if not present]
+    struct_checks = list(critical_checks.values())
     delta_struct = 1.0 - (sum(1 for c in struct_checks if c) / len(struct_checks))
 
     if not has_stem:
@@ -169,7 +180,10 @@ def audit_core2_question_card(art_html: str, index: int, qrt_matrix: dict[str, A
         },
         "has_svg": has_svg,
         "findings": findings,
-        "status": "PASS" if delta_qrt <= 0.05 else ("FLAGGED" if delta_qrt <= 0.25 else "FAIL"),
+        "missing_critical": missing_critical,
+        "status": ("FAIL" if missing_critical else
+                   ("PASS" if delta_qrt <= 0.05 else
+                    ("FLAGGED" if delta_qrt <= 0.25 else "FAIL"))),
     }
 
 
@@ -583,7 +597,11 @@ def audit_item_inter_core_checkpoint(
         "band": band,
         "demand": demand,
         "overall_item_delta_qrt": overall_item_delta,
-        "item_checkpoint_verdict": "PASS" if overall_item_delta <= 0.05 else ("FLAGGED" if overall_item_delta <= 0.35 else "FAIL"),
+        "item_checkpoint_verdict": (
+            "FAIL" if core2_res["missing_critical"] else
+            ("PASS" if overall_item_delta <= 0.05 else
+             ("FLAGGED" if overall_item_delta <= 0.35 else "FAIL"))
+        ),
         "checkpoints": checkpoints,
         "core2_details": core2_res,
         "anchored_core1a": anchored_c1a,
@@ -613,7 +631,7 @@ def main(argv: list[str] | None = None) -> int:
             return 0
         else:
             print(f"\n[CHECKPOINT RECEIPT]: {res.get('item_checkpoint_verdict')} (Delta: {res.get('overall_item_delta_qrt')})")
-            return 1 if args.strict else 0
+            return 1 if res["core2_details"]["missing_critical"] or args.strict else 0
 
     try:
         report = audit_hosted_suite(args.html, args.core1a, args.core1b)
@@ -645,7 +663,17 @@ def main(argv: list[str] | None = None) -> int:
             for f in m["findings"]:
                 print(f"      * {f}")
 
-    if args.strict and (summ["core1_mean_delta_qrt"] > 0.05 or any(b["flagged_count"] > 0 for b in summ["band_statistics"].values())):
+    critical_rejections = [q for q in report["questions"] if q["missing_critical"]]
+    if critical_rejections:
+        # Even the non-strict CLI must not report success when a question
+        # lacks any mandatory stem/options/attempt/derivation/check/trap.
+        print(f"\\n[CRITICAL QRT]: {len(critical_rejections)} question(s) missing mandatory elements; FAIL CLOSED.",
+              file=sys.stderr)
+        return 1
+    if args.strict and (
+        summ["core1_mean_delta_qrt"] > 0.05 or
+        any(q["status"] != "PASS" for q in report["questions"])
+    ):
         print("\n[STRICT MODE]: Quality gate FAILED due to unearned QRT deviations.", file=sys.stderr)
         return 1
 
