@@ -762,8 +762,10 @@ jobs:
           assert matrix["release"]=="HOLD"
           print("R13 real source-bound native repair matrix: 21 source-bound reports, 7 held source cases; no artificial release")
           PY
-      - name: R14 candidate harness syntax review (no product counts)
-        run: python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_prhead_overlay_qualification.py
+      - name: R14 candidate harness syntax and source-safe failure-code self-test (no product counts)
+        run: |
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_prhead_overlay_qualification.py
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_prhead_overlay_qualification.py --self-test-diagnostic
       - name: R14 PR-head native overlay qualification (manual AFTER Agent B exact-SHA harness PASS)
         if: github.event_name == 'workflow_dispatch'
         run: |

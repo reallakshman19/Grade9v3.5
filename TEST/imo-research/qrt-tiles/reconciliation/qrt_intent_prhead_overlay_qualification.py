@@ -48,15 +48,106 @@ RENDERER = Path("Shared/tools/render_core.py")
 WORKFLOW = Path(".github/workflows/imo182-r8-qrt-intent-contract.yml")
 
 
-def call(args: list[str], *, cwd: Path | None = None) -> str:
+# Only structural rejection codes already defined by qrt_intent_native_evidence.py.
+# Neither arbitrary child output nor original question text is logged or uploaded.
+SAFE_NATIVE_FAILURE_CODES = frozenset((
+    "UNVALIDATED_QRT_CONTRACT",
+    "SOURCE_CHANGED_SINCE_CONTRACT",
+    "MANIFEST_CHANGED_SINCE_CONTRACT",
+    "REGISTRY_CHANGED_SINCE_CONTRACT",
+    "IMMUTABLE_GOLDEN_LOCK_DRIFT",
+    "WRONG_FROZEN_GOLDEN",
+    "RENDER_RECEIPT_MISSING",
+    "RENDERER_AUTHORITY_OR_GAPS",
+    "RENDER_RECEIPT_ROLES_OR_PAGES",
+    "RENDER_RECEIPT_SHA_SET_DRIFT",
+    "MALFORMED_RENDER_RECEIPT_SHAS",
+    "LEGACY_RECEIPT_REQUIRES_INDEPENDENT_RERENDER",
+    "INDEPENDENT_RECEIPT_CHANGED",
+    "INDEX_MISSING",
+    "INDEX_SHA_NOT_RECEIPT",
+    "LEGACY_INDEX_NONDETERMINISTIC",
+    "MISSING_NATIVE_ROLE",
+    "NATIVE_PAGE_SHA_NOT_RECEIPT",
+    "LEGACY_CORE_NONDETERMINISTIC",
+    "GOLDEN_ROLE_NOT_UNIQUE",
+    "GOLDEN_SNAPSHOT_BYTES_DRIFT",
+    "ROLE_BLUEPRINT_MISMATCH",
+    "GOLDEN_SLOT_MISMATCH",
+    "GOLDEN_COMPONENT_MISMATCH",
+    "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT",
+))
+SAFE_FAILURE_FALLBACKS = (
+    ("ModuleNotFoundError:", "CHILD_MODULE_NOT_FOUND"),
+    ("FileNotFoundError:", "CHILD_FILE_NOT_FOUND"),
+    ("KeyError:", "CHILD_KEY_NOT_FOUND"),
+    ("JSONDecodeError:", "CHILD_JSON_DECODE_FAILURE"),
+)
+
+
+def source_safe_failure_code(output: str) -> str:
+    """Extract only an audited literal code; arbitrary message bytes remain private."""
+    import re
+    codes = re.findall(r"(?<![A-Z0-9_])[A-Z][A-Z0-9_]{6,}(?![A-Z0-9_])",
+                       output)
+    allowlisted = [code for code in codes if code in SAFE_NATIVE_FAILURE_CODES]
+    if allowlisted:
+        return allowlisted[-1]
+    for error_kind, safe in SAFE_FAILURE_FALLBACKS:
+        if error_kind in output:
+            return safe
+    return "UNCLASSIFIED_SUBPROCESS_FAILURE"
+
+
+def diagnostic_self_test() -> None:
+    """CI-run synthetic failure mutation with a private-looking sentinel."""
+    secret = "ORIGINAL_QUESTION_CONTENT_MUST_NOT_ESCAPE"
+    sample = ("Traceback: " + secret +
+              "\\nRuntimeError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
+    classified = source_safe_failure_code(sample)
+    assert classified == "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT"
+    assert secret not in classified
+    assert source_safe_failure_code(secret) == "UNCLASSIFIED_SUBPROCESS_FAILURE"
+    assert source_safe_failure_code(
+        "FileNotFoundError: " + secret) == "CHILD_FILE_NOT_FOUND"
+    print("R14 source-safe failure-code classifier synthetic tests: 3 PASS")
+
+
+def call(args: list[str], *, cwd: Path | None = None,
+         phase: str | None = None, cell_id: str | None = None,
+         diagnostic_out: Path | None = None) -> str:
     proc = subprocess.run(args, cwd=cwd, text=True, encoding="utf-8",
                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     if proc.returncode:
-        # No copyrighted/learner question body is echoed into CI on failure.
-        raise RuntimeError(
-            f"qualifier subprocess exit {proc.returncode}: {args[0]} "
-            f"{args[1] if len(args) > 1 else ''}"
-        )
+        # Do NOT print proc.stdout/stderr: it can contain source question content.
+        code = source_safe_failure_code(proc.stdout)
+        if phase is not None and diagnostic_out is not None:
+            if phase not in {"renderer-build", "native-evidence",
+                             "browser-navigation"} or cell_id not in {
+                                 "QRT-" + slug.upper() for _root, slug in CASES
+                             }:
+                raise AssertionError("R14_DIAGNOSTIC_PHASE_OR_CELL_NOT_PINNED")
+            receipt = {
+                "schema": "imo182-prhead-overlay-failure-code/v1",
+                "disposition": "FAIL_RUN_HOLD_ALL_21_NO_RENDERER_VERDICT",
+                "phase": phase,
+                "cell_id": cell_id,
+                "failure_code": code,
+                "exit_code": proc.returncode,
+                "no_source_text_or_raw_traceback": True,
+                "native_return_counts_admissible": False,
+                "candidate_21_case_result": "NOT_QUALIFIED",
+                "academic_accepted": 0,
+                "owner_qrt_accepted": 0,
+                "release": "HOLD",
+            }
+            diagnostic_out.parent.mkdir(parents=True, exist_ok=True)
+            diagnostic_out.write_text(json.dumps(receipt, indent=2) + "\\n",
+                                      encoding="utf-8")
+            print(f"R14_SOURCE_SAFE_FAILURE phase={phase} cell={cell_id} "
+                  f"code={code}; candidate 21 cases HOLD, no renderer verdict",
+                  file=sys.stderr)
+        raise RuntimeError("R14_CHILD_REJECTED_CODE_" + code)
     return proc.stdout.strip()
 
 
@@ -91,8 +182,14 @@ def original_source_is_pinned(source: Path, witness: dict) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--out", type=Path)
+    parser.add_argument("--self-test-diagnostic", action="store_true")
     args = parser.parse_args()
+    if args.self_test_diagnostic:
+        diagnostic_self_test()
+        return
+    if args.out is None:
+        parser.error("--out is required outside synthetic diagnostic self-test")
     verify_old_r8_assignments()
     witnesses = json.loads((RECONCILIATION / "qrt-intent-witnesses-pilot.v1.json")
                            .read_text(encoding="utf-8"))
@@ -138,17 +235,23 @@ def main() -> None:
                 for where in (target, alternate):
                     call([sys.executable, str(shadow / RENDERER), "build",
                           "--manifest", expected_manifest, "--out", str(where),
-                          "--mode", "PAGES", "--reference", "--draft"], cwd=shadow)
+                          "--mode", "PAGES", "--reference", "--draft"], cwd=shadow,
+                         phase="renderer-build", cell_id=cid,
+                         diagnostic_out=args.out.with_name("prhead-overlay-FAILURE-CODE.json"))
                 candidate_contract = temp / (slug + "-prhead-native.json")
                 call([sys.executable, str(RECONCILIATION / "qrt_intent_native_evidence.py"),
                       "--contract", str(Path("build/imo182-r8-intent") / (slug + ".json")),
                       "--source-root", str(shadow), "--native-output", str(target),
-                      "--independent-rebuild", str(alternate), "--out", str(candidate_contract)])
+                      "--independent-rebuild", str(alternate), "--out", str(candidate_contract)],
+                     phase="native-evidence", cell_id=cid,
+                     diagnostic_out=args.out.with_name("prhead-overlay-FAILURE-CODE.json"))
                 nav_path = temp / (slug + "-prhead-navigation.json")
                 call([sys.executable, str(RECONCILIATION / "qrt_intent_real_navigation.py"),
                       "--native-contract", str(candidate_contract),
                       "--source-root", str(shadow), "--native-output", str(target),
-                      "--out", str(nav_path)])
+                      "--out", str(nav_path)],
+                     phase="browser-navigation", cell_id=cid,
+                     diagnostic_out=args.out.with_name("prhead-overlay-FAILURE-CODE.json"))
                 nav = json.loads(nav_path.read_text(encoding="utf-8"))
                 journey = nav["postcommit_native_journey"]
                 observed = journey["observed"]
