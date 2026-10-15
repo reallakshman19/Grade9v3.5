@@ -1,0 +1,93 @@
+name: QRT G2 frozen-source Chromium learner interaction witness
+on:
+  push:
+    branches:
+      - agent/qrt-tile-validator-g2
+    paths:
+      - '.github/workflows/qrt-g2-browser-pinned.yml'
+      - 'TEST/imo-qrt-tile/qrt-g2-browser-witness.mjs'
+      - 'TEST/imo-qrt-tile/qrt-g2-browser-predicates.mjs'
+      - 'TEST/imo-qrt-tile/qrt-g2-browser-mutants.mjs'
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: 'Exact frozen repair commit of coder draft PR #270'
+        type: string
+        required: true
+        default: '6ad5c73cfee80b75efffd219eb1b14886ca18c10'
+permissions:
+  contents: read
+jobs:
+  qrt-g2-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SOURCE_SHA: ${{ inputs.source_sha || '6ad5c73cfee80b75efffd219eb1b14886ca18c10' }}
+      VALIDATOR_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Freeze exact coder source and compare generated HTML bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]] || exit 2
+          git fetch --no-tags origin refs/heads/repair/qrt-tile-html-g2:refs/remotes/origin/qrt-browser-repair
+          git merge-base --is-ancestor "$SOURCE_SHA" refs/remotes/origin/qrt-browser-repair || { echo 'SOURCE_NOT_ON_CODER_REPAIR_BRANCH'; exit 1; }
+          git worktree add --detach "$RUNNER_TEMP/qrt-browser-source" "$SOURCE_SHA"
+          test "$(git -C "$RUNNER_TEMP/qrt-browser-source" rev-parse HEAD)" = "$SOURCE_SHA"
+          cd "$RUNNER_TEMP/qrt-browser-source"
+          python Mathematics/research/build_full_master_suite.py > "$GITHUB_WORKSPACE/build.log"
+          html=(
+            standalone/mathematics-imo-grade9-master-suite.html
+            public/standalone/mathematics-imo-grade9-master-suite.html
+            public/test/imo-grade9/core2.html
+            docs/test/imo-grade9/core2.html
+          )
+          git diff --exit-code -- "${html[@]}" || { echo STALE_COMMITTED_HTML; exit 1; }
+          sha256sum "${html[@]}" | tee "$GITHUB_WORKSPACE/four-html-sha256.txt"
+          test "$(sha256sum "${html[@]}" | cut -d' ' -f1 | sort -u | wc -l)" -eq 1
+          echo "SOURCE_SHA=$SOURCE_SHA VALIDATOR_SHA=$VALIDATOR_SHA"
+      - name: Falsify strengthened browser checker predicates with negative mutations
+        run: node TEST/imo-qrt-tile/qrt-g2-browser-mutants.mjs
+      - name: Install pinned Chromium browser harness
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+      - name: Drive native keyboard controls and attempt stages against local frozen HTML
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$GITHUB_WORKSPACE/build/qrt-g2"
+          python -m http.server 8777 --bind 127.0.0.1             --directory "$RUNNER_TEMP/qrt-browser-source" > "$RUNNER_TEMP/qrt-browser-http.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 50); do
+            curl -fsS -o /dev/null http://127.0.0.1:8777/standalone/mathematics-imo-grade9-master-suite.html && break
+            sleep 0.2
+          done
+          for viewport in desktop tablet mobile; do
+            echo "BROWSER_VIEWPORT_PROFILE=$viewport SOURCE_SHA=$SOURCE_SHA"
+            QRT_SOURCE_SHA="$SOURCE_SHA" \
+            QRT_VIEWPORT="$viewport" \
+            QRT_BASE_URL="http://127.0.0.1:8777" \
+            QRT_EVIDENCE_DIR="$GITHUB_WORKSPACE/build/qrt-g2" \
+              node TEST/imo-qrt-tile/qrt-g2-browser-witness.mjs
+          done
+      - name: Upload browser evidence independently of pass or failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qrt-g2-frozen-browser-interactions
+          path: |
+            build/qrt-g2/tile1-browser-*.json
+            four-html-sha256.txt
+            build.log
+          if-no-files-found: warn
