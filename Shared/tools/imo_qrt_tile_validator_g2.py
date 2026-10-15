@@ -14,6 +14,11 @@ from pathlib import Path
 import re
 import subprocess
 from typing import Any
+import sys
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from Shared.tools import question_difficulty, question_review_matrix
 from Shared.tools import imo_qrt_validator, imo_qrt_standalone_gate
