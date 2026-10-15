@@ -161,6 +161,28 @@ class TileMutations(unittest.TestCase):
         self.assertIn("HINT2_CHANGED_PROTECTED_W_REVIEW_REQUIRED",
                       {x["code"] for x in changed if x["verdict"] == "REVIEW_REQUIRED"})
 
+    def test_compound_d1_hint_must_not_supply_numerical_answer(self):
+        q = question()
+        q["id"] = "SOF-IMO-G09-L1-2024-25-B-Q022"
+        q["hint_ladder"] = {
+            "hint2_tactical_step": "3² - (√2)² = 9 - 2 = 7. Is 7 rational?"
+        }
+        self.assertIn("HINT2_REVEALS_D1_PROTECTED_FINAL_DECISION",
+                      codes(_protected_w(q, REVIEW)))
+
+    def test_compound_hint_rewording_reopens_review_not_instant_pass(self):
+        q = question()
+        q["id"] = "SOF-IMO-G09-L1-2024-25-B-Q022"
+        q["hint_ladder"] = {
+            "hint2_tactical_step": "Use a² - b², simplify the radical and classify."
+        }
+        findings = _protected_w(q, REVIEW)
+        self.assertNotIn("HINT2_REVEALS_D1_PROTECTED_FINAL_DECISION",
+                         codes(findings))
+        self.assertIn("HINT2_CHANGED_PROTECTED_W_REVIEW_REQUIRED",
+                      {f["code"] for f in findings
+                       if f["verdict"] == "REVIEW_REQUIRED"})
+
     def test_reject_nonsha_even_on_synthetic_input(self):
         with self.assertRaises(ValueError):
             inspect(SRC, source_sha="main")
