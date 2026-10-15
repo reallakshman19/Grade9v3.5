@@ -98,8 +98,8 @@ def source_safe_assertion(output: str) -> tuple[str, str]:
     """
     import re
     matches = re.findall(
-        r"(?m)^[ \\t]*(ContractError|AssertionError|RuntimeError):[ \\t]*"
-        r"([A-Z][A-Z0-9_]{6,})(?=[: \\t]|$)",
+        r"(?m)^[ \t]*(ContractError|AssertionError|RuntimeError):[ \t]*"
+        r"([A-Z][A-Z0-9_]{6,})(?=[: \t]|$)",
         output,
     )
     for kind, code in reversed(matches):
@@ -123,7 +123,7 @@ def diagnostic_self_test() -> None:
 
     secret = "ORIGINAL_QUESTION_CONTENT_MUST_NOT_ESCAPE"
     sample = ("Traceback: " + secret +
-              "\\nContractError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
+              "\nContractError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
     classified = source_safe_failure_code(sample)
     assert classified == "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT"
     assert source_safe_assertion(sample) == (
@@ -146,7 +146,8 @@ def diagnostic_self_test() -> None:
                 call(["synthetic-not-executed"], phase="native-evidence",
                      cell_id="QRT-EXPLAIN-D3", diagnostic_out=receipt_path)
             except RuntimeError as err:
-                assert "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT" in str(err)
+                caught = str(err)
+                assert "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT" in caught
             else:
                 raise AssertionError("R14_SYNTHETIC_FAILURE_NOT_FAIL_CLOSED")
 
@@ -164,8 +165,8 @@ def diagnostic_self_test() -> None:
         assert receipt["native_return_counts_admissible"] is False
         assert receipt["no_source_text_or_raw_traceback"] is True
         assert secret not in written
-        assert secret not in str(err)
-        assert "ContractError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT" in str(err)
+        assert secret not in caught
+        assert "ContractError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT" in caught
     print("R14 source-safe classifier + on-disk JSON round-trip: PASS")
 
 
