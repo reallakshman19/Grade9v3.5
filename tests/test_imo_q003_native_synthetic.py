@@ -70,7 +70,7 @@ def fake_question() -> tuple[dict, dict]:
                 {"text": "After your attempt: compare a square-plus-offset model.",
                  "learner_stage": "FORMAL_MODEL", "reveals": "METHOD"},
                 {"text": "After your attempt: compute the residual of each invented pair.",
-                 "learner_stage": "CHECKPOINT", "reveals": "ANSWER"}
+                 "learner_stage": "CHECKPOINT", "reveals": "METHOD"}
             ],
             "difficulty": {
                 "band": "D2", "score": 5,
