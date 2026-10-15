@@ -9,6 +9,14 @@ import { q022HintPreservesProtectedWork, katexWitnessPasses, coreRouteVisible } 
 const qrtSha = process.env.QRT_SOURCE_SHA;
 const base = process.env.QRT_BASE_URL || "http://127.0.0.1:8777";
 const evidenceDir = process.env.QRT_EVIDENCE_DIR || "build/qrt-g2";
+const viewportProfiles = {
+  desktop: {width:1366,height:854},
+  tablet: {width:820,height:1180},
+  mobile: {width:390,height:844},
+};
+const profile = process.env.QRT_VIEWPORT || "desktop";
+if (!Object.hasOwn(viewportProfiles,profile)) throw new Error("BROWSER_VIEWPORT_PROFILE_UNSUPPORTED:"+profile);
+const viewport = viewportProfiles[profile];
 const ledger = JSON.parse(fs.readFileSync(
   "TEST/imo-qrt-tile/qrt-retrieve-d1-semantic-desk-review.v1.json", "utf8"
 ));
@@ -21,6 +29,8 @@ const report = {
   source_commit: qrtSha,
   status: "NOT_RUN",
   browser: "playwright chromium",
+  viewport_profile:profile,
+  viewport,
   html: "standalone/mathematics-imo-grade9-master-suite.html",
   academic_approval: "NOT_GRANTED",
   source_rights: "NOT_VERIFIED",
@@ -34,7 +44,7 @@ const add = (id, pass, detail) => {
 let browser;
 try {
   browser = await chromium.launch({ headless: true, args: ["--disable-dev-shm-usage"] });
-  const page = await browser.newPage({ viewport: { width: 1366, height: 854 } });
+  const page = await browser.newPage({ viewport });
   page.setDefaultTimeout(12000);
   page.on("pageerror", err => report.page_errors.push(String(err?.message || err)));
   await page.goto(base + "/standalone/mathematics-imo-grade9-master-suite.html", {
@@ -51,6 +61,13 @@ try {
     katexQuestionErrors: document.querySelectorAll("#tab-core2 .qb-question .katex-error").length,
   }));
   report.initial_dom = init;
+  const geometry = async tabName => await page.evaluate(name => {
+    const doc=document.documentElement;
+    return {tab:name,width:innerWidth,height:innerHeight,
+      clientWidth:doc.clientWidth,scrollWidth:doc.scrollWidth,
+      overflowPx:Math.max(0,doc.scrollWidth-doc.clientWidth)};
+  },tabName);
+  report.layout = {core2_before_navigation:await geometry("core2")};
   add("BROWSER_TABS_AND_QUESTION_RENDER", init.core2 && init.core1 && init.questions >= 12,
       "Core1A/Core2 tabs and 12+ rendered questions");
   add("BROWSER_KATEX_RUNTIME", katexWitnessPasses(init),
@@ -123,6 +140,7 @@ try {
     }
     report.navigation.push(row);
   }
+  report.layout.core1_after_navigation = await geometry("core1");
   add("BROWSER_12_DIRECT_CORE_KEYBOARD_ROUTES",
       report.navigation.length === 12 &&
       report.navigation.every(x => x.verdict === "PASS"),
@@ -132,6 +150,10 @@ try {
   // DOM; a source-string check alone cannot attest active browser behavior.
   const qid = "SOF-IMO-G09-L1-2024-25-B-Q022";
   await page.evaluate(() => switchTab("core2"));
+  report.layout.core2_after_navigation = await geometry("core2");
+  add("BROWSER_LAYOUT_NO_DOCUMENT_HORIZONTAL_OVERFLOW",
+      Object.values(report.layout).every(row => row.overflowPx <= 1),
+      JSON.stringify(report.layout));
   const card = page.locator("[id=" + JSON.stringify("q-" + qid) + "]");
   const get = async suffix => await page.evaluate(({qid,suffix}) => {
     const el = document.getElementById(suffix+"-"+qid);
@@ -198,10 +220,10 @@ try {
   report.status = report.assertions.every(a=>a.verdict==="PASS")?"PASS":"FAIL";
   report.passed = report.assertions.filter(a=>a.verdict==="PASS").length;
   report.failed = report.assertions.filter(a=>a.verdict==="FAIL").length;
-  fs.writeFileSync(path.join(evidenceDir,"tile1-browser.json"),
+  fs.writeFileSync(path.join(evidenceDir,"tile1-browser-"+profile+".json"),
     JSON.stringify(report,null,2)+"\n");
   console.log(JSON.stringify({
-    source_commit:report.source_commit, status:report.status,
+    source_commit:report.source_commit, viewport_profile:profile, viewport, status:report.status,
     passed:report.passed,failed:report.failed,
     nav_pass:report.navigation.filter(x=>x.verdict==="PASS").length,
     assertions:report.assertions,
