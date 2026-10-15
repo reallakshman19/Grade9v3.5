@@ -34,6 +34,7 @@ jobs:
     env:
       BASELINE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
       SOURCE_SHA: ${{ inputs.source_sha || '90c859705feb0dfcedc6d33a013d9e563b7cac9d' }}
+      VALIDATOR_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -57,9 +58,9 @@ jobs:
           test "$(git -C "$RUNNER_TEMP/qrt-g2-source" rev-parse HEAD)" = "$SOURCE_SHA"
           for p in Shared/tools/imo_qrt_validator.py Shared/tools/imo_qrt_standalone_gate.py Shared/tools/imo_qrt_core_relationships.py Shared/tools/imo_qrt_tile_validator_g2.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_standalone_gate.py tests/test_imo_qrt_core_relationships.py tests/test_imo_qrt_tile_validator_g2.py TEST/imo-qrt-tile/qrt-retrieve-d1-review.v1.json; do
             mkdir -p "$RUNNER_TEMP/qrt-g2-source/$(dirname "$p")"
-            git show "$GITHUB_SHA:$p" > "$RUNNER_TEMP/qrt-g2-source/$p"
+            git show "$VALIDATOR_SHA:$p" > "$RUNNER_TEMP/qrt-g2-source/$p"
           done
-          echo "SOURCE_SHA=$SOURCE_SHA VALIDATOR_SHA=$GITHUB_SHA"
+          echo "SOURCE_SHA=$SOURCE_SHA VALIDATOR_SHA=$VALIDATOR_SHA"
       - name: Rebuild and compare four committed HTML endpoints in isolated worktree
         shell: bash
         run: |
