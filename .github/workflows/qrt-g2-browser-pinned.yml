@@ -73,14 +73,21 @@ jobs:
             curl -fsS -o /dev/null http://127.0.0.1:8777/standalone/mathematics-imo-grade9-master-suite.html && break
             sleep 0.2
           done
-          QRT_SOURCE_SHA="$SOURCE_SHA"           QRT_BASE_URL="http://127.0.0.1:8777"           QRT_EVIDENCE_DIR="$GITHUB_WORKSPACE/build/qrt-g2"             node TEST/imo-qrt-tile/qrt-g2-browser-witness.mjs
+          for viewport in desktop tablet mobile; do
+            echo "BROWSER_VIEWPORT_PROFILE=$viewport SOURCE_SHA=$SOURCE_SHA"
+            QRT_SOURCE_SHA="$SOURCE_SHA" \
+            QRT_VIEWPORT="$viewport" \
+            QRT_BASE_URL="http://127.0.0.1:8777" \
+            QRT_EVIDENCE_DIR="$GITHUB_WORKSPACE/build/qrt-g2" \
+              node TEST/imo-qrt-tile/qrt-g2-browser-witness.mjs
+          done
       - name: Upload browser evidence independently of pass or failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: qrt-g2-frozen-browser-interactions
           path: |
-            build/qrt-g2/tile1-browser.json
+            build/qrt-g2/tile1-browser-*.json
             four-html-sha256.txt
             build.log
           if-no-files-found: warn
