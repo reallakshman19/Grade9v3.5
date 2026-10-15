@@ -169,11 +169,18 @@ def inspect_card(question: dict[str, Any], attrs: str, body: str, *,
                 rendered_hint, str(question["answer"]["value"])):
             fail("T11_PRECOMMIT_PROTECTED_W_LEAK", "#" + kind + qid,
                  "Pre-commit support discloses the final retrieval/classification answer")
-    if core_review.get("same_inferential_jump_proven") is not True:
-        fail("T12_CORE_P2_CRUX_BRIDGE_UNPROVEN",
-             "article .qb-badge[onclick*='jumpToCore1']",
+    # Structural P2 needs an actual question-specific unit target, not the
+    # builder's generic jumpToCore1(topic) badge. Academic same-crux proof is
+    # tracked as HOLD (even for explicit links), not an unfixable HTML blocker.
+    valid_units = set(core_review.get("explicit_unit_ids") or [])
+    rendered_targets = set(re.findall(r'data-core-unit-id="([^"]+)"', body))
+    if not valid_units or not rendered_targets.intersection(valid_units):
+        fail("T12_CORE_P2_TOPIC_ONLY_NO_QUESTION_UNIT",
+             "article .qb-badge[onclick*='jumpToCore1'] / [data-core-unit-id]",
              core_review.get("code", "NO_EXPLICIT_CRUX_LINK") +
-             ": topic routing/unit declaration does not evidence an exact concept bridge")
+             ": HTML must target a source-declared question-specific Core1A/B unit")
+    if core_review.get("same_inferential_jump_proven") is not True:
+        holds.append("CORE_SAME_INFERENTIAL_JUMP_ACADEMIC_UNREVIEWED")
     if not elem.element("hint1-" + qid) or not elem.element("hint2-" + qid):
         fail("T13_HINT_PROGRESSIVE_SEQUENCE_MISSING", ".qb-support-container",
              "H1 conceptual → H2 tactical support stages not present")
