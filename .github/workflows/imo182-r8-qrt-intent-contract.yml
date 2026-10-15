@@ -14,6 +14,8 @@ on:
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_held_keyboard_state.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_coverage.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_review_handoff.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_repair_matrix.py'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_r13_native_repair_matrix.py'
       - 'TEST/imo-research/qrt-tiles/reconciliation/qrt-intent-witnesses-pilot.v1.json'
       - 'TEST/imo-research/qrt-tiles/reconciliation/test_qrt_intent_contract.py'
   workflow_dispatch:
@@ -737,6 +739,26 @@ jobs:
               for z in x["available_scoped_browser_proof"]) for x in not_observed)
           print("P5 28 separate reviewer handoffs, 336 question-level H/S/P/M reviews NOT_RUN, "
                 "7 source-author repair requests, 0 signatures/Owner acceptances")
+          PY
+      - name: R13 derive read-only source-SHA-native engineering repair matrix
+        run: |
+          set -euo pipefail
+          python -m py_compile TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_repair_matrix.py
+          python TEST/imo-research/qrt-tiles/reconciliation/qrt_intent_native_repair_matrix.py \
+            --handoff build/imo182-r8-review-handoff.v1.json \
+            --evidence-dir build/imo182-r8-intent \
+            --out build/imo182-r8-intent/r13-native-repair-matrix.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          matrix=json.loads(Path("build/imo182-r8-intent/r13-native-repair-matrix.json").read_text())
+          assert matrix["counts"]["qrt_cells"]==28
+          assert matrix["counts"]["native_source_bound"]==21
+          assert matrix["counts"]["source_blocked_no_native_report"]==7
+          assert matrix["independent_academic_approvals"]==0
+          assert matrix["owner_qrt_acceptances"]==0
+          assert matrix["release"]=="HOLD"
+          print("R13 real source-bound native repair matrix: 21 source-bound reports, 7 held source cases; no artificial release")
           PY
       - name: Keep review hypothesis evidence and immutable original source/manifest fingerprints
         if: always()
