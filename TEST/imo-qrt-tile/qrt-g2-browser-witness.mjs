@@ -69,9 +69,6 @@ try {
       if (!match) throw Error("no declared direct jumpToCoreUnit package ID");
       const unitId = match[1];
       row.route = unitId;
-      const declared = await page.evaluate(key =>
-        document.querySelectorAll("#tab-core1-all .topic-module-card[data-package-id=" +
-          CSS.escape(JSON.stringify(key)) + "]").length, unitId);
       // Evaluate attribute equality without CSS string escaping ambiguity.
       const targetCount = await page.evaluate(key =>
         [...document.querySelectorAll("#tab-core1-all .topic-module-card")]
