@@ -197,12 +197,12 @@ class TileMutations(unittest.TestCase):
         self.assertEqual(set(actual), expected)
         self.assertEqual(len(actual), len(expected))
         self.assertEqual(len(review["hints"]), 7)
-        self.assertEqual(review["counts"]["hint2_confirmed_mechanical_fail"], 1)
+        self.assertEqual(review["counts"]["hint2_confirmed_mechanical_fail"], 0)
         self.assertEqual(review["source_commit"],
-                         "cd139cae41435c313612919614b0b80605f0801b")
+                         "6ad5c73cfee80b75efffd219eb1b14886ca18c10")
         self.assertTrue(all(r["academic_status"] == "REVIEW_REQUIRED"
                             for r in review["core_links"] + review["hints"]))
-        self.assertEqual(review["status"], "DESK_REVIEW_ONLY_NOT_ACADEMIC_ACCEPTANCE")
+        self.assertEqual(review["status"], "UPDATED_DESK_REVIEW_NOT_ACADEMIC_ACCEPTANCE")
 
     def test_semantic_review_flags_weak_links_and_h2_numeric_leak(self):
         path = SRC / "TEST/imo-qrt-tile/qrt-retrieve-d1-semantic-desk-review.v1.json"
@@ -213,9 +213,9 @@ class TileMutations(unittest.TestCase):
             "SOF-IMO-G09-L1-2024-25-B-Q022",
             "SOF-IMO-G09-L1-2025-26-B-Q017"
         })
-        leaking = {r["question_id"] for r in review["hints"]
-                   if r["desk_status"] == "FAIL_KNOWN_PRECOMMIT_W"}
-        self.assertEqual(leaking, {"SOF-IMO-G09-L1-2024-25-B-Q022"})
+        revised = {r["question_id"] for r in review["hints"]
+                   if r["desk_status"] == "REVIEW_REQUIRED_REVISED_NO_NUMERIC_ANSWER"}
+        self.assertEqual(revised, {"SOF-IMO-G09-L1-2024-25-B-Q022"})
 
     def test_reject_nonsha_even_on_synthetic_input(self):
         with self.assertRaises(ValueError):
