@@ -1,0 +1,84 @@
+name: QRT G2 first tile exact-source witness
+on:
+  push:
+    branches:
+      - agent/qrt-tile-validator-g2
+    paths:
+      - 'Shared/tools/imo_qrt_tile_validator_g2.py'
+      - 'TEST/imo-qrt-tile/**'
+      - 'tests/test_imo_qrt_tile_validator_g2.py'
+      - '.github/workflows/qrt-tile-g2-pinned.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qrt-retrieve-d1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Freeze actual research source and overlay validator lane only
+        shell: bash
+        env:
+          SOURCE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin refs/heads/feat/imo-grade9-68-questions-master-suite:refs/remotes/origin/qrt-g2-research
+          test "$(git rev-parse refs/remotes/origin/qrt-g2-research)" = "$SOURCE_SHA"
+          git worktree add --detach "$RUNNER_TEMP/qrt-g2-source" "$SOURCE_SHA"
+          test "$(git -C "$RUNNER_TEMP/qrt-g2-source" rev-parse HEAD)" = "$SOURCE_SHA"
+          for p in Shared/tools/imo_qrt_validator.py Shared/tools/imo_qrt_standalone_gate.py Shared/tools/imo_qrt_core_relationships.py Shared/tools/imo_qrt_tile_validator_g2.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_standalone_gate.py tests/test_imo_qrt_core_relationships.py tests/test_imo_qrt_tile_validator_g2.py TEST/imo-qrt-tile/qrt-retrieve-d1-review.v1.json; do
+            mkdir -p "$RUNNER_TEMP/qrt-g2-source/$(dirname "$p")"
+            git show "$GITHUB_SHA:$p" > "$RUNNER_TEMP/qrt-g2-source/$p"
+          done
+          echo "SOURCE_SHA=$SOURCE_SHA"
+          echo "VALIDATOR_SHA=$GITHUB_SHA"
+          echo "No source/builder/HTML writes, detached worktree only."
+      - name: Mutation checks at pinned source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt-g2-source"
+          python -m unittest discover -s tests -p 'test_imo_qrt_validator.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_standalone_gate.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_core_relationships.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_tile_validator_g2.py' -v
+      - name: Execute real tile one on actual four standalone files
+        shell: bash
+        env:
+          SOURCE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt-g2-source"
+          set +e
+          python Shared/tools/imo_qrt_tile_validator_g2.py --source-sha "$SOURCE_SHA" --tile QRT-RETRIEVE-D1 --output build/qrt-g2/tile1.json
+          rc=$?
+          set -e
+          test "$rc" -eq 1
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path("build/qrt-g2/tile1.json").read_text())
+          assert a["source_commit"]=="90c859705feb0dfcedc6d33a013d9e563b7cac9d"
+          assert a["tile"]=="QRT-RETRIEVE-D1"
+          assert a["question_count"]==12 and a["fail_questions"]>0
+          assert a["academic_approval"]=="NOT_GRANTED"
+          assert len({e["sha256"] for e in a["html_endpoints"]})==1
+          print("Pinned tile 1: 12 questions, nonzero actionable findings, four generated HTML files byte identical.")
+          PY
+          mkdir -p "$GITHUB_WORKSPACE/build/qrt-g2"
+          cp build/qrt-g2/tile1.json "$GITHUB_WORKSPACE/build/qrt-g2/tile1.json"
+      - name: Export source-bound tile inspection report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qrt-g2-retrieve-d1-exact-source-evidence
+          path: build/qrt-g2/tile1.json
+          if-no-files-found: warn
