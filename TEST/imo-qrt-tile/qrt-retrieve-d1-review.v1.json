@@ -1,0 +1,61 @@
+{
+  "schema": "qrt-retrieve-d1-protected-w-review/v1",
+  "basis": "Shared/quality/question-demand-matrix.v1.json RETRIEVE.W; D1.band_policies.protected_work; hints 2 remain available precommit after opening hint 1",
+  "source_commit": "90c859705feb0dfcedc6d33a013d9e563b7cac9d",
+  "scope": "Conservative manually inspected exact hint substrings, including the 2024-25-B-Q022 numeric-answer leak observed on coder freeze cd139cae. Earlier six markers are baseline-90c8597 witnesses. Changed text requires fresh semantic W review. No score edits or QRT acceptance.",
+  "cases": {
+    "SOF-IMO-G09-L1-2024-25-B-Q022": {
+      "bank": "sof-imo-2024-25-set-b.core2.json",
+      "evidence_source_commit": "cd139cae41435c313612919614b0b80605f0801b",
+      "markers": [
+        "3² - (√2)² = 9 - 2 = 7"
+      ],
+      "why": "Precommit Tier-2 support computes the exact numerical value 7 of a compound D1 answer (value plus rational classification); the learner no longer owns the requested value, even though it still must classify it."
+    },
+    "SOF-IMO-G09-L1-2024-25-B-Q025": {
+      "bank": "sof-imo-2024-25-set-b.core2.json",
+      "markers": [
+        "sum of lengths of any two sides must strictly exceed"
+      ],
+      "why": "H2 states the triangle-inequality answer condition in full; the D1 property identification is no longer learner-owned."
+    },
+    "SOF-IMO-G09-L1-2024-25-B-Q028": {
+      "bank": "sof-imo-2024-25-set-b.core2.json",
+      "markers": [
+        "Each exterior angle = 180° - interior angle",
+        "Number of sides n = 360° /"
+      ],
+      "why": "H1/H2 supply the two complete pieces of the unique option formula; the formula-selection W is completed precommit."
+    },
+    "SOF-IMO-G09-L1-2025-26-A-Q028": {
+      "bank": "sof-imo-2025-26-set-a.core2.json",
+      "markers": [
+        "additive identity for real and rational numbers is always 0"
+      ],
+      "why": "H2 explicitly supplies the keyed additive identity 0 before the learner's committed classification."
+    },
+    "SOF-IMO-G09-L1-2025-26-B-Q011": {
+      "bank": "sof-imo-2025-26-set-b.core2.json",
+      "markers": [
+        "2 precedes 5",
+        "'Recog...' (4), 'Recol...' (1), 'Recon...' (3)"
+      ],
+      "why": "H2 orders both word groups, disclosing the entire keyed 2,5,4,1,3 sequence."
+    },
+    "SOF-IMO-G09-L1-2025-26-B-Q017": {
+      "bank": "sof-imo-2025-26-set-b.core2.json",
+      "markers": [
+        "gives $x = -5$",
+        "gives $y = +3$"
+      ],
+      "why": "H2 supplies both final coordinates (-5,+3), performing the D1 Cartesian-coordinate identification."
+    },
+    "SOF-IMO-G09-L1-2025-26-B-Q037": {
+      "bank": "sof-imo-2025-26-set-b.core2.json",
+      "markers": [
+        "Probability $= 1/3$"
+      ],
+      "why": "H2 directly supplies keyed option value 1/3 before the learner's probability determination."
+    }
+  }
+}

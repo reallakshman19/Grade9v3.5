@@ -1,0 +1,175 @@
+name: QRT249 source-bound standalone assurance (baseline or repair)
+
+on:
+  push:
+    branches:
+      - agent/issue249-qrt-validator-v1
+    paths:
+      - 'Shared/tools/imo_qrt_validator.py'
+      - 'tests/test_imo_qrt_validator.py'
+      - 'tests/test_imo_qrt_factor_evidence.py'
+      - 'Shared/tools/imo_qrt_standalone_gate.py'
+      - 'tests/test_imo_qrt_standalone_gate.py'
+      - 'Shared/tools/imo_qrt_canonical_evidence.py'
+      - 'tests/test_imo_qrt_canonical_evidence.py'
+      - 'Shared/tools/imo_qrt_core_relationships.py'
+      - 'tests/test_imo_qrt_core_relationships.py'
+      - 'TEST/imo-qrt-validator/**'
+      - '.github/workflows/qrt249-research-validator.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qrt249-standalone-validator
+  cancel-in-progress: true
+
+jobs:
+  corpus:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fail-closed mutation unit tests
+        run: python -m unittest discover -s tests -p 'test_imo_qrt_validator.py' -v
+      - name: Five-factor HOLD ledger adversarial regression tests
+        run: python -m unittest discover -s tests -p 'test_imo_qrt_factor_evidence.py' -v
+      - name: Run all 260 research questions and confirm the known negative baseline
+        shell: bash
+        run: |
+          set +e
+          python Shared/tools/imo_qrt_validator.py --baseline-sha "$GITHUB_SHA" --output build/imo-qrt-249/intake.json
+          rc=$?
+          set -e
+          if [ "$rc" != "1" ]; then
+            echo "Validator must return FAIL for this uncorrected research baseline"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path('build/imo-qrt-249/intake.json').read_text(encoding='utf-8'))
+          assert d['actual_total'] == d['unique_ids'] == 260
+          assert d['occupied_tiles'] == 19 and d['academic_approval'] == 'NOT_GRANTED'
+          assert d['finding_counts']['FIVE_FACTOR_SCORE_MISMATCH'] == 27
+          assert d['finding_counts']['FIVE_FACTOR_BAND_MISMATCH'] == 6
+          assert d['finding_counts']['FIVE_FACTOR_EVIDENCE_MISSING'] == 50
+          assert d['finding_counts']['FIVE_FACTOR_VALUE_INVALID'] == 1
+          assert d['difficulty_evidence_summary']['components'] == {
+              'COMPLETE': 209, 'INVALID_VALUES': 1, 'MISSING': 50,
+          }
+          assert d['difficulty_evidence_summary']['scores'] == {
+              'MATCH': 182, 'MISMATCH': 27, 'NOT_DERIVABLE': 51,
+          }
+          assert d['difficulty_evidence_summary']['bands'] == {
+              'MATCH': 203, 'MISMATCH': 6, 'NOT_DERIVABLE': 51,
+          }
+          assert len(d['stale_audits']) == 1
+          assert d['stale_audits'][0]['reported_question_count'] == 184
+          print('260 records inventoried; expected blockers proven; no academic pass claimed')
+          PY
+      - name: Standalone pre-attempt disclosure mutation tests
+        run: python -m unittest discover -s tests -p 'test_imo_qrt_standalone_gate.py' -v
+      - name: Actual standalone HTML baseline falsifier or post-repair evidence gate
+        shell: bash
+        run: |
+          set +e
+          python Shared/tools/imo_qrt_standalone_gate.py --baseline-sha "$GITHUB_SHA" --output build/imo-qrt-249/standalone-disclosure.json
+          rc=$?
+          set -e
+          QRT_HTML_RC="$rc" python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+          data = json.loads(Path('build/imo-qrt-249/standalone-disclosure.json').read_text(encoding='utf-8'))
+          assert data['scope'] == 'RESEARCH_STANDALONE_HTML_ONLY'
+          assert len(data['endpoints']) == 4
+          assert data['rendered']['question_count'] == data['rendered']['unique_question_ids'] == 260
+          assert data['academic_verdict'] == 'REVIEW_REQUIRED'
+          source_blob = subprocess.check_output(
+              ['git','hash-object','Mathematics/research/build_full_master_suite.py'], text=True
+          ).strip()
+          baseline_blob = '6bbcc547b25ce0af5b3de5a7f367c5460420227c'
+          if source_blob == baseline_blob:
+              # This SHA is the exact known-defective builder, not an arbitrary workflow expectation.
+              assert os.environ['QRT_HTML_RC'] == '1'
+              assert data['status'] == 'FAIL'
+              for key in (
+                  'PREATTEMPT_CORRECT_OPTION_EMPHASIZED',
+                  'PREATTEMPT_ANSWER_IN_VISIBLE_SOLUTION_SUMMARY',
+                  'SOLUTION_DIRECTLY_OPENABLE_BEFORE_ATTEMPT',
+              ):
+                  assert data['rendered']['findings'].get(key) == 260, key
+              print('Known pinned builder correctly falsified across 260 question cards')
+          else:
+              # Any edited builder must generate genuinely safe, synchronized HTML.
+              assert os.environ['QRT_HTML_RC'] == '0'
+              assert data['status'] == 'REVIEW_REQUIRED'
+              assert not data['hard_findings'] and not data['rendered']['findings']
+              assert len({row['sha256'] for row in data['endpoints']}) == 1
+              print('Modified builder: 260 question cards, four byte-identical HTML outputs, zero structural disclosures; academic HOLD retained')
+          PY
+      - name: Native QRT/Blueprint evidence bridge synthetic negative tests
+        run: python -m unittest discover -s tests -p 'test_imo_qrt_canonical_evidence.py' -v
+      - name: Actual 260-question research-to-native readiness negative control
+        shell: bash
+        run: |
+          set +e
+          python Shared/tools/imo_qrt_canonical_evidence.py --baseline-sha "$GITHUB_SHA" --output build/imo-qrt-249/native-readiness.json
+          rc=$?
+          set -e
+          if [ "$rc" != "1" ]; then
+            echo "Unreviewed research bank must not auto-admit native questions"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path('build/imo-qrt-249/native-readiness.json').read_text(encoding='utf-8'))
+          assert d['total'] == d['unique_ids'] == 260
+          assert d['canonical_resolved'] == 0
+          assert d['missing_or_invalid_counts']['ACTUAL_LEARNER_PROFILE'] == 260
+          assert d['missing_or_invalid_counts']['NATIVE_CORE_ROLE_RECORD'] == 260
+          assert d['native_product_admission'] == 'NOT_GRANTED'
+          print('Native QRT evidence adapter: 260/260 research records correctly held; 0 invented native admissions')
+          PY
+      - name: Core relationship independent synthetic falsifiers
+        run: python -m unittest discover -s tests -p 'test_imo_qrt_core_relationships.py' -v
+      - name: Real research Core1A/Core1B to 260 question mapping audit
+        shell: bash
+        run: |
+          set +e
+          python Shared/tools/imo_qrt_core_relationships.py --baseline-sha "$GITHUB_SHA" --output build/imo-qrt-249/core-relationships.json
+          rc=$?
+          set -e
+          CORE_REL_RC="$rc" python - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=json.loads(Path('build/imo-qrt-249/core-relationships.json').read_text(encoding='utf-8'))
+          assert d['question_count']==260
+          assert d['core1a_count']==d['core1b_count']==d['paired_units']==20
+          assert len(d['questions'])==260
+          assert d['academic_approval']=='NOT_GRANTED'
+          assert all(q['native_core_admission']=='NOT_GRANTED' for q in d['questions'])
+          assert os.environ['CORE_REL_RC']==('1' if d['status']=='FAIL' else '0')
+          kinds=('EXPLICIT_UNIT_ID','TOPIC_NAV_ONLY','UNDECLARED_TOPIC_FALLBACK','NO_CORE_UNITS_AT_ROUTED_FOLDER')
+          assert sum(d['relationship_counts'].get(k,0) for k in kinds)==260
+          print('Research 20 unit pairs × 260 Core2 records, no auto-approved concept links')
+          print('Relationship counts:', d['relationship_counts'])
+          print('Structural findings:',len(d['structural_findings']))
+          PY
+      - name: Upload validator finding references only
+        uses: actions/upload-artifact@v4
+        with:
+          name: qrt249-exact-head-intake
+          path: |
+            build/imo-qrt-249/intake.json
+            build/imo-qrt-249/standalone-disclosure.json
+            build/imo-qrt-249/native-readiness.json
+            build/imo-qrt-249/core-relationships.json
+          if-no-files-found: error
