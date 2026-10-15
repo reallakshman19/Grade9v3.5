@@ -1,0 +1,113 @@
+name: QRT G2 repair build handoff (unfrozen candidate)
+on:
+  push:
+    branches:
+      - agent/qrt-tile-validator-g2
+    paths:
+      - '.github/workflows/qrt-g2-repair-build-handoff.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repair-build-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CANDIDATE_SHA: 97fb4004a3dfabf3c7c3ad0f400f654817345b00
+      BASELINE_SHA: 90c859705feb0dfcedc6d33a013d9e563b7cac9d
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify repair head and create detached source worktree
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin refs/heads/repair/qrt-tile-html-g2:refs/remotes/origin/qrt-g2-coder
+          test "$(git rev-parse refs/remotes/origin/qrt-g2-coder)" = "$CANDIDATE_SHA" || { echo "CODER_BRANCH_HEAD_MOVED_REPIN_FIRST"; exit 1; }
+          git merge-base --is-ancestor "$BASELINE_SHA" "$CANDIDATE_SHA"
+          git worktree add --detach "$RUNNER_TEMP/qrt-g2-coder" "$CANDIDATE_SHA"
+          test "$(git -C "$RUNNER_TEMP/qrt-g2-coder" rev-parse HEAD)" = "$CANDIDATE_SHA"
+          echo "Coder source SHA pinned; no branch or source writes."
+      - name: Build all four HTML outputs and compare hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt-g2-coder"
+          mkdir -p build/qrt-g2/handoff
+          python Mathematics/research/build_full_master_suite.py | tee build/qrt-g2/handoff/builder.log
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          files=[
+            "standalone/mathematics-imo-grade9-master-suite.html",
+            "public/standalone/mathematics-imo-grade9-master-suite.html",
+            "public/test/imo-grade9/core2.html",
+            "docs/test/imo-grade9/core2.html",
+          ]
+          rows=[]
+          for rel in files:
+              data=Path(rel).read_bytes()
+              rows.append(dict(path=rel,sha256=hashlib.sha256(data).hexdigest(),bytes=len(data)))
+          assert len(set(x["sha256"] for x in rows))==1, "FOUR_OUTPUT_HASH_MISMATCH"
+          changed=subprocess.check_output(["git","diff","--name-only"],text=True).splitlines()
+          assert set(changed)==set(files), f"EXPECTED_ONLY_FOUR_GENERATED_CHANGES: {changed}"
+          assert subprocess.run(["git","diff","--check"]).returncode == 0
+          result={
+            "status":"UNFROZEN_GENERATED_CANDIDATE_NOT_ACCEPTANCE",
+            "source_sha":"97fb4004a3dfabf3c7c3ad0f400f654817345b00",
+            "generated_html":rows,
+            "changed_paths":changed,
+            "commit_required_on_coder_branch":True,
+            "academic_approval":"NOT_GRANTED",
+            "note":"Read-only CI build. Generated outputs are not committed at source SHA; coder owns their commit and tests."
+          }
+          Path("build/qrt-g2/handoff/manifest.json").write_text(json.dumps(result,indent=2)+"\n")
+          print(json.dumps(result,indent=2))
+          PY
+          cp build/qrt-g2/handoff/manifest.json "$GITHUB_WORKSPACE/handoff-manifest.json"
+          cp build/qrt-g2/handoff/builder.log "$GITHUB_WORKSPACE/handoff-builder.log"
+          for p in standalone/mathematics-imo-grade9-master-suite.html public/standalone/mathematics-imo-grade9-master-suite.html public/test/imo-grade9/core2.html docs/test/imo-grade9/core2.html; do
+            mkdir -p "$GITHUB_WORKSPACE/handoff/$(dirname "$p")"
+            cp "$p" "$GITHUB_WORKSPACE/handoff/$p"
+          done
+      - name: Run relevant regression and validator mutation tests on candidate source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt-g2-coder"
+          for p in Shared/tools/imo_qrt_validator.py Shared/tools/imo_qrt_standalone_gate.py Shared/tools/imo_qrt_core_relationships.py Shared/tools/imo_qrt_tile_validator_g2.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_standalone_gate.py tests/test_imo_qrt_core_relationships.py tests/test_imo_qrt_tile_validator_g2.py TEST/imo-qrt-tile/qrt-retrieve-d1-review.v1.json; do
+            mkdir -p "$(dirname "$p")"
+            git -C "$GITHUB_WORKSPACE" show "$GITHUB_SHA:$p" > "$p"
+          done
+          python -m unittest discover -s tests -p 'test_imo_qrt_validator.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_standalone_gate.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_core_relationships.py' -v
+          python -m unittest discover -s tests -p 'test_imo_qrt_tile_validator_g2.py' -v
+      - name: Run preliminary QRT tile report on uncommitted built HTML
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/qrt-g2-coder"
+          set +e
+          python Shared/tools/imo_qrt_tile_validator_g2.py --source-sha "$CANDIDATE_SHA" --tile QRT-RETRIEVE-D1 --output "$GITHUB_WORKSPACE/handoff-tile1-unfrozen.json"
+          rc=$?
+          set -e
+          test "$rc" -eq 0 -o "$rc" -eq 1
+          echo "PRELIMINARY CANDIDATE ONLY. This is NOT a recheck of committed generated HTML and NOT academic or QRT acceptance."
+      - name: Upload four candidate HTML files and evidence for coder handoff
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qrt-g2-97fb400-unfrozen-generated-html
+          path: |
+            handoff/
+            handoff-manifest.json
+            handoff-builder.log
+            handoff-tile1-unfrozen.json
+          if-no-files-found: warn
