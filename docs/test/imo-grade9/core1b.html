@@ -77,9 +77,10 @@
         <textarea class="exit-field" placeholder="State the coprimality condition: gcd(a, b) = ?..."></textarea>
       </div>
 
-      <button class="commit-btn" onclick="document.getElementById('stage1-solution').style.display='block'">Check Stage 1 Foundation</button>
+      <button class="commit-btn" type="button" data-g9-commit-gate="stage1">Commit all three recall attempts &amp; check Stage 1</button>
+      <p id="stage1-feedback" role="status" aria-live="polite" class="smallprint"></p>
 
-      <div id="stage1-solution" class="model-proof" style="display:none;margin-top:16px">
+      <div id="stage1-solution" class="model-proof" hidden style="margin-top:16px">
         <h3>Stage 1 Recall Reference</h3>
         <ul>
           <li><strong>Parity:</strong> Integers alternate between even and odd: <code>n ≡ 0 (mod 2)</code> or <code>n ≡ 1 (mod 2)</code>. If <code>n</code> is odd, <code>n+1</code> is even. Hence <code>2 | n(n+1)</code> holds universally regardless of compositeness.</li>
@@ -103,10 +104,11 @@
       <div class="attempt-box">
         <label for="full-proof-attempt"><strong>Your Full Step-by-Step Proof:</strong></label>
         <textarea class="exit-field" id="full-proof-attempt" style="min-height:180px" placeholder="Write Step 1 (Arbitrary start), Step 2 (Factor of 2), Step 3 (Factor of 3 cases), and Step 4 (Synthesis)..."></textarea>
-        <button class="commit-btn" onclick="document.getElementById('stage2-solution').style.display='block'">Commit Proof & Reveal Model</button>
+        <button class="commit-btn" type="button" data-g9-commit-gate="stage2">Commit Proof &amp; Reveal Model</button>
+        <p id="stage2-feedback" role="status" aria-live="polite" class="smallprint"></p>
       </div>
 
-      <div id="stage2-solution" class="model-proof" style="display:none">
+      <div id="stage2-solution" class="model-proof" hidden>
         <h3>Model Proof Verification</h3>
         <ol class="reconstruction-steps">
           <li class="reconstruction-step">
@@ -131,12 +133,18 @@
           </li>
         </ol>
       </div>
+    </section>
+
     <section class="review-panel" id="stage3-boundary">
       <h2>Stage 3 · Boundary Test & Perturbation</h2>
       <p><strong>Boundary Test:</strong> Suppose the consecutive integers are allowed to be negative or include zero (e.g. n = -1, giving (-1)(0)(1) = 0). Does the divisibility by 6 property still hold for all n ∈ ℤ?</p>
       <div class="attempt-box">
         <p><strong>Prompt:</strong> Evaluate the limiting boundary case at n = 0, n = -1, and n = -2.</p>
-        <details class="model-proof">
+        <label for="stage3-boundary-attempt"><strong>Your boundary-case reasoning (required before analysis):</strong></label>
+        <textarea class="exit-field" id="stage3-boundary-attempt" placeholder="Work through the limiting cases, then explain your general conclusion."></textarea>
+        <button class="commit-btn" type="button" data-g9-commit-gate="stage3">Commit Boundary Attempt &amp; Reveal Analysis</button>
+        <p id="stage3-feedback" role="status" aria-live="polite" class="smallprint"></p>
+        <details class="model-proof" id="stage3-solution" hidden>
           <summary>View Boundary Analysis</summary>
           <p>For n ∈ {-2, -1, 0}, the product contains 0 as a factor, yielding P(n) = 0. Since 0 = 6 × 0, 6 | 0 is true. For any negative integer n = -m (m ≥ 3), the product (-m)(-m+1)(-m+2) = -[m(m-1)(m-2)] is the negative of three positive consecutive integers, hence also divisible by 6. The divisibility invariant holds across all ℤ without exception.</p>
         </details>
@@ -149,6 +157,41 @@
       <a href="core2.html" class="commit-btn" style="text-decoration:none">Proceed to Core 2 (Practice 68 Questions) →</a>
     </div>
   </main>
+  <script>
+  (() => {
+    "use strict";
+    // These TEST references stay hidden until their respective answer is committed.
+    const gates = [
+      ["stage1", "stage1-boundary", "stage1-solution", 3],
+      ["stage2", "stage2-reconstruct", "stage2-solution", 1],
+      ["stage3", "stage3-boundary", "stage3-solution", 1],
+    ];
+    for (const [key, sectionId, solutionId, count] of gates) {
+      const section = document.getElementById(sectionId);
+      const button = section.querySelector('[data-g9-commit-gate="' + key + '"]');
+      const solution = document.getElementById(solutionId);
+      const feedback = document.getElementById(key + "-feedback");
+      const fields = Array.from(section.querySelectorAll("textarea"));
+      if (fields.length !== count || !button || !solution || !feedback) {
+        throw new Error("CORE1B_COMMIT_GATE_STRUCTURE_INVALID");
+      }
+      solution.hidden = true;
+      if (solution.tagName === "DETAILS") solution.open = false;
+      button.addEventListener("click", () => {
+        const missing = fields.find(field => !field.value.trim());
+        if (missing) {
+          feedback.textContent = "Write a nonblank attempt in each field before revealing the reference.";
+          missing.focus();
+          return;
+        }
+        button.dataset.g9AttemptCommitted = "true";
+        solution.hidden = false;
+        if (solution.tagName === "DETAILS") solution.open = true;
+        feedback.textContent = "Attempt committed for this stage. The reference is available.";
+      });
+    }
+  })();
+  </script>
 
   <footer class="g9-footer"><p>Grade9V3.5 · TEST Core 1B Reconstruction Review · Research Integrity Sandbox</p></footer>
 </body>
