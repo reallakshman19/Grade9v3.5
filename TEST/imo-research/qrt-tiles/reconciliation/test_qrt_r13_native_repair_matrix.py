@@ -97,6 +97,17 @@ class NativeRepairMatrix(unittest.TestCase):
                      lambda h, r: r["QRT-RETRIEVE-D1"][0]["postcommit_native_journey"].update(
                          source_question_id="WRONG"))
 
+    def test_missing_or_blank_question_id_rejected(self):
+        for invalid_qid in (None, "", "  ", 42):
+            with self.subTest(question_id=invalid_qid):
+                def mutate(handoff, reports):
+                    cell = handoff["cells"][0]
+                    cell["qrt_hypothesis_not_a_verdict"]["primary_question_id"] = invalid_qid
+                    cell["available_scoped_browser_proof"][0]["native_question_id"] = invalid_qid
+                    reports["QRT-RETRIEVE-D1"][0]["postcommit_native_journey"][
+                        "source_question_id"] = invalid_qid
+                self.rejects("R13_NATIVE_SOURCE_IDENTITY_DRIFT", mutate)
+
     def test_wrong_concept_rejected(self):
         self.rejects("R13_NATIVE_SOURCE_IDENTITY_DRIFT",
                      lambda h, r: r["QRT-RETRIEVE-D1"][0]["postcommit_native_journey"].update(
