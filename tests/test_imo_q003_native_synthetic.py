@@ -251,6 +251,9 @@ class Q003SyntheticNativeSmoke(unittest.TestCase):
               "duties:", sorted({g["duty"] for g in core2_receipt.get("gaps") or []}),
               "Core1A gaps:", len(core1a_receipt.get("gaps") or []),
               "duties:", sorted({g["duty"] for g in core1a_receipt.get("gaps") or []}))
+        print("Synthetic Core2 exact gap findings:",
+              [(g.get("duty"), g.get("component"), g.get("detail"))
+               for g in core2_receipt.get("gaps") or []])
         print("Core2 missing golden slots:", sorted(set(g2_markers["components"]) - set(c2["components"])))
         print("Core1A missing golden slots:", sorted(set(g1_markers["components"]) - set(c1["components"])))
 
