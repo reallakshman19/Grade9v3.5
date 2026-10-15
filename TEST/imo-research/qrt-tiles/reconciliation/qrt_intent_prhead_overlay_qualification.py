@@ -47,6 +47,7 @@ CASES = (
 RECONCILIATION = Path("TEST/imo-research/qrt-tiles/reconciliation")
 RENDERER = Path("Shared/tools/render_core.py")
 WORKFLOW = Path(".github/workflows/imo182-r8-qrt-intent-contract.yml")
+R14_PRACTICE_GOLDEN_DIR = Path("golden/units/G-IMO-G9-FIVE-CORE-20261012-v2-PRACTICE")
 
 # Owner AB-R14-SRCPIN: preserve draft #191 original input provenance only
 # for R14. The existing #201 R8 checkout remains on its later evidence SHA.
@@ -255,9 +256,12 @@ def _component_tokens(path: Path) -> list[str]:
     return parser.components
 
 
-def source_safe_component_delta(source_root: Path, target: Path) -> dict:
+def source_safe_component_delta(
+    source_root: Path, target: Path, golden_root: Path | None = None
+) -> dict:
     """Observations, not a golden verdict; no user question or raw HTML."""
-    lock_dir = source_root / GOLDEN_COMPONENT_ROOT
+    lock_dir = (golden_root if golden_root is not None
+                else source_root / GOLDEN_COMPONENT_ROOT)
     lock = json.loads((lock_dir / "snapshot-lock.json").read_text(encoding="utf-8"))
     records = lock["snapshots"]
     if (len(records) != 5
@@ -783,6 +787,22 @@ def diagnostic_self_test() -> None:
         assert "Traceback" not in imported_bytes
         assert "Traceback" not in imported_error
     verify_r14_source_isolation()
+    # Hosted step 41 has the historical pinned checkout. Validate both
+    # immutable fixtures and assert ONLY one approved CORE1A insertion.
+    from qrt_intent_native_evidence import (
+        verify_r14_versioned_golden, verify_only_authorized_practice_delta)
+    from qrt_intent_contract import ContractError
+    verify_r14_versioned_golden(Path("source-explain-d3"), R14_PRACTICE_GOLDEN_DIR)
+    try:
+        verify_only_authorized_practice_delta(
+            b'<div data-g9-component="LEARNING_TRANSITIONS"></div>',
+            b'<div data-g9-component="PRACTICE_LINKS"></div>'
+            b'<div data-g9-component="LEARNING_TRANSITIONS"></div>EXTRA')
+    except ContractError:
+        pass
+    else:
+        raise AssertionError("R14_GOLDEN_ILLEGAL_DELTA_ACCEPTED")
+    print("R14 owner-versioned CORE1A golden exact one-marker-only delta: PASS")
     fanout_self_test()
     cleanup_and_component_self_test()
     print("R14 source-safe classifier + on-disk JSON round-trip + "
@@ -874,6 +894,8 @@ def main() -> None:
         parser.error("--out is required outside synthetic diagnostic self-test")
     verify_old_r8_assignments()
     verify_r14_source_isolation()
+    from qrt_intent_native_evidence import verify_r14_versioned_golden
+    verify_r14_versioned_golden(Path("source-explain-d3"), R14_PRACTICE_GOLDEN_DIR)
     witnesses = json.loads((RECONCILIATION / "qrt-intent-witnesses-pilot.v1.json")
                            .read_text(encoding="utf-8"))
     by_cell = {w["cell_id"]: w for w in witnesses["witnesses"]}
@@ -931,7 +953,9 @@ def main() -> None:
                 call([sys.executable, str(RECONCILIATION / "qrt_intent_native_evidence.py"),
                       "--contract", str(Path("build/imo182-r8-intent") / (slug + ".json")),
                       "--source-root", str(shadow), "--native-output", str(target),
-                      "--independent-rebuild", str(alternate), "--out", str(candidate_contract)],
+                      "--independent-rebuild", str(alternate),
+                      "--r14-golden-dir", str(R14_PRACTICE_GOLDEN_DIR),
+                      "--out", str(candidate_contract)],
                      phase="native-evidence", cell_id=cid,
                      diagnostic_out=args.out.with_name(
                          "prhead-overlay-" + slug + "-FAILURE-CODE.json"))
@@ -940,7 +964,8 @@ def main() -> None:
                     # Diagnostic-only: never modify renderer/immutable golden.
                     # Failure to inspect markers must not hide the native error.
                     try:
-                        delta = source_safe_component_delta(shadow, target)
+                        delta = source_safe_component_delta(
+                            shadow, target, golden_root=R14_PRACTICE_GOLDEN_DIR)
                         output = args.out.with_name(
                             "prhead-overlay-" + slug + "-COMPONENT-DIFF.json")
                         stage = output.with_name(output.name + ".tmp")

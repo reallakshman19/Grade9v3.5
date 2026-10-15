@@ -50,9 +50,93 @@ def parse(path: Path) -> NativeStructure:
     return parser
 
 
+
+# Owner AB-R14-PRACTICE: never mutate or displace the historical R8 golden.
+# R14 alone may explicitly request this separately locked structural v2.
+R14_GOLDEN = "G-IMO-G9-FIVE-CORE-20261012-v2-PRACTICE"
+R14_GOLDEN_RELATIVE = Path("golden/units/G-IMO-G9-FIVE-CORE-20261012-v2-PRACTICE")
+R14_GOLDEN_LOCK_BLOB = "53870580200de9f08f9f2ebe0a21ecc46fcf02f5"
+R14_MARKER_NODE = b'<div data-g9-component="PRACTICE_LINKS"></div>'
+R14_TRANSITIONS_ANCHOR = b'data-g9-component="LEARNING_TRANSITIONS"'
+
+
+def verify_only_authorized_practice_delta(old: bytes, new: bytes) -> None:
+    """Full byte-level structural oracle: ONE insertion, no other mutation."""
+    ensure(old.count(R14_TRANSITIONS_ANCHOR) == 1 and
+           old.count(R14_MARKER_NODE) == 0, "R14_GOLDEN_BASE_MARKERS_DRIFT")
+    anchor = old.index(R14_TRANSITIONS_ANCHOR)
+    tag_start = old.rfind(b"<div", 0, anchor)
+    ensure(tag_start >= 0 and anchor - tag_start < 230,
+           "R14_GOLDEN_INSERTION_ANCHOR_DRIFT")
+    expected = old[:tag_start] + R14_MARKER_NODE + old[tag_start:]
+    ensure(new == expected, "R14_GOLDEN_ONLY_PRACTICE_LINKS_PERMITTED")
+
+
+def verify_r14_versioned_golden(source_root: Path, versioned_root: Path) -> dict:
+    """Check BOTH locks and every role; fail closed on any unapproved delta."""
+    legacy_lock = resolve_under(
+        source_root, "golden/units/" + GOLDEN + "/snapshot-lock.json")
+    legacy_root = legacy_lock.parent
+    ensure(blob_hash(legacy_lock) == LOCK_BLOB,
+           "IMMUTABLE_GOLDEN_LOCK_DRIFT")
+    ensure(versioned_root.resolve() == R14_GOLDEN_RELATIVE.resolve(),
+           "R14_GOLDEN_VERSION_NOT_EXPLICIT")
+    new_lock_path = versioned_root / "snapshot-lock.json"
+    ensure(blob_hash(new_lock_path) == R14_GOLDEN_LOCK_BLOB,
+           "R14_GOLDEN_V2_LOCK_DRIFT")
+    original = read_json(legacy_lock)
+    proposed = read_json(new_lock_path)
+    ensure(original.get("fixture_id") == GOLDEN and
+           proposed.get("fixture_id") == R14_GOLDEN and
+           proposed.get("base_fixture_id") == GOLDEN and
+           proposed.get("base_fixture_lock_git_blob_sha") == LOCK_BLOB and
+           proposed.get("only_allowed_delta") == {
+               "role": "CORE1A", "component": "PRACTICE_LINKS",
+               "ordinal_zero_based": 11,
+               "markup": R14_MARKER_NODE.decode("utf-8")
+           } and
+           proposed.get("academic_accepted") == 0 and
+           proposed.get("owner_qrt_accepted") == 0 and
+           proposed.get("release") == "HOLD",
+           "R14_GOLDEN_VERSION_AUTHORITY_DRIFT")
+    older = original["snapshots"]
+    newer = proposed["snapshots"]
+    ensure(len(older) == len(newer) == 5 and
+           {item["role"] for item in older} ==
+           {item["role"] for item in newer} == set(ROLES),
+           "R14_GOLDEN_ROLE_SET_DRIFT")
+    for role in ROLES:
+        old_rec = next(x for x in older if x["role"] == role)
+        new_rec = next(x for x in newer if x["role"] == role)
+        path = "snapshots/" + role.lower() + ".html"
+        ensure(old_rec["path"] == new_rec["path"] == path,
+               "R14_GOLDEN_SNAPSHOT_PATH_DRIFT")
+        old_snapshot = legacy_root / path
+        new_snapshot = versioned_root / path
+        ensure(sha256(old_snapshot) == old_rec["sha256"] and
+               sha256(new_snapshot) == new_rec["sha256"] and
+               blob_hash(new_snapshot) == new_rec["git_blob_sha"],
+               "R14_GOLDEN_SNAPSHOT_BYTES_DRIFT")
+        old_bytes, new_bytes = old_snapshot.read_bytes(), new_snapshot.read_bytes()
+        if role == "CORE1A":
+            verify_only_authorized_practice_delta(old_bytes, new_bytes)
+            old_ids = parse(old_snapshot).components
+            new_ids = parse(new_snapshot).components
+            ensure(len(old_ids) == 12 and
+                   new_ids == old_ids[:11] + ["PRACTICE_LINKS"] + old_ids[11:],
+                   "R14_GOLDEN_COMPONENT_DELTA_DRIFT")
+        else:
+            ensure(new_bytes == old_bytes and
+                   new_rec["sha256"] == old_rec["sha256"] and
+                   new_rec["git_blob_sha"] == old_rec["git_blob_sha"],
+                   "R14_GOLDEN_NON_CORE1A_CHANGED")
+    return proposed
+
+
 def attach_native_contract(
     contract: dict, source_root: Path, output: Path,
-    independent_rebuild: Path | None = None
+    independent_rebuild: Path | None = None,
+    r14_golden_dir: Path | None = None
 ) -> dict:
     """Reject stale bytes, compare source pages to frozen snapshots, leave W HOLD."""
     contract = copy.deepcopy(contract)
@@ -78,6 +162,10 @@ def attach_native_contract(
     frozen = read_json(lock_path)
     ensure(frozen["fixture_id"] == GOLDEN,
            "WRONG_FROZEN_GOLDEN")
+    if r14_golden_dir is not None:
+        # Historical path is validated above and remains the R8 default.
+        frozen = verify_r14_versioned_golden(source_root, r14_golden_dir)
+        golden_dir = r14_golden_dir
     receipt_path = output / "render-receipt.json"
     ensure(receipt_path.is_file(), "RENDER_RECEIPT_MISSING")
     receipt = read_json(receipt_path)
@@ -192,6 +280,7 @@ def attach_native_contract(
         "index_sha256": sha256(index),
         "roles": proof,
         "golden_immutability": "FIVE_SNAPSHOT_SHAS_CONFIRMED",
+        "golden_fixture_id": R14_GOLDEN if r14_golden_dir is not None else GOLDEN,
         "all_role_structure": "PASS",
         "independent_math": "NOT_RUN",
         "browser_and_AX": "NOT_RUN",
@@ -212,11 +301,13 @@ def main():
     parser.add_argument("--native-output", required=True, type=Path)
     parser.add_argument("--independent-rebuild", type=Path,
                         help="Required for legacy pinned receipts without per-page hashes")
+    parser.add_argument("--r14-golden-dir", type=Path,
+                        help="Owner AB-R14-PRACTICE explicit review-only v2; R8 defaults to old lock")
     parser.add_argument("--out", required=True, type=Path)
     args = parser.parse_args()
     report = attach_native_contract(
         read_json(args.contract), args.source_root, args.native_output,
-        args.independent_rebuild
+        args.independent_rebuild, args.r14_golden_dir
     )
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n",
