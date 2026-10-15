@@ -88,11 +88,40 @@ class TileMutations(unittest.TestCase):
         nav = ('<button type="button" class="qb-badge qb-core-nav" '
                'aria-label="Linked Core 1A/1B for test" '
                'onclick="jumpToCoreUnit(' + "'unit-a'" + ')">Core</button>')
-        html = card(nav_override=nav)
-        self.assertNotIn("CORE_EXPLICIT_LINK_NOT_RENDERED",
-                         codes(_html_findings(html, question(), {}, linked_unit_ids=("unit-a",))))
+        html = self._with_core_target(card(nav_override=nav), "unit-a")
+        self.assertEqual(codes(_html_findings(
+            html, question(), {}, linked_unit_ids=("unit-a",))), set())
         self.assertIn("CORE_EXPLICIT_LINK_NOT_RENDERED",
                       codes(_html_findings(html, question(), {}, linked_unit_ids=("unit-b",))))
+
+    @staticmethod
+    def _with_core_target(html, package_id):
+        return (html +
+                '<div class="topic-module-card" data-package-id="' + package_id + '"></div>' +
+                "<script>function jumpToCoreUnit(unitId) {" +
+                "document.querySelectorAll('.topic-module-card')" +
+                ".find(m => m.getAttribute('data-package-id') === unitId);" +
+                "}</script>")
+
+    def test_direct_link_to_missing_rendered_core_card_fails(self):
+        nav = ('<button type="button" class="qb-badge qb-core-nav" '
+               'aria-label="Linked Core 1A/1B for test" '
+               'onclick="jumpToCoreUnit(' + "'unit-a'" + ')">Core</button>')
+        html = self._with_core_target(card(nav_override=nav), "wrong-package")
+        self.assertIn("CORE_EXPLICIT_TARGET_NOT_RENDERED",
+                      codes(_html_findings(html, question(), {},
+                                           linked_unit_ids=("unit-a",))))
+
+    def test_direct_link_to_wrong_js_lookup_fails(self):
+        nav = ('<button type="button" class="qb-badge qb-core-nav" '
+               'aria-label="Linked Core 1A/1B for test" '
+               'onclick="jumpToCoreUnit(' + "'unit-a'" + ')">Core</button>')
+        html = self._with_core_target(card(nav_override=nav), "unit-a")
+        html = html.replace("getAttribute('data-package-id')",
+                            "getAttribute('data-unit-id')")
+        self.assertIn("CORE_NAV_PACKAGE_ID_LOOKUP_MISSING",
+                      codes(_html_findings(html, question(), {},
+                                           linked_unit_ids=("unit-a",))))
 
     def test_false_direct_link_without_source_ref_fails(self):
         nav = ('<button type="button" class="qb-badge qb-core-nav" '
