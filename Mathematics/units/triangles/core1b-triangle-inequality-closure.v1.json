@@ -1,0 +1,65 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-TRIANGLE-INEQUALITY-CLOSURE",
+  "paired_core1a_ref": "CORE1A-MATH-TRIANGLE-INEQUALITY-CLOSURE",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Triangles",
+  "subtopic": "TRI-INEQUALITY-AXIOM",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Three rods have lengths 2, 4, and 7. Why can they not close into a nondegenerate triangle?",
+      "options": [
+        "A. One rod is even.",
+        "B. The shorter two sum to less than the longest.",
+        "C. All rod lengths must be equal.",
+        "D. Their product is not square."
+      ],
+      "predict_rationale": "Commit to the relevant invariant on a separate authored example before observing any worked model. The model answer is disclosed only after the learner attempts."
+    },
+    "stage_2_attempt": {
+      "task": "For sides 5, 7 and t, state the complete allowable range of real t for a nondegenerate triangle. Explain both endpoints geometrically.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Apply triangle inequality to the sides 5 and 7: t<12.",
+        "step_2": "The other inequalities give 5+ t>7 and 7+t>5, hence t>2.",
+        "step_3": "Combine as 2<t<12.",
+        "conclusion": "At t=2 or t=12 the shape is collinear, so endpoints are excluded."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "INVERSE_OR_CONTRAPOSITIVE_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose a triangle has perimeter 24 and its longest side is 13. Prove that it cannot be a genuine triangle.",
+          "expected_insight": "The sum of the other two sides is 24−13=11, less than 13; this contradicts the triangle inequality."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "What is formed by three segments of lengths 5, 12, and 13?",
+      "options": [
+        "A. A genuine right triangle.",
+        "B. A degenerate straight line.",
+        "C. No length 13 is allowed in any triangle.",
+        "D. A triangle with zero perimeter."
+      ],
+      "correct_option": "A",
+      "explanation": "Since 5+12>13 and 5²+12²=13², the triangle exists and is right-angled."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Think of the shortest route between two vertices versus a route bending through the third."
+    },
+    "hint_2_tactical_step": {
+      "role": "METHOD_NOT_ORIGINAL_OPTION",
+      "text": "Sort three lengths; compare the two shorter together against the longest and treat equality as a degenerate boundary."
+    }
+  }
+}

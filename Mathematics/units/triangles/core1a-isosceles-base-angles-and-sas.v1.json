@@ -1,0 +1,97 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-ISOSCELES-BASE-ANGLES-AND-SAS",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Triangles",
+  "topic_name": "Triangles",
+  "subtopic": "TRI-ISOSCELES-CONGRUENCE",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-A-Q022"
+  ],
+  "entry_assumptions": [
+    "For a nondegenerate isosceles triangle, two legs have equal length.",
+    "Corresponding parts of congruent triangles are equal (CPCT)."
+  ],
+  "inferential_jump": "An isosceles triangle has equal base angles opposite its equal legs; prove this from SAS by bisecting the vertex angle, and distinguish the SAS congruence criterion (two sides plus included angle) from ASA (two angles plus included side). The vertex bisector is also perpendicular to the base, not acute.",
+  "relation_refs": {
+    "domain": "Triangles",
+    "hypotheses": [
+      "Triangle ABC has AB=AC with B and C distinct.",
+      "Point D lies on BC and ray AD bisects angle BAC."
+    ],
+    "excluded_values": [
+      "A statement that the vertex bisector meets the base at acute unequal angles is false; it meets it at right angles.",
+      "SAS refers to two sides and their included angle; ASA refers to two angles and their included side."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "AB=AC ⇒ ∠ABC=∠BCA",
+      "word_meaning": "Isosceles theorem: angles opposite equal legs match."
+    },
+    {
+      "symbol": "AB=AC, AD=AD, ∠BAD=∠DAC",
+      "word_meaning": "SAS data for the two smaller triangles ABD and ACD."
+    },
+    {
+      "symbol": "∠ADB=∠ADC=90°",
+      "word_meaning": "Equal adjacent angles along straight base BC must both be right angles."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Construct a vertex-angle bisector.",
+      "derivation": "Draw AD from A toward base BC so that ∠BAD=∠DAC.",
+      "why_valid": "An angle bisector partitions its angle into equal portions."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Compare the two half-triangles.",
+      "derivation": "AB=AC, AD is common and ∠BAD=∠DAC, so triangles BAD and CAD are congruent by SAS.",
+      "why_valid": "The angle is included between the two known corresponding sides."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Derive base-angle equality.",
+      "derivation": "Congruence gives ∠ABD=∠DCA; since D lies on BC these are base angles ∠ABC and ∠ACB.",
+      "why_valid": "Corresponding angles of congruent triangles are equal."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Recover the median and altitude.",
+      "derivation": "Congruence also gives BD=DC and ∠ADB=∠ADC. As adjacent angles on the straight base sum to 180°, each is 90°.",
+      "why_valid": "An equal pair of supplementary angles must both be right angles."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "SAS_VERSUS_ASA",
+      "wrong_idea": "Two sides and an included angle can be called ASA.",
+      "diagnostic_prompt": "What physical data are compared—sides or angles?",
+      "repair": "Two sides plus their included angle is SAS, not ASA."
+    },
+    {
+      "code": "ACUTE_BISECTOR_INTERSECTION",
+      "wrong_idea": "The bisector of an isosceles vertex angle makes acute angles with its base.",
+      "diagnostic_prompt": "The adjacent two angles on a straight base are equal: what can their measure be?",
+      "repair": "They must each measure 90°, not acute angles."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "In isosceles triangle PQR with PQ=PR, S lies on QR and PS bisects the vertex angle QPR. Prove QS=SR and PS perpendicular QR.",
+    "model_answer": "Triangles PQS and PRS are congruent by SAS: PQ=PR, PS common, ∠QPS=∠SPR. Consequently QS=SR and ∠PSQ=∠PSR; these supplementary angles are 90°, hence PS⊥QR."
+  },
+  "exit_task": {
+    "prompt": "Triangle MNO satisfies MN=MO and its vertex angle M is 46°. Find each base angle and identify the correct congruence criterion for comparing the two triangles cut by the vertex bisector.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "Base angles N and O are equal; each is (180°−46°)/2=67°. The two half-triangles are congruent by SAS (equal legs, common bisector, equal included vertex half-angles), not ASA.",
+      "check": "Verify the independent worked case from its definitions; no original linked multiple-choice answer is supplied."
+    }
+  }
+}

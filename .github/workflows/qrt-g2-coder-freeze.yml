@@ -1,0 +1,150 @@
+name: QRT G2 coder Q022 protected-work freeze (one-shot)
+
+on:
+  push:
+    branches:
+      - repair/qrt-tile-html-g2
+    paths:
+      - '.github/workflows/qrt-g2-coder-freeze.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: qrt-g2-coder-freeze
+  cancel-in-progress: false
+
+jobs:
+  build-test-freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pin expected concept-authoring source parent
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD^)" = "cd139cae41435c313612919614b0b80605f0801b"
+          test "${GITHUB_REF}" = "refs/heads/repair/qrt-tile-html-g2"
+          test -z "$(git status --porcelain)"
+          git rev-parse HEAD
+      - name: Verify eight genuinely authored paired Core concept bridges
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          pairs=[
+            ("number-systems","irrational-decimal-classification","SOF-IMO-G09-L1-2023-24-A-Q020"),
+            ("linear-equations","linear-equation-infinite-pairs","SOF-IMO-G09-L1-2023-24-A-Q021"),
+            ("triangles","triangle-inequality-closure","SOF-IMO-G09-L1-2024-25-B-Q025"),
+            ("euclid-geometry","regular-polygon-exterior-turn","SOF-IMO-G09-L1-2024-25-B-Q028"),
+            ("triangles","isosceles-base-angles-and-sas","SOF-IMO-G09-L1-2025-26-A-Q022"),
+            ("euclid-geometry","seven-common-notions-verification","SOF-IMO-G09-L1-2025-26-A-Q025"),
+            ("number-systems","rational-additive-identity","SOF-IMO-G09-L1-2025-26-A-Q028"),
+            ("reasoning","dictionary-order-first-difference","SOF-IMO-G09-L1-2025-26-B-Q011"),
+          ]
+          names=set()
+          for folder,slug,qid in pairs:
+            base=Path("Mathematics/units")/folder
+            a=json.loads((base/f"core1a-{slug}.v1.json").read_text())
+            b=json.loads((base/f"core1b-{slug}.v1.json").read_text())
+            assert a["linked_core2_refs"]==[qid],qid
+            assert a["package_id"] not in names,qid
+            names.add(a["package_id"])
+            assert b["paired_core1a_ref"]==a["package_id"],qid
+            assert a["topic"]==b["topic"] and a["subtopic"]==b["subtopic"],qid
+            assert a["target_band"]==b["target_band"]=="D1",qid
+            assert a["target_demand"]==b["target_demand"]=="RETRIEVE",qid
+            assert len(a["completed_teaching_path"])>=4,qid
+            assert b["answer_before_attempt"]=="FORBIDDEN",qid
+            assert b["interactive_tutor_flow"]["stage_2_attempt"]["lock_state"]=="LOCKED_UNTIL_STUDENT_COMMITMENT",qid
+          print("EIGHT_PAIRED_EXACT_CONCEPT_BRIDGES_IN_SOURCE")
+          PY
+      - name: Verify new compound-answer Hint 2 regression before builder
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests/test_imo_qrt_h2_compound_answer_coder.py -v
+      - name: Build the four generated HTML endpoints and assert exact file set/hash parity
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scratch
+          python Mathematics/research/build_full_master_suite.py | tee scratch/qrt-g2-coder-builder.log
+          python - <<'PY'
+          import hashlib
+          import subprocess
+          from pathlib import Path
+          paths=[
+            "standalone/mathematics-imo-grade9-master-suite.html",
+            "public/standalone/mathematics-imo-grade9-master-suite.html",
+            "public/test/imo-grade9/core2.html",
+            "docs/test/imo-grade9/core2.html",
+          ]
+          receipts=[]
+          for p in paths:
+            content=Path(p).read_bytes()
+            receipts.append((p,len(content),hashlib.sha256(content).hexdigest()))
+          assert len({digest for _,_,digest in receipts})==1,receipts
+          assert len({n for _,n,_ in receipts})==1,receipts
+          assert receipts[0][1]>4800000,receipts
+          changed=set(subprocess.check_output(["git","diff","--name-only","HEAD"],text=True).splitlines())
+          assert changed==set(paths),("UNEXPECTED_BUILDER_CHANGED_FILES",sorted(changed))
+          with Path("scratch/qrt-g2-coder-four-hashes.txt").open("w") as f:
+            for p,n,d in receipts:
+              print(f"{d}  {p} ({n} UTF-8 bytes)")
+              f.write(f"{d}  {p} ({n} UTF-8 bytes)\n")
+          print("EIGHT_BRIDGE_FOUR_ENDPOINT_BUILD_PARITY")
+          PY
+      - name: Run all IMO source, disclosure, relationship and research regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_imo_*.py' -v
+      - name: Commit and push only four generated HTML files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            standalone/mathematics-imo-grade9-master-suite.html \
+            public/standalone/mathematics-imo-grade9-master-suite.html \
+            public/test/imo-grade9/core2.html \
+            docs/test/imo-grade9/core2.html
+          test "$(git diff --cached --name-only | wc -l)" -eq 4
+          # The inherited HTML builder emits indentation-only lines; do not hand-edit its deterministic output.
+          git -c core.whitespace=-blank-at-eol diff --cached --check
+          git commit -m "build(qrt-t1): freeze Q022 protected-work hint in four HTML mirrors"
+          git push origin HEAD:refs/heads/repair/qrt-tile-html-g2
+          echo "FROZEN_REPAIR_SHA=$(git rev-parse HEAD)" | tee scratch/qrt-g2-coder-frozen-commit.txt
+      - name: Verify committed HTML reproducibility
+        shell: bash
+        run: |
+          set -euo pipefail
+          python Mathematics/research/build_full_master_suite.py >/dev/null
+          git diff --exit-code -- \
+            standalone/mathematics-imo-grade9-master-suite.html \
+            public/standalone/mathematics-imo-grade9-master-suite.html \
+            public/test/imo-grade9/core2.html \
+            docs/test/imo-grade9/core2.html
+          echo "Frozen source+HTML SHA: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+          cat scratch/qrt-g2-coder-four-hashes.txt >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload reproducible coder freeze receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qrt-g2-q022-h2-freeze-receipts
+          path: |
+            scratch/qrt-g2-coder-builder.log
+            scratch/qrt-g2-coder-four-hashes.txt
+            scratch/qrt-g2-coder-frozen-commit.txt
+          if-no-files-found: warn

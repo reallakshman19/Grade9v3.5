@@ -1,0 +1,97 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-REGULAR-POLYGON-EXTERIOR-TURN",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Introduction to Euclid's Geometry",
+  "topic_name": "Introduction to Euclid's Geometry",
+  "subtopic": "GEO-REGULAR-POLYGON-FORMULA",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2024-25-B-Q028"
+  ],
+  "entry_assumptions": [
+    "A regular convex polygon has equal sides and interior angles.",
+    "At each vertex the usual exterior turning angle is the small supplementary angle to the interior angle."
+  ],
+  "inferential_jump": "A regular convex n-gon has equal exterior turning angles whose sum is exactly one full turn (360°); each exterior angle is supplementary to its interior angle, yielding n=360°/(180°−interior angle).",
+  "relation_refs": {
+    "domain": "Introduction to Euclid's Geometry",
+    "hypotheses": [
+      "The polygon is regular, convex, and has integer n≥3 sides.",
+      "The path traverses its boundary exactly once without self-intersection."
+    ],
+    "excluded_values": [
+      "Interior angles must satisfy 0<180°−interior angle≤120° in a regular convex n-gon (n≥3).",
+      "A computed noninteger n does not describe a regular polygon with that specified interior angle."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "I+E=180°",
+      "word_meaning": "Interior and adjacent exterior angle form a straight angle."
+    },
+    {
+      "symbol": "nE=360°",
+      "word_meaning": "Equal exterior turns complete one full revolution."
+    },
+    {
+      "symbol": "n=360°/(180°−I)",
+      "word_meaning": "Number of sides from the common interior angle I."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Relate interior and exterior angles.",
+      "derivation": "At a vertex, the interior angle I and adjoining exterior turn E sum to 180°, so E=180°−I.",
+      "why_valid": "They form a linear pair on a straight line."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Track the whole boundary turn.",
+      "derivation": "Walk around a convex polygon once: the sum of outside turns is exactly 360°.",
+      "why_valid": "The heading direction rotates by one complete revolution."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Use regularity.",
+      "derivation": "All turns have equal measure E; therefore nE=360° and n=360°/E.",
+      "why_valid": "Equal angular contributions sum to a full revolution."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Combine and check.",
+      "derivation": "For each interior angle 135°, E=45°, giving n=360/45=8 sides.",
+      "why_valid": "A regular octagon has each interior angle 135°, which checks the formula."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "DIVIDE_BY_INTERIOR",
+      "wrong_idea": "Divide 360° directly by the interior angle.",
+      "diagnostic_prompt": "What angle measures the direction change at the vertex?",
+      "repair": "The outside turn, not the interior angle, accumulates to 360°."
+    },
+    {
+      "code": "NONINTEGRAL_SIDE_COUNT",
+      "wrong_idea": "A regular polygon can have 5.5 sides.",
+      "diagnostic_prompt": "Can a polygon have a fractional count of vertices?",
+      "repair": "The side count n must be an integer at least 3."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "A regular convex polygon has exterior turns of 30° each. How many sides and what interior angle does it have?",
+    "model_answer": "n=360°/30°=12 sides; each interior angle is 180°−30°=150°. The turns sum to 12·30°=360°."
+  },
+  "exit_task": {
+    "prompt": "A regular convex polygon has interior angle 144°. Derive n and verify by angle-sum formula.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "Exterior turn E=180°−144°=36°. Thus n=360°/36°=10. Check interior sum: (10−2)180°/10=144°.",
+      "check": "Verify every worked claim against its stated domain and the original defining condition; examples are independent of the linked research question."
+    }
+  }
+}

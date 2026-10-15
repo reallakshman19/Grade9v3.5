@@ -1,0 +1,97 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-RATIONAL-ADDITIVE-IDENTITY",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Number Systems",
+  "topic_name": "Number Systems",
+  "subtopic": "NS-RATIONAL-IDENTITY",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-A-Q028"
+  ],
+  "entry_assumptions": [
+    "Rational numbers are closed under addition.",
+    "An additive identity leaves every element unchanged under addition."
+  ],
+  "inferential_jump": "The additive identity e for any rational r is uniquely e=0 because r+e=r. It is not the additive inverse −r, the multiplicative identity 1, or a number obtained by solving unrelated rational-factor arithmetic.",
+  "relation_refs": {
+    "domain": "Number Systems",
+    "hypotheses": [
+      "r is any rational number, including zero and negative rational values.",
+      "The same additive identity must work for all rational numbers."
+    ],
+    "excluded_values": [
+      "An additive inverse depends on r; the identity does not.",
+      "A product, ratio, or other distractor computation does not change the additive identity."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "r+0=r",
+      "word_meaning": "Additive identity property for every rational r."
+    },
+    {
+      "symbol": "r+(−r)=0",
+      "word_meaning": "Additive inverse property, which has a different objective."
+    },
+    {
+      "symbol": "r·1=r",
+      "word_meaning": "Multiplicative identity, distinct from addition."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Define the sought property before calculating.",
+      "derivation": "Let e be an additive identity. By definition r+e=r for every rational r.",
+      "why_valid": "The identity is the neutral element of the addition operation."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Isolate the neutral element.",
+      "derivation": "Subtract r from both sides: (r+e)−r=r−r, hence e=0.",
+      "why_valid": "Cancellation in the additive group of rationals is valid."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Prove uniqueness.",
+      "derivation": "If e and f are both additive identities, e=e+f=f.",
+      "why_valid": "Each neutral element leaves the other fixed, so they must coincide."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Distinguish nearby vocabulary.",
+      "derivation": "For r=−3/5, its additive inverse is +3/5; its additive identity is still 0.",
+      "why_valid": "The inverse makes a sum zero; identity leaves the original number unchanged."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "INVERSE_CONFUSED_WITH_IDENTITY",
+      "wrong_idea": "The additive identity of −3/5 is +3/5.",
+      "diagnostic_prompt": "Which expression leaves the original value unchanged?",
+      "repair": "The opposite is the inverse; zero is the identity."
+    },
+    {
+      "code": "EXTRANEOUS_QUOTIENT",
+      "wrong_idea": "You must calculate a hidden rational operand before finding its additive identity.",
+      "diagnostic_prompt": "Would r+e=r have a different e for different r?",
+      "repair": "No; the identity is independent of r."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Give the additive identity and additive inverse of 7/9 and check both statements.",
+    "model_answer": "Identity 0, since 7/9+0=7/9. Inverse −7/9, since 7/9+(−7/9)=0. They serve different roles."
+  },
+  "exit_task": {
+    "prompt": "For a rational number s whose value is not specified, determine the unique additive identity and explain why even knowing s=−11/17 would not change it.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "The identity is 0 from s+e=s ⇒ e=0. For s=−11/17 the same property holds: −11/17+0=−11/17.",
+      "check": "Verify the independent worked case from its definitions; no original linked multiple-choice answer is supplied."
+    }
+  }
+}

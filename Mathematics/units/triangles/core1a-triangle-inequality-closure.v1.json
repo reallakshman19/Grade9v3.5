@@ -1,0 +1,93 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-TRIANGLE-INEQUALITY-CLOSURE",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Triangles",
+  "topic_name": "Triangles",
+  "subtopic": "TRI-INEQUALITY-AXIOM",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2024-25-B-Q025"
+  ],
+  "entry_assumptions": [
+    "Side lengths are positive distances between distinct planar vertices.",
+    "A nondegenerate triangle has three noncollinear vertices."
+  ],
+  "inferential_jump": "For every nondegenerate triangle, the straight segment between two vertices is shorter than the two-segment route through the third: each sum of two side lengths strictly exceeds the remaining side; equality marks a degenerate collinear boundary.",
+  "relation_refs": {
+    "domain": "Triangles",
+    "hypotheses": [
+      "A, B, C are three noncollinear points in the Euclidean plane.",
+      "Euclidean distance obeys the triangle inequality with strictness for a genuinely bent route."
+    ],
+    "excluded_values": [
+      "A+B=C is a straight-line degenerate boundary, not a triangle.",
+      "Satisfying only one of the three strict inequalities is insufficient to construct a triangle."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "AB + BC > AC",
+      "word_meaning": "Path through B is longer than the direct side AC for a noncollinear vertex B."
+    },
+    {
+      "symbol": "|a−b| < c < a+b",
+      "word_meaning": "Equivalent possible range for a third side length c given positive a,b."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Compare a direct path with a broken path.",
+      "derivation": "In a noncollinear triangle, traveling A→B→C uses lengths AB+BC; the straight connection A→C is shorter.",
+      "why_valid": "The segment is the shortest Euclidean path joining fixed endpoints."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Cycle the vertex roles.",
+      "derivation": "Similarly AC+CB>AB and AB+AC>BC.",
+      "why_valid": "No vertex is distinguished; the same geometric argument holds at each vertex."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Check constructive examples.",
+      "derivation": "Lengths 4,5,8 satisfy 4+5>8, 4+8>5, and 5+8>4.",
+      "why_valid": "All three strict inequalities permit closing a nondegenerate triangle."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Recognize the boundary trap.",
+      "derivation": "Lengths 4,5,9 have 4+5=9; no noncollinear triangle can close.",
+      "why_valid": "Equality corresponds to one point lying on the segment joining the other two."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "ONE_SIDED_TEST_ONLY",
+      "wrong_idea": "One inequality alone is enough without checking which side is longest.",
+      "diagnostic_prompt": "Check the sum of the two shorter lengths against the longest.",
+      "repair": "For positive lengths it is sufficient to verify shortest+middle>longest; all other strict comparisons then follow."
+    },
+    {
+      "code": "EQUALITY_IS_TRIANGLE",
+      "wrong_idea": "A sum equal to the longest length is a valid triangle.",
+      "diagnostic_prompt": "Lay the short segments end-to-end on one line.",
+      "repair": "Equality gives a degenerate line, not a triangular region."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Can straight sticks of lengths 3 cm, 7 cm, and 9 cm close into a triangle? Explain the decisive inequality.",
+    "model_answer": "Yes: 3+7=10>9, and the two other positive-length comparisons follow automatically. A nondegenerate triangle is possible."
+  },
+  "exit_task": {
+    "prompt": "Classify side triples (6,8,15), (6,8,14), and (6,8,13) as possible genuine triangles, showing the longest-side test.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "6+8=14. For 15, 14<15 impossible; for 14, equality gives a degenerate straight line; for 13, 14>13 gives a genuine triangle.",
+      "check": "Verify every worked claim against its stated domain and the original defining condition; examples are independent of the linked research question."
+    }
+  }
+}

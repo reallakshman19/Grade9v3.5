@@ -1,0 +1,97 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-DICTIONARY-ORDER-FIRST-DIFFERENCE",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Verbal and Non-Verbal Reasoning",
+  "topic_name": "Verbal and Non-Verbal Reasoning",
+  "subtopic": "LOGIC-DICTIONARY-ORDER",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-B-Q011"
+  ],
+  "entry_assumptions": [
+    "All words are compared in the same alphabet and case-normalized spelling.",
+    "Dictionary order is ascending A to Z unless explicitly reversed."
+  ],
+  "inferential_jump": "Lexicographic dictionary order compares words at the first differing character after any common prefix; alphabetical order of those characters decides. If one word is a strict prefix of another, the shorter word sorts first.",
+  "relation_refs": {
+    "domain": "Verbal and Non-Verbal Reasoning",
+    "hypotheses": [
+      "Finite written word tokens use their ordinary English spelling.",
+      "Letters at equal positions are compared from left to right."
+    ],
+    "excluded_values": [
+      "Comparing only the first letter is insufficient when words have long common prefixes.",
+      "A shorter prefix word precedes a longer word only when all its letters equal the longer word's initial letters."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "prefix(w₁,w₂)",
+      "word_meaning": "The initial sequence of characters shared by both words."
+    },
+    {
+      "symbol": "first differing letter",
+      "word_meaning": "The earliest coordinate where two word strings diverge."
+    },
+    {
+      "symbol": "a < e < i < o < u",
+      "word_meaning": "Example of ordinary alphabetic comparisons used only at the first differing position."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Normalize and align words.",
+      "derivation": "Write 'cast', 'caster', 'castle', and 'cash' beneath one another, aligned by letter position.",
+      "why_valid": "Aligned columns expose the first unequal letter."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Compare the first differing position.",
+      "derivation": "Between 'cash' and 'cast', h comes before t in the fourth position; 'cash' sorts before 'cast'.",
+      "why_valid": "An earlier differing letter determines the order regardless of subsequent letters."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Apply prefix handling.",
+      "derivation": "'cast' sorts before 'caster' because all its letters match the first four of 'caster' and it ends first.",
+      "why_valid": "A word is before its strict extension in lexicographic order."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Complete remaining comparisons.",
+      "derivation": "'caster' is before 'castle' since e comes before l in position 5. Therefore cash, cast, caster, castle.",
+      "why_valid": "The full ordering follows local comparisons under the same rule."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "LAST_LETTER_PRIORITY",
+      "wrong_idea": "Alphabetize using the final letter even when earlier positions differ.",
+      "diagnostic_prompt": "At which earliest position do 'cash' and 'cast' differ?",
+      "repair": "The first differing letter dominates all later positions."
+    },
+    {
+      "code": "LONGER_PREFIX_FIRST",
+      "wrong_idea": "A longer word must come before a shorter word sharing its complete prefix.",
+      "diagnostic_prompt": "Compare 'act' with 'action'.",
+      "repair": "The completed shorter prefix 'act' sorts before 'action'."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Alphabetize cash, castle, cast, and caster by the first differing letter or prefix rule.",
+    "model_answer": "cash, cast, caster, castle. cash precedes the 'cast' words at position four (h<t); 'cast' is a strict prefix of the two extensions; 'caster' precedes 'castle' at position five (e<l)."
+  },
+  "exit_task": {
+    "prompt": "Put 'form', 'format', 'former', 'fork' in dictionary order and explain the first relevant differences.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "fork, form, format, former. In position four, k comes before m, so fork is first. form is a prefix of format and former. Among extensions, 'format' has a fifth a and 'former' fifth e; a<e.",
+      "check": "Verify the independent worked case from its definitions; no original linked multiple-choice answer is supplied."
+    }
+  }
+}

@@ -229,7 +229,7 @@ TOPIC_TO_UNIT_FOLDER = {
     "statistics": "statistics",
     "surface areas and volumes": "surface-areas-volumes",
     "triangles": "triangles",
-    "number systems": "polynomials"
+    "number systems": "number-systems"
 }
 
 
@@ -343,7 +343,7 @@ def render_topic_module_html(unit: dict, prefix: str = "") -> str:
     
     # Topic Card Wrapper with Visual Color Band
     parts.append(f"""
-    <div class="topic-module-card" id="{card_id}" data-topic="{html.escape(topic_name)}" data-band="{band}" data-folder="{unit['folder']}" data-unit-id="{unit_id}" style="margin:28px 0;background:var(--card);border:1.5px solid var(--border);border-top:6px solid {palette['primary']};border-radius:12px;padding:24px;box-shadow:0 6px 20px rgba(0,0,0,0.22);position:relative">
+    <div class="topic-module-card" id="{card_id}" data-topic="{html.escape(topic_name)}" data-band="{band}" data-folder="{unit['folder']}" data-unit-id="{unit_id}" data-package-id="{html.escape(str(c1a.get('package_id') or unit_id))}" style="margin:28px 0;background:var(--card);border:1.5px solid var(--border);border-top:6px solid {palette['primary']};border-radius:12px;padding:24px;box-shadow:0 6px 20px rgba(0,0,0,0.22);position:relative">
       <!-- TOP VISUAL COLOR ACCENT BAR -->
       <div style="height:4px;width:100%;background:linear-gradient(90deg, {palette['primary']}, transparent);border-radius:2px;margin-bottom:16px"></div>
 
@@ -1948,6 +1948,8 @@ def main():
     .qb-badge-d3 { background: rgba(251, 191, 36, 0.15); color: var(--warning); border-color: rgba(251, 191, 36, 0.3); }
     .qb-badge-d4 { background: rgba(248, 113, 113, 0.15); color: var(--danger); border-color: rgba(248, 113, 113, 0.3); }
 
+    .qb-core-nav { font: inherit; cursor: pointer; }
+    .qb-core-nav:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
     .qb-badge-qrt { background: rgba(192, 132, 252, 0.15); color: var(--purple); border-color: rgba(192, 132, 252, 0.3); }
     .qb-badge-topic { background: var(--surface); color: var(--text-muted); border-color: var(--border); }
     .qb-badge-paper { background: rgba(56, 189, 248, 0.10); color: var(--accent); border-color: var(--border); }
@@ -2527,6 +2529,33 @@ def main():
         search_blob = html.escape(f"{qid} {stem_search_clean} {title} {topic_name} {paper_label} {sec} {cell}").lower()
 
         unit_folder = TOPIC_TO_UNIT_FOLDER.get(topic_name.lower().strip(), "polynomials")
+        # Tile-1 keyboard control and source-declared unit navigation.
+        # A topic-only route is browsing, never an assertion of concept parity.
+        explicit_core_unit = next(
+            (u for u in topic_units if qid in u["c1a"].get("linked_core2_refs", [])),
+            None,
+        )
+        if cell == "QRT-RETRIEVE-D1":
+            if explicit_core_unit:
+                core_action = f"jumpToCoreUnit('{explicit_core_unit['c1a'].get('package_id') or explicit_core_unit['unit_id']}')"
+                core_label = "Linked Core 1A/1B"
+            else:
+                core_action = f"jumpToCore1('{unit_folder}')"
+                core_label = "Browse Core modules (topic only)"
+            core_nav_badge = (
+                f'<button type="button" class="qb-badge qb-core-nav" '
+                f'style="background:rgba(56,189,248,0.12);color:var(--accent);'
+                f'border:1px solid rgba(56,189,248,0.25)" onclick="{core_action}" '
+                f'aria-label="{html.escape(core_label)} for {qid}">📖 {core_label}</button>'
+            )
+        else:
+            core_nav_badge = (
+                f'<span class="qb-badge" style="background:rgba(56,189,248,0.12);'
+                f'color:var(--accent);border:1px solid rgba(56,189,248,0.25)" '
+                f'onclick="jumpToCore1(\'{unit_folder}\')" '
+                f'title="Study Core 1A/1B for {topic_name}">📖 Core 1A/1B</span>'
+            )
+
 
         # Distinctive D3/D4 badges & banners
         d3_d4_badge = ""
@@ -2559,7 +2588,7 @@ def main():
                 <span class="qb-badge qb-badge-qrt" onclick="addActiveFilter('demand', '{demand}')" title="Filter by {cell}">{cell}</span>
                 <span class="qb-badge qb-badge-topic" onclick="addActiveFilter('topic', '{topic_name}')" title="Filter by {topic_name}">📚 {topic_name}</span>
                 <span class="qb-badge qb-badge-paper" onclick="addActiveFilter('paper', '{paper_label}')" title="Filter by {paper_label}">📄 {paper_label}</span>
-                <span class="qb-badge" style="background:rgba(56,189,248,0.12);color:var(--accent);border:1px solid rgba(56,189,248,0.25)" onclick="jumpToCore1('{unit_folder}')" title="Study Core 1A/1B for {topic_name}">📖 Core 1A/1B</span>
+                {core_nav_badge}
               </div>
             </div>
 
@@ -3029,6 +3058,23 @@ def main():
           mod.classList.add('highlighted');
           setTimeout(() => mod.classList.remove('highlighted'), 2500);
           activateTopicInNav('all', mod.getAttribute('data-unit-id'), mod.getAttribute('data-folder'));
+        }
+      }, 100);
+    }
+
+
+    // Source-declared direct Core1A link, not a topic-only navigation guess.
+    function jumpToCoreUnit(unitId) {
+      switchTab('core1-all');
+      filterCore1ByTopic('ALL');
+      setTimeout(() => {
+        const mod = Array.from(document.querySelectorAll('#tab-core1-all .topic-module-card'))
+          .find(m => m.getAttribute('data-package-id') === unitId);
+        if (mod) {
+          mod.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          mod.classList.add('highlighted');
+          setTimeout(() => mod.classList.remove('highlighted'), 2500);
+          activateTopicInNav('all', unitId, mod.getAttribute('data-folder'));
         }
       }, 100);
     }
