@@ -76,7 +76,8 @@ def _mechanical_source(q: dict[str, Any], file: str) -> list[dict[str, str]]:
 
 
 def _html_findings(html: str, q: dict[str, Any],
-                   disclosure: dict[str, Any]) -> list[dict[str, str]]:
+                   disclosure: dict[str, Any], *,
+                   linked_unit_ids: tuple[str, ...] = ()) -> list[dict[str, str]]:
     qid = q["id"]
     loc = "standalone/mathematics-imo-grade9-master-suite.html#q-" + qid
     found = _article(html, qid)
@@ -104,10 +105,43 @@ def _html_findings(html: str, q: dict[str, Any],
     if _tag_attributes(card, "button", "commit-" + qid) is None:
         _emit(out, verdict="FAIL", rule="V10", code="KEYBOARD_COMMIT_BUTTON_MISSING",
               location=loc + " #commit-" + qid)
-    # Inline spans cannot receive focus or keyboard activation by default.
-    if re.search(r'<span\b[^>]*onclick="jumpToCore1\(', card):
+    # A span with a click handler is not keyboard-operable by default.
+    # Direct Core navigation must agree with source-declared linked_core2_refs.
+    if re.search(r'<span\b[^>]*onclick="jumpToCore(?:1|Unit)\(', card, re.I):
         _emit(out, verdict="FAIL", rule="P2", code="CORE_NAV_MOUSE_ONLY_SPAN",
-              location=loc + " .qb-badges span[onclick*=jumpToCore1]")
+              location=loc + " .qb-badges span[onclick*=jumpToCore]")
+    buttons = re.findall(
+        r'<button\b[^>]*\bclass="[^"]*\bqb-core-nav\b[^"]*"[^>]*>',
+        card, re.I | re.S)
+    if not buttons:
+        _emit(out, verdict="FAIL", rule="P2", code="CORE_NAV_NATIVE_BUTTON_MISSING",
+              location=loc + " .qb-badges button.qb-core-nav")
+    else:
+        button = buttons[0]
+        if not re.search(r'\btype="button"', button, re.I) or not re.search(
+                r'\baria-label="[^"]+"', button, re.I):
+            _emit(out, verdict="FAIL", rule="P2", code="CORE_NAV_ACCESSIBLE_BUTTON_INVALID",
+                  location=loc + " .qb-badges button.qb-core-nav")
+        direct = re.search(r"""onclick="jumpToCoreUnit\('([^']+)'\)""", button)
+        topic = re.search(r"""onclick="jumpToCore1\('([^']+)'\)""", button)
+        if not (direct or topic):
+            _emit(out, verdict="FAIL", rule="P2", code="CORE_NAV_ACTION_MISSING",
+                  location=loc + " .qb-badges button.qb-core-nav@onclick")
+        elif linked_unit_ids and (not direct or direct.group(1) not in linked_unit_ids):
+            _emit(out, verdict="FAIL", rule="P2/V19",
+                  code="CORE_EXPLICIT_LINK_NOT_RENDERED",
+                  location=loc + " .qb-badges button.qb-core-nav@onclick",
+                  detail="Expected one of: " + ", ".join(linked_unit_ids))
+        elif not linked_unit_ids and direct:
+            _emit(out, verdict="FAIL", rule="P2/V19",
+                  code="CORE_NAV_FALSE_EXACT_LINK",
+                  location=loc + " .qb-badges button.qb-core-nav@onclick",
+                  detail="Direct Core1A navigation lacks a source-declared linked_core2_refs entry.")
+        elif not linked_unit_ids and not re.search(
+                r'\baria-label="[^"]*[Tt]opic only[^"]*"', button):
+            _emit(out, verdict="FAIL", rule="P2/V19",
+                  code="CORE_TOPIC_FALLBACK_NOT_DISCLOSED",
+                  location=loc + " .qb-badges button.qb-core-nav@aria-label")
     for problem, ids in (disclosure.get("affected_question_ids") or {}).items():
         if qid in ids:
             _emit(out, verdict="FAIL", rule="V10", code=problem, location=loc)
@@ -127,8 +161,16 @@ def _protected_w(q: dict[str, Any], evidence: dict[str, Any]) -> list[dict[str, 
     if not isinstance(h2, str):
         return []
     markers = ref.get("markers", [])
-    if not markers or not all(token in h2 for token in markers):
+    if not markers:
         return []
+    if not all(token in h2 for token in markers):
+        # A corrected substring reopens semantic review; it is not a clearance.
+        out: list[dict[str, str]] = []
+        _emit(out, verdict="REVIEW_REQUIRED", rule="P1/H2/W",
+              code="HINT2_CHANGED_PROTECTED_W_REVIEW_REQUIRED",
+              location=f"Mathematics/question-bank/{ref['bank']}#{q['id']}.hint_ladder.hint2_tactical_step",
+              detail="Unsafe wording changed; independently assess revised H2 against W.")
+        return out
     out: list[dict[str, str]] = []
     _emit(out, verdict="FAIL", rule="P1/H2/W",
           code="HINT2_REVEALS_D1_PROTECTED_FINAL_DECISION",
@@ -185,9 +227,11 @@ def inspect(root: Path, *, source_sha: str, tile: str = "QRT-RETRIEVE-D1",
     for bank, q in source_qs:
         qid = q["id"]
         findings = _mechanical_source(q, bank)
-        findings.extend(_html_findings(html, q, disclosure))
-        findings.extend(_protected_w(q, review))
         rel = links.get(qid)
+        declared = tuple((rel or {}).get("explicit_unit_ids") or ())
+        findings.extend(_html_findings(html, q, disclosure,
+                                       linked_unit_ids=declared))
+        findings.extend(_protected_w(q, review))
         if rel is None or rel["relationship"] != "EXPLICIT_UNIT_ID":
             _emit(findings, verdict="FAIL", rule="P2/V19",
                   code="EXACT_CORE_CONCEPT_LINK_MISSING",
