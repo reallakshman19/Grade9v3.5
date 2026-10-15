@@ -1,0 +1,110 @@
+name: QRT G2 coder four-HTML freeze (one-shot)
+
+on:
+  push:
+    branches:
+      - repair/qrt-tile-html-g2
+    paths:
+      - '.github/workflows/qrt-g2-coder-freeze.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: qrt-g2-coder-freeze
+  cancel-in-progress: false
+
+jobs:
+  build-test-freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Require the exact coder-owned reviewed source parent
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD^)" = "97fb4004a3dfabf3c7c3ad0f400f654817345b00"
+          test "${GITHUB_REF}" = "refs/heads/repair/qrt-tile-html-g2"
+          test -z "$(git status --porcelain)"
+          git rev-parse HEAD
+      - name: Rebuild the four HTML endpoints and verify validator artifact hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scratch
+          python Mathematics/research/build_full_master_suite.py | tee scratch/qrt-g2-coder-builder.log
+          python - <<'PY'
+          import hashlib
+          import subprocess
+          from pathlib import Path
+          expected_sha = "2aaf5ddec96e33c65e13809bf95cccf0894bfac6d76e1cacdb8c5f95b914c180"
+          paths = [
+              "standalone/mathematics-imo-grade9-master-suite.html",
+              "public/standalone/mathematics-imo-grade9-master-suite.html",
+              "public/test/imo-grade9/core2.html",
+              "docs/test/imo-grade9/core2.html",
+          ]
+          receipts = []
+          for p in paths:
+              raw = Path(p).read_bytes()
+              digest = hashlib.sha256(raw).hexdigest()
+              assert digest == expected_sha and len(raw) == 4882528, (p, digest, len(raw))
+              receipts.append(f"{digest}  {p}")
+          changed = set(subprocess.check_output(["git", "diff", "--name-only", "HEAD"],
+                                                text=True).splitlines())
+          assert changed == set(paths), ("UNEXPECTED_GENERATOR_CHANGED_PATHS", sorted(changed))
+          Path("scratch/qrt-g2-coder-four-hashes.txt").write_text("\n".join(receipts) + "\n")
+          print("\n".join(receipts))
+          print("EXACT_VALIDATOR_ARTIFACT_SHA_MATCH_AND_4_ONLY_DIFFS")
+          PY
+      - name: Run all existing IMO source/repair regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scratch
+          python -m unittest discover -s tests -p 'test_imo_*.py' -v
+      - name: Commit and push precisely the four generated HTML outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            standalone/mathematics-imo-grade9-master-suite.html \
+            public/standalone/mathematics-imo-grade9-master-suite.html \
+            public/test/imo-grade9/core2.html \
+            docs/test/imo-grade9/core2.html
+          test "$(git diff --cached --name-only | wc -l)" -eq 4
+          git diff --cached --check
+          git commit -m "build(qrt-t1): freeze four byte-identical generated research HTML endpoints"
+          git push origin HEAD:refs/heads/repair/qrt-tile-html-g2
+          echo "FROZEN_REPAIR_SHA=$(git rev-parse HEAD)" | tee scratch/qrt-g2-coder-frozen-commit.txt
+      - name: Confirm the frozen HTML is fully reproducible
+        shell: bash
+        run: |
+          set -euo pipefail
+          python Mathematics/research/build_full_master_suite.py >/dev/null
+          git diff --exit-code -- \
+            standalone/mathematics-imo-grade9-master-suite.html \
+            public/standalone/mathematics-imo-grade9-master-suite.html \
+            public/test/imo-grade9/core2.html \
+            docs/test/imo-grade9/core2.html
+          echo "Frozen exact SHA: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+          cat scratch/qrt-g2-coder-four-hashes.txt >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload coder-only freeze receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qrt-g2-coder-freeze-receipts
+          path: |
+            scratch/qrt-g2-coder-builder.log
+            scratch/qrt-g2-coder-four-hashes.txt
+            scratch/qrt-g2-coder-frozen-commit.txt
+          if-no-files-found: warn
