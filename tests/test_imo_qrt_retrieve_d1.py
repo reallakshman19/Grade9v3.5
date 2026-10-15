@@ -109,9 +109,21 @@ class RetrieveD1Tests(unittest.TestCase):
     def test_topic_only_link_fails_core_p2(self):
         row = self.inspect(core={"same_inferential_jump_proven": False,
                                  "code": "TOPIC_ONLY_NOT_CONCEPT_LINK"})
-        self.assertIn("T12_CORE_P2_CRUX_BRIDGE_UNPROVEN", self.rules(row))
+        self.assertIn("T12_CORE_P2_TOPIC_ONLY_NO_QUESTION_UNIT", self.rules(row))
         issue = next(f for f in row["findings"] if f["rule"].startswith("T12"))
         self.assertIn("jumpToCore1", issue["element"])
+
+    def test_explicit_rendered_question_unit_can_pass_html_p2_without_academic_proof(self):
+        attrs, body = html_card()
+        body = body.replace('class="qb-badge">Core', 
+                            'class="qb-badge" data-core-unit-id="UNIT-Q">Core')
+        row = inspect_card(record(), attrs, body,
+                           core_review={"code": "EXPLICIT_UNIT_INFERENTIAL_JUMP_UNREVIEWED",
+                                        "explicit_unit_ids": ["UNIT-Q"],
+                                        "same_inferential_jump_proven": False},
+                           global_guard=True)
+        self.assertEqual(row["verdict"], "PASS")
+        self.assertIn("CORE_SAME_INFERENTIAL_JUMP_ACADEMIC_UNREVIEWED", row["holds"])
 
     def test_wrong_option_emphasis_fails(self):
         row = self.inspect(option_style='style="border-color: var(--success)"')
