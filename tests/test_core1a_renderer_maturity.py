@@ -152,6 +152,48 @@ class Core1ARendererMaturityTests(unittest.TestCase):
                 {p.name: digest(p.read_bytes()) for p in out.glob("*.html")},
             )
 
+
+    def test_first_stage_svg_accessibility_does_not_announce_later_proof(self):
+        """T03: the image summary must not give away stages before their control is used."""
+        from xml.etree import ElementTree
+
+        asset = ROOT / "TEST/library/figures/core1a-consecutive-divisibility-staged.svg"
+        svg = ElementTree.parse(asset).getroot()
+        desc = svg.find("{http://www.w3.org/2000/svg}desc")
+        self.assertIsNotNone(desc, "SVG image needs an accessible description")
+        description = "".join(desc.itertext()).lower()
+        self.assertIn("parity", description)
+        self.assertIn("stage controls", description)
+        for protected in ("modulo three", "remainder", "coprime", "factor of three",
+                          "divisibility by six", "third stage combines"):
+            with self.subTest(protected=protected):
+                self.assertNotIn(protected, description)
+        unit = json.loads(PACKAGE.read_text(encoding="utf-8"))["microtopics"][0]
+        reps = json.loads(PACKAGE.read_text(encoding="utf-8"))["representations"][0]
+        self.assertEqual(len(reps["reveal_stages"]), 3)
+        self.assertEqual(unit["construction_units"][0]["reveal_stage_refs"],
+                         [item["id"] for item in reps["reveal_stages"]])
+        # The same renderer still exports the stage-specific accessible explanations.
+        pages, gaps, *_ = render_core.build_report(MANIFEST, "PAGES", held_to="REFERENCE")
+        self.assertFalse(gaps)
+        self.assertIn("data-g9-stage-desc-text", pages["core1a.html"])
+        self.assertIn(description, pages["core1a.html"].lower())
+
+    def test_independent_exit_method_not_displayed_in_pre_exit_quick_check(self):
+        """T11: no four-factor/mod-24 method belongs in the pre-attempt QUICK_CHECK."""
+        pkg = json.loads(PACKAGE.read_text(encoding="utf-8"))
+        unit = next(m for m in pkg["microtopics"] if m["id"] == MICRO)
+        preexit = " ".join(c["statement"] for u in unit["construction_units"]
+                           for c in u["independent_checks"])
+        self.assertIn("three-factor", preexit)
+        self.assertNotIn("four-factor", preexit)
+        self.assertNotIn("modulo 24", preexit)
+        self.assertIn("24", unit["exit_task"]["prompt"])
+        self.assertIn("modulo 24", unit["exit_task"]["answer"]["check"])
+        pages, gaps, *_ = render_core.build_report(MANIFEST, "PAGES", held_to="REFERENCE")
+        self.assertFalse(gaps)
+        self.assertNotIn("Check the four-factor exit product modulo 24", pages["core1a.html"])
+
     def test_malformed_selection_refused_in_strict_and_draft_contexts(self):
         base = json.loads(MANIFEST.read_text(encoding="utf-8"))
         base["selection"]["microtopics"] = ["NONEXISTENT-CORE-MICROTOPIC"]
