@@ -142,6 +142,33 @@ def _html_findings(html: str, q: dict[str, Any],
             _emit(out, verdict="FAIL", rule="P2/V19",
                   code="CORE_TOPIC_FALLBACK_NOT_DISCLOSED",
                   location=loc + " .qb-badges button.qb-core-nav@aria-label")
+    # The href-equivalent is only actionable when its declared package ID
+    # exists in the rendered Core1A cards AND the runtime lookup uses it.
+    # This is structural evidence, not browser focus/scroll or crux parity.
+    if buttons:
+        direct_target = re.search(
+            r"""onclick="jumpToCoreUnit\('([^']+)'\)""", buttons[0])
+        if direct_target and direct_target.group(1) in linked_unit_ids:
+            package = direct_target.group(1)
+            module_cards = re.findall(
+                r'<div\b[^>]*\bclass="[^"]*\btopic-module-card\b[^"]*"[^>]*>',
+                html, re.I | re.S)
+            if not any(re.search(
+                    r'\bdata-package-id="' + re.escape(package) + r'"', el)
+                    for el in module_cards):
+                _emit(out, verdict="FAIL", rule="P2/V19",
+                      code="CORE_EXPLICIT_TARGET_NOT_RENDERED",
+                      location=loc + " → #tab-core1-all .topic-module-card@data-package-id",
+                      detail="Expected package_id: " + package)
+            if not re.search(
+                    r"function\s+jumpToCoreUnit\s*\([^)]*\)\s*\{.{0,1200}?"
+                    r"getAttribute\('data-package-id'\)\s*===\s*unitId",
+                    html, re.S):
+                _emit(out, verdict="FAIL", rule="P2/V19",
+                      code="CORE_NAV_PACKAGE_ID_LOOKUP_MISSING",
+                      location="standalone/mathematics-imo-grade9-master-suite.html"
+                               "#jumpToCoreUnit",
+                      detail="Direct Core buttons must resolve package_id, not filename-derived unit_id.")
     for problem, ids in (disclosure.get("affected_question_ids") or {}).items():
         if qid in ids:
             _emit(out, verdict="FAIL", rule="V10", code=problem, location=loc)
