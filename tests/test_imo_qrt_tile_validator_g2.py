@@ -34,9 +34,14 @@ def question():
     }
 
 
-def card(*, lock=True, mouse_only=False, band="D1"):
+def card(*, lock=True, mouse_only=False, band="D1", nav_override=None):
     lockattrs = " hidden inert" if lock else ""
-    nav = '<span onclick="jumpToCore1(&#x27;poly&#x27;)">Core</span>' if mouse_only else '<button onclick="jumpToCore1(&#x27;poly&#x27;)">Core</button>'
+    nav = ('<span onclick="jumpToCore1(&#x27;poly&#x27;)">Core</span>' if mouse_only else
+           '<button type="button" class="qb-badge qb-core-nav" '
+           'aria-label="Browse Core modules (topic only) for ' + QID +
+           '" onclick="jumpToCore1(' + "'poly'" + ')">Core</button>')
+    if nav_override is not None:
+        nav = nav_override
     return f"""<article class="qb-question" id="q-{QID}" data-demand="RETRIEVE" data-band="{band}">
       <textarea id="att-{QID}"></textarea>
       <button id="commit-{QID}" type="button"></button>
@@ -70,6 +75,39 @@ class TileMutations(unittest.TestCase):
         self.assertIn("CORE_NAV_MOUSE_ONLY_SPAN",
                       codes(_html_findings(card(mouse_only=True), question(), {})))
 
+    def test_native_core_button_is_required(self):
+        self.assertIn("CORE_NAV_NATIVE_BUTTON_MISSING",
+                      codes(_html_findings(card(nav_override=""), question(), {})))
+
+    def test_native_button_must_have_accessible_name(self):
+        wrong = '<button type="button" class="qb-badge qb-core-nav" onclick="jumpToCore1(' + "'poly'" + ')">Core</button>'
+        self.assertIn("CORE_NAV_ACCESSIBLE_BUTTON_INVALID",
+                      codes(_html_findings(card(nav_override=wrong), question(), {})))
+
+    def test_declared_direct_link_must_render_to_correct_core_unit(self):
+        nav = ('<button type="button" class="qb-badge qb-core-nav" '
+               'aria-label="Linked Core 1A/1B for test" '
+               'onclick="jumpToCoreUnit(' + "'unit-a'" + ')">Core</button>')
+        html = card(nav_override=nav)
+        self.assertNotIn("CORE_EXPLICIT_LINK_NOT_RENDERED",
+                         codes(_html_findings(html, question(), {}, linked_unit_ids=("unit-a",))))
+        self.assertIn("CORE_EXPLICIT_LINK_NOT_RENDERED",
+                      codes(_html_findings(html, question(), {}, linked_unit_ids=("unit-b",))))
+
+    def test_false_direct_link_without_source_ref_fails(self):
+        nav = ('<button type="button" class="qb-badge qb-core-nav" '
+               'aria-label="Linked Core 1A/1B for test" '
+               'onclick="jumpToCoreUnit(' + "'unit-a'" + ')">Core</button>')
+        self.assertIn("CORE_NAV_FALSE_EXACT_LINK",
+                      codes(_html_findings(card(nav_override=nav), question(), {})))
+
+    def test_topic_fallback_must_label_itself_topic_only(self):
+        nav = ('<button type="button" class="qb-badge qb-core-nav" '
+               'aria-label="Exact concept bridge for test" '
+               'onclick="jumpToCore1(' + "'poly'" + ')">Core</button>')
+        self.assertIn("CORE_TOPIC_FALLBACK_NOT_DISCLOSED",
+                      codes(_html_findings(card(nav_override=nav), question(), {})))
+
     def test_predecessor_disclosure_observation_used(self):
         a = {"affected_question_ids": {"PREATTEMPT_CORRECT_OPTION_EMPHASIZED": [QID]}}
         self.assertIn("PREATTEMPT_CORRECT_OPTION_EMPHASIZED",
@@ -89,7 +127,10 @@ class TileMutations(unittest.TestCase):
         q["hint_ladder"] = {"hint2_tactical_step": "Probability $= 1/3$."}
         self.assertIn("HINT2_REVEALS_D1_PROTECTED_FINAL_DECISION", codes(_protected_w(q, REVIEW)))
         q["hint_ladder"]["hint2_tactical_step"] = "Count favorable outcomes."
-        self.assertEqual(_protected_w(q, REVIEW), [])
+        changed = _protected_w(q, REVIEW)
+        self.assertEqual(codes(changed), set())
+        self.assertIn("HINT2_CHANGED_PROTECTED_W_REVIEW_REQUIRED",
+                      {x["code"] for x in changed if x["verdict"] == "REVIEW_REQUIRED"})
 
     def test_reject_nonsha_even_on_synthetic_input(self):
         with self.assertRaises(ValueError):
