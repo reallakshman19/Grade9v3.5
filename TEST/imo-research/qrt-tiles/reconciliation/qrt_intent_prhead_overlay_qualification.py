@@ -17,6 +17,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from html.parser import HTMLParser
 
 
 # Identical root/cell assignments to the pre-existing R8 P2b shell step.
@@ -225,6 +226,232 @@ def source_safe_systemic_exception(exc: Exception) -> tuple[str, str]:
     if kind == "AssertionError" and str(exc) in SAFE_HARNESS_ASSERTION_CODES:
         return "AssertionError", str(exc)
     return kind, SYSTEMIC_BUILTIN_CODES[kind]
+
+
+
+# R14 evidence-only marker observation: read rendered/snapshot HTML privately,
+# emit only counts, stable digests of marker identifiers and mismatch positions.
+# Never serialize HTML, question content, free-form attribute values or paths.
+ROLES_FOR_COMPONENT_DIFF = ("CORE1", "CORE1A", "CORE1B", "CORE2A", "CORE2B")
+GOLDEN_COMPONENT_ROOT = Path("golden/units/G-IMO-G9-FIVE-CORE-20261012")
+
+
+class _ComponentOnlyParser(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.components: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        value = dict(attrs).get("data-g9-component")
+        if value:
+            # It is used internally only for equality and a SHA digest;
+            # contents are never printed or written to JSON.
+            self.components.append(value)
+
+
+def _component_tokens(path: Path) -> list[str]:
+    parser = _ComponentOnlyParser()
+    parser.feed(path.read_text(encoding="utf-8"))
+    return parser.components
+
+
+def source_safe_component_delta(source_root: Path, target: Path) -> dict:
+    """Observations, not a golden verdict; no user question or raw HTML."""
+    lock_dir = source_root / GOLDEN_COMPONENT_ROOT
+    lock = json.loads((lock_dir / "snapshot-lock.json").read_text(encoding="utf-8"))
+    records = lock["snapshots"]
+    if (len(records) != 5
+            or {row["role"] for row in records} != set(ROLES_FOR_COMPONENT_DIFF)):
+        raise AssertionError("R14_COMPONENT_DIFF_LOCK_UNRECOGNIZED")
+    evidence = []
+    for role in ROLES_FOR_COMPONENT_DIFF:
+        rec = next(item for item in records if item["role"] == role)
+        # All snapshot filenames are constrained by the locked role identity.
+        expected_snapshot = "snapshots/" + role.lower() + ".html"
+        if rec["path"] != expected_snapshot:
+            raise AssertionError("R14_COMPONENT_DIFF_SNAPSHOT_PATH_DRIFT")
+        golden = _component_tokens(lock_dir / expected_snapshot)
+        actual = _component_tokens(target / (role.lower() + ".html"))
+        bound = min(len(golden), len(actual))
+        first = next((i for i in range(bound) if golden[i] != actual[i]), None)
+        if first is None and len(golden) != len(actual):
+            first = bound
+        def digest(ids: list[str]) -> str:
+            return hashlib.sha256(bytes([0]).join(value.encode("utf-8") for value in ids)).hexdigest()
+        evidence.append({
+            "role": role,
+            "golden_component_count": len(golden),
+            "candidate_component_count": len(actual),
+            "golden_component_id_sha256": digest(golden),
+            "candidate_component_id_sha256": digest(actual),
+            "first_difference_zero_based": first,
+            "component_ids_match": golden == actual,
+        })
+    return {
+        "schema": "imo182-r14-component-marker-diagnostic/v1",
+        "source_safe": True,
+        "scope": "MARKER_IDS_ONLY_NOT_HTML_OR_ACADEMIC",
+        "golden_modified": False,
+        "renderer_modified": False,
+        "roles": evidence,
+        "all_roles_match": all(row["component_ids_match"] for row in evidence),
+        "academic_accepted": 0,
+        "release": "HOLD",
+    }
+
+
+def cleanup_shadow_worktrees(
+    overlays: dict[str, tuple[Path, Path]], remover
+) -> list[dict]:
+    """Use each shadow's owning git repository; never mask aggregate evidence.
+
+    A failing git remove yields a sanitized FAIL record, and cleanup continues.
+    Root identifiers are allowlisted literals from the pinned CASES mapping.
+    """
+    allowed = {root for root, _slug in CASES}
+    failures: list[dict] = []
+    for root, (owner, shadow) in overlays.items():
+        try:
+            if root not in allowed or not isinstance(owner, Path) or not isinstance(shadow, Path):
+                raise AssertionError("R14_CLEANUP_OWNER_MAP_DRIFT")
+            remover(["git", "-C", str(owner), "worktree", "remove",
+                     "--force", str(shadow)])
+        except Exception as exc:
+            kind, code = source_safe_systemic_exception(exc)
+            failures.append({
+                "case_source_root": root if root in allowed else "UNCLASSIFIED",
+                "assertion_type": kind,
+                "failure_code": code,
+                "raw_git_stderr_recorded": False,
+            })
+    return failures
+
+
+def write_fanout_aggregate(
+    out: Path, reports: list[dict], systemic_abort: bool, cleanup_failures: list[dict],
+    held: set[str], head: str, renderer_digest: str,
+) -> bool:
+    """Write the aggregate atomically EVEN if some git worktree removes fail."""
+    summary = {status: sum(r["status"] == status for r in reports)
+               for status in ("PASS", "FAIL", "NOT_REACHED")}
+    assert len(reports) == 21 and sum(summary.values()) == 21
+    assert len({r["cell_id"] for r in reports}) == 21
+    assert len(held) == 7
+    assert {r["cell_id"] for r in reports}.isdisjoint(held)
+    failed = (systemic_abort or summary["FAIL"] > 0
+              or summary["NOT_REACHED"] > 0 or bool(cleanup_failures))
+    result = {
+        "schema": "imo182-prhead-overlay-fanout-diagnostic/v1",
+        "disposition": ("FAIL_RUN_HOLD_ALL_21_NO_RENDERER_VERDICT" if failed
+                        else "PROVISIONAL_AGENT_B_AND_OWNER_GATES_REQUIRED"),
+        "renderer_head_sha": head,
+        "renderer_sha256": renderer_digest,
+        "historical_r8_and_frozen_golden_unchanged": True,
+        "source_pinned_original_cells": 21,
+        "source_held_no_candidate_render": sorted(held),
+        "observed_diagnostic_counts": summary,
+        "native_returns_observed_not_accepted": sum(
+            bool(r["candidate_round_trip"]) for r in reports),
+        "candidate_counts_admissible_before_agent_b": False,
+        "systemic_abort": systemic_abort,
+        "cleanup_disposition": "FAIL" if cleanup_failures else "PASS",
+        "cleanup_failure_count": len(cleanup_failures),
+        "cleanup_failures": cleanup_failures,
+        "academic_accepted": 0,
+        "owner_qrt_accepted": 0,
+        "release": "HOLD",
+        "cells": reports,
+    }
+    stage = out.with_name(out.name + ".tmp")
+    stage.write_text(json.dumps(result, indent=2, ensure_ascii=False) + chr(10),
+                     encoding="utf-8")
+    stage.replace(out)
+    return failed
+
+
+def cleanup_and_component_self_test() -> None:
+    """Synthetic owner-map/failing-remove/aggregate and marker redaction tests."""
+    with tempfile.TemporaryDirectory(prefix="r14-cleanup-component-synthetic-") as td:
+        root = Path(td)
+        owner = root / R14_RETRIEVE_D2_ROOT
+        old_r8 = root / "source-retrieve-d2"
+        shadow = root / "overlay-for-retrieve-d2"
+        other_owner = root / "source-explain-d3"
+        other_shadow = root / "overlay-for-explain-d3"
+        visited = []
+        secret = "ORIGINAL_QUESTION_CONTENT_MUST_NOT_ESCAPE"
+
+        def failing_remove(cmd):
+            visited.append(cmd)
+            if cmd[2] == str(owner):
+                raise ChildProcessFailure(None, "UNCLASSIFIED",
+                                          "UNCLASSIFIED_SUBPROCESS_FAILURE")
+            if cmd[2] == str(other_owner):
+                return ""
+            raise AssertionError("R14_CLEANUP_WRONG_REPOSITORY")
+
+        failures = cleanup_shadow_worktrees({
+            "source-retrieve-d2": (owner, shadow),
+            "source-explain-d3": (other_owner, other_shadow)
+        }, failing_remove)
+        assert len(visited) == 2
+        assert visited[0] == ["git", "-C", str(owner), "worktree", "remove",
+                              "--force", str(shadow)]
+        assert visited[0][2] != str(old_r8)
+        assert visited[1][2] == str(other_owner)
+        assert failures == [{
+            "case_source_root": "source-retrieve-d2",
+            "assertion_type": "UNCLASSIFIED",
+            "failure_code": "UNCLASSIFIED_SUBPROCESS_FAILURE",
+            "raw_git_stderr_recorded": False,
+        }]
+        observed = [{"cell_id": "QRT-" + slug.upper(),
+                     "status": "PASS", "candidate_round_trip": True}
+                    for _, slug in CASES]
+        held = {"QRT-" + slug for slug in ("APPLY-D1", "EXPLAIN-D1",
+                "MODEL-D1", "REPRESENT-D1", "REPRESENT-D2",
+                "RETRIEVE-D1", "SYNTHESIZE-D1")}
+        aggregate = root / "aggregate.json"
+        assert write_fanout_aggregate(aggregate, observed, False, failures,
+                                     held, "synthetic", "synthetic") is True
+        disk = json.loads(aggregate.read_text(encoding="utf-8"))
+        assert disk["observed_diagnostic_counts"] == {
+            "PASS": 21, "FAIL": 0, "NOT_REACHED": 0}
+        assert disk["cleanup_disposition"] == "FAIL"
+        assert disk["cleanup_failure_count"] == 1
+        assert disk["candidate_counts_admissible_before_agent_b"] is False
+        assert disk["release"] == "HOLD"
+        assert secret not in json.dumps(disk)
+        assert write_fanout_aggregate(aggregate, observed, False, [],
+                                     held, "synthetic", "synthetic") is False
+        assert json.loads(aggregate.read_text(encoding="utf-8"))["cleanup_disposition"] == "PASS"
+        # Test component-marker parser with synthetic invented markers only,
+        # never original source/golden HTML in this regression.
+        golden = root / GOLDEN_COMPONENT_ROOT
+        snapshots = golden / "snapshots"
+        snapshots.mkdir(parents=True)
+        pages = root / "synthetic-pages"
+        pages.mkdir()
+        entries = []
+        for role in ROLES_FOR_COMPONENT_DIFF:
+            page = role.lower() + ".html"
+            entries.append({"role": role, "path": "snapshots/" + page})
+            base = '<article data-g9-component="IDENTITY"></article>'
+            (snapshots / page).write_text(base, encoding="utf-8")
+            extra = ('<span data-g9-component="SECTION_ROUTE"></span>'
+                     if role == "CORE1A" else "")
+            (pages / page).write_text(base + extra + secret, encoding="utf-8")
+        (golden / "snapshot-lock.json").write_text(
+            json.dumps({"snapshots": entries}), encoding="utf-8")
+        diff = source_safe_component_delta(root, pages)
+        assert diff["all_roles_match"] is False
+        assert len(diff["roles"]) == 5
+        assert [r["role"] for r in diff["roles"] if not r["component_ids_match"]] == ["CORE1A"]
+        assert next(r for r in diff["roles"] if r["role"] == "CORE1A")[
+            "first_difference_zero_based"] == 1
+        assert secret not in json.dumps(diff)
+        assert "<article" not in json.dumps(diff)
+    print("R14 owned-worktree cleanup, preserved aggregate and safe component delta: PASS")
 
 
 def case_receipt(out: Path, slug: str, record: dict) -> None:
@@ -557,6 +784,7 @@ def diagnostic_self_test() -> None:
         assert "Traceback" not in imported_error
     verify_r14_source_isolation()
     fanout_self_test()
+    cleanup_and_component_self_test()
     print("R14 source-safe classifier + on-disk JSON round-trip + "
           "real imported-ContractError subprocess: PASS")
 
@@ -665,7 +893,7 @@ def main() -> None:
         raise AssertionError("ORIGINAL_QRT_28_WITNESS_DUPLICATION")
     with tempfile.TemporaryDirectory(prefix="imo182-prhead-", dir=str(args.out.parent.resolve())) as td:
         temp = Path(td)
-        overlays: dict[str, Path] = {}
+        overlays: dict[str, tuple[Path, Path]] = {}
 
         def execute_case(root: str, slug: str) -> dict:
             cid = "QRT-" + slug.upper()
@@ -677,9 +905,9 @@ def main() -> None:
                 shadow = temp / root
                 call(["git", "-C", str(original), "worktree", "add",
                       "--detach", "-q", str(shadow), witness["source_pin"]["commit"]])
-                overlays[root] = shadow
+                overlays[root] = (original, shadow)
                 (shadow / RENDERER).write_bytes(renderer.read_bytes())
-            shadow = overlays[root]
+            shadow = overlays[root][1]
             manifest = shadow / expected_manifest
             if blob_sha(manifest) != witness["source_pin"]["manifest_blob"]:
                 raise AssertionError("OVERLAY_MANIFEST_BLOB_CHANGED")
@@ -699,12 +927,29 @@ def main() -> None:
                      phase="renderer-build", cell_id=cid,
                      diagnostic_out=args.out.with_name("prhead-overlay-" + slug + "-FAILURE-CODE.json"))
             candidate_contract = temp / (slug + "-prhead-native.json")
-            call([sys.executable, str(RECONCILIATION / "qrt_intent_native_evidence.py"),
-                  "--contract", str(Path("build/imo182-r8-intent") / (slug + ".json")),
-                  "--source-root", str(shadow), "--native-output", str(target),
-                  "--independent-rebuild", str(alternate), "--out", str(candidate_contract)],
-                 phase="native-evidence", cell_id=cid,
-                 diagnostic_out=args.out.with_name("prhead-overlay-" + slug + "-FAILURE-CODE.json"))
+            try:
+                call([sys.executable, str(RECONCILIATION / "qrt_intent_native_evidence.py"),
+                      "--contract", str(Path("build/imo182-r8-intent") / (slug + ".json")),
+                      "--source-root", str(shadow), "--native-output", str(target),
+                      "--independent-rebuild", str(alternate), "--out", str(candidate_contract)],
+                     phase="native-evidence", cell_id=cid,
+                     diagnostic_out=args.out.with_name(
+                         "prhead-overlay-" + slug + "-FAILURE-CODE.json"))
+            except CaseLocalFailure as failure:
+                if failure.code == "GOLDEN_COMPONENT_MISMATCH":
+                    # Diagnostic-only: never modify renderer/immutable golden.
+                    # Failure to inspect markers must not hide the native error.
+                    try:
+                        delta = source_safe_component_delta(shadow, target)
+                        output = args.out.with_name(
+                            "prhead-overlay-" + slug + "-COMPONENT-DIFF.json")
+                        stage = output.with_name(output.name + ".tmp")
+                        stage.write_text(json.dumps(delta, indent=2) + "\n",
+                                         encoding="utf-8")
+                        stage.replace(output)
+                    except Exception:
+                        pass
+                raise
             nav_path = temp / (slug + "-prhead-navigation.json")
             call([sys.executable, str(RECONCILIATION / "qrt_intent_real_navigation.py"),
                   "--native-contract", str(candidate_contract),
@@ -750,49 +995,27 @@ def main() -> None:
             original_source_is_pinned(Path(r14_source_root(root, slug)).resolve(),
                                       by_cell["QRT-" + slug.upper()])
 
+        cleanup_failures: list[dict] = []
         try:
             reports, systemic_abort = fanout_cases(
                 execute_case, verify_case_pin,
                 lambda slug, record: case_receipt(args.out, slug, record))
         finally:
-            for root, shadow in overlays.items():
-                call(["git", "-C", str(Path(root).resolve()), "worktree", "remove",
-                      "--force", str(shadow)])
-    summary = {status: sum(r["status"] == status for r in reports)
-               for status in ("PASS", "FAIL", "NOT_REACHED")}
-    assert sum(summary.values()) == 21
+            # Each detached shadow is owned by its actual original checkout,
+            # NOT necessarily its historical R8 case-root alias.
+            cleanup_failures = cleanup_shadow_worktrees(overlays, call)
     assert set(r["cell_id"] for r in reports) | held == set(by_cell)
-    failed = systemic_abort or summary["FAIL"] > 0 or summary["NOT_REACHED"] > 0
-    result = {
-        "schema": "imo182-prhead-overlay-fanout-diagnostic/v1",
-        "disposition": ("FAIL_RUN_HOLD_ALL_21_NO_RENDERER_VERDICT" if failed
-                        else "PROVISIONAL_AGENT_B_AND_OWNER_GATES_REQUIRED"),
-        "renderer_head_sha": head,
-        "renderer_sha256": renderer_digest,
-        "historical_r8_and_frozen_golden_unchanged": True,
-        "source_pinned_original_cells": 21,
-        "source_held_no_candidate_render": sorted(held),
-        "observed_diagnostic_counts": summary,
-        "native_returns_observed_not_accepted": sum(
-            bool(r["candidate_round_trip"]) for r in reports),
-        "candidate_counts_admissible_before_agent_b": False,
-        "systemic_abort": systemic_abort,
-        "academic_accepted": 0,
-        "owner_qrt_accepted": 0,
-        "release": "HOLD",
-        "cells": reports,
-    }
-    stage = args.out.with_name(args.out.name + ".tmp")
-    stage.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n",
-                     encoding="utf-8")
-    stage.replace(args.out)
-    print(f"R14_SOURCE_SAFE_FANOUT pass={summary['PASS']} fail={summary['FAIL']} "
-          f"not_reached={summary['NOT_REACHED']} held=7 "
-          f"systemic_abort={systemic_abort}; ALWAYS PROVISIONAL; "
-          "academic/Owner HOLD")
+    failed = write_fanout_aggregate(
+        args.out, reports, systemic_abort, cleanup_failures,
+        held, head, renderer_digest)
+    counts = {status: sum(r["status"] == status for r in reports)
+              for status in ("PASS", "FAIL", "NOT_REACHED")}
+    print(f"R14_SOURCE_SAFE_FANOUT pass={counts['PASS']} fail={counts['FAIL']} "
+          f"not_reached={counts['NOT_REACHED']} held=7 "
+          f"systemic_abort={systemic_abort} cleanup_failures={len(cleanup_failures)}; "
+          "ALWAYS PROVISIONAL; academic/Owner HOLD")
     if failed:
         raise SystemExit("R14_FANOUT_FAILED_CLOSED; no native 21-case acceptance")
-
 
 if __name__ == "__main__":
     main()
