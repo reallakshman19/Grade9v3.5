@@ -1,0 +1,79 @@
+{
+  "source_question": {
+    "id": "GOLDEN-SYN-D4-003",
+    "prompt": "<p>Find the unique three-digit integer \\(x \\in \\{0, 1, \\dots, 999\\}\\) satisfying the system of congruences:</p>\\[ x^3 \\equiv 2 \\pmod{125} \\quad \\text{and} \\quad x \\equiv 1 \\pmod 8 \\]",
+    "options": [
+      { "id": "A", "text": "\\( 53 \\)" },
+      { "id": "B", "text": "\\( 303 \\)" },
+      { "id": "C", "text": "\\( 553 \\)" },
+      { "id": "D", "text": "\\( 803 \\)" }
+    ],
+    "answer": {
+      "choice": "C",
+      "value": "553",
+      "crux_move_ref": "HENSEL_LIFTING_CHINESE_REMAINDER_POLYNOMIAL_SYNTHESIS"
+    },
+    "cognitive_classification": {
+      "difficulty_band": "D4",
+      "difficulty_score": 10,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 2
+      },
+      "demand": "SYNTHESIZE",
+      "crux_move": "HENSEL_LIFTING_CHINESE_REMAINDER_POLYNOMIAL_SYNTHESIS"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Find the unique root of \\(x^3 \\equiv 2 \\pmod 5\\). Verify that the derivative \\(f'(x) = 3x^2\\) does not vanish modulo 5, ensuring that Hensel's lemma guarantees a unique lift modulo higher powers of 5.",
+      "hint2_tactical_step": "Lift the root systematically modulo 25 and then modulo 125. Then apply the Chinese Remainder Theorem to combine the resulting congruence modulo 125 with \\(x \\equiv 1 \\pmod 8\\) to identify the unique solution in the range \\([0, 999]\\)."
+    },
+    "distractor_analysis": [
+      {
+        "choice": "A",
+        "description": "Calculates the correct root modulo 125 (x = 53) but fails to synthesize with the second congruence x = 1 mod 8."
+      },
+      {
+        "choice": "B",
+        "description": "Inverts 5 modulo 8 incorrectly during Chinese Remainder Theorem synthesis, taking k = 2 yielding 53 + 250 = 303."
+      },
+      {
+        "choice": "C",
+        "description": "Correct solution: Hensel lifting gives x = 53 mod 125; combining with x = 1 mod 8 gives x = 53 + 4*125 = 553."
+      },
+      {
+        "choice": "D",
+        "description": "Computational error during the quadratic Hensel lift step mod 125, setting u = 3 leading to candidate 803."
+      }
+    ],
+    "core_links": {
+      "core1a_unit_id": "ALG-NT-HENSEL-LIFTING-CRT-03",
+      "core1b_unit_id": "RECON-SYN-D4-003"
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-SYN-D4-003\" data-core-unit-id=\"ALG-NT-HENSEL-LIFTING-CRT-03\">\n  <div class=\"qb-stem\">\n    <p>Find the unique three-digit integer \\(x \\in \\{0, 1, \\dots, 999\\}\\) satisfying the system of congruences:</p>\n    <p>\\[ x^3 \\equiv 2 \\pmod{125} \\quad \\text{and} \\quad x \\equiv 1 \\pmod 8 \\]</p>\n  </div>\n  <div class=\"qb-options-grid\">\n    <button class=\"qb-option-btn\" id=\"opt-A\">\\( 53 \\)</button>\n    <button class=\"qb-option-btn\" id=\"opt-B\">\\( 303 \\)</button>\n    <button class=\"qb-option-btn\" id=\"opt-C\">\\( 553 \\)</button>\n    <button class=\"qb-option-btn\" id=\"opt-D\">\\( 803 \\)</button>\n  </div>\n  <div class=\"qb-support-container\">\n    <div class=\"qb-hint\" id=\"hint1-GOLDEN-SYN-D4-003\">\n      <p><strong>Hint 1 (Conceptual):</strong> Find the unique root of \\(x^3 \\equiv 2 \\pmod 5\\). Verify that the derivative \\(f'(x) = 3x^2\\) does not vanish modulo 5, ensuring that Hensel's lemma guarantees a unique lift modulo higher powers of 5.</p>\n    </div>\n    <div class=\"qb-hint\" id=\"hint2-GOLDEN-SYN-D4-003\">\n      <p><strong>Hint 2 (Tactical):</strong> Lift the root systematically modulo 25 and then modulo 125. Then apply the Chinese Remainder Theorem to combine the resulting congruence modulo 125 with \\(x \\equiv 1 \\pmod 8\\) to identify the unique solution in the range \\([0, 999]\\).</p>\n    </div>\n  </div>\n  <details class=\"qb-solution\" inert hidden data-locked=\"true\">\n    <summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary>\n    <div class=\"qb-solution-content\">\n      <p>Consider the polynomial \\(f(x) = x^3 - 2\\). We seek a solution to \\(f(x) \\equiv 0 \\pmod{125}\\) where \\(125 = 5^3\\).</p>\n      <p><strong>Step 1: Base root modulo 5</strong></p>\n      <p>Testing residues modulo 5: \\(3^3 = 27 \\equiv 2 \\pmod 5\\), so \\(x_1 = 3\\) is the unique base root.</p>\n      <p>The derivative is \\(f'(x) = 3x^2\\), so \\(f'(3) = 27 \\equiv 2 \\not\\equiv 0 \\pmod 5\\). Since the derivative is non-zero modulo 5, Hensel's Lemma guarantees a unique lift to each prime power.</p>\n      <p><strong>Step 2: Lift modulo 25</strong></p>\n      <p>Write \\(x_2 = 3 + 5t\\). Then \\(f(3 + 5t) \\equiv f(3) + f'(3)(5t) \\pmod{25}\\). Since \\(f(3) = 25 \\equiv 0 \\pmod{25}\\), we have \\(0 + 2(5t) \\equiv 0 \\pmod{25} \\implies 10t \\equiv 0 \\pmod{25} \\implies t \\equiv 0 \\pmod 5\\). Thus \\(x_2 = 3\\).</p>\n      <p><strong>Step 3: Lift modulo 125</strong></p>\n      <p>Write \\(x_3 = 3 + 25u\\). Expanding modulo 125:</p>\n      <p>\\[ f(3 + 25u) \\equiv f(3) + f'(3)(25u) = 25 + 27(25u) \\equiv 25 + 2(25u) = 25 + 50u \\pmod{125} \\]</p>\n      <p>Setting this to 0 modulo 125 and dividing by 25:</p>\n      <p>\\[ 1 + 2u \\equiv 0 \\pmod 5 \\implies 2u \\equiv 4 \\pmod 5 \\implies u \\equiv 2 \\pmod 5 \\]</p>\n      <p>Thus \\(x \\equiv 3 + 25(2) = 53 \\pmod{125}\\).</p>\n      <p><strong>Step 4: Chinese Remainder Theorem synthesis</strong></p>\n      <p>We are given \\(x \\equiv 53 \\pmod{125}\\) and \\(x \\equiv 1 \\pmod 8\\). Any solution has the form \\(x = 53 + 125k\\). Reducing modulo 8:</p>\n      <p>\\[ 53 + 125k \\equiv 5 + 5k \\equiv 1 \\pmod 8 \\implies 5k \\equiv -4 \\equiv 4 \\pmod 8 \\]</p>\n      <p>Multiplying by 5 (since \\(5 \\times 5 = 25 \\equiv 1 \\pmod 8\\)): \\(k \\equiv 20 \\equiv 4 \\pmod 8\\).</p>\n      <p>The minimal non-negative solution in \\([0, 999]\\) is:</p>\n      <p>\\[ x = 53 + 125(4) = 53 + 500 = 553 \\]</p>\n    </div>\n  </details>\n</div>",
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-NT-HENSEL-LIFTING-CRT-03",
+      "entry_assumptions": "Polynomial Taylor expansion in local p-adic rings and the Chinese Remainder Theorem for coprime moduli.",
+      "inferential_jump": "Using first-order derivative approximations to lift congruences across prime power strata.",
+      "why_valid_derivation": "Hensel's Lemma is Newton-Raphson iteration in the p-adic metric, guaranteed to converge quadratically when the derivative is a unit.",
+      "three_way_bridge": "Algebraic analysis via derivatives bridges modular arithmetic with p-adic topological completion.",
+      "representation_anchor": "Tree diagram of residues branching from modulo p to p^2 and p^3.",
+      "boundary_conditions": "Fails if f'(x_0) = 0 mod p, which requires higher-order singularity analysis.",
+      "worked_check": "For lifting x^2 = 2 mod 7 where x_1 = 3: f'(3) = 6 != 0 mod 7; lifting gives x = 3 + 7*1 = 10 mod 49; 10^2 = 100 = 2 * 49 + 2 = 2 mod 49. Verified."
+    },
+    "core1b": {
+      "unit_id": "RECON-SYN-D4-003",
+      "target_concept": "Hensel p-adic lifting combined with Chinese Remainder Theorem",
+      "answer_before_attempt": "FORBIDDEN",
+      "scaffold_prompts": [
+        "State the non-singularity condition required for Hensel's lemma.",
+        "Set up the linear equation for the lift parameter u modulo p.",
+        "Formulate the Chinese Remainder Theorem combination for coprime moduli."
+      ]
+    }
+  }
+}

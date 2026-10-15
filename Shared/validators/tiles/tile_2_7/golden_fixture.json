@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_7",
+  "qrt_cell": "QRT-JUSTIFY-D2",
+  "source_question": {
+    "id": "GOLDEN-JUS-D2-001",
+    "custody_hash": "a7b8c9d0e1f23456789abcdef0123456789abcdef0123456789abcdef0123456",
+    "stem": "If $n$ is an integer such that $n^2$ is divisible by $18$, which of the following is the smallest positive integer that must divide $n$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$6$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$18$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$3$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$9$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "6",
+      "crux_move_ref": "CRUX-NT-JUSTIFY-PRIME-EXPONENT-PARITY-DIVISIBILITY"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "JUSTIFY",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 0,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-NT-JUSTIFY-PRIME-EXPONENT-PARITY-DIVISIBILITY"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Write the prime factorization of $18 = 2 \\times 3^2$. Recall that in the prime factorization of any square $n^2$, every prime factor must appear with an even exponent.",
+      "hint2_tactical_step": "Since $18$ divides $n^2$, $n^2$ contains at least one factor of $2$ and two factors of $3$. Exponent parity forces $n^2$ to have at least two $2$s ($2^2$) and two $3$s ($3^2$). Deduce the minimal product of prime factors that $n$ itself must possess."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student falsely generalizes that if m divides n^2, then m must divide n directly (disproven by counterexample n = 6).",
+      "opt-C": "Student identifies that 3 divides n, but fails to recognize that 2 must also divide n.",
+      "opt-D": "Student assumes that since 9 divides 18, 9 must divide n."
+    },
+    "core_links": {
+      "core1a_unit_id": "NT-JUSTIFY-DIV-PARITY-02",
+      "core1b_activity_id": "ACT-RECON-JUSTIFY-02",
+      "core2a_practice_id": "PRAC-JUSTIFY-02",
+      "core2b_transfer_id": "TRANS-JUSTIFY-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "NT-JUSTIFY-DIV-PARITY-02",
+      "title": "Prime Exponent Parity in Divisibility Justifications",
+      "concept": "For any integer n, every prime in the canonical factorization of n^2 has an even exponent: v_p(n^2) = 2*v_p(n). If an integer m divides n^2, then for each prime p, 2*v_p(n) >= v_p(m), which implies v_p(n) >= ceil(v_p(m)/2). For example, if 20 divides n^2, then 20 = 2^2 * 5^1 requires v_2(n) >= 1 and v_5(n) >= 1, so 2^1 * 5^1 = 10 must divide n.",
+      "boundary_conditions": "If m is square-free, then m divides n^2 implies m divides n. If m contains prime powers, the square root of the minimal square multiple of m determines the necessary divisor."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-JUSTIFY-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the smallest positive integer n whose square n^2 is a multiple of 18?",
+      "scaffold_steps": [
+        "Test small positive integers starting from 1",
+        "Notice 6^2 = 36 is divisible by 18",
+        "Conclude minimal positive integer n is 6"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-JUS-D2-001\"><div class=\"qb-stem\"><p>If $n$ is an integer such that $n^2$ is divisible by $18$, which of the following is the smallest positive integer that must divide $n$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $6$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $18$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $3$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $9$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-JUS-D2-001\"><p>Write the prime factorization of $18 = 2 \\times 3^2$. Recall that in the prime factorization of any square $n^2$, every prime factor must appear with an even exponent.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-JUS-D2-001\"><p>Since $18$ divides $n^2$, $n^2$ contains at least one factor of $2$ and two factors of $3$. Exponent parity forces $n^2$ to have at least two $2$s ($2^2$) and two $3$s ($3^2$). Deduce the minimal product of prime factors that $n$ itself must possess.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"NT-JUSTIFY-DIV-PARITY-02\">Review Prime Exponent Parity</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Prime factorize $18 = 2^1 \\times 3^2$.</p><p>2. Let $n = 2^a \\times 3^b \\times k$, where $\\gcd(k, 6) = 1$. Then $n^2 = 2^{2a} \\times 3^{2b} \\times k^2$.</p><p>3. For $18 \\mid n^2$, we require $2a \\ge 1$ and $2b \\ge 2$.</p><p>4. Since $a, b$ are integers, $2a \\ge 1 \\implies a \\ge 1$, and $2b \\ge 2 \\implies b \\ge 1$.</p><p>5. Therefore, $n$ must contain at least $2^1 \\times 3^1 = 6$.</p><p>6. Counterexample refuting $18$: Take $n = 6$. Then $n^2 = 36$, which is divisible by $18$, but $6$ is not divisible by $18$. Thus the minimal necessary divisor is $6$.</p></div></details></div>"
+}

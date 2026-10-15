@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_5",
+  "qrt_cell": "QRT-REPRESENT-D2",
+  "source_question": {
+    "id": "GOLDEN-REP-D2-002",
+    "custody_hash": "b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef01",
+    "stem": "A Cartesian graph shows the V-shaped curve $y = |2x - 4| - 3$ with vertex at $(2, -3)$ opening upwards. What are the coordinates of the two $x$-intercepts where the graph crosses the horizontal axis?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$(0.5, 0)$ and $(3.5, 0)$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$(1, 0)$ and $(3, 0)$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$(-0.5, 0)$ and $(4.5, 0)$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$(0.5, 0)$ and $(2.5, 0)$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "(0.5, 0) and (3.5, 0)",
+      "crux_move_ref": "CRUX-FUNC-PIECEWISE-MODULUS-GRAPH-TO-ZEROS-LOCI"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "REPRESENT",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 2,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-FUNC-PIECEWISE-MODULUS-GRAPH-TO-ZEROS-LOCI"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall the graphical definition of an x-intercept: set y = 0 in the function equation to locate where the locus crosses the horizontal axis.",
+      "hint2_tactical_step": "Setting y = 0 yields |2x - 4| = 3. Translate the absolute value condition into the two linear equations 2x - 4 = 3 and 2x - 4 = -3."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student divides by 2 inside the modulus before balancing the equation.",
+      "opt-C": "Student adds 3 to both sides without accounting for the leading slope coefficient 2.",
+      "opt-D": "Student forgets to reflect the negative branch across the vertex axis of symmetry."
+    },
+    "core_links": {
+      "core1a_unit_id": "FUNC-REPRESENT-GRAPH-02",
+      "core1b_activity_id": "ACT-RECON-PIECEWISE-02",
+      "core2a_practice_id": "PRAC-PIECEWISE-02",
+      "core2b_transfer_id": "TRANS-PIECEWISE-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "FUNC-REPRESENT-GRAPH-02",
+      "title": "Piecewise Absolute Value Graphs and Axis Intercepts",
+      "concept": "To find the x-intercepts of an absolute value graph y = |u(x)| - c, set y = 0 to yield |u(x)| = c. For example, for y = |x - 5| - 2, we solve |x - 5| = 2 to find x = 7 or x = 3, giving intercepts (3, 0) and (7, 0).",
+      "boundary_conditions": "If c < 0, the absolute value equation has no real solutions and the graph has zero real x-intercepts."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-PIECEWISE-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If a V-shaped curve has vertex at (1, -4) and slope 2, what vertical distance must it rise to meet the horizontal axis?",
+      "scaffold_steps": [
+        "Identify vertex y-coordinate -4",
+        "Set target y = 0 to find vertical rise delta y = 4",
+        "Divide rise by slope 2 to find horizontal half-width 2"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-REP-D2-002\"><div class=\"qb-stem\"><p>A Cartesian graph shows the V-shaped curve $y = |2x - 4| - 3$ with vertex at $(2, -3)$ opening upwards. What are the coordinates of the two $x$-intercepts where the graph crosses the horizontal axis?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $(0.5, 0)$ and $(3.5, 0)$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $(1, 0)$ and $(3, 0)$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $(-0.5, 0)$ and $(4.5, 0)$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $(0.5, 0)$ and $(2.5, 0)$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-REP-D2-002\"><p>Recall the graphical definition of an x-intercept: set y = 0 in the function equation to locate where the locus crosses the horizontal axis.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-REP-D2-002\"><p>Setting y = 0 yields |2x - 4| = 3. Translate the absolute value condition into the two linear equations 2x - 4 = 3 and 2x - 4 = -3.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"FUNC-REPRESENT-GRAPH-02\">Review Graph Intercept Transformations</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. At an $x$-intercept, $y = 0$, giving $|2x - 4| - 3 = 0 \\implies |2x - 4| = 3$.</p><p>2. Splitting into linear branches:</p><p>$2x - 4 = 3 \\implies 2x = 7 \\implies x = 3.5$.</p><p>$2x - 4 = -3 \\implies 2x = 1 \\implies x = 0.5$.</p><p>3. Therefore, the $x$-intercepts are $(0.5, 0)$ and $(3.5, 0)$.</p></div></details></div>"
+}

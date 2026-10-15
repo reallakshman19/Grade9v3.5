@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_5",
+  "qrt_cell": "QRT-REPRESENT-D2",
+  "source_question": {
+    "id": "GOLDEN-REP-D2-001",
+    "custody_hash": "a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0",
+    "stem": "In the Cartesian plane, the line $L_1$ has equation $2x - 3y + 6 = 0$. The line is reflected across the line $y = x$ to form line $L_2$. Which of the following is the Cartesian equation of line $L_2$ in standard form?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$3x - 2y - 6 = 0$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$3x + 2y - 6 = 0$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$2x + 3y - 6 = 0$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$3x - 2y + 6 = 0$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "3x - 2y - 6 = 0",
+      "crux_move_ref": "CRUX-COORD-REFLECTION-LINE-Y-EQUALS-X-SWAP"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "REPRESENT",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 2,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-COORD-REFLECTION-LINE-Y-EQUALS-X-SWAP"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall the geometric representation transformation: reflecting any point (x, y) across the diagonal identity line y = x interchanges its coordinates to (y, x).",
+      "hint2_tactical_step": "Replace every occurrence of x with y and every occurrence of y with x in the original equation to get 2y - 3x + 6 = 0, then multiply by -1 to format with a positive leading coefficient."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student inverts the y sign instead of reflecting across y = x.",
+      "opt-C": "Student reflects across y = -x with incorrect sign orientation.",
+      "opt-D": "Student fails to distribute the negative sign when multiplying by -1."
+    },
+    "core_links": {
+      "core1a_unit_id": "COORD-REPRESENT-REFL-02",
+      "core1b_activity_id": "ACT-RECON-REPRESENT-02",
+      "core2a_practice_id": "PRAC-REPRESENT-02",
+      "core2b_transfer_id": "TRANS-REPRESENT-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COORD-REPRESENT-REFL-02",
+      "title": "Geometric Reflection and Coordinate Transformations",
+      "concept": "To find the Cartesian equation of a curve under reflection across the diagonal line y = x, swap variables x and y throughout the locus equation. For example, reflecting x + 4y - 8 = 0 produces y + 4x - 8 = 0 or 4x + y - 8 = 0.",
+      "boundary_conditions": "Points lying directly on y = x are invariant fixed points. Reflection preserves line angles and distances."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-REPRESENT-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If a line passes through (0, 4) and has slope 2, what point must its reflection across y = x pass through?",
+      "scaffold_steps": [
+        "Identify original intercept point (0, 4)",
+        "Apply coordinate reflection swap (x, y) -> (y, x)",
+        "Conclude image point is (4, 0)"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-REP-D2-001\"><div class=\"qb-stem\"><p>In the Cartesian plane, the line $L_1$ has equation $2x - 3y + 6 = 0$. The line is reflected across the line $y = x$ to form line $L_2$. Which of the following is the Cartesian equation of line $L_2$ in standard form?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $3x - 2y - 6 = 0$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $3x + 2y - 6 = 0$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $2x + 3y - 6 = 0$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $3x - 2y + 6 = 0$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-REP-D2-001\"><p>Recall the geometric representation transformation: reflecting any point (x, y) across the diagonal identity line y = x interchanges its coordinates to (y, x).</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-REP-D2-001\"><p>Replace every occurrence of x with y and every occurrence of y with x in the original equation to get 2y - 3x + 6 = 0, then multiply by -1 to format with a positive leading coefficient.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COORD-REPRESENT-REFL-02\">Review Coordinate Reflection Invariants</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Geometric transformation under reflection across $y = x$ maps $(x, y) \\mapsto (y, x)$.</p><p>2. Substitute $x \\to y$ and $y \\to x$ into the equation $2x - 3y + 6 = 0$:</p><p>$2(y) - 3(x) + 6 = 0 \\implies -3x + 2y + 6 = 0$.</p><p>3. Multiply through by $-1$ to obtain standard form: $3x - 2y - 6 = 0$.</p></div></details></div>"
+}

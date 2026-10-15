@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_2",
+  "qrt_cell": "QRT-EXPLAIN-D2",
+  "source_question": {
+    "id": "GOLDEN-EXP-D2-002",
+    "custody_hash": "c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0123",
+    "stem": "For the linear graph representing $2x + 3y = 12$, any two distinct points $P(x_1, y_1)$ and $Q(x_2, y_2)$ lie on the line. Which statement correctly explains why the ratio $\\frac{y_2 - y_1}{x_2 - x_1}$ remains constant (invariant) regardless of which pair of points on the line is chosen?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "Because the line passes through the origin $(0, 0)$."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "Any two right-angled slope triangles constructed along the line are similar by AA similarity, making the ratio of vertical rise to horizontal run invariant."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "Because the Euclidean distance between any two chosen points is always constant."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Because the sum of the coordinates $x + y$ is always equal to $12$."
+      }
+    ],
+    "answer": {
+      "choice": "B",
+      "value": "Any two right-angled slope triangles constructed along the line are similar by AA similarity, making the ratio of vertical rise to horizontal run invariant",
+      "crux_move_ref": "CRUX-COORD-SLOPE-INVARIANCE-SIMILAR-TRIANGLES"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "EXPLAIN",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-COORD-SLOPE-INVARIANCE-SIMILAR-TRIANGLES"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider constructing right-angled triangles using horizontal run and vertical rise between pairs of points on the line.",
+      "hint2_tactical_step": "Examine the corresponding angles formed by the line with parallel horizontal grid lines to identify triangle similarity."
+    },
+    "distractor_rationales": {
+      "opt-A": "Student assumes all lines pass through origin; here 2(0)+3(0)=0 != 12.",
+      "opt-C": "Student confuses constant slope ratio with constant distance between points.",
+      "opt-D": "Student confuses the linear relation 2x + 3y = 12 with simple coordinate sum x + y = 12."
+    },
+    "core_links": {
+      "core1a_unit_id": "COORD-LINE-SLOPE-02",
+      "core1b_activity_id": "ACT-RECON-SLOPE-02",
+      "core2a_practice_id": "PRAC-SLOPE-02",
+      "core2b_transfer_id": "TRANS-SLOPE-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COORD-LINE-SLOPE-02",
+      "title": "Linear Graphs and Slope Invariance",
+      "concept": "A straight line in the Cartesian plane has a constant inclination angle with the horizontal axis. Any two slope triangles have identical angle measures (AA similarity), forcing the ratio of vertical change to horizontal change to be invariant.",
+      "boundary_conditions": "For vertical lines x = c, horizontal run is zero, making slope undefined."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-SLOPE-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If two right triangles share equal non-right angles, what is true about the ratio of their legs?",
+      "scaffold_steps": [
+        "Recall AA triangle similarity theorem",
+        "Formulate proportional ratio of corresponding sides",
+        "Deduce slope invariance"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-EXP-D2-002\"><div class=\"qb-stem\"><p>For the linear graph representing $2x + 3y = 12$, any two distinct points $P(x_1, y_1)$ and $Q(x_2, y_2)$ lie on the line. Which statement correctly explains why the ratio $\\frac{y_2 - y_1}{x_2 - x_1}$ remains constant (invariant) regardless of which pair of points on the line is chosen?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> Because the line passes through the origin $(0, 0)$.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> Any two right-angled slope triangles constructed along the line are similar by AA similarity, making the ratio of vertical rise to horizontal run invariant.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> Because the Euclidean distance between any two chosen points is always constant.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Because the sum of the coordinates $x + y$ is always equal to $12$.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-EXP-D2-002\"><p>Consider constructing right-angled triangles using horizontal run and vertical rise between pairs of points on the line.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-EXP-D2-002\"><p>Examine the corresponding angles formed by the line with parallel horizontal grid lines to identify triangle similarity.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COORD-LINE-SLOPE-02\">Review Slope Invariance</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Solution</summary><div class=\"qb-solution-body\"><p>The line acts as a transversal across horizontal and vertical grid lines. For any two points, the horizontal run and vertical rise form a right-angled triangle.</p><p>Because the angle of inclination of the straight line is constant, all such slope triangles have congruent corresponding angles (AA similarity). Therefore, the ratio of legs $\\frac{\\Delta y}{\\Delta x}$ is strictly invariant.</p></div></details></div>"
+}

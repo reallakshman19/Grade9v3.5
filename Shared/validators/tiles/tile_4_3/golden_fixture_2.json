@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_3",
+  "qrt_cell": "QRT-APPLY-D4",
+  "source_question": {
+    "id": "GOLDEN-APP-D4-002",
+    "custody_hash": "d2e3f4a5b6c708192a3b4c5d6e7f80123456789abcdef0123456789abcdef0",
+    "stem": "Let $(x_1, y_1)$ be the smallest positive integer solution in $\\mathbb{Z}^+$ to the Pell equation $x^2 - 7y^2 = 1$. Let $(x_2, y_2)$ be the strictly second smallest positive integer solution to the same equation. What is the exact value of $x_2$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$127$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$8$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$255$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$113$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "127",
+      "crux_move_ref": "CRUX-NT-APPLY-PELL-EQUATION-RING-EXPONENTIATION"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "APPLY",
+      "difficulty_band": "D4",
+      "difficulty_score": 10,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 2
+      },
+      "crux_move": "CRUX-NT-APPLY-PELL-EQUATION-RING-EXPONENTIATION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall that the fundamental solution $(x_1, y_1)$ to $x^2 - d y^2 = 1$ is obtained from the continued fraction expansion of $\\sqrt{d}$.",
+      "hint2_tactical_step": "For $\\sqrt{7} = [2; \\overline{1, 1, 1, 4}]$, the third convergent yields the fundamental unit $(x_1, y_1) = (8, 3)$. Use the ring multiplication identity $(x_1 + y_1\\sqrt{7})^2 = x_2 + y_2\\sqrt{7}$ to determine the second solution."
+    },
+    "distractor_rationales": {
+      "opt-B": "Selects the minimal fundamental solution $x_1 = 8$ instead of the second solution $x_2$.",
+      "opt-C": "Computational error in evaluating the algebraic norm recurrence, erroneously doubling without subtracting 1.",
+      "opt-D": "Sign error during ring binomial squaring, incorrectly subtracting $64 - 49$ or $64 - 63$."
+    },
+    "core_links": {
+      "core1a_unit_id": "NT-APP-PELL-FUNDAMENTAL-UNIT-04",
+      "core1b_activity_id": "ACT-RECON-PELL-FUNDAMENTAL-UNIT-04",
+      "core2a_practice_id": "PRAC-PELL-FUNDAMENTAL-UNIT-04",
+      "core2b_transfer_id": "TRANS-PELL-FUNDAMENTAL-UNIT-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "NT-APP-PELL-FUNDAMENTAL-UNIT-04",
+      "title": "Pell's Equation and Quadratic Ring Units",
+      "concept": "For a square-free integer $D > 0$, the Pell equation $u^2 - D v^2 = 1$ is solved by finding the fundamental unit $\\epsilon_1 = u_1 + v_1\\sqrt{D}$ via the continued fraction convergents of $\\sqrt{D}$. Every subsequent positive integer solution corresponds to an integral power $\\epsilon_n = \\epsilon_1^n = u_n + v_n\\sqrt{D}$.",
+      "boundary_conditions": "If $D$ is a square, no non-trivial positive integer solutions exist. The solutions grow exponentially according to the spectral radius of the companion matrix."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-PELL-FUNDAMENTAL-UNIT-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "In the ring $\\mathbb{Z}[\\sqrt{D}]$, what operation on the fundamental unit $(u_1 + v_1\\sqrt{D})$ generates all positive solutions?",
+      "scaffold_steps": [
+        "Recall algebraic norm preservation N(alpha * beta) = N(alpha) * N(beta)",
+        "Observe (u1 + v1*sqrt(D))^n has norm 1 for all positive integers n",
+        "Expand via binomial theorem to extract un and vn"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-APP-D4-002\"><div class=\"qb-stem\"><p>Let $(x_1, y_1)$ be the smallest positive integer solution in $\\mathbb{Z}^+$ to the Pell equation $x^2 - 7y^2 = 1$. Let $(x_2, y_2)$ be the strictly second smallest positive integer solution to the same equation. What is the exact value of $x_2$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $127$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $8$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $255$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $113$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-APP-D4-002\"><p>Recall that the fundamental solution $(x_1, y_1)$ to $x^2 - d y^2 = 1$ is obtained from the continued fraction expansion of $\\sqrt{d}$.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-APP-D4-002\"><p>For $\\sqrt{7} = [2; \\overline{1, 1, 1, 4}]$, the third convergent yields the fundamental unit $(x_1, y_1) = (8, 3)$. Use the ring multiplication identity $(x_1 + y_1\\sqrt{7})^2 = x_2 + y_2\\sqrt{7}$ to determine the second solution.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"NT-APP-PELL-FUNDAMENTAL-UNIT-04\">Review Pell Equation Machinery</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Continued fraction expansion of $\\sqrt{7}$:</p><p>We compute the simple continued fraction of $\\sqrt{7}$:</p><p>$a_0 = \\lfloor \\sqrt{7} \\rfloor = 2$.</p><p>$\\sqrt{7} - 2 = \\frac{1}{\\frac{\\sqrt{7}+2}{3}} \\implies a_1 = 1$.</p><p>$\\frac{\\sqrt{7}-1}{3} = \\frac{1}{\\frac{\\sqrt{7}+1}{2}} \\implies a_2 = 1$.</p><p>$\\frac{\\sqrt{7}-1}{2} = \\frac{1}{\\frac{\\sqrt{7}+1}{3}} \\implies a_3 = 1$.</p><p>$\\frac{\\sqrt{7}-2}{3} = \\frac{1}{\\sqrt{7}+2} \\implies a_4 = 4$.</p><p>Thus $\\sqrt{7} = [2; \\overline{1, 1, 1, 4}]$ with period length $L = 4$.</p><p>2. Computing convergents $p_k / q_k$:</p><p>$k = 0: \\frac{p_0}{q_0} = \\frac{2}{1} \\implies 2^2 - 7(1)^2 = 4 - 7 = -3$.</p><p>$k = 1: \\frac{p_1}{q_1} = 2 + \\frac{1}{1} = \\frac{3}{1} \\implies 3^2 - 7(1)^2 = 9 - 7 = 2$.</p><p>$k = 2: \\frac{p_2}{q_2} = 2 + \\frac{1}{1 + 1/1} = \\frac{5}{2} \\implies 5^2 - 7(2)^2 = 25 - 28 = -3$.</p><p>$k = 3: \\frac{p_3}{q_3} = 2 + \\frac{1}{1 + \\frac{1}{1 + 1}} = \\frac{8}{3} \\implies 8^2 - 7(3)^2 = 64 - 63 = 1$.</p><p>Because the period length is even ($L = 4$), the convergent $p_{L-1}/q_{L-1} = p_3/q_3$ gives the minimal positive fundamental solution:</p><p>$(x_1, y_1) = (8, 3)$.</p><p>3. Generating the second positive solution:</p><p>All positive integer solutions $(x_n, y_n)$ are generated by powers of the fundamental unit in $\\mathbb{Z}[\\sqrt{7}]$:</p><p>$x_n + y_n\\sqrt{7} = (x_1 + y_1\\sqrt{7})^n$.</p><p>For $n = 2$:</p><p>$x_2 + y_2\\sqrt{7} = (8 + 3\\sqrt{7})^2 = 8^2 + (3\\sqrt{7})^2 + 2(8)(3\\sqrt{7}) = 64 + 63 + 48\\sqrt{7} = 127 + 48\\sqrt{7}$.</p><p>4. Verification:</p><p>$x_2^2 - 7y_2^2 = 127^2 - 7(48^2) = 16129 - 7(2304) = 16129 - 16128 = 1$.</p><p>Thus, the second smallest positive integer $x$-value is $x_2 = 127$.</p></div></details></div>"
+}

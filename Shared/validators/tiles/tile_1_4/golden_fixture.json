@@ -1,0 +1,63 @@
+{
+  "schema": "imo-qrt-golden-fixture/v1",
+  "tile_id": "tile_1_4",
+  "qrt_cell": "QRT-MODEL-D1",
+  "source_question": {
+    "id": "GOLDEN-MOD-D1-001",
+    "topic": {
+      "code": "LOGIC",
+      "topic_label": "Verbal and Non-Verbal Reasoning",
+      "subtopic": "LOGIC-NUMBER-PATTERN"
+    },
+    "cognitive_classification": {
+      "primary_demand": "MODEL",
+      "crux_move": "Discover invariant: center number equals sum of principal square roots of vertex numbers: Center = sum sqrt(V_i). For Fig 2: sqrt(64) + sqrt(121) + sqrt(25) = 8 + 11 + 5 = 24",
+      "secondary_demands": ["APPLY"],
+      "difficulty_band": "D1",
+      "difficulty_score": 2,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 0,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_cell": "QRT-MODEL-D1"
+    },
+    "stem": "Find the missing number in Figure 2, if the same mathematical model connects the vertex numbers to the center number in all three figures.",
+    "options": {
+      "A": "24",
+      "B": "22",
+      "C": "25",
+      "D": "23"
+    },
+    "answer": {
+      "choice": "A",
+      "value": "24",
+      "crux_move_ref": "Discover invariant: center number equals sum of principal square roots of vertex numbers: Center = sum sqrt(V_i). For Fig 2: sqrt(64) + sqrt(121) + sqrt(25) = 8 + 11 + 5 = 24"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Observe that each outer vertex value (49, 16, 81; 64, 121, 25; 81, 36, 9) is a perfect square.",
+      "hint2_tactical_step": "Formulate a model relating the square roots of the three vertex numbers to the central value."
+    },
+    "solution": {
+      "derivation": "1. Fig 1: √49 + √16 + √81 = 7 + 4 + 9 = 20.\n2. Fig 3: √81 + √36 + √9 = 9 + 6 + 3 = 18.\n3. Model: Center = sum of square roots of vertices.\n4. Fig 2: √64 + √121 + √25 = 8 + 11 + 5 = 24 (Option A).",
+      "independent_check": {
+        "check_type": "SPECIAL_CASE",
+        "verification": "Check invariant rule across all three figures: 7+4+9=20; 8+11+5=24; 9+6+3=18. Model is consistent. Matches Option A uniquely."
+      }
+    },
+    "distractor_analysis": {
+      "B": "Arithmetic calculation error: 8 + 11 + 3 = 22.",
+      "C": "Assumes center is an average rounded upwards.",
+      "D": "Off-by-one arithmetic slip in radical addition."
+    },
+    "core_links": {
+      "core1a_unit_id": "u-logic-pattern-model",
+      "core1b_unit_id": "u-logic-pattern-tutor",
+      "core2a_id": "GOLDEN-MOD-D1-001-PRACTICE",
+      "core2b_id": "GOLDEN-MOD-D1-001-TRANSFER"
+    }
+  },
+  "html_representation": "<article class=\"qb-question\" id=\"q-GOLDEN-MOD-D1-001\" data-band=\"D1\" data-demand=\"MODEL\" data-score=\"2\" data-core-unit-id=\"u-logic-pattern-model\">\n  <header class=\"qb-header\">\n    <span class=\"qb-badge\">D1</span>\n    <span class=\"qb-badge\">MODEL</span>\n    <span class=\"qb-badge\" data-core-unit-id=\"u-logic-pattern-model\">Unit: Pattern Models</span>\n  </header>\n  <div class=\"qb-stem\">\n    <p>Find the missing number in Figure 2, if the same mathematical model connects the vertex numbers to the center number in all three figures.</p>\n  </div>\n  <div class=\"qb-options\" data-g9-options=\"true\">\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-MOD-D1-001-A\" data-choice=\"A\">(A) 24</button>\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-MOD-D1-001-B\" data-choice=\"B\">(B) 22</button>\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-MOD-D1-001-C\" data-choice=\"C\">(C) 25</button>\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-MOD-D1-001-D\" data-choice=\"D\">(D) 23</button>\n  </div>\n  <div class=\"qb-support-container\">\n    <div class=\"qb-hint\" id=\"hint1-GOLDEN-MOD-D1-001\">\n      <p>Observe that each outer vertex value (49, 16, 81; 64, 121, 25; 81, 36, 9) is a perfect square.</p>\n    </div>\n    <div class=\"qb-hint\" id=\"hint2-GOLDEN-MOD-D1-001\">\n      <p>Formulate a model relating the square roots of the three vertex numbers to the central value.</p>\n    </div>\n  </div>\n  <div class=\"qb-solution-container\">\n    <details class=\"qb-solution\" id=\"sol-GOLDEN-MOD-D1-001\" inert hidden data-locked=\"true\">\n      <summary class=\"qb-solution-summary\">Show Complete Solution</summary>\n      <div class=\"qb-solution-body\">\n        <p>1. Fig 1: √49 + √16 + √81 = 7 + 4 + 9 = 20.</p>\n        <p>2. Fig 3: √81 + √36 + √9 = 9 + 6 + 3 = 18.</p>\n        <p>3. Model: Center = sum of square roots of vertices.</p>\n        <p>4. Fig 2: √64 + √121 + √25 = 8 + 11 + 5 = 24 (Option A).</p>\n      </div>\n    </details>\n  </div>\n</article>"
+}

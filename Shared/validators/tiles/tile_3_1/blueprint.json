@@ -1,0 +1,71 @@
+{
+  "schema": "imo-qrt-tile-blueprint/v1",
+  "version": "1.0.0",
+  "tile_id": "tile_3_1",
+  "qrt_cell": "QRT-RETRIEVE-D3",
+  "coordinates": {
+    "band_index": 3,
+    "demand_index": 1,
+    "band": "D3",
+    "demand": "RETRIEVE"
+  },
+  "cognitive_contract": {
+    "label": "Retrieve / instantiate advanced competition theorem (Advanced Olympiad)",
+    "decisive_act": "Retrieve and instantiate specialized Olympiad mathematical theorems, invariants, and formulas from deep memory to determine protected value W.",
+    "band_protected_work": "Require learner to recognize and instantiate the high-level competition theorem without intermediate prompts or formula sheets.",
+    "support_posture": "Activate the existence of the specialized competition theorem without providing its symbolic algebraic formulation.",
+    "slots": {
+      "X": "retrieval and execution of Brahmagupta's formula for cyclic quadrilaterals",
+      "Y": "cyclic quadrilateral with consecutive side lengths 2, 3, 4, 7",
+      "Z": "Brahmagupta's invariant: Area = sqrt((s-a)(s-b)(s-c)(s-d)) where s = (a+b+c+d)/2",
+      "W": "2\\sqrt{30}",
+      "wrong_idea": "treating quadrilateral as requiring altitude calculations or mistakenly applying triangle Heron's formula",
+      "replacement_rule": "calculate semi-perimeter s = (2+3+4+7)/2 = 8; evaluate differences (6, 5, 4, 1); compute Area = sqrt(120) = 2*sqrt(30)",
+      "visual_job": "render cyclic quadrilateral inscribed in circle with sides 2, 3, 4, 7 labeled; avoid unmounted SVGs",
+      "check_job": "independent check: Bretschneider's formula with supplementary opposite angles confirms Area = sqrt(120) = 2*sqrt(30)"
+    }
+  },
+  "scoring_bounds": {
+    "min_score": 6,
+    "max_score": 8,
+    "band": "D3",
+    "allowed_component_max": 2,
+    "component_keys": [
+      "concept_model_selection",
+      "representation_translation",
+      "reasoning_chain_length",
+      "algebra_computational_load",
+      "trap_exception_sensitivity"
+    ]
+  },
+  "five_core_obligations": {
+    "core2_custody": {
+      "stem_requirement": "Exact advanced competition scenario, options with authentic theorem misapplication traps",
+      "hint_ladder_requirement": "H1 theorem name/domain reminder, H2 semi-perimeter and radical formulation; preserves W",
+      "solution_requirement": "Locked pre-commit; step-by-step why-valid derivation with theorem verification",
+      "distractor_requirement": "Every distractor explained with specific student misconception"
+    },
+    "core1a_declarative": {
+      "blocks": [
+        "entry_assumptions",
+        "inferential_jump",
+        "why_valid_derivation",
+        "three_way_bridge",
+        "representation_anchor",
+        "boundary_conditions",
+        "worked_check"
+      ],
+      "anti_leak_rule": "Strict prohibition on leaking Core 2 exact parameters in Core 1A text"
+    },
+    "core1b_reconstruction": {
+      "predictive_gate": "Answer before attempt FORBIDDEN",
+      "model_alternation": "Reconstruction must use an alternative derivation path (e.g. diagonal chord splitting via Law of Cosines instead of direct formula substitution)"
+    },
+    "core2a_supported_practice": {
+      "transfer_obligation": "Near-transfer item with identical advanced competition theorem retrieval"
+    },
+    "core2b_transfer_assessment": {
+      "transfer_obligation": "Far-transfer item extending theorem to bicentric quadrilaterals or Bretschneider's general case"
+    }
+  }
+}

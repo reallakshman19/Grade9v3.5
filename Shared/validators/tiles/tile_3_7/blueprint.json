@@ -1,0 +1,71 @@
+{
+  "schema": "imo-qrt-tile-blueprint/v1",
+  "version": "1.0.0",
+  "tile_id": "tile_3_7",
+  "qrt_cell": "QRT-JUSTIFY-D3",
+  "coordinates": {
+    "band_index": 3,
+    "demand_index": 7,
+    "band": "D3",
+    "demand": "JUSTIFY"
+  },
+  "cognitive_contract": {
+    "label": "Justify / formal deductive proof (Advanced Olympiad)",
+    "decisive_act": "Formulate rigorous deductive justifications, invariant impossibility arguments, or extremal equality conditions across advanced Olympiad structures to evaluate protected claim W.",
+    "band_protected_work": "Require learner to establish the complete deductive necessity without prompting the invariant coloring or descent mechanism.",
+    "support_posture": "Activate the coloring scheme, divisibility property, or substitution variables without completing the contradiction or equality proof.",
+    "slots": {
+      "X": "proving that an 8x8 chessboard with one corner square removed cannot be tiled by 1x3 straight trominoes",
+      "Y": "8x8 chessboard with corner (1, 1) removed, leaving 63 squares, candidate tiling by twenty-one 1x3 trominoes",
+      "Z": "coloring invariant: color (i, j) with (i + j) mod 3; every 1x3 tromino covers exactly one square of each color; full board has counts (22, 21, 21); removing corner (1, 1) of color 2 leaves (22, 21, 20), violating the necessary condition of 21 of each color",
+      "W": "Every 1x3 tromino covers exactly one square of each color, but removing corner (1, 1) leaves color counts 22, 21, 20 instead of 21, 21, 21",
+      "wrong_idea": "claiming that since 63 is divisible by 3, a valid tiling must exist, or using a 2-color checkerboard which cannot constrain 1x3 trominoes",
+      "replacement_rule": "apply diagonal 3-coloring (i + j) mod 3; every straight 1x3 tromino covers {0, 1, 2}; color imbalance (22, 21, 20) rigorously precludes tiling",
+      "visual_job": "render 8x8 grid colored with 3 alternating diagonal colors, highlighting removed corner square; avoid unmounted SVGs",
+      "check_job": "independent check: rotating the coloring by 90 degrees yields a symmetrical color discrepancy, confirming tiling impossibility."
+    }
+  },
+  "scoring_bounds": {
+    "min_score": 6,
+    "max_score": 8,
+    "band": "D3",
+    "allowed_component_max": 2,
+    "component_keys": [
+      "concept_model_selection",
+      "representation_translation",
+      "reasoning_chain_length",
+      "algebra_computational_load",
+      "trap_exception_sensitivity"
+    ]
+  },
+  "five_core_obligations": {
+    "core2_custody": {
+      "stem_requirement": "Deductive assertion or impossibility claim requiring formal justification",
+      "hint_ladder_requirement": "H1 activates invariant/extremal framework; H2 establishes intermediate contradiction step; preserves W",
+      "solution_requirement": "Locked pre-commit; complete deductive proof with counterexample elimination",
+      "distractor_requirement": "Every distractor explained with specific student logical flaw or incomplete invariant"
+    },
+    "core1a_declarative": {
+      "blocks": [
+        "entry_assumptions",
+        "inferential_jump",
+        "why_valid_derivation",
+        "three_way_bridge",
+        "representation_anchor",
+        "boundary_conditions",
+        "worked_check"
+      ],
+      "anti_leak_rule": "Strict prohibition on leaking Core 2 exact parameters or textual answer in Core 1A text"
+    },
+    "core1b_reconstruction": {
+      "predictive_gate": "Answer before attempt FORBIDDEN",
+      "model_alternation": "Reconstruction must use an alternative justification pathway (e.g. horizontal line parity or coordinate polynomials)"
+    },
+    "core2a_supported_practice": {
+      "transfer_obligation": "Near-transfer item with identical deductive justification under modified dimensions"
+    },
+    "core2b_transfer_assessment": {
+      "transfer_obligation": "Far-transfer item extending the justification to 3D grid cube decomposition"
+    }
+  }
+}

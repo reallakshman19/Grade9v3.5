@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_7",
+  "qrt_cell": "QRT-JUSTIFY-D3",
+  "source_question": {
+    "id": "GOLDEN-JUS-D3-003",
+    "custody_hash": "c30405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122",
+    "stem": "For all positive real numbers $x, y, z > 0$ satisfying $x + y + z = 3$, what is the minimum value of $S = \\frac{x}{y + z} + \\frac{y}{z + x} + \\frac{z}{x + y}$, and under what condition is this minimum attained?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "Minimum is $\\frac{3}{2}$, attained strictly when $x = y = z = 1$."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "Minimum is $1$, attained as one variable approaches $0$ and the other two approach equal limits."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "Minimum is $2$, attained at asymmetric points such as $x = 2, y = 0.5, z = 0.5$."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Minimum is $\\frac{3}{2}$, attained along any linear profile satisfying $x + y = 2z$."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "Minimum is 3/2, attained strictly when x = y = z = 1",
+      "crux_move_ref": "CRUX-ALG-JUSTIFY-NESBITT-CAUCHY-SCHWARZ"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "JUSTIFY",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-ALG-JUSTIFY-NESBITT-CAUCHY-SCHWARZ"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Introduce the variable substitutions u = y + z, v = z + x, w = x + y, and express the sum S + 3 as a product amenable to the Cauchy-Schwarz inequality.",
+      "hint2_tactical_step": "The transformation yields S + 3 = (1/2) * (u + v + w) * (1/u + 1/v + 1/w) >= (1/2) * 9 = 9/2. Subtract 3 and analyze the condition for equality."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student tests a boundary limit where one variable approaches zero and incorrectly assumes the infimum is 1.",
+      "opt-C": "Student tests asymmetric values without verifying the necessary stationary conditions.",
+      "opt-D": "Student recognizes the minimum value 3/2 but fails to establish that equality requires full symmetry x = y = z."
+    },
+    "core_links": {
+      "core1a_unit_id": "ALG-JUS-NESBITT-INEQUALITY-03",
+      "core1b_activity_id": "ACT-RECON-NESBITT-INEQUALITY-03",
+      "core2a_practice_id": "PRAC-NESBITT-INEQUALITY-03",
+      "core2b_transfer_id": "TRANS-NESBITT-INEQUALITY-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-JUS-NESBITT-INEQUALITY-03",
+      "title": "Deductive Proofs of Algebraic Inequalities and Equality Extremes",
+      "concept": "To rigorously justify lower bounds for cyclic rational sums, transform the terms using Cauchy-Schwarz or AM-HM in Bergström form: sum(a_i^2 / b_i) >= (sum a_i)^2 / sum b_i. For example, for positive numbers with a + b = 2, minimizing a^2 + b^2 yields (a + b)^2 / 2 = 4 / 2 = 2, with equality strictly when a = b = 1.",
+      "boundary_conditions": "Equality in Cauchy-Schwarz holds if and only if the underlying component vectors are linearly proportional."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-NESBITT-INEQUALITY-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the sum u + v + w in terms of x + y + z?",
+      "scaffold_steps": [
+        "Add u = y + z, v = z + x, and w = x + y",
+        "Observe each variable x, y, z appears exactly twice",
+        "Conclude u + v + w = 2(x + y + z)"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-JUS-D3-003\"><div class=\"qb-stem\"><p>For all positive real numbers $x, y, z > 0$ satisfying $x + y + z = 3$, what is the minimum value of $S = \\frac{x}{y + z} + \\frac{y}{z + x} + \\frac{z}{x + y}$, and under what condition is this minimum attained?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> Minimum is $\\frac{3}{2}$, attained strictly when $x = y = z = 1$.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> Minimum is $1$, attained as one variable approaches $0$ and the other two approach equal limits.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> Minimum is $2$, attained at asymmetric points such as $x = 2, y = 0.5, z = 0.5$.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Minimum is $\\frac{3}{2}$, attained along any linear profile satisfying $x + y = 2z$.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-JUS-D3-003\"><p>Introduce the variable substitutions u = y + z, v = z + x, w = x + y, and express the sum S + 3 as a product amenable to the Cauchy-Schwarz inequality.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-JUS-D3-003\"><p>The transformation yields S + 3 = (1/2) * (u + v + w) * (1/u + 1/v + 1/w) >= (1/2) * 9 = 9/2. Subtract 3 and analyze the condition for equality.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"ALG-JUS-NESBITT-INEQUALITY-03\">Review Nesbitt Inequality Proof</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Reformulate the sum by adding $3$:</p><p>$S + 3 = \\left(\\frac{x}{y + z} + 1\\right) + \\left(\\frac{y}{z + x} + 1\\right) + \\left(\\frac{z}{x + y} + 1\\right)$.</p><p>$S + 3 = \\frac{x + y + z}{y + z} + \\frac{x + y + z}{z + x} + \\frac{x + y + z}{x + y} = (x + y + z)\\left(\\frac{1}{y + z} + \\frac{1}{z + x} + \\frac{1}{x + y}\\right)$.</p><p>2. Introduce substitution variables:</p><p>Let $u = y + z$, $v = z + x$, $w = x + y$.</p><p>Then $u + v + w = 2(x + y + z) = 2(3) = 6 \\implies x + y + z = \\frac{1}{2}(u + v + w)$.</p><p>Thus $S + 3 = \\frac{1}{2}(u + v + w)\\left(\\frac{1}{u} + \\frac{1}{v} + \\frac{1}{w}\\right)$.</p><p>3. Apply the Cauchy-Schwarz (or AM-HM) inequality:</p><p>By Cauchy-Schwarz in Engel/Bergström form:</p><p>$(u + v + w)\\left(\\frac{1}{u} + \\frac{1}{v} + \\frac{1}{w}\\right) \\ge (1 + 1 + 1)^2 = 3^2 = 9$.</p><p>4. Conclude the lower bound:</p><p>$S + 3 \\ge \\frac{1}{2} \\times 9 = \\frac{9}{2} \\implies S \\ge \\frac{9}{2} - 3 = \\frac{3}{2}$.</p><p>5. Establish equality conditions:</p><p>Equality in Cauchy-Schwarz holds if and only if $u = v = w$.</p><p>$y + z = z + x = x + y \\implies x = y = z$.</p><p>Since $x + y + z = 3$, this forces $3x = 3 \\implies x = y = z = 1$.</p><p>At $(1, 1, 1)$, $S = \\frac{1}{2} + \\frac{1}{2} + \\frac{1}{2} = \\frac{3}{2}$.</p><p>Thus the minimum is $\\frac{3}{2}$, attained strictly when $x = y = z = 1$.</p></div></details></div>"
+}

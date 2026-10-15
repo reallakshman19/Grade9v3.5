@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_4",
+  "qrt_cell": "QRT-MODEL-D2",
+  "source_question": {
+    "id": "GOLDEN-MOD-D2-003",
+    "custody_hash": "091a2b3c4d5e6f708192a3b4c5d6e7f80123456789abcdef0123456789abcdef0",
+    "stem": "A chemistry laboratory technician mixes $x$ liters of a $20\\%$ acid solution with $y$ liters of a $50\\%$ acid solution to obtain a total of $30$ liters of a mixture containing $32\\%$ acid. Which system of linear equations correctly models the total liquid volume and total pure acid content?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$x + y = 30$ and $2x + 5y = 96$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$x + y = 30$ and $5x + 2y = 96$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$x + y = 32$ and $20x + 50y = 30$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$2x + 5y = 30$ and $x + y = 96$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "x + y = 30 and 2x + 5y = 96",
+      "crux_move_ref": "CRUX-STAT-MIXTURE-CONCENTRATION-WEIGHTED-MODELING"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "MODEL",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 2,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-STAT-MIXTURE-CONCENTRATION-WEIGHTED-MODELING"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Formulate two independent equations: one for total solution volume, and one for the total amount of pure acid contributed by each component.",
+      "hint2_tactical_step": "The volume equation is $x + y = 30$. For pure acid: $0.20x + 0.50y = 0.32(30) = 9.6$. Multiply by 10 to clear decimals."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student swaps the percentage concentrations between the two solutions.",
+      "opt-C": "Student confuses target percentage 32 with target volume 30.",
+      "opt-D": "Student swaps the count total and the simplified concentration total."
+    },
+    "core_links": {
+      "core1a_unit_id": "STAT-MIXT-MODEL-02",
+      "core1b_activity_id": "ACT-RECON-MIXT-02",
+      "core2a_practice_id": "PRAC-MIXT-02",
+      "core2b_transfer_id": "TRANS-MIXT-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "STAT-MIXT-MODEL-02",
+      "title": "Mixture and Concentration Constraint Systems",
+      "concept": "When mixing two solutions of concentrations c1 and c2 to produce total volume V at concentration C, volume conservation gives x + y = V, and solute conservation gives c1*x + c2*y = C*V. Clearing decimals yields integer coefficients.",
+      "boundary_conditions": "Target concentration C must lie strictly between component concentrations: c1 < C < c2."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-MIXT-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "Can a mixture of a 10% solution and a 40% solution ever have a concentration of 50%?",
+      "scaffold_steps": [
+        "Recall weighted average bounds",
+        "Deduce concentration must lie between 10% and 40%",
+        "State conservation law"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-MOD-D2-003\"><div class=\"qb-stem\"><p>A chemistry laboratory technician mixes $x$ liters of a $20\\%$ acid solution with $y$ liters of a $50\\%$ acid solution to obtain a total of $30$ liters of a mixture containing $32\\%$ acid. Which system of linear equations correctly models the total liquid volume and total pure acid content?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $x + y = 30$ and $2x + 5y = 96$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $x + y = 30$ and $5x + 2y = 96$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $x + y = 32$ and $20x + 50y = 30$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $2x + 5y = 30$ and $x + y = 96$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-MOD-D2-003\"><p>Formulate two independent equations: one for total solution volume, and one for the total amount of pure acid contributed by each component.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-MOD-D2-003\"><p>The volume equation is $x + y = 30$. For pure acid: $0.20x + 0.50y = 0.32(30) = 9.6$. Multiply by 10 to clear decimals.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"STAT-MIXT-MODEL-02\">Review Mixture Modeling</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Solution</summary><div class=\"qb-solution-body\"><p>1. Total volume constraint: $x + y = 30$.</p><p>2. Pure acid content: $0.20x + 0.50y = 0.32 \\times 30 = 9.6$.</p><p>3. Multiply the acid equation by 10 to clear decimals: $2x + 5y = 96$.</p><p>Therefore, the governing system is $x + y = 30$ and $2x + 5y = 96$.</p></div></details></div>"
+}

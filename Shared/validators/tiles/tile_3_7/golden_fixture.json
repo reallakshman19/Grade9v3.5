@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_7",
+  "qrt_cell": "QRT-JUSTIFY-D3",
+  "source_question": {
+    "id": "GOLDEN-JUS-D3-001",
+    "custody_hash": "a102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20",
+    "stem": "An $8 \\times 8$ chessboard has one corner square $(1, 1)$ removed, leaving $63$ squares. Can this mutilated board be tiled completely by twenty-one $1 \\times 3$ straight trominoes? Which of the following statements provides the rigorous deductive justification for why such a tiling is impossible?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "Every $1 \\times 3$ tromino covers exactly one square of each color, but removing corner $(1, 1)$ leaves color counts $22, 21, 20$ instead of $21, 21, 21$."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "A standard 2-color checkerboard has 32 black and 31 white squares, which cannot be partitioned into triples."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "Because 63 is divisible by 3, a valid tiling must exist by the Euclidean division algorithm."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Removing any square from an 8x8 board disconnects the perimeter graph into odd cycles."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "Every 1x3 tromino covers exactly one square of each color, but removing corner (1, 1) leaves color counts 22, 21, 20 instead of 21, 21, 21",
+      "crux_move_ref": "CRUX-COMB-JUSTIFY-TROMINO-COLORING-INVARIANT"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "JUSTIFY",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-COMB-JUSTIFY-TROMINO-COLORING-INVARIANT"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider an invariant coloring: assign each square (i, j) of the board one of three colors based on the value of (i + j) mod 3, and examine what each straight tile must cover.",
+      "hint2_tactical_step": "Each straight tile covers all three distinct colors. In the full 8x8 board, the color distribution is 22, 21, 21. What color is the corner square at (1, 1), and how does its removal affect the color balance?"
+    },
+    "distractor_rationales": {
+      "opt-B": "Student attempts to use a 2-color checkerboard argument, which cannot constrain 1x3 tiles since a 1x3 tile does not cover equal numbers of two colors.",
+      "opt-C": "Student confuses a necessary condition (area divisible by 3) with a sufficient condition for tiling existence.",
+      "opt-D": "Student invents an irrelevant graph connectivity property without an invariant coloring basis."
+    },
+    "core_links": {
+      "core1a_unit_id": "COMB-JUS-COLORING-INVARIANT-03",
+      "core1b_activity_id": "ACT-RECON-COLORING-INVARIANT-03",
+      "core2a_practice_id": "PRAC-COLORING-INVARIANT-03",
+      "core2b_transfer_id": "TRANS-COLORING-INVARIANT-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COMB-JUS-COLORING-INVARIANT-03",
+      "title": "Deductive Justification via Modulo Invariant Coloring",
+      "concept": "To prove that a board cannot be tiled by 1 x k polyominoes, color each cell (i, j) with color (i + j) mod k. Since every straight 1 x k tile placed horizontally or vertically covers exactly one cell of each of the k colors, any tileable region must have equal counts of all k colors. For example, on a 5 x 5 board with 25 cells, removing the center cell (3, 3) leaves 24 cells; testing the 3-coloring reveals whether all 3 colors appear exactly 8 times.",
+      "boundary_conditions": "Invariant coloring proves impossibility; proving tiling existence requires explicit constructive partition."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-COLORING-INVARIANT-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "How many squares of each color {0, 1, 2} does a 1x3 straight tromino cover?",
+      "scaffold_steps": [
+        "Observe adjacent cells along a line increase coordinate by 1",
+        "Note three consecutive integers modulo 3 hit 0, 1, and 2 exactly once",
+        "Conclude every 1x3 tromino covers exactly one of each color"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-JUS-D3-001\"><div class=\"qb-stem\"><p>An $8 \\times 8$ chessboard has one corner square $(1, 1)$ removed, leaving $63$ squares. Can this mutilated board be tiled completely by twenty-one $1 \\times 3$ straight trominoes? Which of the following statements provides the rigorous deductive justification for why such a tiling is impossible?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> Every $1 \\times 3$ tromino covers exactly one square of each color, but removing corner $(1, 1)$ leaves color counts $22, 21, 20$ instead of $21, 21, 21$.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> A standard 2-color checkerboard has 32 black and 31 white squares, which cannot be partitioned into triples.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> Because 63 is divisible by 3, a valid tiling must exist by the Euclidean division algorithm.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Removing any square from an 8x8 board disconnects the perimeter graph into odd cycles.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-JUS-D3-001\"><p>Consider an invariant coloring: assign each square (i, j) of the board one of three colors based on the value of (i + j) mod 3, and examine what each straight tile must cover.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-JUS-D3-001\"><p>Each straight tile covers all three distinct colors. In the full 8x8 board, the color distribution is 22, 21, 21. What color is the corner square at (1, 1), and how does its removal affect the color balance?</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COMB-JUS-COLORING-INVARIANT-03\">Review Coloring Invariant Proofs</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Introduce the 3-coloring invariant:</p><p>Assign each square $(i, j)$ with $1 \\le i, j \\le 8$ the color $c(i, j) = (i + j) \\pmod 3 \\in \\{0, 1, 2\\}$.</p><p>2. Property of straight $1 \\times 3$ trominoes:</p><p>A horizontal tromino covers $(i, j), (i, j+1), (i, j+2)$ with colors $k, k+1, k+2 \\pmod 3$, which are distinct.</p><p>A vertical tromino covers $(i, j), (i+1, j), (i+2, j)$ with colors $k, k+1, k+2 \\pmod 3$, which are distinct.</p><p>Therefore, every straight $1 \\times 3$ tromino covers exactly one cell of color $0$, one of color $1$, and one of color $2$.</p><p>3. Calculate the color distribution in the full $8 \\times 8$ board:</p><p>The first $6$ rows and columns decompose into $2 \\times 2$ blocks of $3 \\times 3$ tiles, with equal color distribution.</p><p>Detailed counting shows the full $8 \\times 8$ board contains:</p><p>Color $0$: $22$ squares</p><p>Color $1$: $21$ squares</p><p>Color $2$: $21$ squares.</p><p>4. Effect of removing corner square $(1, 1)$:</p><p>$c(1, 1) = (1 + 1) \\pmod 3 = 2$.</p><p>Removing this corner square leaves:</p><p>Color $0$: $22$ squares</p><p>Color $1$: $21$ squares</p><p>Color $2$: $21 - 1 = 20$ squares.</p><p>5. Deductive impossibility conclusion:</p><p>To tile the $63$ remaining squares with $21$ trominoes, there must be exactly $21$ squares of each of the three colors.</p><p>Since the mutilated board has counts $(22, 21, 20) \\ne (21, 21, 21)$, no such tiling can exist. The proof is complete.</p></div></details></div>"
+}

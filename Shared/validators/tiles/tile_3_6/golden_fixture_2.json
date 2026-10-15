@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_6",
+  "qrt_cell": "QRT-SYNTHESIZE-D3",
+  "source_question": {
+    "id": "GOLDEN-SYN-D3-002",
+    "custody_hash": "e2f30415263748596a7b8c9d0e1f2031425364758697a8b9c0d1e2f304152637",
+    "stem": "The three roots of the cubic polynomial equation $x^3 - 30x^2 + 281x - k = 0$ are the side lengths of a right-angled triangle. What is the value of the constant term $k$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$780$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$156$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$221$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$840$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "780",
+      "crux_move_ref": "CRUX-ALG-GEO-SYNTHESIZE-VIETA-PYTHAGOREAN"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "SYNTHESIZE",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-ALG-GEO-SYNTHESIZE-VIETA-PYTHAGOREAN"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Combine Vieta's formulas for the sum and pairwise products of the roots with the Pythagorean identity a^2 + b^2 = c^2 by expanding (a + b + c)^2.",
+      "hint2_tactical_step": "The expansion yields 30^2 = 2c^2 + 2(281), which gives c = 13. Substitute c = 13 into a + b = 17 and ab = 60 to determine a and b."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student solves for c = 13 and multiplies by 12, omitting the third side.",
+      "opt-C": "Student computes the product c * (a + b) = 13 * 17 = 221 instead of the product of all three roots abc.",
+      "opt-D": "Student makes an arithmetic addition error during the expansion of 30^2 - 562."
+    },
+    "core_links": {
+      "core1a_unit_id": "ALG-SYNTH-VIETA-PYTHAGOREAN-03",
+      "core1b_activity_id": "ACT-RECON-VIETA-PYTHAGOREAN-03",
+      "core2a_practice_id": "PRAC-VIETA-PYTHAGOREAN-03",
+      "core2b_transfer_id": "TRANS-VIETA-PYTHAGOREAN-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-SYNTH-VIETA-PYTHAGOREAN-03",
+      "title": "Synthesis of Vieta's Formulas and the Pythagorean Metric",
+      "concept": "For a cubic polynomial with roots a, b, c forming a right triangle with hypotenuse c, the roots satisfy a^2 + b^2 = c^2, so a^2 + b^2 + c^2 = 2c^2. Expanding the square of the root sum (a + b + c)^2 = (a^2 + b^2 + c^2) + 2(ab + bc + ca) allows direct isolation of 2c^2. For example, with roots 3, 4, 5, the polynomial is x^3 - 12x^2 + 47x - 60 = 0. Here 12^2 = 144, 2c^2 = 2(25) = 50, and 2(47) = 94, with 50 + 94 = 144, giving constant term k = 3 * 4 * 5 = 60.",
+      "boundary_conditions": "The hypotenuse c must be strictly greater than each leg a and b, with all three roots strictly positive."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-VIETA-PYTHAGOREAN-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What expression in terms of hypotenuse c equals a^2 + b^2 + c^2?",
+      "scaffold_steps": [
+        "Recall the Pythagorean theorem a^2 + b^2 = c^2",
+        "Substitute c^2 in place of a^2 + b^2",
+        "Conclude a^2 + b^2 + c^2 = 2c^2"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-SYN-D3-002\"><div class=\"qb-stem\"><p>The three roots of the cubic polynomial equation $x^3 - 30x^2 + 281x - k = 0$ are the side lengths of a right-angled triangle. What is the value of the constant term $k$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $780$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $156$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $221$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $840$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-SYN-D3-002\"><p>Combine Vieta's formulas for the sum and pairwise products of the roots with the Pythagorean identity a^2 + b^2 = c^2 by expanding (a + b + c)^2.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-SYN-D3-002\"><p>The expansion yields 30^2 = 2c^2 + 2(281), which gives c = 13. Substitute c = 13 into a + b = 17 and ab = 60 to determine a and b.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"ALG-SYNTH-VIETA-PYTHAGOREAN-03\">Review Vieta Pythagorean Synthesis</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. State Vieta's formulas for the roots $a, b, c$:</p><p>$a + b + c = 30$</p><p>$ab + bc + ca = 281$</p><p>$abc = k$.</p><p>2. Integrate the Pythagorean condition for hypotenuse $c$:</p><p>$a^2 + b^2 = c^2 \\implies a^2 + b^2 + c^2 = 2c^2$.</p><p>3. Expand the algebraic identity $(a + b + c)^2$:</p><p>$(a + b + c)^2 = (a^2 + b^2 + c^2) + 2(ab + bc + ca)$.</p><p>$30^2 = 2c^2 + 2(281)$.</p><p>$900 = 2c^2 + 562$.</p><p>$2c^2 = 900 - 562 = 338 \\implies c^2 = 169 \\implies c = 13$.</p><p>4. Determine the remaining sides $a$ and $b$:</p><p>$a + b = 30 - c = 30 - 13 = 17$.</p><p>$ab + c(a + b) = 281 \\implies ab + 13(17) = 281 \\implies ab + 221 = 281 \\implies ab = 60$.</p><p>The roots of $t^2 - 17t + 60 = (t - 5)(t - 12) = 0$ give side lengths $a = 5$ and $b = 12$.</p><p>Verify Pythagorean theorem: $5^2 + 12^2 = 25 + 144 = 169 = 13^2$. Exact match.</p><p>5. Calculate $k = abc$:</p><p>$k = 5 \\times 12 \\times 13 = 60 \\times 13 = 780$.</p></div></details></div>"
+}

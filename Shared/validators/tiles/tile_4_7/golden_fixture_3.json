@@ -1,0 +1,91 @@
+{
+  "source_question": {
+    "id": "GOLDEN-JUS-D4-003",
+    "prompt": "<p>Which deductive progression rigorously justifies why the Diophantine equation \\(x^4 + y^4 = z^2\\) has no solutions in positive integers?</p>",
+    "options": [
+      {
+        "id": "A",
+        "text": "Reducing modulo 8 proves that fourth powers are 0 or 1, which immediately precludes any integer solutions without requiring descent."
+      },
+      {
+        "id": "B",
+        "text": "Parameterizing \\((x_0^2)^2 + (y_0^2)^2 = z_0^2\\) once gives \\(y_0^2 = 2mn\\), which contradicts the fundamental theorem of arithmetic since 2 is square-free."
+      },
+      {
+        "id": "C",
+        "text": "Assuming a minimal positive solution z_0 and twice parameterizing coprime Pythagorean triples yields pairwise coprime factors u = a^2, v = b^2, u^2+v^2 = c^2, producing a strictly smaller positive solution a^4 + b^4 = c^2 with 0 < c < z_0, contradicting minimality."
+      },
+      {
+        "id": "D",
+        "text": "Applying Fermat's Last Theorem for n = 4 directly proves the non-existence of solutions to \\(x^4 + y^4 = z^2\\)."
+      }
+    ],
+    "answer": {
+      "choice": "C",
+      "value": "Assuming a minimal positive solution z_0 and twice parameterizing coprime Pythagorean triples yields pairwise coprime factors u = a^2, v = b^2, u^2+v^2 = c^2, producing a strictly smaller positive solution a^4 + b^4 = c^2 with 0 < c < z_0, contradicting minimality.",
+      "crux_move_ref": "FERMAT_INFINITE_DESCENT_PYTHAGOREAN_PARAMETERIZATION_JUSTIFICATION"
+    },
+    "cognitive_classification": {
+      "difficulty_band": "D4",
+      "difficulty_score": 10,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 2
+      },
+      "demand": "JUSTIFY",
+      "crux_move": "FERMAT_INFINITE_DESCENT_PYTHAGOREAN_PARAMETERIZATION_JUSTIFICATION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider Fermat's method of infinite descent. Assume there exists at least one positive integer solution and select one that minimizes the hypotenuse parameter \\(z\\).",
+      "hint2_tactical_step": "Write the equation as a Pythagorean triple \\((x^2)^2 + (y^2)^2 = z^2\\) and parameterize it. Note that \\(x^2 + n^2 = m^2\\) forms a second Pythagorean triple. Parameterize again and analyze the coprimality of factors."
+    },
+    "distractor_analysis": [
+      {
+        "choice": "A",
+        "description": "Insufficient modular obstruction: modulo 8 only demonstrates that if solutions exist, x or y must be even, but does not preclude solutions."
+      },
+      {
+        "choice": "B",
+        "description": "False arithmetic claim: y_0^2 = 2mn is completely consistent if mn contains an odd power of 2 (e.g. m = 2, n = 1 gives 2*2*1 = 4 = 2^2)."
+      },
+      {
+        "choice": "C",
+        "description": "Correct rigorous justification: iterated Pythagorean triple parameterization produces pairwise coprime factors whose square roots yield a strictly smaller integer solution, contradicting the well-ordering principle."
+      },
+      {
+        "choice": "D",
+        "description": "Logical circularity: Fermat's Last Theorem for exponent 4 is traditionally established as an immediate corollary of the non-solvability of x^4 + y^4 = z^2."
+      }
+    ],
+    "core_links": {
+      "core1a_unit_id": "NT-DIOPHANTINE-FERMAT-INFINITE-DESCENT-03",
+      "core1b_unit_id": "RECON-JUS-D4-003"
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-JUS-D4-003\" data-core-unit-id=\"NT-DIOPHANTINE-FERMAT-INFINITE-DESCENT-03\">\n  <div class=\"qb-stem\">\n    <p>Which deductive progression rigorously justifies why the Diophantine equation \\(x^4 + y^4 = z^2\\) has no solutions in positive integers?</p>\n  </div>\n  <div class=\"qb-options-grid\">\n    <button class=\"qb-option-btn\" id=\"opt-A\">Reducing modulo 8 proves that fourth powers are 0 or 1, which immediately precludes any integer solutions without requiring descent.</button>\n    <button class=\"qb-option-btn\" id=\"opt-B\">Parameterizing \\((x_0^2)^2 + (y_0^2)^2 = z_0^2\\) once gives \\(y_0^2 = 2mn\\), which contradicts the fundamental theorem of arithmetic since 2 is square-free.</button>\n    <button class=\"qb-option-btn\" id=\"opt-C\">Assuming a minimal positive solution z_0 and twice parameterizing coprime Pythagorean triples yields pairwise coprime factors u = a^2, v = b^2, u^2+v^2 = c^2, producing a strictly smaller positive solution a^4 + b^4 = c^2 with 0 < c < z_0, contradicting minimality.</button>\n    <button class=\"qb-option-btn\" id=\"opt-D\">Applying Fermat's Last Theorem for n = 4 directly proves the non-existence of solutions to \\(x^4 + y^4 = z^2\\).</button>\n  </div>\n  <div class=\"qb-support-container\">\n    <div class=\"qb-hint\" id=\"hint1-GOLDEN-JUS-D4-003\">\n      <p><strong>Hint 1 (Conceptual):</strong> Consider Fermat's method of infinite descent. Assume there exists at least one positive integer solution and select one that minimizes the hypotenuse parameter \\(z\\).</p>\n    </div>\n    <div class=\"qb-hint\" id=\"hint2-GOLDEN-JUS-D4-003\">\n      <p><strong>Hint 2 (Tactical):</strong> Write the equation as a Pythagorean triple \\((x^2)^2 + (y^2)^2 = z^2\\) and parameterize it. Note that \\(x^2 + n^2 = m^2\\) forms a second Pythagorean triple. Parameterize again and analyze the coprimality of factors.</p>\n    </div>\n  </div>\n  <details class=\"qb-solution\" inert hidden data-locked=\"true\">\n    <summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary>\n    <div class=\"qb-solution-content\">\n      <p><strong>Theorem (Fermat):</strong> The equation \\(x^4 + y^4 = z^2\\) has no solutions in positive integers \\(x, y, z\\).</p>\n      <p><strong>Rigorous Proof via Infinite Descent:</strong></p>\n      <ol>\n        <li>Suppose the set of positive integer solutions is non-empty. By the well-ordering principle of \\(\\mathbb{Z}^+\\), there exists a solution \\((x_0, y_0, z_0)\\) with minimal positive \\(z_0\\). Furthermore, we can assume \\(\\gcd(x_0, y_0) = 1\\).</li>\n        <li>The equation \\((x_0^2)^2 + (y_0^2)^2 = z_0^2\\) is a primitive Pythagorean triple. One leg is even; without loss of generality, assume \\(y_0^2\\) is even. Then there exist coprime positive integers \\(m, n\\) of opposite parity such that: \\[ x_0^2 = m^2 - n^2, \\quad y_0^2 = 2mn, \\quad z_0 = m^2 + n^2 \\]</li>\n        <li>If \\(m\\) were even and \\(n\\) odd, then \\(x_0^2 = m^2 - n^2 \\equiv 0 - 1 \\equiv -1 \\equiv 3 \\pmod 4\\), which is impossible since squares are \\(0\\) or \\(1 \\pmod 4\\). Thus \\(m\\) is odd and \\(n\\) is even.</li>\n        <li>Rewrite \\(x_0^2 = m^2 - n^2\\) as \\(x_0^2 + n^2 = m^2\\). Since \\(\\gcd(x_0, n) = 1\\) and \\(n\\) is even, this is another primitive Pythagorean triple. Hence there exist coprime positive integers \\(u, v\\) of opposite parity such that: \\[ n = 2uv, \\quad m = u^2 + v^2, \\quad x_0 = u^2 - v^2 \\]</li>\n        <li>Substitute these expressions into the formula for \\(y_0^2\\): \\[ y_0^2 = 2mn = 2(u^2 + v^2)(2uv) = 4uv(u^2 + v^2) \\implies \\left(\\frac{y_0}{2}\\right)^2 = u \\cdot v \\cdot (u^2 + v^2) \\]</li>\n        <li>Because \\(\\gcd(u, v) = 1\\), the three integers \\(u\\), \\(v\\), and \\(u^2 + v^2\\) are pairwise coprime. Since their product is a perfect square, each must be a perfect square: \\[ u = a^2, \\quad v = b^2, \\quad u^2 + v^2 = c^2 \\] for positive integers \\(a, b, c\\).</li>\n        <li>Substituting \\(u\\) and \\(v\\) into the third equation yields: \\[ (a^2)^2 + (b^2)^2 = c^2 \\implies a^4 + b^4 = c^2 \\]</li>\n        <li>Thus \\((a, b, c)\\) is a new positive integer solution! We examine its size: \\[ c \\le c^2 = u^2 + v^2 = m < m^2 + n^2 = z_0 \\implies 0 < c < z_0 \\]</li>\n        <li>This strictly contradicts the minimality of \\(z_0\\). Hence no positive integer solutions exist.</li>\n      </ol>\n    </div>\n  </details>\n</div>",
+  "core_context": {
+    "core1a": {
+      "unit_id": "NT-DIOPHANTINE-FERMAT-INFINITE-DESCENT-03",
+      "entry_assumptions": "The well-ordering principle of natural numbers and parameterizing primitive Pythagorean triples.",
+      "inferential_jump": "Using coprimality of factor products to extract a descendant solution in the same algebraic family, producing an impossible downward chain.",
+      "why_valid_derivation": "Since every non-empty subset of natural numbers contains a least element, producing a descendant in the same integer family forces an impossible downward regress.",
+      "three_way_bridge": "Algebraic Diophantine geometry bridges modular parity constraints to the topological discrete order of the integers.",
+      "representation_anchor": "Descent ladder showing strict inequality chain on hypotenuse values.",
+      "boundary_conditions": "Requires solutions to lie in positive integers so the well-ordering principle applies.",
+      "worked_check": "Descent for sqrt(2): Assume p^2 = 2q^2 with minimal positive p. Then p is even, p = 2k. Then 4k^2 = 2q^2 => q^2 = 2k^2. Then (q, k) has a smaller first component with q < p, refuting the initial least choice. Verified."
+    },
+    "core1b": {
+      "unit_id": "RECON-JUS-D4-003",
+      "target_concept": "Fermat's Method of Infinite Descent via Pythagorean Parameterization",
+      "answer_before_attempt": "FORBIDDEN",
+      "scaffold_prompts": [
+        "State the well-ordering principle and explain why an infinite descending chain of positive integers cannot exist.",
+        "Parameterize a primitive Pythagorean triple with one even leg.",
+        "Demonstrate why the factors in the product must individually be perfect squares."
+      ]
+    }
+  }
+}

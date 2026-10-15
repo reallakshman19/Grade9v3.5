@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_1",
+  "qrt_cell": "QRT-RETRIEVE-D3",
+  "source_question": {
+    "id": "GOLDEN-RET-D3-003",
+    "custody_hash": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef1",
+    "stem": "The cubic equation $2x^3 - 5x^2 + 4x - 7 = 0$ has roots $r_1, r_2, r_3$. What is the exact value of $\\frac{1}{r_1} + \\frac{1}{r_2} + \\frac{1}{r_3}$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$\\frac{4}{7}$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$-\\frac{4}{7}$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$\\frac{5}{7}$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$\\frac{5}{2}$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "4/7",
+      "crux_move_ref": "CRUX-ALG-RETRIEVE-VIETA-CUBIC-RECIPROCAL-ROOT-SUM"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "RETRIEVE",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-ALG-RETRIEVE-VIETA-CUBIC-RECIPROCAL-ROOT-SUM"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Express the sum of reciprocals as a single fraction over the common denominator r_1 * r_2 * r_3.",
+      "hint2_tactical_step": "Recall Vieta's formulas for cubic polynomials: r_1*r_2 + r_2*r_3 + r_3*r_1 = c/a and r_1*r_2*r_3 = -d/a. Substitute coefficients c = 4 and d = -7."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student makes a sign error, forgetting that the constant term in Vieta is -d/a.",
+      "opt-C": "Student uses the sum of roots -b/a in the numerator instead of the sum of pairwise products.",
+      "opt-D": "Student calculates the simple sum of roots r_1 + r_2 + r_3 = 5/2."
+    },
+    "core_links": {
+      "core1a_unit_id": "ALG-RETRIEVE-VIETA-CUBIC-03",
+      "core1b_activity_id": "ACT-RECON-VIETA-CUBIC-03",
+      "core2a_practice_id": "PRAC-VIETA-CUBIC-03",
+      "core2b_transfer_id": "TRANS-VIETA-CUBIC-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-RETRIEVE-VIETA-CUBIC-03",
+      "title": "Vieta's Formulas for Cubic Polynomials",
+      "concept": "For a cubic polynomial ax^3 + bx^2 + cx + d = 0, Vieta's formulas provide the elementary symmetric polynomials: e_1 = -b/a, e_2 = c/a, e_3 = -d/a. The sum of reciprocals is e_2 / e_3 = (c/a) / (-d/a) = -c/d. For example, for 3x^3 - 4x^2 + 5x - 6 = 0, e_2 = 5/3 and e_3 = 6/3 = 2, so the sum of reciprocals is (5/3)/2 = 5/6.",
+      "boundary_conditions": "Reciprocal root sums require that no root equals zero, which holds if and only if the constant term d != 0."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-VIETA-CUBIC-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the product of the roots r_1 * r_2 * r_3 for the polynomial 2x^3 - 5x^2 + 4x - 7 = 0?",
+      "scaffold_steps": [
+        "Recall Vieta's constant formula -d/a",
+        "Substitute a = 2 and d = -7",
+        "Evaluate -(-7)/2 = 7/2"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-RET-D3-003\"><div class=\"qb-stem\"><p>The cubic equation $2x^3 - 5x^2 + 4x - 7 = 0$ has roots $r_1, r_2, r_3$. What is the exact value of $\\frac{1}{r_1} + \\frac{1}{r_2} + \\frac{1}{r_3}$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $\\frac{4}{7}$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $-\\frac{4}{7}$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $\\frac{5}{7}$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $\\frac{5}{2}$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-RET-D3-003\"><p>Express the sum of reciprocals as a single fraction over the common denominator r_1 * r_2 * r_3.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-RET-D3-003\"><p>Recall Vieta's formulas for cubic polynomials: r_1*r_2 + r_2*r_3 + r_3*r_1 = c/a and r_1*r_2*r_3 = -d/a. Substitute coefficients c = 4 and d = -7.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"ALG-RETRIEVE-VIETA-CUBIC-03\">Review Cubic Vieta Formulas</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Find a common denominator for the sum of reciprocals:</p><p>$\\frac{1}{r_1} + \\frac{1}{r_2} + \\frac{1}{r_3} = \\frac{r_2 r_3 + r_1 r_3 + r_1 r_2}{r_1 r_2 r_3}$.</p><p>2. By Vieta's formulas for $ax^3 + bx^2 + cx + d = 0$:</p><p>$r_1 r_2 + r_2 r_3 + r_3 r_1 = \\frac{c}{a} = \\frac{4}{2} = 2$.</p><p>$r_1 r_2 r_3 = -\\frac{d}{a} = -\\frac{-7}{2} = \\frac{7}{2}$.</p><p>3. Compute the quotient: $\\frac{2}{7/2} = 2 \\times \\frac{2}{7} = \\frac{4}{7}$.</p></div></details></div>"
+}

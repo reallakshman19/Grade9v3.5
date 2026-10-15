@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_1",
+  "qrt_cell": "QRT-RETRIEVE-D4",
+  "source_question": {
+    "id": "GOLDEN-RET-D4-001",
+    "custody_hash": "f1a2b3c4d5e60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0",
+    "stem": "In advanced Euclidean geometry, Feuerbach's Theorem establishes a universal tangency relation for the nine-point circle (Euler circle) of any non-equilateral triangle. Which of the following statements correctly identifies the exact tangency properties guaranteed by Feuerbach's Theorem?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "The nine-point circle is tangent internally to the incircle and tangent externally to all three excircles."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "The nine-point circle is tangent externally to the incircle and tangent internally to all three excircles."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "The nine-point circle is tangent internally to the circumcircle and orthogonal to all three excircles."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "The nine-point circle passes through the incenter and is tangent externally to the circumcircle."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "The nine-point circle is tangent internally to the incircle and tangent externally to all three excircles",
+      "crux_move_ref": "CRUX-GEO-RETRIEVE-FEUERBACHS-TANGENCY-THEOREM"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "RETRIEVE",
+      "difficulty_band": "D4",
+      "difficulty_score": 9,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 2
+      },
+      "crux_move": "CRUX-GEO-RETRIEVE-FEUERBACHS-TANGENCY-THEOREM"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall the classical theorem relating the radius of the nine-point circle to the inradius and excircle radii through center-to-center distance formulas.",
+      "hint2_tactical_step": "The distance from the nine-point center N to the incenter I is R/2 - r, while the distance to each excenter I_a is R/2 + r_a. What geometric contact does each distance formula imply?"
+    },
+    "distractor_rationales": {
+      "opt-B": "Student inverts the internal and external orientations, falsely placing the incircle outside the nine-point circle.",
+      "opt-C": "Student confuses Feuerbach's theorem with properties of the circumcircle and orthocenter.",
+      "opt-D": "Student confuses circle tangency with passing through the incenter."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEO-RET-FEUERBACH-THM-04",
+      "core1b_activity_id": "ACT-RECON-FEUERBACH-THM-04",
+      "core2a_practice_id": "PRAC-FEUERBACH-THM-04",
+      "core2b_transfer_id": "TRANS-FEUERBACH-THM-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEO-RET-FEUERBACH-THM-04",
+      "title": "The Nine-Point Circle and Center Distance Identities",
+      "concept": "The nine-point circle of a triangle has radius R/2, where R is the circumradius, and is centered at the midpoint N of the segment joining orthocenter H and circumcenter O. Euler proved that OI^2 = R(R - 2r), establishing the inequality R >= 2r. In Euclidean geometry, center distances to notable incircles dictate mutual tangencies when center distance equals the sum or difference of radii.",
+      "boundary_conditions": "For equilateral triangles, the incircle and nine-point circle coincide (r = R/2), making tangency degenerate."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-FEUERBACH-THM-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the radius of the nine-point circle in terms of circumradius R?",
+      "scaffold_steps": [
+        "Recall the homothety connecting circumcircle and nine-point circle",
+        "Observe the homothety ratio is 1/2 centered at the orthocenter",
+        "Conclude nine-point circle radius is R/2"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-RET-D4-001\"><div class=\"qb-stem\"><p>In advanced Euclidean geometry, Feuerbach's Theorem establishes a universal tangency relation for the nine-point circle (Euler circle) of any non-equilateral triangle. Which of the following statements correctly identifies the exact tangency properties guaranteed by Feuerbach's Theorem?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> The nine-point circle is tangent internally to the incircle and tangent externally to all three excircles.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> The nine-point circle is tangent externally to the incircle and tangent internally to all three excircles.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> The nine-point circle is tangent internally to the circumcircle and orthogonal to all three excircles.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> The nine-point circle passes through the incenter and is tangent externally to the circumcircle.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-RET-D4-001\"><p>Recall the classical theorem relating the radius of the nine-point circle to the inradius and excircle radii through center-to-center distance formulas.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-RET-D4-001\"><p>The distance from the nine-point center N to the incenter I is R/2 - r, while the distance to each excenter I_a is R/2 + r_a. What geometric contact does each distance formula imply?</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEO-RET-FEUERBACH-THM-04\">Review Feuerbach Theorem</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Geometric setup of the nine-point circle:</p><p>For any triangle with circumradius $R$, inradius $r$, and excircle radii $r_a, r_b, r_c$, the nine-point circle has radius $R_9 = \\frac{R}{2}$.</p><p>2. Center distance to the incenter $I$:</p><p>The distance between the nine-point center $N$ and the incenter $I$ satisfies:</p><p>$NI = \\frac{R}{2} - r = R_9 - r$.</p><p>Since the distance between centers equals the difference of the radii ($R_9 - r$), the incircle is tangent internally to the nine-point circle.</p><p>3. Center distance to the excenter $I_a$:</p><p>The distance between the nine-point center $N$ and the excenter $I_a$ satisfies:</p><p>$NI_a = \\frac{R}{2} + r_a = R_9 + r_a$.</p><p>Since the distance between centers equals the sum of the radii ($R_9 + r_a$), the excircle is tangent externally to the nine-point circle.</p><p>4. By symmetry, the same relation holds for all three excircles ($I_a, I_b, I_c$).</p><p>5. Thus, Feuerbach's Theorem establishes that the nine-point circle is tangent internally to the incircle and tangent externally to all three excircles.</p></div></details></div>"
+}

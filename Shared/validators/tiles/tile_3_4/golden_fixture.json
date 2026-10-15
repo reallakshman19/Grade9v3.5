@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_4",
+  "qrt_cell": "QRT-MODEL-D3",
+  "source_question": {
+    "id": "GOLDEN-MOD-D3-001",
+    "custody_hash": "d1e2f3a4b5c6d7e8f90123456789abcdef0123456789abcdef0123456789abcdef",
+    "stem": "A security system encodes transmissions using binary sequences of length $n$. A transmission is valid if and only if it contains no two consecutive zeros ($00$). Let $a_n$ denote the number of valid transmissions of length $n$. Given base values $a_1 = 2$ ($0, 1$) and $a_2 = 3$ ($01, 10, 11$), model the recurrence relationship satisfied by $a_n$ and determine $a_8$, the total number of valid transmissions of length $8$.",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$55$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$34$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$89$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$64$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "55",
+      "crux_move_ref": "CRUX-COMB-MODEL-BINARY-RECURRENCE-NO-CONSECUTIVE-ZEROS"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "MODEL",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-COMB-MODEL-BINARY-RECURRENCE-NO-CONSECUTIVE-ZEROS"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Partition any valid transmission of length n based on its terminal digits: it either ends with 1 or with 10.",
+      "hint2_tactical_step": "The partition establishes the recurrence a_n = a_{n-1} + a_{n-2} with initial values a_1 = 2 and a_2 = 3. Step forward successively to n = 8."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student makes an off-by-one indexing error and computes a_7 instead of a_8.",
+      "opt-C": "Student steps the recurrence one iteration too far and computes a_9 instead of a_8.",
+      "opt-D": "Student assumes an arbitrary power of two heuristic or incorrect geometric progression."
+    },
+    "core_links": {
+      "core1a_unit_id": "COMB-MODEL-DISCRETE-RECURRENCE-03",
+      "core1b_activity_id": "ACT-RECON-DISCRETE-RECURRENCE-03",
+      "core2a_practice_id": "PRAC-DISCRETE-RECURRENCE-03",
+      "core2b_transfer_id": "TRANS-DISCRETE-RECURRENCE-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COMB-MODEL-DISCRETE-RECURRENCE-03",
+      "title": "Recurrence Modeling on Constrained Sequences",
+      "concept": "To model sequences under local adjacency constraints, partition candidate strings by their terminal patterns. For example, consider ternary sequences from {0, 1, 2} of length n where 00 is forbidden: any valid string either ends in 1 or 2 (2 choices, preceded by any valid string of length n - 1, contributing 2 * b_{n-1}) or ends in 10 or 20 (2 choices, preceded by any valid string of length n - 2, contributing 2 * b_{n-2}). This induces the recurrence b_n = 2 * b_{n-1} + 2 * b_{n-2}. For base values b_1 = 3 and b_2 = 8, we obtain b_3 = 2(8) + 2(3) = 22.",
+      "boundary_conditions": "Recurrence models require verified initial conditions for n = 1 and n = 2 before forward stepping can proceed."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-DISCRETE-RECURRENCE-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If a valid sequence ends in 0, what digit must immediately precede it?",
+      "scaffold_steps": [
+        "Recall consecutive zeros are forbidden",
+        "Observe the digit before 0 cannot be 0",
+        "Conclude the preceding digit must be 1"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-MOD-D3-001\"><div class=\"qb-stem\"><p>A security system encodes transmissions using binary sequences of length $n$. A transmission is valid if and only if it contains no two consecutive zeros ($00$). Let $a_n$ denote the number of valid transmissions of length $n$. Given base values $a_1 = 2$ ($0, 1$) and $a_2 = 3$ ($01, 10, 11$), model the recurrence relationship satisfied by $a_n$ and determine $a_8$, the total number of valid transmissions of length $8$.</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $55$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $34$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $89$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $64$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-MOD-D3-001\"><p>Partition any valid transmission of length n based on its terminal digits: it either ends with 1 or with 10.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-MOD-D3-001\"><p>The partition establishes the recurrence a_n = a_{n-1} + a_{n-2} with initial values a_1 = 2 and a_2 = 3. Step forward successively to n = 8.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COMB-MODEL-DISCRETE-RECURRENCE-03\">Review Recurrence Modeling</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Analyze the structure of a valid binary transmission of length $n$:</p><p>- Case 1: The transmission ends with digit $1$. Removing this $1$ leaves an arbitrary valid transmission of length $n - 1$. There are $a_{n-1}$ such transmissions.</p><p>- Case 2: The transmission ends with digit $0$. Because no two consecutive zeros are allowed, the penultimate digit must be $1$. Thus the sequence must end with $10$. Removing the terminal $10$ leaves an arbitrary valid transmission of length $n - 2$. There are $a_{n-2}$ such transmissions.</p><p>2. These cases are mutually exclusive and exhaustive, yielding the governing recurrence model:</p><p>$a_n = a_{n-1} + a_{n-2}$ for all $n \\ge 3$.</p><p>3. Use the given initial conditions to step forward to $n = 8$:</p><p>$a_1 = 2$</p><p>$a_2 = 3$</p><p>$a_3 = 2 + 3 = 5$</p><p>$a_4 = 3 + 5 = 8$</p><p>$a_5 = 5 + 8 = 13$</p><p>$a_6 = 8 + 13 = 21$</p><p>$a_7 = 13 + 21 = 34$</p><p>$a_8 = 21 + 34 = 55$.</p><p>4. Thus, there are exactly $55$ valid transmissions of length $8$.</p></div></details></div>"
+}

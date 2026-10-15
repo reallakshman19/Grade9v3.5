@@ -1,0 +1,91 @@
+{
+  "source_question": {
+    "id": "GOLDEN-JUS-D4-001",
+    "prompt": "<p>Let \\(G = (V, E)\\) be a simple graph on \\(n\\) vertices with vertex degree sequence \\((d(v))_{v \\in V}\\). Which deductive argument rigorously establishes the Caro-Wei lower bound on the independence number: \\[ \\alpha(G) \\ge \\sum_{v \\in V} \\frac{1}{d(v) + 1} \\text{ ?} \\]</p>",
+    "options": [
+      {
+        "id": "A",
+        "text": "Assigning each vertex a uniform random permutation of {1, ..., n} and selecting vertices that precede all their neighbors produces an independent set whose expected size by linearity of expectation is \\(\\sum_{v \\in V} \\frac{1}{d(v)+1}\\), guaranteeing an independent set of at least that size."
+      },
+      {
+        "id": "B",
+        "text": "Applying a greedy algorithm that iteratively removes the vertex of maximal degree removes at most \\(d(v)\\) edges per step, which by arithmetic mean yields an independent set of size at least \\(\\sum_{v \\in V} \\frac{1}{d(v)+1}\\)."
+      },
+      {
+        "id": "C",
+        "text": "Including each vertex independently with uniform probability \\(p = \\frac{1}{d+1}\\) and removing one endpoint of each surviving edge gives an expected independent set size of \\(n p - m p^2\\), establishing the local degree sum."
+      },
+      {
+        "id": "D",
+        "text": "Inducting on the number of vertices by deleting a vertex of minimal degree preserves the neighborhood degrees and forces the lower bound by Cauchy-Schwarz summation."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "Assigning each vertex a uniform random permutation of {1, ..., n} and selecting vertices that precede all their neighbors produces an independent set whose expected size by linearity of expectation is sum 1/(d(v)+1), guaranteeing an independent set of at least that size.",
+      "crux_move_ref": "PROBABILISTIC_METHOD_RANDOM_PERMUTATION_INDEPENDENT_SET_JUSTIFICATION"
+    },
+    "cognitive_classification": {
+      "difficulty_band": "D4",
+      "difficulty_score": 10,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 2
+      },
+      "demand": "JUSTIFY",
+      "crux_move": "PROBABILISTIC_METHOD_RANDOM_PERMUTATION_INDEPENDENT_SET_JUSTIFICATION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider constructing a random independent set rather than a deterministic one. What global random object treats all vertices symmetrically while imposing a strict total ordering on the vertex set?",
+      "hint2_tactical_step": "Under a uniform random total ordering of vertices, what is the probability that a specific vertex \\(v\\) appears earlier than all vertices in its neighborhood \\(N(v)\\)? Sum the indicator probabilities across all vertices to find the expected size."
+    },
+    "distractor_analysis": [
+      {
+        "choice": "A",
+        "description": "Correct rigorous justification: uniform random vertex permutations define an independent set via precedence over neighbors, whose expectation matches the exact sum by linearity of expectation."
+      },
+      {
+        "choice": "B",
+        "description": "Fallacious heuristic: greedy removal of maximum degree vertices does not guarantee an independent set size bounded by the local harmonic sum without tie-break permutation analysis."
+      },
+      {
+        "choice": "C",
+        "description": "Confuses the permutation method with the independent coin-flip alteration method, which only produces the weaker global Turan bound rather than the local degree harmonic sum."
+      },
+      {
+        "choice": "D",
+        "description": "Flawed induction: deleting a minimal degree vertex alters the degrees of its neighbors, invalidating the inductive hypothesis on the remaining degree sum."
+      }
+    ],
+    "core_links": {
+      "core1a_unit_id": "COMB-GRAPH-PROBABILISTIC-METHOD-01",
+      "core1b_unit_id": "RECON-JUS-D4-001"
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-JUS-D4-001\" data-core-unit-id=\"COMB-GRAPH-PROBABILISTIC-METHOD-01\">\n  <div class=\"qb-stem\">\n    <p>Let \\(G = (V, E)\\) be a simple graph on \\(n\\) vertices with vertex degree sequence \\((d(v))_{v \\in V}\\). Which deductive argument rigorously establishes the Caro-Wei lower bound on the independence number:</p>\n    <p>\\[ \\alpha(G) \\ge \\sum_{v \\in V} \\frac{1}{d(v) + 1} \\text{ ?} \\]</p>\n  </div>\n  <div class=\"qb-options-grid\">\n    <button class=\"qb-option-btn\" id=\"opt-A\">Assigning each vertex a uniform random permutation of {1, ..., n} and selecting vertices that precede all their neighbors produces an independent set whose expected size by linearity of expectation is \\(\\sum_{v \\in V} \\frac{1}{d(v)+1}\\), guaranteeing an independent set of at least that size.</button>\n    <button class=\"qb-option-btn\" id=\"opt-B\">Applying a greedy algorithm that iteratively removes the vertex of maximal degree removes at most \\(d(v)\\) edges per step, which by arithmetic mean yields an independent set of size at least \\(\\sum_{v \\in V} \\frac{1}{d(v)+1}\\).</button>\n    <button class=\"qb-option-btn\" id=\"opt-C\">Including each vertex independently with uniform probability \\(p = \\frac{1}{d+1}\\) and removing one endpoint of each surviving edge gives an expected independent set size of \\(n p - m p^2\\), establishing the local degree sum.</button>\n    <button class=\"qb-option-btn\" id=\"opt-D\">Inducting on the number of vertices by deleting a vertex of minimal degree preserves the neighborhood degrees and forces the lower bound by Cauchy-Schwarz summation.</button>\n  </div>\n  <div class=\"qb-support-container\">\n    <div class=\"qb-hint\" id=\"hint1-GOLDEN-JUS-D4-001\">\n      <p><strong>Hint 1 (Conceptual):</strong> Consider constructing a random independent set rather than a deterministic one. What global random object treats all vertices symmetrically while imposing a strict total ordering on the vertex set?</p>\n    </div>\n    <div class=\"qb-hint\" id=\"hint2-GOLDEN-JUS-D4-001\">\n      <p><strong>Hint 2 (Tactical):</strong> Under a uniform random total ordering of vertices, what is the probability that a specific vertex \\(v\\) appears earlier than all vertices in its neighborhood \\(N(v)\\)? Sum the indicator probabilities across all vertices to find the expected size.</p>\n    </div>\n  </div>\n  <details class=\"qb-solution\" inert hidden data-locked=\"true\">\n    <summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary>\n    <div class=\"qb-solution-content\">\n      <p><strong>Theorem (Caro-Wei):</strong> For any simple graph \\(G = (V, E)\\), \\(\\alpha(G) \\ge \\sum_{v \\in V} \\frac{1}{d(v) + 1}\\).</p>\n      <p><strong>Rigorous Proof via The Probabilistic Method:</strong></p>\n      <ol>\n        <li>Let \\(\\pi\\) be a permutation of the vertex set \\(V\\) chosen uniformly at random from the symmetric group \\(S_n\\).</li>\n        <li>Define a subset \\(S \\subseteq V\\) by: \\[ S = \\{ v \\in V : \\pi(v) < \\pi(u) \\text{ for all } u \\in N(v) \\} \\]</li>\n        <li><strong>Claim:</strong> \\(S\\) is an independent set. <em>Proof:</em> Suppose for contradiction that there exist adjacent vertices \\(u, v \\in S\\). Then \\(u \\in N(v) \\implies \\pi(v) < \\pi(u)\\), and \\(v \\in N(u) \\implies \\pi(u) < \\pi(v)\\), an impossible strict inequality. Hence no two vertices in \\(S\\) are adjacent.</li>\n        <li>For each vertex \\(v \\in V\\), consider the set \\(K_v = \\{v\\} \\cup N(v)\\). The size of \\(K_v\\) is \\(d(v) + 1\\).</li>\n        <li>Because \\(\\pi\\) is chosen uniformly at random, every element in \\(K_v\\) has equal probability of being the earliest among \\(K_v\\) in the permutation: \\[ P(v \\in S) = P(\\pi(v) = \\min_{w \\in K_v} \\pi(w)) = \\frac{1}{|K_v|} = \\frac{1}{d(v) + 1} \\]</li>\n        <li>Let \\(I_v\\) be the indicator random variable for the event \\(v \\in S\\). The size of \\(S\\) is \\(|S| = \\sum_{v \\in V} I_v\\).</li>\n        <li>By linearity of expectation (which holds without requiring independence among indicator variables): \\[ E[|S|] = \\sum_{v \\in V} E[I_v] = \\sum_{v \\in V} P(v \\in S) = \\sum_{v \\in V} \\frac{1}{d(v) + 1} \\]</li>\n        <li>Since the expectation of the random variable \\(|S|\\) equals this value, there must exist at least one specific permutation for which the resulting independent set has size at least the expectation. Therefore, \\(\\alpha(G) \\ge \\sum_{v \\in V} \\frac{1}{d(v) + 1}\\).</li>\n      </ol>\n    </div>\n  </details>\n</div>",
+  "core_context": {
+    "core1a": {
+      "unit_id": "COMB-GRAPH-PROBABILISTIC-METHOD-01",
+      "entry_assumptions": "Foundations of discrete probability spaces, random variables, indicator functions, and additive expected values.",
+      "inferential_jump": "Using the existence of a probability distribution with non-zero expectation to prove the deterministic existence of an extremal combinatorial structure.",
+      "why_valid_derivation": "If the expected value of an integer-valued random variable is mu, then there must exist an outcome in the sample space where the variable is at least mu.",
+      "three_way_bridge": "Probability theory bridges deterministic discrete graph structures to continuous algebraic summation bounds.",
+      "representation_anchor": "Sample space partition diagram showing average value line bounding maximal outcome.",
+      "boundary_conditions": "Requires sample space to be non-empty and random variable to be bounded.",
+      "worked_check": "Erdos Ramsey lower bound: In a random 2-coloring of K_n edges with p = 1/2, expected monochromatic K_k is binom(n, k) * 2^(1 - binom(k, 2)). When this is < 1, there exists a 2-coloring without monochromatic K_k. Verified."
+    },
+    "core1b": {
+      "unit_id": "RECON-JUS-D4-001",
+      "target_concept": "The Probabilistic Method and Caro-Wei Independent Set Bound",
+      "answer_before_attempt": "FORBIDDEN",
+      "scaffold_prompts": [
+        "State the definition of an independent set in a simple graph.",
+        "Explain why the set of vertices preceding all their neighbors in a random permutation forms an independent set.",
+        "Calculate the probability that a vertex precedes all elements of its closed neighborhood."
+      ]
+    }
+  }
+}

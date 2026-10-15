@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_4",
+  "qrt_cell": "QRT-MODEL-D4",
+  "source_question": {
+    "id": "GOLDEN-MOD-D4-002",
+    "custody_hash": "e2f3a4b5c6d708192a3b4c5d6e7f80123456789abcdef0123456789abcdef0",
+    "stem": "Two players play a game under normal play convention with three piles of tokens containing $11$, $19$, and $27$ tokens respectively. On each turn, a player selects exactly one pile and removes any positive number of tokens from it. The last player to move wins. To secure a guaranteed winning strategy on the opening move, the first player decides to remove tokens from the largest pile ($27$ tokens). What is the exact number of tokens the first player must leave in this largest pile?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$24$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$8$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$16$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$21$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "24",
+      "crux_move_ref": "CRUX-GAME-MODEL-NIM-BITWISE-XOR-KERNEL"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "MODEL",
+      "difficulty_band": "D4",
+      "difficulty_score": 9,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-GAME-MODEL-NIM-BITWISE-XOR-KERNEL"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Model the impartial game positions using Bouton's Theorem: a state is a second-player win (P-position) if and only if the bitwise XOR sum (Nim-sum) of the pile sizes equals zero.",
+      "hint2_tactical_step": "Calculate the overall Nim-sum $S = 11 \\oplus 19 \\oplus 27$. The target pile size $c'$ in the largest pile must satisfy $c' = 27 \\oplus S$ so that the new total Nim-sum becomes zero."
+    },
+    "distractor_rationales": {
+      "opt-B": "Calculates $11 \\oplus 3 = 8$, reducing the smallest pile rather than the largest pile.",
+      "opt-C": "Calculates $19 \\oplus 3 = 16$, reducing the middle pile rather than the largest pile.",
+      "opt-D": "Binary subtraction error when evaluating bitwise exclusive OR."
+    },
+    "core_links": {
+      "core1a_unit_id": "GAME-MOD-SPRAGUE-GRUNDY-NIM-04",
+      "core1b_activity_id": "ACT-RECON-SPRAGUE-GRUNDY-NIM-04",
+      "core2a_practice_id": "PRAC-SPRAGUE-GRUNDY-NIM-04",
+      "core2b_transfer_id": "TRANS-SPRAGUE-GRUNDY-NIM-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GAME-MOD-SPRAGUE-GRUNDY-NIM-04",
+      "title": "Combinatorial Game Theory: Sprague-Grundy and Nim Invariants",
+      "concept": "Under normal play conventions, finite impartial games are isomorphic to single-pile Nim games via the Sprague-Grundy theorem. Positions with Nim-sum zero are kernel states (P-positions) where every legal move necessarily produces a non-zero Nim-sum (N-position), while from any N-position there exists at least one legal move to a P-position.",
+      "boundary_conditions": "Terminal state has all piles at size 0 (Nim-sum 0). The last player to move wins under normal play convention."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-SPRAGUE-GRUNDY-NIM-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "In Bouton's analysis of Nim, what algebraic operation over the binary expansions of pile sizes defines the invariant state?",
+      "scaffold_steps": [
+        "Express pile sizes in base 2",
+        "Compute bitwise exclusive OR without carries",
+        "Identify moves that transition non-zero sums to zero"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-MOD-D4-002\"><div class=\"qb-stem\"><p>Two players play a game under normal play convention with three piles of tokens containing $11$, $19$, and $27$ tokens respectively. On each turn, a player selects exactly one pile and removes any positive number of tokens from it. The last player to move wins. To secure a guaranteed winning strategy on the opening move, the first player decides to remove tokens from the largest pile ($27$ tokens). What is the exact number of tokens the first player must leave in this largest pile?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $24$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $8$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $16$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $21$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-MOD-D4-002\"><p>Model the impartial game positions using Bouton's Theorem: a state is a second-player win (P-position) if and only if the bitwise XOR sum (Nim-sum) of the pile sizes equals zero.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-MOD-D4-002\"><p>Calculate the overall Nim-sum $S = 11 \\oplus 19 \\oplus 27$. The target pile size $c'$ in the largest pile must satisfy $c' = 27 \\oplus S$ so that the new total Nim-sum becomes zero.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GAME-MOD-SPRAGUE-GRUNDY-NIM-04\">Review Nim Invariant Model</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Mathematical game model (Bouton's Theorem):</p><p>In the game of Nim, a position $(c_1, c_2, c_3)$ is a winning position for the first player (N-position) if and only if the bitwise XOR sum (Nim-sum) is non-zero:</p><p>$S = c_1 \\oplus c_2 \\oplus c_3 \\ne 0$.</p><p>To guarantee a winning strategy, the player must transition the game to a P-position where $S' = 0$.</p><p>2. Binary expansions of pile sizes:</p><p>$11 = 01011_2$</p><p>$19 = 10011_2$</p><p>$27 = 11011_2$</p><p>3. Computing the initial Nim-sum $S$:</p><p>$11 \\oplus 19 = 01011_2 \\oplus 10011_2 = 11000_2 = 24$.</p><p>$24 \\oplus 27 = 11000_2 \\oplus 11011_2 = 00011_2 = 3$.</p><p>Since $S = 3 \\ne 0$, the starting state is an N-position (first player wins).</p><p>4. Modifying the largest pile ($27$ tokens):</p><p>To leave a new Nim-sum of $0$, the new size $c_3'$ must satisfy:</p><p>$c_1 \\oplus c_2 \\oplus c_3' = 0 \\implies c_3' = c_1 \\oplus c_2 = c_3 \\oplus S = 27 \\oplus 3$.</p><p>$27 \\oplus 3 = 11011_2 \\oplus 00011_2 = 11000_2 = 24$.</p><p>5. Legality check:</p><p>Since $24 < 27$, reducing the pile from $27$ to $24$ removes exactly $3$ tokens, which is a strictly legal move.</p><p>Thus, the first player leaves exactly $24$ tokens in the largest pile.</p></div></details></div>"
+}

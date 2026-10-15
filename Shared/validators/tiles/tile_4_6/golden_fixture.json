@@ -1,0 +1,79 @@
+{
+  "source_question": {
+    "id": "GOLDEN-SYN-D4-001",
+    "prompt": "<p>Evaluate the exact integer sum of binomial coefficients:</p>\\[ S = \\sum_{k=0}^{5} \\binom{18}{3k+1} = \\binom{18}{1} + \\binom{18}{4} + \\binom{18}{7} + \\binom{18}{10} + \\binom{18}{13} + \\binom{18}{16} \\]",
+    "options": [
+      { "id": "A", "text": "\\( 87381 \\)" },
+      { "id": "B", "text": "\\( 87382 \\)" },
+      { "id": "C", "text": "\\( 87380 \\)" },
+      { "id": "D", "text": "\\( 131072 \\)" }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "87381",
+      "crux_move_ref": "AUTONOMOUS_ROOTS_OF_UNITY_FILTER_MULTISECTION_SYNTHESIS"
+    },
+    "cognitive_classification": {
+      "difficulty_band": "D4",
+      "difficulty_score": 10,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 2
+      },
+      "demand": "SYNTHESIZE",
+      "crux_move": "AUTONOMOUS_ROOTS_OF_UNITY_FILTER_MULTISECTION_SYNTHESIS"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider expanding \\((1+x)^{18}\\) using complex roots of unity. Recall that for a primitive third root of unity \\(\\omega = e^{2\\pi i / 3}\\), the sum \\(1 + \\omega^m + \\omega^{2m}\\) equals \\(3\\) if \\(3 \\mid m\\) and \\(0\\) otherwise.",
+      "hint2_tactical_step": "To isolate indices with remainder 1 modulo 3, evaluate the combination \\(\\frac{1}{3} [ (1+1)^{18} + \\omega^2(1+\\omega)^{18} + \\omega(1+\\omega^2)^{18} ]\\). Note that \\(1+\\omega = -\\omega^2\\) and simplify its 18th power."
+    },
+    "distractor_analysis": [
+      {
+        "choice": "A",
+        "description": "Correct solution using the roots of unity multisection filter on (1+x)^18 yielding (2^18 - 1)/3 = 87381."
+      },
+      {
+        "choice": "B",
+        "description": "Erroneously assumes omega^2 + omega = 0 rather than -1, taking 2^18 / 3 and rounding up to 87382."
+      },
+      {
+        "choice": "C",
+        "description": "Sign error on the phase weights, setting omega^2 + omega = 1 to obtain (2^18 - 2)/3 = 87380."
+      },
+      {
+        "choice": "D",
+        "description": "Confuses mod-3 multisection with mod-2 parity bisection, evaluating 2^(18-1) = 2^17 = 131072."
+      }
+    ],
+    "core_links": {
+      "core1a_unit_id": "ALG-COMB-SYN-ROOTS-OF-UNITY-MULTISECTION-01",
+      "core1b_unit_id": "RECON-SYN-D4-001"
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-SYN-D4-001\" data-core-unit-id=\"ALG-COMB-SYN-ROOTS-OF-UNITY-MULTISECTION-01\">\n  <div class=\"qb-stem\">\n    <p>Evaluate the exact integer sum of binomial coefficients:</p>\n    <p>\\[ S = \\sum_{k=0}^{5} \\binom{18}{3k+1} = \\binom{18}{1} + \\binom{18}{4} + \\binom{18}{7} + \\binom{18}{10} + \\binom{18}{13} + \\binom{18}{16} \\]</p>\n  </div>\n  <div class=\"qb-options-grid\">\n    <button class=\"qb-option-btn\" id=\"opt-A\">\\( 87381 \\)</button>\n    <button class=\"qb-option-btn\" id=\"opt-B\">\\( 87382 \\)</button>\n    <button class=\"qb-option-btn\" id=\"opt-C\">\\( 87380 \\)</button>\n    <button class=\"qb-option-btn\" id=\"opt-D\">\\( 131072 \\)</button>\n  </div>\n  <div class=\"qb-support-container\">\n    <div class=\"qb-hint\" id=\"hint1-GOLDEN-SYN-D4-001\">\n      <p><strong>Hint 1 (Conceptual):</strong> Consider expanding \\((1+x)^{18}\\) using complex roots of unity. Recall that for a primitive third root of unity \\(\\omega = e^{2\\pi i / 3}\\), the sum \\(1 + \\omega^m + \\omega^{2m}\\) equals \\(3\\) if \\(3 \\mid m\\) and \\(0\\) otherwise.</p>\n    </div>\n    <div class=\"qb-hint\" id=\"hint2-GOLDEN-SYN-D4-001\">\n      <p><strong>Hint 2 (Tactical):</strong> To isolate indices with remainder 1 modulo 3, evaluate the combination \\(\\frac{1}{3} [ (1+1)^{18} + \\omega^2(1+\\omega)^{18} + \\omega(1+\\omega^2)^{18} ]\\). Note that \\(1+\\omega = -\\omega^2\\) and simplify its 18th power.</p>\n    </div>\n  </div>\n  <details class=\"qb-solution\" inert hidden data-locked=\"true\">\n    <summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary>\n    <div class=\"qb-solution-content\">\n      <p>Let \\(\\omega = e^{2\\pi i / 3} = -\\frac{1}{2} + i\\frac{\\sqrt{3}}{2}\\) be a primitive cube root of unity. Then \\(\\omega^3 = 1\\) and \\(1 + \\omega + \\omega^2 = 0\\).</p>\n      <p>By the discrete Fourier transform / multisection identity for residue class \\(r = 1\\) modulo \\(3\\):</p>\n      <p>\\[ \\sum_{k \\ge 0} \\binom{n}{3k+1} = \\frac{1}{3} \\sum_{j=0}^{2} \\omega^{-j} (1 + \\omega^j)^n = \\frac{1}{3} \\left[ (1+1)^n + \\omega^2 (1+\\omega)^n + \\omega (1+\\omega^2)^n \\right] \\]</p>\n      <p>Using the cyclotomic identities:</p>\n      <p>\\[ 1 + \\omega = -\\omega^2 = e^{i\\pi / 3}, \\quad 1 + \\omega^2 = -\\omega = e^{-i\\pi / 3} \\]</p>\n      <p>For \\(n = 18\\):</p>\n      <p>\\[ (1+\\omega)^{18} = (-\\omega^2)^{18} = \\omega^{36} = (\\omega^3)^{12} = 1 \\]</p>\n      <p>\\[ (1+\\omega^2)^{18} = (-\\omega)^{18} = \\omega^{18} = (\\omega^3)^6 = 1 \\]</p>\n      <p>Substituting these back into the multisection formula:</p>\n      <p>\\[ S = \\frac{1}{3} \\left[ 2^{18} + \\omega^2(1) + \\omega(1) \\right] = \\frac{1}{3} \\left[ 2^{18} + (\\omega^2 + \\omega) \\right] = \\frac{2^{18} - 1}{3} \\]</p>\n      <p>Evaluating \\(2^{18} = 262144\\), we obtain:</p>\n      <p>\\[ S = \\frac{262144 - 1}{3} = \\frac{262143}{3} = 87381 \\]</p>\n    </div>\n  </details>\n</div>",
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-COMB-SYN-ROOTS-OF-UNITY-MULTISECTION-01",
+      "entry_assumptions": "Binomial theorem expansions in complex polynomial rings and properties of cyclotomic roots of unity.",
+      "inferential_jump": "Using orthogonality of group characters on Z/mZ to filter specific residue classes of binomial coefficients.",
+      "why_valid_derivation": "The sum of powers sum_{j=0}^{m-1} omega^{j(k - r)} is m if k = r mod m, and 0 otherwise by geometric series summation.",
+      "three_way_bridge": "Algebraic characters on cyclic groups bridge polynomial evaluations to combinatorial partition subsets.",
+      "representation_anchor": "Circle representation of m-th roots of unity summing to zero symmetrically about the origin.",
+      "boundary_conditions": "Requires m to divide n evenly for clean simplification of phase terms.",
+      "worked_check": "For n=6 and m=3 with r=1: (2^6 - 1)/3 = 63/3 = 21. Direct sum binom(6,1) + binom(6,4) = 6 + 15 = 21. Verified."
+    },
+    "core1b": {
+      "unit_id": "RECON-SYN-D4-001",
+      "target_concept": "Roots of unity multisection filter on binomial sums",
+      "answer_before_attempt": "FORBIDDEN",
+      "scaffold_prompts": [
+        "State the orthogonality identity for primitive m-th roots of unity.",
+        "Formulate the linear combination of (1 + omega^j)^n that isolates terms where index has remainder 1 mod 3.",
+        "Express 1 + omega in terms of powers of omega."
+      ]
+    }
+  }
+}

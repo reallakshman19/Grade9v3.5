@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_5",
+  "qrt_cell": "QRT-REPRESENT-D4",
+  "source_question": {
+    "id": "GOLDEN-REP-D4-001",
+    "custody_hash": "a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0",
+    "stem": "Consider the three acute angles $\\theta_k = \\frac{k\\pi}{7}$ for $k \\in \\{1, 2, 3\\}$. By representing the trigonometric identity $\\sin(7\\theta) = 0$ as an algebraic polynomial equation in the variable $u = \\cot^2\\theta$, calculate the exact value of the trigonometric sum:\n$$S = \\cot^2\\left(\\frac{\\pi}{7}\\right) + \\cot^2\\left(\\frac{2\\pi}{7}\\right) + \\cot^2\\left(\\frac{3\\pi}{7}\\right)$$",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$5$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$7$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$21$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$3$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "5",
+      "crux_move_ref": "CRUX-TRIG-REPRESENT-CYCLOTOMIC-COTANGENT-POLYNOMIAL"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "REPRESENT",
+      "difficulty_band": "D4",
+      "difficulty_score": 9,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-TRIG-REPRESENT-CYCLOTOMIC-COTANGENT-POLYNOMIAL"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Use de Moivre's formula to expand $\\sin(7\\theta) = \\Im((\\cos\\theta + i\\sin\\theta)^7)$ and factor out powers of sine to express the equation in terms of powers of cotangent.",
+      "hint2_tactical_step": "Substitute $u = \\cot^2\\theta$ to obtain the cubic polynomial $7u^3 - 35u^2 + 21u - 1 = 0$. What do Vieta's formulas imply about the sum of its roots?"
+    },
+    "distractor_rationales": {
+      "opt-B": "Evaluates the constant product of the roots rather than the sum of the cotangent squares.",
+      "opt-C": "Evaluates the sum of the tangent squares $\\sum \\tan^2(k\\pi/7) = 21$ instead of the cotangent squares.",
+      "opt-D": "Heuristic estimate assuming each term is approximately equal to 1."
+    },
+    "core_links": {
+      "core1a_unit_id": "TRIG-REP-CYCLOTOMIC-POLYNOMIALS-04",
+      "core1b_activity_id": "ACT-RECON-CYCLOTOMIC-POLYNOMIALS-04",
+      "core2a_practice_id": "PRAC-CYCLOTOMIC-POLYNOMIALS-04",
+      "core2b_transfer_id": "TRANS-CYCLOTOMIC-POLYNOMIALS-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "TRIG-REP-CYCLOTOMIC-POLYNOMIALS-04",
+      "title": "Trigonometric Products and Cyclotomic Polynomial Representations",
+      "concept": "By using Euler's formula and de Moivre's identity, trigonometric values evaluated at rational multiples of $\\pi$ can be represented as algebraic roots of polynomials. This algebraic translation enables the exact evaluation of trigonometric sums and products using Vieta's relations on polynomial coefficients.",
+      "boundary_conditions": "Excludes angles where cotangent is undefined. Roots are paired by symmetry since cotangent squares are invariant under supplementary reflections."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-CYCLOTOMIC-POLYNOMIALS-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "In de Moivre's binomial expansion of $(\\cot\\theta + i)^7$, which terms (real or imaginary) correspond to $\\sin(7\\theta)$?",
+      "scaffold_steps": [
+        "Recall de Moivre identity (cos theta + i sin theta)^7",
+        "Factor out sin^7 theta to express in terms of cot theta",
+        "Isolate the imaginary part to obtain the sine expansion"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-REP-D4-001\"><div class=\"qb-stem\"><p>Consider the three acute angles $\\theta_k = \\frac{k\\pi}{7}$ for $k \\in \\{1, 2, 3\\}$. By representing the trigonometric identity $\\sin(7\\theta) = 0$ as an algebraic polynomial equation in the variable $u = \\cot^2\\theta$, calculate the exact value of the trigonometric sum:</p><p>$$S = \\cot^2\\left(\\frac{\\pi}{7}\\right) + \\cot^2\\left(\\frac{2\\pi}{7}\\right) + \\cot^2\\left(\\frac{3\\pi}{7}\\right)$$</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $5$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $7$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $21$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $3$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-REP-D4-001\"><p>Use de Moivre's formula to expand $\\sin(7\\theta) = \\Im((\\cos\\theta + i\\sin\\theta)^7)$ and factor out powers of sine to express the equation in terms of powers of cotangent.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-REP-D4-001\"><p>Substitute $u = \\cot^2\\theta$ to obtain the cubic polynomial $7u^3 - 35u^2 + 21u - 1 = 0$. What do Vieta's formulas imply about the sum of its roots?</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"TRIG-REP-CYCLOTOMIC-POLYNOMIALS-04\">Review Cyclotomic Representations</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. De Moivre algebraic expansion:</p><p>By de Moivre's formula:</p><p>$\\cos(7\\theta) + i\\sin(7\\theta) = (\\cos\\theta + i\\sin\\theta)^7 = \\sin^7\\theta (\\cot\\theta + i)^7$.</p><p>Expanding the binomial $(\\cot\\theta + i)^7$ and extracting the imaginary part:</p><p>$\\sin(7\\theta) = \\sin^7\\theta \\left[ \\binom{7}{1}\\cot^6\\theta - \\binom{7}{3}\\cot^4\\theta + \\binom{7}{5}\\cot^2\\theta - \\binom{7}{7} \\right]$.</p><p>2. Setting up the root equation:</p><p>For $\\theta = \\frac{k\\pi}{7}$ with $k \\in \\{1, 2, 3, 4, 5, 6\\}$, we have $7\\theta = k\\pi$, so $\\sin(7\\theta) = 0$, while $\\sin\\theta \\ne 0$.</p><p>Dividing by $\\sin^7\\theta \\ne 0$, we obtain:</p><p>$\\binom{7}{1}\\cot^6\\theta - \\binom{7}{3}\\cot^4\\theta + \\binom{7}{5}\\cot^2\\theta - \\binom{7}{7} = 0$.</p><p>Evaluating the binomial coefficients:</p><p>$\\binom{7}{1} = 7, \\quad \\binom{7}{3} = 35, \\quad \\binom{7}{5} = 21, \\quad \\binom{7}{7} = 1$.</p><p>So the equation becomes:</p><p>$7\\cot^6\\theta - 35\\cot^4\\theta + 21\\cot^2\\theta - 1 = 0$.</p><p>3. Polynomial representation in $u = \\cot^2\\theta$:</p><p>Let $u = \\cot^2\\theta$. This yields the cubic polynomial equation:</p><p>$7u^3 - 35u^2 + 21u - 1 = 0$.</p><p>Because $\\cot^2\\left(\\frac{(7-k)\\pi}{7}\\right) = \\cot^2\\left(\\pi - \\frac{k\\pi}{7}\\right) = \\left(-\\cot\\frac{k\\pi}{7}\\right)^2 = \\cot^2\\left(\\frac{k\\pi}{7}\\right)$, the six values of $k \\in \\{1, 2, 3, 4, 5, 6\\}$ produce exactly three distinct squared values:</p><p>$u_1 = \\cot^2\\left(\\frac{\\pi}{7}\\right), \\quad u_2 = \\cot^2\\left(\\frac{2\\pi}{7}\\right), \\quad u_3 = \\cot^2\\left(\\frac{3\\pi}{7}\\right)$.</p><p>These are precisely the three roots of the cubic polynomial $7u^3 - 35u^2 + 21u - 1 = 0$.</p><p>4. Applying Vieta's formulas:</p><p>The sum of the roots of a cubic $a u^3 + b u^2 + c u + d = 0$ is $-\\frac{b}{a}$.</p><p>Here $a = 7$ and $b = -35$. Therefore:</p><p>$S = u_1 + u_2 + u_3 = -\\frac{-35}{7} = 5$.</p></div></details></div>"
+}

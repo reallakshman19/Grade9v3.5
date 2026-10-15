@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_3",
+  "qrt_cell": "QRT-APPLY-D4",
+  "source_question": {
+    "id": "GOLDEN-APP-D4-001",
+    "custody_hash": "b1c2d3e4f5a60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0",
+    "stem": "Three circles $\\omega_1, \\omega_2, \\omega_3$ with radii $r_1 = 1$, $r_2 = 2$, and $r_3 = 3$ are mutually externally tangent to each other in the Euclidean plane. A fourth circle $\\omega_4$ of radius $r_4$ is externally tangent to all three circles. What is the exact value of $r_4$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$\\frac{6}{23}$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$6$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$\\frac{5}{12}$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$\\frac{2}{7}$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "6/23",
+      "crux_move_ref": "CRUX-GEO-APPLY-DESCARTES-CIRCLE-CURVATURE"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "APPLY",
+      "difficulty_band": "D4",
+      "difficulty_score": 9,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-GEO-APPLY-DESCARTES-CIRCLE-CURVATURE"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall Descartes' Circle Theorem relating the curvatures (bends) $k_i = 1/r_i$ of four mutually tangent circles: $(k_1 + k_2 + k_3 + k_4)^2 = 2(k_1^2 + k_2^2 + k_3^2 + k_4^2)$.",
+      "hint2_tactical_step": "Express the curvature of the fourth circle as $k_4 = k_1 + k_2 + k_3 \\pm 2\\sqrt{k_1 k_2 + k_2 k_3 + k_3 k_1}$. For an externally tangent inner circle, choose the positive square root branch."
+    },
+    "distractor_rationales": {
+      "opt-B": "Taking the negative sign branch gives $k_4 = 11/6 - 2 = -1/6$, which corresponds to the outer circumscribing circle of radius $6$ that encloses all three circles.",
+      "opt-C": "Computational error in evaluating the sum of pairwise curvature products.",
+      "opt-D": "Heuristic error attempting to approximate the configuration via an inscribed triangle without solving the curvature quadratic."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEO-APP-DESCARTES-CIRCLE-04",
+      "core1b_activity_id": "ACT-RECON-DESCARTES-CIRCLE-04",
+      "core2a_practice_id": "PRAC-DESCARTES-CIRCLE-04",
+      "core2b_transfer_id": "TRANS-DESCARTES-CIRCLE-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEO-APP-DESCARTES-CIRCLE-04",
+      "title": "Descartes' Circle Theorem and Apollonian Gasket Curvatures",
+      "concept": "For four pairwise tangent circles, their curvatures $k_i = 1/r_i$ satisfy the quadratic relation $(\\sum k_i)^2 = 2\\sum k_i^2$. For mutually tangent circles, there exist two distinct solutions for the fourth curvature: an inner Soddy circle (larger positive curvature) and an outer Soddy circle (which may have negative curvature if it encloses the others).",
+      "boundary_conditions": "Straight lines can be treated as degenerate circles with curvature zero. Negative curvature indicates that the other circles lie internally within the circle."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-DESCARTES-CIRCLE-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If a circle has radius $r$, how is its curvature $k$ defined in Descartes' Circle Theorem?",
+      "scaffold_steps": [
+        "Recall the reciprocal definition of curvature",
+        "Express k as 1/r",
+        "Substitute known curvatures into Descartes' quadratic equation"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-APP-D4-001\"><div class=\"qb-stem\"><p>Three circles $\\omega_1, \\omega_2, \\omega_3$ with radii $r_1 = 1$, $r_2 = 2$, and $r_3 = 3$ are mutually externally tangent to each other in the Euclidean plane. A fourth circle $\\omega_4$ of radius $r_4$ is externally tangent to all three circles. What is the exact value of $r_4$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $\\frac{6}{23}$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $6$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $\\frac{5}{12}$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $\\frac{2}{7}$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-APP-D4-001\"><p>Recall Descartes' Circle Theorem relating the curvatures (bends) $k_i = 1/r_i$ of four mutually tangent circles: $(k_1 + k_2 + k_3 + k_4)^2 = 2(k_1^2 + k_2^2 + k_3^2 + k_4^2)$.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-APP-D4-001\"><p>Express the curvature of the fourth circle as $k_4 = k_1 + k_2 + k_3 \\pm 2\\sqrt{k_1 k_2 + k_2 k_3 + k_3 k_1}$. For an externally tangent inner circle, choose the positive square root branch.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEO-APP-DESCARTES-CIRCLE-04\">Review Descartes Circle Theorem</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Defining curvatures (bends):</p><p>For each given circle $\\omega_i$, the curvature is $k_i = \\frac{1}{r_i}$:</p><p>$k_1 = \\frac{1}{1} = 1, \\quad k_2 = \\frac{1}{2}, \\quad k_3 = \\frac{1}{3}$.</p><p>2. Descartes' Circle Theorem formulation:</p><p>For four pairwise tangent circles with curvatures $k_1, k_2, k_3, k_4$:</p><p>$(k_1 + k_2 + k_3 + k_4)^2 = 2(k_1^2 + k_2^2 + k_3^2 + k_4^2)$.</p><p>Solving this quadratic equation for $k_4$ yields:</p><p>$k_4 = (k_1 + k_2 + k_3) \\pm 2\\sqrt{k_1 k_2 + k_2 k_3 + k_3 k_1}$.</p><p>3. Evaluating intermediate curvature terms:</p><p>Sum of given curvatures:</p><p>$k_1 + k_2 + k_3 = 1 + \\frac{1}{2} + \\frac{1}{3} = \\frac{6 + 3 + 2}{6} = \\frac{11}{6}$.</p><p>Sum of pairwise products:</p><p>$k_1 k_2 + k_2 k_3 + k_3 k_1 = \\left(1 \\cdot \\frac{1}{2}\\right) + \\left(\\frac{1}{2} \\cdot \\frac{1}{3}\\right) + \\left(\\frac{1}{3} \\cdot 1\\right) = \\frac{1}{2} + \\frac{1}{6} + \\frac{1}{3} = \\frac{3 + 1 + 2}{6} = 1$.</p><p>4. Selecting the appropriate branch:</p><p>Because the fourth circle is externally tangent to all three given circles, it is situated in the central interstice between them, which requires a smaller radius and therefore a larger curvature.</p><p>We choose the positive square root branch:</p><p>$k_4 = \\frac{11}{6} + 2\\sqrt{1} = \\frac{11}{6} + 2 = \\frac{11 + 12}{6} = \\frac{23}{6}$.</p><p>5. Calculating the radius $r_4$:</p><p>$r_4 = \\frac{1}{k_4} = \\frac{1}{23/6} = \\frac{6}{23}$.</p></div></details></div>"
+}

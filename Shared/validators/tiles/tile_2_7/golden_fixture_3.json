@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_7",
+  "qrt_cell": "QRT-JUSTIFY-D2",
+  "source_question": {
+    "id": "GOLDEN-JUS-D2-003",
+    "custody_hash": "c9d0e1f23456789abcdef0123456789abcdef0123456789abcdef012345678ab",
+    "stem": "For all real numbers $x > 0$, the function $f(x) = x + \\frac{9}{x}$ attains a global minimum. Which of the following correctly justifies the minimum value of $f(x)$ and the exact value of $x$ where it is attained?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "Minimum is $6$, attained at $x = 3$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "Minimum is $9$, attained at $x = 1$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "Minimum is $6$, attained at $x = 9$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Minimum is $3$, attained at $x = 3$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "Minimum is 6, attained at x = 3",
+      "crux_move_ref": "CRUX-ALG-JUSTIFY-AM-GM-EQUALITY-CONDITION"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "JUSTIFY",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 0,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-ALG-JUSTIFY-AM-GM-EQUALITY-CONDITION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Apply the Arithmetic Mean-Geometric Mean (AM-GM) inequality to the two positive terms x and 9/x.",
+      "hint2_tactical_step": "Compute (x + 9/x)/2 >= sqrt(x * 9/x) = 3 to establish the lower bound, then solve the equality condition x = 9/x for positive x."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student assumes minimum occurs at integer boundary x = 1, giving 1 + 9 = 10, not the true minimum.",
+      "opt-C": "Student finds the correct minimum value 6, but mistakenly selects x = 9.",
+      "opt-D": "Student takes the geometric mean 3 as the sum itself instead of doubling it."
+    },
+    "core_links": {
+      "core1a_unit_id": "ALG-JUSTIFY-AM-GM-02",
+      "core1b_activity_id": "ACT-RECON-AM-GM-02",
+      "core2a_practice_id": "PRAC-AM-GM-02",
+      "core2b_transfer_id": "TRANS-AM-GM-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-JUSTIFY-AM-GM-02",
+      "title": "AM-GM Inequality and Equality Conditions",
+      "concept": "For positive real numbers a, b > 0, the AM-GM inequality states (a + b)/2 >= sqrt(ab), so a + b >= 2*sqrt(ab). Equality holds if and only if a = b. For example, for g(x) = x + 16/x with x > 0, g(x) >= 2*sqrt(16) = 8. Equality requires x = 16/x, so x^2 = 16 and x = 4. Thus the minimum is 8 at x = 4.",
+      "boundary_conditions": "The AM-GM inequality holds strictly for positive real numbers. If x can be negative, the function is unbounded below as x approaches zero from the left."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-AM-GM-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the product of the two terms x and 9/x for any non-zero real number x?",
+      "scaffold_steps": [
+        "Multiply x * (9/x)",
+        "Cancel the variable x to obtain constant 9",
+        "Take square root sqrt(9) = 3 to compute geometric mean"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-JUS-D2-003\"><div class=\"qb-stem\"><p>For all real numbers $x > 0$, the function $f(x) = x + \\frac{9}{x}$ attains a global minimum. Which of the following correctly justifies the minimum value of $f(x)$ and the exact value of $x$ where it is attained?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> Minimum is $6$, attained at $x = 3$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> Minimum is $9$, attained at $x = 1$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> Minimum is $6$, attained at $x = 9$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Minimum is $3$, attained at $x = 3$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-JUS-D2-003\"><p>Apply the Arithmetic Mean-Geometric Mean (AM-GM) inequality to the two positive terms x and 9/x.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-JUS-D2-003\"><p>Compute (x + 9/x)/2 >= sqrt(x * 9/x) = 3 to establish the lower bound, then solve the equality condition x = 9/x for positive x.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"ALG-JUSTIFY-AM-GM-02\">Review AM-GM Inequality Justifications</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Since $x > 0$, both $x$ and $\\frac{9}{x}$ are strictly positive real numbers.</p><p>2. By the AM-GM inequality: $\\frac{x + 9/x}{2} \\ge \\sqrt{x \\cdot \\frac{9}{x}} = \\sqrt{9} = 3$.</p><p>3. Multiplying by 2 gives: $x + \\frac{9}{x} \\ge 6$.</p><p>4. Equality holds if and only if the two terms are equal: $x = \\frac{9}{x} \\implies x^2 = 9$.</p><p>5. Since $x > 0$, the unique equality point is $x = 3$. At $x = 3$, $f(3) = 3 + 9/3 = 6$.</p><p>6. Therefore, the minimum value is $6$, attained at $x = 3$.</p></div></details></div>"
+}

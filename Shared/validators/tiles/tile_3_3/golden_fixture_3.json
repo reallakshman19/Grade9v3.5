@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_3",
+  "qrt_cell": "QRT-APPLY-D3",
+  "source_question": {
+    "id": "GOLDEN-APP-D3-003",
+    "custody_hash": "c6d7e8f90123456789abcdef0123456789abcdef0123456789abcdef0123456",
+    "stem": "Evaluate the complex expression $\\left(\\frac{1 + i\\sqrt{3}}{1 - i}\\right)^{12}$.",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$-64$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$64$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$-64i$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$-32$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "-64",
+      "crux_move_ref": "CRUX-ALG-APPLY-DE-MOIVRE-COMPLEX-POWER"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "APPLY",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-ALG-APPLY-DE-MOIVRE-COMPLEX-POWER"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Convert both numerator and denominator into polar exponential form before raising to the power 12.",
+      "hint2_tactical_step": "The quotient inside has modulus sqrt(2) and argument 7*pi/12. Apply De Moivre's formula: (sqrt(2))^12 * exp(i * 7*pi)."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student evaluates cos(7*pi) as +1 instead of -1, forgetting the sign alternation of odd multiples of pi.",
+      "opt-C": "Student introduces a spurious imaginary component from misinterpreting exp(i * 7*pi).",
+      "opt-D": "Student calculates (sqrt(2))^12 as 2^5 = 32 instead of 2^6 = 64."
+    },
+    "core_links": {
+      "core1a_unit_id": "ALG-APPLY-DE-MOIVRE-03",
+      "core1b_activity_id": "ACT-RECON-DE-MOIVRE-03",
+      "core2a_practice_id": "PRAC-DE-MOIVRE-03",
+      "core2b_transfer_id": "TRANS-DE-MOIVRE-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-APPLY-DE-MOIVRE-03",
+      "title": "De Moivre's Theorem and Complex Polar Powers",
+      "concept": "To compute high powers of complex fractions (z1 / z2)^n, first express z1 and z2 in polar form: z1 = r1 * exp(i * theta1) and z2 = r2 * exp(i * theta2). Then the quotient is (r1 / r2) * exp(i * (theta1 - theta2)). By De Moivre's Theorem, raising to power n yields (r1 / r2)^n * exp(i * n * (theta1 - theta2)). For example, to evaluate ((1 + i) / sqrt(2))^8: 1 + i has modulus sqrt(2) and argument pi/4, so the fraction is exp(i * pi/4). Raising to the 8th power gives exp(i * 8 * pi/4) = exp(i * 2*pi) = 1.",
+      "boundary_conditions": "De Moivre's Theorem holds for any integer power n. For fractional powers, multiple roots exist on the complex plane."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-DE-MOIVRE-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the argument of the numerator 1 + i*sqrt(3)?",
+      "scaffold_steps": [
+        "Compute arctan(sqrt(3) / 1)",
+        "Identify standard first-quadrant angle",
+        "Conclude angle is pi/3"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-APP-D3-003\"><div class=\"qb-stem\"><p>Evaluate the complex expression $\\left(\\frac{1 + i\\sqrt{3}}{1 - i}\\right)^{12}$.</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $-64$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $64$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $-64i$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $-32$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-APP-D3-003\"><p>Convert both numerator and denominator into polar exponential form before raising to the power 12.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-APP-D3-003\"><p>The quotient inside has modulus sqrt(2) and argument 7*pi/12. Apply De Moivre's formula: (sqrt(2))^12 * exp(i * 7*pi).</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"ALG-APPLY-DE-MOIVRE-03\">Review De Moivre Powers</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Convert the numerator to polar form:</p><p>$z_1 = 1 + i\\sqrt{3} \\implies |z_1| = \\sqrt{1^2 + (\\sqrt{3})^2} = 2$.</p><p>$\\arg(z_1) = \\arctan(\\sqrt{3}/1) = \\frac{\\pi}{3}$. So $z_1 = 2 e^{i\\pi/3}$.</p><p>2. Convert the denominator to polar form:</p><p>$z_2 = 1 - i \\implies |z_2| = \\sqrt{1^2 + (-1)^2} = \\sqrt{2}$.</p><p>$\\arg(z_2) = -\\frac{\\pi}{4}$. So $z_2 = \\sqrt{2} e^{-i\\pi/4}$.</p><p>3. Calculate the quotient inside the parentheses:</p><p>$\\frac{z_1}{z_2} = \\frac{2}{\\sqrt{2}} e^{i\\left(\\frac{\\pi}{3} - (-\\frac{\\pi}{4})\\right)} = \\sqrt{2} e^{i\\left(\\frac{4\\pi + 3\\pi}{12}\\right)} = \\sqrt{2} e^{i\\frac{7\\pi}{12}}$.</p><p>4. Apply De Moivre's Theorem with exponent $12$:</p><p>$\\left(\\frac{z_1}{z_2}\\right)^{12} = (\\sqrt{2})^{12} \\cdot e^{i 12 \\cdot \\frac{7\\pi}{12}} = 2^6 \\cdot e^{i 7\\pi} = 64 \\cdot (\\cos 7\\pi + i\\sin 7\\pi)$.</p><p>5. Since $7$ is odd, $\\cos 7\\pi = -1$ and $\\sin 7\\pi = 0$:</p><p>$64 \\times (-1) = -64$.</p></div></details></div>"
+}

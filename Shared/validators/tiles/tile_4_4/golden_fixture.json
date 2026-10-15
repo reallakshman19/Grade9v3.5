@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_4",
+  "qrt_cell": "QRT-MODEL-D4",
+  "source_question": {
+    "id": "GOLDEN-MOD-D4-001",
+    "custody_hash": "c1d2e3f4a5b60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0",
+    "stem": "An automated trading bot models capital fluctuations as a discrete-time stochastic process. In each transaction cycle, the bot gains 1 dollar with probability $p = \\frac{2}{3}$ and loses 1 dollar with probability $q = \\frac{1}{3}$. The bot ceases operation if its capital drops to 0 dollars (insolvency) or reaches 4 dollars (target milestone). If the bot begins with an initial capital of 2 dollars, what is the exact probability that it reaches the 4-dollar milestone before insolvency?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$\\frac{4}{5}$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$\\frac{1}{2}$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$\\frac{2}{3}$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$\\frac{8}{9}$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "4/5",
+      "crux_move_ref": "CRUX-PROB-MODEL-GAMBLERS-RUIN-ASYMMETRIC-RECURRENCE"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "MODEL",
+      "difficulty_band": "D4",
+      "difficulty_score": 9,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-PROB-MODEL-GAMBLERS-RUIN-ASYMMETRIC-RECURRENCE"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Model the success probability $P_k$ starting from state $k$ as a linear second-order difference equation $P_k = p P_{k+1} + q P_{k-1}$ with boundary conditions at the absorbing states.",
+      "hint2_tactical_step": "For $p = 2/3$ and $q = 1/3$, the ratio of root bases is $q/p = 1/2$. Use the general solution $P_k = \\frac{1 - (q/p)^k}{1 - (q/p)^N}$ with boundary $N = 4$."
+    },
+    "distractor_rationales": {
+      "opt-B": "Assumes a symmetric unbiased random walk $k/N = 2/4 = 1/2$, failing to model the positive drift $p > q$.",
+      "opt-C": "Naive assumption that the overall success probability equals the single-step win probability $p = 2/3$.",
+      "opt-D": "Applies a naive compounding factor $(2/3)^2 / (1 - 1/3)$ without solving the characteristic polynomial of the Markov chain."
+    },
+    "core_links": {
+      "core1a_unit_id": "PROB-MOD-STOCHASTIC-RANDOM-WALK-04",
+      "core1b_activity_id": "ACT-RECON-STOCHASTIC-RANDOM-WALK-04",
+      "core2a_practice_id": "PRAC-STOCHASTIC-RANDOM-WALK-04",
+      "core2b_transfer_id": "TRANS-STOCHASTIC-RANDOM-WALK-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "PROB-MOD-STOCHASTIC-RANDOM-WALK-04",
+      "title": "Discrete Stochastic Modeling: Random Walks and Absorbing Boundaries",
+      "concept": "In probability theory, discrete stochastic processes with absorbing states are modeled using systems of linear difference equations derived from first-step analysis. When transition probabilities are non-symmetric, the characteristic polynomial produces distinct roots, resulting in geometric solution structures rather than linear interpolations.",
+      "boundary_conditions": "Absorbing states have exit probability 0. The process terminates almost surely in finite time."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-STOCHASTIC-RANDOM-WALK-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "In a random walk on {0, 1, ..., N}, what are the absorbing boundary conditions for the probability $P_k$ of reaching $N$ before $0$?",
+      "scaffold_steps": [
+        "Identify state 0 as insolvency so P_0 = 0",
+        "Identify state N as milestone victory so P_N = 1",
+        "Formulate recurrence relation P_k = p*P_{k+1} + q*P_{k-1}"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-MOD-D4-001\"><div class=\"qb-stem\"><p>An automated trading bot models capital fluctuations as a discrete-time stochastic process. In each transaction cycle, the bot gains 1 dollar with probability $p = \\frac{2}{3}$ and loses 1 dollar with probability $q = \\frac{1}{3}$. The bot ceases operation if its capital drops to 0 dollars (insolvency) or reaches 4 dollars (target milestone). If the bot begins with an initial capital of 2 dollars, what is the exact probability that it reaches the 4-dollar milestone before insolvency?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $\\frac{4}{5}$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $\\frac{1}{2}$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $\\frac{2}{3}$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $\\frac{8}{9}$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-MOD-D4-001\"><p>Model the success probability $P_k$ starting from state $k$ as a linear second-order difference equation $P_k = p P_{k+1} + q P_{k-1}$ with boundary conditions at the absorbing states.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-MOD-D4-001\"><p>For $p = 2/3$ and $q = 1/3$, the ratio of root bases is $q/p = 1/2$. Use the general solution $P_k = \\frac{1 - (q/p)^k}{1 - (q/p)^N}$ with boundary $N = 4$.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"PROB-MOD-STOCHASTIC-RANDOM-WALK-04\">Review Stochastic Random Walk Model</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Formal model definition:</p><p>Let $P_k$ denote the probability that the trading bot reaches the target milestone $N = 4$ starting from capital state $k \\in \\{0, 1, 2, 3, 4\\}$.</p><p>2. Difference equation via first-step analysis:</p><p>For any interior state $k \\in \\{1, 2, 3\\}$, conditioning on the first transaction yields:</p><p>$P_k = p P_{k+1} + q P_{k-1} = \\frac{2}{3} P_{k+1} + \\frac{1}{3} P_{k-1}$.</p><p>3. Boundary conditions:</p><p>$P_0 = 0$ (insolvency occurs), and $P_4 = 1$ (milestone achieved).</p><p>4. Solving the characteristic equation:</p><p>Rewrite the recurrence as $\\frac{2}{3} r^2 - r + \\frac{1}{3} = 0$, or $2r^2 - 3r + 1 = (2r - 1)(r - 1) = 0$.</p><p>The roots are $r_1 = 1$ and $r_2 = \\frac{q}{p} = \\frac{1/3}{2/3} = \\frac{1}{2}$.</p><p>5. General solution:</p><p>$P_k = A + B \\left(\\frac{1}{2}\\right)^k$.</p><p>Applying $P_0 = 0 \\implies A + B = 0 \\implies B = -A$.</p><p>Applying $P_4 = 1 \\implies A - A\\left(\\frac{1}{2}\\right)^4 = A\\left(1 - \\frac{1}{16}\\right) = A \\cdot \\frac{15}{16} = 1 \\implies A = \\frac{16}{15}$.</p><p>Thus, $P_k = \\frac{1 - (1/2)^k}{1 - (1/2)^4}$.</p><p>6. Evaluating at initial state $k = 2$:</p><p>$P_2 = \\frac{1 - (1/2)^2}{1 - (1/2)^4} = \\frac{1 - 1/4}{1 - 1/16} = \\frac{3/4}{15/16} = \\frac{3}{4} \\cdot \\frac{16}{15} = \\frac{4}{5}$.</p></div></details></div>"
+}

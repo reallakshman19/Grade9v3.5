@@ -1,0 +1,71 @@
+{
+  "schema": "imo-qrt-tile-blueprint/v1",
+  "version": "1.0.0",
+  "tile_id": "tile_4_6",
+  "qrt_cell": "QRT-SYNTHESIZE-D4",
+  "coordinates": {
+    "band_index": 4,
+    "demand_index": 6,
+    "band": "D4",
+    "demand": "SYNTHESIZE"
+  },
+  "cognitive_contract": {
+    "label": "Synthesize / cross-topic synthesis (National/International Olympiad)",
+    "decisive_act": "Autonomous formulation and resolution of an intermediate cross-domain bridge invariant Z connecting disparate mathematical fields to evaluate protected quantity W.",
+    "band_protected_work": "Require learner to establish cross-domain invariants between roots of unity / combinatorics, Pell Diophantine geometry, or Hensel lifting without intermediate scaffolding.",
+    "support_posture": "Activate the separate mathematical domain identities without providing the bridge connecting them.",
+    "slots": {
+      "X": "synthesizing complex roots of unity multisection filter with binomial coefficients to compute arithmetic progression binomial sums",
+      "Y": "binomial sum S = sum_{k=0}^5 binom(18, 3k+1)",
+      "Z": "discrete Fourier multisection filter with omega = exp(2pi*i/3): S = 1/3 [2^18 + omega^2(1+omega)^18 + omega(1+omega^2)^18]; (1+omega)^18 = (-omega^2)^18 = omega^36 = 1; S = (2^18 - 1)/3",
+      "W": "87381",
+      "wrong_idea": "miscalculating omega^2 + omega = 0 or attempting step-size 2 parity multisection",
+      "replacement_rule": "use cyclotomic filter sum_{j=0}^{m-1} omega^{j(r-k)} = m delta_{r, k mod m}; with m=3, r=1, evaluating (1+omega)^18 = 1 gives (2^18 - 1)/3 = 87381",
+      "visual_job": "render unit circle in complex plane showing the three cube roots of unity 1, omega, omega^2 with vectors for 1+omega and 1+omega^2; avoid unmounted SVGs",
+      "check_job": "independent verification: check n=3 gives binom(3,1) = 3; formula gives (2^3 + 1)/3 = 3; check n=6 gives binom(6,1) + binom(6,4) = 6 + 15 = 21; formula gives (2^6 - 1)/3 = 63/3 = 21. For n=18, (2^18 - 1)/3 = 262143/3 = 87381. Verified."
+    }
+  },
+  "scoring_bounds": {
+    "min_score": 9,
+    "max_score": 10,
+    "band": "D4",
+    "allowed_component_max": 2,
+    "component_keys": [
+      "concept_model_selection",
+      "representation_translation",
+      "reasoning_chain_length",
+      "algebra_computational_load",
+      "trap_exception_sensitivity"
+    ]
+  },
+  "five_core_obligations": {
+    "core2_custody": {
+      "stem_requirement": "Exact formulation of an international Olympiad multi-discipline synthesis challenge",
+      "hint_ladder_requirement": "H1 activates disparate domain foundations; H2 frames bridge invariant Z without leaking W",
+      "solution_requirement": "Locked pre-commit; complete formal step-by-step cross-disciplinary deduction evaluating W",
+      "distractor_requirement": "Every distractor explained with specific student cross-topic failure or partial synthesis slip"
+    },
+    "core1a_declarative": {
+      "blocks": [
+        "entry_assumptions",
+        "inferential_jump",
+        "why_valid_derivation",
+        "three_way_bridge",
+        "representation_anchor",
+        "boundary_conditions",
+        "worked_check"
+      ],
+      "anti_leak_rule": "Strict prohibition on leaking Core 2 exact parameters or textual answer in Core 1A text"
+    },
+    "core1b_reconstruction": {
+      "rule": "Targeted active recall eliciting the synthesis bridge invariant before problem execution",
+      "answer_before_attempt": "FORBIDDEN"
+    },
+    "core2a_navigation": {
+      "rule": "Explicit question-specific data-core-unit-id navigation hook required in DOM representation"
+    },
+    "precommit_dom_privacy": {
+      "rule": "Neutral buttons, no data-correct / is_correct attributes, locked details container with inert and hidden"
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema": "imo-qrt-tile-blueprint/v1",
+  "version": "1.0.0",
+  "tile_id": "tile_4_7",
+  "qrt_cell": "QRT-JUSTIFY-D4",
+  "coordinates": {
+    "band_index": 4,
+    "demand_index": 7,
+    "band": "D4",
+    "demand": "JUSTIFY"
+  },
+  "cognitive_contract": {
+    "label": "Justify / formal deductive proof (National/International Olympiad)",
+    "decisive_act": "Formulate and discriminate unassailable deductive justifications, probabilistic existence arguments, sharpness equality conditions, and infinite descent contradiction proofs without intermediate scaffolding.",
+    "band_protected_work": "Require learner to establish the complete deductive necessity across probabilistic permutation indicators, Cauchy reverse algebraic substitutions, or iterated Pythagorean parameterizations.",
+    "support_posture": "Activate the foundational framework (random variables, reverse algebraic expansions, or modular parity) without completing the contradiction or equality proof.",
+    "slots": {
+      "X": "proving the Caro-Wei lower bound on graph independence numbers via random vertex permutations and linearity of expectation",
+      "Y": "simple graph G = (V, E) with vertex degrees d(v)",
+      "Z": "random permutation ordering: vertex v is chosen if it precedes all neighbors in N(v); probability is 1/(d(v)+1); linearity of expectation guarantees existence of independent set of size at least sum 1/(d(v)+1)",
+      "W": "Assigning each vertex a uniform random permutation of {1, ..., n} and selecting vertices that precede all their neighbors produces an independent set whose expected size by linearity of expectation is sum 1/(d(v)+1), guaranteeing an independent set of at least that size.",
+      "wrong_idea": "claiming a naive greedy vertex-deletion heuristic achieves the bound without tie-breaking, or using independent coin-flips which yields the weaker Turan bound",
+      "replacement_rule": "use uniform random permutation of V; the indicator that v precedes N(v) has expectation 1/(d(v)+1); linearity of expectation proves existence",
+      "visual_job": "render small sample graph with vertices ordered by random permutation, highlighting the selected independent set; avoid unmounted SVGs",
+      "check_job": "independent verification: test on complete graph K_n where d(v) = n-1: sum 1/((n-1)+1) = sum 1/n = 1 = alpha(K_n); test on empty graph E_n where d(v) = 0: sum 1/1 = n = alpha(E_n). Bounds are sharp."
+    }
+  },
+  "scoring_bounds": {
+    "min_score": 9,
+    "max_score": 10,
+    "band": "D4",
+    "allowed_component_max": 2,
+    "component_keys": [
+      "concept_model_selection",
+      "representation_translation",
+      "reasoning_chain_length",
+      "algebra_computational_load",
+      "trap_exception_sensitivity"
+    ]
+  },
+  "five_core_obligations": {
+    "core2_custody": {
+      "stem_requirement": "Exact formulation of an international Olympiad formal justification or proof discrimination demand",
+      "hint_ladder_requirement": "H1 activates the foundational proof framework; H2 establishes intermediate contradiction step; preserves W",
+      "solution_requirement": "Locked pre-commit; complete formal step-by-step deductive derivation evaluating W",
+      "distractor_requirement": "Every distractor explained with specific student proof error, circularity, or pseudo-justification"
+    },
+    "core1a_declarative": {
+      "blocks": [
+        "entry_assumptions",
+        "inferential_jump",
+        "why_valid_derivation",
+        "three_way_bridge",
+        "representation_anchor",
+        "boundary_conditions",
+        "worked_check"
+      ],
+      "anti_leak_rule": "Strict prohibition on leaking Core 2 exact parameters or textual answer in Core 1A text"
+    },
+    "core1b_reconstruction": {
+      "rule": "Targeted active recall eliciting the core proof invariant before problem execution",
+      "answer_before_attempt": "FORBIDDEN"
+    },
+    "core2a_navigation": {
+      "rule": "Explicit question-specific data-core-unit-id navigation hook required in DOM representation"
+    },
+    "precommit_dom_privacy": {
+      "rule": "Neutral buttons, no data-correct / is_correct attributes, locked details container with inert and hidden"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_1",
+  "qrt_cell": "QRT-RETRIEVE-D4",
+  "source_question": {
+    "id": "GOLDEN-RET-D4-003",
+    "custody_hash": "f3a4b5c6d7e8091a213c4d5e6f7a80123456789abcdef0123456789abcdef012",
+    "stem": "Let a finite group $G$ act on a finite set $X$. Which foundational theorem expresses the total number of distinct orbits $|X/G|$ as the average number of elements fixed by the group elements: $|X/G| = \\frac{1}{|G|} \\sum_{g \\in G} |X^g|$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "Burnside's Lemma (Cauchy-Frobenius Lemma)"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "Polya's Enumeration Theorem with weight substitution"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "Lagrange's Theorem on coset orders"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Sylow's First Theorem on subgroup conjugacy"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "Burnside's Lemma (Cauchy-Frobenius Lemma)",
+      "crux_move_ref": "CRUX-COMB-RETRIEVE-BURNSIDES-LEMMA"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "RETRIEVE",
+      "difficulty_band": "D4",
+      "difficulty_score": 9,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 2
+      },
+      "crux_move": "CRUX-COMB-RETRIEVE-BURNSIDES-LEMMA"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall the fundamental lemma in permutation group actions that counts orbits by averaging the number of fixed points across all group elements.",
+      "hint2_tactical_step": "The identity sum_{g in G} |X^g| = sum_{x in X} |G_x| combined with the orbit-stabilizer theorem |G_x| = |G| / |O(x)| equates the orbit count to the average fixed-point count. Identify this theorem."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student confuses Burnside's unweighted orbit counting lemma with Polya's enumeration theorem using cycle index polynomials.",
+      "opt-C": "Student confuses the orbit-counting lemma with Lagrange's theorem on the order of subgroups dividing group order.",
+      "opt-D": "Student confuses orbit counting with Sylow theorems on p-subgroups."
+    },
+    "core_links": {
+      "core1a_unit_id": "COMB-RET-BURNSIDE-LEMMA-04",
+      "core1b_activity_id": "ACT-RECON-BURNSIDE-LEMMA-04",
+      "core2a_practice_id": "PRAC-BURNSIDE-LEMMA-04",
+      "core2b_transfer_id": "TRANS-BURNSIDE-LEMMA-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COMB-RET-BURNSIDE-LEMMA-04",
+      "title": "Group Actions, Orbits, and Stabilizers",
+      "concept": "When a finite group G acts on a set X, each element x belongs to an orbit O(x) = {g.x : g in G}. The stabilizer G_x = {g in G : g.x = x} is a subgroup of G. The Orbit-Stabilizer Theorem states that |G| = |O(x)| * |G_x| for all x in X, partitioning the set X into non-overlapping symmetry equivalence classes.",
+      "boundary_conditions": "The group G and set X must both be finite for orbit-stabilizer counting to hold."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-BURNSIDE-LEMMA-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What does the set X^g denote for an element g in G?",
+      "scaffold_steps": [
+        "Recall standard fixed point notation in group actions",
+        "Identify elements x in X where g.x = x",
+        "Conclude X^g is the set of elements in X left fixed by g"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-RET-D4-003\"><div class=\"qb-stem\"><p>Let a finite group $G$ act on a finite set $X$. Which foundational theorem expresses the total number of distinct orbits $|X/G|$ as the average number of elements fixed by the group elements: $|X/G| = \\frac{1}{|G|} \\sum_{g \\in G} |X^g|$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> Burnside's Lemma (Cauchy-Frobenius Lemma)</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> Polya's Enumeration Theorem with weight substitution</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> Lagrange's Theorem on coset orders</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Sylow's First Theorem on subgroup conjugacy</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-RET-D4-003\"><p>Recall the fundamental lemma in permutation group actions that counts orbits by averaging the number of fixed points across all group elements.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-RET-D4-003\"><p>The identity sum_{g in G} |X^g| = sum_{x in X} |G_x| combined with the orbit-stabilizer theorem |G_x| = |G| / |O(x)| equates the orbit count to the average fixed-point count. Identify this theorem.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COMB-RET-BURNSIDE-LEMMA-04\">Review Burnside's Lemma</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Double count pairs $(g, x) \\in G \\times X$ such that $g \\cdot x = x$:</p><p>Summing over $g \\in G$: $\\sum_{g \\in G} |X^g|$.</p><p>Summing over $x \\in X$: $\\sum_{x \\in X} |G_x|$, where $G_x$ is the stabilizer of $x$.</p><p>Thus $\\sum_{g \\in G} |X^g| = \\sum_{x \\in X} |G_x|$.</p><p>2. Apply the Orbit-Stabilizer Theorem:</p><p>$|G_x| = \\frac{|G|}{|\\mathcal{O}(x)|}$.</p><p>Substitute into the sum over $x$:</p><p>$\\sum_{x \\in X} |G_x| = \\sum_{x \\in X} \\frac{|G|}{|\\mathcal{O}(x)|} = |G| \\sum_{x \\in X} \\frac{1}{|\\mathcal{O}(x)|}$.</p><p>3. Group by orbits:</p><p>For any orbit $\\mathcal{O}$, $\\sum_{x \\in \\mathcal{O}} \\frac{1}{|\\mathcal{O}|} = |\\mathcal{O}| \\cdot \\frac{1}{|\\mathcal{O}|} = 1$.</p><p>Summing over all orbits yields the total number of orbits $|X/G|$:</p><p>$\\sum_{x \\in X} \\frac{1}{|\\mathcal{O}(x)|} = |X/G|$.</p><p>4. Equate and solve for $|X/G|$:</p><p>$\\sum_{g \\in G} |X^g| = |G| |X/G| \\implies |X/G| = \\frac{1}{|G|} \\sum_{g \\in G} |X^g|$.</p><p>5. Conclusion:</p><p>This foundational result is **Burnside's Lemma** (also historically known as the Cauchy-Frobenius Lemma).</p></div></details></div>"
+}

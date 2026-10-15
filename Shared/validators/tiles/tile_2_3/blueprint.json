@@ -1,0 +1,96 @@
+{
+  "schema": "imo-qrt-tile-blueprint/v1",
+  "version": "1.0.0",
+  "tile_id": "tile_2_3",
+  "qrt_cell": "QRT-APPLY-D2",
+  "coordinates": {
+    "band_index": 2,
+    "demand_index": 3,
+    "band": "D2",
+    "demand": "APPLY"
+  },
+  "cognitive_contract": {
+    "label": "Apply / execute (Standard Olympiad)",
+    "decisive_act": "Execute a multi-step standard algorithmic calculation pipeline (semi-perimeter calculation, radical product evaluation) without procedural guidance.",
+    "band_protected_work": "Require learner to perform the decisive multi-digit radical factoring and evaluation to obtain the terminal quantity W.",
+    "support_posture": "Recall governing formula or intermediate differences without computing the square root.",
+    "slots": {
+      "X": "the area calculation of a scalene triangle with sides 13, 14, 15",
+      "Y": "given three side lengths a = 13, b = 14, c = 15",
+      "Z": "Heron's formula procedural execution via semi-perimeter",
+      "W": "84",
+      "wrong_idea": "using half base times side (0.5 * 14 * 13 = 91) or arithmetic slip in radical evaluation",
+      "replacement_rule": "calculate semi-perimeter s = 21, then evaluate sqrt(s(s-a)(s-b)(s-c)) by prime factorization",
+      "visual_job": "render scalene triangle with labeled sides 13, 14, 15",
+      "check_job": "verify altitude: Area = 0.5 * 14 * h = 84 => h = 12. Check right triangles: 5^2 + 12^2 = 13^2 and 9^2 + 12^2 = 15^2 (5 + 9 = 14)"
+    }
+  },
+  "scoring_bounds": {
+    "min_score": 3,
+    "max_score": 5,
+    "band": "D2",
+    "allowed_component_max": 2,
+    "component_keys": [
+      "concept_model_selection",
+      "representation_translation",
+      "reasoning_chain_length",
+      "algebra_computational_load",
+      "trap_exception_sensitivity"
+    ]
+  },
+  "five_core_obligations": {
+    "core2_custody": {
+      "stem_requirement": "Exact triangle side dimensions, standard numerical options with authentic distractors",
+      "hint_ladder_requirement": "H1 conceptual Heron formula nudge, H2 tactical semi-perimeter differences; preserves W",
+      "solution_requirement": "Locked pre-commit; step-by-step why-valid derivation with prime factorization check",
+      "distractor_requirement": "Every distractor explained with specific student misconception"
+    },
+    "core1a_declarative": {
+      "blocks": [
+        "entry_assumptions",
+        "inferential_jump",
+        "why_valid_derivation",
+        "three_way_bridge",
+        "representation_anchor",
+        "boundary_conditions",
+        "worked_check"
+      ],
+      "anti_leak_rule": "Strict prohibition on leaking Core 2 exact parameters (13, 14, 15, 84) in Core 1A text"
+    },
+    "core1b_reconstruction": {
+      "stages": [
+        "predict_gate",
+        "locked_attempt",
+        "reverse_reconstruction",
+        "scaffold_checkpoint",
+        "boundary_test",
+        "synthesis_reflection"
+      ],
+      "answer_before_attempt": "FORBIDDEN"
+    },
+    "core2a_supported_practice": {
+      "crux_alignment": "Identical crux move with progressive hints and after-commit unit link",
+      "navigation": "Data attribute data-core-unit-id binding to MENS-HERON-PROC-02"
+    },
+    "core2b_transfer": {
+      "perturbation_rule": "Vary to quadrilateral decomposed into two triangles by a known diagonal",
+      "verification": "Confirm learner derivation W transferred without memorization"
+    }
+  },
+  "rules": {
+    "T01_PRECOMMIT_OPTION_STYLING": "Pre-commit option styling must not disclose the keyed answer via green borders, classes, or attributes",
+    "T02_SUMMARY_ANSWER_LEAK": "Summary elements must not disclose the answer letter or key prior to attempt commitment",
+    "T03_SOLUTION_PRECOMMIT_UNLOCKED": "Solution container must be inert and hidden prior to learner commitment",
+    "T04_SCORE_OUT_OF_BOUNDS": "Difficulty score must be within [3, 5] for Band D2",
+    "T05_CRUX_MOVE_REF_MISSING": "Question must declare a valid crux_move reference",
+    "T06_KATEX_RENDER_DEFECT": "HTML must not contain KaTeX error spans or unescaped macro issues",
+    "T07_CORE1A_PARAMETER_LEAK": "Core 1A declarative study must not leak Core 2 specific question parameters or answers",
+    "T08_CORE1B_PRECOMMIT_ANSWER_LEAK": "Core 1B reconstruction must enforce answer_before_attempt: FORBIDDEN",
+    "T09_CORE2A_UNIT_NAV_MISSING": "Core 2A must provide explicit question-specific unit navigation",
+    "T10_EMPTY_HINT": "Hints must provide meaningful question-specific guidance",
+    "T11_PRECOMMIT_PROTECTED_W_LEAK": "Pre-commit hints must not leak protected work W (the evaluated area value 84)",
+    "T12_CORE_P2_TOPIC_ONLY_NO_QUESTION_UNIT": "HTML must target a source-declared question-specific Core1 unit",
+    "T13_HINT_PROGRESSIVE_SEQUENCE_MISSING": "Hint sequence must progress from H1 conceptual nudge to H2 tactical step",
+    "T14_SOURCE_CUSTODY_INTEGRITY": "Source question must maintain verified provenance and custody hash"
+  }
+}

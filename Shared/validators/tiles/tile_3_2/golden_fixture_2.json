@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_2",
+  "qrt_cell": "QRT-EXPLAIN-D3",
+  "source_question": {
+    "id": "GOLDEN-EXP-D3-002",
+    "custody_hash": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef2",
+    "stem": "Wilson's Theorem asserts that for any prime number $p$, $(p - 1)! \\equiv -1 \\pmod{p}$. Which of the following provides the core structural explanation for why this congruence holds?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "In modulo $p$ arithmetic, each element in $\\{2, 3, \\dots, p - 2\\}$ pairs uniquely with its distinct inverse, leaving only the self-inverses $1$ and $p - 1 \\equiv -1$."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "The sum of all residues from $1$ to $p - 1$ is a multiple of $p$, which forces their factorial product to equal $-1$."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "By Fermat's Little Theorem, every base $a$ raised to $p - 1$ is $1$, so multiplying all $p - 1$ terms yields $-1$."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Every integer from $1$ to $p - 1$ satisfies $x^2 \\equiv -1 \\pmod{p}$, causing the product to telescope to $-1$."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "Elements {2, 3, ..., p - 2} pair into distinct partner pairs with product 1, leaving only self-inverses 1 and p - 1 = -1.",
+      "crux_move_ref": "CRUX-NT-EXPLAIN-WILSONS-THEOREM-MODULAR-INVERSE-PAIRING"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "EXPLAIN",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 0,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 2
+      },
+      "crux_move": "CRUX-NT-EXPLAIN-WILSONS-THEOREM-MODULAR-INVERSE-PAIRING"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider how integers in {1, 2, ..., p - 1} group together when multiplied modulo p.",
+      "hint2_tactical_step": "An integer is its own inverse modulo p if and only if x^2 = 1 (mod p), which has only two solutions: 1 and p - 1. Examine how all other residues group."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student confuses additive properties (sum of residues) with multiplicative factorial properties.",
+      "opt-C": "Student incorrectly tries to deduce Wilson's theorem from Fermat's Little Theorem.",
+      "opt-D": "Student falsely asserts that all elements are square roots of -1."
+    },
+    "core_links": {
+      "core1a_unit_id": "NT-EXPLAIN-WILSON-PAIRING-03",
+      "core1b_activity_id": "ACT-RECON-WILSON-PAIRING-03",
+      "core2a_practice_id": "PRAC-WILSON-PAIRING-03",
+      "core2b_transfer_id": "TRANS-WILSON-PAIRING-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "NT-EXPLAIN-WILSON-PAIRING-03",
+      "title": "Wilson's Theorem and Modular Multiplicative Inverses",
+      "concept": "In prime modular arithmetic, non-zero residues form a field. For prime p = 7, the intermediate values {2, 3, 4, 5} pair up as 2*4 = 8 = 1 and 3*5 = 15 = 1. Thus 6! = 1 * (2*4) * (3*5) * 6 = 1 * 1 * 1 * 6 = 6 = -1 (mod 7).",
+      "boundary_conditions": "Wilson's theorem fails for composite numbers: if n > 4 is composite, (n - 1)! = 0 (mod n) because n factors into integers strictly smaller than n - 1."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-WILSON-PAIRING-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "For prime p = 11, what is the multiplicative inverse of 2 modulo 11?",
+      "scaffold_steps": [
+        "Find integer y such that 2y = 1 (mod 11)",
+        "Notice 2 * 6 = 12 = 1 (mod 11)",
+        "Conclude inverse is 6"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-EXP-D3-002\"><div class=\"qb-stem\"><p>Wilson's Theorem asserts that for any prime number $p$, $(p - 1)! \\equiv -1 \\pmod{p}$. Which of the following provides the core structural explanation for why this congruence holds?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> In modulo $p$ arithmetic, each element in $\\{2, 3, \\dots, p - 2\\}$ pairs uniquely with its distinct inverse, leaving only the self-inverses $1$ and $p - 1 \\equiv -1$.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> The sum of all residues from $1$ to $p - 1$ is a multiple of $p$, which forces their factorial product to equal $-1$.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> By Fermat's Little Theorem, every base $a$ raised to $p - 1$ is $1$, so multiplying all $p - 1$ terms yields $-1$.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Every integer from $1$ to $p - 1$ satisfies $x^2 \\equiv -1 \\pmod{p}$, causing the product to telescope to $-1$.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-EXP-D3-002\"><p>Consider how integers in {1, 2, ..., p - 1} group together when multiplied modulo p.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-EXP-D3-002\"><p>An integer is its own inverse modulo p if and only if x^2 = 1 (mod p), which has only two solutions: 1 and p - 1. Examine how all other residues group.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"NT-EXPLAIN-WILSON-PAIRING-03\">Review Wilson's Theorem Pairing</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. In $\\mathbb{Z}_p$, every element $a \\in \\{1, 2, \\dots, p - 1\\}$ has a unique inverse $a^{-1}$.</p><p>2. An element equals its own inverse if and only if $a^2 \\equiv 1 \\pmod{p} \\implies (a - 1)(a + 1) \\equiv 0 \\pmod{p}$.</p><p>3. Since $p$ is prime, this requires $a \\equiv 1$ or $a \\equiv -1 \\equiv p - 1 \\pmod{p}$.</p><p>4. The remaining $p - 3$ elements $\\{2, 3, \\dots, p - 2\\}$ group into $(p - 3)/2$ pairs of distinct inverses $(x, x^{-1})$.</p><p>5. The product of each pair is $1 \\pmod{p}$.</p><p>6. Multiplying all terms gives: $(p - 1)! = 1 \\times (1)^{\\frac{p-3}{2}} \\times (p - 1) \\equiv p - 1 \\equiv -1 \\pmod{p}$.</p></div></details></div>"
+}

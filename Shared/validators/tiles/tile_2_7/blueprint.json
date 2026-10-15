@@ -1,0 +1,71 @@
+{
+  "schema": "imo-qrt-tile-blueprint/v1",
+  "version": "1.0.0",
+  "tile_id": "tile_2_7",
+  "qrt_cell": "QRT-JUSTIFY-D2",
+  "coordinates": {
+    "band_index": 2,
+    "demand_index": 7,
+    "band": "D2",
+    "demand": "JUSTIFY"
+  },
+  "cognitive_contract": {
+    "label": "Justify / deductively prove (Standard Olympiad)",
+    "decisive_act": "Provide a rigorous deductive justification, evaluate prime factor exponent parity, or establish necessary and sufficient bounding inequalities to determine protected value W.",
+    "band_protected_work": "Require learner to establish the deductive necessity chain without intermediate prompting, avoiding false generalizations.",
+    "support_posture": "Activate the fundamental theorem (e.g. prime exponent parity or polygon inequality) without evaluating the specific bound or quotient.",
+    "slots": {
+      "X": "deductive proof of prime divisibility via square exponent parity",
+      "Y": "given that 18 divides n^2 for an integer n",
+      "Z": "18 = 2 * 3^2 forces v_2(n^2) >= 2 and v_3(n^2) >= 2 by exponent parity, so v_2(n) >= 1 and v_3(n) >= 1, requiring 6 to divide n",
+      "W": "6",
+      "wrong_idea": "assuming 18 divides n directly (falsified by counterexample n = 6 where 18 divides 36 but not 6)",
+      "replacement_rule": "analyze prime factor valuations: n^2 has even exponents, so if it has at least one 2, it has at least two 2s; thus n must contain at least 2^1 * 3^1 = 6",
+      "visual_job": "render prime factorization Venn diagram comparing prime factor sets of n and n^2; avoid unmounted SVGs",
+      "check_job": "test minimal candidate: n = 6 gives n^2 = 36 which is divisible by 18; 6 is divisible by 6, but not by 18 or 12. Correct."
+    }
+  },
+  "scoring_bounds": {
+    "min_score": 3,
+    "max_score": 5,
+    "band": "D2",
+    "allowed_component_max": 2,
+    "component_keys": [
+      "concept_model_selection",
+      "representation_translation",
+      "reasoning_chain_length",
+      "algebra_computational_load",
+      "trap_exception_sensitivity"
+    ]
+  },
+  "five_core_obligations": {
+    "core2_custody": {
+      "stem_requirement": "Exact deductive justification task with authentic logical fallacy distractors",
+      "hint_ladder_requirement": "H1 fundamental theorem activation, H2 tactical valuation constraint; preserves W",
+      "solution_requirement": "Locked pre-commit; step-by-step why-valid derivation with counterexample refutation",
+      "distractor_requirement": "Every distractor explained with specific student misconception"
+    },
+    "core1a_declarative": {
+      "blocks": [
+        "entry_assumptions",
+        "inferential_jump",
+        "why_valid_derivation",
+        "three_way_bridge",
+        "representation_anchor",
+        "boundary_conditions",
+        "worked_check"
+      ],
+      "anti_leak_rule": "Strict prohibition on leaking Core 2 exact parameters in Core 1A text"
+    },
+    "core1b_reconstruction": {
+      "predictive_gate": "Answer before attempt FORBIDDEN",
+      "model_alternation": "Reconstruction must use an alternative justification method (e.g. counterexample elimination instead of formal prime valuation)"
+    },
+    "core2a_supported_practice": {
+      "transfer_obligation": "Near-transfer item with identical deductive justification crux"
+    },
+    "core2b_transfer_assessment": {
+      "transfer_obligation": "Far-transfer item extending justification to higher prime powers or cube powers"
+    }
+  }
+}

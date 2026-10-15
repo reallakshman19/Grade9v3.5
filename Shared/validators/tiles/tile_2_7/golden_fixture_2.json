@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_7",
+  "qrt_cell": "QRT-JUSTIFY-D2",
+  "source_question": {
+    "id": "GOLDEN-JUS-D2-002",
+    "custody_hash": "b8c9d0e1f23456789abcdef0123456789abcdef0123456789abcdef01234567a",
+    "stem": "Four positive numbers $3, 4, 8, x$ represent the side lengths of a non-degenerate planar quadrilateral. Which of the following represents the complete and necessary range of valid real values for $x$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$1 < x < 15$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$0 < x < 15$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$5 < x < 15$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$1 < x < 11$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "1 < x < 15",
+      "crux_move_ref": "CRUX-GEOM-JUSTIFY-POLYGON-INEQUALITY-BOUNDING-RANGE"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "JUSTIFY",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-GEOM-JUSTIFY-POLYGON-INEQUALITY-BOUNDING-RANGE"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall the generalized polygon inequality: in any non-degenerate planar polygon, every individual side length must be strictly less than the sum of all remaining sides.",
+      "hint2_tactical_step": "Consider the two critical bounding cases: when x is the longest side (x < 3 + 4 + 8), and when 8 is the longest side (8 < 3 + 4 + x). Combine both strict inequalities."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student assumes the lower bound is 0 because all side lengths are positive, forgetting that 8 cannot exceed the sum of the other three sides.",
+      "opt-C": "Student incorrectly subtracts 3 from 8 to form the lower bound.",
+      "opt-D": "Student sums only 3 and 8 to obtain an upper bound of 11, omitting 4."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEOM-JUSTIFY-POLYGON-INEQ-02",
+      "core1b_activity_id": "ACT-RECON-POLYGON-INEQ-02",
+      "core2a_practice_id": "PRAC-POLYGON-INEQ-02",
+      "core2b_transfer_id": "TRANS-POLYGON-INEQ-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEOM-JUSTIFY-POLYGON-INEQ-02",
+      "title": "Generalized Polygon Inequality Justifications",
+      "concept": "In any non-degenerate planar n-gon with sides s_1, s_2, ..., s_n, each side s_i satisfies s_i < sum_{j != i} s_j. For example, with sides 2, 5, 9, x, if x is the longest side then x < 2 + 5 + 9 = 16. If 9 is the longest side, then 9 < 2 + 5 + x, giving x > 9 - 7 = 2. Thus the valid open range is 2 < x < 16.",
+      "boundary_conditions": "At the boundary values (e.g. x = 2 or x = 16), the polygon degenerates into a flat line segment of zero area."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-POLYGON-INEQ-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If a quadrilateral has sides 3, 4, 8, and x, can x equal 1?",
+      "scaffold_steps": [
+        "Evaluate sum of remaining sides: 3 + 4 + 1 = 8",
+        "Compare with side 8: 8 is not strictly less than 8",
+        "Conclude x = 1 degenerates into a segment and is invalid"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-JUS-D2-002\"><div class=\"qb-stem\"><p>Four positive numbers $3, 4, 8, x$ represent the side lengths of a non-degenerate planar quadrilateral. Which of the following represents the complete and necessary range of valid real values for $x$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $1 < x < 15$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $0 < x < 15$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $5 < x < 15$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $1 < x < 11$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-JUS-D2-002\"><p>Recall the generalized polygon inequality: in any non-degenerate planar polygon, every individual side length must be strictly less than the sum of all remaining sides.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-JUS-D2-002\"><p>Consider the two critical bounding cases: when x is the longest side (x < 3 + 4 + 8), and when 8 is the longest side (8 < 3 + 4 + x). Combine both strict inequalities.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEOM-JUSTIFY-POLYGON-INEQ-02\">Review Polygon Inequality Proofs</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. By the generalized polygon inequality, any side is strictly less than the sum of the others.</p><p>2. Condition 1: Side $x$ is bounded by $x < 3 + 4 + 8 = 15$.</p><p>3. Condition 2: The largest known side $8$ is bounded by $8 < 3 + 4 + x \\implies 8 < 7 + x \\implies x > 1$.</p><p>4. Conditions for sides $3$ and $4$ ($3 < 4 + 8 + x$ and $4 < 3 + 8 + x$) are automatically satisfied for all $x > 0$.</p><p>5. Combining necessary and sufficient conditions: $1 < x < 15$.</p></div></details></div>"
+}

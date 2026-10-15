@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_2",
+  "qrt_cell": "QRT-EXPLAIN-D4",
+  "source_question": {
+    "id": "GOLDEN-EXP-D4-002",
+    "custody_hash": "c2d3e4f5a6b708192a3b4c5d6e7f80123456789abcdef0123456789abcdef0",
+    "stem": "Let $p$ and $q$ be distinct odd primes, and consider the open rectangle in the plane $\\mathcal{R} = (0, \\frac{p}{2}) \\times (0, \\frac{q}{2})$. In Eisenstein's geometric proof of Gauss's Law of Quadratic Reciprocity, which of the following statements rigorously explains the structural mechanism by which the integer lattice points in $\\mathcal{R}$ prove that $\\left(\\frac{p}{q}\\right)\\left(\\frac{q}{p}\\right) = (-1)^{\\frac{p-1}{2}\\frac{q-1}{2}}$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "The diagonal line $y = \\frac{q}{p}x$ contains no integer points in $\\mathcal{R}$ because $\\gcd(p, q) = 1$, partitioning the $\\frac{p-1}{2} \\cdot \\frac{q-1}{2}$ lattice points into $\\sum_{x=1}^{(p-1)/2} \\lfloor \\frac{qx}{p} \\rfloor$ points below the diagonal and $\\sum_{y=1}^{(q-1)/2} \\lfloor \\frac{py}{q} \\rfloor$ points above, whose respective parities match the Legendre symbols."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "Every lattice point $(x, y) \\in \\mathcal{R}$ corresponds to a distinct residue class modulo $pq$, and by the Chinese Remainder Theorem, the count of invertible residues is $(p-1)(q-1)$, which divides by $4$ to give the sign."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "The area of rectangle $\\mathcal{R}$ is exactly $\\frac{pq}{4}$, and Pick's theorem directly evaluates the boundary and interior points to yield $(-1)^{\\frac{p-1}{2}\\frac{q-1}{2}}$."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Reflecting points across the center of the rectangle maps each quadratic residue to a quadratic non-residue, leaving an odd number of fixed points that determine the sign."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "The diagonal line y = q/p x contains no integer points in R because gcd(p, q) = 1, partitioning the (p-1)/2 * (q-1)/2 lattice points into sum floor(qx/p) points below and sum floor(py/q) points above",
+      "crux_move_ref": "CRUX-NT-EXPLAIN-EISENSTEIN-LATTICE-DIAGONAL-PARTITION"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "EXPLAIN",
+      "difficulty_band": "D4",
+      "difficulty_score": 10,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 2
+      },
+      "crux_move": "CRUX-NT-EXPLAIN-EISENSTEIN-LATTICE-DIAGONAL-PARTITION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider the diagonal connecting $(0, 0)$ to $(\\frac{p}{2}, \\frac{q}{2})$ with equation $y = \\frac{q}{p}x$. Can any integer point $(x, y)$ lie strictly on this segment inside $\\mathcal{R}$?",
+      "hint2_tactical_step": "Because $\\gcd(p, q) = 1$, the diagonal contains no lattice points. For each integer $x \\in \\{1, \\dots, \\frac{p-1}{2}\\}$, the number of lattice points with $y < \\frac{q}{p}x$ is $\\lfloor \\frac{qx}{p} \\rfloor$. Summing both halves yields the total number of points in the rectangle."
+    },
+    "distractor_rationales": {
+      "opt-B": "Confuses the abstract Chinese Remainder Theorem residue counting with the specific two-dimensional lattice partition underlying Eisenstein's lemma.",
+      "opt-C": "Appeals to Pick's theorem for area, which is unrelated to the parity of integer floor summations that dictate the Legendre symbols.",
+      "opt-D": "Claims point reflection interchanges residue classes without justifying the diagonal partition or the parity sum."
+    },
+    "core_links": {
+      "core1a_unit_id": "NT-EXP-EISENSTEIN-LEMMA-04",
+      "core1b_activity_id": "ACT-RECON-EISENSTEIN-LEMMA-04",
+      "core2a_practice_id": "PRAC-EISENSTEIN-LEMMA-04",
+      "core2b_transfer_id": "TRANS-EISENSTEIN-LEMMA-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "NT-EXP-EISENSTEIN-LEMMA-04",
+      "title": "Eisenstein's Lemma and Geometric Invariants of Reciprocity",
+      "concept": "For distinct odd primes, Eisenstein demonstrated that the Legendre symbol can be evaluated via lattice sums without computing half-system residues directly. By embedding the product into a discrete grid, algebraic divisibility relations are translated into spatial counting problems where coprime axes preclude on-line intersections.",
+      "boundary_conditions": "Both primes are assumed distinct and odd, ensuring that the interior line has rational non-integral slopes with zero grid hits within the open bounding box."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-EISENSTEIN-LEMMA-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "Can a straight line $y = \\frac{q}{p}x$ with coprime odd integers $p$ and $q$ contain an integer point $(x, y)$ where $1 \\le x < p$?",
+      "scaffold_steps": [
+        "Express equation as py = qx",
+        "Use Euclid's lemma with gcd(p, q) = 1 to deduce p divides x",
+        "Note x < p makes divisibility impossible for positive integers"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-EXP-D4-002\"><div class=\"qb-stem\"><p>Let $p$ and $q$ be distinct odd primes, and consider the open rectangle in the plane $\\mathcal{R} = (0, \\frac{p}{2}) \\times (0, \\frac{q}{2})$. In Eisenstein's geometric proof of Gauss's Law of Quadratic Reciprocity, which of the following statements rigorously explains the structural mechanism by which the integer lattice points in $\\mathcal{R}$ prove that $\\left(\\frac{p}{q}\\right)\\left(\\frac{q}{p}\\right) = (-1)^{\\frac{p-1}{2}\\frac{q-1}{2}}$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> The diagonal line $y = \\frac{q}{p}x$ contains no integer points in $\\mathcal{R}$ because $\\gcd(p, q) = 1$, partitioning the $\\frac{p-1}{2} \\cdot \\frac{q-1}{2}$ lattice points into $\\sum_{x=1}^{(p-1)/2} \\lfloor \\frac{qx}{p} \\rfloor$ points below the diagonal and $\\sum_{y=1}^{(q-1)/2} \\lfloor \\frac{py}{q} \\rfloor$ points above, whose respective parities match the Legendre symbols.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> Every lattice point $(x, y) \\in \\mathcal{R}$ corresponds to a distinct residue class modulo $pq$, and by the Chinese Remainder Theorem, the count of invertible residues is $(p-1)(q-1)$, which divides by $4$ to give the sign.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> The area of rectangle $\\mathcal{R}$ is exactly $\\frac{pq}{4}$, and Pick's theorem directly evaluates the boundary and interior points to yield $(-1)^{\\frac{p-1}{2}\\frac{q-1}{2}}$.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Reflecting points across the center of the rectangle maps each quadratic residue to a quadratic non-residue, leaving an odd number of fixed points that determine the sign.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-EXP-D4-002\"><p>Consider the diagonal connecting $(0, 0)$ to $(\\frac{p}{2}, \\frac{q}{2})$ with equation $y = \\frac{q}{p}x$. Can any integer point $(x, y)$ lie strictly on this segment inside $\\mathcal{R}$?</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-EXP-D4-002\"><p>Because $\\gcd(p, q) = 1$, the diagonal contains no lattice points. For each integer $x \\in \\{1, \\dots, \\frac{p-1}{2}\\}$, the number of lattice points with $y < \\frac{q}{p}x$ is $\\lfloor \\frac{qx}{p} \\rfloor$. Summing both halves yields the total number of points in the rectangle.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"NT-EXP-EISENSTEIN-LEMMA-04\">Review Eisenstein Lemma</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Total lattice point count in the rectangle:</p><p>The rectangle $\\mathcal{R} = (0, \\frac{p}{2}) \\times (0, \\frac{q}{2})$ contains all integer pairs $(x, y)$ such that $1 \\le x \\le \\frac{p-1}{2}$ and $1 \\le y \\le \\frac{q-1}{2}$.</p><p>The total number of integer lattice points in $\\mathcal{R}$ is exactly:</p><p>$N = \\frac{p-1}{2} \\cdot \\frac{q-1}{2}$.</p><p>2. Non-intersection with the diagonal line:</p><p>The diagonal segment from $(0, 0)$ to $(\\frac{p}{2}, \\frac{q}{2})$ has equation $y = \\frac{q}{p}x$, or $py = qx$.</p><p>If $(x, y) \\in \\mathbb{Z}^2$ lies on this line, then $p \\mid qx$. Since $\\gcd(p, q) = 1$, by Euclid's lemma $p \\mid x$.</p><p>However, inside $\\mathcal{R}$ we have $1 \\le x \\le \\frac{p-1}{2} < p$, so no integer multiple of $p$ exists in this range.</p><p>Thus, the diagonal contains zero integer lattice points.</p><p>3. Partitioning the lattice points:</p><p>Because the diagonal contains no lattice points, every point in $\\mathcal{R}$ lies either strictly below or strictly above the diagonal.</p><p>For a fixed integer $x \\in \\{1, 2, \\dots, \\frac{p-1}{2}\\}$, the condition $y < \\frac{q}{p}x$ means $1 \\le y \\le \\lfloor \\frac{qx}{p} \\rfloor$. The number of points below the diagonal is:</p><p>$N_1 = \\sum_{x=1}^{(p-1)/2} \\left\\lfloor \\frac{qx}{p} \\right\\rfloor$.</p><p>By symmetry, interchanging the roles of $x$ and $y$, the number of points above the diagonal ($x < \\frac{p}{q}y$) is:</p><p>$N_2 = \\sum_{y=1}^{(q-1)/2} \\left\\lfloor \\frac{py}{q} \\right\\rfloor$.</p><p>4. Eisenstein's Lemma and Quadratic Reciprocity:</p><p>Since every point in $\\mathcal{R}$ is accounted for, $N_1 + N_2 = N = \\frac{p-1}{2}\\frac{q-1}{2}$.</p><p>Eisenstein's Lemma establishes that $\\left(\\frac{q}{p}\\right) = (-1)^{N_1}$ and $\\left(\\frac{p}{q}\\right) = (-1)^{N_2}$.</p><p>Multiplying these two identities yields:</p><p>$\\left(\\frac{q}{p}\\right)\\left(\\frac{p}{q}\\right) = (-1)^{N_1 + N_2} = (-1)^{\\frac{p-1}{2}\\frac{q-1}{2}}$.</p></div></details></div>"
+}

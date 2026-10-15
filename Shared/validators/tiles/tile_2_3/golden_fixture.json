@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_3",
+  "qrt_cell": "QRT-APPLY-D2",
+  "source_question": {
+    "id": "GOLDEN-APP-D2-001",
+    "custody_hash": "c4d5e6f708192a3b4c5d6e7f80123456789abcdef0123456789abcdef0123456",
+    "stem": "A triangular plot of land has side lengths $13\\text{ m}$, $14\\text{ m}$, and $15\\text{ m}$. What is the exact area of the triangular plot?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$84\\text{ m}^2$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$91\\text{ m}^2$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$168\\text{ m}^2$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$42\\text{ m}^2$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "84",
+      "crux_move_ref": "CRUX-MENS-HERON-SEMI-PERIMETER-AREA-EXECUTION"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "APPLY",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 0,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-MENS-HERON-SEMI-PERIMETER-AREA-EXECUTION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall Heron's formula: $\\text{Area} = \\sqrt{s(s-a)(s-b)(s-c)}$, where $s = \\frac{a+b+c}{2}$ is the semi-perimeter.",
+      "hint2_tactical_step": "Compute the semi-perimeter $s = 21\\text{ m}$, then evaluate the differences $(21 - 13)$, $(21 - 14)$, and $(21 - 15)$ before extracting the square root."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student treats a side length as the perpendicular altitude: 0.5 * 14 * 13 = 91.",
+      "opt-C": "Student omits the square root operation or forgets to divide the perimeter by 2.",
+      "opt-D": "Student mistakenly divides the correct area by 2."
+    },
+    "core_links": {
+      "core1a_unit_id": "MENS-HERON-PROC-02",
+      "core1b_activity_id": "ACT-RECON-HERON-02",
+      "core2a_practice_id": "PRAC-HERON-02",
+      "core2b_transfer_id": "TRANS-HERON-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "MENS-HERON-PROC-02",
+      "title": "Heron's Formula and Radical Simplification",
+      "concept": "For any triangle with side lengths a, b, c, semi-perimeter s = (a + b + c) / 2. Area = sqrt(s(s - a)(s - b)(s - c)). Factoring terms into prime factors enables efficient square root extraction without multiplying large numbers.",
+      "boundary_conditions": "Triangle inequality must hold: a + b > c, b + c > a, c + a > b. Otherwise s - c <= 0 and area is non-real."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-HERON-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the semi-perimeter of a triangle with side lengths 3 cm, 4 cm, and 5 cm?",
+      "scaffold_steps": [
+        "Calculate perimeter and divide by 2",
+        "Formulate side differences s - a, s - b, s - c",
+        "Apply square root product"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-APP-D2-001\"><div class=\"qb-stem\"><p>A triangular plot of land has side lengths $13\\text{ m}$, $14\\text{ m}$, and $15\\text{ m}$. What is the exact area of the triangular plot?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $84\\text{ m}^2$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $91\\text{ m}^2$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $168\\text{ m}^2$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $42\\text{ m}^2$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-APP-D2-001\"><p>Recall Heron's formula: $\\text{Area} = \\sqrt{s(s-a)(s-b)(s-c)}$, where $s = \\frac{a+b+c}{2}$ is the semi-perimeter.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-APP-D2-001\"><p>Compute the semi-perimeter $s = 21\\text{ m}$, then evaluate the differences $(21 - 13)$, $(21 - 14)$, and $(21 - 15)$ before extracting the square root.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"MENS-HERON-PROC-02\">Review Heron's Formula</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Solution</summary><div class=\"qb-solution-body\"><p>First calculate the semi-perimeter $s = \\frac{13 + 14 + 15}{2} = \\frac{42}{2} = 21\\text{ m}$.</p><p>Next compute side differences: $s - a = 21 - 13 = 8$, $s - b = 21 - 14 = 7$, $s - c = 21 - 15 = 6$.</p><p>Apply Heron's formula: $\\text{Area} = \\sqrt{21 \\times 8 \\times 7 \\times 6} = \\sqrt{(7 \\times 3) \\times (2^3) \\times 7 \\times (2 \\times 3)} = \\sqrt{7^2 \\times 3^2 \\times 2^4} = 7 \\times 3 \\times 4 = 84\\text{ m}^2$.</p></div></details></div>"
+}

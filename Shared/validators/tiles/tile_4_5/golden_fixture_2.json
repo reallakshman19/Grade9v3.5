@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_5",
+  "qrt_cell": "QRT-REPRESENT-D4",
+  "source_question": {
+    "id": "GOLDEN-REP-D4-002",
+    "custody_hash": "c2d3e4f5a6b708192a3b4c5d6e7f80123456789abcdef0123456789abcdef0",
+    "stem": "In a mathematical community of $n = 9$ residents, a collection of $m$ clubs $S_1, S_2, \\dots, S_m \\subseteq \\{1, 2, \\dots, 9\\}$ is established such that:\n1. Every club contains an odd number of residents: $|S_i| \\equiv 1 \\pmod 2$ for all $1 \\le i \\le m$.\n2. Every two distinct clubs share an even number of residents: $|S_i \\cap S_j| \\equiv 0 \\pmod 2$ for all $i \\ne j$.\nBy representing each club as an incidence vector in the vector space $\\mathbb{F}_2^9$, what is the maximum possible number of clubs $m$ that can be formed?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$9$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$8$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$18$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$512$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "9",
+      "crux_move_ref": "CRUX-COMB-REPRESENT-ODDTOWN-VECTOR-SPACE-F2"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "REPRESENT",
+      "difficulty_band": "D4",
+      "difficulty_score": 10,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 2
+      },
+      "crux_move": "CRUX-COMB-REPRESENT-ODDTOWN-VECTOR-SPACE-F2"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Translate each subset $S_i$ into its characteristic incidence vector $v_i \\in \\mathbb{F}_2^n$ and compute the standard dot product $v_i \\cdot v_j$ in the finite field $\\mathbb{F}_2$.",
+      "hint2_tactical_step": "The conditions translate to $v_i \\cdot v_i = 1$ and $v_i \\cdot v_j = 0$ for $i \\ne j$. Show that this orthogonality property forces {v_1, ..., v_m} to be linearly independent in the vector space $\\mathbb{F}_2^n$."
+    },
+    "distractor_rationales": {
+      "opt-B": "Incorrectly assumes that the even-intersection condition imposes a dimension reduction to $n - 1 = 8$.",
+      "opt-C": "Confuses the dimension bound $n$ with double the dimension $2n = 18$.",
+      "opt-D": "Counts the total number of unconstrained subsets $2^9 = 512$ without enforcing linear independence."
+    },
+    "core_links": {
+      "core1a_unit_id": "COMB-REP-LINEAR-ALGEBRA-METHODS-04",
+      "core1b_activity_id": "ACT-RECON-LINEAR-ALGEBRA-METHODS-04",
+      "core2a_practice_id": "PRAC-LINEAR-ALGEBRA-METHODS-04",
+      "core2b_transfer_id": "TRANS-LINEAR-ALGEBRA-METHODS-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COMB-REP-LINEAR-ALGEBRA-METHODS-04",
+      "title": "Linear Algebraic Representations in Extremal Combinatorics",
+      "concept": "In extremal combinatorics, subsets and hypergraph families are effectively analyzed by mapping them to characteristic incidence vectors over finite fields. Parity conditions on cardinalities and pairwise intersections translate into inner product equations, converting combinatorial size bounds into fundamental linear algebraic dimension theorems.",
+      "boundary_conditions": "Requires the base field to match the modulus. For modulo 2 parity constraints, vector spaces over the two-element field F_2 are canonical."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-LINEAR-ALGEBRA-METHODS-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "In a vector space of dimension $n$, what is the maximum number of linearly independent vectors that can exist?",
+      "scaffold_steps": [
+        "Recall the definition of basis and dimension of a vector space",
+        "Observe any linearly independent set has cardinality at most the dimension",
+        "Conclude that m cannot exceed dimension n"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-REP-D4-002\"><div class=\"qb-stem\"><p>In a mathematical community of $n = 9$ residents, a collection of $m$ clubs $S_1, S_2, \\dots, S_m \\subseteq \\{1, 2, \\dots, 9\\}$ is established such that:</p><p>1. Every club contains an odd number of residents: $|S_i| \\equiv 1 \\pmod 2$ for all $1 \\le i \\le m$.</p><p>2. Every two distinct clubs share an even number of residents: $|S_i \\cap S_j| \\equiv 0 \\pmod 2$ for all $i \\ne j$.</p><p>By representing each club as an incidence vector in the vector space $\\mathbb{F}_2^9$, what is the maximum possible number of clubs $m$ that can be formed?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $9$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $8$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $18$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $512$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-REP-D4-002\"><p>Translate each subset $S_i$ into its characteristic incidence vector $v_i \\in \\mathbb{F}_2^n$ and compute the standard dot product $v_i \\cdot v_j$ in the finite field $\\mathbb{F}_2$.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-REP-D4-002\"><p>The conditions translate to $v_i \\cdot v_i = 1$ and $v_i \\cdot v_j = 0$ for $i \\ne j$. Show that this orthogonality property forces {v_1, ..., v_m} to be linearly independent in the vector space $\\mathbb{F}_2^n$.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COMB-REP-LINEAR-ALGEBRA-METHODS-04\">Review Linear Algebraic Methods</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Vector representation over $\\mathbb{F}_2$:</p><p>For each club $S_i \\subseteq \\{1, 2, \\dots, 9\\}$, define its characteristic incidence vector $v_i = ((v_i)_1, \\dots, (v_i)_9)^T \\in \\mathbb{F}_2^9$, where $(v_i)_k = 1$ if resident $k \\in S_i$ and $(v_i)_k = 0$ otherwise.</p><p>2. Algebraic translation of combinatorial rules:</p><p>In the field $\\mathbb{F}_2$, the standard dot product between two characteristic vectors $v_i$ and $v_j$ counts the cardinality of their intersection modulo $2$:</p><p>$v_i \\cdot v_j = \\sum_{k=1}^9 (v_i)_k (v_j)_k \\equiv |S_i \\cap S_j| \\pmod 2$.</p><p>Rule 1 (odd club size):</p><p>$v_i \\cdot v_i = |S_i| \\equiv 1 \\pmod 2$.</p><p>Rule 2 (even pairwise intersection):</p><p>$v_i \\cdot v_j = |S_i \\cap S_j| \\equiv 0 \\pmod 2$ for all $i \\ne j$.</p><p>3. Proof of linear independence:</p><p>Suppose there exist coefficients $c_1, c_2, \\dots, c_m \\in \\mathbb{F}_2$ such that:</p><p>$\\sum_{i=1}^m c_i v_i = 0$.</p><p>Take the dot product of both sides with any specific vector $v_j$ ($1 \\le j \\le m$):</p><p>$0 = \\left(\\sum_{i=1}^m c_i v_i\\right) \\cdot v_j = \\sum_{i=1}^m c_i (v_i \\cdot v_j) = c_j (v_j \\cdot v_j) + \\sum_{i \\ne j} c_i (v_i \\cdot v_j) = c_j(1) + 0 = c_j$.</p><p>Thus, $c_j = 0$ for every $j \\in \\{1, 2, \\dots, m\\}$.</p><p>This proves that the vectors $v_1, v_2, \\dots, v_m$ are strictly linearly independent over $\\mathbb{F}_2$.</p><p>4. Bounding by dimension:</p><p>Because any set of linearly independent vectors in an $n$-dimensional vector space can contain at most $n$ vectors:</p><p>$m \\le \\dim(\\mathbb{F}_2^9) = 9$.</p><p>5. Attainability:</p><p>Choosing the $9$ singleton clubs $S_i = \\{i\\}$ yields $|S_i| = 1$ (odd) and $|S_i \\cap S_j| = 0$ (even), achieving exactly $m = 9$.</p></div></details></div>"
+}

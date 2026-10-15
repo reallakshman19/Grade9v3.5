@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_2",
+  "qrt_cell": "QRT-EXPLAIN-D2",
+  "source_question": {
+    "id": "GOLDEN-EXP-D2-001",
+    "custody_hash": "b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef01",
+    "stem": "In $\\triangle ABC$, an auxiliary line $l$ is drawn through vertex $A$ parallel to base $BC$. Which of the following statements provides the precise mathematical explanation for why this construction proves that $\\angle A + \\angle B + \\angle C = 180^\\circ$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "The line $l$ bisects angle $A$ into two equal $45^\\circ$ angles."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "The line $l$ makes side $AB$ equal in length to side $AC$."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "The line $l$ creates alternate interior angles equal to $\\angle B$ and $\\angle C$ along the straight line at $A$, which sum to $180^\\circ$."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "The line $l$ forms vertically opposite angles with the base $BC$."
+      }
+    ],
+    "answer": {
+      "choice": "C",
+      "value": "The line l creates alternate interior angles equal to B and C along the straight line at A, which sum to 180",
+      "crux_move_ref": "CRUX-GEO-TRIANGLE-ANGLE-SUM-ALTERNATE-INTERIOR-INVARIANCE"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "EXPLAIN",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-GEO-TRIANGLE-ANGLE-SUM-ALTERNATE-INTERIOR-INVARIANCE"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider what angle relationships are created when parallel lines are intersected by transversals $AB$ and $AC$.",
+      "hint2_tactical_step": "Examine the three adjacent angles formed at apex $A$ along the straight line $l$."
+    },
+    "distractor_rationales": {
+      "opt-A": "Student erroneously assumes the triangle is right-isosceles with angle A equal to 90 degrees.",
+      "opt-B": "Student confuses angle sum proof with isosceles side equality.",
+      "opt-D": "Student confuses alternate interior angles across transversals with vertically opposite angles."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEO-TRIA-INVAR-02",
+      "core1b_activity_id": "ACT-RECON-TRIA-02",
+      "core2a_practice_id": "PRAC-TRIA-02",
+      "core2b_transfer_id": "TRANS-TRIA-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEO-TRIA-INVAR-02",
+      "title": "Parallel Transversals and Angle Invariance",
+      "concept": "When two parallel lines are cut by a transversal, alternate interior angles are congruent. Consecutive interior angles on the same side of the transversal sum to 180 degrees.",
+      "boundary_conditions": "If lines are non-parallel, alternate interior angles are unequal and the angle-sum transfer fails."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-TRIA-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If three adjacent angles lie along a straight line at a single vertex, what is their exact sum?",
+      "scaffold_steps": [
+        "Recall the straight angle axiom",
+        "Formulate exterior angle equivalence for triangle vertices",
+        "State triangle angle sum invariance"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-EXP-D2-001\"><div class=\"qb-stem\"><p>In $\\triangle ABC$, an auxiliary line $l$ is drawn through vertex $A$ parallel to base $BC$. Which of the following statements provides the precise mathematical explanation for why this construction proves that $\\angle A + \\angle B + \\angle C = 180^\\circ$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> The line $l$ bisects angle $A$ into two equal $45^\\circ$ angles.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> The line $l$ makes side $AB$ equal in length to side $AC$.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> The line $l$ creates alternate interior angles equal to $\\angle B$ and $\\angle C$ along the straight line at $A$, which sum to $180^\\circ$.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> The line $l$ forms vertically opposite angles with the base $BC$.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-EXP-D2-001\"><p>Consider what angle relationships are created when parallel lines are intersected by transversals $AB$ and $AC$.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-EXP-D2-001\"><p>Examine the three adjacent angles formed at apex $A$ along the straight line $l$.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEO-TRIA-INVAR-02\">Review Triangle Angle Invariants</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Solution</summary><div class=\"qb-solution-body\"><p>Since line $l \\parallel BC$, transversal $AB$ creates alternate interior angle $\\angle 1 = \\angle B$ and transversal $AC$ creates $\\angle 2 = \\angle C$.</p><p>Along the straight line $l$ at vertex $A$, the angles form a straight angle: $\\angle 1 + \\angle A + \\angle 2 = 180^\\circ$. Substituting gives $\\angle B + \\angle A + \\angle C = 180^\\circ$.</p></div></details></div>"
+}

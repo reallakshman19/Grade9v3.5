@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_4",
+  "qrt_cell": "QRT-MODEL-D3",
+  "source_question": {
+    "id": "GOLDEN-MOD-D3-003",
+    "custody_hash": "f3a4b5c6d7e8f90123456789abcdef0123456789abcdef0123456789abcdef012",
+    "stem": "An optical reflector is positioned along the horizontal line $y = 0$. A light emitter is situated at point $A(0, 5)$ and a light detector is placed at point $B(12, 4)$. A light ray leaves $A$, reflects off a point $P(x, 0)$ on the reflector, and reaches detector $B$. By Fermat's Principle of Least Time, the total path length $AP + PB$ is minimized. Model this physical reflection path to determine the exact coordinate $x$ of the reflection point $P$.",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$\\frac{20}{3}$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$6$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$\\frac{16}{3}$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$\\frac{15}{2}$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "\\frac{20}{3}",
+      "crux_move_ref": "CRUX-GEO-MODEL-HERONS-REFLECTION-MINIMIZATION"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "MODEL",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-GEO-MODEL-HERONS-REFLECTION-MINIMIZATION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Use Heron's reflection principle: reflect point A across the line y = 0 to convert the broken path AP + PB into a single straight line segment.",
+      "hint2_tactical_step": "Point A reflects to A'(0, -5). The line connecting A'(0, -5) and B(12, 4) has slope (4 - (-5))/(12 - 0) = 3/4 and equation y = (3/4)x - 5. Find its x-intercept."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student assumes a naive midpoint reflection at x = 12 / 2 = 6, ignoring the unequal vertical heights of emitter and detector.",
+      "opt-C": "Student inverts the vertical proportion, allocating the smaller fraction 4/9 of the horizontal span to Node A: 12 * (4/9) = 16/3.",
+      "opt-D": "Student makes an arithmetic error when equating similar right triangles."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEO-MODEL-HERON-REFLECTION-03",
+      "core1b_activity_id": "ACT-RECON-HERON-REFLECTION-03",
+      "core2a_practice_id": "PRAC-HERON-REFLECTION-03",
+      "core2b_transfer_id": "TRANS-HERON-REFLECTION-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEO-MODEL-HERON-REFLECTION-03",
+      "title": "Heron's Principle of Reflection and Path Minimization",
+      "concept": "To minimize the sum of distances AP + PB from two fixed points A and B to a line L, reflect point A across line L to obtain image point A'. For any point P on L, AP = A'P, so AP + PB = A'P + PB. By the triangle inequality, the minimum occurs when A', P, and B are collinear. For example, with A(0, 3), B(8, 3), and reflector y = 0, A' is (0, -3). The segment from (0, -3) to (8, 3) crosses y = 0 at the midpoint x = 4.",
+      "boundary_conditions": "Both points A and B must lie on the same side of the reflection boundary line L."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-HERON-REFLECTION-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What are the coordinates of the reflected point A' across y = 0?",
+      "scaffold_steps": [
+        "Negate the y-coordinate of A(0, 5)",
+        "Keep the x-coordinate unchanged at 0",
+        "Conclude A' is (0, -5)"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-MOD-D3-003\"><div class=\"qb-stem\"><p>An optical reflector is positioned along the horizontal line $y = 0$. A light emitter is situated at point $A(0, 5)$ and a light detector is placed at point $B(12, 4)$. A light ray leaves $A$, reflects off a point $P(x, 0)$ on the reflector, and reaches detector $B$. By Fermat's Principle of Least Time, the total path length $AP + PB$ is minimized. Model this physical reflection path to determine the exact coordinate $x$ of the reflection point $P$.</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $\\frac{20}{3}$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $6$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $\\frac{16}{3}$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $\\frac{15}{2}$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-MOD-D3-003\"><p>Use Heron's reflection principle: reflect point A across the line y = 0 to convert the broken path AP + PB into a single straight line segment.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-MOD-D3-003\"><p>Point A reflects to A'(0, -5). The line connecting A'(0, -5) and B(12, 4) has slope (4 - (-5))/(12 - 0) = 3/4 and equation y = (3/4)x - 5. Find its x-intercept.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEO-MODEL-HERON-REFLECTION-03\">Review Reflection Modeling</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Formulate the path length function to be minimized:</p><p>$L(x) = AP + PB = \\sqrt{(x - 0)^2 + (0 - 5)^2} + \\sqrt{(12 - x)^2 + (4 - 0)^2} = \\sqrt{x^2 + 25} + \\sqrt{(12 - x)^2 + 16}$.</p><p>2. Model via Heron's Geometric Reflection Principle:</p><p>Reflect point $A(0, 5)$ across the reflector line $y = 0$ to get $A'(0, -5)$.</p><p>For any point $P(x, 0)$ on $y = 0$, $AP = A'P$. Thus $AP + PB = A'P + PB$.</p><p>The straight-line path from $A'$ to $B$ gives the minimum possible distance.</p><p>3. Find the equation of line $A'B$:</p><p>Slope $m = \\frac{4 - (-5)}{12 - 0} = \\frac{9}{12} = \\frac{3}{4}$.</p><p>$y$-intercept is at $(0, -5)$, so the line equation is $y = \\frac{3}{4}x - 5$.</p><p>4. Determine the reflection point $P(x, 0)$ by setting $y = 0$:</p><p>$0 = \\frac{3}{4}x - 5 \\implies \\frac{3}{4}x = 5 \\implies x = \\frac{20}{3}$.</p><p>5. Verification via similar right triangles:</p><p>Let $A_0 = (0, 0)$ and $B_0 = (12, 0)$. In right triangles $\\triangle AA_0P$ and $\\triangle BB_0P$, equal reflection angles imply similarity:</p><p>$\\frac{AA_0}{A_0P} = \\frac{BB_0}{PB_0} \\implies \\frac{5}{x} = \\frac{4}{12 - x}$.</p><p>$5(12 - x) = 4x \\implies 60 - 5x = 4x \\implies 9x = 60 \\implies x = \\frac{60}{9} = \\frac{20}{3}$.</p><p>The physical and geometric models match identically.</p></div></details></div>"
+}
