@@ -777,7 +777,7 @@ def embed_standalone_katex(page_html: str) -> str:
     """Embed the existing repository-vendored KaTeX in each byte-identical HTML.
 
     Relative vendor URLs work only from standalone/, not public/standalone/ and
-    public/docs test routes. CDN fallback is also unsuitable for offline use.
+    public/docs test routes. Remote CDN fallback is forbidden; missing vendor assets fail closed.
     This embeds the *existing* renderer and its WOFF2 faces (not a new engine).
     """
     vendor = Path("standalone/vendor/katex/0.16.8")
@@ -804,9 +804,9 @@ def embed_standalone_katex(page_html: str) -> str:
         raise RuntimeError(f"Expected 20 KaTeX font faces, got {len(embedded_faces)}")
 
     previous = (
-        '<link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css" onerror="this.onerror=null;this.href=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css\';">\n'
-        '  <script src="vendor/katex/0.16.8/katex.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js\';"></script>\n'
-        '  <script src="vendor/katex/0.16.8/contrib/auto-render.min.js" onerror="this.onerror=null;this.src=\'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js\';"></script>'
+        '<link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css">\n'
+        '  <script src="vendor/katex/0.16.8/katex.min.js"></script>\n'
+        '  <script src="vendor/katex/0.16.8/contrib/auto-render.min.js"></script>'
     )
     # Data-URI resources preserve byte-identical offline paths while keeping
     # minified KaTeX internals out of the source-question/math-text audit.
@@ -1075,10 +1075,10 @@ def main():
   <title>Grade 9 IMO Mathematics · Core 2 Question Bank & Blueprints Suite</title>
   <meta name="description" content="Grade 9 IMO research suite: 260 draft questions with vector SVGs, KaTeX typography, progressive hint ladders and Core 1A/1B research modules. Academic, source and Blueprint acceptance pending.">
 
-  <!-- KaTeX Typography (Local Vendor Primary + CDN Fallback) -->
-  <link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css" onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css';">
-  <script src="vendor/katex/0.16.8/katex.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js';"></script>
-  <script src="vendor/katex/0.16.8/contrib/auto-render.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js';"></script>
+  <!-- KaTeX Typography (vendored only; fail closed if missing) -->
+  <link rel="stylesheet" href="vendor/katex/0.16.8/katex.min.css">
+  <script src="vendor/katex/0.16.8/katex.min.js"></script>
+  <script src="vendor/katex/0.16.8/contrib/auto-render.min.js"></script>
 
   <style>
     :root {
