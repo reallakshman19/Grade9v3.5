@@ -31,7 +31,7 @@ def get_figure_markup(figure_ref, qid, stem="", options=None):
     # 1. Check if figure_ref points to a file in Mathematics/library/figures
     if figure_ref:
         ref = Path(figure_ref)
-        if ref.is_absolute() or ".." in ref.parts or ref.suffix.lower() != ".svg":
+        if ref.is_absolute() or str(figure_ref).startswith(("/", "\\")) or ".." in ref.parts or ref.suffix.lower() != ".svg":
             raise ValueError(f"UNSAFE_FIGURE_REFERENCE: {figure_ref}")
         prefix = Path("Mathematics/library/figures").parts
         if ref.parts[:len(prefix)] == prefix:

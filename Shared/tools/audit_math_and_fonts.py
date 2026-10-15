@@ -137,13 +137,15 @@ def audit_html_file(html_path: Path) -> List[Dict[str, Any]]:
             })
 
     # Validate math syntax via Node.js KaTeX if node is available
-    script_path = REPO_ROOT / "scratch" / "validate_katex_batch.js"
+    scratch_dir = REPO_ROOT / "scratch"
+    scratch_dir.mkdir(parents=True, exist_ok=True)
+    script_path = scratch_dir / "validate_katex_batch.js"
     katex_js = REPO_ROOT / "standalone" / "vendor" / "katex" / "0.16.8" / "katex.min.js"
     
     if katex_js.exists():
         # Prepare batch input
         math_items = [{"raw": raw, "inner": inner, "pos": pos} for raw, inner, pos in blocks]
-        batch_input_path = REPO_ROOT / "scratch" / "_katex_input.json"
+        batch_input_path = scratch_dir / "_katex_input.json"
         batch_input_path.write_text(json.dumps(math_items), encoding="utf-8")
 
         validator_js = f"""

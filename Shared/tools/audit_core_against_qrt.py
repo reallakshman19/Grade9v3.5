@@ -124,15 +124,18 @@ def audit_core2_question_card(art_html: str, index: int, qrt_matrix: dict[str, A
         findings.append("MISSING_TRAP_DIAGNOSTIC")
 
     # 3. Hint Ladder & Protected Work W Check
-    rungs = re.findall(r'<span class="rung-tag[^"]*">([^<]+)</span>\s*<p>(.*?)</p>', clean_html, re.DOTALL)
+    raw_rungs = re.findall(r'<div class="ladder-rung"[^>]*><p[^>]*>(.*?)</p></div>', clean_html, re.DOTALL)
+    if not raw_rungs:
+        tag_rungs = re.findall(r'<span class="rung-tag[^"]*">([^<]+)</span>\s*<p[^>]*>(.*?)</p>', clean_html, re.DOTALL)
+        raw_rungs = [r[1] for r in tag_rungs]
     delta_prot = 0.0
-    if len(rungs) < 2:
-        findings.append(f"HINT_LADDER_UNDERSIZED: found {len(rungs)}, expected at least 2 rungs")
+    if len(raw_rungs) < 2:
+        findings.append(f"HINT_LADDER_UNDERSIZED: found {len(raw_rungs)}, expected at least 2 rungs")
         delta_prot += 0.3
 
     # Check for boilerplate geometry leakage into non-geometry
     is_geom = any(k in topic.lower() for k in ["geometry", "triangle", "circle", "angle", "lines", "quadrilateral"])
-    rung_texts = " ".join(r[1] for r in rungs)
+    rung_texts = " ".join(raw_rungs)
     if "apply euclid" in rung_texts.lower() and not is_geom:
         findings.append("BOILERPLATE_EUCLID_HINT_ON_NON_GEOMETRY")
         delta_prot += 0.2
