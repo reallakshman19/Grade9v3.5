@@ -49,6 +49,15 @@ jobs:
           ref: 5b382356e792ae50884241fb047c328e304d011d
           path: source-retrieve-d2
           persist-credentials: false
+      # R8/#201 retains the 5b382 source. R14 alone uses Owner-pinned
+      # original authored TEST source (draft #191 HEAD) eb3cf066.
+      - name: R14-only RETRIEVE-D2 original authored TEST source (AB-R14-SRCPIN)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+        with:
+          ref: eb3cf06646f00bf208084e794b41b4d8d83135b6
+          path: source-retrieve-d2-r14-original
+          persist-credentials: false
       - name: Exact corrected RETRIEVE-D4 authored TEST source (not superseded leaky version)
         uses: actions/checkout@v4
         with:

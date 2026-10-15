@@ -47,6 +47,42 @@ RECONCILIATION = Path("TEST/imo-research/qrt-tiles/reconciliation")
 RENDERER = Path("Shared/tools/render_core.py")
 WORKFLOW = Path(".github/workflows/imo182-r8-qrt-intent-contract.yml")
 
+# Owner AB-R14-SRCPIN: preserve draft #191 original input provenance only
+# for R14. The existing #201 R8 checkout remains on its later evidence SHA.
+R14_RETRIEVE_D2_ROOT = "source-retrieve-d2-r14-original"
+R14_RETRIEVE_D2_SOURCE_COMMIT = "eb3cf06646f00bf208084e794b41b4d8d83135b6"
+R8_RETRIEVE_D2_SOURCE_COMMIT = "5b382356e792ae50884241fb047c328e304d011d"
+
+
+def r14_source_root(root: str, slug: str) -> str:
+    """Return the distinct ORIGINAL checkout for R14 RETRIEVE-D2 only."""
+    if (root, slug) == ("source-retrieve-d2", "retrieve-d2"):
+        return R14_RETRIEVE_D2_ROOT
+    return root
+
+
+def verify_r14_source_isolation() -> None:
+    """Reject authority drift in both frozen source commits and checkout scopes."""
+    workflow = WORKFLOW.read_text(encoding="utf-8")
+    r8_checkout = "- name: Exact RETRIEVE-D2 authored TEST source from established method-cue benchmark\n        uses: actions/checkout@v4\n        with:\n          ref: 5b382356e792ae50884241fb047c328e304d011d\n          path: source-retrieve-d2\n          persist-credentials: false"
+    r14_checkout = "- name: R14-only RETRIEVE-D2 original authored TEST source (AB-R14-SRCPIN)\n        if: github.event_name == 'workflow_dispatch'\n        uses: actions/checkout@v4\n        with:\n          ref: eb3cf06646f00bf208084e794b41b4d8d83135b6\n          path: source-retrieve-d2-r14-original\n          persist-credentials: false"
+    if (workflow.count(r8_checkout) != 1 or workflow.count(r14_checkout) != 1
+            or R14_RETRIEVE_D2_ROOT in {root for root, _ in CASES}
+            or [(root, slug) for root, slug in CASES
+                if r14_source_root(root, slug) != root] != [
+                    ("source-retrieve-d2", "retrieve-d2")]):
+        raise AssertionError("R14_ORIGINAL_SOURCE_CHECKOUT_PIN_DRIFT")
+    bank = json.loads((RECONCILIATION / "qrt-intent-witnesses-pilot.v1.json")
+                      .read_text(encoding="utf-8"))
+    witness = [entry for entry in bank["witnesses"]
+               if entry["cell_id"] == "QRT-RETRIEVE-D2"]
+    if (len(witness) != 1
+            or witness[0]["source_pin"]["commit"] != R14_RETRIEVE_D2_SOURCE_COMMIT
+            or witness[0]["source_alternate_commit"] != R8_RETRIEVE_D2_SOURCE_COMMIT):
+        raise AssertionError("R14_ORIGINAL_WITNESS_SOURCE_PIN_DRIFT")
+
+
+
 
 # Only structural rejection codes already defined by qrt_intent_native_evidence.py.
 # Neither arbitrary child output nor original question text is logged or uploaded.
@@ -519,6 +555,7 @@ def diagnostic_self_test() -> None:
         assert secret not in imported_error
         assert "Traceback" not in imported_bytes
         assert "Traceback" not in imported_error
+    verify_r14_source_isolation()
     fanout_self_test()
     print("R14 source-safe classifier + on-disk JSON round-trip + "
           "real imported-ContractError subprocess: PASS")
@@ -608,6 +645,7 @@ def main() -> None:
     if args.out is None:
         parser.error("--out is required outside synthetic diagnostic self-test")
     verify_old_r8_assignments()
+    verify_r14_source_isolation()
     witnesses = json.loads((RECONCILIATION / "qrt-intent-witnesses-pilot.v1.json")
                            .read_text(encoding="utf-8"))
     by_cell = {w["cell_id"]: w for w in witnesses["witnesses"]}
@@ -632,7 +670,7 @@ def main() -> None:
         def execute_case(root: str, slug: str) -> dict:
             cid = "QRT-" + slug.upper()
             witness = by_cell[cid]
-            original = Path(root).resolve()
+            original = Path(r14_source_root(root, slug)).resolve()
             original_source_is_pinned(original, witness)
             expected_manifest = witness["source_pin"]["manifest_path"]
             if root not in overlays:
@@ -709,7 +747,7 @@ def main() -> None:
             original_source_is_pinned(original, witness)
             return record
         def verify_case_pin(root: str, slug: str) -> None:
-            original_source_is_pinned(Path(root).resolve(),
+            original_source_is_pinned(Path(r14_source_root(root, slug)).resolve(),
                                       by_cell["QRT-" + slug.upper()])
 
         try:
