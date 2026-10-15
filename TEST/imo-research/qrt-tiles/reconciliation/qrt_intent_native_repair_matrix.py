@@ -70,7 +70,8 @@ def summarize(handoff: dict, reports: dict[str, tuple[dict, str]]) -> dict:
         obs = post.get("observed", {})
         expected_qid = cell["qrt_hypothesis_not_a_verdict"]["primary_question_id"]
         expected_concept = w.get("selected_concept_id")
-        require(nav.get("cell_id") == cid and
+        require(isinstance(expected_qid, str) and bool(expected_qid.strip()) and
+                nav.get("cell_id") == cid and
                 post.get("schema") == "imo182-r11-native-postcommit-technical-probe/v1" and
                 nav.get("schema") == "imo182-r8-real-native-navigation/v1" and
                 post.get("source_question_id") == expected_qid and
