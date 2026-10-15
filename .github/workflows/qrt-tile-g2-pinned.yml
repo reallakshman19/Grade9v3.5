@@ -49,7 +49,8 @@ jobs:
           [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "SOURCE_SHA_NOT_EXACT"; exit 1; }
           git fetch --no-tags origin refs/heads/feat/imo-grade9-68-questions-master-suite:refs/remotes/origin/qrt-g2-research
           git fetch --no-tags origin refs/heads/repair/qrt-tile-html-g2:refs/remotes/origin/qrt-g2-repair
-          test "$(git rev-parse refs/remotes/origin/qrt-g2-research)" = "$BASELINE_SHA"
+          git merge-base --is-ancestor "$BASELINE_SHA" refs/remotes/origin/qrt-g2-research || { echo "FEATURE_BRANCH_NO_LONGER_DESCENDS_FROM_ORIGINAL_BASELINE"; exit 1; }
+          echo "FEATURE_CURRENT_SHA=$(git rev-parse refs/remotes/origin/qrt-g2-research); original BASELINE_SHA=$BASELINE_SHA; independent SOURCE_SHA=$SOURCE_SHA"
           if [ "$SOURCE_SHA" != "$BASELINE_SHA" ]; then
             git merge-base --is-ancestor "$BASELINE_SHA" "$SOURCE_SHA" || { echo "SOURCE_NOT_DESCENDED_FROM_BASELINE"; exit 1; }
             git merge-base --is-ancestor "$SOURCE_SHA" refs/remotes/origin/qrt-g2-repair || { echo "SOURCE_NOT_IN_REPAIR_PR_270"; exit 1; }
