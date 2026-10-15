@@ -48,6 +48,8 @@ class Elements(HTMLParser):
         a = dict(attrs)
         self.attrs.append((tag, a))
         ident = a.get("id")
+        if tag in {"br", "hr", "img", "input", "meta", "link", "source", "wbr"}:
+            return
         self.stack.append((tag, ident))
         if ident:
             self.fragments.setdefault(ident, [])
