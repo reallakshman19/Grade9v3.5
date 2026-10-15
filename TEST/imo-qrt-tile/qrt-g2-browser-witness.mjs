@@ -139,7 +139,9 @@ try {
       afterHint.hint2?.hidden === false && afterHint.hint2?.inert === false &&
       afterHint.solution?.hidden === true, JSON.stringify(afterHint));
 
-  const hintText = await card.locator("[id=" + JSON.stringify("hint2-"+qid) + "]").innerText();
+  const hintTier = card.locator("[id=" + JSON.stringify("hint2-"+qid) + "]");
+  await hintTier.locator("> summary").click();
+  const hintText = await hintTier.locator(".ladder-rung").innerText();
   add("BROWSER_Q022_REVISED_HINT_LEAVES_VALUE_TO_LEARNER",
       hintText.includes("Carry out the difference of squares yourself") &&
       !/9\s*[-−]\s*2\s*=\s*7/.test(hintText),
