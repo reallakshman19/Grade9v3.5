@@ -48,7 +48,7 @@ jobs:
           test "$(git rev-parse refs/remotes/origin/qrt249-repaired-source)" = "$SOURCE_SHA"
           git worktree add --detach "$RUNNER_TEMP/qrt249-pinned-repaired-source" "$SOURCE_SHA"
           test "$(git -C "$RUNNER_TEMP/qrt249-pinned-repaired-source" rev-parse HEAD)" = "$SOURCE_SHA"
-          for p in Shared/tools/imo_qrt_validator.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_factor_evidence.py Shared/tools/imo_qrt_core_relationships.py tests/test_imo_qrt_core_relationships.py Shared/tools/imo_qrt_hots_review.py tests/test_imo_qrt_hots_review.py Shared/tools/imo_qrt_retrieve_d1.py tests/test_imo_qrt_retrieve_d1.py; do
+          for p in Shared/tools/imo_qrt_validator.py tests/test_imo_qrt_validator.py tests/test_imo_qrt_factor_evidence.py Shared/tools/imo_qrt_core_relationships.py tests/test_imo_qrt_core_relationships.py Shared/tools/imo_qrt_hots_review.py tests/test_imo_qrt_hots_review.py Shared/tools/imo_qrt_standalone_gate.py Shared/tools/imo_qrt_retrieve_d1.py tests/test_imo_qrt_retrieve_d1.py; do
             mkdir -p "$RUNNER_TEMP/qrt249-pinned-repaired-source/$(dirname "$p")"
             git show "$GITHUB_SHA:$p" > "$RUNNER_TEMP/qrt249-pinned-repaired-source/$p"
           done
