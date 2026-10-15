@@ -1,0 +1,97 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-IRRATIONAL-DECIMAL-CLASSIFICATION",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Number Systems",
+  "topic_name": "Number Systems",
+  "subtopic": "NS-IRRATIONAL-NUMBERS",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2023-24-A-Q020"
+  ],
+  "entry_assumptions": [
+    "Rational means expressible as a ratio of two integers with nonzero denominator.",
+    "A decimal terminating after finitely many positions is rational, as is an eventually periodic decimal."
+  ],
+  "inferential_jump": "Classify real-number decimal expansions using eventual periodicity: terminating and eventually repeating expansions are rational; a rigorously non-terminating, non-eventually-periodic expansion is irrational. Simplify roots of rational perfect squares before categorizing.",
+  "relation_refs": {
+    "domain": "Number Systems",
+    "hypotheses": [
+      "Base-ten positional notation; listed decimals denote actual infinite expansions rather than truncated approximations.",
+      "Square-root examples use the principal nonnegative root."
+    ],
+    "excluded_values": [
+      "The symbol ... with no specified continuation rule does not by itself prove nonperiodicity.",
+      "A finite initial decimal fragment cannot establish irrationality."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "p/q, q ≠ 0",
+      "word_meaning": "Exact rational-number representation; denominator is a nonzero integer."
+    },
+    {
+      "symbol": "0.abcdabcd...",
+      "word_meaning": "Eventually periodic base-ten tails come from rational fractions."
+    },
+    {
+      "symbol": "√(m²)=|m|",
+      "word_meaning": "Square roots of integer perfect squares simplify to rational integers."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Use reduced fractions to recognize terminating decimals.",
+      "derivation": "If the reduced denominator has only factors 2 and 5, its decimal terminates; otherwise long division eventually repeats a remainder.",
+      "why_valid": "Long division has finitely many possible nonzero remainders."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Show eventually periodic decimals are rational.",
+      "derivation": "For x=0.454545..., compute 100x−x=45 and x=45/99=5/11.",
+      "why_valid": "Subtracting aligned repeating tails cancels the infinite remainder."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Examine an explicitly nonperiodic pattern.",
+      "derivation": "For a decimal whose successive 1 digits have arbitrarily longer zero gaps, no fixed finite repeat block can generate its tail.",
+      "why_valid": "Every eventually periodic tail has bounded spacing between any symbol appearing infinitely often."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Check radicals before labeling.",
+      "derivation": "√81=9 and √0.09=0.3, whereas √2 cannot be expressed as a rational fraction.",
+      "why_valid": "Square-root simplification distinguishes perfect rational squares from genuine irrational roots."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "EVERY_INFINITE_DECIMAL_IRRATIONAL",
+      "wrong_idea": "Any non-terminating decimal must be irrational.",
+      "diagnostic_prompt": "Test 0.333... using fraction 1/3.",
+      "repair": "Recurring non-terminating decimals are rational."
+    },
+    {
+      "code": "ELLIPSIS_PROVES_NONPERIODIC",
+      "wrong_idea": "A finite digit sample followed by dots proves its tail is nonperiodic.",
+      "diagnostic_prompt": "Could the digits change after the displayed prefix?",
+      "repair": "Require a precise continuation rule to prove nonperiodicity."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Determine whether 0.272727..., √64, √3, and a decimal with one more zero between each consecutive pair of 7 digits are rational or irrational.",
+    "model_answer": "0.272727...=27/99=3/11 and √64=8 are rational. √3 is irrational. A decimal with strictly increasing zero gaps between infinitely many 7s is not eventually periodic, hence irrational."
+  },
+  "exit_task": {
+    "prompt": "Classify √121, 0.181818..., 0.125, and the infinite decimal 0.1010010001... defined by exactly k zeros after its kth digit 1.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "√121=11, 0.181818...=18/99, 0.125=1/8 are rational. By the stipulated unbounded zero-gap rule the fourth expansion is not eventually periodic, so is irrational.",
+      "check": "Verify every worked claim against its stated domain and the original defining condition; examples are independent of the linked research question."
+    }
+  }
+}

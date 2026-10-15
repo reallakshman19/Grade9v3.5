@@ -1,0 +1,65 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-REGULAR-POLYGON-EXTERIOR-TURN",
+  "paired_core1a_ref": "CORE1A-MATH-REGULAR-POLYGON-EXTERIOR-TURN",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Introduction to Euclid's Geometry",
+  "subtopic": "GEO-REGULAR-POLYGON-FORMULA",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "A regular polygon's exterior turn is 72°. What does walking once around its boundary prove?",
+      "options": [
+        "A. The exterior turns sum to 180°.",
+        "B. Five equal turns complete 360°.",
+        "C. Side lengths must be 72 units.",
+        "D. Its interior angle is also 72°."
+      ],
+      "predict_rationale": "Commit to the relevant invariant on a separate authored example before observing any worked model. The model answer is disclosed only after the learner attempts."
+    },
+    "stage_2_attempt": {
+      "task": "Derive the side count for a different regular polygon whose interior angle is 150°, justifying each conversion.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Adjacent interior I and exterior E are supplementary, so E=180°−150°=30°.",
+        "step_2": "The full exterior turning total is 360°.",
+        "step_3": "Equal turns give n·30°=360° and n=12.",
+        "conclusion": "A regular dodecagon indeed has interior angle 150°."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "INVERSE_OR_CONTRAPOSITIVE_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "If a regular polygon has 9 sides, reconstruct its exterior and interior angles from the side count.",
+          "expected_insight": "The turn E=360°/9=40°, so I=180°−40°=140°."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "A claimed regular polygon has interior angle 100°. What does the side-count relation imply?",
+      "options": [
+        "A. Exactly 4.5 sides, so no such regular polygon exists.",
+        "B. It must be a square.",
+        "C. It has nine sides.",
+        "D. Every polygon with 100° angles is regular."
+      ],
+      "correct_option": "A",
+      "explanation": "The turn is 80°; 360°/80°=4.5 is not an integer, so no regular convex n-gon has that interior angle."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Distinguish the angle inside the polygon from the turn made as you walk around it."
+    },
+    "hint_2_tactical_step": {
+      "role": "METHOD_NOT_ORIGINAL_OPTION",
+      "text": "Make a full circuit of equal exterior turns, then use a linear pair to translate back to the interior angle."
+    }
+  }
+}

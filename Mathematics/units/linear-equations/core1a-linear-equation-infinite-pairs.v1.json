@@ -1,0 +1,98 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-LINEAR-EQUATION-INFINITE-PAIRS",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Linear Equations in Two Variables",
+  "topic_name": "Linear Equations in Two Variables",
+  "subtopic": "LIN_EQ-SOLUTIONS-OF-LINEAR-EQUATION",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2023-24-A-Q021"
+  ],
+  "entry_assumptions": [
+    "An ordered pair (x,y) solves an equation only when substitution makes it true.",
+    "At least one of a and b is nonzero; x and y range over all real numbers."
+  ],
+  "inferential_jump": "One nondegenerate linear equation ax+by=c in two real variables determines an affine line, hence infinitely many ordered solution pairs; it does not uniquely determine both variables.",
+  "relation_refs": {
+    "domain": "Linear Equations in Two Variables",
+    "hypotheses": [
+      "The coefficients and constant are fixed real numbers with (a,b)≠(0,0).",
+      "Exactly one linear equation is supplied, not an additional independent constraint."
+    ],
+    "excluded_values": [
+      "If a=b=0 with c≠0, there is no solution.",
+      "If a=b=c=0, every ordered real pair solves the identity.",
+      "Over a finite restricted domain, the number of allowed pairs may not be infinite."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "ax+by=c, (a,b)≠(0,0)",
+      "word_meaning": "Nondegenerate linear equation in the plane."
+    },
+    {
+      "symbol": "y=(c−ax)/b (b≠0)",
+      "word_meaning": "Each freely chosen real x determines one real y."
+    },
+    {
+      "symbol": "x=c/a (b=0,a≠0)",
+      "word_meaning": "Vertical line: x fixed but y can vary freely."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Identify the free coordinate.",
+      "derivation": "For 2x+3y=12, rearrange to y=(12−2x)/3.",
+      "why_valid": "Because y is defined for every real x, the equation does not fix a unique pair."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Exhibit different exact solutions.",
+      "derivation": "Taking x=0 gives (0,4); x=3 gives (3,2); x=6 gives (6,0).",
+      "why_valid": "Direct substitution confirms each ordered pair is valid."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Generalize from infinitely many choices.",
+      "derivation": "For each real t, (t,(12−2t)/3) satisfies the same equation.",
+      "why_valid": "Distinct t values produce distinct ordered pairs; the real line has infinitely many t."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Distinguish from a system.",
+      "derivation": "A second independent nonparallel equation might intersect the first at a single point.",
+      "why_valid": "One equation alone is a one-dimensional constraint, whereas two independent equations can fix two variables."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "TWO_VARIABLES_MEANS_TWO_SOLUTIONS",
+      "wrong_idea": "Two variables imply exactly two solutions.",
+      "diagnostic_prompt": "Substitute three distinct choices of x.",
+      "repair": "Number of unknowns is not number of solutions."
+    },
+    {
+      "code": "ONLY_INTERCEPTS_COUNT",
+      "wrong_idea": "Only the two axis intercepts solve the equation.",
+      "diagnostic_prompt": "Check a non-axis point such as (3,2).",
+      "repair": "Every point on the line is a solution."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "How many real solutions does 2x+3y=12 have? Provide a parametrization and three examples.",
+    "model_answer": "Infinitely many: (x,y)=(t,(12−2t)/3) for any real t. Examples (0,4),(3,2),(6,0) all satisfy the equation."
+  },
+  "exit_task": {
+    "prompt": "For the single equation 4x+y=8, parameterize the real solutions, test (1,4), and explain whether two intercepts exhaust the solution set.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "(x,y)=(t,8−4t) with arbitrary real t. (1,4) satisfies 4+4=8. The intercepts (0,8),(2,0) are only two of infinitely many points.",
+      "check": "Verify every worked claim against its stated domain and the original defining condition; examples are independent of the linked research question."
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-IRRATIONAL-DECIMAL-CLASSIFICATION",
+  "paired_core1a_ref": "CORE1A-MATH-IRRATIONAL-DECIMAL-CLASSIFICATION",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Number Systems",
+  "subtopic": "NS-IRRATIONAL-NUMBERS",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Which observation proves that the entire repeating decimal 0.666... is rational?",
+      "options": [
+        "A. It is infinite, so irrational.",
+        "B. It equals the fraction 2/3.",
+        "C. The digit 6 is even.",
+        "D. Every decimal with dots is undefined."
+      ],
+      "predict_rationale": "Commit to the relevant invariant on a separate authored example before observing any worked model. The model answer is disclosed only after the learner attempts."
+    },
+    "stage_2_attempt": {
+      "task": "Classify a new set consisting of √100, 0.141414..., √5 and 0.1010010001... with explicitly increasing zero gaps, showing the criterion for each classification.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "√100=10 is an integer and thus rational.",
+        "step_2": "0.141414... has period 14 and equals 14/99.",
+        "step_3": "√5 is irrational: no ratio of integers squares to 5.",
+        "conclusion": "The specified unbounded gaps prevent any eventual decimal period."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "INVERSE_OR_CONTRAPOSITIVE_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "Given a decimal that repeats 37 forever, reconstruct an integer fraction without performing long division.",
+          "expected_insight": "Let x=0.373737...; 100x−x=37, so x=37/99."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Can a decimal ending in 1,000,000 consecutive zeros be proven irrational from that finite prefix?",
+      "options": [
+        "A. Yes, the run is long.",
+        "B. No; a finite prefix admits both periodic and nonperiodic continuations.",
+        "C. Yes, because zero is irrational.",
+        "D. Only if its first digit is 9."
+      ],
+      "correct_option": "B",
+      "explanation": "Only a fully specified infinite tail determines eventual periodicity."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Decide rationality from termination or eventual periodicity, not merely from the number of shown digits."
+    },
+    "hint_2_tactical_step": {
+      "role": "METHOD_NOT_ORIGINAL_OPTION",
+      "text": "For repeated blocks multiply by a power of 10 and subtract; for growing zero gaps ask whether any fixed period can persist."
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-LINEAR-EQUATION-INFINITE-PAIRS",
+  "paired_core1a_ref": "CORE1A-MATH-LINEAR-EQUATION-INFINITE-PAIRS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Linear Equations in Two Variables",
+  "subtopic": "LIN_EQ-SOLUTIONS-OF-LINEAR-EQUATION",
+  "target_demand": "RETRIEVE",
+  "target_band": "D1",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "What is true of the real solutions of x+2y=4?",
+      "options": [
+        "A. Exactly one pair.",
+        "B. Exactly two pairs.",
+        "C. One pair for every choice of real y.",
+        "D. No pair unless x is positive."
+      ],
+      "predict_rationale": "Commit to the relevant invariant on a separate authored example before observing any worked model. The model answer is disclosed only after the learner attempts."
+    },
+    "stage_2_attempt": {
+      "task": "Without solving a second equation, express every ordered pair solving 5x−2y=10 using a free real parameter, then verify at two parameter values.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Let x=t for arbitrary real t.",
+        "step_2": "Rearrange 5t−2y=10 to y=(5t−10)/2.",
+        "step_3": "Substitution yields 5t−2((5t−10)/2)=10 for every real t.",
+        "conclusion": "Different t give different pairs, so the solution set is infinite."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "INVERSE_OR_CONTRAPOSITIVE_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "If two different coordinate pairs both satisfy one linear equation, does that by itself guarantee infinitely many real pairs?",
+          "expected_insight": "Yes, every point on the line segment joining two distinct solutions, and its extension, satisfies the same affine linear equation."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "What if the supposed 'linear equation' is 0x+0y=7?",
+      "options": [
+        "A. Infinitely many pairs.",
+        "B. Exactly one pair.",
+        "C. No pairs.",
+        "D. All pairs except (0,0)."
+      ],
+      "correct_option": "C",
+      "explanation": "The nondegeneracy condition (a,b)≠(0,0) is required; 0=7 is inconsistent."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "A single linear relation generally leaves one degree of freedom."
+    },
+    "hint_2_tactical_step": {
+      "role": "METHOD_NOT_ORIGINAL_OPTION",
+      "text": "Assign a real parameter to one coordinate, solve for the other, then substitute it back."
+    }
+  }
+}
