@@ -52,6 +52,8 @@ WORKFLOW = Path(".github/workflows/imo182-r8-qrt-intent-contract.yml")
 # Neither arbitrary child output nor original question text is logged or uploaded.
 SAFE_NATIVE_FAILURE_CODES = frozenset((
     "UNVALIDATED_QRT_CONTRACT",
+    "PATH_ESCAPE",  # Audited qrt_intent_contract.ensure() identifiers
+    "SOURCE_MISSING",
     "SOURCE_CHANGED_SINCE_CONTRACT",
     "MANIFEST_CHANGED_SINCE_CONTRACT",
     "REGISTRY_CHANGED_SINCE_CONTRACT",
@@ -79,6 +81,8 @@ SAFE_NATIVE_FAILURE_CODES = frozenset((
 ))
 SAFE_FAILURE_FALLBACKS = (
     ("ModuleNotFoundError:", "CHILD_MODULE_NOT_FOUND"),
+    ("ContractError:", "CHILD_CONTRACT_ERROR_UNCLASSIFIED"),
+    ("AssertionError:", "CHILD_ASSERTION_UNCLASSIFIED"),
     ("FileNotFoundError:", "CHILD_FILE_NOT_FOUND"),
     ("KeyError:", "CHILD_KEY_NOT_FOUND"),
     ("JSONDecodeError:", "CHILD_JSON_DECODE_FAILURE"),
@@ -100,17 +104,49 @@ def source_safe_failure_code(output: str) -> str:
 
 
 def diagnostic_self_test() -> None:
-    """CI-run synthetic failure mutation with a private-looking sentinel."""
+    """Synthetic source-safe child failure; verify actual on-disk JSON receipt."""
+    from types import SimpleNamespace
+    from unittest.mock import patch
+
     secret = "ORIGINAL_QUESTION_CONTENT_MUST_NOT_ESCAPE"
     sample = ("Traceback: " + secret +
-              "\\nRuntimeError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
+              "\\nContractError: CORE1B_GOLDEN_RECONSTRUCTION_DRIFT")
     classified = source_safe_failure_code(sample)
     assert classified == "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT"
     assert secret not in classified
     assert source_safe_failure_code(secret) == "UNCLASSIFIED_SUBPROCESS_FAILURE"
     assert source_safe_failure_code(
         "FileNotFoundError: " + secret) == "CHILD_FILE_NOT_FOUND"
-    print("R14 source-safe failure-code classifier synthetic tests: 3 PASS")
+    assert source_safe_failure_code(
+        "ContractError: " + secret) == "CHILD_CONTRACT_ERROR_UNCLASSIFIED"
+
+    with tempfile.TemporaryDirectory(prefix="r14-diagnostic-synthetic-") as td:
+        receipt_path = Path(td) / "FAILURE-CODE.json"
+        fake_child = SimpleNamespace(returncode=1, stdout=sample)
+        with patch("subprocess.run", return_value=fake_child):
+            try:
+                call(["synthetic-not-executed"], phase="native-evidence",
+                     cell_id="QRT-EXPLAIN-D3", diagnostic_out=receipt_path)
+            except RuntimeError as err:
+                assert "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT" in str(err)
+            else:
+                raise AssertionError("R14_SYNTHETIC_FAILURE_NOT_FAIL_CLOSED")
+
+        written = receipt_path.read_text(encoding="utf-8")
+        assert written.endswith("\\n") is False  # reject literal backslash+n
+        assert written.endswith("\n")  # actual final U+000A whitespace
+        receipt = json.loads(written)
+        assert receipt["schema"] == "imo182-prhead-overlay-failure-code/v1"
+        assert receipt["phase"] == "native-evidence"
+        assert receipt["cell_id"] == "QRT-EXPLAIN-D3"
+        assert receipt["failure_code"] == "CORE1B_GOLDEN_RECONSTRUCTION_DRIFT"
+        assert receipt["exit_code"] == 1
+        assert receipt["candidate_21_case_result"] == "NOT_QUALIFIED"
+        assert receipt["native_return_counts_admissible"] is False
+        assert receipt["no_source_text_or_raw_traceback"] is True
+        assert secret not in written
+    print("R14 source-safe classifier + on-disk JSON round-trip: PASS")
+
 
 
 def call(args: list[str], *, cwd: Path | None = None,
@@ -142,7 +178,7 @@ def call(args: list[str], *, cwd: Path | None = None,
                 "release": "HOLD",
             }
             diagnostic_out.parent.mkdir(parents=True, exist_ok=True)
-            diagnostic_out.write_text(json.dumps(receipt, indent=2) + "\\n",
+            diagnostic_out.write_text(json.dumps(receipt, indent=2) + "\n",
                                       encoding="utf-8")
             print(f"R14_SOURCE_SAFE_FAILURE phase={phase} cell={cell_id} "
                   f"code={code}; candidate 21 cases HOLD, no renderer verdict",
