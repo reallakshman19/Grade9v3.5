@@ -39,16 +39,16 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import subprocess
-          allowed = {'docs/.pages-manifest.json', 'docs/test/imo-grade9/core1b.html'}
+          allowed = {'docs/.pages-manifest.json', 'docs/test/imo-grade9/core1b.html', 'docs/standalone/mathematics-imo-grade9-master-suite.html'}
           rows = subprocess.check_output(['git','status','--porcelain=v1','-uall'],text=True).splitlines()
           modified = {r[3:] for r in rows}
           if not modified:
-              raise SystemExit("NO_DIFF: expected two stale Pages outputs")
+              raise SystemExit("NO_DIFF: expected three current-upstream Pages outputs")
           unexpected = modified - allowed
           if unexpected:
               raise SystemExit(f"OUT_OF_SCOPE_GENERATION: {sorted(unexpected)}")
           if modified != allowed:
-              raise SystemExit(f"EXPECTED_BOTH_STALE_OUTPUTS: {sorted(modified)}")
+              raise SystemExit(f"EXPECTED_THREE_PAGES_OUTPUTS: {sorted(modified)}")
           print("SCOPE_OK: exact generated mirror diff", *sorted(modified),sep="\n - ")
           subprocess.run(['git','add','--',*sorted(modified)],check=True)
           PY
