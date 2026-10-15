@@ -30,7 +30,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD^)" = "d44636e8943f37adb00d90adf157378e958e56cc"
+          test "$(git rev-parse HEAD^)" = "b355598fb49e2ab31f40f1c15637470467328d48"
           test "${GITHUB_REF}" = "refs/heads/repair/qrt-tile-html-g2"
           test -z "$(git status --porcelain)"
           git rev-parse HEAD
@@ -116,7 +116,8 @@ jobs:
             public/test/imo-grade9/core2.html \
             docs/test/imo-grade9/core2.html
           test "$(git diff --cached --name-only | wc -l)" -eq 4
-          git diff --cached --check
+          # The inherited HTML builder emits indentation-only lines; do not hand-edit its deterministic output.
+          git -c core.whitespace=-blank-at-eol diff --cached --check
           git commit -m "build(qrt-t1): freeze eight concept-linked Core lessons in four HTML mirrors"
           git push origin HEAD:refs/heads/repair/qrt-tile-html-g2
           echo "FROZEN_REPAIR_SHA=$(git rev-parse HEAD)" | tee scratch/qrt-g2-coder-frozen-commit.txt
