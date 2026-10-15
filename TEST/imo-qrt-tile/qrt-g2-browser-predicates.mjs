@@ -6,7 +6,12 @@ export function q022HintPreservesProtectedWork(text) {
   if (!hint.includes("Carry out the difference of squares yourself")) return false;
   // Q022's keyed numerical answer must be learner-computed, independently of
   // whether the original 9-2=7 expansion string appears verbatim.
-  if (/\b7\b/.test(hint)) return false;
+  if (/\b(?:7|seven)\b/i.test(hint)) return false;
+  // NFKC maps mathematical double-struck ℚ to Q. Reject unambiguous
+  // category labels, while preserving a reviewer requirement for paraphrases.
+  if (/[ℚℝ]/u.test(text) || /\\mathbb\s*\{\s*[QR]\s*\}/i.test(text)) return false;
+  if (/\bclassification\b\s*(?:is|equals|=|:)\s*(?:a\s+)?rational\b/i.test(hint)) return false;
+  if (/\b(?:rational\s+number|rational)\b/i.test(hint)) return false;
   // A classifier sentence giving the keyed category is also protected W.
   if (/\b(?:the\s+)?(?:answer|result|value|product|number|it|this|which)\s+(?:is|equals|=|:)\s+(?:a\s+)?rational(?:\s+number)?\b/i.test(hint)) return false;
   if (/\brational(?:\s+number)?\s+(?:is\s+)?(?:the\s+)?(?:answer|choice)\b/i.test(hint)) return false;
