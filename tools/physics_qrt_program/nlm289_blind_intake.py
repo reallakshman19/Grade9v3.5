@@ -26,7 +26,7 @@ def compact_sha(value: dict) -> str:
 
 
 def blob_sha(data: bytes) -> str:
-    return hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\\0" + data).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
 
 
 def build_blind_packet(*, root: Path = REPO) -> dict:
