@@ -1,0 +1,43 @@
+name: IMO182 EXPLAIN-D3 cue counterfactual (TEST only)
+on:
+  pull_request:
+    paths:
+      - 'TEST/imo-research/qrt-tiles/reconciliation/explain_d3_cue_counterfactual.py'
+      - '.github/workflows/imo182-explain-d3-cue-counterfactual.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-preserving-counterfactual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout exact EXPLAIN-D3 authored TEST source (not writer PR)
+        uses: actions/checkout@v4
+        with:
+          ref: dfe4bb6766b87132423b01ffaa914ade1145424f
+          path: d3-source
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install native renderer + Chromium dependencies
+        run: |
+          python -m pip install --quiet jsonschema playwright
+          python -m playwright install --with-deps chromium
+      - name: Original registered renderer vs disposable reduced-cue proposal
+        run: |
+          python TEST/imo-research/qrt-tiles/reconciliation/explain_d3_cue_counterfactual.py \
+            --repo d3-source --ledger-root .
+      - name: Archive a TEST proposal, not new QRT acceptance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: imo182-explain-d3-cue-counterfactual-not-adopted
+          path: |
+            d3-source/build/imo182-qrt/d3-explain-cue-counterfactual/
+            d3-source/build/imo182-qrt/d3/explain-cue-original/render-receipt.json
+            d3-source/build/imo182-qrt/d3/explain-cue-proposed/render-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
