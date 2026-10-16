@@ -130,6 +130,25 @@ class PhysicsNlm289SourceCorrection(unittest.TestCase):
         self.assertNotIn("starting pull", route[1]["action"])
         self.assertNotIn("can start the crate", route[2]["output"])
 
+    def test_blind_pass_a_packet_is_source_bound_and_answer_withheld(self):
+        from tools.physics_qrt_program.nlm289_blind_intake import (
+            build_blind_packet, validate_blind_packet,
+        )
+        packet = build_blind_packet(root=ROOT)
+        validate_blind_packet(packet)
+        self.assertEqual(packet["question_sha256"], CANDIDATE_DIGEST)
+        self.assertEqual(packet["question_stem"], self.after["stem"])
+        self.assertEqual(packet["question_conditions"], self.after["conditions"])
+        self.assertEqual(packet["phase"], "PASS_A_ANSWER_WITHHELD")
+        for secret in ("answer", "hints", "rubric", "transfer", "reasoning_route"):
+            self.assertNotIn(secret, packet)
+        self.assertEqual(packet["reviewer_qualification"], "INDEPENDENT_HUMAN_NOT_ASSIGNED")
+        self.assertEqual(packet["academic_verdict"], "NOT_REVIEWED")
+        tampered = dict(packet)
+        tampered["answer"] = self.after["answer"]
+        with self.assertRaises(ValueError):
+            validate_blind_packet(tampered)
+
     def test_authored_hints_do_not_prove_h2_h3_ui(self):
         self.assertEqual(len(self.after["hint_ladder"]), 3)
         self.assertEqual(self.after["hint_ladder"][0]["purpose"], "ORIENT")
