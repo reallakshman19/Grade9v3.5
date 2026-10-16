@@ -1,0 +1,61 @@
+name: Physics NLM submitted AI review exact validator replay (nonapproval)
+on:
+  push:
+    branches:
+      - test/physics-nlm-submitted-review-cli-287
+    paths:
+      - 'tests/fixtures/physics_qrt_nlm_ai_response_287.v1.json'
+      - 'tests/test_physics_nlm_submitted_review_287.py'
+      - '.github/workflows/physics-qrt-nlm-submitted-review.yml'
+  pull_request:
+    paths:
+      - 'tests/fixtures/physics_qrt_nlm_ai_response_287.v1.json'
+      - 'tests/test_physics_nlm_submitted_review_287.py'
+      - '.github/workflows/physics-qrt-nlm-submitted-review.yml'
+permissions:
+  contents: read
+jobs:
+  replay-authentication-pending:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run real #287 response through exact pinned Python validator
+        run: |
+          set -e
+          python3 -m unittest tests.test_physics_nlm_submitted_review_287 tests.test_physics_qrt_program_review_response -v
+          mkdir -p build/physics-nlm-submitted-review
+          python3 -m Physics.adapter.qrt_program.qrt_review_packet \
+            --question Q-PHY-NLM-2B-FRICTION-STATE-01 > build/physics-nlm-submitted-review/pinned-packet.json
+          python3 -m Physics.adapter.qrt_program.qrt_review_response \
+            --packet build/physics-nlm-submitted-review/pinned-packet.json \
+            --response tests/fixtures/physics_qrt_nlm_ai_response_287.v1.json \
+            > build/physics-nlm-submitted-review/structural-verdict.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("build/physics-nlm-submitted-review")
+          packet=json.loads((root/"pinned-packet.json").read_text())
+          result=json.loads((root/"structural-verdict.json").read_text())
+          expected="40c37373238ee796fc2857562cb38033b762277284322315dcc698c2cca12f10"
+          assert packet["packet_sha256"]==expected
+          assert packet["question_count"]==1
+          assert result["status"]=="REVIEW_SUBMITTED_FOR_AUTHENTICATION"
+          assert result["structurally_complete"] is True
+          assert result["reviewer_authenticity"]=="NOT_VERIFIED_BY_THIS_TOOL"
+          assert result["science_certification"]=="NOT_GRANTED_BY_THIS_TOOL"
+          assert result["owner_authorization"]=="NOT_GRANTED_BY_THIS_TOOL"
+          assert result["release_verdict"]=="HOLD"
+          print("EXACT_SUBMITTED_AI_RESPONSE_SHAPE_VALID_ACADEMIC_HOLD")
+          PY
+      - name: Upload structural verdict, not blind pass or academic certification
+        uses: actions/upload-artifact@v4
+        with:
+          name: physics-nlm-ai-response-structure-not-academic-approval
+          path: build/physics-nlm-submitted-review/structural-verdict.json
+          retention-days: 30
