@@ -14,6 +14,7 @@ from pathlib import Path
 
 from .contracts import validate_lock, validate_receipt, converge
 from Physics.adapter.qrt_crosswalk import inspect_question
+from .bootstrap import assemble, BootstrapError
 
 
 def _read(path: str) -> dict:
@@ -29,6 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     lock_parser = sub.add_parser("validate-lock")
     lock_parser.add_argument("lock")
     lock_parser.add_argument("--require-authorized", action="store_true")
+    sub.add_parser("bootstrap-w0")
     source = sub.add_parser("inspect-question")
     source.add_argument("--package", required=True)
     source.add_argument("--question", required=True)
@@ -38,7 +40,10 @@ def main(argv: list[str] | None = None) -> int:
         p.add_argument("receipts", nargs="+")
     args = parser.parse_args(argv)
     try:
-        if args.command == "inspect-question":
+        if args.command == "bootstrap-w0":
+            result = assemble()
+            code = 0  # Source verification only; status still HOLD.
+        elif args.command == "inspect-question":
             result = inspect_question(args.package, args.question)
             code = int(bool(result["errors"]))
         elif args.command == "validate-lock":

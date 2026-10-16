@@ -37,3 +37,7 @@ Select a small, exact case set from Physics real-demand evidence: Vectors/Motion
 ## Native source-to-Core crosswalk (read-only)
 
 Run `python3 -m tools.physics_qrt_program.cli inspect-question --package Physics/library/phy-nlm-first-law.v1.json --question Q-PHY-NLM-2B-FRICTION-STATE-01` to inspect actual source custody, primary capability and five-factor difficulty using the canonical `question_difficulty.derive`. It explicitly reports QRT demand UNRESOLVED, published output NOT_ATTESTED and academic REVIEW_REQUIRED. It never infers official source identity from external-demand citations.
+
+## Wave-0 source candidates
+
+Run `python3 -m tools.physics_qrt_program.cli bootstrap-w0`. It reads four real authored Physics source questions listed in `witnesses.candidate.v1.json`, verifies question/capability/Core identities and emits computed source SHA-256s in a draft, strictly unapproved work-lock. Vectors, Motion 2D, NLM FBD and NLM transfer are included; Relative Motion remains optional extension regression. This does not supply an approved scientific oracle, owner decision, QRT demand or learner/render evidence.

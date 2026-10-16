@@ -64,3 +64,7 @@ python3 Shared/tools/republish.py
 python3 -m unittest tests.test_c6_examside_motion_in_plane tests.test_g9_nlm_examside_core2b_transfer
 
 Chromium remains NOT_RUN unless browser executable is present and actual outputs are audited at their exact SHA. Never execute republish.py --write or alter protected goldens merely for a passing report.
+
+## Wave-0 candidate source readback
+
+`witnesses.candidate.v1.json` lists four real canonical author-created source questions with pinned Git blob identities for Vector signed components, horizontal launch, NLM FBD and NLM Core2B friction transfer. `bootstrap.py` checks each named question at the local base and emits a **DRAFT_HOLD** work-lock with computed content SHA-256; it never creates an approved work-lock. Source custody, QRT demand, scientific oracle, genuine learner rendering, browser and academic review remain separate missing proof. C0 must deliberately review candidates and record decisions rather than automatically advance Wave 1 or 2.
