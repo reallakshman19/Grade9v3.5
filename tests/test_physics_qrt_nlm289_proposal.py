@@ -174,7 +174,7 @@ class NLM289ProposalTests(unittest.TestCase):
         falsifiers=self.proposal["review_controls"]["false_result_controls"]
         self.assertGreaterEqual(len(falsifiers),5)
         text=" ".join(x["claim"] for x in falsifiers).lower()
-        for forbidden in ("n=mg", "53°", "pcosθ", "equality", "tipping"):
+        for forbidden in ("n=mg", "53°", "pcosθ", "equality", "overturning"):
             self.assertIn(forbidden,text)
         self.assertTrue(all(x["expected"].startswith(("REJECT_","REJECT_OR_"))
                             for x in falsifiers))
