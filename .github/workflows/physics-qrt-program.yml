@@ -38,6 +38,21 @@ jobs:
         run: python3 -m Physics.adapter.qrt_program.qrt_review_packet --check-only
       - name: Independent derivation intake generated without authored answers
         run: python3 -m Physics.adapter.qrt_program.qrt_review_packet --blind-intake --check-only
+      - name: NLM-only packet identity pinned without promoting the science
+        run: python3 -m Physics.adapter.qrt_program.qrt_review_packet --question Q-PHY-NLM-2B-FRICTION-STATE-01 --check-only
+      - name: Stage exact NLM-only blind intake for independent reviewer
+        shell: bash
+        run: |
+          mkdir -p build/physics-qrt-nlm-review
+          python3 -m Physics.adapter.qrt_program.qrt_review_packet --question Q-PHY-NLM-2B-FRICTION-STATE-01 --blind-intake > build/physics-qrt-nlm-review/blind-intake.json
+          python3 -m Physics.adapter.qrt_program.qrt_review_packet --question Q-PHY-NLM-2B-FRICTION-STATE-01 --blind-intake --check-only
+      - name: Upload NLM-only answer-withheld independent reviewer intake
+        uses: actions/upload-artifact@v4
+        with:
+          name: physics-qrt-nlm-blind-intake
+          path: build/physics-qrt-nlm-review/blind-intake.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Source-to-product selected-question trace (no publish)
         run: python3 -m Physics.adapter.qrt_program.qrt_native_consumer_trace
       - name: Install native renderer schema dependency

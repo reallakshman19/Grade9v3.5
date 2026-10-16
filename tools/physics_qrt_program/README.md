@@ -59,6 +59,27 @@ The domain reviewer must independently re-derive the equations and physical assu
 
 \`python3 -m Physics.adapter.qrt_program.qrt_review_response --packet FROZEN_PACKET.json --response REVIEW_RESPONSE.json\` checks a submitted response for exact packet/question SHAs, independent-derivation fields, model-applicability reasons, review of all seeded falsifiers and an explicit result for each selected question. Every accepted *shape* is marked \`REVIEW_SUBMITTED_FOR_AUTHENTICATION\`; it does **not** verify the identity/competence of the reviewer or authorize code, academic acceptance or release. The template at \`Physics/adapter/qrt_science_review.template.json\` intentionally fails this gate until a real review is submitted.
 
+## Owner-directed single-question academic qualification pilot (not release)
+
+Option A is the bounded review-preparation scope: `Q-PHY-NLM-2B-FRICTION-STATE-01`.
+Run these *without changing the original four-candidate source registry*:
+
+```sh
+python3 -m Physics.adapter.qrt_program.qrt_review_packet --question Q-PHY-NLM-2B-FRICTION-STATE-01 --blind-intake > NLM_BLIND_INTAKE.json
+python3 -m Physics.adapter.qrt_program.qrt_review_packet --question Q-PHY-NLM-2B-FRICTION-STATE-01 --blind-intake --check-only
+python3 -m Physics.adapter.qrt_program.qrt_review_packet --question Q-PHY-NLM-2B-FRICTION-STATE-01 --check-only
+```
+
+The dedicated GitHub Action uploads **only** the stem/conditions blind intake.
+Do not open the full comparison packet, this source module, or author-written
+solutions until the qualified reviewer has frozen their Pass A derivation.
+A one-question intake/packet has its own canonical digest; it must not reuse the
+four-question digest or imply academic truth. An absent/duplicate case must fail,
+never fall back to the four-question packet. The preliminary candidate remains
+`DRAFT_HOLD`; source/use rights, `MICRO_TO_CONFIRM`, G3 cognitive-demand
+authorship, scientific signoff, L1–L4 writer leases and release stay separate.
+See reviewer request Issue #287.
+
 ## Reviewer digest hardening and independent-derivation intake
 
 Reviewer-response validation recomputes the canonical hash of the entire packet

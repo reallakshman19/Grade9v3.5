@@ -19,7 +19,7 @@ from Physics.adapter.qrt_program.qrt_oracle_candidates import (
     signed_quadrant_ii_components,
     vertical_magnet_force_balance,
 )
-from tools.physics_qrt_program.bootstrap import assemble, ROOT
+from tools.physics_qrt_program.bootstrap import assemble, ROOT, HERE
 
 
 def _canonical_digest(value: Any) -> str:
@@ -104,6 +104,28 @@ SCENARIOS = {
                                     "Supplied trigonometric approximations define 37/53 calculations"],
     },
 }
+
+
+def selected_review_candidates(question_id: str, *, root: Path = ROOT) -> dict:
+    """Subset the original SHA-pinned witness registry for one review request.
+
+    Never silently fall back to a four-question packet when a selected
+    question is missing, duplicated, malformed, or not in the bounded registry.
+    Source attestation still happens later in assemble().
+    """
+    if not isinstance(question_id, str) or not question_id.strip():
+        raise ValueError("REVIEW_QUESTION_ID_REQUIRED")
+    candidates = json.loads(
+        (root / "tools/physics_qrt_program/witnesses.candidate.v1.json").read_text(encoding="utf-8")
+    )
+    cases = candidates.get("cases")
+    if not isinstance(cases, list):
+        raise ValueError("REVIEW_CANDIDATES_INVALID")
+    matches = [row for row in cases if isinstance(row, dict)
+               and row.get("question_id") == question_id]
+    if len(matches) != 1 or question_id not in SCENARIOS:
+        raise ValueError(f"REVIEW_QUESTION_NOT_UNIQUE_OR_NOT_CANDIDATE:{question_id}")
+    return {**candidates, "cases": matches}
 
 
 def candidate_prediction(question_id: str) -> dict:
@@ -239,8 +261,17 @@ def main() -> int:
                         help="Withhold authored answers and candidate scientific calculations")
     parser.add_argument("--check-only", action="store_true",
                         help="Print digest/status only; no changes to sources or repo")
+    parser.add_argument("--question", metavar="QUESTION_ID",
+                        help="Exact one-question review scope; unknown or duplicate IDs fail closed")
     args = parser.parse_args()
-    packet = make_independent_intake() if args.blind_intake else make_packet()
+    try:
+        candidates = selected_review_candidates(args.question) if args.question else None
+        packet = (make_independent_intake(candidates=candidates) if args.blind_intake
+                  else make_packet(candidates=candidates))
+    except (ValueError, OSError, json.JSONDecodeError) as exc:
+        print(json.dumps({"status": "BLOCKED_INPUT", "errors": [str(exc)],
+                          "permission_to_write": False}, indent=2, sort_keys=True))
+        return 2
     output = {"status": packet["status"], "question_count": len(packet["questions"]),
               "packet_sha256": packet.get("packet_sha256", packet.get("intake_sha256")),
               "permission_to_write": False}

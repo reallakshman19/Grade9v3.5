@@ -3,11 +3,59 @@ import copy
 import json
 import unittest
 
-from Physics.adapter.qrt_program.qrt_review_packet import make_packet, make_independent_intake, recompute_packet_sha256, candidate_prediction, SCENARIOS
+from Physics.adapter.qrt_program.qrt_review_packet import make_packet, make_independent_intake, recompute_packet_sha256, candidate_prediction, SCENARIOS, selected_review_candidates
 from tools.physics_qrt_program.bootstrap import HERE
 
 
 class CandidateReviewPacketTests(unittest.TestCase):
+    def test_one_nlm_pilot_packet_is_bounded_and_not_approved(self):
+        candidate = selected_review_candidates("Q-PHY-NLM-2B-FRICTION-STATE-01")
+        packet = make_packet(candidates=candidate)
+        self.assertEqual(packet["question_count"], 1)
+        self.assertEqual([x["question_id"] for x in packet["questions"]],
+                         ["Q-PHY-NLM-2B-FRICTION-STATE-01"])
+        self.assertEqual(packet["packet_sha256"], recompute_packet_sha256(packet))
+        self.assertEqual(packet["reviewer_identity"], "UNASSIGNED")
+        self.assertEqual(packet["review_verdict"], "NOT_REVIEWED")
+        self.assertFalse(packet["permission_to_write"])
+        self.assertEqual(packet["release_verdict"], "HOLD")
+        self.assertNotEqual(packet["packet_sha256"], make_packet()["packet_sha256"])
+
+    def test_one_nlm_blind_intake_contains_no_answer_or_falsifier(self):
+        candidate = selected_review_candidates("Q-PHY-NLM-2B-FRICTION-STATE-01")
+        intake = make_independent_intake(candidates=candidate)
+        packet = make_packet(candidates=candidate)
+        self.assertEqual(len(intake["questions"]), 1)
+        self.assertEqual(intake["full_comparison_packet_sha256"], packet["packet_sha256"])
+        self.assertEqual(intake["status"], "DERIVATION_REQUEST_UNASSIGNED")
+        self.assertEqual(intake["qualified_reviewer"], "NOT_ASSIGNED")
+        self.assertFalse(intake["owner_authorization"])
+        self.assertEqual(intake["release_verdict"], "HOLD")
+        assert_text = json.dumps(intake, sort_keys=True)
+        for forbidden in ("authored_answer_claim", "candidate_recomputed_prediction",
+                          "required_model_falsifiers", "proposed_physics_model"):
+            self.assertNotIn(forbidden, assert_text)
+
+    def test_unknown_one_question_cannot_fall_back_to_four(self):
+        with self.assertRaisesRegex(ValueError, "REVIEW_QUESTION_NOT_UNIQUE_OR_NOT_CANDIDATE"):
+            selected_review_candidates("Q-PHY-NLM-NOT-REAL")
+
+    def test_duplicate_in_candidate_registry_fails_closed(self):
+        # The one-question selection is not a licence to accept duplicate source IDs.
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            src = json.loads((HERE / "witnesses.candidate.v1.json").read_text())
+            row = next(x for x in src["cases"]
+                       if x["question_id"] == "Q-PHY-NLM-2B-FRICTION-STATE-01")
+            src["cases"].append(copy.deepcopy(row))
+            path = root / "tools/physics_qrt_program/witnesses.candidate.v1.json"
+            path.parent.mkdir(parents=True)
+            path.write_text(json.dumps(src), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "REVIEW_QUESTION_NOT_UNIQUE_OR_NOT_CANDIDATE"):
+                selected_review_candidates("Q-PHY-NLM-2B-FRICTION-STATE-01", root=root)
+
     def test_four_source_bound_review_requests(self):
         packet = make_packet()
         self.assertEqual(packet["question_count"], 4)
