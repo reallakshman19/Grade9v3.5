@@ -18,3 +18,15 @@ does not certify canonical QRT, source rights or Core2B novelty.
 Warning: authored answers are present in inert HTML template source; this
 test validates the ordinary learner UI gate, NOT secrecy against a user
 inspecting raw DOM/source. Actual learner transfer is a separate assessment.
+## Same-page sibling attempt isolation (W0 engineering falsifier)
+
+The existing NLM Core2B native page also selects
+`Q-PHY-NLM-2B-FRICTION-ANGLED-THRESHOLD-04`. The Playwright witness
+checks in both viewports that its article and initially locked answer are
+independent of the target's attempt, that committing the target cannot unlock
+the sibling, that a click on the unattempted sibling solution remains blocked,
+and that a distinct sibling attempt enables only its own gated answer. A
+lexical check looks for the target's exact protected action in the initially
+visible sibling card; it **does not** establish no semantic overlap, no
+other-link leakage, academic novelty, real learner understanding, or secrecy
+of inert raw HTML. No source question, Shared renderer or publication changes.

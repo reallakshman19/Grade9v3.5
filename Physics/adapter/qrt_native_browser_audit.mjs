@@ -24,6 +24,12 @@ const id='Q-PHY-NLM-2B-FRICTION-STATE-01';
 const matches=source.questions.filter(q=>q.id===id);
 if(matches.length!==1)throw new Error('SOURCE_QUESTION_NOT_UNIQUE');
 const question=matches[0];
+const siblingId='Q-PHY-NLM-2B-FRICTION-ANGLED-THRESHOLD-04';
+const siblingMatches=source.questions.filter(q=>q.id===siblingId);
+if(siblingMatches.length!==1)throw new Error('SIBLING_SOURCE_QUESTION_NOT_UNIQUE');
+const manifest=JSON.parse(readFileSync(join(root,'products/physics/phy-nlm-first-law.manifest.json'),'utf8'));
+if((manifest.selection?.core2b||[]).filter(q=>q===siblingId).length!==1)
+  throw new Error('SIBLING_NOT_SELECTED_ON_SAME_CORE2B');
 const parent=question.transfer?.builds_on?.[0];
 const decision=question.answer?.reasoning_route?.find(x=>x.id===question.transfer.protected_move_ref)?.action;
 if(!parent||!decision)throw new Error('SOURCE_LINEAGE_OR_DECISION_MISSING');
@@ -83,6 +89,27 @@ try{
       (await slot.innerText()).trim()==='' &&
       !(await article.getAttribute('data-attempted')),
       'review closed, empty payload and not attempted before commitment');
+    // A second authored transfer lives on the *same* native Core2B page.
+    // Test independent attempt custody; its presence/wording is not proof of novelty.
+    const sibling=page.locator('article[data-g9-unit="'+siblingId+'"][data-g9-role="CORE2B"]');
+    const siblingCount=await sibling.count();
+    add('same_page_sibling_unique_'+viewport.width,siblingCount===1,
+      {sibling_id:siblingId,matched:siblingCount});
+    let siblingDetails, siblingSlot;
+    if(siblingCount===1){
+      siblingDetails=sibling.locator('details[data-requires-attempt]');
+      siblingSlot=siblingDetails.locator('[data-g9-payload-slot]');
+      add('sibling_initial_attempt_independent_'+viewport.width,
+        (await siblingDetails.count())===1 &&
+        !(await siblingDetails.evaluate(el=>el.open)) &&
+        (await siblingSlot.innerText()).trim()==='' &&
+        !(await sibling.getAttribute('data-attempted')),
+        'the sibling has its own initially locked answer and unset attempt flag');
+      const siblingVisible=await sibling.innerText();
+      add('sibling_no_exact_target_decision_before_attempt_'+viewport.width,
+        !siblingVisible.includes(decision),
+        'lexical equality check only; not a semantic novelty or cross-page leak audit');
+    }
     const firstVisible=await article.innerText();
     add('initially_no_protected_move_'+viewport.width,!firstVisible.includes(decision),
       'protected deciding action absent from visible learner text');
@@ -105,6 +132,33 @@ try{
       add('committed_answer_visible_'+viewport.width,(await details.evaluate(el=>el.open)) &&
         (await slot.innerText()).includes(decision),
         'protected source deciding action appeared only after valid commitment');
+    }
+    if(siblingCount===1){
+      add('target_commit_keeps_sibling_locked_'+viewport.width,
+        !(await sibling.getAttribute('data-attempted')) &&
+        !(await siblingDetails.evaluate(el=>el.open)) &&
+        (await siblingSlot.innerText()).trim()==='',
+        'committing on target must not unlock a distinct sibling question');
+      await siblingDetails.locator('summary').click();
+      add('sibling_unattempted_summary_stays_locked_'+viewport.width,
+        !(await siblingDetails.evaluate(el=>el.open)) &&
+        (await siblingSlot.innerText()).trim()==='',
+        'independent sibling solution remains withheld after target commitment');
+      const siblingAttempt=sibling.locator('[data-g9-attempt-box] [data-g9-attempt]').first();
+      if(await siblingAttempt.count()){
+        await siblingAttempt.fill('I will decide the limiting regime first.');
+        await sibling.locator('[data-g9-attempt-box] [data-g9-commit]').click();
+        await siblingDetails.locator('summary').click();
+        add('sibling_own_attempt_unlocks_only_its_answer_'+viewport.width,
+          (await sibling.getAttribute('data-attempted'))==='1' &&
+          (await siblingDetails.evaluate(el=>el.open)) &&
+          (await siblingSlot.innerText()).trim()!=='' &&
+          (await article.getAttribute('data-attempted'))==='1',
+          'distinct attempted sibling answer opens after its own commitment');
+      }else{
+        add('sibling_own_attempt_unlocks_only_its_answer_'+viewport.width,false,
+          'sibling attempt control is missing');
+      }
     }
     const lineage=article.locator('a[data-g9-lineage][href*="'+parent+'"]');
     add('prior_exposure_link_'+viewport.width,(await lineage.count())===1,
