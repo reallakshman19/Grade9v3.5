@@ -26,6 +26,7 @@ def inspect_question(package_path: str, question_id: str, *, root: Path = ROOT) 
         raise ValueError("PHYSICS_LIBRARY_SOURCE_UNAVAILABLE")
     source_bytes = path.read_bytes()
     source_sha256 = hashlib.sha256(source_bytes).hexdigest()
+    git_blob_sha = hashlib.sha1(b"blob " + str(len(source_bytes)).encode("ascii") + b"\0" + source_bytes).hexdigest()
     package = json.loads(source_bytes)
     if not isinstance(package, dict) or package.get("subject") != "Physics":
         raise ValueError("PHYSICS_PACKAGE_REQUIRED")
@@ -64,7 +65,7 @@ def inspect_question(package_path: str, question_id: str, *, root: Path = ROOT) 
         "question_id": question_id,
         "package_path": relative.as_posix(),
         "package_sha256": source_sha256,
-        "package_blob_sha": "NOT_RESOLVED_LOCALLY",
+        "package_blob_sha": git_blob_sha,
         "original_identifier": question.get("original_identifier"),
         "source_class": "AUTHOR_CREATED_CANDIDATE" if question.get("origin") == "AUTHORED" else "UNKNOWN_REVIEW_REQUIRED",
         "source_refs": source_refs,

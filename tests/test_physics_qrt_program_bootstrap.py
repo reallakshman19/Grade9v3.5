@@ -36,6 +36,12 @@ class Wave0Tests(unittest.TestCase):
         with self.assertRaisesRegex(BootstrapError, "DUPLICATE_QUESTION_ID"):
             assemble(candidates=value)
 
+    def test_wrong_git_blob_sha_rejected(self):
+        value = json.loads((HERE / "witnesses.candidate.v1.json").read_text())
+        value["cases"][0]["source_blob_sha"] = "f" * 40
+        with self.assertRaisesRegex(BootstrapError, "SOURCE_BLOB_DRIFT"):
+            assemble(candidates=value)
+
     def test_authorized_lock_never_used_as_candidate(self):
         lock = json.loads((HERE / "work-lock.template.json").read_text())
         lock["governance"]["git_write_authorized"] = True

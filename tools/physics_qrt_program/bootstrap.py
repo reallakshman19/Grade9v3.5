@@ -46,6 +46,8 @@ def assemble(*, root: Path = ROOT, candidates: dict | None = None,
             errors.append(f"CAPABILITY_DRIFT:{qid}")
         if case.get("expected_core") not in record["declared_cores"]:
             errors.append(f"CORE_DRIFT:{qid}")
+        if record["package_blob_sha"] != case.get("source_blob_sha"):
+            errors.append(f"SOURCE_BLOB_DRIFT:{qid}")
         if record["source_class"] != "AUTHOR_CREATED_CANDIDATE":
             errors.append(f"SOURCE_CLASS_DRIFT:{qid}")
         witnesses.append({

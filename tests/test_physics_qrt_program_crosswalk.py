@@ -16,6 +16,7 @@ class SourceCrosswalkTests(unittest.TestCase):
     def test_existing_core2b_source_binding(self):
         row = inspect_question(SOURCE, ID)
         self.assertEqual(row["question_id"], ID)
+        self.assertEqual(row["package_blob_sha"], "62b8df106e83db03ac80fbb4002a611ac3d6e49a")
         self.assertEqual(row["source_class"], "AUTHOR_CREATED_CANDIDATE")
         self.assertEqual(row["primary_capability_ref"], "CAP-NLM-FRICTION-QUANT")
         self.assertIn("CORE2B", row["declared_cores"])
