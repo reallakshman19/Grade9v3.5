@@ -1,0 +1,164 @@
+{
+  "schema": "physics-qrt.nlm289-candidate-proposal/v1",
+  "programme": "PHY-QRT-LTA-v1",
+  "issue": "https://github.com/reallakshman19/Grade9v3.5/issues/289",
+  "source": {
+    "repository": "reallakshman19/Grade9v3.5",
+    "original_main": "73c66b64158ee2ff57b099f990e1c2081d5c571f",
+    "foundation_head": "8538d90ab73701afabc81369adb9ca3fefdd88fa",
+    "path": "Physics/library/phy-nlm-first-law.v1.json",
+    "git_blob_sha": "62b8df106e83db03ac80fbb4002a611ac3d6e49a",
+    "question_sha256": "32c5a4447dfdccf0de457ed6d07a12c448f995869699b02adeed2997feb76f50",
+    "question_id": "Q-PHY-NLM-2B-FRICTION-STATE-01"
+  },
+  "authority": {
+    "source_writer": "NOT_ASSIGNED",
+    "source_write_authorized": false,
+    "editing_production_source": false,
+    "academic_human_review": "PENDING",
+    "student_assessment_engine": "NO_AUTO_GRADER_ATTESTED",
+    "independent_transfer": "NOT_ESTABLISHED",
+    "canonical_cognitive_demand": "NOT_CLASSIFIED",
+    "approval": "NOT_GRANTED",
+    "release": "HOLD"
+  },
+  "patches": {
+    "stem": "A 10 kg crate rests on a rough horizontal floor with μ_s = 0.75; take g = 10 m/s². A worker can pull a rope on the crate horizontally, at 37° above the horizontal, or at 53° above the horizontal (sin 37° = cos 53° = 0.6, cos 37° = sin 53° = 0.8). For each direction, determine the critical pull at impending slip and explain what it tells you about the possibility of the crate remaining at rest. The worker can pull with at most 61 N: which direction(s) could initiate sliding under this idealized model? Explain your choice, including whether equality at the critical pull guarantees motion.",
+    "conditions": [
+      "Treat the crate as a translating, non-tipping and non-rotating body; ignore deformation and impacts.",
+      "The rope direction remains fixed during each trial, and floor contact is maintained at the compared loads.",
+      "A critical pull means the boundary of possible static equilibrium, not proof the crate is already moving at equality."
+    ],
+    "hints": [
+      {
+        "text": "Which external forces act on the crate, and could their effects change when the rope direction changes?",
+        "reveals": "CONCEPT",
+        "visual_ref": "REP-NLM-FRICTION-THRESHOLD",
+        "visual_stage_ref": "VIS-NLM-FRICTION-V1"
+      },
+      {
+        "text": "If the crate were still at rest in one chosen direction, what would have to remain physically possible?",
+        "reveals": "CONCEPT",
+        "visual_ref": "REP-NLM-FRICTION-THRESHOLD",
+        "visual_stage_ref": "VIS-NLM-FRICTION-V2"
+      }
+    ],
+    "hint_ladder": [
+      {
+        "order": 1,
+        "purpose": "ORIENT",
+        "from": "hints[0]",
+        "provenance": "AUTHORED_HINT"
+      },
+      {
+        "order": 2,
+        "purpose": "REPRESENT",
+        "text": "Sketch all external forces for one rope direction with the pull still symbolic, without evaluating which direction succeeds.",
+        "provenance": "AUTHORED_SCAFFOLD"
+      },
+      {
+        "order": 3,
+        "purpose": "FIRST_RELATION",
+        "from": "hints[1]",
+        "provenance": "AUTHORED_HINT"
+      }
+    ],
+    "answer": {
+      "summary": "For an ideal translating crate at impending slip, N=100−P sinθ and P cosθ=μ_s N. Thus Pcrit=75/(cosθ+0.75 sinθ): 75 N (horizontal), 60 N (37°), and 62.5 N (53°). At P=Pcrit the crate may still be at limiting static equilibrium. A pull strictly above Pcrit rules out rest while floor contact holds, so 61 N is sufficient only for the 37° choice in this model.",
+      "reasoning": [
+        "Choose a consistent force diagram and sign convention. In vertical equilibrium, N+P sinθ=100 N, so N=100−P sinθ; check N remains positive at the candidate thresholds.",
+        "If static rest is possible, the required horizontal friction P cosθ cannot exceed the limiting friction μ_sN. The critical pull occurs at equality, P cosθ=0.75(100−P sinθ).",
+        "Solve Pcrit=75/(cosθ+0.75 sinθ) and evaluate the three supplied angle pairs: 75 N, 60 N, 62.5 N, respectively.",
+        "Compare strict exceedance rather than only equality: the available 61 N exceeds 60 N but not 62.5 N or 75 N. Thus only at 37° can the worker rule out a static rest state under the idealized non-tipping model."
+      ],
+      "check": "At 37° and P=60 N, horizontal demand=48 N and static limit=0.75(100−36)=48 N, a limiting rest state. At P=61 N, demand=48.8 N and limit=0.75(100−36.6)=47.55 N, so static rest fails. At 53° and P=61 N, demand=36.6 N while limit=0.75(100−48.8)=38.4 N, so rest remains possible.",
+      "acceptable_alternatives": [
+        "Any algebraically equivalent positive-threshold form, including Pcrit=μ_s mg/(cosθ+μ_s sinθ), with consistent dimensions and contact conditions.",
+        "Pcrit=mg/(sinθ+cosθ/μ_s) for μ_s>0, with the correct positive thresholds and feasible direction.",
+        "A signed free-body-diagram derivation using a consistent opposite axis convention, with each transformed equation physically equivalent to vertical and horizontal force balance.",
+        "Thresholds expressed as 75 N, about 60 N, about 62.5 N using the supplied trigonometric values, or defensible rounding that preserves the 37°-only choice.",
+        "The candidate may explicitly say that equality is impending slip, whereas a force strictly above the critical threshold is needed to rule out static rest.",
+        "An optional observation that tanθ=μ_s minimizes the threshold among continuously varying upward angles is valid additional reasoning, not required for the three choices."
+      ],
+      "rubric": [
+        {
+          "criterion": "Selects a physically consistent FBD and recognizes that the applied upward component can change the floor normal while the pull remains unknown.",
+          "evidence_of": "Equivalent vertical equilibrium expression N=mg−P sinθ or a sign-consistent transformed relation, plus a physically consistent positive normal."
+        },
+        {
+          "criterion": "Distinguishes required horizontal friction from its static upper bound, and finds a boundary of possible rest.",
+          "evidence_of": "Equivalent inequality P cosθ≤μ_s(mg−P sinθ) and correct limiting equality; accepts algebraically equivalent derivations."
+        },
+        {
+          "criterion": "Evaluates the three critical values and identifies the worker-feasible direction for 61 N.",
+          "evidence_of": "Correct values 75/60/62.5 N, recognition only 37° allows strict exceedance and no unsupported steepest-angle rule."
+        },
+        {
+          "criterion": "Explains model applicability, limiting equilibrium and fair rounding.",
+          "evidence_of": "Does not confuse equality with certain motion; does not include tipping/rotation outside the stipulated model; consistent units, signs and valid alternative reasoning."
+        }
+      ]
+    }
+  },
+  "review_controls": {
+    "positive_equivalents": [
+      {
+        "id": "TP1",
+        "claim": "Pcrit=μ_smg/(cosθ+μ_ssinθ), with correct N>0 and values",
+        "expected": "ACCEPT_BY_QUALIFIED_RUBRIC_REVIEW"
+      },
+      {
+        "id": "TP2",
+        "claim": "Pcrit=mg/(sinθ+cosθ/μ_s), correct for μ_s>0",
+        "expected": "ACCEPT_BY_QUALIFIED_RUBRIC_REVIEW"
+      },
+      {
+        "id": "TP3",
+        "claim": "Reverse signed axes consistently and obtain same N, thresholds and 37° conclusion",
+        "expected": "ACCEPT_BY_QUALIFIED_RUBRIC_REVIEW"
+      },
+      {
+        "id": "TP4",
+        "claim": "At 60 N 37° is impending; 61 N strictly exceeds it and rules out rest",
+        "expected": "ACCEPT_BY_QUALIFIED_RUBRIC_REVIEW"
+      }
+    ],
+    "false_result_controls": [
+      {
+        "id": "FP1",
+        "claim": "Keep N=mg=100 N for every angle; infer wrong angled thresholds",
+        "expected": "REJECT_BY_QUALIFIED_RUBRIC_REVIEW"
+      },
+      {
+        "id": "FP2",
+        "claim": "Choose 53° because it reduces N most, without accounting for lower Pcosθ",
+        "expected": "REJECT_BY_QUALIFIED_RUBRIC_REVIEW"
+      },
+      {
+        "id": "FP3",
+        "claim": "Treat P rather than Pcosθ as the horizontal driving force",
+        "expected": "REJECT_BY_QUALIFIED_RUBRIC_REVIEW"
+      },
+      {
+        "id": "FP4",
+        "claim": "Claim equality P=Pcrit guarantees that the crate is already sliding",
+        "expected": "REJECT_BY_QUALIFIED_RUBRIC_REVIEW"
+      },
+      {
+        "id": "FP5",
+        "claim": "Apply this no-rotation result to a tall narrow crate without checking overturning",
+        "expected": "REJECT_OR_QUALIFY_BY_HUMAN_REVIEW"
+      }
+    ],
+    "execution": "PROPOSED_CORPUS_ONLY_NO_RUNNING_GRADER",
+    "target_assessment_surface": "UNKNOWN_NEEDS_OWNER_SPECIFICATION"
+  },
+  "educational_checks": {
+    "D1": "PROPOSAL_PREATTEMPT_CUES_REDUCED_NOT_BROWSER_VERIFIED",
+    "D2": "AUTHORING_ALTERNATIVES_ADDED_NOT_OPERATIONALLY_GRADED",
+    "D3": "PROPOSAL_CLARIFIES_IMPENDING_VS_STRICT_ONSET",
+    "D4": "PROPOSAL_ADDS_IDEAL_NON_TIPPING_SCOPE",
+    "D5": "NEW_TRANSFER_NOT_ESTABLISHED_REQUIRES_CORE1A_1B_2A_SIBLING_CONTRAST",
+    "D6": "G3_SCHOOL_RIGHTS_QUALIFIED_REVIEWER_OWNER_SCOPE_HOLD"
+  }
+}
