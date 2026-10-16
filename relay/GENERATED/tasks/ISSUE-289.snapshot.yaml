@@ -1,0 +1,98 @@
+# Derived V3.1 issue-local read model for the independent, unmerged #289 source draft.
+# NOT a transfer of relay/STATE.yaml ACTIVE/SERIAL lease and NOT an academic ACCEPT.
+schema_version: relay-v3.1-task-snapshot
+authority: DERIVED_READ_MODEL
+source_protocol: V3_1
+identity:
+  work_package: ISSUE-289-PHY-QRT-NLM-D1D4-CANONICAL-DRAFT
+  ep: ISSUE-289-SOURCE-CANDIDATE-PROVIDER-VIEW
+  issue: 289
+  delivery_vehicle: 297
+purpose:
+  programme_outcome: "Prove parent #127 G6 as an independently reviewed complete Physics learner journey."
+  current_goal: "Correct exactly one NLM Core2B question's model cues, scientific assumptions, alternative answers, threshold interpretation and rubric."
+  task_outcome: "A reviewable main-rooted draft source correction with one-question SHA, 51 other questions unchanged and native renderer/physics invariant checks."
+  why_this_task_exists: "The academic Pass B requested D1-D6 correction; PR #295 supplied source-preserving D1-D4 proposal and PR #296 provided actual native-browser falsifiers."
+parent_issue:
+  repository: reallakshman19/Grade9v3.5
+  number: 289
+  title: "[PHY QRT NLM] Correct scaffolded Core2B transfer, rubric and scientific assumptions (D1-D6)"
+  state: OPEN
+  url: https://github.com/reallakshman19/Grade9v3.5/issues/289
+programme_parent:
+  repository: reallakshman19/Grade9v3.5
+  number: 127
+  acceptance: "G6 — One Physics learner journey"
+  state: HOLD
+planning:
+  state: PRESENT
+  provider_ref: github:reallakshman19/Grade9v3.5/issues/289#issuecomment-6222291519
+delivery:
+  relationship: PRIMARY
+  pr: 297
+  url: https://github.com/reallakshman19/Grade9v3.5/pull/297
+  lifecycle: DRAFT_UNMERGED
+  base: 73c66b64158ee2ff57b099f990e1c2081d5c571f
+  head: b6fa4bebabf393944fee6ec623b791581a11c475
+  branch: fix/phy289-nlm-d1d4-source-20261016
+delivery_stack:
+  - relationship: SIBLING_TEST_ONLY_EVIDENCE
+    pr: 296
+    url: https://github.com/reallakshman19/Grade9v3.5/pull/296
+    head: 2a33e56f1365067a7598067c8bc0602488ee32ee
+    lifecycle: DRAFT_UNMERGED
+material:
+  base: 73c66b64158ee2ff57b099f990e1c2081d5c571f
+  current_head: b6fa4bebabf393944fee6ec623b791581a11c475
+  source_original_blob: 62b8df106e83db03ac80fbb4002a611ac3d6e49a
+  source_changed_blob: 71d567ef1862180416c12216e23a6675d8a64304
+  candidate_question_sha256: fd6e5c259cff1b28d96ad76630df0549e0d7d0a893bc26fd50bdec19580fa15e
+execution:
+  lifecycle: HOLD_SOURCE_REVIEW
+  branch: fix/phy289-nlm-d1d4-source-20261016
+  writer_authority: NOT_GRANTED_BY_THIS_READ_MODEL
+  active_relay_state_path: relay/STATE.yaml
+verification:
+  state: PENDING_EXACT_HEAD
+  observations:
+    - kind: PR295_D1D4_PROPOSAL
+      state: PROPOSED
+      ref: https://github.com/reallakshman19/Grade9v3.5/pull/295
+    - kind: PR296_INDEPENDENT_PROPOSED_SOURCE_BROWSER
+      state: PASS_MECHANICS_ONLY
+      ref: https://github.com/reallakshman19/Grade9v3.5/actions/runs/38951833281
+    - kind: CANONICAL_SHA_AND_NATIVE_RENDER
+      state: PENDING
+      detail: "Must pass on exact PR #297 head; prior PR #296 ran in-memory unapplied source and does not certify this canonical draft."
+    - kind: HUMAN_ACADEMIC
+      state: HOLD
+      detail: "Qualified independent Physics reviewer, novelty, school/rights and QRT cognitive demand still not authenticated."
+completion:
+  overall_state: PARTIAL
+  implementation: DRAFT_SOURCE_APPLIED
+  delivery: DRAFT
+  work_issue_acceptance: HOLD
+  programme_contribution: ONE_QUESTION_DRAFT_ONLY
+  what_done:
+    - "Copied only D1-D4 proposed fields from PR #295 into the single canonical source question on a main-rooted draft."
+    - "Preserved 51 sibling questions, existing transfer metadata, source rights, QRT classification and Shared renderer."
+  what_remains:
+    - "Exact-head source invariant, native render, relay and broad CI qualification."
+    - "Coordinator reconcile exclusive source-writing grant and selected V3.1 serial custody without silent lease reassignment."
+    - "Independent qualified human Physics and novelty evaluation after amended source and new blind/full packets."
+    - "Decide R3 assessment operation and #135 H2/H3 renderer integration; Parent #127 G6 remains HOLD."
+scope:
+  write:
+    - Physics/library/phy-nlm-first-law.v1.json
+    - tests/test_physics_qrt_nlm289_source_correction.py
+    - .github/workflows/physics-qrt-nlm289-source.yml
+    - relay/GENERATED/tasks/ISSUE-289.snapshot.yaml
+  prohibited:
+    - Shared/tools/render_core.py
+    - relay/STATE.yaml
+    - public/**
+    - docs/**
+    - golden/**
+  release: HOLD
+next:
+  immediate_action: "Qualify exact-head single-question source+native render and return to C0/Owner/qualified independent human academic reviewer for governed adoption."
