@@ -71,21 +71,21 @@ Chromium remains NOT_RUN unless browser executable is present and actual outputs
 
 ## Draft scientific benchmark (candidate-only)
 
-Four model-independent recomputation routines are installed under `Physics/adapter/qrt_oracle_candidates.py` with paired seeded false-result controls. They are a testable proposed independent benchmark, **not** a signed scientific oracle: no independent reviewer receipt, rights adjudication, QRT classification, Core behavioral proof or learner-output proof is asserted. Until subject review, the W0 work lock must retain `scientific_oracle_review: REVIEW_REQUIRED` and prevent authorized execution. These draft checks do not change existing subject validator logic or published source content.
+Four model-independent recomputation routines are installed under `Physics/adapter/qrt_program/qrt_oracle_candidates.py` with paired seeded false-result controls. They are a testable proposed independent benchmark, **not** a signed scientific oracle: no independent reviewer receipt, rights adjudication, QRT classification, Core behavioral proof or learner-output proof is asserted. Until subject review, the W0 work lock must retain `scientific_oracle_review: REVIEW_REQUIRED` and prevent authorized execution. These draft checks do not change existing subject validator logic or published source content.
 
 
 ## W0 external science-review handoff
 
-\`python3 -m Physics.adapter.qrt_review_packet\` assembles a stable, source-bound request for qualified **independent** Physics review. Each case includes its exact author-created question stem, source digest, proposed model assumptions, numerical prediction and falsifiers. The programme MUST NOT accept its own computed numbers as reviewed scientific truth; the output deliberately has no reviewer identity or PASS state. C0 later obtains an authenticated third-party review and Owner confirmation using the applicable repository process before promoting a work lock. A reviewer may reject the proposal without changing canonical source content.
+\`python3 -m Physics.adapter.qrt_program.qrt_review_packet\` assembles a stable, source-bound request for qualified **independent** Physics review. Each case includes its exact author-created question stem, source digest, proposed model assumptions, numerical prediction and falsifiers. The programme MUST NOT accept its own computed numbers as reviewed scientific truth; the output deliberately has no reviewer identity or PASS state. C0 later obtains an authenticated third-party review and Owner confirmation using the applicable repository process before promoting a work lock. A reviewer may reject the proposal without changing canonical source content.
 
 
 ## Review response gate (not a self-approval mechanism)
 
-\`Physics/adapter/qrt_review_response.py\` validates that a future independent scientific review covers exactly the frozen questions and source digests, includes physically reasoned derivations and explicit adversarial falsifier outcomes. A mathematically well-formed response is still \`REVIEW_SUBMITTED_FOR_AUTHENTICATION\`, never \`APPROVED\`. C0 must independently authenticate the reviewer, verify evidence, confirm the Owner's work-specific approval, and operate the active native relay protocol. No agent may fill the template as its own acceptance receipt.
+\`Physics/adapter/qrt_program/qrt_review_response.py\` validates that a future independent scientific review covers exactly the frozen questions and source digests, includes physically reasoned derivations and explicit adversarial falsifier outcomes. A mathematically well-formed response is still \`REVIEW_SUBMITTED_FOR_AUTHENTICATION\`, never \`APPROVED\`. C0 must independently authenticate the reviewer, verify evidence, confirm the Owner's work-specific approval, and operate the active native relay protocol. No agent may fill the template as its own acceptance receipt.
 
 ## Post-handover single native consumer trace
 
-Physics/adapter/qrt_native_consumer_trace.py binds an existing authored
+Physics/adapter/qrt_program/qrt_native_consumer_trace.py binds an existing authored
 NLM Core2B item through source, product and candidate-golden manifests,
 prerequisite selection and optionally in-memory native render. This is a
 read-only source-first observation, NOT a new renderer, scientific oracle,

@@ -5,7 +5,7 @@ These are candidate oracles, NOT independently signed scientific acceptance.
 from __future__ import annotations
 import math
 import unittest
-from Physics.adapter.qrt_oracle_candidates import (
+from Physics.adapter.qrt_program.qrt_oracle_candidates import (
     signed_quadrant_ii_components, ideal_horizontal_launch,
     vertical_magnet_force_balance, angled_static_friction_threshold,
 )

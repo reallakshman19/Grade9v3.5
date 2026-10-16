@@ -12,8 +12,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from Physics.adapter.qrt_crosswalk import inspect_question
-from Physics.adapter.qrt_oracle_candidates import (
+from Physics.adapter.qrt_program.qrt_crosswalk import inspect_question
+from Physics.adapter.qrt_program.qrt_oracle_candidates import (
     angled_static_friction_threshold,
     ideal_horizontal_launch,
     signed_quadrant_ii_components,

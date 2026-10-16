@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 import json
 from pathlib import Path
-from Physics.adapter.qrt_crosswalk import inspect_question
+from Physics.adapter.qrt_program.qrt_crosswalk import inspect_question
 from .contracts import validate_lock
 
 ROOT = Path(__file__).resolve().parents[2]

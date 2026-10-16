@@ -11,7 +11,7 @@ import json
 import re
 from pathlib import Path
 
-from Physics.adapter.qrt_review_packet import recompute_packet_sha256
+from Physics.adapter.qrt_program.qrt_review_packet import recompute_packet_sha256
 
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 FINAL = {"ACCEPT", "REVISE", "REJECT"}

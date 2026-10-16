@@ -2,8 +2,8 @@
 import copy
 import unittest
 
-from Physics.adapter.qrt_review_packet import make_packet
-from Physics.adapter.qrt_review_response import evaluate, validate_review_response
+from Physics.adapter.qrt_program.qrt_review_packet import make_packet
+from Physics.adapter.qrt_program.qrt_review_response import evaluate, validate_review_response
 
 
 def complete_test_response(packet):

@@ -11,7 +11,7 @@ from pathlib import Path
 
 from Shared.tools import question_difficulty
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 SOURCE_PREFIX = Path("Physics/library")
 
 

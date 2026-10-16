@@ -12,7 +12,7 @@ from html.parser import HTMLParser
 import json
 from pathlib import Path
 
-from Physics.adapter.qrt_crosswalk import ROOT as REPO
+from Physics.adapter.qrt_program.qrt_crosswalk import ROOT as REPO
 
 QUESTION_ID = "Q-PHY-NLM-2B-FRICTION-STATE-01"
 SOURCE = "Physics/library/phy-nlm-first-law.v1.json"

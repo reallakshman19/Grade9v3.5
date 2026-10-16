@@ -20,7 +20,7 @@ The first lock command should return STRUCTURE_VALID_NOT_PERMISSION with exit co
 
 ## File architecture
 
-- Physics/adapter/qrt_crosswalk.py: dedicated subject-level question → source/capability/Core source probe; not a shared engine rule
+- Physics/adapter/qrt_program/qrt_crosswalk.py: dedicated subject-level question → source/capability/Core source probe; not a shared engine rule
 - contracts.py: core schema checks, safe paths/leases, source/head/scope binding, proof-carrying receipts, convergence always HOLD for science/release
 - cli.py: offline validation and JSON-only report, no network or writes
 - work-lock.template.json: draft coordinator data, with full write HOLD
@@ -44,19 +44,19 @@ Run `python3 -m tools.physics_qrt_program.cli bootstrap-w0`. It reads four real 
 
 ## Candidate scientific cross-checks — independent review not yet complete
 
-`Physics/adapter/qrt_oracle_candidates.py` has four **candidate-only** numerical/model reconstruction functions for the exact Wave-0 families, with positive and deliberately wrong-model tests in `tests/test_physics_qrt_program_oracle_candidates.py`. They check vector direction as well as magnitude, one time base for projectile x/y, force ownership for the magnet FBD, and changing-normal-reaction thresholds under angled pulling. These functions are NOT wired into production Physics validation, QRT scoring or learner content. An independent subject reviewer must confirm their applicability before C0 locks the scientific oracle and L2 is allowed to alter production adapters.
+`Physics/adapter/qrt_program/qrt_oracle_candidates.py` has four **candidate-only** numerical/model reconstruction functions for the exact Wave-0 families, with positive and deliberately wrong-model tests in `tests/test_physics_qrt_program_oracle_candidates.py`. They check vector direction as well as magnitude, one time base for projectile x/y, force ownership for the magnet FBD, and changing-normal-reaction thresholds under angled pulling. These functions are NOT wired into production Physics validation, QRT scoring or learner content. An independent subject reviewer must confirm their applicability before C0 locks the scientific oracle and L2 is allowed to alter production adapters.
 
 
 ## Academic reviewer packet — next gate
 
-Run \`python3 -m Physics.adapter.qrt_review_packet\` to export a fully source-bound review-request JSON. For each Wave-0 question it contains exact canonical stem/conditions/author-written claim, source and individual-question digests, a bounded candidate calculation, model assumptions, adversarial false-model controls, and expert review questions. The packet is always \`PENDING_INDEPENDENT_PHYSICS_REVIEW\`, \`NOT_REVIEWED\` and \`permission_to_write: false\`. There is no auto-approval pathway.
+Run \`python3 -m Physics.adapter.qrt_program.qrt_review_packet\` to export a fully source-bound review-request JSON. For each Wave-0 question it contains exact canonical stem/conditions/author-written claim, source and individual-question digests, a bounded candidate calculation, model assumptions, adversarial false-model controls, and expert review questions. The packet is always \`PENDING_INDEPENDENT_PHYSICS_REVIEW\`, \`NOT_REVIEWED\` and \`permission_to_write: false\`. There is no auto-approval pathway.
 
 The domain reviewer must independently re-derive the equations and physical assumptions, inspect model applicability, alternate valid results, signed axes and transfer novelty. C0 must authenticate any reviewer declaration separately and retain precise source SHA and acceptance evidence; a code test of the review packet is not an academic review or Owner permission.
 
 
 ## Future reviewer-response validation
 
-\`python3 -m Physics.adapter.qrt_review_response --packet FROZEN_PACKET.json --response REVIEW_RESPONSE.json\` checks a submitted response for exact packet/question SHAs, independent-derivation fields, model-applicability reasons, review of all seeded falsifiers and an explicit result for each selected question. Every accepted *shape* is marked \`REVIEW_SUBMITTED_FOR_AUTHENTICATION\`; it does **not** verify the identity/competence of the reviewer or authorize code, academic acceptance or release. The template at \`Physics/adapter/qrt_science_review.template.json\` intentionally fails this gate until a real review is submitted.
+\`python3 -m Physics.adapter.qrt_program.qrt_review_response --packet FROZEN_PACKET.json --response REVIEW_RESPONSE.json\` checks a submitted response for exact packet/question SHAs, independent-derivation fields, model-applicability reasons, review of all seeded falsifiers and an explicit result for each selected question. Every accepted *shape* is marked \`REVIEW_SUBMITTED_FOR_AUTHENTICATION\`; it does **not** verify the identity/competence of the reviewer or authorize code, academic acceptance or release. The template at \`Physics/adapter/qrt_science_review.template.json\` intentionally fails this gate until a real review is submitted.
 
 ## Reviewer digest hardening and independent-derivation intake
 
@@ -67,7 +67,7 @@ digest. Tampered stems, predictions or falsifiers with an old digest fail with
 reviewer identity, provenance, or authority. C0 must authenticate the reviewer
 and compare the hash to the independently frozen packet.
 
-Use `python3 -m Physics.adapter.qrt_review_packet --blind-intake` to create a
+Use `python3 -m Physics.adapter.qrt_program.qrt_review_packet --blind-intake` to create a
 source-question stem/conditions-only request without authored answers,
 model predictions, or seeded falsifiers. An independent reviewer should freeze
 their own derivation before accessing the full comparison packet.
@@ -76,13 +76,13 @@ disclosed by the reviewer. Neither route authorizes learner release or worker wr
 
 ## W1: single existing NLM Core2B source-to-learner consumer evidence
 
-Run `python3 -m Physics.adapter.qrt_native_consumer_trace` for a read-only
+Run `python3 -m Physics.adapter.qrt_program.qrt_native_consumer_trace` for a read-only
 check of canonical question identity, actual Physics product manifest, prior
 Core2A selection, candidate golden selection and a public render receipt.
 This does not write any output or infer that generated pages exist.
 
 For a bounded in-memory renderer check, run
-`python3 -m Physics.adapter.qrt_native_consumer_trace --render` with native
+`python3 -m Physics.adapter.qrt_program.qrt_native_consumer_trace --render` with native
 renderer dependencies available. The probe reads `core2b.html` from existing
 `render_core.build()` in memory and checks the question article, attempt
 controls, gated payload, and whether the protected move is withheld from

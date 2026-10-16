@@ -6,7 +6,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from Physics.adapter.qrt_native_consumer_trace import (
+from Physics.adapter.qrt_program.qrt_native_consumer_trace import (
     trace, inspect_rendered_html, QUESTION_ID, SOURCE, MANIFEST, GOLDEN,
 )
 

@@ -3,7 +3,7 @@ import copy
 import json
 import unittest
 
-from Physics.adapter.qrt_review_packet import make_packet, make_independent_intake, recompute_packet_sha256, candidate_prediction, SCENARIOS
+from Physics.adapter.qrt_program.qrt_review_packet import make_packet, make_independent_intake, recompute_packet_sha256, candidate_prediction, SCENARIOS
 from tools.physics_qrt_program.bootstrap import HERE
 
 

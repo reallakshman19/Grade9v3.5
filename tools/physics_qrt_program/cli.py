@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 
 from .contracts import validate_lock, validate_receipt, converge
-from Physics.adapter.qrt_crosswalk import inspect_question
+from Physics.adapter.qrt_program.qrt_crosswalk import inspect_question
 from .bootstrap import assemble, BootstrapError
 
 
