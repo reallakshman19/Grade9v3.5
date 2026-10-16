@@ -10,10 +10,12 @@ import hashlib
 import json
 import math
 import subprocess
+import sys
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 SOURCE = "Physics/library/phy-nlm-first-law.v1.json"
 BASE = "73c66b64158ee2ff57b099f990e1c2081d5c571f"
 ORIGINAL_BLOB = "62b8df106e83db03ac80fbb4002a611ac3d6e49a"
