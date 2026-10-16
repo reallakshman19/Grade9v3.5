@@ -35,7 +35,7 @@ jobs:
           import re
           text=Path('build/physics-nlm289-draft-source/core2b.html').read_text()
           question='Q-PHY-NLM-2B-FRICTION-STATE-01'
-          match=re.search(r'<article\\b[^>]*data-g9-unit="'+question+r'"[^>]*>(.*?)</article>',text,re.S)
+          match=re.search(r'<article\b[^>]*data-g9-unit="'+question+r'"[^>]*>(.*?)</article>',text,re.S)
           assert match, "CANONICAL_SOURCE_NOT_RENDERED_IN_ACTUAL_NATIVE_CORE2B"
           article=match.group(1)
           # Conditions are before the attempt and must not hand over the model choice.
