@@ -4,7 +4,7 @@ This small read-only foundation supports the Option C **demand-first native** pr
 
 Read [PROGRAMME_CONTRACT.md](PROGRAMME_CONTRACT.md) first. [AGENT_WORK_ORDERS.md](AGENT_WORK_ORDERS.md) gives four fixed four-step tasks; C0 coordinator freezes actual question IDs, source SHA-256, non-overlapping file leases, independent scientific oracles and Owner permission.
 
-**Initial status:** DRAFT_HOLD, no frozen question set, no approved scientific oracle, no work-specific v3.6 enrollment. These are intentional. The Owner's authorization to open this foundation draft PR does not authorize the four workers' later production edits.
+**Initial status:** DRAFT_HOLD, no frozen question set, no approved scientific oracle. The repository currently selects V3_1 in `relay/PROTOCOL_SELECTION.yaml`; no work-specific Physics v3.6 enrollment is established. These are intentional. The Owner's authorization to open this foundation draft PR does not authorize the four workers' later production edits.
 
 ## Run offline from repository root
 
