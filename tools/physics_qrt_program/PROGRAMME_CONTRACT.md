@@ -68,3 +68,7 @@ Chromium remains NOT_RUN unless browser executable is present and actual outputs
 ## Wave-0 candidate source readback
 
 `witnesses.candidate.v1.json` lists four real canonical author-created source questions with pinned Git blob identities for Vector signed components, horizontal launch, NLM FBD and NLM Core2B friction transfer. `bootstrap.py` checks each named question at the local base and emits a **DRAFT_HOLD** work-lock with computed content SHA-256; it never creates an approved work-lock. Source custody, QRT demand, scientific oracle, genuine learner rendering, browser and academic review remain separate missing proof. C0 must deliberately review candidates and record decisions rather than automatically advance Wave 1 or 2.
+
+## Draft scientific benchmark (candidate-only)
+
+Four model-independent recomputation routines are installed under `Physics/adapter/qrt_oracle_candidates.py` with paired seeded false-result controls. They are a testable proposed independent benchmark, **not** a signed scientific oracle: no independent reviewer receipt, rights adjudication, QRT classification, Core behavioral proof or learner-output proof is asserted. Until subject review, the W0 work lock must retain `scientific_oracle_review: REVIEW_REQUIRED` and prevent authorized execution. These draft checks do not change existing subject validator logic or published source content.

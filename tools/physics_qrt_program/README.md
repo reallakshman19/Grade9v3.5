@@ -41,3 +41,7 @@ Run `python3 -m tools.physics_qrt_program.cli inspect-question --package Physics
 ## Wave-0 source candidates
 
 Run `python3 -m tools.physics_qrt_program.cli bootstrap-w0`. It reads four real authored Physics source questions listed in `witnesses.candidate.v1.json`, verifies question/capability/Core identities and emits computed source SHA-256s in a draft, strictly unapproved work-lock. Vectors, Motion 2D, NLM FBD and NLM transfer are included; Relative Motion remains optional extension regression. This does not supply an approved scientific oracle, owner decision, QRT demand or learner/render evidence.
+
+## Candidate scientific cross-checks — independent review not yet complete
+
+`Physics/adapter/qrt_oracle_candidates.py` has four **candidate-only** numerical/model reconstruction functions for the exact Wave-0 families, with positive and deliberately wrong-model tests in `tests/test_physics_qrt_program_oracle_candidates.py`. They check vector direction as well as magnitude, one time base for projectile x/y, force ownership for the magnet FBD, and changing-normal-reaction thresholds under angled pulling. These functions are NOT wired into production Physics validation, QRT scoring or learner content. An independent subject reviewer must confirm their applicability before C0 locks the scientific oracle and L2 is allowed to alter production adapters.

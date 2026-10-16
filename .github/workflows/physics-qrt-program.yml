@@ -6,6 +6,8 @@ on:
       - 'tests/test_physics_qrt_program_contract.py'
       - 'tests/test_physics_qrt_program_crosswalk.py'
       - 'tests/test_physics_qrt_program_bootstrap.py'
+      - 'tests/test_physics_qrt_program_oracle_candidates.py'
+      - 'Physics/adapter/qrt_oracle_candidates.py'
       - '.github/workflows/physics-qrt-program.yml'
   workflow_dispatch:
 jobs:
@@ -19,7 +21,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Contract unit tests
-        run: python3 -m unittest tests.test_physics_qrt_program_contract tests.test_physics_qrt_program_crosswalk tests.test_physics_qrt_program_bootstrap -v
+        run: python3 -m unittest tests.test_physics_qrt_program_contract tests.test_physics_qrt_program_crosswalk tests.test_physics_qrt_program_bootstrap tests.test_physics_qrt_program_oracle_candidates -v
       - name: Bootstrap Wave-0 source candidates (HOLD)
         run: python3 -m tools.physics_qrt_program.cli bootstrap-w0
       - name: Draft work-lock structurally valid
