@@ -1,0 +1,91 @@
+name: Physics QRT programme foundation
+on:
+  pull_request:
+    paths:
+      - 'tools/physics_qrt_program/**'
+      - 'Physics/adapter/qrt_program/**'
+      - 'tests/test_physics_qrt_program_runtime_isolation.py'
+      - 'tests/test_physics_qrt_program_contract.py'
+      - 'tests/test_physics_qrt_program_crosswalk.py'
+      - 'tests/test_physics_qrt_program_bootstrap.py'
+      - 'tests/test_physics_qrt_program_oracle_candidates.py'
+      - 'Physics/adapter/qrt_program/qrt_oracle_candidates.py'
+      - 'Physics/adapter/qrt_program/qrt_review_packet.py'
+      - 'tests/test_physics_qrt_program_review_packet.py'
+      - 'Physics/adapter/qrt_program/qrt_review_response.py'
+      - 'tests/test_physics_qrt_program_review_response.py'
+      - 'Physics/adapter/qrt_program/qrt_native_consumer_trace.py'
+      - 'tests/test_physics_qrt_native_consumer_trace.py'
+      - 'Physics/adapter/qrt_native_browser_audit.mjs'
+      - 'Physics/adapter/qrt_native_browser_contract.md'
+      - '.github/workflows/physics-qrt-program.yml'
+  workflow_dispatch:
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Contract unit tests
+        run: python3 -m unittest tests.test_physics_qrt_program_contract tests.test_physics_qrt_program_crosswalk tests.test_physics_qrt_program_bootstrap tests.test_physics_qrt_program_oracle_candidates tests.test_physics_qrt_program_review_packet tests.test_physics_qrt_program_review_response tests.test_physics_qrt_native_consumer_trace tests.test_physics_qrt_program_runtime_isolation -v
+      - name: Bootstrap Wave-0 source candidates (HOLD)
+        run: python3 -m tools.physics_qrt_program.cli bootstrap-w0
+      - name: Source-bound Physics review request remains unapproved
+        run: python3 -m Physics.adapter.qrt_program.qrt_review_packet --check-only
+      - name: Independent derivation intake generated without authored answers
+        run: python3 -m Physics.adapter.qrt_program.qrt_review_packet --blind-intake --check-only
+      - name: NLM-only packet identity pinned without promoting the science
+        run: python3 -m Physics.adapter.qrt_program.qrt_review_packet --question Q-PHY-NLM-2B-FRICTION-STATE-01 --check-only
+      - name: Stage exact NLM-only blind intake for independent reviewer
+        shell: bash
+        run: |
+          mkdir -p build/physics-qrt-nlm-review
+          python3 -m Physics.adapter.qrt_program.qrt_review_packet --question Q-PHY-NLM-2B-FRICTION-STATE-01 --blind-intake > build/physics-qrt-nlm-review/blind-intake.json
+          python3 -m Physics.adapter.qrt_program.qrt_review_packet --question Q-PHY-NLM-2B-FRICTION-STATE-01 --blind-intake --check-only
+      - name: Upload NLM-only answer-withheld independent reviewer intake
+        uses: actions/upload-artifact@v4
+        with:
+          name: physics-qrt-nlm-blind-intake
+          path: build/physics-qrt-nlm-review/blind-intake.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Source-to-product selected-question trace (no publish)
+        run: python3 -m Physics.adapter.qrt_program.qrt_native_consumer_trace
+      - name: Install native renderer schema dependency
+        run: python3 -m pip install --quiet jsonschema
+      - name: Native Physics source-to-Core2B render (in memory; not browser)
+        run: python3 -m Physics.adapter.qrt_program.qrt_native_consumer_trace --render
+      - name: Install pinned Chromium test browser
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Stage exact native PAGES in gitignored build area
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from Shared.tools import render_core
+          target=Path("build/physics-qrt-browser")
+          target.mkdir(parents=True,exist_ok=True)
+          pages,gaps,digest=render_core.build(Path("products/physics/phy-nlm-first-law.manifest.json"),mode="PAGES")
+          for name,html in pages.items():
+              (target/name).write_bytes(html.encode("utf-8"))
+          print(json.dumps({"render_digest":digest,"page_count":len(pages),"gaps":len(gaps),
+            "core2b_sha256":hashlib.sha256(pages["core2b.html"].encode()).hexdigest()},sort_keys=True))
+          PY
+      - name: Real Chromium Core2B protected-move and prior-exposure test
+        run: node Physics/adapter/qrt_native_browser_audit.mjs --render-dir build/physics-qrt-browser
+      - name: Draft work-lock structurally valid
+        run: python3 -m tools.physics_qrt_program.cli validate-lock tools/physics_qrt_program/work-lock.template.json
+      - name: Draft work-lock cannot authorize writes
+        shell: bash
+        run: |
+          if python3 -m tools.physics_qrt_program.cli validate-lock tools/physics_qrt_program/work-lock.template.json --require-authorized; then
+            echo 'FAIL: unapproved draft lock authorized'; exit 1
+          fi
+          echo 'PASS: draft lock remains on HOLD'
