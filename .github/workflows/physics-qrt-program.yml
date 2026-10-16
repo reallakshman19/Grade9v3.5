@@ -36,6 +36,10 @@ jobs:
         run: python3 -m Physics.adapter.qrt_review_packet --blind-intake --check-only
       - name: Source-to-product selected-question trace (no publish)
         run: python3 -m Physics.adapter.qrt_native_consumer_trace
+      - name: Install native renderer schema dependency
+        run: python3 -m pip install --quiet jsonschema
+      - name: Native Physics source-to-Core2B render (in memory; not browser)
+        run: python3 -m Physics.adapter.qrt_native_consumer_trace --render
       - name: Draft work-lock structurally valid
         run: python3 -m tools.physics_qrt_program.cli validate-lock tools/physics_qrt_program/work-lock.template.json
       - name: Draft work-lock cannot authorize writes
