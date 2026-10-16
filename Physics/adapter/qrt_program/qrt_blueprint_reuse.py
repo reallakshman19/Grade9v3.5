@@ -52,7 +52,7 @@ def map_reuse(root:Path=ROOT):
             w.get("programme")=="PHY-QRT-LTA-v1" and
             w.get("base_sha")==BASE and w.get("stage")=="CANDIDATE_NOT_FROZEN",
             "WITNESS_CONTRACT_OR_SOURCE_CUT_DRIFT")
-    require(registry.get("schema")=="interactive-page-blueprints/v1", "BLUEPRINT_SCHEMA_DRIFT")
+    require(registry.get("schema_version")=="1.0" and registry.get("registry_version"), "BLUEPRINT_SCHEMA_DRIFT")
     require(templates.get("schema")=="question-demand-templates/v1", "QRT_TEMPLATE_SCHEMA_DRIFT")
     entries=templates.get("templates")
     require(isinstance(entries,list),"QRT_TEMPLATES_MISSING")
