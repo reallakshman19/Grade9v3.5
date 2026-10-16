@@ -4,6 +4,7 @@ on:
     paths:
       - 'Physics/library/phy-nlm-first-law.v1.json'
       - 'tests/test_physics_qrt_nlm289_source_correction.py'
+      - 'tools/physics_qrt_program/nlm289_blind_intake.py'
       - '.github/workflows/physics-qrt-nlm289-source.yml'
       - 'relay/GENERATED/tasks/ISSUE-289.snapshot.yaml'
   workflow_dispatch:
@@ -24,6 +25,17 @@ jobs:
         run: python -m pip install jsonschema
       - name: Prove exact immutable original, changed-only-one-question and basic Physics invariants
         run: python tests/test_physics_qrt_nlm289_source_correction.py -v
+      - name: Generate truly answer-withheld Physics Pass A packet from exact amended source
+        run: |
+          python tools/physics_qrt_program/nlm289_blind_intake.py \\
+            --out build/physics-nlm289-pass-a/nlm289-pass-a.json
+      - name: Upload blind-only Stage A academic review intake (not a verdict)
+        uses: actions/upload-artifact@v4
+        with:
+          name: physics-nlm289-PASS-A-ANSWER-WITHHELD
+          path: build/physics-nlm289-pass-a/nlm289-pass-a.json
+          retention-days: 30
+          if-no-files-found: error
       - name: Validate real product structure through existing native renderer
         run: |
           python -m Shared.tools.render_core build \
@@ -60,6 +72,7 @@ jobs:
           allowed={
             'Physics/library/phy-nlm-first-law.v1.json',
             'tests/test_physics_qrt_nlm289_source_correction.py',
+            'tools/physics_qrt_program/nlm289_blind_intake.py',
             '.github/workflows/physics-qrt-nlm289-source.yml',
             'relay/GENERATED/tasks/ISSUE-289.snapshot.yaml',
           }
