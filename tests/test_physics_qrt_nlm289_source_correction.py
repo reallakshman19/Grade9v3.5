@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT))
 SOURCE = "Physics/library/phy-nlm-first-law.v1.json"
 BASE = "73c66b64158ee2ff57b099f990e1c2081d5c571f"
 ORIGINAL_BLOB = "62b8df106e83db03ac80fbb4002a611ac3d6e49a"
+CORRECTED_BLOB = "fc80cc53261b3c4932836795333e7cffe35a5133"
 QUESTION_ID = "Q-PHY-NLM-2B-FRICTION-STATE-01"
 CANDIDATE_DIGEST = "310f32e0b09d1628b53e98164c46db477b84ab45ee20701ee43a01bc88c5d616"
 FIELDS = {"stem", "conditions", "hints", "hint_ladder", "answer"}
@@ -37,20 +38,36 @@ def blob_sha(data: bytes) -> str:
 class PhysicsNlm289SourceCorrection(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        base = subprocess.run(["git", "-C", str(ROOT), "show", f"{BASE}:{SOURCE}"],
-                              check=True, capture_output=True).stdout
+        # The focused qualification job checks out full Git history, while
+        # broad guardrails use a shallow checkout without the pinned BASE.
+        # Lack of history must skip ONLY history-dependent diff assertions;
+        # source identity, physics, and answer-withholding still run normally.
+        result = subprocess.run(
+            ["git", "-C", str(ROOT), "show", f"{BASE}:{SOURCE}"],
+            check=False, capture_output=True,
+        )
         cls.source_bytes = (ROOT / SOURCE).read_bytes()
-        cls.base = json.loads(base)
         cls.changed = json.loads(cls.source_bytes)
-        cls.base_bytes = base
-        cls.before = next(q for q in cls.base["questions"] if q["id"] == QUESTION_ID)
+        cls.base_available = result.returncode == 0
+        cls.base_bytes = result.stdout if cls.base_available else None
+        cls.base = json.loads(result.stdout) if cls.base_available else None
+        cls.before = (next(q for q in cls.base["questions"] if q["id"] == QUESTION_ID)
+                      if cls.base_available else None)
         cls.after = next(q for q in cls.changed["questions"] if q["id"] == QUESTION_ID)
 
+    def require_pinned_history(self):
+        if not self.base_available:
+            self.skipTest("PINNED_BASE_UNAVAILABLE_IN_SHALLOW_CHECKOUT; full-history CI verifies historical diff")
+
     def test_original_and_candidate_pinned(self):
-        self.assertEqual(blob_sha(self.base_bytes), ORIGINAL_BLOB)
+        # Candidate material check never needs historical Git access.
+        self.assertEqual(blob_sha(self.source_bytes), CORRECTED_BLOB)
         self.assertEqual(canonical_sha(self.after), CANDIDATE_DIGEST)
+        if self.base_available:
+            self.assertEqual(blob_sha(self.base_bytes), ORIGINAL_BLOB)
 
     def test_no_unrelated_package_records_changed(self):
+        self.require_pinned_history()
         original = dict(self.base)
         candidate = dict(self.changed)
         original["questions"] = [q for q in original["questions"] if q["id"] != QUESTION_ID]
@@ -59,6 +76,7 @@ class PhysicsNlm289SourceCorrection(unittest.TestCase):
         self.assertEqual(len(original["questions"]), 51)
 
     def test_only_approved_one_question_fields_changed(self):
+        self.require_pinned_history()
         before = self.before
         after = self.after
         changed_keys = {k for k in before if before[k] != after[k]}
@@ -121,8 +139,14 @@ class PhysicsNlm289SourceCorrection(unittest.TestCase):
 
     def test_protected_reasoning_does_not_turn_equality_into_motion(self):
         route = self.after["answer"]["reasoning_route"]
-        self.assertEqual([r["id"] for r in route],
-                         [r["id"] for r in self.before["answer"]["reasoning_route"]])
+        original_ids = [
+            "R-NLM-2B-STATE-NORMAL", "R-NLM-2B-STATE-DEMAND",
+            "R-NLM-2B-STATE-DECIDE", "R-NLM-2B-STATE-CHECK",
+        ]
+        self.assertEqual([r["id"] for r in route], original_ids)
+        if self.base_available:
+            self.assertEqual([r["id"] for r in route],
+                             [r["id"] for r in self.before["answer"]["reasoning_route"]])
         protected = self.after["transfer"]["protected_move_ref"]
         self.assertEqual(next(r for r in route if r["id"] == protected)["kind"], "DECIDE")
         self.assertIn("strictly exceeds", route[2]["output"])
