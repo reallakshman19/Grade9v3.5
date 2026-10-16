@@ -77,3 +77,8 @@ Four model-independent recomputation routines are installed under `Physics/adapt
 ## W0 external science-review handoff
 
 \`python3 -m Physics.adapter.qrt_review_packet\` assembles a stable, source-bound request for qualified **independent** Physics review. Each case includes its exact author-created question stem, source digest, proposed model assumptions, numerical prediction and falsifiers. The programme MUST NOT accept its own computed numbers as reviewed scientific truth; the output deliberately has no reviewer identity or PASS state. C0 later obtains an authenticated third-party review and Owner confirmation using the applicable repository process before promoting a work lock. A reviewer may reject the proposal without changing canonical source content.
+
+
+## Review response gate (not a self-approval mechanism)
+
+\`Physics/adapter/qrt_review_response.py\` validates that a future independent scientific review covers exactly the frozen questions and source digests, includes physically reasoned derivations and explicit adversarial falsifier outcomes. A mathematically well-formed response is still \`REVIEW_SUBMITTED_FOR_AUTHENTICATION\`, never \`APPROVED\`. C0 must independently authenticate the reviewer, verify evidence, confirm the Owner's work-specific approval, and operate the active native relay protocol. No agent may fill the template as its own acceptance receipt.

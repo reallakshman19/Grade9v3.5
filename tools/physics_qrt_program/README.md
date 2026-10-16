@@ -52,3 +52,8 @@ Run `python3 -m tools.physics_qrt_program.cli bootstrap-w0`. It reads four real 
 Run \`python3 -m Physics.adapter.qrt_review_packet\` to export a fully source-bound review-request JSON. For each Wave-0 question it contains exact canonical stem/conditions/author-written claim, source and individual-question digests, a bounded candidate calculation, model assumptions, adversarial false-model controls, and expert review questions. The packet is always \`PENDING_INDEPENDENT_PHYSICS_REVIEW\`, \`NOT_REVIEWED\` and \`permission_to_write: false\`. There is no auto-approval pathway.
 
 The domain reviewer must independently re-derive the equations and physical assumptions, inspect model applicability, alternate valid results, signed axes and transfer novelty. C0 must authenticate any reviewer declaration separately and retain precise source SHA and acceptance evidence; a code test of the review packet is not an academic review or Owner permission.
+
+
+## Future reviewer-response validation
+
+\`python3 -m Physics.adapter.qrt_review_response --packet FROZEN_PACKET.json --response REVIEW_RESPONSE.json\` checks a submitted response for exact packet/question SHAs, independent-derivation fields, model-applicability reasons, review of all seeded falsifiers and an explicit result for each selected question. Every accepted *shape* is marked \`REVIEW_SUBMITTED_FOR_AUTHENTICATION\`; it does **not** verify the identity/competence of the reviewer or authorize code, academic acceptance or release. The template at \`Physics/adapter/qrt_science_review.template.json\` intentionally fails this gate until a real review is submitted.
