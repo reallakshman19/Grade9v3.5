@@ -1,0 +1,29 @@
+name: Physics QRT programme foundation
+on:
+  pull_request:
+    paths:
+      - 'tools/physics_qrt_program/**'
+      - 'tests/test_physics_qrt_program_contract.py'
+      - '.github/workflows/physics-qrt-program.yml'
+  workflow_dispatch:
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Contract unit tests
+        run: python3 -m unittest tests.test_physics_qrt_program_contract -v
+      - name: Draft work-lock structurally valid
+        run: python3 -m tools.physics_qrt_program.cli validate-lock tools/physics_qrt_program/work-lock.template.json
+      - name: Draft work-lock cannot authorize writes
+        shell: bash
+        run: |
+          if python3 -m tools.physics_qrt_program.cli validate-lock tools/physics_qrt_program/work-lock.template.json --require-authorized; then
+            echo 'FAIL: unapproved draft lock authorized'; exit 1
+          fi
+          echo 'PASS: draft lock remains on HOLD'
