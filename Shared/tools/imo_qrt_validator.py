@@ -12,6 +12,7 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import re
+import subprocess
 import sys
 from typing import Any
 
@@ -34,8 +35,9 @@ BANKS = (
 DEMANDS = ("RETRIEVE", "EXPLAIN", "APPLY", "MODEL", "REPRESENT", "SYNTHESIZE", "JUSTIFY")
 BANDS = ("D1", "D2", "D3", "D4")
 EXPECTED_TOTAL = 260
-VERDICTS = ("PASS", "FAIL", "REVIEW_REQUIRED", "NOT_RUN", "NOT_APPLICABLE", "STALE")
+VERDICTS = ("PASS", "FAIL", "REVIEW_REQUIRED", "NOT_RUN", "NOT_APPLICABLE", "STALE", "ERROR")
 SCHEMA = "imo-qrt-validator-intake/v1"
+FINDINGS_SCHEMA = "imo-qrt-question-findings/v1"
 
 
 def digest(raw: bytes) -> str:
@@ -223,6 +225,8 @@ def validate_bank_dir(bank_dir: Path = BANK_DIR, *, visual_manifest: Path = VISU
             record = check_one(q, visual_needed=q.get("id") in visual_ids)
             record["source_file"] = name
             record["source_array_index"] = i
+            locator = q.get("paper_origin_locator")
+            record["source_question_number"] = locator.get("question_number") if isinstance(locator, dict) else None
             records.append(record)
             all_ids.append(record["id"])
 
@@ -268,6 +272,143 @@ def validate_bank_dir(bank_dir: Path = BANK_DIR, *, visual_manifest: Path = VISU
     }
 
 
+
+def _git_bytes(root: Path, *args: str) -> bytes:
+    """Read-only Git object lookup; error is not evidence of a passed check."""
+    call = subprocess.run(
+        ["git", "-C", str(root), *args], stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE, check=False,
+    )
+    if call.returncode:
+        raise ValueError("GIT_IDENTITY_UNVERIFIED: " + " ".join(args))
+    return call.stdout
+
+
+def verify_source_commit(repo_root: Path, source_sha: str) -> None:
+    """Reject a well-formed but false source commit before creating findings."""
+    if not isinstance(source_sha, str) or not re.fullmatch(r"[0-9a-f]{40}", source_sha):
+        raise ValueError("EXACT_40_CHARACTER_SOURCE_COMMIT_REQUIRED")
+    actual = _git_bytes(repo_root, "rev-parse", "HEAD").decode("ascii").strip()
+    if actual != source_sha:
+        raise ValueError("SOURCE_COMMIT_NOT_PINNED: expected=" + source_sha + " actual=" + actual)
+    if _git_bytes(repo_root, "cat-file", "-t", source_sha).strip() != b"commit":
+        raise ValueError("SOURCE_NOT_A_GIT_COMMIT")
+
+
+def _verified_git_file(repo_root: Path, commit: str, relative: str) -> dict[str, str]:
+    """Prove working bytes exactly equal the designated commit's Git blob."""
+    if relative.startswith("/") or ".." in Path(relative).parts:
+        raise ValueError("UNSAFE_PROVENANCE_PATH")
+    target = (repo_root / relative).resolve()
+    if not target.is_relative_to(repo_root.resolve()) or not target.is_file():
+        raise ValueError("BOUND_FILE_MISSING_OR_UNSAFE: " + relative)
+    git_bytes = _git_bytes(repo_root, "show", commit + ":" + relative)
+    actual = target.read_bytes()
+    if actual != git_bytes:
+        raise ValueError("GIT_BLOB_CONTENT_MISMATCH: " + relative)
+    blob = _git_bytes(repo_root, "rev-parse", commit + ":" + relative).decode("ascii").strip()
+    if not re.fullmatch(r"[0-9a-f]{40}", blob):
+        raise ValueError("GIT_BLOB_ID_INVALID")
+    return {"path": relative, "git_blob_sha": blob, "sha256": digest(actual)}
+
+
+def build_question_findings(report: dict[str, Any], *, repo_root: Path,
+                            source_sha: str, validator_sha: str) -> dict[str, Any]:
+    """Additive, Git-bound evidence view. Never upgrades academic status."""
+    repo_root = repo_root.resolve()
+    verify_source_commit(repo_root, source_sha)
+    if not isinstance(validator_sha, str) or not re.fullmatch(r"[0-9a-f]{40}", validator_sha):
+        raise ValueError("EXACT_40_CHARACTER_VALIDATOR_COMMIT_REQUIRED")
+    if _git_bytes(repo_root, "cat-file", "-t", validator_sha).strip() != b"commit":
+        raise ValueError("VALIDATOR_NOT_A_GIT_COMMIT")
+    if report.get("baseline_commit") != source_sha:
+        raise ValueError("INTAKE_SOURCE_COMMIT_DISAGREES")
+    if (report.get("actual_total"), report.get("unique_ids"), report.get("expected_total")) != (
+        EXPECTED_TOTAL, EXPECTED_TOTAL, EXPECTED_TOTAL,
+    ):
+        raise ValueError("SOURCE_260_DENOMINATOR_MISMATCH")
+    if len(report.get("questions", [])) != EXPECTED_TOTAL or len(report.get("tiles", {})) != 28:
+        raise ValueError("SOURCE_OCCURRENCES_OR_QRT_BOARD_INCOMPLETE")
+    source_files = []
+    bank_dir = repo_root / "Mathematics" / "question-bank"
+    for name in BANKS:
+        rel = "Mathematics/question-bank/" + name
+        proof = _verified_git_file(repo_root, source_sha, rel)
+        inputs = [x for x in report.get("inputs", [])
+                  if x.get("kind") == "RESEARCH_BANK" and Path(x.get("path", "")).resolve() == (bank_dir / name).resolve()]
+        if len(inputs) != 1 or inputs[0].get("sha256") != proof["sha256"]:
+            raise ValueError("INTAKE_BANK_PROVENANCE_MISMATCH: " + name)
+        proof["question_count"] = inputs[0]["count"]
+        source_files.append(proof)
+    validator_paths = (
+        "Shared/tools/imo_qrt_validator.py",
+        "tests/test_imo_qrt_validator.py",
+        "tests/test_imo_qrt_findings_contract.py",
+        "TEST/imo-qrt-validator/question-findings.v1.schema.json",
+    )
+    validator_files = [
+        _verified_git_file(repo_root, validator_sha, path) for path in validator_paths
+    ]
+    by_bank = {item["path"].rsplit("/", 1)[-1]: item for item in source_files}
+    questions = []
+    for row in report["questions"]:
+        src = row["source_file"]
+        bank = by_bank.get(src)
+        if bank is None:
+            raise ValueError("QUESTION_SOURCE_BANK_UNKNOWN")
+        index = row["source_array_index"]
+        if type(index) is not int or not 0 <= index < bank["question_count"]:
+            raise ValueError("QUESTION_OCCURRENCE_OUT_OF_BOUNDS")
+        original = json.loads((bank_dir / src).read_bytes())["questions"][index]
+        if original.get("id") != row["id"]:
+            raise ValueError("QUESTION_OCCURRENCE_ID_MISMATCH")
+        occurrence = {
+            "paper_id": src.removesuffix(".core2.json"),
+            "question_number": row["source_question_number"],
+            "question_id": row["id"],
+            "source_path": bank["path"],
+            "source_array_index": index,
+            "source_git_blob_sha": bank["git_blob_sha"],
+            "source_sha256": bank["sha256"],
+        }
+        findings = []
+        for finding in row["findings"]:
+            identity = "|".join((source_sha, bank["git_blob_sha"], validator_sha,
+                                 occurrence["source_path"], str(index), row["id"],
+                                 finding["rule"], finding["evidence"], finding["verdict"]))
+            findings.append({**finding, "finding_id": digest(identity.encode("utf-8"))})
+        questions.append({
+            "occurrence": occurrence,
+            "declared_tile": row["declared_tile"],
+            "difficulty_evidence": row["difficulty_evidence"],
+            "technical_verdict": "FAIL" if any(f["verdict"] == "FAIL" for f in findings)
+                                 else "REVIEW_REQUIRED",
+            "academic_verdict": row["academic_verdict"],
+            "native_core_admission": row["native_core_admission"],
+            "findings": findings,
+            "independent_browser": "NOT_RUN",
+            "independent_academic": "NOT_RUN",
+        })
+    return {
+        "schema": FINDINGS_SCHEMA,
+        "source_basis": {"commit": source_sha, "expected_total": EXPECTED_TOTAL,
+                         "bank_files": source_files},
+        "validator_basis": {"commit": validator_sha, "files": validator_files},
+        "scope": "RESEARCH_INTAKE_ONLY",
+        "status": report["status"],
+        "academic_approval": "NOT_GRANTED",
+        "source_rights": "UNVERIFIED",
+        "execution": {"browser": "NOT_RUN", "academic": "NOT_RUN",
+                      "independent_negative_controls": "NOT_RUN"},
+        "matrix": {"expected_coordinates": 28, "occupied_coordinates": report["occupied_tiles"],
+                   "tiles": report["tiles"]},
+        "expected_total": EXPECTED_TOTAL,
+        "actual_total": len(questions),
+        "questions": questions,
+        "stale_audits": report["stale_audits"],
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--bank-dir", type=Path, default=BANK_DIR)
@@ -275,9 +416,21 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--legacy-audit", type=Path, default=OLD_AUDIT)
     p.add_argument("--baseline-sha", required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--findings-output", type=Path, help="optional source+validator Git-bound v1 export")
+    p.add_argument("--validator-sha", help="required only with --findings-output")
     args = p.parse_args(argv)
     result = validate_bank_dir(args.bank_dir, visual_manifest=args.visual_manifest,
                                legacy_audit=args.legacy_audit, baseline_sha=args.baseline_sha)
+    if args.findings_output:
+        if not args.validator_sha:
+            raise ValueError("VALIDATOR_COMMIT_REQUIRED_FOR_FINDINGS")
+        # Strictly verify source and all validator blobs before publishing either file.
+        export = build_question_findings(
+            result, repo_root=args.bank_dir.resolve().parents[1],
+            source_sha=args.baseline_sha, validator_sha=args.validator_sha,
+        )
+        args.findings_output.parent.mkdir(parents=True, exist_ok=True)
+        args.findings_output.write_text(json.dumps(export, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: result[k] for k in (

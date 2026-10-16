@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import json
-from Shared.tools.imo_qrt_validator import BANKS, check_one, validate_bank_dir
+from Shared.tools.imo_qrt_validator import BANKS, check_one, validate_bank_dir, verify_source_commit, build_question_findings, ROOT
 
 SHA = "a" * 40
 
@@ -40,6 +40,23 @@ class IntakeChecks(unittest.TestCase):
     def test_wrong_score(self):
         q = sample(); q["cognitive_classification"]["difficulty_score"] = 9
         self.assertIn("FIVE_FACTOR_SCORE_MISMATCH", errors(q))
+
+    def test_score_eight_is_canonical_d4_without_remap(self):
+        q = sample()
+        c = q["cognitive_classification"]
+        c["difficulty_components"] = {
+            "concept_model_selection": 2, "representation_translation": 2,
+            "reasoning_chain_length": 2, "algebra_computational_load": 1,
+            "trap_exception_sensitivity": 1,
+        }
+        c["difficulty_score"] = 8
+        c["difficulty_band"] = "D4"
+        c["qrt_cell"] = "QRT-APPLY-D4"
+        row = check_one(q)
+        self.assertEqual((row["derived_score"], row["derived_band"]), (8, "D4"))
+        self.assertNotIn("FIVE_FACTOR_BAND_MISMATCH", errors(q))
+        self.assertNotIn("FIVE_FACTOR_SCORE_MISMATCH", errors(q))
+        self.assertEqual(row["academic_verdict"], "REVIEW_REQUIRED")
 
     def test_wrong_band(self):
         q = sample(); q["cognitive_classification"]["difficulty_band"] = "D4"
