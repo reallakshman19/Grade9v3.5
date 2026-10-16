@@ -73,3 +73,19 @@ model predictions, or seeded falsifiers. An independent reviewer should freeze
 their own derivation before accessing the full comparison packet.
 Reading the canonical source files can expose authored answers and should be
 disclosed by the reviewer. Neither route authorizes learner release or worker writes.
+
+## W1: single existing NLM Core2B source-to-learner consumer evidence
+
+Run `python3 -m Physics.adapter.qrt_native_consumer_trace` for a read-only
+check of canonical question identity, actual Physics product manifest, prior
+Core2A selection, candidate golden selection and a public render receipt.
+This does not write any output or infer that generated pages exist.
+
+For a bounded in-memory renderer check, run
+`python3 -m Physics.adapter.qrt_native_consumer_trace --render` with native
+renderer dependencies available. The probe reads `core2b.html` from existing
+`render_core.build()` in memory and checks the question article, attempt
+controls, gated payload, and whether the protected move is withheld from
+initial article text. Browser JS enforcement, transfer pedagogy, academic
+review, demand and publication remain separate gates. `NOT_RUN` is not PASS.
+No build-to-disk, publish operation, golden rewrite or source edit.

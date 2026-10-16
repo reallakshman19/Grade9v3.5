@@ -34,3 +34,11 @@ Validate work-lock with CLI; reject overlapping leases or missing scientific rev
 ## Independent academic reviewer (not a low-thinking agent)
 
 Review \`Physics/adapter/qrt_review_packet.py\` output and original canonical Physics records at the exact base and question SHA. Independently derive all four models. Verify signed vector components and equivalent forms; free-flight assumptions, shared time and impact velocities; physical ownership of magnet force and third-law partners; and whether the static-friction model keeps N positive and truly assesses a changed-demand model choice. Try each listed wrong-result control. Respond for EACH question with ACCEPT/REVISE/REJECT, source digest, derivation, caveats and reviewer identity. **Do not review your own engineering tests as your only authority.** Reviewer identity and competence must be authenticated by C0; do not invent acknowledgement. No developer/source writer or test agent may automatically sign this.
+
+## First bounded L3 source-to-consumer witness
+
+Use `python3 -m Physics.adapter.qrt_native_consumer_trace` read-only;
+`--render` checks only HTML structure from the native in-memory builder.
+Keep Chromium and real pre-attempt interaction NOT_RUN until actually observed.
+Stop at the earliest missing join; do not treat a manifest as a published page
+or a candidate transfer as academically reviewed.

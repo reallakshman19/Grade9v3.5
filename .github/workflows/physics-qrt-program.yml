@@ -12,6 +12,8 @@ on:
       - 'tests/test_physics_qrt_program_review_packet.py'
       - 'Physics/adapter/qrt_review_response.py'
       - 'tests/test_physics_qrt_program_review_response.py'
+      - 'Physics/adapter/qrt_native_consumer_trace.py'
+      - 'tests/test_physics_qrt_native_consumer_trace.py'
       - '.github/workflows/physics-qrt-program.yml'
   workflow_dispatch:
 jobs:
@@ -25,13 +27,15 @@ jobs:
         with:
           python-version: '3.11'
       - name: Contract unit tests
-        run: python3 -m unittest tests.test_physics_qrt_program_contract tests.test_physics_qrt_program_crosswalk tests.test_physics_qrt_program_bootstrap tests.test_physics_qrt_program_oracle_candidates tests.test_physics_qrt_program_review_packet tests.test_physics_qrt_program_review_response -v
+        run: python3 -m unittest tests.test_physics_qrt_program_contract tests.test_physics_qrt_program_crosswalk tests.test_physics_qrt_program_bootstrap tests.test_physics_qrt_program_oracle_candidates tests.test_physics_qrt_program_review_packet tests.test_physics_qrt_program_review_response tests.test_physics_qrt_native_consumer_trace -v
       - name: Bootstrap Wave-0 source candidates (HOLD)
         run: python3 -m tools.physics_qrt_program.cli bootstrap-w0
       - name: Source-bound Physics review request remains unapproved
         run: python3 -m Physics.adapter.qrt_review_packet --check-only
       - name: Independent derivation intake generated without authored answers
         run: python3 -m Physics.adapter.qrt_review_packet --blind-intake --check-only
+      - name: Source-to-product selected-question trace (no publish)
+        run: python3 -m Physics.adapter.qrt_native_consumer_trace
       - name: Draft work-lock structurally valid
         run: python3 -m tools.physics_qrt_program.cli validate-lock tools/physics_qrt_program/work-lock.template.json
       - name: Draft work-lock cannot authorize writes

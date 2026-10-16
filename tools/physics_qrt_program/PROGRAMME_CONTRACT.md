@@ -82,3 +82,14 @@ Four model-independent recomputation routines are installed under `Physics/adapt
 ## Review response gate (not a self-approval mechanism)
 
 \`Physics/adapter/qrt_review_response.py\` validates that a future independent scientific review covers exactly the frozen questions and source digests, includes physically reasoned derivations and explicit adversarial falsifier outcomes. A mathematically well-formed response is still \`REVIEW_SUBMITTED_FOR_AUTHENTICATION\`, never \`APPROVED\`. C0 must independently authenticate the reviewer, verify evidence, confirm the Owner's work-specific approval, and operate the active native relay protocol. No agent may fill the template as its own acceptance receipt.
+
+## Post-handover single native consumer trace
+
+Physics/adapter/qrt_native_consumer_trace.py binds an existing authored
+NLM Core2B item through source, product and candidate-golden manifests,
+prerequisite selection and optionally in-memory native render. This is a
+read-only source-first observation, NOT a new renderer, scientific oracle,
+browser session, school-demand decision or release gate. It returns a
+first-unproven-join and keeps scientific, browser and release status on HOLD.
+The selected V3.1 protocol and Owner controls remain authoritative.
+Independent academic request remains Issue #287 without authenticated review.
