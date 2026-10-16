@@ -1,0 +1,358 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "imo-qrt-question-findings/v1",
+  "title": "Source and validator Git-bound QRT per-question findings; not an academic acceptance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "source_basis",
+    "validator_basis",
+    "scope",
+    "status",
+    "academic_approval",
+    "source_rights",
+    "execution",
+    "matrix",
+    "expected_total",
+    "actual_total",
+    "questions",
+    "stale_audits"
+  ],
+  "properties": {
+    "schema": {
+      "const": "imo-qrt-question-findings/v1"
+    },
+    "source_basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit",
+        "expected_total",
+        "bank_files"
+      ],
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/sha40"
+        },
+        "expected_total": {
+          "const": 260
+        },
+        "bank_files": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/sourceFile"
+          }
+        }
+      }
+    },
+    "validator_basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit",
+        "files"
+      ],
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/sha40"
+        },
+        "files": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/gitFile"
+          }
+        }
+      }
+    },
+    "scope": {
+      "const": "RESEARCH_INTAKE_ONLY"
+    },
+    "status": {
+      "$ref": "#/$defs/verdict"
+    },
+    "academic_approval": {
+      "const": "NOT_GRANTED"
+    },
+    "source_rights": {
+      "const": "UNVERIFIED"
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "browser",
+        "academic",
+        "independent_negative_controls"
+      ],
+      "properties": {
+        "browser": {
+          "$ref": "#/$defs/verdict"
+        },
+        "academic": {
+          "$ref": "#/$defs/verdict"
+        },
+        "independent_negative_controls": {
+          "$ref": "#/$defs/verdict"
+        }
+      }
+    },
+    "matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_coordinates",
+        "occupied_coordinates",
+        "tiles"
+      ],
+      "properties": {
+        "expected_coordinates": {
+          "const": 28
+        },
+        "occupied_coordinates": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 28
+        },
+        "tiles": {
+          "type": "object",
+          "minProperties": 28,
+          "maxProperties": 28,
+          "patternProperties": {
+            "^QRT-(RETRIEVE|EXPLAIN|APPLY|MODEL|REPRESENT|SYNTHESIZE|JUSTIFY)-D[1-4]$": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "count",
+                "question_ids"
+              ],
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "question_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "expected_total": {
+      "const": 260
+    },
+    "actual_total": {
+      "const": 260
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 260,
+      "maxItems": 260,
+      "items": {
+        "$ref": "#/$defs/question"
+      }
+    },
+    "stale_audits": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "$defs": {
+    "sha40": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL",
+        "REVIEW_REQUIRED",
+        "ERROR",
+        "NOT_RUN",
+        "STALE",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "gitFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "git_blob_sha",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "git_blob_sha": {
+          "$ref": "#/$defs/sha40"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "sourceFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "git_blob_sha",
+        "sha256",
+        "question_count"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "git_blob_sha": {
+          "$ref": "#/$defs/sha40"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "question_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "paper_id",
+        "question_number",
+        "question_id",
+        "source_path",
+        "source_array_index",
+        "source_git_blob_sha",
+        "source_sha256"
+      ],
+      "properties": {
+        "paper_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "question_number": {
+          "type": [
+            "integer",
+            "string",
+            "null"
+          ]
+        },
+        "question_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_array_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_git_blob_sha": {
+          "$ref": "#/$defs/sha40"
+        },
+        "source_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "verdict",
+        "evidence",
+        "finding_id"
+      ],
+      "properties": {
+        "rule": {
+          "type": "string",
+          "pattern": "^V[0-9]{2}$"
+        },
+        "verdict": {
+          "$ref": "#/$defs/verdict"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "finding_id": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "occurrence",
+        "declared_tile",
+        "difficulty_evidence",
+        "technical_verdict",
+        "academic_verdict",
+        "native_core_admission",
+        "findings",
+        "independent_browser",
+        "independent_academic"
+      ],
+      "properties": {
+        "occurrence": {
+          "$ref": "#/$defs/occurrence"
+        },
+        "declared_tile": {
+          "type": "string"
+        },
+        "difficulty_evidence": {
+          "type": "object"
+        },
+        "technical_verdict": {
+          "$ref": "#/$defs/verdict"
+        },
+        "academic_verdict": {
+          "$ref": "#/$defs/verdict"
+        },
+        "native_core_admission": {
+          "const": "NOT_VERIFIED"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/finding"
+          }
+        },
+        "independent_browser": {
+          "$ref": "#/$defs/verdict"
+        },
+        "independent_academic": {
+          "$ref": "#/$defs/verdict"
+        }
+      }
+    }
+  }
+}
