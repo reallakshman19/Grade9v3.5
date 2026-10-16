@@ -29,3 +29,8 @@ Read PROGRAMME_CONTRACT.md and the coordinator-frozen work-lock first. If the lo
 ## C0 — independent integration and publication boundary
 
 Validate work-lock with CLI; reject overlapping leases or missing scientific review. Require all four receipts and check source/candidate coherency. Independently review actual Physics results with qualified academic reviewer. Keep source custody/technical/browser/learner/rights/Owner acceptance distinct. Draft foundation PR is not production authorization. No automatic EP creation, no BuddyRunner unless an actual predecessor handover occurs.
+
+
+## Independent academic reviewer (not a low-thinking agent)
+
+Review \`Physics/adapter/qrt_review_packet.py\` output and original canonical Physics records at the exact base and question SHA. Independently derive all four models. Verify signed vector components and equivalent forms; free-flight assumptions, shared time and impact velocities; physical ownership of magnet force and third-law partners; and whether the static-friction model keeps N positive and truly assesses a changed-demand model choice. Try each listed wrong-result control. Respond for EACH question with ACCEPT/REVISE/REJECT, source digest, derivation, caveats and reviewer identity. **Do not review your own engineering tests as your only authority.** Reviewer identity and competence must be authenticated by C0; do not invent acknowledgement. No developer/source writer or test agent may automatically sign this.

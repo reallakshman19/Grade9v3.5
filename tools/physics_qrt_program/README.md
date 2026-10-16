@@ -45,3 +45,10 @@ Run `python3 -m tools.physics_qrt_program.cli bootstrap-w0`. It reads four real 
 ## Candidate scientific cross-checks — independent review not yet complete
 
 `Physics/adapter/qrt_oracle_candidates.py` has four **candidate-only** numerical/model reconstruction functions for the exact Wave-0 families, with positive and deliberately wrong-model tests in `tests/test_physics_qrt_program_oracle_candidates.py`. They check vector direction as well as magnitude, one time base for projectile x/y, force ownership for the magnet FBD, and changing-normal-reaction thresholds under angled pulling. These functions are NOT wired into production Physics validation, QRT scoring or learner content. An independent subject reviewer must confirm their applicability before C0 locks the scientific oracle and L2 is allowed to alter production adapters.
+
+
+## Academic reviewer packet — next gate
+
+Run \`python3 -m Physics.adapter.qrt_review_packet\` to export a fully source-bound review-request JSON. For each Wave-0 question it contains exact canonical stem/conditions/author-written claim, source and individual-question digests, a bounded candidate calculation, model assumptions, adversarial false-model controls, and expert review questions. The packet is always \`PENDING_INDEPENDENT_PHYSICS_REVIEW\`, \`NOT_REVIEWED\` and \`permission_to_write: false\`. There is no auto-approval pathway.
+
+The domain reviewer must independently re-derive the equations and physical assumptions, inspect model applicability, alternate valid results, signed axes and transfer novelty. C0 must authenticate any reviewer declaration separately and retain precise source SHA and acceptance evidence; a code test of the review packet is not an academic review or Owner permission.

@@ -72,3 +72,8 @@ Chromium remains NOT_RUN unless browser executable is present and actual outputs
 ## Draft scientific benchmark (candidate-only)
 
 Four model-independent recomputation routines are installed under `Physics/adapter/qrt_oracle_candidates.py` with paired seeded false-result controls. They are a testable proposed independent benchmark, **not** a signed scientific oracle: no independent reviewer receipt, rights adjudication, QRT classification, Core behavioral proof or learner-output proof is asserted. Until subject review, the W0 work lock must retain `scientific_oracle_review: REVIEW_REQUIRED` and prevent authorized execution. These draft checks do not change existing subject validator logic or published source content.
+
+
+## W0 external science-review handoff
+
+\`python3 -m Physics.adapter.qrt_review_packet\` assembles a stable, source-bound request for qualified **independent** Physics review. Each case includes its exact author-created question stem, source digest, proposed model assumptions, numerical prediction and falsifiers. The programme MUST NOT accept its own computed numbers as reviewed scientific truth; the output deliberately has no reviewer identity or PASS state. C0 later obtains an authenticated third-party review and Owner confirmation using the applicable repository process before promoting a work lock. A reviewer may reject the proposal without changing canonical source content.
