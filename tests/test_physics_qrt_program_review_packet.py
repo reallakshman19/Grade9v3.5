@@ -3,7 +3,7 @@ import copy
 import json
 import unittest
 
-from Physics.adapter.qrt_review_packet import make_packet, candidate_prediction, SCENARIOS
+from Physics.adapter.qrt_review_packet import make_packet, make_independent_intake, recompute_packet_sha256, candidate_prediction, SCENARIOS
 from tools.physics_qrt_program.bootstrap import HERE
 
 
@@ -20,6 +20,23 @@ class CandidateReviewPacketTests(unittest.TestCase):
         self.assertTrue(all(row["scientific_approval"] == "NOT_OBTAINED"
                             for row in packet["questions"]))
         self.assertTrue(all(len(row["required_model_falsifiers"]) >= 2 for row in packet["questions"]))
+
+
+    def test_packet_digest_matches_actual_canonical_bytes(self):
+        packet = make_packet()
+        self.assertEqual(packet["packet_sha256"], recompute_packet_sha256(packet))
+
+    def test_stem_only_intake_withholds_answers_and_false_result_controls(self):
+        intake = make_independent_intake()
+        self.assertEqual(intake["status"], "DERIVATION_REQUEST_UNASSIGNED")
+        self.assertEqual(len(intake["questions"]), 4)
+        self.assertEqual(intake["scientific_verdict"], "NOT_REVIEWED")
+        self.assertEqual(intake["release_verdict"], "HOLD")
+        for question in intake["questions"]:
+            self.assertTrue(question["authored_question_stem"])
+            for withheld in ("authored_answer_claim", "candidate_recomputed_prediction",
+                             "required_model_falsifiers", "proposed_physics_model"):
+                self.assertNotIn(withheld, question)
 
     def test_source_locked_without_trusting_fixture_prose(self):
         packet = make_packet()

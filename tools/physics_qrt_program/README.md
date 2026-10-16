@@ -57,3 +57,19 @@ The domain reviewer must independently re-derive the equations and physical assu
 ## Future reviewer-response validation
 
 \`python3 -m Physics.adapter.qrt_review_response --packet FROZEN_PACKET.json --response REVIEW_RESPONSE.json\` checks a submitted response for exact packet/question SHAs, independent-derivation fields, model-applicability reasons, review of all seeded falsifiers and an explicit result for each selected question. Every accepted *shape* is marked \`REVIEW_SUBMITTED_FOR_AUTHENTICATION\`; it does **not** verify the identity/competence of the reviewer or authorize code, academic acceptance or release. The template at \`Physics/adapter/qrt_science_review.template.json\` intentionally fails this gate until a real review is submitted.
+
+## Reviewer digest hardening and independent-derivation intake
+
+Reviewer-response validation recomputes the canonical hash of the entire packet
+(excluding its self-referential `packet_sha256`) before accepting the claimed
+digest. Tampered stems, predictions or falsifiers with an old digest fail with
+`PACKET_CONTENT_DIGEST_MISMATCH`. A digest is content integrity, not qualified
+reviewer identity, provenance, or authority. C0 must authenticate the reviewer
+and compare the hash to the independently frozen packet.
+
+Use `python3 -m Physics.adapter.qrt_review_packet --blind-intake` to create a
+source-question stem/conditions-only request without authored answers,
+model predictions, or seeded falsifiers. An independent reviewer should freeze
+their own derivation before accessing the full comparison packet.
+Reading the canonical source files can expose authored answers and should be
+disclosed by the reviewer. Neither route authorizes learner release or worker writes.

@@ -62,6 +62,29 @@ class PhysicsReviewResponseTests(unittest.TestCase):
         response["packet_sha256"] = "f" * 64
         self.assertIn("REVIEW_WRONG_PACKET_SHA", validate_review_response(self.packet, response))
 
+
+    def test_stem_tampering_with_old_digest_is_rejected(self):
+        packet = copy.deepcopy(self.packet)
+        response = complete_test_response(self.packet)
+        packet["questions"][0]["authored_question_stem"] += " CHANGED_UNDER_REVIEW"
+        self.assertIn("PACKET_CONTENT_DIGEST_MISMATCH",
+                      validate_review_response(packet, response))
+        self.assertEqual(evaluate(packet, response)["release_verdict"], "HOLD")
+
+    def test_predicted_science_tampering_is_rejected(self):
+        packet = copy.deepcopy(self.packet)
+        response = complete_test_response(self.packet)
+        packet["questions"][1]["candidate_recomputed_prediction"]["range"] = 999
+        self.assertIn("PACKET_CONTENT_DIGEST_MISMATCH",
+                      validate_review_response(packet, response))
+
+    def test_seeded_falsifier_tampering_is_rejected(self):
+        packet = copy.deepcopy(self.packet)
+        response = complete_test_response(self.packet)
+        packet["questions"][2]["required_model_falsifiers"].append("injected")
+        self.assertIn("PACKET_CONTENT_DIGEST_MISMATCH",
+                      validate_review_response(packet, response))
+
     def test_missing_one_question_is_rejected(self):
         response = complete_test_response(self.packet)
         response["per_question"].pop()

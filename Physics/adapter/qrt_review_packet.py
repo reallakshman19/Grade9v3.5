@@ -28,6 +28,17 @@ def _canonical_digest(value: Any) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def recompute_packet_sha256(packet: dict) -> str:
+    """Digest supplied packet content excluding its self-referential digest.
+
+    A matching digest does not authenticate the sender or qualified reviewer.
+    """
+    if not isinstance(packet, dict):
+        raise ValueError("PACKET_MUST_BE_OBJECT")
+    return _canonical_digest({key: value for key, value in packet.items()
+                              if key != "packet_sha256"})
+
+
 # This is a fixed, bounded, non-authoritative test scenario registry.
 # The evaluator must not claim the authored question is valid merely
 # because these cases produce numerically plausible results.
@@ -180,19 +191,59 @@ def make_packet(*, root: Path = ROOT, candidates: dict | None = None,
         "permission_to_write": False,
         "release_verdict": "HOLD",
     }
-    result["packet_sha256"] = _canonical_digest(result)
+    result["packet_sha256"] = recompute_packet_sha256(result)
     return result
+
+
+
+def make_independent_intake(*, root: Path = ROOT,
+                            candidates: dict | None = None,
+                            draft_lock: dict | None = None) -> dict:
+    """Source-bound stem-only brief, without author's answers or model proposals.
+
+    An actual independent reviewer must freeze their own derivation before
+    seeing the full comparison packet. This formatting alone does not prove
+    reviewer independence or scientific competency.
+    """
+    complete = make_packet(root=root, candidates=candidates, draft_lock=draft_lock)
+    fields = (
+        "question_id", "source_package", "source_sha256", "question_sha256",
+        "primary_capability_ref", "core_exposure", "authored_question_stem",
+        "authored_conditions"
+    )
+    intake = {
+        "schema": "physics-qrt.independent-derivation-intake/v1",
+        "programme": complete["programme"],
+        "base_sha": complete["base_sha"],
+        "full_comparison_packet_sha256": complete["packet_sha256"],
+        "status": "DERIVATION_REQUEST_UNASSIGNED",
+        "questions": [{key: item[key] for key in fields} for item in complete["questions"]],
+        "protocol": ("Solve the stems and conditions independently and freeze your "
+                     "own derivations before seeing the authors' answers, our candidate "
+                     "computations or seeded falsifiers. Then compare and explain any "
+                     "differences. Opening canonical JSON containing authored answers "
+                     "breaks answer-withheld independence and must be disclosed."),
+        "qualified_reviewer": "NOT_ASSIGNED",
+        "scientific_verdict": "NOT_REVIEWED",
+        "owner_authorization": False,
+        "release_verdict": "HOLD",
+    }
+    intake["intake_sha256"] = _canonical_digest(intake)
+    return intake
 
 
 def main() -> int:
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--blind-intake", action="store_true",
+                        help="Withhold authored answers and candidate scientific calculations")
     parser.add_argument("--check-only", action="store_true",
                         help="Print digest/status only; no changes to sources or repo")
     args = parser.parse_args()
-    packet = make_packet()
-    output = {"status": packet["status"], "question_count": packet["question_count"],
-              "packet_sha256": packet["packet_sha256"], "permission_to_write": False}
+    packet = make_independent_intake() if args.blind_intake else make_packet()
+    output = {"status": packet["status"], "question_count": len(packet["questions"]),
+              "packet_sha256": packet.get("packet_sha256", packet.get("intake_sha256")),
+              "permission_to_write": False}
     if not args.check_only:
         output = packet
     print(json.dumps(output, indent=2, ensure_ascii=False, sort_keys=True))

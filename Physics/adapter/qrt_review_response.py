@@ -11,6 +11,8 @@ import json
 import re
 from pathlib import Path
 
+from Physics.adapter.qrt_review_packet import recompute_packet_sha256
+
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 FINAL = {"ACCEPT", "REVISE", "REJECT"}
 
@@ -25,6 +27,12 @@ def validate_review_response(packet: dict, response: dict) -> list[str]:
             or not HEX64.fullmatch(packet["packet_sha256"])
             or response.get("packet_sha256") != packet.get("packet_sha256")):
         errors.append("REVIEW_WRONG_PACKET_SHA")
+    # A forged packet with the original declared digest must never pass.
+    try:
+        if recompute_packet_sha256(packet) != packet.get("packet_sha256"):
+            errors.append("PACKET_CONTENT_DIGEST_MISMATCH")
+    except (ValueError, TypeError, OverflowError):
+        errors.append("PACKET_CONTENT_DIGEST_INVALID")
     if response.get("source_base_sha") != packet.get("base_sha"):
         errors.append("REVIEW_STALE_SOURCE_BASE")
     reviewer = response.get("reviewer")
