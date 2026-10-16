@@ -115,9 +115,16 @@ def run(root: Path, ledger_root: Path) -> dict:
     ensure(gitblob(root, source) == SOURCE_BLOB, "SOURCE_NOT_BYTE_RESTORED")
     ensure(receipt["page_sha256"]["core2b.html"] != ARCHIVED_CORE2B_SHA,
            "CUE_CHANGE_NOT_PROJECTED_TO_NATIVE_PAGE")
-    for role in ("core1.html", "core1a.html", "core1b.html", "core2a.html"):
-        ensure(receipt["page_sha256"][role] == baseline_receipt["page_sha256"][role],
-               "OTHER_CORE_PAGE_CHANGED:" + role)
+    # Native pages include package provenance: a one-question source edit may
+    # legitimately change the HTML *bytes* for ALL roles, not just Core2B.
+    # Record hashes; compare the OTHER roles' actual learner-visible content
+    # and registered blueprint/role sequences instead of claiming byte parity.
+    role_native_changed = {
+        role: (receipt["page_sha256"][role] != baseline_receipt["page_sha256"][role])
+        for role in ("core1.html", "core1a.html", "core1b.html", "core2a.html",
+                     "core2b.html", "index.html")
+    }
+    ensure(role_native_changed["core2b.html"], "TARGET_PAGE_SHA_NOT_CHANGED")
 
     sys.path.insert(0, str(root / "TEST/imo-research/qrt-d3-successor"))
     from browser_stage_217 import RootHandler
@@ -131,6 +138,28 @@ def run(root: Path, ledger_root: Path) -> dict:
             browser = pw.chromium.launch(headless=True, args=["--no-sandbox"])
             try:
                 for width in (390, 768, 1280):
+                    for other_role in ("core1", "core1a", "core1b", "core2a"):
+                        observed = []
+                        for kind, path in (("baseline", baseline),
+                                           ("proposal", candidate)):
+                            other = browser.new_page(
+                                viewport={"width": width, "height": 900})
+                            url = ("http://127.0.0.1:" + str(server.server_port)
+                                   + "/" + str((path / (other_role + ".html")).relative_to(root)))
+                            reply = other.goto(url, wait_until="load")
+                            ensure(reply and reply.status == 200,
+                                   "NON_TARGET_NATIVE_HTTP_FAILED")
+                            observed.append({
+                                "visible": other.locator("main").inner_text(),
+                                "slots": other.locator("[data-blueprint-slot]").evaluate_all(
+                                    "els => els.map(e=>e.getAttribute('data-blueprint-slot'))"),
+                                "blocks": other.locator("[data-g9-block]").evaluate_all(
+                                    "els => els.map(e=>e.getAttribute('data-g9-block'))"),
+                                "role": other.locator("html").get_attribute("data-g9-role")
+                            })
+                            other.close()
+                        ensure(observed[0] == observed[1],
+                               f"UNEXPECTED_NON_TARGET_LEARNER_SEMANTIC_CHANGE:{other_role}/{width}")
                     for kind, path in (("baseline", baseline), ("proposal", candidate)):
                         page = browser.new_page(viewport={"width": width, "height": 900})
                         errors = []
@@ -206,6 +235,9 @@ def run(root: Path, ledger_root: Path) -> dict:
         "source_only_edits": edits,
         "baseline_native_sha256": baseline_receipt["page_sha256"],
         "candidate_native_sha256": receipt["page_sha256"],
+        "package_wide_html_hash_changed": role_native_changed,
+        "non_target_4_core_role_visible_content_and_structure_equal":
+            "PASS_REAL_CHROMIUM_3_VIEWPORTS",
         "browser_cases": records,
         "technical_verdict": "PROPOSED_CUE_REDUCTION_RENDERED_AND_ATTEMPT_GATED",
         "semantic_independent_transfer": "NOT_DEMONSTRATED_BY_THIS_TEST",
