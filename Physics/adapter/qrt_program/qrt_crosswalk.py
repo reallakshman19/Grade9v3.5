@@ -9,11 +9,43 @@ import hashlib
 import json
 from pathlib import Path
 
-from Shared.tools import question_difficulty
+from Shared.tools import question_difficulty, question_review_matrix
 
 ROOT = Path(__file__).resolve().parents[3]
 SOURCE_PREFIX = Path("Physics/library")
 
+
+
+def _canonical_qrt_source_gate(question: dict) -> dict:
+    """Ask the canonical engine about authored input, not learner review.
+
+    We deliberately do NOT assign a demand, provide a synthetic learner profile,
+    select a QRT cell, or claim that the metadata is independently qualified.
+    """
+    if not question:
+        return {"state": "NOT_EVALUABLE", "canonical_error": "QUESTION_UNRESOLVED",
+                "declared_demand": None, "crux_move_ref": None,
+                "crux_move_present": False, "review": "NOT_RUN"}
+
+    extension = ((question.get("extensions") or {}).get("grade9v3:cognitive_demand"))
+    declared = extension.get("primary") if isinstance(extension, dict) else None
+    answer = question.get("answer") or {}
+    crux = answer.get("crux_move_ref")
+    route = answer.get("reasoning_route") or []
+    found = bool(crux and isinstance(route, list) and any(
+        isinstance(move, dict) and move.get("id") == crux
+        and isinstance(move.get("action"), str) and move["action"].strip()
+        for move in route
+    ))
+    try:
+        # Reuse the source contract that native resolve_review() itself enforces.
+        question_review_matrix._question_demand(question)
+        state, reason = "SOURCE_METADATA_VALID_NOT_REVIEWED", None
+    except question_review_matrix.QRTContractError as exc:
+        state, reason = "BLOCKED", str(exc)
+    return {"state": state, "canonical_error": reason,
+            "declared_demand": declared, "crux_move_ref": crux,
+            "crux_move_present": found, "review": "NOT_RUN"}
 
 def inspect_question(package_path: str, question_id: str, *, root: Path = ROOT) -> dict:
     """Inspect a real named question without inventing missing joins."""
@@ -72,6 +104,7 @@ def inspect_question(package_path: str, question_id: str, *, root: Path = ROOT) 
         "primary_capability_ref": primary,
         "difficulty": difficulty,
         "qrt_demand": "UNRESOLVED_RUN_CANONICAL_QRT",
+        "qrt_source_gate": _canonical_qrt_source_gate(question),
         "declared_cores": exposed,
         "compiled_artifact_refs": compiled,
         "render_verdict": "NOT_ATTESTED",

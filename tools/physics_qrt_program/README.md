@@ -21,6 +21,7 @@ The first lock command should return STRUCTURE_VALID_NOT_PERMISSION with exit co
 ## File architecture
 
 - Physics/adapter/qrt_program/qrt_crosswalk.py: dedicated subject-level question → source/capability/Core source probe; not a shared engine rule
+  Its `qrt_source_gate` now calls the existing canonical `question_review_matrix` metadata validator; it reports exact missing demand/crux prerequisites, not a new demand score or a per-question accepted QRT cell. The synthetic test-only demand fixtures are never saved to Physics/library.
 - contracts.py: core schema checks, safe paths/leases, source/head/scope binding, proof-carrying receipts, convergence always HOLD for science/release
 - cli.py: offline validation and JSON-only report, no network or writes
 - work-lock.template.json: draft coordinator data, with full write HOLD
