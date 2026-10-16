@@ -27,7 +27,7 @@ jobs:
         run: python tests/test_physics_qrt_nlm289_source_correction.py -v
       - name: Generate truly answer-withheld Physics Pass A packet from exact amended source
         run: |
-          python tools/physics_qrt_program/nlm289_blind_intake.py \\
+          python tools/physics_qrt_program/nlm289_blind_intake.py \
             --out build/physics-nlm289-pass-a/nlm289-pass-a.json
       - name: Upload blind-only Stage A academic review intake (not a verdict)
         uses: actions/upload-artifact@v4
