@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" role="img" aria-label="Intersecting lines XY and MN with perpendicular ray OP" font-family="system-ui, sans-serif">
+  <title>Geometry Diagram for Lines XY and MN</title>
+  <desc>Lines XY and MN intersect at point O. Ray OP is perpendicular to line XY. Angle a and b are adjacent angles with ratio 2 to 3.</desc>
+  <style>
+    .line-main { stroke: #1e293b; stroke-width: 3.5; stroke-linecap: round; }
+    .line-ray { stroke: #0284c7; stroke-width: 3.5; stroke-linecap: round; }
+    .label { font-size: 22px; font-weight: 600; fill: #0f172a; }
+    .angle-label { font-size: 20px; font-weight: 700; fill: #b91c1c; }
+    .right-angle { fill: none; stroke: #0284c7; stroke-width: 2.5; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arrow-ray" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7"/>
+    </marker>
+  </defs>
+
+  <!-- Line XY -->
+  <line x1="80" y1="280" x2="620" y2="280" class="line-main" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="60" y="288" class="label">X</text>
+  <text x="635" y="288" class="label">Y</text>
+
+  <!-- Line MN -->
+  <line x1="160" y1="120" x2="520" y2="420" class="line-main" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="140" y="115" class="label">M</text>
+  <text x="535" y="435" class="label">N</text>
+
+  <!-- Point O -->
+  <circle cx="340" cy="280" r="5" fill="#0f172a"/>
+  <text x="348" y="308" class="label">O</text>
+
+  <!-- Ray OP perpendicular to XY -->
+  <line x1="340" y1="280" x2="340" y2="70" class="line-ray" marker-end="url(#arrow-ray)"/>
+  <text x="330" y="55" class="label" fill="#0284c7">P</text>
+
+  <!-- Right angle marker at POY -->
+  <path d="M 340 250 L 370 250 L 370 280" class="right-angle"/>
+
+  <!-- Angle a and b arcs & annotations -->
+  <path d="M 285 280 A 55 55 0 0 1 296 235" fill="none" stroke="#b91c1c" stroke-width="2.5"/>
+  <text x="260" y="245" class="angle-label">b</text>
+
+  <path d="M 305 250 A 55 55 0 0 1 340 225" fill="none" stroke="#b91c1c" stroke-width="2.5"/>
+  <text x="305" y="215" class="angle-label">a</text>
+
+  <!-- Given Info Box -->
+  <rect x="440" y="70" width="230" height="90" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="455" y="105" font-size="18" fill="#334155" font-weight="600">∠POY = 90°</text>
+  <text x="455" y="135" font-size="18" fill="#334155" font-weight="600">a : b = 2 : 3</text>
+</svg>

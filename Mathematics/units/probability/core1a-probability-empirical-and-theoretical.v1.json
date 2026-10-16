@@ -1,0 +1,108 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-PROBABILITY-EMPIRICAL-THEORETICAL",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "PROBABILITY",
+  "topic_name": "Introduction to Probability and Empirical Chance",
+  "subtopic": "PROBABILITY-EXPERIMENTAL-AND-THEORETICAL",
+  "target_demand": "APPLY",
+  "target_band": "D1",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-B-Q037",
+    "SOF-IMO-G09-L1-2025-26-A-Q043",
+    "SOF-IMO-G09-L1-2024-25-B-Q027",
+    "SOF-IMO-G09-L1-2023-24-A-Q025",
+    "SOF-IMO-G09-L1-2023-24-A-Q040"
+  ],
+  "entry_assumptions": [
+    "Understanding of finite sample spaces, counting techniques, and set union/intersection.",
+    "Familiarity with fractions, decimals, and basic percentages representing proportional chance."
+  ],
+  "inferential_jump": "Why discrete probability requires partitioning the sample space into mutually exclusive, equally likely elementary outcomes, how empirical frequency ratio f/N converges to theoretical probability P(E) under large trials, and why complementary probability P(not E) = 1 - P(E) guarantees exhaustive event accounting.",
+  "relation_refs": {
+    "domain": "Discrete Finite Sample Spaces S with sigma-algebra of subsets",
+    "hypotheses": [
+      "All elementary outcomes in sample space S are mutually exclusive.",
+      "In classical theoretical probability, all elementary outcomes are equally likely.",
+      "In empirical probability, total trial count N > 0 and frequency f satisfies 0 <= f <= N.",
+      "Events without replacement reduce both favorable count and total sample space cardinality by exactly 1 per draw."
+    ],
+    "excluded_values": [
+      "Empty sample space |S| = 0 (undefined division).",
+      "Probabilities strictly negative or strictly greater than 1.",
+      "Assuming independent trial probabilities when sampling without replacement."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "P(E) = n(E) / n(S)",
+      "svg_element_ref": "venn-diagram-favorable-region-over-universal-set",
+      "word_meaning": "Ratio of cardinality of favorable event subset to total sample space cardinality."
+    },
+    {
+      "symbol": "P(E') = 1 - P(E)",
+      "svg_element_ref": "complementary-shaded-exterior-region",
+      "word_meaning": "Probability of non-occurrence evaluated by subtracting event probability from total certainty 1."
+    },
+    {
+      "symbol": "(d_1, d_2) in S",
+      "svg_element_ref": "six-by-six-lattice-grid-outcomes",
+      "word_meaning": "Coordinate pair in 36-element product space representing outcomes of rolling two fair six-sided dice."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "The probability of an event E in an equally likely finite sample space S is P(E) = n(E) / n(S).",
+      "derivation": "Since S is partitioned into n(S) mutually exclusive and equally likely elementary outcomes, each outcome has probability 1/n(S). Event E consists of n(E) such outcomes. By finite additivity of disjoint outcomes, P(E) = sum_{k=1}^{n(E)} 1/n(S) = n(E)/n(S).",
+      "why_valid": "Finite additivity of mutually disjoint elementary events is the core Kolmogorov axiom."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "For any event E and its complement E', P(E) + P(E') = 1, so P(E') = 1 - P(E).",
+      "derivation": "By definition, E union E' = S and E intersect E' is empty. Therefore P(E union E') = P(S) = 1. Since they are disjoint, P(E) + P(E') = 1, which rearranges to P(E') = 1 - P(E).",
+      "why_valid": "An event either occurs or does not occur; the two possibilities partition the entire certainty space S."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "In sequential draws without replacement, the total sample space decreases after each draw.",
+      "derivation": "If an urn contains N items including M target items, the first draw probability is M/N. If a target is drawn, the remaining pool has N - 1 items with M - 1 targets. The joint probability of consecutive targets is (M/N) * ((M-1)/(N-1)).",
+      "why_valid": "Conditional probability P(A and B) = P(A) * P(B|A) accounts for the updated state of the urn."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "REPLACEMENT_ASSUMPTION_ERROR",
+      "wrong_idea": "Assuming the total sample size remains unchanged when drawing items sequentially without replacement.",
+      "diagnostic_prompt": "If a bag has 5 red and 5 blue balls and one red ball is removed, what is the probability that the second ball drawn is red?",
+      "repair": "Update both the favorable count and the denominator: favorable becomes 4 and total becomes 9, yielding 4/9, NOT 5/10 or 4/10."
+    },
+    {
+      "code": "COMPLEMENT_ARITHMETIC_SLIP",
+      "wrong_idea": "Subtracting favorable outcome counts from the sample size but forgetting to divide by the total, or miscalculating 1 - P(E).",
+      "diagnostic_prompt": "If the probability of rain is 0.35, what is the probability that it does NOT rain?",
+      "repair": "Compute 1.00 - 0.35 = 0.65 directly from the complement invariant P(E') = 1 - P(E)."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Two fair six-sided dice are rolled simultaneously. Find the probability that the sum of the numbers appearing on top is strictly greater than 9.",
+    "model_answer": "The sample space S consists of all ordered pairs (a, b) with 1 <= a, b <= 6, so n(S) = 6 * 6 = 36 equally likely outcomes. The sums strictly greater than 9 are 10, 11, and 12. Sum 10: (4, 6), (5, 5), (6, 4) [3 pairs]. Sum 11: (5, 6), (6, 5) [2 pairs]. Sum 12: (6, 6) [1 pair]. Total favorable outcomes n(E) = 3 + 2 + 1 = 6. Therefore, P(Sum > 9) = 6 / 36 = 1 / 6.",
+    "svg_figure_ref": null
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT (modified case). A box contains 8 green balls, 7 yellow balls, and 5 white balls. A ball is drawn at random. Find: (i) the probability of getting a non-yellow ball, and (ii) if two balls are drawn one after another without replacement, find the probability that both are green.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "(i) P(not Yellow) = 13/20; (ii) P(both Green) = 14/95.",
+      "reasoning": [
+        "Total balls N = 8 + 7 + 5 = 20.",
+        "For (i): Yellow balls = 7, so P(Yellow) = 7/20. Complement P(not Yellow) = 1 - 7/20 = 13/20.",
+        "For (ii): First green draw has probability 8/20 = 2/5. With 1 green removed, 7 green remain out of 19 balls. Second green draw has probability 7/19.",
+        "Joint probability P(both Green) = (8/20) * (7/19) = (2/5) * (7/19) = 14/95."
+      ],
+      "check": "Sum of P(Yellow) + P(not Yellow) = 7/20 + 13/20 = 20/20 = 1.00. For joint draws, 14/95 < 8/20, which is consistent with decreasing probability without replacement."
+    }
+  }
+}

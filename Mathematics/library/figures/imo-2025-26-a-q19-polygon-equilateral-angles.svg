@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 500" role="img" aria-label="Geometric configuration of quadrilateral ABCD and equilateral triangle AQD" font-family="system-ui, sans-serif">
+  <title>Angle Calculation with Equilateral Triangle and Quadrilateral</title>
+  <desc>Quadrilateral ABCD adjacent to equilateral triangle AQD on side AD, along straight line CDP. Angle BAR is 90 degrees, angle QAR is 135 degrees, angle BCD is 106 degrees, angle ABC is 100 degrees, and angle PDQ is 41 degrees.</desc>
+  <style>
+    .poly-quad { fill: #f8fafc; stroke: #1e293b; stroke-width: 3.5; stroke-linejoin: round; }
+    .poly-eq { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; stroke-linejoin: round; }
+    .line-ray { stroke: #64748b; stroke-width: 2.5; stroke-dasharray: 6,4; }
+    .line-base { stroke: #1e293b; stroke-width: 3.5; marker-end: url(#arrow); }
+    .label { font-size: 20px; font-weight: 700; fill: #0f172a; }
+    .angle-text { font-size: 16px; font-weight: 600; fill: #b91c1c; }
+    .angle-arc { fill: none; stroke: #b91c1c; stroke-width: 2; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+
+  <!-- Straight line CDP -->
+  <!-- C at (180, 360), D at (340, 360), P at (620, 360) -->
+  <line x1="140" y1="360" x2="620" y2="360" class="line-base"/>
+  <text x="175" y="390" class="label">C</text>
+  <text x="335" y="390" class="label">D</text>
+  <text x="630" y="365" class="label">P</text>
+
+  <!-- Quadrilateral ABCD -->
+  <!-- A at (340, 160), B at (150, 240), C at (180, 360), D at (340, 360) -->
+  <polygon points="340,160 150,240 180,360 340,360" class="poly-quad"/>
+  <text x="335" y="145" class="label">A</text>
+  <text x="120" y="245" class="label">B</text>
+
+  <!-- Equilateral Triangle AQD on side AD -->
+  <!-- AD length = 200 px. Apex Q to the right: x = 340 + 200 * cos(30 deg) = 340 + 173.2 = 513.2, y = 260 -->
+  <polygon points="340,160 513.2,260 340,360" class="poly-eq"/>
+  <text x="525" y="265" class="label" fill="#2563eb">Q</text>
+
+  <!-- Ray AR from A -->
+  <line x1="340" y1="160" x2="280" y2="70" class="line-ray" marker-end="url(#arrow)"/>
+  <text x="270" y="60" class="label" fill="#64748b">R</text>
+
+  <!-- Angle annotations -->
+  <!-- Angle ABC = 100 deg -->
+  <text x="165" y="250" class="angle-text">100°</text>
+
+  <!-- Angle BCD = 106 deg -->
+  <text x="195" y="340" class="angle-text">106°</text>
+
+  <!-- Angle BAR = 90 deg -->
+  <text x="285" y="140" class="angle-text">90°</text>
+
+  <!-- Angle QAR = 135 deg -->
+  <text x="345" y="115" class="angle-text">135°</text>
+
+  <!-- Angle PDQ target -->
+  <path d="M 400 360 A 60 60 0 0 0 385 334" class="angle-arc"/>
+  <text x="410" y="345" class="angle-label" fill="#b91c1c" font-size="18" font-weight="700">?</text>
+</svg>

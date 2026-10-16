@@ -1,0 +1,68 @@
+{
+  "schema": "imo-core1b-self-tutor-dialogue/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1B-HERON-COMPOSITE-AREAS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+  "paired_core1a_ref": "PKG-CORE1A-HERON-COMPOSITE-AREAS",
+  "topic": "HERON_FORMULA",
+  "target_demand": "SYNTHESIZE",
+  "target_band": "D3",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating: In Heron's formula Area = √(s(s-a)(s-b)(s-c)), what does the parameter s represent, and why must s be greater than each of the individual side lengths a, b, c?",
+      "options": [
+        "A. s is the perimeter a + b + c; it must be larger because perimeter is larger than any side.",
+        "B. s is the semiperimeter (a + b + c) / 2; the triangle inequality a + b > c guarantees s - c > 0.",
+        "C. s is the inradius of the triangle; it must be positive.",
+        "D. s is the circumradius; it represents the maximum diameter."
+      ],
+      "predict_rationale": "Forces unassisted recall of the semiperimeter definition and its intrinsic connection to triangle inequality existence conditions."
+    },
+    "stage_2_attempt": {
+      "task": "In the attempt-box below, formulate the step-by-step calculation: A triangular plot has sides 6 m, 8 m, 10 m. Compute its area using Heron's formula, showing the semiperimeter s, the differences s - a, s - b, s - c, and prime factorization under the radical.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Compute semiperimeter: s = (6 + 8 + 10) / 2 = 24 / 2 = 12 m.",
+        "step_2": "Calculate differences: s - a = 12 - 6 = 6; s - b = 12 - 8 = 4; s - c = 12 - 10 = 2.",
+        "step_3": "Substitute into Heron's formula: Area = √(12 × 6 × 4 × 2) = √(144 × 4) = √(576) = 24 m².",
+        "conclusion": "The area is strictly 24 m², which matches (1/2) × 6 × 8 = 24 m² from the right triangle formula."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_ENGINEERING_FROM_GOAL",
+      "dialog_steps": [
+        {
+          "inquiry": "Working backwards from the radical Area = √(s(s-a)(s-b)(s-c)): What dimensional units does the expression s(s-a)(s-b)(s-c) have before taking the square root?",
+          "expected_insight": "It is the product of four linear lengths, having dimensions [Length⁴]. Taking the square root gives [Length²], which is Area."
+        },
+        {
+          "inquiry": "What would happen if you mistakenly used total perimeter P instead of s?",
+          "expected_insight": "Since P = 2s, each factor would roughly double, making the product under the square root 16 times too big, resulting in an area 4 times too large."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Boundary test on limiting case: Suppose the side lengths approach the degenerate boundary where a + b = c (e.g., a = 3, b = 4, c = 7). What does Heron's formula yield for the area?",
+      "options": [
+        "A. Area = 0, because s = 7 and s - c = 0, collapsing the product to zero.",
+        "B. Area = 12, because 3 × 4 = 12.",
+        "C. Area is undefined because negative numbers appear under the square root.",
+        "D. Area = 7, equal to the longest side."
+      ],
+      "correct_option": "A",
+      "explanation": "At the collinear boundary a + b = c, the semiperimeter is s = (a+b+c)/2 = 2c/2 = c. Then the factor (s - c) becomes exactly 0. The radical product becomes √(s(s-a)(s-b)(0)) = 0. Heron's formula naturally detects geometric degeneracy with zero enclosed area."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "First calculate the semiperimeter s = (a + b + c) / 2. Then find the three differences (s - a), (s - b), and (s - c), verifying that each difference is strictly positive."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Under the radical √(s(s-a)(s-b)(s-c)), decompose each factor into prime powers rather than multiplying out into a massive number. Pair up matching factors to extract perfect square roots cleanly."
+    }
+  }
+}

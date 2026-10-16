@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" role="img" aria-label="Pie chart showing examination marks distribution across five subjects" font-family="system-ui, sans-serif">
+  <title>Examination Marks Distribution Pie Chart</title>
+  <desc>Circular pie chart representing student examination marks across English (75 deg), Science (80 deg), Maths (80 deg), Hindi (70 deg), and Social Science (55 deg), out of a total of 720 marks.</desc>
+  <style>
+    .slice { stroke: #1e293b; stroke-width: 2.5; stroke-linejoin: round; }
+    .label-title { font-size: 19px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .label-deg { font-size: 17px; font-weight: 600; fill: #475569; text-anchor: middle; }
+  </style>
+
+  <!-- Pie Chart with center (350, 250) and radius 170 -->
+  <!-- 
+    Angles relative to 12 o'clock (-90 deg):
+    1. Science: 80 deg (-90 to -10 deg)
+    2. Maths: 80 deg (-10 to +70 deg)
+    3. Hindi: 70 deg (+70 to +140 deg)
+    4. Social Science: 55 deg (+140 to +195 deg)
+    5. English: 75 deg (+195 to +270 deg / -90 deg)
+  -->
+
+  <!-- Science Sector (80 deg): from -90 to -10 deg -->
+  <!-- cos(-90)=0, sin(-90)=-1 -> (350, 80) -->
+  <!-- cos(-10)=0.9848, sin(-10)=-0.1736 -> (517.4, 220.5) -->
+  <path d="M 350 250 L 350 80 A 170 170 0 0 1 517.4 220.5 Z" fill="#e0f2fe" class="slice"/>
+  <text x="440" y="150" class="label-title">Science</text>
+  <text x="440" y="172" class="label-deg">80°</text>
+
+  <!-- Maths Sector (80 deg): from -10 to +70 deg -->
+  <!-- cos(70)=0.3420, sin(70)=0.9397 -> (408.1, 409.7) -->
+  <path d="M 350 250 L 517.4 220.5 A 170 170 0 0 1 408.1 409.7 Z" fill="#fef3c7" class="slice"/>
+  <text x="450" y="310" class="label-title">Maths</text>
+  <text x="450" y="332" class="label-deg">80°</text>
+
+  <!-- Hindi Sector (70 deg): from +70 to +140 deg -->
+  <!-- cos(140)=-0.7660, sin(140)=0.6428 -> (219.8, 359.3) -->
+  <path d="M 350 250 L 408.1 409.7 A 170 170 0 0 1 219.8 359.3 Z" fill="#dcfce7" class="slice"/>
+  <text x="320" y="380" class="label-title">Hindi</text>
+  <text x="320" y="402" class="label-deg">70°</text>
+
+  <!-- Social Science Sector (55 deg): from +140 to +195 deg -->
+  <!-- cos(195)=-0.9659, sin(195)=-0.2588 -> (185.8, 206.0) -->
+  <path d="M 350 250 L 219.8 359.3 A 170 170 0 0 1 185.8 206.0 Z" fill="#fee2e2" class="slice"/>
+  <text x="240" y="275" class="label-title">Social</text>
+  <text x="240" y="295" class="label-title">Science</text>
+  <text x="240" y="317" class="label-deg">55°</text>
+
+  <!-- English Sector (75 deg): from +195 to +270 deg -->
+  <path d="M 350 250 L 185.8 206.0 A 170 170 0 0 1 350 80 Z" fill="#f3e8ff" class="slice"/>
+  <text x="270" y="150" class="label-title">English</text>
+  <text x="270" y="172" class="label-deg">75°</text>
+
+  <!-- Info box -->
+  <rect x="30" y="30" width="190" height="45" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="125" y="58" font-size="16" font-weight="600" fill="#334155" text-anchor="middle">Total Marks = 720</text>
+</svg>

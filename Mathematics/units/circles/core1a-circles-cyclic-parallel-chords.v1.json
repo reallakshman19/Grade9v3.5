@@ -1,0 +1,112 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-CIRCLES-CYCLIC-PARALLEL-CHORDS",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "CIRCLES",
+  "topic_name": "Circles and Cyclic Quadrilaterals",
+  "subtopic": "CIRCLES-CYCLIC-PARALLEL-CHORDS",
+  "target_demand": "JUSTIFY",
+  "target_band": "D4",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-A-Q050",
+    "SOF-IMO-G09-L1-2025-26-B-Q050"
+  ],
+  "entry_assumptions": [
+    "Familiarity with inscribed angles and central angle subtension theorems in a single circle.",
+    "Understanding of supplementary angles along a straight line (linear pairs) and parallel line angle criteria."
+  ],
+  "inferential_jump": "Why the angle subtended by an arc at the circumference is half the central angle, forcing opposite angles of any cyclic quadrilateral to sum to 180 degrees, and how chaining this supplementary invariant across intersecting circles transfers equal corresponding angles to force two chords to be strictly parallel.",
+  "relation_refs": {
+    "domain": "Euclidean Plane Geometry (R^2)",
+    "hypotheses": [
+      "Quadrilateral ABCD is cyclic with all four vertices on circle C_1.",
+      "Circle C_2 passes through vertices A and B, intersecting secant line AD at point E and secant line BC at point F.",
+      "Points A, E, D are distinct and collinear in order A-E-D.",
+      "Points B, F, C are distinct and collinear in order B-F-C."
+    ],
+    "excluded_values": [
+      "Degenerate circles of radius zero.",
+      "Collinear vertex configurations (triangle degeneracies).",
+      "Tangent contact where E coincides with A or F coincides with B."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "angle(BAD)",
+      "svg_element_ref": "circle-outer vertex A",
+      "word_meaning": "Inscribed angle in outer circle C_1 subtending arc BCD."
+    },
+    {
+      "symbol": "angle(BCD)",
+      "svg_element_ref": "circle-outer vertex C",
+      "word_meaning": "Opposite interior angle in cyclic quadrilateral ABCD, supplementary to angle(BAD)."
+    },
+    {
+      "symbol": "angle(AEF)",
+      "svg_element_ref": "circle-inner vertex E",
+      "word_meaning": "Inscribed angle in inner circle C_2 subtending arc ABF."
+    },
+    {
+      "symbol": "angle(DEF)",
+      "svg_element_ref": "angle-arc at vertex E along transversal AD",
+      "word_meaning": "Exterior angle to cyclic quadrilateral ABFE, equal to interior opposite angle angle(ABF)."
+    },
+    {
+      "symbol": "EF || DC",
+      "svg_element_ref": "chord-parallel dashed line EF and chord-main DC",
+      "word_meaning": "Parallel lines proved via equal corresponding angles across transversal BC or AD."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "In any cyclic quadrilateral, the sum of either pair of opposite angles is 180 degrees.",
+      "derivation": "Let arc BCD subtend central angle alpha at O, and arc BAD subtend reflex central angle beta. Then alpha + beta = 360 deg. By the Inscribed Angle Theorem, angle(BAD) = beta / 2 and angle(BCD) = alpha / 2. Therefore, angle(BAD) + angle(BCD) = (alpha + beta) / 2 = 360 / 2 = 180 deg.",
+      "why_valid": "Every point on circle C_1 belongs to either the major or minor arc; their central angles partition the full circle of 360 degrees."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "The exterior angle formed by producing a side of a cyclic quadrilateral is equal to the interior opposite angle.",
+      "derivation": "In cyclic quad ABFE (in circle C_2), angle(ABF) + angle(AEF) = 180 deg. Since A-E-D is a straight line segment, angle(AEF) + angle(DEF) = 180 deg (linear pair). Subtracting gives angle(DEF) = angle(ABF).",
+      "why_valid": "Angles supplementary to the exact same angle are strictly equal to each other."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "In outer circle C_1, cyclic quadrilateral ABCD gives angle(BCD) = 180 deg - angle(BAD) and angle(CDE) = angle(ABF).",
+      "derivation": "In cyclic quad ABCD, angle(BAD) + angle(BCD) = 180 deg, and along line B-F-C, angle(ABF) + angle(ADC) = 180 deg. Producing AD shows the exterior angle at D equals angle(ABF).",
+      "why_valid": "Vertices A, B, C, D lie on circle C_1, so the identical cyclic opposite-angle theorem applies."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Line segment EF is strictly parallel to chord DC.",
+      "derivation": "From Step 2, angle(DEF) = angle(ABF). From Step 3, angle(CDE) = 180 deg - angle(ABF), so angle(DEF) + angle(CDE) = angle(ABF) + (180 deg - angle(ABF)) = 180 deg. For lines EF and DC intersected by transversal AD, consecutive interior angles angle(DEF) and angle(CDE) sum to 180 deg. By Euclid's converse of the parallel transversal theorem, EF is parallel to DC.",
+      "why_valid": "When consecutive interior angles on the same side of a transversal are supplementary, the lines cannot intersect and are parallel."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "VISUAL_PARALLEL_ASSUMPTION",
+      "wrong_idea": "Assuming chords EF and DC must be parallel because the figure looks symmetrical, without referencing cyclic quadrilateral angles.",
+      "diagnostic_prompt": "If circle C_2 passed through vertices A and D instead of A and B, would line EF still be parallel to DC?",
+      "repair": "Trace the exact circle containing quadrilateral ABFE. The parallelism requires vertices A and B to be shared by both circles; changing the intersection points changes the angle transfer and destroys parallelism."
+    },
+    {
+      "code": "OPPOSITE_EQUAL_CONFUSION",
+      "wrong_idea": "Confusing cyclic quadrilaterals with parallelograms and assuming opposite angles are equal rather than supplementary.",
+      "diagnostic_prompt": "In a cyclic quadrilateral with one angle measuring 110 degrees, what is the opposite angle?",
+      "repair": "Remember: in parallelograms opposite angles are equal (110 = 110); in cyclic quadrilaterals opposite angles are supplementary (180 - 110 = 70 degrees)."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "Let two circles intersect at points A and B. Through A and B, two straight lines are drawn meeting the first circle at C, D and the second circle at E, F. Prove that CD is parallel to EF.",
+    "model_answer": "In the first circle, cyclic quad ABDC gives angle(BAC) + angle(BDC) = 180 deg. Along straight line CAE, angle(BAC) + angle(BAE) = 180 deg, so angle(BDC) = angle(BAE). In the second circle, cyclic quad ABFE gives angle(BAE) + angle(BFE) = 180 deg. Substituting angle(BAE) = angle(BDC) yields angle(BDC) + angle(BFE) = 180 deg. For lines CD and EF intersected by transversal DF, consecutive interior angles are supplementary. Hence, CD || EF.",
+    "svg_figure_ref": "Mathematics/library/figures/imo-2025-26-a-q50-cyclic-quadrilateral-circles.svg"
+  },
+  "exit_task": {
+    "prompt": "In circle C_1, quadrilateral ABCD is cyclic. A second circle C_2 passes through C and D, meeting diagonal AC at P and diagonal BD at Q. Show that PQ is parallel to AB.",
+    "answer": "In circle C_1, inscribed angles subtended by chord AB are equal: angle(ACB) = angle(ADB), so angle(PCD) = angle(QDC)... In circle C_2, cyclic quad CDQP has opposite angles supplementary, which transfers to corresponding angles equal: angle(CPQ) = angle(CAB). Therefore, PQ is parallel to AB.",
+    "check": "Verify that when circle C_2 coincides with C_1, P coincides with A and Q coincides with B, making PQ identical to AB and trivially parallel."
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-QUADRILATERALS-PARALLELOGRAM-DIAGONALS-MIDPOINTS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Quadrilaterals",
+  "subtopic": "QUADS-PARALLELOGRAM-PROPERTIES",
+  "target_demand": "JUSTIFY",
+  "target_band": "D4",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before analyzing the full geometric diagram: In parallelogram ABCD, points L and M lie on opposite sides AB and CD such that AL = CM. What type of quadrilateral is formed by the remaining vertices BLDM?",
+      "options": [
+        "A. A trapezoid with non-parallel legs.",
+        "B. A parallelogram, because BL is parallel and equal to DM.",
+        "C. A kite with perpendicular diagonals.",
+        "D. An irregular cyclic quadrilateral."
+      ],
+      "predict_rationale": "Guides the student to subtract equal segments AL = CM from equal sides AB = CD to recognize BL = DM and BL || DM."
+    },
+    "stage_2_attempt": {
+      "task": "In triangle ABR, P is the mid-point of AB and a line through P parallel to BR meets AR at D. Given ABCD is a parallelogram, deduce the exact relation between AR and BC. Is AR = BC?",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "In triangle ABR, P is the midpoint of AB and PD || BR.",
+        "step_2": "By the converse of the Mid-Point Theorem, D must be the midpoint of side AR.",
+        "step_3": "Hence AR = 2 * AD.",
+        "conclusion": "In parallelogram ABCD, opposite sides are equal: AD = BC. Substituting gives AR = 2 * BC. Therefore, AR is twice BC, so AR = BC is strictly FALSE."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "COORDINATE_GEOMETRY_VERIFICATION",
+      "dialog_steps": [
+        {
+          "inquiry": "Set up a coordinate frame: let A = (0,0), B = (2,0), D = (0,2), so C = (2,2). What are the coordinates of P (midpoint of AB)?",
+          "expected_insight": "P is the midpoint of (0,0) and (2,0), so P = (1,0)."
+        },
+        {
+          "inquiry": "If a line parallel to line PD passes through B(2,0) and meets line AD (y-axis) at R, what are the coordinates of R and the length of AR?",
+          "expected_insight": "Slope of PD connecting (1,0) to (0,2) is -2. Line through B is y - 0 = -2(x - 2) => y = -2x + 4. At x = 0 (y-axis), y = 4 => R = (0,4). Thus AR = 4, while BC = AD = 2. This proves AR = 2*BC = 4, verifying AR = BC is definitively false!"
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: If quadrilateral PQRS has PQ || RS and PQ = RS, what can be definitively concluded about its diagonals PR and QS?",
+      "options": [
+        "A. They are perpendicular to each other.",
+        "B. They bisect each other at their common midpoint.",
+        "C. They are equal in length.",
+        "D. They lie on the same straight line."
+      ],
+      "correct_option": "B",
+      "explanation": "Because PQ || RS and PQ = RS, PQRS is a parallelogram. By the fundamental diagonal property of all parallelograms, its diagonals bisect each other."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Recall Euclid Elements I.33: If one pair of opposite sides of a quadrilateral is both equal and parallel, the quadrilateral is a parallelogram."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "For triangle ABR with P midpoint of AB and PD || BR, use the Converse of the Mid-Point Theorem: D is the midpoint of AR, so AR = 2*AD = 2*BC."
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-STATISTICS-GRAPHICAL-REPRESENTATIONS",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Statistics",
+  "topic_name": "Statistics & Data Handling",
+  "subtopic": "STATISTICS-GRAPHICAL-REPRESENTATIONS",
+  "target_demand": "REPRESENT",
+  "target_band": "D2",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-A-Q032",
+    "SOF-IMO-G09-L1-2025-26-B-Q021"
+  ],
+  "entry_assumptions": [
+    "Understanding of circular degrees, complete circle rotation (360 degrees), and proportional scaling.",
+    "Familiarity with reading data from frequency tables, bar charts, and pie charts."
+  ],
+  "inferential_jump": "Why reading and converting statistical visual representations (pie chart central angles and grouped bar heights) requires establishing the exact proportional metric scaling factor (Theta / 360 = Value / Total), mapping visual angular sectors to raw quantitative frequencies without distortion.",
+  "relation_refs": {
+    "domain": "Descriptive Statistics, Angular Sector Proportions, and Discrete Visual Metric Scaling",
+    "hypotheses": [
+      "In a circular pie chart, the complete circumference subtends exactly 360 degrees at the center.",
+      "The central angle theta_i of any category sector is strictly proportional to its frequency: theta_i = (Value_i / Total) * 360 deg.",
+      "In a dual-year bar graph, the vertical axis maps bar heights linearly to monetary expenditure."
+    ],
+    "excluded_values": [
+      "Distorted 3D perspectives that alter apparent sector angles.",
+      "Dividing central angles by 100 instead of 360 degrees."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "theta / 360 = Value / Total",
+      "svg_element_ref": "circular-sector-proportion",
+      "word_meaning": "The fundamental geometric invariance connecting sector central angle to quantitative frequency fraction."
+    },
+    {
+      "symbol": "1 deg = Total / 360 marks",
+      "svg_element_ref": "angular-unit-scale-factor",
+      "word_meaning": "The linear multiplier converting every 1 degree of sector arc into physical marks or units."
+    },
+    {
+      "symbol": "theta_sum = (Target_Value / Total) * 360",
+      "svg_element_ref": "inverse-sector-sum",
+      "word_meaning": "The exact angular requirement needed for a combination of subjects to total the target value."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Calculate the unit degree value factor: for total marks T = 720, each degree represents 720 / 360 = 2 marks.",
+      "derivation": "The complete circle is 360 degrees. By uniform metric distribution, dividing total magnitude by 360 yields the constant rate per degree.",
+      "why_valid": "Linear proportional scaling preserves relative frequency across circular partitions."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Determine the required total sector angle corresponding to 250 marks: theta_req = 250 / 2 = 125 degrees.",
+      "derivation": "Since every degree equals 2 marks, dividing the target 250 marks by 2 marks/degree gives exactly 125 degrees.",
+      "why_valid": "Dimensional analysis: marks divided by (marks/degree) yields pure degrees."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Test pairwise sums of subject central angles to find which pair equals 125 degrees.",
+      "derivation": "Inspect the pie chart sectors: Social Science = 65 deg, Mathematics = 90 deg, English = 55 deg, Hindi = 70 deg, Science = 80 deg. The sum English (55 deg) + Hindi (70 deg) = 125 deg.",
+      "why_valid": "Exact integer addition of angular sub-sectors: 55 + 70 = 125 degrees."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Verify marks: English (55 * 2 = 110) + Hindi (70 * 2 = 140) = 250 marks, confirming English and Hindi.",
+      "derivation": "Multiplying the confirmed angular sectors by 2 marks/degree confirms 110 + 140 = 250 marks.",
+      "why_valid": "Direct arithmetic evaluation verifies that the visual representation maps bijectively to the target value."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "PERCENTAGE_DEGREE_CONFUSION",
+      "wrong_idea": "Treating sector degrees as percentages and calculating Value = (theta / 100) * Total.",
+      "diagnostic_prompt": "How many total degrees exist in a full circle, and why is dividing by 100 a catastrophic error?",
+      "repair": "A full circle has 360 degrees, not 100. Always divide by 360. If percentage is needed, multiply the fraction (theta / 360) by 100%."
+    },
+    {
+      "code": "VISUAL_AREA_ESTIMATION_FALLACY",
+      "wrong_idea": "Guessing which sector is larger by eye rather than reading the explicit degree label.",
+      "diagnostic_prompt": "Can visual angles be distorted by perspective or diagram printing?",
+      "repair": "Always use the exact quantitative labels (degrees or frequencies) printed on the visual representation."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "A pie chart represents total marks of 720. Sectors are: Social Science 65 deg, Math 90 deg, English 55 deg, Hindi 70 deg, Science 80 deg. Which two subjects total 250 marks?",
+    "model_answer": "Each degree represents 720 / 360 = 2 marks. To obtain 250 marks, the combined central angle must be 250 / 2 = 125 deg. Summing angles: English (55 deg) + Hindi (70 deg) = 125 deg. English marks = 55 * 2 = 110; Hindi marks = 70 * 2 = 140; Total = 250 marks. Therefore, the subjects are English and Hindi."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT (modified case). A family's monthly budget of Rs 54,000 is represented on a pie chart. The sector angle for Rent is 100 degrees, Food is 120 degrees, Education is 80 degrees, and the remainder is Savings. Find: (i) the sector angle for Savings, (ii) the exact amount spent on Education, and (iii) how much more money is spent on Food than on Rent.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "(i) Savings angle = 60 deg; (ii) Education expenditure = Rs 12,000; (iii) Food exceeds Rent by Rs 3,000.",
+      "reasoning": [
+        "Each degree represents 54,000 / 360 = Rs 150.",
+        "Sum of given angles = 100 + 120 + 80 = 300 deg. Therefore, Savings angle = 360 - 300 = 60 deg.",
+        "Education expenditure = 80 deg * Rs 150/deg = Rs 12,000.",
+        "Angle difference between Food and Rent = 120 - 100 = 20 deg. Monetary difference = 20 deg * Rs 150/deg = Rs 3,000."
+      ],
+      "check": "Sum of all amounts: Rent (15,000) + Food (18,000) + Education (12,000) + Savings (9,000) = Rs 54,000. Exactly 100% of budget accounted for."
+    }
+  }
+}

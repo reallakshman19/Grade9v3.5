@@ -1,0 +1,68 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-PROBABILITY-EMPIRICAL-THEORETICAL",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "PROBABILITY",
+  "subtopic": "PROBABILITY-EXPERIMENTAL-AND-THEORETICAL",
+  "target_demand": "APPLY",
+  "target_band": "D1",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating exact fractions: A bag has 4 red, 6 green, and 10 blue marbles. If you want the probability of drawing a marble that is NOT red, will this probability be greater than, equal to, or less than 0.75, and what governing formula avoids summing each non-red color separately?",
+      "options": [
+        "A. Exactly equal to 0.75; use P(not Red) = 1 - P(Red).",
+        "B. Greater than 0.75 (specifically 0.80); use the complement rule P(not Red) = 1 - P(Red).",
+        "C. Less than 0.50; multiply P(Green) * P(Blue).",
+        "D. Cannot be predicted without drawing first."
+      ],
+      "predict_rationale": "Forces the learner to recognize that Red accounts for 4/20 = 0.20, so non-red must account for 1 - 0.20 = 0.80 > 0.75 without computing each color individually."
+    },
+    "stage_2_attempt": {
+      "task": "Two standard dice are thrown. (1) Write down the total number of elementary outcomes in the product sample space. (2) Identify the exact set of ordered pairs whose sum is a prime number greater than 5. (3) Compute the probability as an irreducible fraction.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Total outcomes n(S) = 6 * 6 = 36.",
+        "step_2": "Prime sums strictly greater than 5 are 7 and 11. Sum 7: (1, 6), (2, 5), (3, 4), (4, 3), (5, 2), (6, 1) [6 pairs]. Sum 11: (5, 6), (6, 5) [2 pairs]. Total favorable pairs = 6 + 2 = 8.",
+        "step_3": "P(Prime Sum > 5) = 8 / 36 = 2 / 9.",
+        "conclusion": "The favorable fraction is 2/9."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_ENGINEERING_FROM_COMPLEMENT",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose you are tasked with finding the probability of getting AT LEAST ONE six when rolling two dice. How can you find this by working BACKWARDS through the non-occurrence event?",
+          "expected_insight": "Identify the opposite event: 'NO six on either die'. On one die, non-six has probability 5/6. For two independent dice, P(no six) = (5/6) * (5/6) = 25/36. Then P(at least one six) = 1 - 25/36 = 11/36."
+        },
+        {
+          "inquiry": "Why is this reverse path faster and less error-prone than forward enumeration?",
+          "expected_insight": "Forward enumeration requires counting cases with exactly one six and case with two sixes and avoiding double-counting (6, 6). The complement groups all non-target cases into a single product!"
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: Suppose an event E is impossible in sample space S (e.g. rolling a sum of 13 on two standard dice). What is P(E), what is P(E'), and what does this prove about the boundary bounds of any probability measure?",
+      "options": [
+        "A. P(E) = -1, P(E') = 2; probabilities can extend beyond [0, 1].",
+        "B. P(E) = 0, P(E') = 1; this confirms that probability is bounded on [0, 1] with certainty equal to 1.",
+        "C. P(E) is undefined because the event does not exist.",
+        "D. P(E) = 0.5 because it either happens or it does not."
+      ],
+      "correct_option": "B",
+      "explanation": "An impossible event contains 0 outcomes: n(empty) / n(S) = 0 / n(S) = 0. Its complement is the entire certainty space S, with P(S) = 1. This establishes the infimum 0 and supremum 1 of probability measure."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Recall the fundamental probability law: the sum of the probabilities of all mutually exclusive and exhaustive events in a sample space equals 1. If an event has probability p, its complement has probability 1 - p."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "For two dice, write S as a 6x6 grid of 36 outcomes. Group rows and columns by sum diagonals: the diagonals for sum = 7 has 6 cells, and sum = 11 has 2 cells."
+    }
+  }
+}
