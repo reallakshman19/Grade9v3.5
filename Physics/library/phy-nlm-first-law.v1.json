@@ -14817,8 +14817,8 @@
           {
             "id": "R-NLM-2B-STATE-DEMAND",
             "kind": "CONNECT",
-            "action": "At the smallest starting pull the need equals the limit: P cos θ = 0.75(100 − P sin θ).",
-            "why_valid": "Below that pull static friction can supply the need; at it, the need reaches μ_s N.",
+            "action": "At the boundary of possible static equilibrium, horizontal friction demand reaches its limit: P cos θ = 0.75(100 − P sin θ).",
+            "why_valid": "Below the critical pull, static friction can balance the horizontal demand; equality is limiting static equilibrium and does not itself prove motion.",
             "inputs": [
               "need P cos θ",
               "limit μ_s N"
@@ -14834,13 +14834,13 @@
               "θ = 0°, 37°, 53°",
               "worker's limit 61 N"
             ],
-            "output": "Only the 37° pull can start the crate."
+            "output": "Only a 37° pull of 61 N strictly exceeds its threshold, ruling out static rest within the stated ideal model."
           },
           {
             "id": "R-NLM-2B-STATE-CHECK",
             "kind": "VERIFY",
             "action": "Substitute P = 60 N at 37° into both force equations.",
-            "why_valid": "At the threshold, the vertical balance holds and the need equals μ_s N.",
+            "why_valid": "At the critical pull, the force balances and limiting static friction are consistent with rest; an additional strict exceedance check distinguishes possible onset from a guaranteed state change.",
             "inputs": [
               "vertical: 64 + 36 − 100",
               "horizontal need 48 N, limit 0.75 × 64"
