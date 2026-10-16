@@ -152,21 +152,39 @@ try {
       ];
       const outcomes=[];
       for(const row of cases){
-        // Exercise each student response against the actual native input/commit path,
-        // NEVER a fabricated semantic scorer. Reload so every case is isolated.
-        await page.goto(pageUrl('candidate'),{waitUntil:'load'});
-        const item=page.locator('article[data-g9-unit="'+id+'"][data-g9-role="CORE2B"]');
-        const answer=item.locator('[data-g9-attempt-box] [data-g9-attempt]').first();
-        await answer.fill(row.response);
-        await item.locator('[data-g9-commit]').click();
-        const attempted=(await item.getAttribute('data-attempted'))==='1';
-        const review=item.locator('details[data-requires-attempt]');
-        await review.locator('summary').click();
-        const reveal=(await review.evaluate(el=>el.open)) &&
-          (await review.locator('[data-g9-payload-slot]').innerText()).includes('62.5 N');
-        outcomes.push({case_id:row.id,physics_class:row.expected,
-                       registered_attempt:attempted,review_unlocked:reveal,
-                       academically_marked:null});
+        // Each submission is a genuinely NEW learner session, not repeated
+        // same-URL navigation in one page (which may restore <details> state).
+        // Test only attempt/review mechanics, NEVER invented science scoring.
+        const caseContext=await browser.newContext({viewport});
+        try{
+          const casePage=await caseContext.newPage();
+          const caseExternal=[];
+          await casePage.route('**/*',route=>{
+            if(route.request().url().startsWith(base))return route.continue();
+            caseExternal.push(route.request().url());
+            return route.abort();
+          });
+          await casePage.goto(pageUrl('candidate'),{waitUntil:'load'});
+          const item=casePage.locator('article[data-g9-unit="'+id+'"][data-g9-role="CORE2B"]');
+          const review=item.locator('details[data-requires-attempt]');
+          const initialOpen=await review.evaluate(el=>el.open);
+          const answer=item.locator('[data-g9-attempt-box] [data-g9-attempt]').first();
+          await answer.fill(row.response);
+          await item.locator('[data-g9-commit]').click();
+          const attempted=(await item.getAttribute('data-attempted'))==='1';
+          const lockedAfterCommit=await review.getAttribute('data-locked');
+          await review.locator('summary').click();
+          const opened=await review.evaluate(el=>el.open);
+          const solutionText=await review.locator('[data-g9-payload-slot]').innerText();
+          const revealed=opened && solutionText.includes('62.5 N');
+          outcomes.push({case_id:row.id,physics_class:row.expected,
+                         initial_review_open:initialOpen,
+                         registered_attempt:attempted,
+                         locked_after_commit:lockedAfterCommit!==null,
+                         review_opened:opened,review_unlocked:revealed,
+                         external_requests:caseExternal.length,
+                         academically_marked:null});
+        } finally {await caseContext.close();}
       }
       report.assessment_corpus={
         scope:'REAL_NATIVE_ATTEMPT_GATE_NOT_PHYSICS_MARKING',
@@ -181,7 +199,7 @@ try {
         outcomes
       };
       add('nine_case_attempt_gate_not_grader',
-        outcomes.length===9 && outcomes.every(x=>x.registered_attempt&&x.review_unlocked),
+        outcomes.length===9 && outcomes.every(x=>!x.initial_review_open&&x.registered_attempt&&!x.locked_after_commit&&x.review_unlocked&&x.external_requests===0),
         'All 4 proposed-valid and 5 proposed-invalid text responses unlock the same review; neither pass/fail nor diagnosis is computed.');
     }
 
