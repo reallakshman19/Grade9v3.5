@@ -14,6 +14,8 @@ on:
       - 'tests/test_physics_qrt_program_review_response.py'
       - 'Physics/adapter/qrt_native_consumer_trace.py'
       - 'tests/test_physics_qrt_native_consumer_trace.py'
+      - 'Physics/adapter/qrt_native_browser_audit.mjs'
+      - 'Physics/adapter/qrt_native_browser_contract.md'
       - '.github/workflows/physics-qrt-program.yml'
   workflow_dispatch:
 jobs:
@@ -40,6 +42,27 @@ jobs:
         run: python3 -m pip install --quiet jsonschema
       - name: Native Physics source-to-Core2B render (in memory; not browser)
         run: python3 -m Physics.adapter.qrt_native_consumer_trace --render
+      - name: Install pinned Chromium test browser
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Stage exact native PAGES in gitignored build area
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from Shared.tools import render_core
+          target=Path("build/physics-qrt-browser")
+          target.mkdir(parents=True,exist_ok=True)
+          pages,gaps,digest=render_core.build(Path("products/physics/phy-nlm-first-law.manifest.json"),mode="PAGES")
+          for name,html in pages.items():
+              (target/name).write_bytes(html.encode("utf-8"))
+          print(json.dumps({"render_digest":digest,"page_count":len(pages),"gaps":len(gaps),
+            "core2b_sha256":hashlib.sha256(pages["core2b.html"].encode()).hexdigest()},sort_keys=True))
+          PY
+      - name: Real Chromium Core2B protected-move and prior-exposure test
+        run: node Physics/adapter/qrt_native_browser_audit.mjs --render-dir build/physics-qrt-browser
       - name: Draft work-lock structurally valid
         run: python3 -m tools.physics_qrt_program.cli validate-lock tools/physics_qrt_program/work-lock.template.json
       - name: Draft work-lock cannot authorize writes
