@@ -1,0 +1,57 @@
+name: Physics QRT existing shared blueprint reuse proof (TEST-only)
+on:
+  push:
+    branches:
+      - test/physics-qrt-shared-blueprint-reuse
+    paths:
+      - 'Physics/adapter/qrt_program/qrt_blueprint_reuse.py'
+      - 'tests/test_physics_qrt_blueprint_reuse.py'
+      - '.github/workflows/physics-qrt-blueprint-reuse.yml'
+  pull_request:
+    paths:
+      - 'Physics/adapter/qrt_program/qrt_blueprint_reuse.py'
+      - 'tests/test_physics_qrt_blueprint_reuse.py'
+      - '.github/workflows/physics-qrt-blueprint-reuse.yml'
+permissions:
+  contents: read
+jobs:
+  source-bound-candidate-reuse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile Physics read-only adapter and test 28 canonical QRT slots
+        run: |
+          python3 -m py_compile Physics/adapter/qrt_program/qrt_blueprint_reuse.py
+          python3 -m unittest tests.test_physics_qrt_blueprint_reuse tests.test_physics_qrt_program_crosswalk -v
+      - name: Generate four-source map, not blind packet nor approval
+        run: |
+          mkdir -p build/physics-qrt-reuse
+          python3 -m Physics.adapter.qrt_program.qrt_blueprint_reuse \
+            --output build/physics-qrt-reuse/four-source-reuse-evidence.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("build/physics-qrt-reuse/four-source-reuse-evidence.json")
+          obj=json.loads(p.read_text(encoding="utf-8"))
+          s=obj["summary"]
+          assert s["shared_qrt_semantic_templates"] == 28
+          assert s["registered_core_blueprints"] == 7
+          assert s["registered_role_links"] == 20
+          assert s["actually_rendered_role_pages_proven_by_this_map"] == 0
+          assert s["academically_accepted_physics_questions"] == 0
+          assert obj["owner_approval"] == "NOT_GRANTED"
+          assert obj["release"] == "HOLD"
+          print("PHYSICS_SHARED_REUSE_READONLY:",s)
+          PY
+      - name: Upload source-only map, explicitly forbidden for blind Pass A
+        uses: actions/upload-artifact@v4
+        with:
+          name: physics-qrt-registered-core-role-map-not-blind-not-adopted
+          path: build/physics-qrt-reuse/four-source-reuse-evidence.json
+          retention-days: 30
