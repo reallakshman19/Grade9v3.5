@@ -18,9 +18,9 @@ SOURCE = "Physics/library/phy-nlm-first-law.v1.json"
 BASE = "73c66b64158ee2ff57b099f990e1c2081d5c571f"
 ORIGINAL_BLOB = "62b8df106e83db03ac80fbb4002a611ac3d6e49a"
 QUESTION_ID = "Q-PHY-NLM-2B-FRICTION-STATE-01"
-CANDIDATE_DIGEST = "fd6e5c259cff1b28d96ad76630df0549e0d7d0a893bc26fd50bdec19580fa15e"
+CANDIDATE_DIGEST = "310f32e0b09d1628b53e98164c46db477b84ab45ee20701ee43a01bc88c5d616"
 FIELDS = {"stem", "conditions", "hints", "hint_ladder", "answer"}
-ANSWER_FIELDS = {"summary", "reasoning", "check", "acceptable_alternatives", "rubric"}
+ANSWER_FIELDS = {"summary", "reasoning", "check", "acceptable_alternatives", "rubric", "reasoning_route"}
 
 
 def canonical_sha(value: dict) -> str:
@@ -116,6 +116,19 @@ class PhysicsNlm289SourceCorrection(unittest.TestCase):
         self.assertIn("axis convention", content)
         self.assertIn("rounding", content)
         self.assertGreaterEqual(len(self.after["answer"]["rubric"]), 4)
+
+    def test_protected_reasoning_does_not_turn_equality_into_motion(self):
+        route = self.after["answer"]["reasoning_route"]
+        self.assertEqual([r["id"] for r in route],
+                         [r["id"] for r in self.before["answer"]["reasoning_route"]])
+        protected = self.after["transfer"]["protected_move_ref"]
+        self.assertEqual(next(r for r in route if r["id"] == protected)["kind"], "DECIDE")
+        self.assertIn("strictly exceeds", route[2]["output"])
+        self.assertIn("ruling out static rest", route[2]["output"])
+        self.assertIn("does not itself prove motion", route[1]["why_valid"])
+        self.assertIn("limiting static", route[3]["why_valid"])
+        self.assertNotIn("starting pull", route[1]["action"])
+        self.assertNotIn("can start the crate", route[2]["output"])
 
     def test_authored_hints_do_not_prove_h2_h3_ui(self):
         self.assertEqual(len(self.after["hint_ladder"]), 3)
