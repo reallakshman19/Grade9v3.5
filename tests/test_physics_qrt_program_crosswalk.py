@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tools.physics_qrt_program.crosswalk import inspect_question
+from Physics.adapter.qrt_crosswalk import inspect_question
 
 SOURCE = "Physics/library/phy-nlm-first-law.v1.json"
 ID = "Q-PHY-NLM-2B-FRICTION-STATE-01"
