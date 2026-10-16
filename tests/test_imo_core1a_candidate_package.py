@@ -36,6 +36,50 @@ class Core1ACandidateTests(unittest.TestCase):
         with self.assertRaises(IMOCore1ACandidateError):
             self.check()
 
+    def test_correspondence_is_literal_required_element_with_correct_factor(self):
+        p=json.loads(self.filename.read_text(encoding="utf-8"))
+        rep=p["representations"][0]
+        pairs=[(x["element"],x["symbol"]) for x in rep["correspondence"]]
+        self.assertEqual(pairs,[
+            ("n modulo 3 has three rows: 0,1,2.", "n"),
+            ("For residue 0, n is divisible by 3.", "n"),
+            ("For residue 1, n+2 is divisible by 3.", "n+2"),
+            ("For residue 2, n+1 is divisible by 3.", "n+1"),
+        ])
+        self.assertTrue(all(element in rep["required_elements"]
+                            for element,_ in pairs))
+        declared=p["relations"][0]["symbols"]
+        self.assertEqual([entry["symbol"] for entry in declared],["n","n+1","n+2"])
+        self.assertTrue(all(symbol in {entry["symbol"] for entry in declared}
+                            for _,symbol in pairs))
+        self.assertIn("Parity guarantee shown independently, not blended with the modulo-3 table.",
+                      rep["required_elements"])
+        self.assertEqual(p["data"],[])
+        self.assertEqual(p["questions"],[])
+        self.assertFalse(p["extensions"]["grade9v3:qrt_admitted"])
+        self.assertFalse(p["extensions"]["grade9v3:learner_published"])
+
+    def test_residue_correspondence_cannot_name_undrawn_element(self):
+        self.blocked(lambda x:x["representations"][0]["correspondence"][0].update(
+            element="Three unlisted rows"))
+
+    def test_residue_correspondence_cannot_misidentify_divisible_term(self):
+        self.blocked(lambda x:x["representations"][0]["correspondence"][2].update(
+            symbol="n+1"))
+
+    def test_residue_correspondence_cannot_omit_a_case(self):
+        self.blocked(lambda x:x["representations"][0]["correspondence"].pop())
+
+    def test_correspondence_symbol_must_be_declared(self):
+        self.blocked(lambda x:x["relations"][0]["symbols"].pop())
+
+    def test_derived_relation_symbol_cannot_be_mislabeled(self):
+        self.blocked(lambda x:x["relations"][0]["symbols"][2].update(
+            symbol="n+3"))
+
+    def test_separate_parity_warrant_cannot_be_erased(self):
+        self.blocked(lambda x:x["representations"][0]["required_elements"].pop())
+
     def test_candidate_is_nonpublishing_and_canonical_refs_resolve(self):
         result=self.check()
         self.assertEqual(result["complete_teaching_steps"],4)
