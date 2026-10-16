@@ -14754,40 +14754,51 @@
       "origin": "AUTHORED",
       "origin_ref": "SRC-AUTHOR-NLM",
       "original_identifier": "AUTHOR-NLM-2B-FRICTION-STATE-01",
-      "stem": "A 10 kg crate rests on a rough horizontal floor with μ_s = 0.75; take g = 10 m/s². A rope on the crate can be pulled horizontally, at 37° above the horizontal, or at 53° above the horizontal (sin 37° = cos 53° = 0.6, cos 37° = sin 53° = 0.8). For each direction, find the smallest pull that starts the crate sliding. A worker can pull with at most 61 N: in which of the three directions can the worker start the crate?",
+      "stem": "A 10 kg crate rests on a rough horizontal floor with μ_s = 0.75; take g = 10 m/s². A worker can pull a rope on the crate horizontally, at 37° above the horizontal, or at 53° above the horizontal (sin 37° = cos 53° = 0.6, cos 37° = sin 53° = 0.8). For each direction, determine the critical pull at impending slip and explain what it tells you about the possibility of the crate remaining at rest. The worker can pull with at most 61 N: which direction(s) could initiate sliding under this idealized model? Explain your choice, including whether equality at the critical pull guarantees motion.",
       "subparts": [],
       "options": [],
       "conditions": [
-        "The crate stays in contact with the floor in every direction.",
-        "Resolve each pull into horizontal and vertical components.",
-        "The pull is the unknown: do not take N = mg before the vertical balance is written."
+        "Treat the crate as a translating, non-tipping and non-rotating body; ignore deformation and impacts.",
+        "The rope direction remains fixed during each trial, and floor contact is maintained at the compared loads.",
+        "A critical pull means the boundary of possible static equilibrium, not proof the crate is already moving at equality."
       ],
       "figure_refs": [],
       "answer": {
         "kind": "MODEL_RESPONSE",
-        "summary": "When the crate is just about to slide, the friction it needs equals the limit μ_s N, and N = 100 − P sin θ. So P cos θ = 0.75(100 − P sin θ), which gives P = 75/(cos θ + 0.75 sin θ). Horizontal: 75 N. At 37°: 75/1.25 = 60 N. At 53°: 75/1.2 = 62.5 N. The 37° pull needs the least, and a worker limited to 61 N can start the crate only in that direction.",
+        "summary": "For an ideal translating crate at impending slip, N=100−P sinθ and P cosθ=μ_s N. Thus Pcrit=75/(cosθ+0.75 sinθ): 75 N (horizontal), 60 N (37°), and 62.5 N (53°). At P=Pcrit the crate may still be at limiting static equilibrium. A pull strictly above Pcrit rules out rest while floor contact holds, so 61 N is sufficient only for the 37° choice in this model.",
         "reasoning": [
-          "With a pull P at angle θ above the horizontal, the vertical balance gives N = mg − P sin θ = 100 − P sin θ.",
-          "Until the crate moves, friction must equal the horizontal part P cos θ; the smallest starting pull makes that need equal to the limit: P cos θ = 0.75(100 − P sin θ).",
-          "Solving, P = 75/(cos θ + 0.75 sin θ): 75/1 = 75 N at 0°, 75/(0.8 + 0.45) = 60 N at 37°, 75/(0.6 + 0.6) = 62.5 N at 53°.",
-          "Only the 37° threshold, 60 N, is within the worker's 61 N; horizontally 75 N is needed, and at 53° 62.5 N."
+          "Choose a consistent force diagram and sign convention. In vertical equilibrium, N+P sinθ=100 N, so N=100−P sinθ; check N remains positive at the candidate thresholds.",
+          "If static rest is possible, the required horizontal friction P cosθ cannot exceed the limiting friction μ_sN. The critical pull occurs at equality, P cosθ=0.75(100−P sinθ).",
+          "Solve Pcrit=75/(cosθ+0.75 sinθ) and evaluate the three supplied angle pairs: 75 N, 60 N, 62.5 N, respectively.",
+          "Compare strict exceedance rather than only equality: the available 61 N exceeds 60 N but not 62.5 N or 75 N. Thus only at 37° can the worker rule out a static rest state under the idealized non-tipping model."
         ],
-        "check": "At 37° with P = 60 N: horizontal part 48 N, vertical part 36 N, so N = 64 N and μ_s N = 48 N, exactly the need. At 53° with P = 61 N: need 61 × 0.6 = 36.6 N, but N = 100 − 48.8 = 51.2 N gives a limit of 38.4 N, so the crate stays at rest.",
-        "acceptable_alternatives": [],
+        "check": "At 37° and P=60 N, horizontal demand=48 N and static limit=0.75(100−36)=48 N, a limiting rest state. At P=61 N, demand=48.8 N and limit=0.75(100−36.6)=47.55 N, so static rest fails. At 53° and P=61 N, demand=36.6 N while limit=0.75(100−48.8)=38.4 N, so rest remains possible.",
+        "acceptable_alternatives": [
+          "Any algebraically equivalent positive-threshold form, including Pcrit=μ_s mg/(cosθ+μ_s sinθ), with consistent dimensions and contact conditions.",
+          "Pcrit=mg/(sinθ+cosθ/μ_s) for μ_s>0, with the correct positive thresholds and feasible direction.",
+          "A signed free-body-diagram derivation using a consistent opposite axis convention, with each transformed equation physically equivalent to vertical and horizontal force balance.",
+          "Thresholds expressed as 75 N, about 60 N, about 62.5 N using the supplied trigonometric values, or defensible rounding that preserves the 37°-only choice.",
+          "The candidate may explicitly say that equality is impending slip, whereas a force strictly above the critical threshold is needed to rule out static rest.",
+          "An optional observation that tanθ=μ_s minimizes the threshold among continuously varying upward angles is valid additional reasoning, not required for the three choices."
+        ],
         "subpart_answers": [],
         "verification_status": "CHECKED_BY_AUTHOR",
         "rubric": [
           {
-            "criterion": "Writes N = 100 − P sin θ with the pull still unknown, before using the limit.",
-            "evidence_of": "The static limit depends on the actual contact force, which here depends on the pull."
+            "criterion": "Selects a physically consistent FBD and recognizes that the applied upward component can change the floor normal while the pull remains unknown.",
+            "evidence_of": "Equivalent vertical equilibrium expression N=mg−P sinθ or a sign-consistent transformed relation, plus a physically consistent positive normal."
           },
           {
-            "criterion": "Sets the need P cos θ equal to μ_s N only at the start of sliding and finds 75 N, 60 N and 62.5 N.",
-            "evidence_of": "Turning the no-slip test into a threshold for an unknown force."
+            "criterion": "Distinguishes required horizontal friction from its static upper bound, and finds a boundary of possible rest.",
+            "evidence_of": "Equivalent inequality P cosθ≤μ_s(mg−P sinθ) and correct limiting equality; accepts algebraically equivalent derivations."
           },
           {
-            "criterion": "Decides that only the 37° direction works for a 61 N worker.",
-            "evidence_of": "Comparing thresholds across directions instead of assuming more tilt is always better or always worse."
+            "criterion": "Evaluates the three critical values and identifies the worker-feasible direction for 61 N.",
+            "evidence_of": "Correct values 75/60/62.5 N, recognition only 37° allows strict exceedance and no unsupported steepest-angle rule."
+          },
+          {
+            "criterion": "Explains model applicability, limiting equilibrium and fair rounding.",
+            "evidence_of": "Does not confuse equality with certain motion; does not include tipping/rotation outside the stipulated model; consistent units, signs and valid alternative reasoning."
           }
         ],
         "reasoning_route": [
@@ -14864,13 +14875,13 @@
       ],
       "hints": [
         {
-          "text": "At the smallest pull that starts the crate, what contact state is the crate in, and what does that say about the friction?",
+          "text": "Which external forces act on the crate, and could their effects change when the rope direction changes?",
           "reveals": "CONCEPT",
           "visual_ref": "REP-NLM-FRICTION-THRESHOLD",
           "visual_stage_ref": "VIS-NLM-FRICTION-V1"
         },
         {
-          "text": "Write N from the vertical balance with P still unknown; then compare the friction the crate needs with μ_s N.",
+          "text": "If the crate were still at rest in one chosen direction, what would have to remain physically possible?",
           "reveals": "CONCEPT",
           "visual_ref": "REP-NLM-FRICTION-THRESHOLD",
           "visual_stage_ref": "VIS-NLM-FRICTION-V2"
@@ -14910,7 +14921,7 @@
         {
           "order": 2,
           "purpose": "REPRESENT",
-          "text": "Draw the crate for one direction with its weight, N, the pull split into horizontal and vertical parts, and a friction arrow labelled f. Keep the pull as P, not a number.",
+          "text": "Sketch all external forces for one rope direction with the pull still symbolic, without evaluating which direction succeeds.",
           "provenance": "AUTHORED_SCAFFOLD"
         },
         {
