@@ -32,3 +32,7 @@ Do not auto-launch agents using these files. For a true two-pass independent inv
 ## First real checkpoint for coordinator
 
 Select a small, exact case set from Physics real-demand evidence: Vectors/Motion 2D/NLM and optional Relative Motion regression. Enumerate each actual canonical question ID and source path/sha256 (no guessing), give a separately reviewed scientific oracle, then freeze W0 work lock. Retest current baseline at the pinned head. Only after distinct Owner authority should each agent create a separate scoped implementation branch.
+
+## Native source-to-Core crosswalk (read-only)
+
+Run `python3 -m tools.physics_qrt_program.cli inspect-question --package Physics/library/phy-nlm-first-law.v1.json --question Q-PHY-NLM-2B-FRICTION-STATE-01` to inspect actual source custody, primary capability and five-factor difficulty using the canonical `question_difficulty.derive`. It explicitly reports QRT demand UNRESOLVED, published output NOT_ATTESTED and academic REVIEW_REQUIRED. It never infers official source identity from external-demand citations.

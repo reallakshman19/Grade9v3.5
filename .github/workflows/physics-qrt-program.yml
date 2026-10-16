@@ -4,6 +4,7 @@ on:
     paths:
       - 'tools/physics_qrt_program/**'
       - 'tests/test_physics_qrt_program_contract.py'
+      - 'tests/test_physics_qrt_program_crosswalk.py'
       - '.github/workflows/physics-qrt-program.yml'
   workflow_dispatch:
 jobs:
@@ -17,7 +18,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Contract unit tests
-        run: python3 -m unittest tests.test_physics_qrt_program_contract -v
+        run: python3 -m unittest tests.test_physics_qrt_program_contract tests.test_physics_qrt_program_crosswalk -v
       - name: Draft work-lock structurally valid
         run: python3 -m tools.physics_qrt_program.cli validate-lock tools/physics_qrt_program/work-lock.template.json
       - name: Draft work-lock cannot authorize writes

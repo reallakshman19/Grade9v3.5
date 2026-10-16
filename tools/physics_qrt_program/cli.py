@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 
 from .contracts import validate_lock, validate_receipt, converge
+from .crosswalk import inspect_question
 
 
 def _read(path: str) -> dict:
@@ -28,13 +29,19 @@ def main(argv: list[str] | None = None) -> int:
     lock_parser = sub.add_parser("validate-lock")
     lock_parser.add_argument("lock")
     lock_parser.add_argument("--require-authorized", action="store_true")
+    source = sub.add_parser("inspect-question")
+    source.add_argument("--package", required=True)
+    source.add_argument("--question", required=True)
     for action in ("validate-receipt", "converge"):
         p = sub.add_parser(action)
         p.add_argument("--lock", required=True)
         p.add_argument("receipts", nargs="+")
     args = parser.parse_args(argv)
     try:
-        if args.command == "validate-lock":
+        if args.command == "inspect-question":
+            result = inspect_question(args.package, args.question)
+            code = int(bool(result["errors"]))
+        elif args.command == "validate-lock":
             errors = validate_lock(_read(args.lock), require_authorized=args.require_authorized)
             result = {"status": "FAIL" if errors else "STRUCTURE_VALID_NOT_PERMISSION", "errors": errors}
             code = int(bool(errors))
