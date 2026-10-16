@@ -14,7 +14,7 @@
 5. Physics/library and Physics/adapter are academic/scientific candidates and subject adapters respectively. A magnitude check is not a vector-model proof. A code PASS is not scientific signoff.
 6. Compiled Core and browser artifacts must trace to the declared library basis and exact rendered bytes. AUTHORED_OUTSIDE_THE_LIBRARY remains labelled honestly. Do not regenerate original publications to hide drift.
 7. Learner evidence remains separate: source coverage, tests, routing and owner estimates never imply observed independent mastery.
-8. The Handover Master in Common routes the correct native process. A Physics-specific approved v3.6 AIM + bound plan was not established at initial review; no v3.6 EP/label, legacy publication or merge entitlement may be inferred. The Owner's explicit request authorizes THIS draft foundation PR only. Future writes require their own approved boundaries.
+8. The repository's pinned `relay/PROTOCOL_SELECTION.yaml` declares `selected_protocol: V3_1` (ACTIVE). Follow that repository authority and Handover Master; do **not** silently upgrade to v3.6. A Physics-specific approved v3.6 AIM + bound plan was not established at initial review; no v3.6 EP/label or merge entitlement may be inferred. The Owner's explicit request authorizes THIS draft foundation PR only. Separate ongoing engineering execution and durable relay publication remain subject to their applicable scopes.
 
 ## Decision separation
 
