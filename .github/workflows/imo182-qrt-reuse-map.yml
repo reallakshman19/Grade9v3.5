@@ -1,0 +1,30 @@
+name: IMO182 reusable QRT blueprint crosswalk
+on:
+  pull_request:
+    paths:
+      - 'TEST/imo-research/qrt-tiles/reconciliation/qrt_reuse_map.py'
+      - 'tests/test_imo182_qrt_reuse_map.py'
+      - 'Shared/quality/question-demand-templates.v1.json'
+      - 'Shared/web/interactive-page-blueprints.v1.json'
+      - 'TEST/imo-research/qrt-tiles/reconciliation/r5-01-28-artifact-adoption.v1.json'
+      - '.github/workflows/imo182-qrt-reuse-map.yml'
+  workflow_dispatch:
+jobs:
+  read-only-map:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run eight true and mutated reuse contract cases
+        run: python3 -m unittest tests.test_imo182_qrt_reuse_map -v
+      - name: Generate exact ledger-to-blueprint mapping evidence
+        run: |
+          mkdir -p build/imo182-reuse
+          python3 TEST/imo-research/qrt-tiles/reconciliation/qrt_reuse_map.py > build/imo182-reuse/qrt-map.json
+          python3 -c 'import json; x=json.load(open("build/imo182-reuse/qrt-map.json")); assert len(x["cells"])==28 and x["summary"]["qualified_or_owner_accepted"]==0'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: imo182-28-qrt-reuse-map
+          path: build/imo182-reuse/qrt-map.json
+          if-no-files-found: error
