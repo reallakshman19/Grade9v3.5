@@ -1,0 +1,84 @@
+name: Physics NLM289 one-question source correction (DRAFT HOLD)
+on:
+  pull_request:
+    paths:
+      - 'Physics/library/phy-nlm-first-law.v1.json'
+      - 'tests/test_physics_qrt_nlm289_source_correction.py'
+      - 'tools/physics_qrt_program/nlm289_blind_intake.py'
+      - '.github/workflows/physics-qrt-nlm289-source.yml'
+      - 'relay/GENERATED/tasks/ISSUE-289.snapshot.yaml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-scope-and-physics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install actual package schema validator
+        run: python -m pip install jsonschema
+      - name: Prove exact immutable original, changed-only-one-question and basic Physics invariants
+        run: python tests/test_physics_qrt_nlm289_source_correction.py -v
+      - name: Generate truly answer-withheld Physics Pass A packet from exact amended source
+        run: |
+          python tools/physics_qrt_program/nlm289_blind_intake.py \
+            --out build/physics-nlm289-pass-a/nlm289-pass-a.json
+      - name: Upload blind-only Stage A academic review intake (not a verdict)
+        uses: actions/upload-artifact@v4
+        with:
+          name: physics-nlm289-PASS-A-ANSWER-WITHHELD
+          path: build/physics-nlm289-pass-a/nlm289-pass-a.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Validate real product structure through existing native renderer
+        run: |
+          python -m Shared.tools.render_core build \
+            --manifest products/physics/phy-nlm-first-law.manifest.json \
+            --out build/physics-nlm289-draft-source \
+            --mode PAGES --draft
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          text=Path('build/physics-nlm289-draft-source/core2b.html').read_text()
+          question='Q-PHY-NLM-2B-FRICTION-STATE-01'
+          match=re.search(r'<article\b[^>]*data-g9-unit="'+question+r'"[^>]*>(.*?)</article>',text,re.S)
+          assert match, "CANONICAL_SOURCE_NOT_RENDERED_IN_ACTUAL_NATIVE_CORE2B"
+          article=match.group(1)
+          # Conditions are before the attempt and must not hand over the model choice.
+          first=article.split('data-g9-attempt-box',1)[0]
+          assert 'Resolve each pull into horizontal and vertical components.' not in first
+          assert 'do not take N = mg' not in first
+          assert 'Which external forces act on the crate' in first
+          assert 'VIS-NLM-CRATE3DIR-V0' in first
+          assert 'VIS-NLM-CRATE3DIR-V1' not in first
+          assert 'VIS-NLM-CRATE3DIR-V2' not in first
+          assert 'VIS-NLM-CRATE3DIR-V3' not in first
+          print('REAL_CANONICAL_SOURCE_TO_NATIVE_CORE2B=PASS_SOURCE_SCOPE_ONLY')
+          PY
+      - name: Check changed-file boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --name-only 73c66b64158ee2ff57b099f990e1c2081d5c571f...HEAD > /tmp/phy289_changed.txt
+          cat /tmp/phy289_changed.txt
+          python - <<'PY'
+          from pathlib import Path
+          allowed={
+            'Physics/library/phy-nlm-first-law.v1.json',
+            'tests/test_physics_qrt_nlm289_source_correction.py',
+            'tools/physics_qrt_program/nlm289_blind_intake.py',
+            '.github/workflows/physics-qrt-nlm289-source.yml',
+            'relay/GENERATED/tasks/ISSUE-289.snapshot.yaml',
+          }
+          paths=set(Path('/tmp/phy289_changed.txt').read_text().splitlines())
+          assert paths <= allowed,paths-allowed
+          assert 'Shared/tools/render_core.py' not in paths
+          assert 'relay/STATE.yaml' not in paths
+          print('DISJOINT_SOURCE_PR_BOUNDARY=PASS')
+          PY
