@@ -1,0 +1,75 @@
+name: Physics QRT NLM #289 source-preserving candidate (not academic approval)
+on:
+  push:
+    branches:
+      - test/phy289-source-correction-proposal
+    paths:
+      - 'tools/physics_qrt_program/proposals/nlm289_candidate.v1.json'
+      - 'tests/test_physics_qrt_nlm289_proposal.py'
+      - '.github/workflows/physics-qrt-nlm289-proposal.yml'
+  pull_request:
+    paths:
+      - 'tools/physics_qrt_program/proposals/nlm289_candidate.v1.json'
+      - 'tests/test_physics_qrt_nlm289_proposal.py'
+      - '.github/workflows/physics-qrt-nlm289-proposal.yml'
+permissions:
+  contents: read
+jobs:
+  offline-source-preserving:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Source-anchored D1–D6 and true/false corpus proposals
+        run: |
+          python3 -m unittest tests.test_physics_qrt_nlm289_proposal -v
+      - name: Export review candidate and exact changed fields (NOT FOR BLIND PASS A)
+        run: |
+          mkdir -p build/physics-qrt-nlm289-proposal
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from tests.test_physics_qrt_nlm289_proposal import candidate,compact_digest,git_blob,SOURCE
+          proposal,old,new=candidate()
+          source_bytes=SOURCE.read_bytes()
+          patch=proposal["patches"]
+          output={
+              "schema":"physics-qrt.nlm289-derived-review-diff/v1",
+              "status":"PROPOSAL_ONLY_SOURCE_UNCHANGED",
+              "source_git_blob_sha":git_blob(source_bytes),
+              "source_sha256":hashlib.sha256(source_bytes).hexdigest(),
+              "original_question_sha256":compact_digest(old),
+              "proposed_question_sha256":compact_digest(new),
+              "question_id":old["id"],
+              "changed_fields":[key for key in new if old.get(key)!=new.get(key)],
+              "changed_answer_fields":[key for key in new["answer"] if old["answer"].get(key)!=new["answer"].get(key)],
+              "before":{"stem":old["stem"],"conditions":old["conditions"],"hints":old["hints"],"hint_ladder":old["hint_ladder"],"answer_alternatives":old["answer"]["acceptable_alternatives"]},
+              "proposed":{"stem":new["stem"],"conditions":new["conditions"],"hints":new["hints"],"hint_ladder":new["hint_ladder"],"answer_alternatives":new["answer"]["acceptable_alternatives"]},
+              "academic_gates":proposal["educational_checks"],
+              "assessment_corpus":proposal["review_controls"],
+              "source_writing_authorized":False,
+              "human_scientific_acceptance":"NOT_OBTAINED",
+              "core2b_novelty":"NOT_ESTABLISHED",
+              "release":"HOLD",
+              "caution":"Contains authored answer and proposal. Never provide as answer-withheld Pass A intake."
+          }
+          assert output["changed_fields"]==["stem","conditions","answer","hints","hint_ladder"] or set(output["changed_fields"])=={"stem","conditions","hints","hint_ladder","answer"}
+          assert output["source_writing_authorized"] is False
+          target=Path("build/physics-qrt-nlm289-proposal/review-diff.json")
+          target.write_text(json.dumps(output,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
+          print("NLM289_SOURCE_PRESERVED:",output["source_git_blob_sha"])
+          print("NLM289_SUGGESTED_QUESTION_SHA256:",output["proposed_question_sha256"])
+          print("NLM289_GATES:"," | ".join(f"{k}={v}" for k,v in output["academic_gates"].items()))
+          PY
+      - name: Upload NON-BLIND proposal only
+        uses: actions/upload-artifact@v4
+        with:
+          name: physics-nlm289-proposed-content-diff-not-approved-not-blind
+          path: build/physics-qrt-nlm289-proposal/review-diff.json
+          if-no-files-found: error
+          retention-days: 30
