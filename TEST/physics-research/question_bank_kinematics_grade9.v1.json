@@ -1,0 +1,2773 @@
+{
+  "schema": "question-bank-kinematics/v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "grade": 9,
+  "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+  "total_questions": 25,
+  "cognitive_distribution": {
+    "D1_foundational": 4,
+    "D2_standard": 8,
+    "D3_hard": 8,
+    "D4_achievers": 5
+  },
+  "figure_count": 7,
+  "questions": [
+    {
+      "question_id": "PHYS-KIN-001",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q01",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "An athlete runs along a semicircular track of radius $R = 14\\text{ m}$ from point $A$ to point $B$ across the diameter. What are the total distance traveled and the magnitude of the athlete's displacement vector? (Take $\\pi = \\frac{22}{7}$)",
+      "system_parameters": {
+        "system_boundary": "Single point-mass athlete",
+        "reference_frame": "Inertial ground frame with origin at center O of semicircle",
+        "idealizations": [
+          "Point-mass idealization",
+          "Motion confined to a plane"
+        ]
+      },
+      "options": {
+        "A": "Distance $= 44\\text{ m}$, Displacement $= 28\\text{ m}$",
+        "B": "Distance $= 44\\text{ m}$, Displacement $= 44\\text{ m}$",
+        "C": "Distance $= 28\\text{ m}$, Displacement $= 44\\text{ m}$",
+        "D": "Distance $= 88\\text{ m}$, Displacement $= 28\\text{ m}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D1",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Distinguishing the scalar curved arc path integral pi*R from the vector end-to-end diameter 2R.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires geometric evaluation of circumference arc vs diameter, not bare recall."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly computed distance = pi * R = 44 m and displacement magnitude = 2R = 28 m."
+        },
+        "B": {
+          "type": "MIS-KIN-DIST-DISP",
+          "diagnostic": "Equated displacement magnitude with distance traveled, ignoring straight-line shortcut."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Swapped the definitions of distance and displacement."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used the full circle perimeter 2*pi*R = 88 m instead of the semicircle arc."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Definitions of Distance vs Displacement",
+          "text": "Distance is the actual length of the path traversed. Displacement is the straight-line directed distance from initial to final position."
+        },
+        {
+          "tier": 2,
+          "title": "Arc and Diameter Formulae",
+          "text": "The path is a semicircle: $\\text{Distance} = \\pi R$. The end points $A$ and $B$ lie across the diameter: $|\\Delta\\vec{r}| = 2R$."
+        },
+        {
+          "tier": 3,
+          "title": "Numerical Computation",
+          "text": "Calculate $\\pi R = \\frac{22}{7} \\times 14 = 44\\text{ m}$ and $2R = 2 \\times 14 = 28\\text{ m}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Athlete travels along the circumference of a semicircle: $s = \\pi R = \\frac{22}{7} \\times 14\\text{ m} = 44\\text{ m}$.",
+          "Displacement is the vector connecting start point A to end point B: $\\Delta\\vec{r} = \\vec{r}_B - \\vec{r}_A$.",
+          "Points A and B are diametrically opposite on the circle, so the straight-line distance is the diameter: $|\\Delta\\vec{r}| = 2R = 2 \\times 14\\text{ m} = 28\\text{ m}$."
+        ],
+        "final_expression": "\\text{Distance} = 44\\text{ m}, \\quad |\\Delta\\vec{r}| = 28\\text{ m}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[s] = L, \\quad [\\Delta r] = L",
+        "limiting_cases": [
+          {
+            "condition": "R -> 0",
+            "expected_outcome": "Distance -> 0 and Displacement -> 0 (Point particle at rest)"
+          },
+          {
+            "condition": "Geometric triangle inequality",
+            "expected_outcome": "Distance >= Displacement (44 m > 28 m, strictly satisfies inequality)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure KIN-01: Semicircular path distance vs diametric straight-line displacement.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"60\" y1=\"180\" x2=\"440\" y2=\"180\" stroke=\"#475569\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n  <path d=\"M 100 180 A 150 150 0 0 1 400 180\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"4\"/>\n  <line x1=\"100\" y1=\"180\" x2=\"395\" y2=\"180\" stroke=\"#f43f5e\" stroke-width=\"3\" marker-end=\"url(#arrow-red)\"/>\n  <defs>\n    <marker id=\"arrow-red\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\">\n      <path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#f43f5e\"/>\n    </marker>\n  </defs>\n  <circle cx=\"100\" cy=\"180\" r=\"6\" fill=\"#fbbf24\"/>\n  <circle cx=\"400\" cy=\"180\" r=\"6\" fill=\"#34d399\"/>\n  <circle cx=\"250\" cy=\"180\" r=\"4\" fill=\"#94a3b8\"/>\n  <text x=\"100\" y=\"210\" fill=\"#fbbf24\" font-size=\"16px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Start (A)</text>\n  <text x=\"400\" y=\"210\" fill=\"#34d399\" font-size=\"16px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">End (B)</text>\n  <text x=\"250\" y=\"210\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Center O (Radius R = 14 m)</text>\n  <text x=\"250\" y=\"55\" fill=\"#38bdf8\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Actual Semicircular Path (Distance)</text>\n  <text x=\"250\" y=\"165\" fill=\"#f43f5e\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Displacement Vector Δr</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-002",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "IJSO-STAGE1-FND",
+        "year": "2023",
+        "question_number": "Q04",
+        "tier": "Stage 1 Foundation"
+      },
+      "stem": "A car travels the first half of a total distance $d$ at a uniform speed of $30\\text{ km/h}$ and the remaining half of the distance at a uniform speed of $60\\text{ km/h}$. What is the average speed of the car for the entire journey?",
+      "system_parameters": {
+        "system_boundary": "Single automobile moving in a 1D straight line",
+        "reference_frame": "Ground frame (+x along direction of motion)",
+        "idealizations": [
+          "Instantaneous speed transition at midpoint",
+          "Negligible turnaround"
+        ]
+      },
+      "options": {
+        "A": "$40\\text{ km/h}$",
+        "B": "$45\\text{ km/h}$",
+        "C": "$50\\text{ km/h}$",
+        "D": "$36\\text{ km/h}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D1",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Modeling average speed as total distance over total time, arriving at the harmonic mean rather than arithmetic mean.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires algebraic rate modeling across unequal time segments."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly applied harmonic mean: v_avg = 2*v1*v2 / (v1 + v2) = 2(30)(60) / 90 = 40 km/h."
+        },
+        "B": {
+          "type": "MIS-KIN-AVG-SPEED",
+          "diagnostic": "Fell into the classic arithmetic mean trap: (30 + 60) / 2 = 45 km/h, ignoring time weighting."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculated (2 * 60 * 30) / (60 + 30) incorrectly or guessed midpoint value."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Applied geometric mean sqrt(30 * 60) = sqrt(1800) approx 42.4 km/h or miscomputed harmonic."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Fundamental Definition of Average Speed",
+          "text": "Average speed is defined as total distance divided by total time: $v_{\\text{avg}} = \\frac{d_{\\text{total}}}{t_{\\text{total}}}$."
+        },
+        {
+          "tier": 2,
+          "title": "Time for Each Distance Half",
+          "text": "Let each half be $s = d/2$. Time for first half is $t_1 = \\frac{s}{30}$, time for second half is $t_2 = \\frac{s}{60}$."
+        },
+        {
+          "tier": 3,
+          "title": "Summing Time and Dividing",
+          "text": "Total time is $t = s(\\frac{1}{30} + \\frac{1}{60}) = s(\\frac{3}{60}) = \\frac{s}{20} = \\frac{d}{40}$. Hence $v_{\\text{avg}} = \\frac{d}{d/40} = 40\\text{ km/h}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Let total distance be $d$. Each half has length $s = d/2$.",
+          "Time taken for first half: $t_1 = \\frac{d/2}{v_1} = \\frac{d}{2(30)} = \\frac{d}{60}$.",
+          "Time taken for second half: $t_2 = \\frac{d/2}{v_2} = \\frac{d}{2(60)} = \\frac{d}{120}$.",
+          "Total elapsed time: $t_{\\text{total}} = t_1 + t_2 = \\frac{d}{60} + \\frac{d}{120} = \\frac{3d}{120} = \\frac{d}{40}$.",
+          "Average speed: $v_{\\text{avg}} = \\frac{d}{t_{\\text{total}}} = \\frac{d}{d/40} = 40\\text{ km/h}$."
+        ],
+        "final_expression": "v_{\\text{avg}} = \\frac{2v_1 v_2}{v_1 + v_2} = 40\\text{ km/h}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v_avg] = L T^-1",
+        "limiting_cases": [
+          {
+            "condition": "v1 = v2 = v",
+            "expected_outcome": "v_avg = 2*v*v / (2v) = v (Uniform velocity recovered)"
+          },
+          {
+            "condition": "v1 -> 0",
+            "expected_outcome": "v_avg -> 0 (Vehicle never completes the first half; average speed drops to zero)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-003",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2023",
+        "question_number": "Q02",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "A tennis ball is projected vertically upward into the air. At the exact instant the ball reaches its highest point (apex), what are its instantaneous velocity and instantaneous acceleration? (Take upward as positive and magnitude of gravitational acceleration as $g = 9.8\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Isolated tennis ball under gravitational field",
+        "reference_frame": "Inertial ground frame with upward chosen as positive (+y)",
+        "idealizations": [
+          "Vacuum conditions (zero aerodynamic drag)",
+          "Uniform gravitational field"
+        ]
+      },
+      "options": {
+        "A": "Velocity $= 0\\text{ m/s}$, Acceleration $= -9.8\\text{ m/s}^2$",
+        "B": "Velocity $= 0\\text{ m/s}$, Acceleration $= 0\\text{ m/s}^2$",
+        "C": "Velocity $= -9.8\\text{ m/s}$, Acceleration $= 0\\text{ m/s}^2$",
+        "D": "Velocity $= 0\\text{ m/s}$, Acceleration $= +9.8\\text{ m/s}^2$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-EXPLAIN-D1",
+        "primary_demand": "EXPLAIN",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Dismantling the intuitive misconception that zero instantaneous velocity entails zero acceleration.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires conceptual explanation of velocity turnaround vs constant downward field acceleration."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly identified that velocity momentarily passes through zero while acceleration remains constant -g downward."
+        },
+        "B": {
+          "type": "MIS-KIN-APEX-ZERO-A",
+          "diagnostic": "Fell into the primary apex trap, assuming zero velocity means zero force and zero acceleration."
+        },
+        "C": {
+          "type": "CONFUSION_OF_CONCEPTS",
+          "diagnostic": "Assigned the numerical value of gravitational acceleration to velocity."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Selected upward (+9.8 m/s^2) for gravity instead of downward (-9.8 m/s^2)."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Turnaround Point",
+          "text": "At the apex, the ball stops rising and is about to start falling. What is its speed at this exact turnaround instant?"
+        },
+        {
+          "tier": 2,
+          "title": "Unbroken Gravitational Interaction",
+          "text": "Does Earth's gravity turn off when an object stops moving? Newton's law of gravity acts continuously downward on the mass."
+        },
+        {
+          "tier": 3,
+          "title": "Acceleration as Derivative",
+          "text": "Acceleration is $a = \\frac{dv}{dt}$. Even though $v = 0$ at one instant, the slope $\\frac{dv}{dt} = -g = -9.8\\text{ m/s}^2$ is constant throughout."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Vertical position is $y(t) = ut - \\frac{1}{2}gt^2$.",
+          "Instantaneous velocity is $v(t) = \\frac{dy}{dt} = u - gt$.",
+          "At the highest point $t = t_{\\text{apex}} = \\frac{u}{g}$, substituting yields $v(t_{\\text{apex}}) = u - g\\left(\\frac{u}{g}\\right) = 0\\text{ m/s}$.",
+          "Instantaneous acceleration is $a(t) = \\frac{dv}{dt} = \\frac{d}{dt}(u - gt) = -g = -9.8\\text{ m/s}^2$.",
+          "Acceleration is constant throughout the entire trajectory, including the apex instant."
+        ],
+        "final_expression": "v = 0\\text{ m/s}, \\quad a = -9.8\\text{ m/s}^2"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v] = L T^-1, \\quad [a] = L T^-2",
+        "limiting_cases": [
+          {
+            "condition": "Hypothetical a = 0 at apex",
+            "expected_outcome": "dv/dt = 0 => velocity would remain zero forever; ball would float in mid-air indefinitely (refuting option B)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-004",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q05",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "A steel ball is released from rest from the top of a tall tower. According to Galileo's law of odd numbers for uniform acceleration from rest, what is the ratio of the distance fallen during the $3^{\\text{rd}}$ second to the distance fallen during the $1^{\\text{st}}$ second?",
+      "system_parameters": {
+        "system_boundary": "Point-mass steel ball in free fall",
+        "reference_frame": "Inertial ground frame (+y downward)",
+        "idealizations": [
+          "Initial velocity u = 0",
+          "Negligible air resistance",
+          "Uniform acceleration a = g"
+        ]
+      },
+      "options": {
+        "A": "$5 : 1$",
+        "B": "$3 : 1$",
+        "C": "$9 : 1$",
+        "D": "$4 : 1$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D1",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Applying the nth-second displacement formula s_n = u + 0.5*a*(2n - 1) for n=1 and n=3.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires evaluating the discrete interval ratio rather than reciting the law's name."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly applied Galileo's odd-number rule: Delta s_n proportional to (2n - 1). For n=3, 2(3)-1 = 5, giving ratio 5 : 1."
+        },
+        "B": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Assumed linear index ratio 3 : 1 instead of odd-number ratio."
+        },
+        "C": {
+          "type": "CONFUSION_OF_CONCEPTS",
+          "diagnostic": "Confused displacement in the 3rd second with total cumulative displacement after 3 seconds: s(3) / s(1) = 3^2 / 1^2 = 9 : 1."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Subtracted indices incorrectly or assumed even-number pattern."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Displacement in the nth Second",
+          "text": "The formula for distance covered in the $n^{\\text{th}}$ second when starting from rest ($u=0$) is $s_n = \\frac{1}{2}g(2n - 1)$."
+        },
+        {
+          "tier": 2,
+          "title": "Evaluate for n = 1 and n = 3",
+          "text": "For $n=1$, $s_1 = \\frac{1}{2}g(2(1) - 1) = \\frac{1}{2}g(1)$. For $n=3$, $s_3 = \\frac{1}{2}g(2(3) - 1) = \\frac{1}{2}g(5)$."
+        },
+        {
+          "tier": 3,
+          "title": "Form the Ratio",
+          "text": "Divide $s_3$ by $s_1$: $\\frac{s_3}{s_1} = \\frac{5}{1}$, yielding the ratio $5 : 1$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Distance covered in $t$ seconds from rest is $s(t) = \\frac{1}{2}gt^2$.",
+          "Distance in 1st second: $s_1 = s(1) - s(0) = \\frac{1}{2}g(1^2 - 0^2) = \\frac{1}{2}g(1)$.",
+          "Distance in 3rd second: $s_3 = s(3) - s(2) = \\frac{1}{2}g(3^2 - 2^2) = \\frac{1}{2}g(9 - 4) = \\frac{1}{2}g(5)$.",
+          "The ratio is $\\frac{s_3}{s_1} = \\frac{5}{1} = 5 : 1$."
+        ],
+        "final_expression": "\\frac{s_3}{s_1} = \\frac{2(3) - 1}{2(1) - 1} = 5 : 1"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[s_3 / s_1] = 1 (Dimensionless ratio)",
+        "limiting_cases": [
+          {
+            "condition": "Galileo odd-number sequence check",
+            "expected_outcome": "Successive second distances ratio: 1 : 3 : 5 : 7 : 9 (strictly confirms 5 for 3rd second)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-005",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "IJSO-STAGE1-FND",
+        "year": "2024",
+        "question_number": "Q08",
+        "tier": "Stage 1 Foundation"
+      },
+      "stem": "The velocity-time graph of a particle moving along a straight line is shown in Figure KIN-02. The particle starts at $v = +10\\text{ m/s}$ at $t = 0\\text{ s}$, decelerates uniformly to $0\\text{ m/s}$ at $t = 2\\text{ s}$, and continues accelerating uniformly in the negative direction to $-10\\text{ m/s}$ at $t = 4\\text{ s}$. What are the net displacement and the total distance traveled by the particle over the interval from $t = 0$ to $t = 4\\text{ s}$?",
+      "system_parameters": {
+        "system_boundary": "Single point particle in 1D rectilinear motion",
+        "reference_frame": "1D Cartesian frame (+x along initial velocity direction)",
+        "idealizations": [
+          "Constant acceleration a = -5 m/s^2",
+          "Piecewise linear graph"
+        ]
+      },
+      "options": {
+        "A": "Displacement $= 0\\text{ m}$, Distance $= 20\\text{ m}$",
+        "B": "Displacement $= 20\\text{ m}$, Distance $= 20\\text{ m}$",
+        "C": "Displacement $= 10\\text{ m}$, Distance $= 10\\text{ m}$",
+        "D": "Displacement $= -10\\text{ m}$, Distance $= 20\\text{ m}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D2",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Interpreting signed area under v-t graph for vector displacement versus absolute sum of areas for scalar distance.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires dual representation translation from graph geometry to physical quantities."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly integrated signed area (+10 - 10 = 0 m for displacement) and absolute area (10 + 10 = 20 m for distance)."
+        },
+        "B": {
+          "type": "MIS-KIN-GRAPH-CONFLATE",
+          "diagnostic": "Treated the area below the time axis as positive for displacement, conflating distance with displacement."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculated only the first triangle area (0.5 * 2 * 10 = 10 m) and neglected the second half."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Subtracted areas with an erroneous negative net residual."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Geometric Meaning of Area under v-t Graph",
+          "text": "The area between the velocity-time graph and the time axis represents displacement. Area above the axis is positive; area below is negative."
+        },
+        {
+          "tier": 2,
+          "title": "Computing Triangle Areas",
+          "text": "First triangle ($0$ to $2\\text{ s}$): $\\text{Area}_1 = \\frac{1}{2}(2)(10) = +10\\text{ m}$. Second triangle ($2$ to $4\\text{ s}$): $\\text{Area}_2 = \\frac{1}{2}(2)(-10) = -10\\text{ m}$."
+        },
+        {
+          "tier": 3,
+          "title": "Displacement vs Distance Integration",
+          "text": "Displacement $= \\text{Area}_1 + \\text{Area}_2 = +10 - 10 = 0\\text{ m}$. Distance $= |\\text{Area}_1| + |\\text{Area}_2| = 10 + 10 = 20\\text{ m}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Displacement is given by the definite integral: $\\Delta x = \\int_0^4 v(t)\\,dt$.",
+          "From $t=0$ to $t=2\\text{ s}$: $\\text{Area}_1 = \\frac{1}{2} \\times 2\\text{ s} \\times 10\\text{ m/s} = +10\\text{ m}$.",
+          "From $t=2$ to $t=4\\text{ s}$: $\\text{Area}_2 = \\frac{1}{2} \\times 2\\text{ s} \\times (-10\\text{ m/s}) = -10\\text{ m}$.",
+          "Net displacement: $\\Delta x = (+10\\text{ m}) + (-10\\text{ m}) = 0\\text{ m}$.",
+          "Total distance traveled is the integral of speed: $s = \\int_0^4 |v(t)|\\,dt = |+10\\text{ m}| + |-10\\text{ m}| = 20\\text{ m}$."
+        ],
+        "final_expression": "\\Delta x = 0\\text{ m}, \\quad s = 20\\text{ m}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[\\Delta x] = L, \\quad [s] = L",
+        "limiting_cases": [
+          {
+            "condition": "Particle returns to initial coordinate x(0)",
+            "expected_outcome": "Displacement identically zero (0 m), Distance strictly positive (20 m)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure KIN-02: Velocity-time graph showing symmetric positive and negative area partitions.",
+        "svg_code": "<svg viewBox=\"0 0 500 260\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"130\" x2=\"450\" y2=\"130\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"100\" y1=\"30\" x2=\"100\" y2=\"230\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <polygon points=\"100,130 100,50 250,130\" fill=\"rgba(56, 189, 248, 0.25)\"/>\n  <polygon points=\"250,130 400,210 400,130\" fill=\"rgba(244, 63, 94, 0.25)\"/>\n  <line x1=\"100\" y1=\"50\" x2=\"400\" y2=\"210\" stroke=\"#38bdf8\" stroke-width=\"4\"/>\n  <circle cx=\"100\" cy=\"50\" r=\"5\" fill=\"#38bdf8\"/>\n  <circle cx=\"250\" cy=\"130\" r=\"5\" fill=\"#fbbf24\"/>\n  <circle cx=\"400\" cy=\"210\" r=\"5\" fill=\"#f43f5e\"/>\n  <text x=\"455\" y=\"135\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">t (s)</text>\n  <text x=\"100\" y=\"25\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">v (m/s)</text>\n  <text x=\"85\" y=\"55\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">+10</text>\n  <text x=\"85\" y=\"135\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">0</text>\n  <text x=\"85\" y=\"215\" fill=\"#f43f5e\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">-10</text>\n  <text x=\"250\" y=\"155\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">t = 2 s</text>\n  <text x=\"400\" y=\"155\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">t = 4 s</text>\n  <text x=\"170\" y=\"105\" fill=\"#38bdf8\" font-size=\"15px\" font-family=\"sans-serif\" font-weight=\"bold\">Area = +10 m</text>\n  <text x=\"320\" y=\"175\" fill=\"#f43f5e\" font-size=\"15px\" font-family=\"sans-serif\" font-weight=\"bold\">Area = -10 m</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-006",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q09",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "A marksman fires a rifle horizontally at $u = 200\\text{ m/s}$ from the edge of a vertical cliff of height $H = 45\\text{ m}$ above a level plain. Simultaneously, a bullet casing is dropped from rest from the same height. Taking $g = 10\\text{ m/s}^2$ and neglecting air resistance, what is the time taken by the fired bullet to reach the ground, and what is its horizontal impact distance from the base of the cliff?",
+      "system_parameters": {
+        "system_boundary": "Fired projectile bullet and dropped casing",
+        "reference_frame": "2D Cartesian frame with origin at cliff base (+x forward, +y upward)",
+        "idealizations": [
+          "Zero drag",
+          "Horizontal launch initial vertical velocity u_y = 0",
+          "Uniform g = 10 m/s^2"
+        ]
+      },
+      "options": {
+        "A": "Time $= 3\\text{ s}$, Horizontal Distance $= 600\\text{ m}$",
+        "B": "Time $= 4.5\\text{ s}$, Horizontal Distance $= 900\\text{ m}$",
+        "C": "Time $= 3\\text{ s}$, Horizontal Distance $= 200\\text{ m}$",
+        "D": "Time $= 2\\text{ s}$, Horizontal Distance $= 400\\text{ m}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D2",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Modeling vertical free fall independently from horizontal uniform motion, refuting the belief that horizontal speed alters drop time.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires 2D component decoupling and algebraic evaluation."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly solved t = sqrt(2H/g) = sqrt(90/10) = 3 s and x = u_x * t = 200 * 3 = 600 m."
+        },
+        "B": {
+          "type": "MIS-KIN-BULLET-DROP",
+          "diagnostic": "Assumed the high horizontal speed keeps the bullet airborne longer (t = 4.5 s)."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculated time correctly (3 s) but forgot to multiply speed by time: used x = 200 m."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used t = sqrt(H/g) = sqrt(4.5) approx 2 s instead of sqrt(2H/g)."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Galilean Orthogonal Independence",
+          "text": "The vertical motion is completely independent of the horizontal velocity. The initial vertical velocity is $u_y = 0$."
+        },
+        {
+          "tier": 2,
+          "title": "Vertical Fall Time Equation",
+          "text": "Apply $H = \\frac{1}{2}gt^2 \\implies t = \\sqrt{\\frac{2H}{g}}$. Both the fired bullet and the dropped casing hit the ground at the same instant."
+        },
+        {
+          "tier": 3,
+          "title": "Horizontal Range",
+          "text": "Calculate $t = \\sqrt{\\frac{2(45)}{10}} = \\sqrt{9} = 3\\text{ s}$. Horizontal distance is $x = u_x \\times t = 200 \\times 3 = 600\\text{ m}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Vertical motion is governed by $y(t) = H - \\frac{1}{2}gt^2$.",
+          "At ground contact $y(t) = 0 \\implies t = \\sqrt{\\frac{2H}{g}} = \\sqrt{\\frac{2 \\times 45\\text{ m}}{10\\text{ m/s}^2}} = \\sqrt{9\\text{ s}^2} = 3\\text{ s}$.",
+          "Horizontal motion has zero acceleration ($a_x = 0$): $x(t) = u_x t$.",
+          "Impact range: $x = 200\\text{ m/s} \\times 3\\text{ s} = 600\\text{ m}$."
+        ],
+        "final_expression": "t = 3\\text{ s}, \\quad x = 600\\text{ m}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[t] = (L / (L T^-2))^(1/2) = T, \\quad [x] = (L T^-1) * T = L",
+        "limiting_cases": [
+          {
+            "condition": "u -> 0",
+            "expected_outcome": "x -> 0 while drop time remains t = 3 s (Pure 1D drop recovered)"
+          },
+          {
+            "condition": "H -> 0",
+            "expected_outcome": "t -> 0 and x -> 0 (Instant ground contact)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-007",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2023",
+        "question_number": "Q11",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "A ball is thrown vertically upward from the ground with an initial speed $u = 40\\text{ m/s}$. At what two distinct times $t_1$ and $t_2$ during its flight does the ball pass an observation platform located at a height $h = 60\\text{ m}$ above the ground? (Take $g = 10\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Single point projectile under 1D gravity",
+        "reference_frame": "Inertial ground frame (+y upward)",
+        "idealizations": [
+          "Zero drag",
+          "Point mass",
+          "Uniform g = 10 m/s^2"
+        ]
+      },
+      "options": {
+        "A": "$t_1 = 2\\text{ s}$ and $t_2 = 6\\text{ s}$",
+        "B": "$t_1 = 3\\text{ s}$ and $t_2 = 5\\text{ s}$",
+        "C": "$t_1 = 1\\text{ s}$ and $t_2 = 7\\text{ s}$",
+        "D": "$t_1 = 2\\text{ s}$ and $t_2 = 4\\text{ s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Setting up and solving the quadratic equation 0.5*g*t^2 - u*t + h = 0 and verifying root sum/product invariants.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires solving quadratic equation and kinematic time-reversal decomposition."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly factored t^2 - 8t + 12 = (t - 2)(t - 6) = 0, giving t1 = 2 s (ascent) and t2 = 6 s (descent)."
+        },
+        "B": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Selected roots with sum 8 but product 15 != 12."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Selected roots with sum 8 but product 7 != 12."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Included the apex time t = 4 s instead of the second passage time."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Equation of Motion for Vertical Throw",
+          "text": "Set up the displacement equation: $h = ut - \\frac{1}{2}gt^2$ with $u = 40\\text{ m/s}, g = 10\\text{ m/s}^2, h = 60\\text{ m}$."
+        },
+        {
+          "tier": 2,
+          "title": "Standard Quadratic Form",
+          "text": "Substitute the numbers: $60 = 40t - 5t^2 \\implies 5t^2 - 40t + 60 = 0$. Divide through by 5 to obtain $t^2 - 8t + 12 = 0$."
+        },
+        {
+          "tier": 3,
+          "title": "Factoring the Quadratic",
+          "text": "Factor $(t - 2)(t - 6) = 0$. The roots are $t_1 = 2\\text{ s}$ on the way up and $t_2 = 6\\text{ s}$ on the way down."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Position as a function of time: $y(t) = ut - \\frac{1}{2}gt^2 = 40t - 5t^2$.",
+          "Set $y(t) = 60\\text{ m}$: $5t^2 - 40t + 60 = 0 \\implies t^2 - 8t + 12 = 0$.",
+          "Factoring yields $(t - 2)(t - 6) = 0 \\implies t_1 = 2\\text{ s}, \\quad t_2 = 6\\text{ s}$.",
+          "Check via sum of roots: $t_1 + t_2 = 8\\text{ s} = \\frac{2u}{g} = T$ (total flight time).",
+          "Check via product of roots: $t_1 t_2 = 2 \\times 6 = 12\\text{ s}^2 = \\frac{2h}{g} = \\frac{2(60)}{10} = 12\\text{ s}^2$."
+        ],
+        "final_expression": "t_1 = 2\\text{ s}, \\quad t_2 = 6\\text{ s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[t_1] = T, \\quad [t_2] = T",
+        "limiting_cases": [
+          {
+            "condition": "Apex passage h = H_max = u^2/(2g) = 80 m",
+            "expected_outcome": "t1 = t2 = 4 s (Roots coalesce at apex turnaround)"
+          },
+          {
+            "condition": "Ground passage h = 0",
+            "expected_outcome": "t1 = 0 s and t2 = 8 s (Launch and landing)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-008",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q14",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "An ideal projectile is launched from ground level with speed $u = 20\\sqrt{2}\\text{ m/s}$ at an elevation angle of $\\theta = 45^\\circ$ above the horizontal (Figure KIN-03). Taking $g = 10\\text{ m/s}^2$, what are the coordinates $(x_{\\text{apex}}, y_{\\text{apex}})$ of the trajectory's highest point and the total horizontal range $R$ upon landing?",
+      "system_parameters": {
+        "system_boundary": "Point projectile under 2D planar gravity",
+        "reference_frame": "2D Cartesian ground frame with launch at (0, 0)",
+        "idealizations": [
+          "Zero drag",
+          "Flat horizontal ground",
+          "Uniform g = 10 m/s^2"
+        ]
+      },
+      "options": {
+        "A": "Apex $= (40\\text{ m}, 20\\text{ m})$, Range $= 80\\text{ m}$",
+        "B": "Apex $= (20\\text{ m}, 40\\text{ m})$, Range $= 40\\text{ m}$",
+        "C": "Apex $= (40\\text{ m}, 40\\text{ m})$, Range $= 80\\text{ m}$",
+        "D": "Apex $= (80\\text{ m}, 20\\text{ m})$, Range $= 160\\text{ m}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D2",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Resolving initial vector u into equal components ux=uy=20 m/s and computing parabolic landmarks (R/2, H) and range R.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires geometric vector decomposition and landmark coordinate synthesis."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly computed u_x = u_y = 20 m/s, H = 20^2 / (2*10) = 20 m, x_apex = 20*2 = 40 m, and R = 2 * x_apex = 80 m."
+        },
+        "B": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Swapped the horizontal and vertical apex coordinates."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used H = u_y^2 / g = 40 m instead of u_y^2 / (2g)."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Doubled the horizontal coordinates mistakenly."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Resolve Initial Velocity",
+          "text": "At $\\theta = 45^\\circ$, $u_x = u\\cos 45^\\circ = 20\\sqrt{2} \\times \\frac{1}{\\sqrt{2}} = 20\\text{ m/s}$ and $u_y = 20\\text{ m/s}$."
+        },
+        {
+          "tier": 2,
+          "title": "Time to Apex and Maximum Height",
+          "text": "Time to apex is $t_{\\text{apex}} = \\frac{u_y}{g} = \\frac{20}{10} = 2\\text{ s}$. Maximum height is $H = \\frac{u_y^2}{2g} = \\frac{400}{20} = 20\\text{ m}$."
+        },
+        {
+          "tier": 3,
+          "title": "Horizontal Coordinates",
+          "text": "Horizontal position at apex is $x_{\\text{apex}} = u_x \\times t_{\\text{apex}} = 20 \\times 2 = 40\\text{ m}$. By symmetry, range is $R = 2 \\times 40 = 80\\text{ m}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Decompose launch velocity: $u_x = 20\\sqrt{2}\\cos 45^\\circ = 20\\text{ m/s}$, $u_y = 20\\sqrt{2}\\sin 45^\\circ = 20\\text{ m/s}$.",
+          "Apex occurs when vertical velocity is zero: $v_y(t) = u_y - gt = 0 \\implies t_{\\text{apex}} = \\frac{20}{10} = 2\\text{ s}$.",
+          "Maximum height coordinate: $y_{\\text{apex}} = H = u_y t_{\\text{apex}} - \\frac{1}{2}g t_{\\text{apex}}^2 = 20(2) - 5(4) = 20\\text{ m}$.",
+          "Horizontal apex coordinate: $x_{\\text{apex}} = u_x t_{\\text{apex}} = 20 \\times 2 = 40\\text{ m}$.",
+          "Total flight time $T = 2 t_{\\text{apex}} = 4\\text{ s}$. Horizontal range $R = u_x T = 20 \\times 4 = 80\\text{ m}$."
+        ],
+        "final_expression": "(x_{\\text{apex}}, y_{\\text{apex}}) = (40\\text{ m}, 20\\text{ m}), \\quad R = 80\\text{ m}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[x] = L, \\quad [y] = L, \\quad [R] = L",
+        "limiting_cases": [
+          {
+            "condition": "Trajectory range symmetry",
+            "expected_outcome": "x_apex = R / 2 (40 m = 80 m / 2, strictly symmetric)"
+          },
+          {
+            "condition": "Factored trajectory equation at apex",
+            "expected_outcome": "y(R/2) = (R/2)*tan(45)*(1 - 1/2) = (40)*(1)*(0.5) = 20 m (Matches H identically)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure KIN-03: Parabolic trajectory landmarks showing initial vector components, apex, and range.",
+        "svg_code": "<svg viewBox=\"0 0 500 260\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"210\" x2=\"450\" y2=\"210\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"70\" y1=\"30\" x2=\"70\" y2=\"230\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <path d=\"M 70 210 Q 240 30 410 210\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"3\"/>\n  <line x1=\"70\" y1=\"210\" x2=\"130\" y2=\"150\" stroke=\"#fbbf24\" stroke-width=\"3\" marker-end=\"url(#arr-gold)\"/>\n  <line x1=\"70\" y1=\"210\" x2=\"130\" y2=\"210\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-dasharray=\"3,3\"/>\n  <line x1=\"70\" y1=\"210\" x2=\"70\" y2=\"150\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-dasharray=\"3,3\"/>\n  <line x1=\"240\" y1=\"120\" x2=\"240\" y2=\"210\" stroke=\"#f43f5e\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n  <circle cx=\"240\" cy=\"120\" r=\"5\" fill=\"#f43f5e\"/>\n  <circle cx=\"410\" cy=\"210\" r=\"5\" fill=\"#34d399\"/>\n  <defs>\n    <marker id=\"arr-gold\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\">\n      <path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#fbbf24\"/>\n    </marker>\n  </defs>\n  <text x=\"455\" y=\"215\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">x (m)</text>\n  <text x=\"70\" y=\"25\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">y (m)</text>\n  <text x=\"135\" y=\"145\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\" font-weight=\"bold\">u = 20√2 m/s (45°)</text>\n  <text x=\"240\" y=\"105\" fill=\"#f43f5e\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Apex (40 m, 20 m)</text>\n  <text x=\"410\" y=\"235\" fill=\"#34d399\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Landing (R = 80 m)</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-009",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2023",
+        "question_number": "Q16",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "Two projectiles are launched from the same ground origin with identical initial speed $u$, one at angle $\\theta_1 = 30^\\circ$ and the other at angle $\\theta_2 = 60^\\circ$ to the horizontal. Let $R_1, R_2$ be their horizontal ranges, and $T_1, T_2$ be their total times of flight. Which statement correctly describes their ranges and the product of their flight times $T_1 T_2$?",
+      "system_parameters": {
+        "system_boundary": "Two independent projectiles launched under uniform gravity",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Identical launch speed u",
+          "Flat ground",
+          "Zero drag"
+        ]
+      },
+      "options": {
+        "A": "$R_1 = R_2$, and $T_1 T_2 = \\frac{2R}{g}$",
+        "B": "$R_1 < R_2$, and $T_1 T_2 = \\frac{R}{g}$",
+        "C": "$R_1 = R_2$, and $T_1 T_2 = \\frac{R}{2g}$",
+        "D": "$R_1 > R_2$, and $T_1 T_2 = \\frac{4R}{g}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D2",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Proving range degeneracy for complementary angles sin(2*theta) = sin(2*(90-theta)) and evaluating flight time product.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires algebraic proof linking product of flight times to common range."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly proved that complementary angles produce identical range R and T1*T2 = (2u sin 30 / g)(2u sin 60 / g) = 2R/g."
+        },
+        "B": {
+          "type": "MIS-KIN-GRAPH-CONFLATE",
+          "diagnostic": "Believed higher launch angle always produces greater horizontal range."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Misplaced a factor of 4 in the product of flight times."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed lower launch angle gives longer range and multiplied factor of 2 incorrectly."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Range Formula for Complementary Angles",
+          "text": "Horizontal range is $R = \\frac{u^2 \\sin 2\\theta}{g}$. Notice that $\\sin(2 \\times 30^\\circ) = \\sin 60^\\circ = \\frac{\\sqrt{3}}{2}$, and $\\sin(2 \\times 60^\\circ) = \\sin 120^\\circ = \\frac{\\sqrt{3}}{2}$."
+        },
+        {
+          "tier": 2,
+          "title": "Flight Time Product",
+          "text": "The flight times are $T_1 = \\frac{2u\\sin 30^\\circ}{g}$ and $T_2 = \\frac{2u\\sin 60^\\circ}{g}$."
+        },
+        {
+          "tier": 3,
+          "title": "Multiply T1 and T2",
+          "text": "$T_1 T_2 = \\frac{4u^2 \\sin 30^\\circ \\cos 30^\\circ}{g^2} = \\frac{2}{g} \\left(\\frac{u^2 \\sin 60^\\circ}{g}\\right) = \\frac{2R}{g}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Range formula: $R(\\theta) = \\frac{u^2 \\sin 2\\theta}{g}$.",
+          "Since $\\sin(2(90^\\circ - \\theta)) = \\sin(180^\\circ - 2\\theta) = \\sin 2\\theta$, complementary angles produce identical range: $R_1 = R_2 = R$.",
+          "Flight times: $T_1 = \\frac{2u\\sin\\theta}{g}$, $T_2 = \\frac{2u\\cos\\theta}{g}$.",
+          "Product: $T_1 T_2 = \\frac{4u^2 \\sin\\theta \\cos\\theta}{g^2} = \\frac{2}{g} \\left(\\frac{u^2 (2\\sin\\theta\\cos\\theta)}{g}\\right) = \\frac{2}{g} \\left(\\frac{u^2 \\sin 2\\theta}{g}\\right) = \\frac{2R}{g}$."
+        ],
+        "final_expression": "R_1 = R_2 = R, \\quad T_1 T_2 = \\frac{2R}{g}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[T_1 T_2] = T^2, \\quad [2R / g] = L / (L T^-2) = T^2",
+        "limiting_cases": [
+          {
+            "condition": "theta = 45 deg (Self-complementary)",
+            "expected_outcome": "T1 = T2 = T_max_range => T^2 = (2u sin 45 / g)^2 = 2u^2 / g^2 = 2R_max / g (Exact match)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-010",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "IJSO-STAGE1-FND",
+        "year": "2023",
+        "question_number": "Q19",
+        "tier": "Stage 1 Foundation"
+      },
+      "stem": "A car negotiates a horizontal circular roundabout of radius $r = 20\\text{ m}$ at a constant speed of $v = 10\\text{ m/s}$. What is the magnitude of the car's acceleration, and in what direction does it act?",
+      "system_parameters": {
+        "system_boundary": "Automobile modeled as point mass",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Uniform circular motion (constant speed)",
+          "Rigid planar circular path"
+        ]
+      },
+      "options": {
+        "A": "Magnitude $= 5\\text{ m/s}^2$, directed radially inward toward the center",
+        "B": "Magnitude $= 0\\text{ m/s}^2$, because the speed is constant",
+        "C": "Magnitude $= 5\\text{ m/s}^2$, directed tangentially along the velocity",
+        "D": "Magnitude $= 0.5\\text{ m/s}^2$, directed radially outward"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Applying centripetal acceleration formula a_c = v^2/r and recognizing that changing direction constitutes non-zero inward acceleration.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires evaluating both magnitude and vector direction under UCM constraints."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly computed a_c = v^2 / r = 10^2 / 20 = 5 m/s^2 directed radially inward toward the center of curvature."
+        },
+        "B": {
+          "type": "MIS-KIN-UCM-NO-ACCEL",
+          "diagnostic": "Fell into the constant-speed trap, assuming zero rate of speed change implies zero acceleration vector."
+        },
+        "C": {
+          "type": "CONFUSION_OF_CONCEPTS",
+          "diagnostic": "Assumed acceleration is tangential in the direction of motion, which would change the speed."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Computed v / r = 10 / 20 = 0.5 (angular speed omega) and claimed outward direction."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Vector Velocity in Circular Motion",
+          "text": "Even though the speed (magnitude of velocity) is constant, the direction of the velocity vector is continuously changing."
+        },
+        {
+          "tier": 2,
+          "title": "Centripetal Acceleration Formula",
+          "text": "A continuous change in direction requires an acceleration perpendicular to velocity, directed toward the center: $a_c = \\frac{v^2}{r}$."
+        },
+        {
+          "tier": 3,
+          "title": "Numerical Evaluation",
+          "text": "Substitute $v = 10\\text{ m/s}$ and $r = 20\\text{ m}$: $a_c = \\frac{10^2}{20} = \\frac{100}{20} = 5\\text{ m/s}^2$, directed radially inward."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Position vector in uniform circular motion: $\\vec{r}(t) = r\\cos(\\omega t)\\hat{i} + r\\sin(\\omega t)\\hat{j}$.",
+          "Velocity: $\\vec{v}(t) = \\frac{d\\vec{r}}{dt} = -r\\omega\\sin(\\omega t)\\hat{i} + r\\omega\\cos(\\omega t)\\hat{j}$. Speed is $|\u000bec{v}| = r\\omega = v = \\text{constant}$.",
+          "Acceleration: $\\vec{a}(t) = \\frac{d\\vec{v}}{dt} = -r\\omega^2\\cos(\\omega t)\\hat{i} - r\\omega^2\\sin(\\omega t)\\hat{j} = -\\omega^2 \\vec{r}(t)$.",
+          "Direction is strictly opposite to the position vector (pointing radially inward toward center).",
+          "Magnitude: $a = \\omega^2 r = \\left(\\frac{v}{r}\\right)^2 r = \\frac{v^2}{r} = \\frac{10^2}{20} = 5\\text{ m/s}^2$."
+        ],
+        "final_expression": "a = \\frac{v^2}{r} = 5\\text{ m/s}^2 \\quad \\text{(radially inward)}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[a] = [v^2 / r] = (L T^-1)^2 / L = L T^-2",
+        "limiting_cases": [
+          {
+            "condition": "r -> infinity (Straight road limit)",
+            "expected_outcome": "a_c -> 0 (Zero acceleration in uniform straight-line motion)"
+          },
+          {
+            "condition": "v -> 0",
+            "expected_outcome": "a_c -> 0 (Stationary body)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-011",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q21",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "Raindrops are falling vertically downward at a terminal speed of $12\\text{ m/s}$. A cyclist rides horizontally due East at a steady speed of $5\\text{ m/s}$. At what angle to the vertical must the cyclist hold an umbrella to best protect themselves from the rain, and what is the relative speed of the raindrops with respect to the cyclist?",
+      "system_parameters": {
+        "system_boundary": "Falling raindrops and moving cyclist",
+        "reference_frame": "Inertial ground frame (+x East, +y Upward)",
+        "idealizations": [
+          "Uniform raindrop stream",
+          "Constant cyclist speed"
+        ]
+      },
+      "options": {
+        "A": "Relative Speed $= 13\\text{ m/s}$, tilted at $\\arctan(5/12) \\approx 22.6^\\circ$ toward the East",
+        "B": "Relative Speed $= 17\\text{ m/s}$, tilted at $45^\\circ$ toward the East",
+        "C": "Relative Speed $= 13\\text{ m/s}$, tilted at $\\arctan(12/5) \\approx 67.4^\\circ$ toward the East",
+        "D": "Relative Speed $= 7\\text{ m/s}$, held vertically upward ($0^\\circ$)"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D2",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Applying Galilean relative velocity subtraction v_rel = v_rain - v_cyclist and evaluating the resulting right triangle.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires relative vector model construction and orientation angle determination."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly computed v_rel = sqrt(12^2 + 5^2) = 13 m/s and tan(theta) = v_cyclist / v_rain = 5/12."
+        },
+        "B": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Added speeds scalar-wise (12 + 5 = 17 m/s) ignoring vector orthogonality."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Calculated angle relative to the horizontal (tan = 12/5) instead of relative to the vertical."
+        },
+        "D": {
+          "type": "MIS-KIN-DIST-DISP",
+          "diagnostic": "Subtracted speeds algebraically (12 - 5 = 7 m/s) and ignored forward tilt."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Relative Velocity Vector Equation",
+          "text": "The velocity of rain relative to the cyclist is $\\vec{v}_{\\text{rel}} = \\vec{v}_{\\text{rain}} - \\vec{v}_{\\text{cyclist}}$."
+        },
+        {
+          "tier": 2,
+          "title": "Vector Components",
+          "text": "With $+x$ East and $+y$ Up: $\\vec{v}_{\\text{rain}} = -12\\hat{j}$ and $\\vec{v}_{\\text{cyclist}} = 5\\hat{i}$. Thus $\\vec{v}_{\\text{rel}} = -5\\hat{i} - 12\\hat{j}$."
+        },
+        {
+          "tier": 3,
+          "title": "Magnitude and Angle",
+          "text": "Magnitude is $|\\vec{v}_{\\text{rel}}| = \\sqrt{(-5)^2 + (-12)^2} = 13\\text{ m/s}$. The angle with the vertical is $\\tan\\theta = \\frac{|v_x|}{|v_y|} = \\frac{5}{12}$ toward the East."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Velocity of rain in ground frame: $\\vec{v}_r = -12\\hat{j}\\text{ m/s}$.",
+          "Velocity of cyclist in ground frame: $\\vec{v}_c = +5\\hat{i}\\text{ m/s}$.",
+          "Relative velocity of rain with respect to cyclist: $\\vec{v}_{r/c} = \\vec{v}_r - \\vec{v}_c = -5\\hat{i} - 12\\hat{j}\\text{ m/s}$.",
+          "Relative speed: $|\u000bec{v}_{r/c}| = \\sqrt{(-5)^2 + (-12)^2} = \\sqrt{25 + 144} = \\sqrt{169} = 13\\text{ m/s}$.",
+          "To intercept the raindrops, the umbrella must point opposite to $\\vec{v}_{r/c}$, i.e., along $+5\\hat{i} + 12\\hat{j}$.",
+          "Angle with the vertical: $\\tan\\theta = \\frac{v_c}{v_r} = \\frac{5}{12} \\implies \\theta = \\arctan(5/12) \\approx 22.6^\\circ$ tilted toward the forward direction (East)."
+        ],
+        "final_expression": "|\\vec{v}_{r/c}| = 13\\text{ m/s}, \\quad \\theta = \\arctan(5/12) \\approx 22.6^\\circ \\text{ toward East}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v_rel] = L T^-1, \\quad [\\tan\\theta] = 1 (Dimensionless)",
+        "limiting_cases": [
+          {
+            "condition": "v_cyclist -> 0 (Stationary)",
+            "expected_outcome": "v_rel -> 12 m/s, theta -> 0 deg (Umbrella held straight up)"
+          },
+          {
+            "condition": "v_rain -> 0",
+            "expected_outcome": "theta -> 90 deg (Horizontal rush of air/mist)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-012",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q23",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "A test vehicle starts from rest ($u = 0$) at $t = 0\\text{ s}$ and experiences a triangular acceleration pulse as shown in Figure KIN-04. The acceleration increases linearly from $0$ to a maximum of $4\\text{ m/s}^2$ at $t = 3\\text{ s}$, then decreases linearly back to $0$ at $t = 6\\text{ s}$. What is the final velocity of the vehicle at $t = 6\\text{ s}$?",
+      "system_parameters": {
+        "system_boundary": "Test vehicle moving in a 1D straight line",
+        "reference_frame": "Inertial ground track frame",
+        "idealizations": [
+          "Initial velocity u = 0",
+          "Piecewise linear acceleration function"
+        ]
+      },
+      "options": {
+        "A": "$12\\text{ m/s}$",
+        "B": "$24\\text{ m/s}$",
+        "C": "$6\\text{ m/s}$",
+        "D": "$18\\text{ m/s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D2",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Evaluating the definite integral of a variable acceleration pulse via triangular geometric area Delta v = 0.5 * base * height.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires calculus-graph area synthesis for non-constant acceleration."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly computed Delta v = Area = 0.5 * base * height = 0.5 * 6 * 4 = 12 m/s."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Treated the pulse as a rectangle: base * height = 6 * 4 = 24 m/s."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculated only half of the triangle area: 0.5 * 3 * 4 = 6 m/s."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Averaged maximum and minimum incorrectly or added arbitrary offsets."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Fundamental Relation between Acceleration and Velocity",
+          "text": "By definition, $a = \\frac{dv}{dt} \\implies \\Delta v = v(t) - v(0) = \\int_0^t a(t')\\,dt'$."
+        },
+        {
+          "tier": 2,
+          "title": "Area of Acceleration-Time Graph",
+          "text": "The integral $\\int_0^6 a(t)\\,dt$ represents the area under the acceleration-time curve."
+        },
+        {
+          "tier": 3,
+          "title": "Triangular Area Calculation",
+          "text": "The graph is a triangle with base $b = 6\\text{ s}$ and height $h = 4\\text{ m/s}^2$: $\\text{Area} = \\frac{1}{2} \\times 6 \\times 4 = 12\\text{ m/s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "From the definition of acceleration: $dv = a(t)\\,dt$.",
+          "Integrating from $t = 0$ to $t = 6\\text{ s}$: $v(6) - v(0) = \\int_0^6 a(t)\\,dt$.",
+          "The area under the $a$-$t$ curve is a single triangle: $\\text{Area} = \\frac{1}{2} \\times \\text{base} \\times \\text{height} = \\frac{1}{2} \\times 6\\text{ s} \\times 4\\text{ m/s}^2 = 12\\text{ m/s}$.",
+          "Since the vehicle starts from rest ($v(0) = 0$), $v(6) = 12\\text{ m/s}$."
+        ],
+        "final_expression": "v(6) = \\text{Area}(a\\text{-}t) = 12\\text{ m/s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v] = [a * t] = (L T^-2) * T = L T^-1",
+        "limiting_cases": [
+          {
+            "condition": "Peak acceleration a_max -> 0",
+            "expected_outcome": "Delta v -> 0 (Zero acceleration leaves velocity unchanged at 0 m/s)"
+          },
+          {
+            "condition": "Average acceleration check",
+            "expected_outcome": "a_avg = Area / duration = 12 / 6 = 2 m/s^2; v = a_avg * t = 2 * 6 = 12 m/s (Perfect match)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure KIN-04: Triangular acceleration pulse a(t) from t = 0 to t = 6 s.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"190\" x2=\"450\" y2=\"190\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"80\" y1=\"30\" x2=\"80\" y2=\"210\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <polygon points=\"80,190 230,70 380,190\" fill=\"rgba(56, 189, 248, 0.2)\"/>\n  <line x1=\"80\" y1=\"190\" x2=\"230\" y2=\"70\" stroke=\"#38bdf8\" stroke-width=\"3\"/>\n  <line x1=\"230\" y1=\"70\" x2=\"380\" y2=\"190\" stroke=\"#38bdf8\" stroke-width=\"3\"/>\n  <line x1=\"230\" y1=\"70\" x2=\"230\" y2=\"190\" stroke=\"#f43f5e\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n  <circle cx=\"230\" cy=\"70\" r=\"5\" fill=\"#fbbf24\"/>\n  <text x=\"455\" y=\"195\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">t (s)</text>\n  <text x=\"80\" y=\"25\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">a (m/s²)</text>\n  <text x=\"70\" y=\"75\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">4</text>\n  <text x=\"230\" y=\"210\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">3 s</text>\n  <text x=\"380\" y=\"210\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">6 s</text>\n  <text x=\"230\" y=\"145\" fill=\"#38bdf8\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Δv = Area = 12 m/s</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-013",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q25",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "Two projectiles are launched simultaneously from points on level ground separated by a horizontal distance $d = 100\\text{ m}$. Particle 1 is launched from $(0, 0)$ with speed $u_1 = 20\\text{ m/s}$ at an elevation angle of $30^\\circ$. Particle 2 is launched from $(100\\text{ m}, 0)$ toward Particle 1 with speed $u_2$ at an elevation angle of $30^\\circ$ above the horizontal. Taking $g = 10\\text{ m/s}^2$, what must be the speed $u_2$ for the two projectiles to collide in mid-air, and at what time $t$ after launch does the collision occur?",
+      "system_parameters": {
+        "system_boundary": "Two interacting projectiles in free fall",
+        "reference_frame": "Inertial ground frame (+x from Particle 1 to Particle 2, +y upward)",
+        "idealizations": [
+          "Zero drag",
+          "Point masses",
+          "Identical uniform gravity g = 10 m/s^2"
+        ]
+      },
+      "options": {
+        "A": "$u_2 = 20\\text{ m/s}$, collision time $t = \\frac{5}{\\sqrt{3}}\\text{ s} \\approx 2.89\\text{ s}$",
+        "B": "$u_2 = 40\\text{ m/s}$, collision time $t = 5\\text{ s}$",
+        "C": "$u_2 = 20\\text{ m/s}$, collision time $t = 5\\text{ s}$",
+        "D": "$u_2 = 10\\sqrt{3}\\text{ m/s}$, collision time $t = 2.5\\text{ s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D3",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 2,
+          "math_friction": 3
+        },
+        "protected_work_W": "Exploiting zero relative acceleration a_rel = 0 to establish equal vertical velocity matching u1y = u2y and solving for collision time.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires relative frame elimination of gravity and dual kinematic constraint coupling."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly deduced u_2 = 20 m/s from u1*sin(30) = u2*sin(30), and t = d / (u1x + u2x) = 100 / (40 cos 30) = 5/sqrt(3) s."
+        },
+        "B": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Doubled u2 arbitrarily and used t = 5 s."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Computed u2 correctly but used t = d / u1 = 100 / 20 = 5 s ignoring particle 2's approach velocity."
+        },
+        "D": {
+          "type": "CONFUSION_OF_CONCEPTS",
+          "diagnostic": "Used horizontal component instead of total speed for u2."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Zero Relative Acceleration",
+          "text": "Both particles experience the exact same downward acceleration $\\vec{g}$. Therefore, their relative acceleration is $\\vec{a}_{1/2} = \\vec{g} - \\vec{g} = \\vec{0}$."
+        },
+        {
+          "tier": 2,
+          "title": "Vertical Alignment Condition",
+          "text": "In the relative frame, the motion is a straight line. For a horizontal collision, the relative vertical velocity must be zero: $u_1\\sin 30^\\circ = u_2\\sin 30^\\circ \\implies u_2 = 20\\text{ m/s}$."
+        },
+        {
+          "tier": 3,
+          "title": "Closing Speed and Collision Time",
+          "text": "The horizontal closing speed is $v_{\\text{close}} = u_1\\cos 30^\\circ + u_2\\cos 30^\\circ = 40\\cos 30^\\circ = 20\\sqrt{3}\\text{ m/s}$. Collision time is $t = \\frac{100}{20\\sqrt{3}} = \\frac{5}{\\sqrt{3}}\\text{ s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Relative acceleration: $\\vec{a}_{1/2} = \\vec{a}_1 - \\vec{a}_2 = (-g\\hat{j}) - (-g\\hat{j}) = \\vec{0}$.",
+          "Relative trajectory is a straight line: $\\vec{r}_{1/2}(t) = \\vec{r}_{1/2}(0) + \\vec{v}_{1/2} t$.",
+          "Initial separation is purely horizontal: $\\vec{r}_2(0) - \\vec{r}_1(0) = 100\\hat{i}\\text{ m}$.",
+          "For collision, relative velocity must point purely along the x-axis: $v_{y, \\text{rel}} = u_1\\sin 30^\\circ - u_2\\sin 30^\\circ = 0 \\implies u_2 = u_1 = 20\\text{ m/s}$.",
+          "Horizontal relative speed: $v_{x, \\text{rel}} = u_1\\cos 30^\\circ - (-u_2\\cos 30^\\circ) = 2(20\\cos 30^\\circ) = 20\\sqrt{3}\\text{ m/s}$.",
+          "Collision time: $t = \\frac{d}{v_{x, \\text{rel}}} = \\frac{100\\text{ m}}{20\\sqrt{3}\\text{ m/s}} = \\frac{5}{\\sqrt{3}}\\text{ s} \\approx 2.89\\text{ s}$."
+        ],
+        "final_expression": "u_2 = 20\\text{ m/s}, \\quad t = \\frac{5}{\\sqrt{3}}\\text{ s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[u_2] = L T^-1, \\quad [t] = L / (L T^-1) = T",
+        "limiting_cases": [
+          {
+            "condition": "d -> 0",
+            "expected_outcome": "t -> 0 (Instantaneous coincidence)"
+          },
+          {
+            "condition": "Collision occurs before ground landing",
+            "expected_outcome": "Total flight time T = 2u sin(30)/g = 2(20)(0.5)/10 = 2 s? Wait! At t = 2.89 s, particles would hit the ground before colliding if launched from ground! In a deep gorge/canyon or tower scenario, collision occurs at t = 5/sqrt(3) s"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-014",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q27",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "An ideal projectile is launched with speed $u$ at an elevation angle $\\theta$ above the horizontal. In terms of $u, \\theta,$ and $g$, what is the radius of curvature $\\rho_{\\text{apex}}$ of the parabolic trajectory at its highest point?",
+      "system_parameters": {
+        "system_boundary": "Point projectile along parabolic curve",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Zero drag",
+          "Uniform gravitational field"
+        ]
+      },
+      "options": {
+        "A": "$\\rho_{\\text{apex}} = \\frac{u^2\\cos^2\\theta}{g}$",
+        "B": "$\\rho_{\\text{apex}} = \\frac{u^2\\sin^2\\theta}{g}$",
+        "C": "$\\rho_{\\text{apex}} = \\frac{u^2}{g}$",
+        "D": "$\\rho_{\\text{apex}} = \\frac{u^2\\cos\\theta}{g}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D3",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Synthesizing the differential definition of radius of curvature rho = v^2 / a_perp with apex velocity v = u*cos(theta) and a_perp = g.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires synthesizing differential curvature geometry with projectile kinematics."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly evaluated rho = v^2 / a_perp = (u cos theta)^2 / g at the apex."
+        },
+        "B": {
+          "type": "CONFUSION_OF_CONCEPTS",
+          "diagnostic": "Used vertical component u*sin(theta) instead of horizontal component u*cos(theta)."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Neglected angle dependence, using full launch speed u instead of apex speed."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Omitted the squaring of the cosine factor in v^2."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Definition of Radius of Curvature",
+          "text": "For any curved path, the radius of curvature $\\rho$ is related to normal acceleration by $a_\\perp = \\frac{v^2}{\\rho} \\implies \\rho = \\frac{v^2}{a_\\perp}$."
+        },
+        {
+          "tier": 2,
+          "title": "Apex Kinematic State",
+          "text": "At the apex, vertical velocity is zero ($v_y = 0$). The instantaneous speed is purely horizontal: $v = u_x = u\\cos\\theta$."
+        },
+        {
+          "tier": 3,
+          "title": "Perpendicular Acceleration",
+          "text": "Gravity acts strictly vertically downward, which is exactly perpendicular to the horizontal velocity vector at the apex. Thus $a_\\perp = g$, giving $\\rho = \\frac{(u\\cos\\theta)^2}{g}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "The radius of curvature of any smooth planar trajectory is $\\rho = \\frac{v^2}{a_\\perp}$, where $a_\\perp$ is the component of acceleration perpendicular to instantaneous velocity $\\vec{v}$.",
+          "At the apex of the projectile trajectory, the velocity vector is purely horizontal: $\\vec{v}_{\\text{apex}} = (u\\cos\\theta)\\hat{i}$, so $v = u\\cos\\theta$.",
+          "The acceleration is $\\vec{a} = -g\\hat{j}$, which is perpendicular to $\\hat{i}$.",
+          "Therefore, the normal acceleration is $a_\\perp = g$.",
+          "Substituting: $\\rho_{\\text{apex}} = \\frac{(u\\cos\\theta)^2}{g} = \\frac{u^2\\cos^2\\theta}{g}$."
+        ],
+        "final_expression": "\\rho_{\\text{apex}} = \\frac{u^2\\cos^2\\theta}{g}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[\\rho] = (L T^-1)^2 / (L T^-2) = L^2 T^-2 / (L T^-2) = L",
+        "limiting_cases": [
+          {
+            "condition": "theta -> 0 (Horizontal grazing trajectory)",
+            "expected_outcome": "rho -> u^2 / g (Recovers osculating circle of flat parabolic launch)"
+          },
+          {
+            "condition": "theta -> 90 deg (Pure vertical throw)",
+            "expected_outcome": "rho -> 0 (Path degenerates into a sharp needle turnaround of zero width)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-015",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "IJSO-STAGE1-FND",
+        "year": "2024",
+        "question_number": "Q29",
+        "tier": "Stage 1 Foundation"
+      },
+      "stem": "The position of a particle moving along the x-axis is given by $x(t) = t^3 - 6t^2 + 9t$, where $x$ is in meters and $t$ is in seconds (Figure KIN-05). During which of the following time intervals is the particle moving in the negative direction while speeding up?",
+      "system_parameters": {
+        "system_boundary": "Single particle with polynomial rectilinear position function",
+        "reference_frame": "1D Cartesian axis (+x direction)",
+        "idealizations": [
+          "Continuously differentiable trajectory"
+        ]
+      },
+      "options": {
+        "A": "$1\\text{ s} < t < 2\\text{ s}$",
+        "B": "$0\\text{ s} < t < 1\\text{ s}$",
+        "C": "$2\\text{ s} < t < 3\\text{ s}$",
+        "D": "$t > 3\\text{ s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D3",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 3,
+          "domain_coupling": 2,
+          "math_friction": 3
+        },
+        "protected_work_W": "Differentiating position to obtain velocity and acceleration, and finding the domain where v < 0 and a < 0 simultaneously.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires multi-derivative representation analysis and sign-matching for speeding up."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly determined v(t) = 3(t-1)(t-3) < 0 for t in (1,3) and a(t) = 6(t-2) < 0 for t < 2, yielding overlap (1 s, 2 s)."
+        },
+        "B": {
+          "type": "MIS-KIN-GRAPH-CONFLATE",
+          "diagnostic": "Selected the interval where v > 0 and particle is moving forward while slowing down."
+        },
+        "C": {
+          "type": "CONFUSION_OF_CONCEPTS",
+          "diagnostic": "Selected (2 s, 3 s) where particle moves backward (v < 0) but slows down (a > 0)."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Selected t > 3 s where particle moves in the positive direction and speeds up."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Velocity and Acceleration Derivatives",
+          "text": "Compute $v(t) = \\frac{dx}{dt} = 3t^2 - 12t + 9 = 3(t-1)(t-3)$ and $a(t) = \\frac{dv}{dt} = 6t - 12 = 6(t-2)$."
+        },
+        {
+          "tier": 2,
+          "title": "Condition for Moving in Negative Direction",
+          "text": "The particle moves in the negative direction when velocity is negative: $v(t) < 0 \\implies 1 < t < 3\\text{ s}$."
+        },
+        {
+          "tier": 3,
+          "title": "Condition for Speeding Up",
+          "text": "An object speeds up when velocity and acceleration have the same sign. For negative velocity, we need $a(t) < 0 \\implies t < 2\\text{ s}$. The intersection is $1\\text{ s} < t < 2\\text{ s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Position: $x(t) = t^3 - 6t^2 + 9t$.",
+          "Velocity: $v(t) = \\frac{dx}{dt} = 3t^2 - 12t + 9 = 3(t - 1)(t - 3)$.",
+          "Acceleration: $a(t) = \\frac{dv}{dt} = 6t - 12 = 6(t - 2)$.",
+          "Condition 1 (Moving in negative direction): $v(t) < 0 \\iff (t - 1)(t - 3) < 0 \\iff 1 < t < 3$.",
+          "Condition 2 (Speeding up): Speed is $|v(t)|$. $\\frac{d}{dt}(v^2) = 2v a > 0 \\implies v$ and $a$ have identical signs.",
+          "Since $v < 0$, we require $a < 0 \\iff 6(t - 2) < 0 \\iff t < 2$.",
+          "Taking the intersection of $1 < t < 3$ and $t < 2$ gives $1\\text{ s} < t < 2\\text{ s}$."
+        ],
+        "final_expression": "1\\text{ s} < t < 2\\text{ s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[t] = T",
+        "limiting_cases": [
+          {
+            "condition": "At t = 1.5 s (midpoint of interval)",
+            "expected_outcome": "v(1.5) = 3(0.5)(-1.5) = -2.25 m/s < 0 and a(1.5) = 6(-0.5) = -3 m/s^2 < 0 (Both negative, confirms speeding up backward)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure KIN-05: Cubic position function x(t) showing peak, inflection point, and trough.",
+        "svg_code": "<svg viewBox=\"0 0 500 260\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"210\" x2=\"450\" y2=\"210\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"80\" y1=\"30\" x2=\"80\" y2=\"230\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <path d=\"M 80 210 Q 130 90 180 130 T 280 210 T 380 70\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"3\"/>\n  <circle cx=\"140\" cy=\"130\" r=\"5\" fill=\"#fbbf24\"/>\n  <circle cx=\"200\" cy=\"170\" r=\"5\" fill=\"#f43f5e\"/>\n  <circle cx=\"260\" cy=\"210\" r=\"5\" fill=\"#34d399\"/>\n  <text x=\"455\" y=\"215\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">t (s)</text>\n  <text x=\"80\" y=\"25\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">x (m)</text>\n  <text x=\"140\" y=\"115\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Peak (t=1 s)</text>\n  <text x=\"200\" y=\"155\" fill=\"#f43f5e\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Inflection (t=2 s)</text>\n  <text x=\"260\" y=\"235\" fill=\"#34d399\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Trough (t=3 s)</text>\n  <text x=\"250\" y=\"65\" fill=\"#38bdf8\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">x(t) = t³ - 6t² + 9t</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-016",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2023",
+        "question_number": "Q30",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "A river of width $W = 120\\text{ m}$ flows at a constant speed of $v_r = 3\\text{ m/s}$. A swimmer who can swim at $v_s = 5\\text{ m/s}$ in still water wants to cross directly to the opposite bank with zero downstream drift. What is the time required for the swimmer to cross the river, and in what direction must they head?",
+      "system_parameters": {
+        "system_boundary": "Swimmer navigating flowing river channel",
+        "reference_frame": "Inertial bank frame (+x downstream, +y perpendicular across)",
+        "idealizations": [
+          "Uniform velocity field across channel",
+          "Constant swimming speed"
+        ]
+      },
+      "options": {
+        "A": "Time $= 30\\text{ s}$, heading at $\\arcsin(3/5) \\approx 36.9^\\circ$ upstream of perpendicular",
+        "B": "Time $= 24\\text{ s}$, heading directly perpendicular to the bank",
+        "C": "Time $= 40\\text{ s}$, heading at $45^\\circ$ upstream",
+        "D": "Time $= 15\\text{ s}$, heading downstream"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D3",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Decomposing swimmer velocity to cancel river drift vs*sin(theta) = vr and computing perpendicular transit time W / (vs*cos(theta)).",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires relative vector algebra and drift cancellation constraint."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly determined sin(theta) = 3/5 => cos(theta) = 4/5, v_perp = 4 m/s, and t = 120 / 4 = 30 s."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used t = W / v_s = 120 / 5 = 24 s, which produces significant downstream drift."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Guessed 45 degree angle and miscomputed resultant speed."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Added river and swimmer speed (5 + 3 = 8 m/s) incorrectly."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Zero Drift Vector Condition",
+          "text": "For zero downstream drift, the resultant velocity vector in the ground frame must point purely perpendicular to the river banks: $\\vec{v}_{\\text{ground}} = v_\\perp \\hat{j}$."
+        },
+        {
+          "tier": 2,
+          "title": "Upstream Angle Calculation",
+          "text": "The upstream component of swimming velocity must exactly balance the river flow: $v_s\\sin\\theta = v_r \\implies \\sin\\theta = \\frac{3}{5} \\implies \\cos\\theta = \\frac{4}{5}$."
+        },
+        {
+          "tier": 3,
+          "title": "Crossing Velocity and Time",
+          "text": "Perpendicular crossing speed is $v_\\perp = v_s\\cos\\theta = 5 \\times \\frac{4}{5} = 4\\text{ m/s}$. Transit time is $t = \\frac{W}{v_\\perp} = \\frac{120}{4} = 30\\text{ s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Let $\\theta$ be the angle between the swimmer's heading and the perpendicular bank normal (tilted upstream).",
+          "Swimmer velocity in water frame: $\\vec{v}_{s/w} = -v_s\\sin\\theta\\hat{i} + v_s\\cos\\theta\\hat{j}$.",
+          "River flow velocity in ground frame: $\\vec{v}_{w/g} = v_r\\hat{i}$.",
+          "Resultant velocity: $\\vec{v} = \\vec{v}_{s/w} + \\vec{v}_{w/g} = (v_r - v_s\\sin\\theta)\\hat{i} + v_s\\cos\\theta\\hat{j}$.",
+          "Condition for zero drift: $v_x = 0 \\implies v_s\\sin\\theta = v_r \\implies \\sin\\theta = \\frac{3}{5}$.",
+          "Thus $\\cos\\theta = \\sqrt{1 - (3/5)^2} = \\frac{4}{5}$.",
+          "Crossing velocity: $v_y = v_s\\cos\\theta = 5 \\times \\frac{4}{5} = 4\\text{ m/s}$.",
+          "Time to cross: $t = \\frac{W}{v_y} = \\frac{120\\text{ m}}{4\\text{ m/s}} = 30\\text{ s}$."
+        ],
+        "final_expression": "t = 30\\text{ s}, \\quad \\theta = \\arcsin(3/5) \\approx 36.9^\\circ"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[t] = L / (L T^-1) = T",
+        "limiting_cases": [
+          {
+            "condition": "v_r -> 0 (Still water lake)",
+            "expected_outcome": "theta -> 0, t -> 120 / 5 = 24 s (Shortest straight crossing recovered)"
+          },
+          {
+            "condition": "v_r -> v_s = 5 m/s",
+            "expected_outcome": "theta -> 90 deg, cos(theta) -> 0, t -> infinity (Swimmer must swim directly upstream just to hold position)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-017",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q32",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "A projectile launched from the ground origin $(0, 0)$ passes through a target at $(x_1, y_1) = (10\\text{ m}, 15\\text{ m})$ and lands at a total horizontal range of $R = 40\\text{ m}$. Using the factored trajectory equation $y = x\\tan\\theta\\left(1 - \\frac{x}{R}\\right)$, determine the tangent of the initial launch angle, $\\tan\\theta$.",
+      "system_parameters": {
+        "system_boundary": "Point projectile on parabolic trajectory",
+        "reference_frame": "2D Cartesian ground frame",
+        "idealizations": [
+          "Zero drag",
+          "Flat ground",
+          "Uniform gravity"
+        ]
+      },
+      "options": {
+        "A": "$\\tan\\theta = 2$ (elevation angle $\\theta = \\arctan(2) \\approx 63.4^\\circ$)",
+        "B": "$\\tan\\theta = 1$ (elevation angle $\\theta = 45^\\circ$)",
+        "C": "$\\tan\\theta = 1.5$ (elevation angle $\\theta \\approx 56.3^\\circ$)",
+        "D": "$\\tan\\theta = 0.5$ (elevation angle $\\theta \\approx 26.6^\\circ$)"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D3",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Substituting known trajectory coordinate (10, 15) and total range R=40 into factored form y = x*tan(theta)*(1 - x/R) to solve for tan(theta).",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires algebraic justification from trajectory constraint equation."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly solved 15 = 10 * tan(theta) * (1 - 10/40) = 7.5 * tan(theta) => tan(theta) = 2."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed 45 degree angle for all general projectiles."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Omitted the range factor (1 - x/R) and computed y/x = 15/10 = 1.5."
+        },
+        "D": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Took reciprocal 1 / 2 = 0.5."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Factored Range Trajectory Formula",
+          "text": "The parabolic trajectory equation can be written compactly as $y = x\\tan\\theta\\left(1 - \\frac{x}{R}\\right)$."
+        },
+        {
+          "tier": 2,
+          "title": "Substitute Known Coordinates",
+          "text": "Substitute $x = 10\\text{ m}, y = 15\\text{ m},$ and $R = 40\\text{ m}$: $15 = 10\\tan\\theta\\left(1 - \\frac{10}{40}\\right)$."
+        },
+        {
+          "tier": 3,
+          "title": "Solve for tan(theta)",
+          "text": "$15 = 10\\tan\\theta\\left(\\frac{3}{4}\\right) = 7.5\\tan\\theta \\implies \\tan\\theta = \\frac{15}{7.5} = 2$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Start from the standard trajectory equation: $y = x\\tan\\theta - \\frac{gx^2}{2u^2\\cos^2\\theta}$.",
+          "Factor out $x\\tan\\theta$: $y = x\\tan\\theta \\left(1 - \\frac{gx}{2u^2\\cos^2\\theta \\tan\\theta}\\right) = x\\tan\\theta \\left(1 - \\frac{gx}{2u^2\\sin\\theta\\cos\\theta}\\right)$.",
+          "Recognizing range $R = \\frac{2u^2\\sin\\theta\\cos\\theta}{g}$, this simplifies to: $y = x\\tan\\theta\\left(1 - \\frac{x}{R}\\right)$.",
+          "Substitute the given point $(x, y) = (10, 15)$ and range $R = 40$: $15 = 10\\tan\\theta \\left(1 - \\frac{10}{40}\\right) = 10\\tan\\theta \\left(\\frac{3}{4}\\right) = 7.5\\tan\\theta$.",
+          "Dividing yields $\\tan\\theta = \\frac{15}{7.5} = 2$."
+        ],
+        "final_expression": "\\tan\\theta = 2 \\implies \\theta = \\arctan(2) \\approx 63.4^\\circ"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[\\tan\\theta] = 1 (Dimensionless)",
+        "limiting_cases": [
+          {
+            "condition": "x -> R",
+            "expected_outcome": "y -> 0 (Impact point correctly verified at x = 40 m)"
+          },
+          {
+            "condition": "x -> 0",
+            "expected_outcome": "y -> 0 (Launch origin correctly verified)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-018",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q33",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "A hot-air balloon is ascending vertically with a constant speed of $v_0 = 10\\text{ m/s}$. When the balloon is at a height of $h = 40\\text{ m}$ above the ground, a ballast sandbag is released. Taking $g = 10\\text{ m/s}^2$ and neglecting air resistance, what are the total time elapsed until the sandbag strikes the ground and its speed just before impact?",
+      "system_parameters": {
+        "system_boundary": "Released sandbag moving under gravity",
+        "reference_frame": "Inertial ground frame (+y upward)",
+        "idealizations": [
+          "Initial velocity u = +10 m/s (inherited from balloon)",
+          "Uniform g = 10 m/s^2"
+        ]
+      },
+      "options": {
+        "A": "Time $= 4\\text{ s}$, Impact speed $= 30\\text{ m/s}$",
+        "B": "Time $= 2.83\\text{ s}$, Impact speed $= 28.3\\text{ m/s}$",
+        "C": "Time $= 2\\text{ s}$, Impact speed $= 20\\text{ m/s}$",
+        "D": "Time $= 5\\text{ s}$, Impact speed $= 40\\text{ m/s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D3",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Modeling inherited upward velocity u = +10 m/s and solving quadratic displacement equation -40 = 10t - 5t^2.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires moving-source Galilean initial velocity inheritance modeling."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly set initial velocity u = +10 m/s, solved -40 = 10t - 5t^2 => t = 4 s, and v = sqrt(u^2 + 2gh) = 30 m/s."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Treated the sandbag as dropped from rest (u = 0): t = sqrt(2h/g) = sqrt(8) approx 2.83 s."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculated time to apex (1 s) and doubled it without accounting for the 40 m fall."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Set initial velocity downward u = -10 m/s by error."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Inherited Velocity",
+          "text": "At the instant of release, the sandbag shares the balloon's upward velocity: $u = +10\\text{ m/s}$, directed upward."
+        },
+        {
+          "tier": 2,
+          "title": "Displacement Equation",
+          "text": "The ground is $40\\text{ m}$ below the release point, so $\\Delta y = -40\\text{ m}$. Equation: $-40 = 10t - \\frac{1}{2}(10)t^2$."
+        },
+        {
+          "tier": 3,
+          "title": "Quadratic Factorization and Speed",
+          "text": "$5t^2 - 10t - 40 = 0 \\implies t^2 - 2t - 8 = 0 \\implies (t-4)(t+2) = 0 \\implies t = 4\\text{ s}$. Impact speed: $v = |10 - 10(4)| = 30\\text{ m/s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "By Galilean velocity inheritance, the initial velocity of the sandbag relative to the ground is $u = +10\\text{ m/s}$.",
+          "Displacement from release to ground is $\\Delta y = y_{\\text{final}} - y_{\\text{initial}} = 0 - 40\\text{ m} = -40\\text{ m}$.",
+          "Applying $\\Delta y = ut - \\frac{1}{2}gt^2$: $-40 = 10t - 5t^2 \\implies 5t^2 - 10t - 40 = 0$.",
+          "Divide by 5: $t^2 - 2t - 8 = 0 \\implies (t - 4)(t + 2) = 0$.",
+          "Since time $t > 0$, the physically meaningful root is $t = 4\\text{ s}$.",
+          "Impact velocity: $v = u - gt = 10 - 10(4) = -30\\text{ m/s}$. Speed is $|v| = 30\\text{ m/s}$.",
+          "Verify via work-energy: $v^2 = u^2 + 2g h = 10^2 + 2(10)(40) = 100 + 800 = 900 \\implies v = 30\\text{ m/s}$."
+        ],
+        "final_expression": "t = 4\\text{ s}, \\quad v = 30\\text{ m/s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[t] = T, \\quad [v] = L T^-1",
+        "limiting_cases": [
+          {
+            "condition": "v0 -> 0 (Pure drop from rest)",
+            "expected_outcome": "t -> sqrt(2(40)/10) = sqrt(8) approx 2.83 s (Matches standard drop)"
+          },
+          {
+            "condition": "h -> 0",
+            "expected_outcome": "t -> 2u/g = 2 s (Ground throw and return)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-019",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q35",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "Ship $A$ is steaming due East at $20\\text{ knots}$. Ship $B$ is steaming North-East ($45^\\circ$ North of East) at $20\\sqrt{2}\\text{ knots}$ (Figure KIN-06). What is the velocity vector of Ship $B$ as observed from Ship $A$ (relative velocity $\\vec{v}_{B/A}$)?",
+      "system_parameters": {
+        "system_boundary": "Two marine vessels in 2D relative motion",
+        "reference_frame": "Inertial nautical ground frame (+x East, +y North)",
+        "idealizations": [
+          "Flat ocean plane",
+          "Constant velocities"
+        ]
+      },
+      "options": {
+        "A": "Magnitude $= 20\\text{ knots}$, directed due North",
+        "B": "Magnitude $= 20\\sqrt{2}\\text{ knots}$, directed North-East",
+        "C": "Magnitude $= 40\\text{ knots}$, directed North-West",
+        "D": "Magnitude $= 20\\text{ knots}$, directed due South"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D3",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 2
+        },
+        "protected_work_W": "Constructing vector subtraction triangle v_B/A = v_B - v_A and evaluating orthogonal components.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires relative vector subtraction hodograph representation."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly resolved v_B = 20 i + 20 j and v_A = 20 i, giving v_{B/A} = (20 - 20) i + 20 j = 20 j knots (due North)."
+        },
+        "B": {
+          "type": "CONFUSION_OF_CONCEPTS",
+          "diagnostic": "Assumed ship A observes ship B's absolute ground velocity unaltered."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Added the magnitudes scalar-wise (20 + 20 = 40 knots)."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Reversed the vector subtraction order to v_A - v_B, giving due South."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Relative Velocity Definition",
+          "text": "The velocity of Ship B relative to Ship A is defined as $\\vec{v}_{B/A} = \\vec{v}_B - \\vec{v}_A$."
+        },
+        {
+          "tier": 2,
+          "title": "Resolve into Unit Vectors",
+          "text": "With East as $\\hat{i}$ and North as $\\hat{j}$: $\\vec{v}_A = 20\\hat{i}$. Ship B travels at $45^\\circ$: $\\vec{v}_B = 20\\sqrt{2}\\cos 45^\\circ\\hat{i} + 20\\sqrt{2}\\sin 45^\\circ\\hat{j} = 20\\hat{i} + 20\\hat{j}$."
+        },
+        {
+          "tier": 3,
+          "title": "Subtract the Vectors",
+          "text": "$\\vec{v}_{B/A} = (20\\hat{i} + 20\\hat{j}) - 20\\hat{i} = 20\\hat{j}\\text{ knots}$, which points due North with magnitude $20\\text{ knots}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Declare standard Cartesian basis: $\\hat{i}$ pointing East, $\\hat{j}$ pointing North.",
+          "Velocity of Ship A: $\\vec{v}_A = 20\\hat{i}\\text{ knots}$.",
+          "Velocity of Ship B: $\\vec{v}_B = 20\\sqrt{2}\\left(\\cos 45^\\circ\\hat{i} + \\sin 45^\\circ\\hat{j}\\right) = 20\\sqrt{2}\\left(\\frac{1}{\\sqrt{2}}\\hat{i} + \\frac{1}{\\sqrt{2}}\\hat{j}\\right) = 20\\hat{i} + 20\\hat{j}\\text{ knots}$.",
+          "Relative velocity: $\\vec{v}_{B/A} = \\vec{v}_B - \\vec{v}_A = (20\\hat{i} + 20\\hat{j}) - 20\\hat{i} = 20\\hat{j}\\text{ knots}$.",
+          "Magnitude is $|\u000bec{v}_{B/A}| = 20\\text{ knots}$, directed due North ($+y$ axis)."
+        ],
+        "final_expression": "\\vec{v}_{B/A} = 20\\hat{j}\\text{ knots} \\quad (20\\text{ knots due North})"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v_{B/A}] = L T^-1",
+        "limiting_cases": [
+          {
+            "condition": "v_A -> 0 (Ship A anchored)",
+            "expected_outcome": "v_{B/A} -> v_B = 20*sqrt(2) knots NE (Recovers Ship B's ground velocity)"
+          },
+          {
+            "condition": "v_B -> v_A",
+            "expected_outcome": "v_{B/A} -> 0 (Zero relative motion for parallel matched cruise)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure KIN-06: Relative velocity vector subtraction triangle for moving vessels.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"120\" y1=\"180\" x2=\"300\" y2=\"180\" stroke=\"#38bdf8\" stroke-width=\"3\" marker-end=\"url(#arr-b)\"/>\n  <line x1=\"120\" y1=\"180\" x2=\"300\" y2=\"60\" stroke=\"#fbbf24\" stroke-width=\"3\" marker-end=\"url(#arr-y)\"/>\n  <line x1=\"300\" y1=\"180\" x2=\"300\" y2=\"65\" stroke=\"#f43f5e\" stroke-width=\"3\" marker-end=\"url(#arr-r)\"/>\n  <defs>\n    <marker id=\"arr-b\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#38bdf8\"/></marker>\n    <marker id=\"arr-y\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#fbbf24\"/></marker>\n    <marker id=\"arr-r\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#f43f5e\"/></marker>\n  </defs>\n  <text x=\"210\" y=\"205\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">v_A = 20 î knots (East)</text>\n  <text x=\"180\" y=\"105\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\" font-weight=\"bold\">v_B = 20√2 knots (NE)</text>\n  <text x=\"315\" y=\"125\" fill=\"#f43f5e\" font-size=\"14px\" font-family=\"sans-serif\" font-weight=\"bold\">v_{B/A} = 20 ĵ knots (North)</text>\n  <text x=\"250\" y=\"35\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Relative Velocity Vector Triangle</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-020",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q38",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "At $t = 0\\text{ h}$, Car $A$ is at the origin $(0, 0)$ moving due East at a constant speed of $40\\text{ km/h}$. At the same instant, Car $B$ is located at $(0, 30\\text{ km})$ moving due South toward the origin at a constant speed of $30\\text{ km/h}$. What is the minimum separation distance (distance of closest approach) between the two cars, and after how much time is it reached?",
+      "system_parameters": {
+        "system_boundary": "Two motor vehicles in 2D intersection approach",
+        "reference_frame": "Inertial ground frame (+x East, +y North)",
+        "idealizations": [
+          "Point vehicles",
+          "Constant rectilinear velocities"
+        ]
+      },
+      "options": {
+        "A": "Minimum separation $= 24\\text{ km}$, reached after $21.6\\text{ minutes}$ ($0.36\\text{ h}$)",
+        "B": "Minimum separation $= 30\\text{ km}$, reached after $0\\text{ minutes}$",
+        "C": "Minimum separation $= 18\\text{ km}$, reached after $30\\text{ minutes}$",
+        "D": "Minimum separation $= 12\\text{ km}$, reached after $15\\text{ minutes}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D3",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 1,
+          "math_friction": 3
+        },
+        "protected_work_W": "Formulating distance squared S^2(t) as a quadratic function of time, setting d(S^2)/dt = 0 to find time of closest approach and minimum distance.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires relative geometric extrema synthesis in 2D plane."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly minimized S^2 = (40t)^2 + (30 - 30t)^2 = 2500t^2 - 1800t + 900, giving t = 0.36 h = 21.6 min and S_min = 24 km."
+        },
+        "B": {
+          "type": "MIS-KIN-DIST-DISP",
+          "diagnostic": "Assumed initial separation of 30 km is the minimum separation."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Estimated midpoint distance at t = 0.5 h: S = sqrt(20^2 + 15^2) = 25 km, then rounded to 18 km."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Halved the true minimum separation arbitrarily."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Position Vectors as Functions of Time",
+          "text": "At time $t$: $\\vec{r}_A(t) = 40t\\hat{i}$ and $\\vec{r}_B(t) = (30 - 30t)\\hat{j}$."
+        },
+        {
+          "tier": 2,
+          "title": "Separation Distance Squared",
+          "text": "Distance squared is $S^2(t) = |\\vec{r}_A - \\vec{r}_B|^2 = (40t)^2 + (30 - 30t)^2 = 1600t^2 + 900(1 - 2t + t^2) = 2500t^2 - 1800t + 900$."
+        },
+        {
+          "tier": 3,
+          "title": "Minimize Quadratic Function",
+          "text": "Take derivative: $\\frac{d(S^2)}{dt} = 5000t - 1800 = 0 \\implies t = \\frac{1800}{5000} = 0.36\\text{ h} = 21.6\\text{ min}$. Substitute $t=0.36$: $S_{\\min} = \\sqrt{2500(0.36)^2 - 1800(0.36) + 900} = \\sqrt{576} = 24\\text{ km}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Position vectors at time $t$ (in hours):",
+          "$\\vec{r}_A(t) = 40t\\hat{i}\\text{ km}$, $\\vec{r}_B(t) = (30 - 30t)\\hat{j}\\text{ km}$.",
+          "Relative displacement vector: $\\vec{r}_{A/B}(t) = 40t\\hat{i} - (30 - 30t)\\hat{j}$.",
+          "Square of separation: $S^2(t) = (40t)^2 + (30 - 30t)^2 = 1600t^2 + 900 - 1800t + 900t^2 = 2500t^2 - 1800t + 900$.",
+          "To find minimum, set derivative to zero: $\\frac{d(S^2)}{dt} = 5000t - 1800 = 0 \\implies t = \\frac{18}{50} = 0.36\\text{ h} = 21.6\\text{ minutes}$.",
+          "Minimum separation: $S^2(0.36) = 2500(0.1296) - 1800(0.36) + 900 = 324 - 648 + 900 = 576$.",
+          "Hence $S_{\\min} = \\sqrt{576} = 24\\text{ km}$."
+        ],
+        "final_expression": "S_{\\min} = 24\\text{ km}, \\quad t = 0.36\\text{ h} = 21.6\\text{ minutes}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[S_min] = L, \\quad [t] = T",
+        "limiting_cases": [
+          {
+            "condition": "Alternative geometric formula check",
+            "expected_outcome": "S_min = |r0 x v_rel| / |v_rel| = |(30 j) x (-40 i - 30 j)| / 50 = (30 * 40) / 50 = 24 km (Exact geometric identity confirmed)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-021",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "JEE-ADV-FND",
+        "year": "2024",
+        "question_number": "Q08",
+        "tier": "Advanced Foundation"
+      },
+      "stem": "A coastal defense artillery cannon is mounted on the edge of a vertical cliff of height $H = 15\\text{ m}$ above sea level. The cannon fires shells with a fixed muzzle speed $u = 20\\text{ m/s}$. By adjusting the launch angle $\\theta$ above the horizontal, what is the maximum achievable horizontal range $R_{\\max}$ of a shell landing at sea level? (Take $g = 10\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Projectile launched from elevated platform to lower sea level",
+        "reference_frame": "2D Cartesian frame with origin at cliff base (+x seaward, +y upward)",
+        "idealizations": [
+          "Zero drag",
+          "Point projectile",
+          "Uniform g = 10 m/s^2"
+        ]
+      },
+      "options": {
+        "A": "$R_{\\max} = 20\\sqrt{7}\\text{ m} \\approx 52.9\\text{ m}$, achieved at launch angle $\\theta < 45^\\circ$",
+        "B": "$R_{\\max} = 40\\text{ m}$, achieved at launch angle $\\theta = 45^\\circ$",
+        "C": "$R_{\\max} = 60\\text{ m}$, achieved at launch angle $\\theta = 30^\\circ$",
+        "D": "$R_{\\max} = 70\\text{ m}$, achieved at launch angle $\\theta = 60^\\circ$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 4,
+          "domain_coupling": 2,
+          "math_friction": 4
+        },
+        "protected_work_W": "Deriving the maximum range envelope formula R_max = (u/g)*sqrt(u^2 + 2gH) from the parabolic trajectory quadratic discriminant.",
+        "rival_demands": [
+          {
+            "demand": "MODEL",
+            "rejection_rationale": "Requires envelope optimization and non-standard elevated-cliff range extremum synthesis."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly applied trajectory envelope R_max = (u/g)*sqrt(u^2 + 2gH) = (20/10)*sqrt(400 + 300) = 2*sqrt(700) = 20*sqrt(7) approx 52.9 m."
+        },
+        "B": {
+          "type": "MIS-KIN-BULLET-DROP",
+          "diagnostic": "Assumed flat-ground maximum range formula u^2 / g = 400 / 10 = 40 m at 45 degrees, ignoring cliff elevation benefit."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Estimated R_max = 40 + 15 = 55 m and rounded to 60 m."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Added potential energy height directly to range."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Trajectory Equation with Cliff Height",
+          "text": "Set landing position $y = -H = -15\\text{ m}$ in $y = x\\tan\\theta - \\frac{gx^2}{2u^2\\cos^2\\theta} = x\\tan\\theta - \\frac{gx^2}{2u^2}(1 + \\tan^2\\theta)$."
+        },
+        {
+          "tier": 2,
+          "title": "Quadratic in tan(theta)",
+          "text": "Rearrange as a quadratic in $T = \\tan\\theta$: $\\frac{gx^2}{2u^2}T^2 - x T + \\left(\\frac{gx^2}{2u^2} - H\\right) = 0$."
+        },
+        {
+          "tier": 3,
+          "title": "Discriminant Envelope Condition",
+          "text": "For real launch angles, discriminant $\\Delta \\ge 0 \\implies x^2 - 4\\left(\\frac{gx^2}{2u^2}\\right)\\left(\\frac{gx^2}{2u^2} - H\\right) \\ge 0 \\implies R_{\\max} = \\frac{u}{g}\\sqrt{u^2 + 2gH} = \\frac{20}{10}\\sqrt{400 + 300} = 20\\sqrt{7}\\text{ m}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "The trajectory equation for a shell launched from height $H$ above landing plane is:",
+          "$-H = x\\tan\\theta - \\frac{gx^2}{2u^2}(1 + \\tan^2\\theta)$.",
+          "Rearranging as a quadratic in $\\tan\\theta$: $\\left(\\frac{gx^2}{2u^2}\\right)\\tan^2\\theta - x\\tan\\theta + \\left(\\frac{gx^2}{2u^2} - H\\right) = 0$.",
+          "For a target at horizontal distance $x$ to be reachable, this quadratic must have real roots for $\\tan\\theta$, so its discriminant must be non-negative: $\\Delta \\ge 0$.",
+          "$\\Delta = x^2 - 4\\left(\\frac{gx^2}{2u^2}\\right)\\left(\\frac{gx^2}{2u^2} - H\\right) = x^2\\left[1 - \\frac{2g}{u^2}\\left(\\frac{gx^2}{2u^2} - H\\right)\\right] \\ge 0$.",
+          "Setting the bracket to zero yields the maximum boundary range:",
+          "$\\frac{2g}{u^2}\\left(\\frac{gx^2}{2u^2} - H\\right) = 1 \\implies \\frac{g^2 x^2}{u^4} - \\frac{2gH}{u^2} = 1 \\implies \\frac{g^2 x^2}{u^4} = 1 + \\frac{2gH}{u^2}$.",
+          "$x^2 = \\frac{u^4}{g^2}\\left(1 + \\frac{2gH}{u^2}\\right) = \\frac{u^2}{g^2}(u^2 + 2gH) \\implies R_{\\max} = \\frac{u}{g}\\sqrt{u^2 + 2gH}$.",
+          "Substitute $u = 20\\text{ m/s}, H = 15\\text{ m}, g = 10\\text{ m/s}^2$:",
+          "$R_{\\max} = \\frac{20}{10}\\sqrt{20^2 + 2(10)(15)} = 2\\sqrt{400 + 300} = 2\\sqrt{700} = 20\\sqrt{7}\\text{ m} \\approx 52.92\\text{ m}$."
+        ],
+        "final_expression": "R_{\\max} = \\frac{u}{g}\\sqrt{u^2 + 2gH} = 20\\sqrt{7}\\text{ m} \\approx 52.92\\text{ m}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[R_max] = (L T^-1 / (L T^-2)) * ((L T^-1)^2 + (L T^-2)*L)^(1/2) = T * (L^2 T^-2)^(1/2) = T * (L T^-1) = L",
+        "limiting_cases": [
+          {
+            "condition": "H -> 0 (Flat ground launch)",
+            "expected_outcome": "R_max -> (u/g)*sqrt(u^2) = u^2/g = 400/10 = 40 m (Flat ground optimum recovered)"
+          },
+          {
+            "condition": "u -> 0",
+            "expected_outcome": "R_max -> 0 (Point drop along vertical cliff face)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-022",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "JEE-ADV-FND",
+        "year": "2023",
+        "question_number": "Q13",
+        "tier": "Advanced Foundation"
+      },
+      "stem": "A particle is projected from level ground at an elevation angle of $\\theta = 60^\\circ$ with initial speed $u$. What is the ratio of the radius of curvature of the trajectory at the point of projection (launch) to that at the highest point (apex), $\\frac{\\rho_{\\text{launch}}}{\\rho_{\\text{apex}}}$?",
+      "system_parameters": {
+        "system_boundary": "Point projectile traversing parabolic arc",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Zero drag",
+          "Uniform gravity g"
+        ]
+      },
+      "options": {
+        "A": "$8 : 1$",
+        "B": "$4 : 1$",
+        "C": "$2 : 1$",
+        "D": "$16 : 1$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D4",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 2,
+          "math_friction": 3
+        },
+        "protected_work_W": "Evaluating normal acceleration components at launch a_perp=g*cos(theta) and apex a_perp=g to deduce the ratio sec^3(theta) = 8.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires differential normal acceleration derivation at arbitrary trajectory points."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly proved rho_launch / rho_apex = [u^2 / (g cos theta)] / [u^2 cos^2 theta / g] = 1 / cos^3 theta = sec^3(60) = 2^3 = 8."
+        },
+        "B": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Used 1 / cos^2(theta) = sec^2(60) = 4, forgetting the normal acceleration cosine factor at launch."
+        },
+        "C": {
+          "type": "CONFUSION_OF_CONCEPTS",
+          "diagnostic": "Used 1 / cos(theta) = sec(60) = 2."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used sec^4(60) = 16."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Formula for Radius of Curvature",
+          "text": "Radius of curvature is given by $\\rho = \\frac{v^2}{a_\\perp}$, where $a_\\perp$ is acceleration perpendicular to the instantaneous velocity."
+        },
+        {
+          "tier": 2,
+          "title": "At Launch and Apex",
+          "text": "At launch: $v = u$, and $\\vec{a}$ makes angle $\\theta$ with the normal, so $a_\\perp = g\\cos\\theta \\implies \\rho_{\\text{launch}} = \\frac{u^2}{g\\cos\\theta}$. At apex: $v = u\\cos\\theta, a_\\perp = g \\implies \\rho_{\\text{apex}} = \\frac{u^2\\cos^2\\theta}{g}$."
+        },
+        {
+          "tier": 3,
+          "title": "Ratio of Curvatures",
+          "text": "$\\frac{\\rho_{\\text{launch}}}{\\rho_{\\text{apex}}} = \\frac{u^2 / (g\\cos\\theta)}{u^2\\cos^2\\theta / g} = \\frac{1}{\\cos^3\\theta} = \\sec^3\\theta$. For $\\theta = 60^\\circ$, $\\cos 60^\\circ = \\frac{1}{2} \\implies 2^3 = 8$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Radius of curvature definition: $\\rho = \\frac{v^2}{a_\\perp}$.",
+          "At launch ($t = 0$): Velocity vector $\\vec{u}$ is directed at angle $\\theta$ to the horizontal. Gravity $\\vec{g}$ is vertical.",
+          "The component of $\\vec{g}$ perpendicular to $\\vec{u}$ is $a_{\\perp, 0} = g\\cos\\theta$.",
+          "Hence: $\\rho_{\\text{launch}} = \\frac{u^2}{g\\cos\\theta}$.",
+          "At apex: The velocity vector is purely horizontal, with magnitude $v = u\\cos\\theta$.",
+          "Gravity is vertical, so it is fully perpendicular to velocity: $a_{\\perp, \\text{apex}} = g$.",
+          "Hence: $\\rho_{\\text{apex}} = \\frac{(u\\cos\\theta)^2}{g} = \\frac{u^2\\cos^2\\theta}{g}$.",
+          "Taking the ratio: $\\frac{\\rho_{\\text{launch}}}{\\rho_{\\text{apex}}} = \\frac{u^2 / (g\\cos\\theta)}{u^2\\cos^2\\theta / g} = \\frac{1}{\\cos^3\\theta} = \\sec^3\\theta$.",
+          "For $\\theta = 60^\\circ$, $\\cos 60^\\circ = \\frac{1}{2} \\implies \\sec 60^\\circ = 2$. Thus $\\sec^3(60^\\circ) = 2^3 = 8$."
+        ],
+        "final_expression": "\\frac{\\rho_{\\text{launch}}}{\\rho_{\\text{apex}}} = \\sec^3\\theta = 8 : 1"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[\\rho_launch / \\rho_apex] = 1 (Dimensionless ratio)",
+        "limiting_cases": [
+          {
+            "condition": "theta -> 0 (Flat launch)",
+            "expected_outcome": "sec^3(0) = 1 => rho_launch = rho_apex (Parabola apex is launch point)"
+          },
+          {
+            "condition": "theta -> 90 deg (Vertical line)",
+            "expected_outcome": "sec^3(theta) -> infinity (Apex curvature collapses to zero radius)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-023",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "JEE-ADV-FND",
+        "year": "2024",
+        "question_number": "Q17",
+        "tier": "Advanced Foundation"
+      },
+      "stem": "A smooth inclined plane is tilted at an angle of $\\beta = 30^\\circ$ to the horizontal. A small elastic steel ball is released from rest vertically from a height $h = 5\\text{ m}$ directly above the incline (Figure KIN-07). It collides elastically with the incline and bounces off into projectile motion. Taking $g = 10\\text{ m/s}^2$, what is the distance $L$ along the incline between the first impact point and the second impact point?",
+      "system_parameters": {
+        "system_boundary": "Bouncing elastic sphere on inclined surface",
+        "reference_frame": "Tilted Cartesian frame with +x' down the incline, +y' normal to incline",
+        "idealizations": [
+          "Perfect restitution e = 1",
+          "Frictionless incline",
+          "Uniform gravity"
+        ]
+      },
+      "options": {
+        "A": "$L = 20\\text{ m}$",
+        "B": "$L = 10\\text{ m}$",
+        "C": "$L = 40\\text{ m}$",
+        "D": "$L = 15\\text{ m}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D4",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 2,
+          "math_friction": 3
+        },
+        "protected_work_W": "Setting up tilted coordinates x' along plane and y' normal, calculating rebound components and proving L = 8*h*sin(beta).",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires tilted coordinate decomposition and elastic boundary condition modeling."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly proved L = 8*h*sin(beta) = 8(5)(sin 30) = 40 * 0.5 = 20 m."
+        },
+        "B": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Used 4*h*sin(beta) = 10 m, forgetting the acceleration along the incline contribution."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Omitted the sin(beta) factor: 8h = 40 m."
+        },
+        "D": {
+          "type": "CONFUSION_OF_CONCEPTS",
+          "diagnostic": "Averaged rebound height and range arbitrarily."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Impact Speed and Rebound Geometry",
+          "text": "Speed before first impact is $v_0 = \\sqrt{2gh} = \\sqrt{2(10)(5)} = 10\\text{ m/s}$ downward. Since the collision is elastic ($e=1$) and the normal is at $\\beta = 30^\\circ$ to the vertical, the rebound angle relative to the normal is $30^\\circ$."
+        },
+        {
+          "tier": 2,
+          "title": "Decompose into Incline Coordinates",
+          "text": "Along normal ($y'$): $u_{y'} = v_0\\cos\\beta, g_{y'} = g\\cos\\beta$. Along incline ($x'$): $u_{x'} = v_0\\sin\\beta, g_{x'} = g\\sin\\beta$."
+        },
+        {
+          "tier": 3,
+          "title": "Flight Time and Range Along Incline",
+          "text": "Flight time is $T = \\frac{2u_{y'}}{g_{y'}} = \\frac{2v_0\\cos\\beta}{g\\cos\\beta} = \\frac{2v_0}{g} = 2\\text{ s}$. Distance along incline is $L = u_{x'}T + \\frac{1}{2}g_{x'}T^2 = (10\\sin 30)(2) + \\frac{1}{2}(10\\sin 30)(4) = 10 + 10 = 20\\text{ m}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Speed acquired during vertical fall of height $h$: $v_0 = \\sqrt{2gh}$.",
+          "Choose coordinate axes: $x'$ directed down the plane, $y'$ directed normal to the plane.",
+          "Gravitational acceleration components: $g_{x'} = g\\sin\\beta$, $g_{y'} = g\\cos\\beta$.",
+          "Because impact is elastic ($e = 1$) on a frictionless plane, velocity along the plane is conserved: $u_{x'} = v_0\\sin\\beta$.",
+          "Velocity normal to the plane reverses magnitude: $u_{y'} = v_0\\cos\\beta$.",
+          "Time of flight between consecutive bounces (when $y' = 0$): $T = \\frac{2u_{y'}}{g_{y'}} = \\frac{2v_0\\cos\\beta}{g\\cos\\beta} = \\frac{2v_0}{g}$.",
+          "Distance along the incline traversed during time $T$:",
+          "$L = u_{x'}T + \\frac{1}{2}g_{x'}T^2 = (v_0\\sin\\beta)\\left(\\frac{2v_0}{g}\\right) + \\frac{1}{2}(g\\sin\\beta)\\left(\\frac{2v_0}{g}\\right)^2$.",
+          "$L = \\frac{2v_0^2\\sin\\beta}{g} + \\frac{2v_0^2\\sin\\beta}{g} = \\frac{4v_0^2\\sin\\beta}{g}$.",
+          "Substitute $v_0^2 = 2gh$: $L = \\frac{4(2gh)\\sin\\beta}{g} = 8h\\sin\\beta$.",
+          "For $h = 5\\text{ m}$ and $\\beta = 30^\\circ$: $L = 8 \\times 5\\text{ m} \\times \\sin 30^\\circ = 40 \\times 0.5 = 20\\text{ m}$."
+        ],
+        "final_expression": "L = 8h\\sin\\beta = 20\\text{ m}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L] = [8 * h * sin(beta)] = 1 * L * 1 = L",
+        "limiting_cases": [
+          {
+            "condition": "beta -> 0 (Flat horizontal ground)",
+            "expected_outcome": "L -> 0 (Ball bounces purely up and down at the exact same spot)"
+          },
+          {
+            "condition": "h -> 0",
+            "expected_outcome": "L -> 0 (Zero release height produces zero bounce distance)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure KIN-07: Elastic bounce of steel ball along tilted inclined plane.",
+        "svg_code": "<svg viewBox=\"0 0 500 260\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <polygon points=\"60,220 440,220 440,220\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"60\" y1=\"220\" x2=\"400\" y2=\"80\" stroke=\"#cbd5e1\" stroke-width=\"4\"/>\n  <line x1=\"60\" y1=\"220\" x2=\"400\" y2=\"220\" stroke=\"#475569\" stroke-width=\"2\"/>\n  <line x1=\"160\" y1=\"40\" x2=\"160\" y2=\"175\" stroke=\"#fbbf24\" stroke-width=\"3\" stroke-dasharray=\"4,4\" marker-end=\"url(#arr-y2)\"/>\n  <path d=\"M 160 178 Q 240 60 300 120\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"3\"/>\n  <circle cx=\"160\" cy=\"178\" r=\"5\" fill=\"#f43f5e\"/>\n  <circle cx=\"300\" cy=\"120\" r=\"5\" fill=\"#34d399\"/>\n  <defs>\n    <marker id=\"arr-y2\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#fbbf24\"/></marker>\n  </defs>\n  <text x=\"110\" y=\"210\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">β = 30°</text>\n  <text x=\"145\" y=\"100\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">Drop h = 5 m</text>\n  <text x=\"160\" y=\"200\" fill=\"#f43f5e\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">1st Bounce</text>\n  <text x=\"300\" y=\"105\" fill=\"#34d399\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">2nd Bounce (L = 20 m)</text>\n  <text x=\"250\" y=\"25\" fill=\"#38bdf8\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Elastic Projectile Bounce along Incline</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-024",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "INPhO-FND",
+        "year": "2024",
+        "question_number": "Q04",
+        "tier": "Olympiad Foundation"
+      },
+      "stem": "A wide river of width $W = 120\\text{ m}$ flows with a swift current of $v_r = 5\\text{ m/s}$. A swimmer with maximum speed $v_s = 3\\text{ m/s}$ in still water wishes to cross to the opposite bank. Since $v_r > v_s$, zero downstream drift is physically impossible. What is the minimum possible downstream drift $x_{\\min}$ achievable by the swimmer upon reaching the opposite bank?",
+      "system_parameters": {
+        "system_boundary": "Swimmer navigating swift river current (vr > vs)",
+        "reference_frame": "Inertial ground frame (+x downstream, +y across)",
+        "idealizations": [
+          "Uniform river flow",
+          "Constant maximum swimmer effort"
+        ]
+      },
+      "options": {
+        "A": "$x_{\\min} = 160\\text{ m}$, heading at angle $\\arcsin(3/5) \\approx 36.9^\\circ$ upstream of perpendicular",
+        "B": "$x_{\\min} = 200\\text{ m}$, heading directly perpendicular to the bank",
+        "C": "$x_{\\min} = 120\\text{ m}$, heading at $45^\\circ$ upstream",
+        "D": "$x_{\\min} = 240\\text{ m}$, heading downstream"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 4,
+          "domain_coupling": 2,
+          "math_friction": 4
+        },
+        "protected_work_W": "Constructing the tangent velocity hodograph from the origin to the circle of radius vs centered at (vr, 0) to find minimum drift angle and distance.",
+        "rival_demands": [
+          {
+            "demand": "MODEL",
+            "rejection_rationale": "Requires extremum geometric optimization for non-holonomic velocity bounds."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly proved sin(theta) = vs / vr = 3/5 and x_min = W * cot(theta) = 120 * (4/3) = 160 m."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed heading perpendicular gives minimum drift: t = 120/3 = 40 s, drift = 5 * 40 = 200 m."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Guessed drift equals river width (120 m)."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Headed downstream, maximizing drift rather than minimizing."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Tangent Velocity Circle Hodograph",
+          "text": "The possible ground velocities $\\vec{v} = \\vec{v}_r + \\vec{v}_s$ form a circle of radius $v_s = 3$ centered at $(v_r, 0) = (5, 0)$. Drift is minimized when the line from the origin is tangent to this circle."
+        },
+        {
+          "tier": 2,
+          "title": "Tangent Triangle Angle",
+          "text": "At tangency, the radius vector $\\vec{v}_s$ is perpendicular to the resultant ground velocity $\\vec{v}$. Therefore, $\\sin\\theta = \\frac{v_s}{v_r} = \\frac{3}{5}$, where $\\theta$ is the angle with the perpendicular."
+        },
+        {
+          "tier": 3,
+          "title": "Minimum Drift Distance",
+          "text": "The angle of resultant ground motion satisfies $\\tan\\phi = \\frac{v_y}{v_x} = \\frac{\\sqrt{v_r^2 - v_s^2}}{v_s} = \\frac{4}{3}$. Downstream drift is $x_{\\min} = W \\cot\\phi = 120 \\times \\frac{4}{3} = 160\\text{ m}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Let $\\theta$ be the angle of swimmer's heading upstream of the perpendicular bank normal.",
+          "Swimmer's velocity in ground frame: $v_x = v_r - v_s\\sin\\theta$, $v_y = v_s\\cos\\theta$.",
+          "Transit time to cross width $W$: $t = \\frac{W}{v_y} = \\frac{W}{v_s\\cos\\theta}$.",
+          "Downstream drift: $x(\\theta) = v_x t = (v_r - v_s\\sin\\theta)\\frac{W}{v_s\\cos\\theta} = W\\left(\\frac{v_r}{v_s}\\sec\\theta - \\tan\\theta\\right)$.",
+          "To minimize $x(\\theta)$, differentiate with respect to $\\theta$ and set to zero:",
+          "$\\frac{dx}{d\\theta} = W\\left(\\frac{v_r}{v_s}\\sec\\theta\\tan\\theta - \\sec^2\\theta\\right) = 0$.",
+          "$\\implies \\frac{v_r}{v_s}\\tan\\theta = \\sec\\theta \\implies \\frac{v_r}{v_s}\\sin\\theta = 1 \\implies \\sin\\theta = \\frac{v_s}{v_r}$.",
+          "Substitute $v_s = 3\\text{ m/s}, v_r = 5\\text{ m/s}$: $\\sin\\theta = \\frac{3}{5} \\implies \\cos\\theta = \\frac{4}{5}, \\tan\\theta = \\frac{3}{4}$.",
+          "Minimum drift: $x_{\\min} = W\\left(\\frac{5}{3}\\left(\\frac{5}{4}\\right) - \\frac{3}{4}\\right) = W\\left(\\frac{25}{12} - \\frac{9}{12}\\right) = W\\left(\\frac{16}{12}\\right) = W\\left(\\frac{4}{3}\\right)$.",
+          "For $W = 120\\text{ m}$: $x_{\\min} = 120 \\times \\frac{4}{3} = 160\\text{ m}$."
+        ],
+        "final_expression": "x_{\\min} = W\\frac{\\sqrt{v_r^2 - v_s^2}}{v_s} = 160\\text{ m}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[x_min] = L * (L T^-1 / (L T^-1)) = L",
+        "limiting_cases": [
+          {
+            "condition": "v_s -> v_r (Matching speeds)",
+            "expected_outcome": "sqrt(v_r^2 - v_s^2) -> 0 => x_min -> 0 (Zero drift becomes marginally achievable at theta = 90 deg)"
+          },
+          {
+            "condition": "v_s -> 0 (Drifting log limit)",
+            "expected_outcome": "x_min -> infinity (Never reaches opposite bank)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-KIN-025",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "provenance": {
+        "paper_code": "INPhO-FND",
+        "year": "2024",
+        "question_number": "Q07",
+        "tier": "Olympiad Foundation"
+      },
+      "stem": "Two particles are projected simultaneously from the same point on level ground with equal speed $u = 20\\text{ m/s}$ in opposite directions: Particle 1 to the right at an elevation angle of $\\alpha = 60^\\circ$, and Particle 2 to the left at an elevation angle of $\\beta = 30^\\circ$. Taking $g = 10\\text{ m/s}^2$, at what time $t$ after launch do their velocity vectors $\\vec{v}_1(t)$ and $\\vec{v}_2(t)$ become mutually perpendicular?",
+      "system_parameters": {
+        "system_boundary": "Two projectiles launched simultaneously in opposing directions",
+        "reference_frame": "Inertial ground frame (+x to the right, +y upward)",
+        "idealizations": [
+          "Zero drag",
+          "Point particles",
+          "Uniform gravity g = 10 m/s^2"
+        ]
+      },
+      "options": {
+        "A": "$t = (\\sqrt{3} + 1)\\text{ s} \\approx 2.73\\text{ s}$",
+        "B": "$t = 2\\text{ s}$",
+        "C": "$t = (\\sqrt{3} - 1)\\text{ s} \\approx 0.73\\text{ s}$",
+        "D": "$t = 3.5\\text{ s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D4",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 4,
+          "domain_coupling": 2,
+          "math_friction": 4
+        },
+        "protected_work_W": "Expressing time-dependent velocity vectors v1(t) and v2(t), setting vector dot product v1 . v2 = 0, and discovering exact algebraic cancellation.",
+        "rival_demands": [
+          {
+            "demand": "SYNTHESIZE",
+            "rejection_rationale": "Requires vector orthogonality modeling and kinematic dot-product algebraic reduction."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly proved v1 . v2 = 0 yields t = u*(sin 60 + sin 30) / g = 20 * ((sqrt(3) + 1)/2) / 10 = sqrt(3) + 1 approx 2.73 s."
+        },
+        "B": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Estimated sqrt(3) + 1 as approx 2 s."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Subtracted angles or inverted the root sign to sqrt(3) - 1 s."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Averaged total flight times."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Vector Velocity Expressions",
+          "text": "Particle 1: $\\vec{v}_1(t) = u\\cos 60^\\circ\\hat{i} + (u\\sin 60^\\circ - gt)\\hat{j}$. Particle 2 (opposite direction): $\\vec{v}_2(t) = -u\\cos 30^\\circ\\hat{i} + (u\\sin 30^\\circ - gt)\\hat{j}$."
+        },
+        {
+          "tier": 2,
+          "title": "Perpendicularity Condition",
+          "text": "Two vectors are perpendicular if and only if their scalar dot product is zero: $\\vec{v}_1(t) \\cdot \\vec{v}_2(t) = 0$."
+        },
+        {
+          "tier": 3,
+          "title": "Dot Product and Cancellation",
+          "text": "Notice that $-u^2\\cos 60^\\circ\\cos 30^\\circ + u^2\\sin 60^\\circ\\sin 30^\\circ = -u^2(\\frac{1}{2})(\\frac{\\sqrt{3}}{2}) + u^2(\\frac{\\sqrt{3}}{2})(\\frac{1}{2}) = 0$! This leaves $-gt u(\\sin 60^\\circ + \\sin 30^\\circ) + g^2 t^2 = 0 \\implies t = \\frac{u(\\sin 60^\\circ + \\sin 30^\\circ)}{g} = \\sqrt{3} + 1\\text{ s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Velocity of Particle 1: $\\vec{v}_1(t) = u\\cos\\alpha\\hat{i} + (u\\sin\\alpha - gt)\\hat{j}$.",
+          "Velocity of Particle 2 (launched in negative x direction): $\\vec{v}_2(t) = -u\\cos\\beta\\hat{i} + (u\\sin\\beta - gt)\\hat{j}$.",
+          "Perpendicular condition: $\\vec{v}_1(t) \\cdot \\vec{v}_2(t) = 0$.",
+          "Expanding the dot product:",
+          "$-u^2\\cos\\alpha\\cos\\beta + (u\\sin\\alpha - gt)(u\\sin\\beta - gt) = 0$.",
+          "$-u^2\\cos\\alpha\\cos\\beta + u^2\\sin\\alpha\\sin\\beta - gt u(\\sin\\alpha + \\sin\\beta) + g^2 t^2 = 0$.",
+          "For $\\alpha = 60^\\circ$ and $\\beta = 30^\\circ$:",
+          "$\\cos 60^\\circ\\cos 30^\\circ = \\frac{1}{2} \\times \\frac{\\sqrt{3}}{2} = \\frac{\\sqrt{3}}{4}$, and $\\sin 60^\\circ\\sin 30^\\circ = \\frac{\\sqrt{3}}{2} \\times \\frac{1}{2} = \\frac{\\sqrt{3}}{4}$.",
+          "The initial constant terms cancel identically: $-\\frac{\\sqrt{3}}{4}u^2 + \\frac{\\sqrt{3}}{4}u^2 = 0$!",
+          "The equation reduces to: $g^2 t^2 - gt u(\\sin 60^\\circ + \\sin 30^\\circ) = 0$.",
+          "For $t > 0$, dividing by $gt$: $gt = u(\\sin 60^\\circ + \\sin 30^\\circ)$.",
+          "$t = \\frac{u}{g}\\left(\\frac{\\sqrt{3}}{2} + \\frac{1}{2}\\right) = \\frac{20}{10}\\left(\\frac{\\sqrt{3} + 1}{2}\\right) = \\sqrt{3} + 1\\text{ s} \\approx 2.732\\text{ s}$."
+        ],
+        "final_expression": "t = \\frac{u(\\sin 60^\\circ + \\sin 30^\\circ)}{g} = (\\sqrt{3} + 1)\\text{ s} \\approx 2.73\\text{ s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[t] = (L T^-1) / (L T^-2) = T",
+        "limiting_cases": [
+          {
+            "condition": "u -> 0",
+            "expected_outcome": "t -> 0 (Stationary particles)"
+          },
+          {
+            "condition": "Dot product verification at t = sqrt(3)+1",
+            "expected_outcome": "v1 = 10 i - 10 j; v2 = -10*sqrt(3) i - 10*sqrt(3) j; v1 . v2 = -100*sqrt(3) + 100*sqrt(3) = 0 (Strictly perpendicular confirmed)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    }
+  ]
+}

@@ -101,6 +101,78 @@
           "refutation": "Vectors possess both magnitude and direction; magnitude of resultant is sqrt(A^2 + B^2 + 2AB cos theta)."
         }
       ]
+    },
+    "kinematics-1d-2d": {
+      "topic_id": "phy-kinematics-1d-2d",
+      "display_name": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "coordinate_conventions": {
+        "system": "2D Cartesian with fixed ground origin (0,0)",
+        "axes": {
+          "x_axis": "Horizontal ground plane along direction of initial projection (+x)",
+          "y_axis": "Vertical axis perpendicular to ground (+y upward, so a_y = -g)"
+        },
+        "sign_convention": "Upward positive, rightward positive. Gravity acceleration vector is strictly a = -g j.",
+        "units": "SI (Position in m, Velocity in m/s, Acceleration in m/s^2, Time in s)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": false,
+        "diagram_types": ["MOTION_GRAPH", "TRAJECTORY_PARABOLA", "RELATIVE_VELOCITY_TRIANGLE"],
+        "svg_specifications": [
+          "Coordinate axes labeled with variable and unit: x (m), y (m), v (m/s), t (s)",
+          "Minimum SVG text font floor >= 14px on all axis labels, coordinate values, and annotations",
+          "Key landmark points (apex, half-height, impact, graph intercepts) marked with distinct circles (r >= 4)",
+          "In projectile diagrams, initial launch vector u must show resolved components u_x and u_y with dashed projection lines"
+        ]
+      },
+      "dimensional_signatures": {
+        "displacement": "[L]",
+        "velocity": "[L T^-1]",
+        "acceleration": "[L T^-2]",
+        "time": "[T]",
+        "radius_of_curvature": "[L]",
+        "dimensionless": ["angle", "trigonometric_ratio", "ratio_of_heights", "ratio_of_times"]
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_THETA_90_VERTICAL",
+        "LIMITING_CASE_THETA_0_HORIZONTAL",
+        "LIMITING_CASE_ZERO_GRAVITY",
+        "LIMITING_CASE_ZERO_VELOCITY",
+        "GALILEO_ODD_NUMBER_RATIO_CHECK",
+        "TIME_REVERSAL_SYMMETRY_CHECK"
+      ],
+      "misconception_discriminators": [
+        {
+          "code": "MIS-KIN-APEX-ZERO-A",
+          "pattern": "Assuming instantaneous zero velocity at apex implies zero acceleration.",
+          "refutation": "Acceleration is rate of velocity change (dv/dt = -g), not velocity. Zero acceleration would mean the particle stops and hovers."
+        },
+        {
+          "code": "MIS-KIN-DIST-DISP",
+          "pattern": "Equating total distance with magnitude of displacement when direction reverses.",
+          "refutation": "Distance is cumulative path length; displacement is net position difference r_final - r_initial."
+        },
+        {
+          "code": "MIS-KIN-AVG-SPEED",
+          "pattern": "Calculating average speed as arithmetic average (v1 + v2)/2 for equal distance segments.",
+          "refutation": "Average speed is total distance over total time, yielding harmonic mean 2*v1*v2 / (v1 + v2)."
+        },
+        {
+          "code": "MIS-KIN-BULLET-DROP",
+          "pattern": "Believing horizontal launch speed extends vertical flight time compared to pure drop.",
+          "refutation": "Orthogonal motions are decoupled. Vertical acceleration is -g regardless of horizontal velocity."
+        },
+        {
+          "code": "MIS-KIN-GRAPH-CONFLATE",
+          "pattern": "Confusing position graph height with velocity, or negative velocity with deceleration.",
+          "refutation": "Velocity is the slope dx/dt, not position coordinate x. Negative velocity with positive slope represents slowing down in the reverse direction."
+        },
+        {
+          "code": "MIS-KIN-UCM-NO-ACCEL",
+          "pattern": "Claiming constant speed in circular motion implies zero acceleration.",
+          "refutation": "Velocity vector turns continuously, requiring inward normal centripetal acceleration a_c = v^2/r."
+        }
+      ]
     }
   }
 }
