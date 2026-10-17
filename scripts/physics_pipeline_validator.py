@@ -41,6 +41,15 @@ def resolve_adapter_for_question(q: dict, adapters: dict):
     if any(k in q_topic or k in qid for k in ["vector"]):
         if "vectors-and-components" in adapters:
             return "vectors-and-components", adapters["vectors-and-components"]
+    if any(k in q_topic or k in qid for k in ["gravitat", "planetary", "kepler", "orbital", "satellite"]):
+        if "gravitation-orbital-motion" in adapters:
+            return "gravitation-orbital-motion", adapters["gravitation-orbital-motion"]
+    if any(k in q_topic or k in qid for k in ["fluid", "hydrostatic", "archimedes", "pascal", "buoyancy", "manometer"]):
+        if "fluids-hydrostatics" in adapters:
+            return "fluids-hydrostatics", adapters["fluids-hydrostatics"]
+    if any(k in q_topic or k in qid for k in ["heat", "thermo", "calorimetry", "temperature", "specific-heat"]):
+        if "heat-thermodynamics" in adapters:
+            return "heat-thermodynamics", adapters["heat-thermodynamics"]
             
     # Default fallback to first adapter or None
     return None, None

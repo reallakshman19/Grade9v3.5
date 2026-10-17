@@ -241,6 +241,189 @@
           "refutation": "K = p^2 / (2m). For equal momentum, kinetic energy is inversely proportional to mass; the lighter object carries vastly greater kinetic energy."
         }
       ]
+    },
+    "gravitation-orbital-motion": {
+      "topic_id": "phy-grav-universal-law",
+      "display_name": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "coordinate_conventions": {
+        "system": "Spherical / Polar coordinates (r, theta) centered at primary body center of mass",
+        "datum": "Gravitational potential datum strictly at infinity: U(r -> infinity) = 0, so U(r) = -G M m / r is universally negative for bound systems",
+        "sign_convention": "Radial unit vector r_hat points outward from center; gravitational force is strictly attractive: F_g = - (G M m / r^2) r_hat",
+        "units": "SI (Distance in m, Mass in kg, Gravitational constant G in N m^2 / kg^2 = m^3 kg^-1 s^-2)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": false,
+        "diagram_types": ["ORBITAL_ELLIPSE_DIAGRAM", "GRAVITATIONAL_FIELD_RADIUS_GRAPH", "POTENTIAL_WELL_CURVE", "TIDAL_BULGE_DECOMPOSITION"],
+        "svg_specifications": [
+          "Coordinate axes labeled: r (m), g (m/s^2), U (J), v (m/s)",
+          "Minimum SVG text font floor >= 14px on all labels and annotations",
+          "Primary central mass, orbiting satellite/planet, and focal points clearly distinguished",
+          "Inside vs outside Earth field profiles clearly marked with boundary at r = R"
+        ]
+      },
+      "dimensional_signatures": {
+        "gravitational_constant": "[M^-1 L^3 T^-2]",
+        "gravitational_field": "[L T^-2]",
+        "gravitational_potential": "[L^2 T^-2]",
+        "potential_energy": "[M L^2 T^-2]",
+        "orbital_velocity": "[L T^-1]",
+        "escape_velocity": "[L T^-1]",
+        "areal_velocity": "[L^2 T^-1]"
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_INFINITE_SEPARATION",
+        "LIMITING_CASE_SHELL_THEOREM_CENTER_ZERO",
+        "KEPLER_THIRD_LAW_SCALING",
+        "VIRIAL_THEOREM_CONSISTENCY"
+      ],
+      "misconception_discriminators": [
+        {
+          "code": "MIS-GRAV-ZERO-G-IN-SPACE",
+          "pattern": "Believing astronauts in orbit experience zero gravity because gravity does not reach space.",
+          "refutation": "Gravity at 400 km ISS orbit is still ~8.8 m/s^2 (~90% of surface g). Weightlessness is free-fall apparent weightlessness where normal contact force N = 0."
+        },
+        {
+          "code": "MIS-GRAV-INTERIOR-INVERSE-SQUARE",
+          "pattern": "Assuming gravity increases without bound as one descends toward the Earth's center according to 1/r^2.",
+          "refutation": "By Newton's Shell Theorem, only mass enclosed within radius r contributes; field decreases linearly g(r) = (GM/R^3)*r to zero at the center."
+        },
+        {
+          "code": "MIS-GRAV-ESCAPE-VS-ORBIT",
+          "pattern": "Confusing circular orbital velocity v_orb = sqrt(GM/r) with parabolic escape velocity v_esc = sqrt(2GM/r).",
+          "refutation": "Escape velocity is larger by factor sqrt(2) approx 1.414; orbital velocity yields a bound closed circular orbit, whereas escape velocity permanently unbinds the body to r -> infinity with zero residual speed."
+        },
+        {
+          "code": "MIS-GRAV-KEPLER-SPEED-UNIFORM",
+          "pattern": "Assuming planets travel at uniform speed in elliptical orbits.",
+          "refutation": "By Kepler's 2nd Law (conservation of angular momentum L = m r v_perp), areal velocity is constant, so linear speed is maximum at perihelion and minimum at aphelion."
+        },
+        {
+          "code": "MIS-GRAV-TIDES-ONE-SIDED",
+          "pattern": "Believing the Moon attracts water only on the near side of Earth, producing a single daily tidal bulge.",
+          "refutation": "Differential gravitational tidal gradient pulls near water more than solid Earth, and pulls solid Earth more than far water, producing two symmetric tidal bulges."
+        },
+        {
+          "code": "MIS-GRAV-MASS-WEIGHT-CONFUSION",
+          "pattern": "Conflating invariant inertial mass m with local gravitational force W = mg.",
+          "refutation": "Mass is an intrinsic scalar measure of inertia independent of location; weight is the downward gravitational force that varies with local field g."
+        }
+      ]
+    },
+    "fluids-hydrostatics": {
+      "topic_id": "phy-fluid-bernoulli-equation",
+      "display_name": "Fluids: Hydrostatics, Pascal's Principle & Archimedes' Law",
+      "coordinate_conventions": {
+        "system": "1D/2D vertical depth axis h measured downward from free liquid surface, or elevation y measured upward",
+        "pressure_nature": "Scalar isotropic pressure acting perpendicular to any immersed surface: P = P_0 + rho * g * h",
+        "units": "SI (Pressure in Pa = N/m^2 = kg m^-1 s^-2, Density in kg/m^3)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": true,
+        "diagram_types": ["U_TUBE_MANOMETER", "SUBMERGED_BODY_FBD", "HYDRAULIC_PRESS_DIAGRAM", "HYDROSTATIC_PRESSURE_PROFILE"],
+        "svg_specifications": [
+          "Liquid levels, interfaces, and free surfaces marked with distinct color/pattern",
+          "Minimum SVG text font floor >= 14px on all labels and annotations",
+          "Buoyant force vector F_B and weight vector W displayed with proper points of action (center of buoyancy vs center of gravity)"
+        ]
+      },
+      "dimensional_signatures": {
+        "pressure": "[M L^-1 T^-2]",
+        "density": "[M L^-3]",
+        "buoyant_force": "[M L T^-2]",
+        "surface_tension": "[M T^-2]"
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_ZERO_GRAVITY",
+        "LIMITING_CASE_EQUAL_DENSITIES_NEUTRAL_BUOYANCY",
+        "HYDROSTATIC_PRESSURE_ISOTROPY"
+      ],
+      "misconception_discriminators": [
+        {
+          "code": "MIS-FLUID-HYDROSTATIC-PARADOX",
+          "pattern": "Believing liquid pressure at the base depends on container shape or total liquid volume rather than vertical depth h.",
+          "refutation": "Hydrostatic pressure P = rho * g * h depends strictly on vertical column depth, completely independent of container geometry or lateral wall slope."
+        },
+        {
+          "code": "MIS-FLUID-BUOYANCY-DEPTH-DEPENDENCE",
+          "pattern": "Believing buoyant force increases as an object sinks deeper into an incompressible liquid.",
+          "refutation": "Buoyant force F_B = rho_fluid * V_submerged * g depends strictly on displaced volume. For an incompressible fluid, F_B is constant once completely submerged."
+        },
+        {
+          "code": "MIS-FLUID-BUOYANCY-MASS-DEPENDENCE",
+          "pattern": "Believing buoyant force depends on the mass or density of the submerged body.",
+          "refutation": "Buoyant force equals the weight of displaced liquid; it depends strictly on fluid density and displaced volume, independent of object material composition."
+        },
+        {
+          "code": "MIS-FLUID-SCALE-SUBMERGED-CONFUSION",
+          "pattern": "Assuming a submerged suspended object exerts no downward force on the beaker scale.",
+          "refutation": "By Newton's 3rd Law, if fluid exerts upward buoyant force F_B on the object, the object exerts an equal downward reaction force F_B on the fluid, increasing beaker scale reading by F_B."
+        },
+        {
+          "code": "MIS-FLUID-FLOATING-FRACTION-INVERT",
+          "pattern": "Inverting the submerged fraction ratio of a floating body.",
+          "refutation": "Floating equilibrium requires weight = buoyancy: rho_body * V_total * g = rho_fluid * V_submerged * g => V_submerged / V_total = rho_body / rho_fluid."
+        }
+      ]
+    },
+    "heat-thermodynamics": {
+      "topic_id": "phy-thermo-first-second-law",
+      "display_name": "Heat, Calorimetry & First Law of Thermodynamics",
+      "coordinate_conventions": {
+        "system": "Thermodynamic state variables (P, V, T)",
+        "sign_convention": "First Law dQ = dU + dW (Work done by expanding gas is positive: dW = P dV). Heat supplied to system is positive.",
+        "temperature": "Absolute thermodynamic temperature in Kelvin: T(K) = T(C) + 273.15. Delta T(K) == Delta T(C).",
+        "units": "SI (Heat and Work in Joules, Specific heat capacity in J/(kg K), Latent heat in J/kg)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": false,
+        "diagram_types": ["PV_INDICATOR_DIAGRAM", "CALORIMETRY_HEATING_CURVE", "HEAT_ENGINE_FLOW_DIAGRAM"],
+        "svg_specifications": [
+          "State paths on PV diagrams marked with arrows indicating process direction",
+          "Minimum SVG text font floor >= 14px on all labels and annotations",
+          "Heating curves must clearly show flat plateau regimes for phase transitions at constant temperature"
+        ]
+      },
+      "dimensional_signatures": {
+        "heat": "[M L^2 T^-2]",
+        "specific_heat_capacity": "[L^2 T^-2 Theta^-1]",
+        "latent_heat": "[L^2 T^-2]",
+        "thermal_conductivity": "[M L T^-3 Theta^-1]"
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_ZERO_HEAT_TRANSFER_ADIABATIC",
+        "LIMITING_CASE_INFINITE_HEAT_CAPACITY_THERMAL_RESERVOIR",
+        "FIRST_LAW_CYCLE_ENERGY_CONSERVATION"
+      ],
+      "misconception_discriminators": [
+        {
+          "code": "MIS-THERMO-HEAT-TEMP-CONFUSION",
+          "pattern": "Conflating heat Q (energy in transit) with temperature T (average microscopic kinetic energy).",
+          "refutation": "Heat is energy transferred across a boundary due to temperature difference; temperature is an intensive state variable measuring average particle kinetic energy."
+        },
+        {
+          "code": "MIS-THERMO-PHASE-CHANGE-TEMP-RISE",
+          "pattern": "Assuming temperature must rise while heat is supplied during a phase transition (melting/boiling).",
+          "refutation": "During a first-order phase transition at constant pressure, latent heat is consumed breaking intermolecular bonds while temperature remains strictly constant."
+        },
+        {
+          "code": "MIS-THERMO-WORK-INDEPENDENT-PATH",
+          "pattern": "Treating work W and heat Q as state functions that depend only on initial and final states.",
+          "refutation": "Heat and work are path-dependent process quantities; only internal energy U is an exact state function: oint dU = 0 while cyclic work oint dW = Area under PV curve."
+        },
+        {
+          "code": "MIS-THERMO-ADIABATIC-CONSTANT-TEMP",
+          "pattern": "Believing an adiabatic process (Q = 0) must maintain constant temperature.",
+          "refutation": "By the First Law, Delta U = -W. When a gas expands adiabatically doing positive work on surroundings, its internal energy drops and its temperature falls."
+        },
+        {
+          "code": "MIS-THERMO-CALORIMETRY-MASS-TEMP-SWAP",
+          "pattern": "Neglecting water equivalent of container in calorimetry mixtures.",
+          "refutation": "The calorimeter vessel absorbs heat: Q_vessel = m_cal * c_cal * Delta T = W_eq * c_water * Delta T, and must be included in heat balance."
+        }
+      ]
     }
   }
 }

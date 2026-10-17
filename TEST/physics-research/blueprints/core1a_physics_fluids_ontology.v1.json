@@ -1,0 +1,129 @@
+{
+  "schema": "core1a-physics-ontology/v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "topic": "Fluids: Hydrostatics, Pascal's Principle & Archimedes' Law",
+  "title": "Grade 9 Olympiad Fluids & Hydrostatics Conceptual Ontology & Dependency Graph",
+  "structural_pillars": [
+    {
+      "pillar_id": "P1",
+      "name": "Fluid Continuum & Hydrostatic Pressure Isotropy (Pascal's Principle)",
+      "statement": "A static fluid cannot sustain static shear stress. Pressure at any point in a static fluid is an isotropic scalar acting perpendicular to any surface with equal magnitude in all directions. External pressure applied to an enclosed incompressible fluid is transmitted undiminished throughout every portion of the fluid and container walls.",
+      "mathematical_invariant": "P = \\lim_{\\Delta A \\to 0} \\frac{\\Delta F_\\perp}{\\Delta A}, \\quad P_x = P_y = P_z, \\quad \\Delta P = \\frac{F_1}{A_1} = \\frac{F_2}{A_2} \\implies F_2 = F_1 \\left(\\frac{A_2}{A_1}\\right)",
+      "scope_condition": "Valid for continuous fluids at static equilibrium; viscous shear stresses vanish identically."
+    },
+    {
+      "pillar_id": "P2",
+      "name": "Vertical Pressure Gradient & The Hydrostatic Invariant",
+      "statement": "In a uniform gravitational field, the spatial pressure variation in a static fluid depends exclusively on vertical coordinate y. For an incompressible fluid of uniform density rho, pressure increases linearly with vertical depth h below the free surface, completely independent of container geometry or lateral wall slope.",
+      "mathematical_invariant": "\\frac{dP}{dy} = -\\rho g \\implies P(h) = P_0 + \\rho g h, \\quad \\vec{\\nabla} P = \\rho \\vec{g}",
+      "scope_condition": "Holds for incompressible homogeneous liquids in uniform gravitational fields."
+    },
+    {
+      "pillar_id": "P3",
+      "name": "Communicating Vessels & U-Tube Isobaric Interface Invariant",
+      "statement": "In interconnected vessels containing a continuous homogeneous static liquid, the free liquid surfaces settle at the exact same horizontal level. For immiscible fluids in a U-tube manometer, pressures at identical horizontal levels in the continuous bottom fluid are strictly equal.",
+      "mathematical_invariant": "P_{\\text{left}}(y_0) = P_{\\text{right}}(y_0) \\implies P_0 + \\rho_1 g h_1 = P_0 + \\rho_2 g h_2 \\implies \\rho_1 h_1 = \\rho_2 h_2",
+      "scope_condition": "Requires continuous connected fluid phase between comparison points."
+    },
+    {
+      "pillar_id": "P4",
+      "name": "Archimedes' Principle & Closed Surface Pressure Integral",
+      "statement": "Any body completely or partially submerged in a fluid experiences a net upward buoyant force equal to the weight of the fluid displaced by the body. The buoyant force is the exact vector resultant of all hydrostatic pressure forces acting on the closed surface boundary of the submerged object.",
+      "mathematical_invariant": "\\vec{F}_B = -\\oint_{S} P\\,d\\vec{A} = \\int_{V} (\\vec{\\nabla} P)\\,dV = \\rho_{\\text{fluid}} V_{\\text{submerged}} g\\,\\hat{j}",
+      "scope_condition": "Holds for arbitrary submerged body shapes in fluids in static equilibrium; fails if object adheres seamlessly to bottom with zero liquid film underneath."
+    },
+    {
+      "pillar_id": "P5",
+      "name": "Law of Flotation & Density Ratio Equilibrium",
+      "statement": "A floating body at static equilibrium displaces a volume of fluid whose weight exactly balances the total downward gravitational weight of the body. The fraction of the body's volume that is submerged equals the ratio of the average density of the body to the density of the fluid.",
+      "mathematical_invariant": "W = F_B \\implies \\rho_{\\text{body}} V_{\\text{total}} g = \\rho_{\\text{fluid}} V_{\\text{sub}} g \\implies \\frac{V_{\\text{sub}}}{V_{\\text{total}}} = \\frac{\\rho_{\\text{body}}}{\\rho_{\\text{fluid}}}",
+      "scope_condition": "Valid for bodies in stable or neutral floating equilibrium at liquid-gas interfaces."
+    }
+  ],
+  "dependency_graph": {
+    "layers": [
+      {
+        "layer_index": 1,
+        "name": "Primitive Physical Definitions",
+        "nodes": [
+          {"id": "NODE-1.1", "term": "Fluid Incompressibility & Density rho", "description": "Constant mass density rho = m / V independent of applied pressure."},
+          {"id": "NODE-1.2", "term": "Normal Force vs Shear Stress Vanishing", "description": "Liquids at rest transmit purely normal compressive forces; static shear modulus is zero."},
+          {"id": "NODE-1.3", "term": "Gravitational Field g", "description": "Uniform downward acceleration vector g = -g j."}
+        ]
+      },
+      {
+        "layer_index": 2,
+        "name": "Hydrostatic Pressure Principles",
+        "nodes": [
+          {"id": "NODE-2.1", "term": "Scalar Pressure Isotropy", "depends_on": ["NODE-1.2"]},
+          {"id": "NODE-2.2", "term": "Pascal's Principle & Hydraulic Multiplication", "depends_on": ["NODE-1.1", "NODE-2.1"]},
+          {"id": "NODE-2.3", "term": "Hydrostatic Gradient Equation (P = P0 + rho g h)", "depends_on": ["NODE-1.1", "NODE-1.3", "NODE-2.1"]}
+        ]
+      },
+      {
+        "layer_index": 3,
+        "name": "Equilibrium Invariants & Buoyancy",
+        "nodes": [
+          {"id": "NODE-3.1", "term": "U-Tube Manometer Isobaric Level", "depends_on": ["NODE-2.3"]},
+          {"id": "NODE-3.2", "term": "Closed Surface Pressure Integration", "depends_on": ["NODE-2.3"]},
+          {"id": "NODE-3.3", "term": "Archimedes' Principle (FB = rho V g)", "depends_on": ["NODE-3.2"]}
+        ]
+      },
+      {
+        "layer_index": 4,
+        "name": "Coupled Olympiad Synthesis",
+        "nodes": [
+          {"id": "NODE-4.1", "term": "Law of Flotation & Submerged Fractions", "depends_on": ["NODE-3.3"]},
+          {"id": "NODE-4.2", "term": "Apparent Weight & Scale Reaction Forces", "depends_on": ["NODE-3.3"]},
+          {"id": "NODE-4.3", "term": "Accelerated Liquid Containers (Effective Gravity)", "depends_on": ["NODE-2.3"]},
+          {"id": "NODE-4.4", "term": "Ice Melting & Displaced Volume Invariance", "depends_on": ["NODE-4.1"]}
+        ]
+      }
+    ]
+  },
+  "cognitive_conflict_matrix": [
+    {
+      "id": "CCM-01",
+      "concept": "Hydrostatic Paradox Fallacy",
+      "intuitive_misconception": "A conical flask holding 5 liters of water must exert a much larger pressure on its base than a narrow cylinder holding only 0.5 liters of water.",
+      "newtonian_scientific_truth": "Liquid pressure at depth h is given strictly by P = rho * g * h. If both containers have the same liquid height h, the hydrostatic pressure on the flat bottom is identical, regardless of the container's volume or wall slope. Slanted walls support the remaining weight through normal reaction forces.",
+      "decisive_experiment": "Pascal's Vases apparatus: different shaped vessels with identical base areas connected to a common pressure membrane read identical pressure when filled to the same vertical height h."
+    },
+    {
+      "id": "CCM-02",
+      "concept": "Submerged Depth Buoyancy Fallacy",
+      "intuitive_misconception": "Because pressure increases with depth, a submerged metal ball experiences a much greater buoyant force at 10 meters depth than at 1 meter depth.",
+      "newtonian_scientific_truth": "Buoyant force is the DIFFERENCE in pressure between bottom and top surfaces: F_B = (P_bottom - P_top) * A = (rho * g * Delta h) * A = rho * g * V. While absolute pressure increases with depth, the pressure DIFFERENCE across the object depends strictly on its vertical height Delta h, which is constant. In an incompressible fluid, buoyant force is completely independent of depth once fully submerged.",
+      "decisive_experiment": "A spring balance holding a submerged metal cylinder reads the exact same scale tension at 10 cm depth, 50 cm depth, and 2 meters depth in water."
+    },
+    {
+      "id": "CCM-03",
+      "concept": "Buoyancy Mass/Material Dependence Fallacy",
+      "intuitive_misconception": "A dense lead ball experiences a smaller buoyant force than a light aluminum ball because lead is heavy and wants to sink.",
+      "newtonian_scientific_truth": "Archimedes' principle states that buoyant force equals the weight of DISPLACED FLUID: F_B = rho_fluid * V_submerged * g. It depends strictly on the volume of the object and the density of the surrounding liquid, completely independent of the object's mass, density, or internal composition.",
+      "decisive_experiment": "Immersing a 100 cm^3 solid lead ball (mass 1134 g) and a 100 cm^3 solid aluminum ball (mass 270 g) into water: overflow measurements and load cell sensors confirm both experience an identical upward buoyant force of exactly 0.98 N."
+    },
+    {
+      "id": "CCM-04",
+      "concept": "Zero-Reaction Scale Reading Fallacy",
+      "intuitive_misconception": "If an iron weight suspended from an external ceiling stand is lowered into a beaker of water resting on a scale, the scale reading does not change because the ceiling supports the iron weight.",
+      "newtonian_scientific_truth": "By Newton's third law, if the water exerts an upward buoyant force F_B on the iron weight, the iron weight must exert an equal and opposite downward reaction force F_B on the water. This downward reaction force is transmitted through the fluid to the beaker bottom, increasing the scale reading by exactly F_B = rho_water * V_iron * g.",
+      "decisive_experiment": "Lowering a suspended mass into a water beaker on a digital balance shows an immediate, precise increase in the balance display equal to the mass of the displaced water."
+    },
+    {
+      "id": "CCM-05",
+      "concept": "Floating Ice Melting Overflow Fallacy",
+      "intuitive_misconception": "When an ice cube floating in a brim-full glass of water melts completely, the water must overflow because the ice had a portion protruding above the rim.",
+      "newtonian_scientific_truth": "While floating, the ice cube of mass m displaces a volume of water whose weight equals the ice cube's weight: V_displaced = m / rho_water. When the ice melts, it turns into liquid water of identical mass m, occupying a volume V_melted = m / rho_water. Because V_melted == V_displaced, the melted ice occupies the exact volume previously displaced, leaving the water level completely unchanged.",
+      "decisive_experiment": "Filling a beaker with water and ice cubes to the very brim: after complete melting at room temperature, not a single drop spills over and the water level remains exactly flush with the rim."
+    },
+    {
+      "id": "CCM-06",
+      "concept": "Inverted Flotation Ratio Fallacy",
+      "intuitive_misconception": "A piece of wood with density 0.6 g/cm^3 has 60% of its volume floating above the water surface.",
+      "newtonian_scientific_truth": "The law of flotation gives V_submerged / V_total = rho_body / rho_fluid. For wood in water (rho_wood = 0.6 g/cm^3, rho_water = 1.0 g/cm^3), 60% is SUBMERGED below the surface, and only 40% is exposed above the surface.",
+      "decisive_experiment": "Graduated cylinder test with calibrated wooden cubes: 60% of the cube height sits below the waterline and 40% protrudes above."
+    }
+  ]
+}

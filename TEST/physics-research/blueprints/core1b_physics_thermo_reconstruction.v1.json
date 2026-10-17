@@ -1,0 +1,100 @@
+{
+  "schema": "core1b-physics-reconstruction/v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "topic": "Heat, Calorimetry & First Law of Thermodynamics",
+  "title": "Core 1B Phenomenological Reconstruction Cycles & Socratic Dialog: Heat & Thermodynamics",
+  "reconstruction_cycles": [
+    {
+      "cycle_id": "RECON-01",
+      "phenomenon": "Joule's Mechanical Equivalent of Heat and the First Law State Function Invariant",
+      "standard_derivation": "In Joule's paddle-wheel experiments, falling weights did mechanical work W on thermally insulated water. The temperature of the water rose by Delta T. Regardless of whether work was performed by friction paddles, electric currents, or compression, the ratio W / Delta T was universally constant: J = 4.184 J/cal. The First Law states dQ = dU + dW, where U is an exact mathematical state function.",
+      "phenomenological_reconstruction": {
+        "perspective": "Adiabatic Work Path Independence",
+        "conceptual_pivot": "Historically, heat was thought to be an indestructible fluid called 'caloric'. Joule proved that caloric does not exist; heat is simply disordered mechanical energy of microscopic molecular motion.",
+        "state_function_nature": "Consider an arbitrary closed cycle on a PV diagram. The net work done is W_net = oint P dV != 0 (the enclosed loop area). If heat and work were state functions, this would be impossible. The breakthrough of the First Law is recognizing that while Q and W depend on the path, their difference dU = dQ - dW is an EXACT differential: oint dU = 0.",
+        "universality": "Internal energy U depends strictly on the current microscopic state (T and V), not on how the system arrived there."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "Adiabatic process (dQ = 0)", "physical_consequence": "dU = -dW (System pays for expansion work purely from internal energy)"},
+        {"limit": "Isochoric process (dV = 0)", "physical_consequence": "dW = 0 => dQ = dU (All heat directly increases internal energy)"},
+        {"limit": "Cyclic process (initial state == final state)", "physical_consequence": "Delta U = 0 => Q_net = W_net (Net heat absorbed equals net work done)"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-02",
+      "phenomenon": "Microscopic Latent Heat and the Constant-Temperature Phase Plateau",
+      "standard_derivation": "When heat is added to pure water at 100 deg C under 1 atm pressure, the temperature remains strictly 100.0 deg C while liquid vaporizes into steam: Q = m * L_v. By kinetic theory, temperature is strictly proportional to average translational kinetic energy per molecule: <K_trans> = (3/2) * k_B * T.",
+      "phenomenological_reconstruction": {
+        "perspective": "Intermolecular Potential Well versus Molecular Kinetic Energy",
+        "conceptual_pivot": "Why doesn't the temperature rise when you pump energy into boiling water? Because total internal energy is the sum of kinetic and potential components: U = K_molecular + U_intermolecular.",
+        "energy_partitioning": "Temperature reflects ONLY the kinetic part (how fast molecules jiggle and zip around). In the liquid phase, molecules are trapped in mutual attractive potential energy wells held by hydrogen bonds.",
+        "bond_breaking_work": "The latent heat L_v is the mechanical work required to tear liquid molecules apart against intermolecular forces to form a dilute gas. All added heat converts 100% into intermolecular potential energy (Delta U_pot = m L_v), leaving translational kinetic energy completely unchanged. Thus, Delta T = 0!"
+      },
+      "limiting_boundary_checks": [
+        {"limit": "Single-phase heating (sub-cooled liquid)", "physical_consequence": "Delta T = Q / (m c_water) > 0 (Energy increases molecular kinetic motion)"},
+        {"limit": "Phase transition plateau", "physical_consequence": "Delta T = 0, Q = m L (Energy increases molecular potential separation)"},
+        {"limit": "Superheated vapor heating", "physical_consequence": "Delta T = Q / (m c_steam) > 0 (Energy resumes increasing molecular kinetic motion)"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-03",
+      "phenomenon": "Calorimetric Multi-Phase Settlement and Enthalpy Datum Budgeting",
+      "standard_derivation": "When ice at T_ice < 0 deg C is mixed with steam at T_steam > 100 deg C in an insulated calorimeter, a naive mixture formula produces unphysical temperatures (e.g. -50 deg C or +180 deg C). Rigorous settlement requires establishing a reference datum (liquid water at 0 deg C) and comparing the total heat capacities of phase transitions.",
+      "phenomenological_reconstruction": {
+        "perspective": "Reference Datum Enthalpy Deficit vs Surplus Balance",
+        "conceptual_pivot": "A phase change acts as a massive thermal 'energy sponge'. Before temperature can move, phase changes must either freeze or melt.",
+        "enthalpy_ledger": "1. Calculate energy required to bring ice to liquid water at 0 deg C: Delta H_cold = m_ice * c_ice * (0 - T_ice) + m_ice * L_f.\n2. Calculate energy released by condensing steam and cooling to 0 deg C: Delta H_hot = m_steam * c_steam * (T_steam - 100) + m_steam * L_v + m_steam * c_water * 100.\n3. Compare Delta H_cold and Delta H_hot.",
+        "phase_settlement_rules": "If Delta H_hot > Delta H_cold, all ice melts and the final mixture reaches an equilibrium temperature T_f between 0 and 100 deg C. If Delta H_hot is insufficient to even melt the ice, the system settles into an ice-water slurry at exactly 0.0 deg C."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "Excess steam (Delta H_steam >> Delta H_ice)", "physical_consequence": "Final state is water + steam at exactly 100 deg C"},
+        {"limit": "Excess ice (Delta H_ice >> Delta H_steam)", "physical_consequence": "Final state is ice + water at exactly 0 deg C"},
+        {"limit": "Matched thermal capacities", "physical_consequence": "Single-phase warm water at 0 < T_f < 100 deg C"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-04",
+      "phenomenon": "Polytropic Gas Processes and Negative Molar Heat Capacity",
+      "standard_derivation": "An ideal gas undergoes a quasi-static process PV^n = const. The boundary work is W = int P dV = (P_i V_i - P_f V_f) / (n - 1) = n_moles * R * Delta T / (1 - n). By the First Law: Q = Delta U + W = n_moles * C_v * Delta T + n_moles * R * Delta T / (1 - n). Therefore, the molar heat capacity along the path is C = C_v + R / (1 - n).",
+      "phenomenological_reconstruction": {
+        "perspective": "Work-to-Heat Feedback Ratio",
+        "conceptual_pivot": "Can heating a gas make it cooler? YES! When 1 < n < gamma, the molar heat capacity C is strictly NEGATIVE.",
+        "negative_heat_capacity_mechanism": "When heat is supplied (dQ > 0), the gas expands so aggressively that the work it performs on the surroundings exceeds the heat supplied (dW > dQ). By the First Law, Delta U = dQ - dW < 0. Because internal energy decreases, the temperature of the gas DROPS while absorbing heat!",
+        "astrophysical_significance": "Self-gravitating stars (like the Sun) have negative heat capacity: as they radiate heat into space (dQ < 0), gravitational contraction does so much work that the core temperature RISES! Losing heat makes stars hotter."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "n = 0 (Isobaric)", "physical_consequence": "C = C_v + R = C_p (Standard constant-pressure heat capacity)"},
+        {"limit": "n = 1 (Isothermal)", "physical_consequence": "Delta T = 0 => C -> infinity (Gas absorbs heat without changing temperature)"},
+        {"limit": "n = gamma (Adiabatic)", "physical_consequence": "dQ = 0 => C = 0 (Zero heat capacity by definition)"},
+        {"limit": "n -> infinity (Isochoric)", "physical_consequence": "dV = 0 => C = C_v (Standard constant-volume heat capacity)"}
+      ]
+    }
+  ],
+  "socratic_repair_probes": [
+    {
+      "probe_id": "SRP-THERMO-01",
+      "target_misconception": "MIS-THERMO-HEAT-TEMP-CONFUSION",
+      "pivotal_question": "Which contains more heat: a red-hot iron nail at 800 deg C or the Pacific Ocean at 15 deg C?",
+      "guided_realization": "Neither 'contains heat'—heat is energy in transit! But in terms of internal thermal energy (U = m * c * T), the Pacific Ocean has over 10^21 times more mass than the nail. Its total thermal energy dwarfs the nail by trillions of times, even though the nail has higher temperature (higher energy per atom)."
+    },
+    {
+      "probe_id": "SRP-THERMO-02",
+      "target_misconception": "MIS-THERMO-PHASE-CHANGE-TEMP-RISE",
+      "pivotal_question": "You put a pot of water on a gas burner. Once it reaches a rolling boil at 100 deg C, you turn the burner flame up to double its power. Does the water get hotter?",
+      "guided_realization": "No! It remains at exactly 100 deg C. The extra heat goes entirely into boiling the water away twice as fast (dm/dt = P / L_v). Temperature measures molecular speed; the extra energy is consumed breaking intermolecular bonds, not accelerating molecules."
+    },
+    {
+      "probe_id": "SRP-THERMO-03",
+      "target_misconception": "MIS-THERMO-ADIABATIC-CONSTANT-TEMP",
+      "pivotal_question": "A cylinder with perfectly insulated walls contains gas at 300 K. A piston rapidly expands, doubling the volume. No heat enters (Q = 0). What happens to the gas temperature?",
+      "guided_realization": "The temperature DROPS! By the First Law, Delta U = Q - W = 0 - W = -W. The gas did positive work pushing the piston outward. Since it received no heat from outside, it paid for this work using its own internal thermal energy, causing its molecules to slow down and its temperature to fall."
+    },
+    {
+      "probe_id": "SRP-THERMO-04",
+      "target_misconception": "MIS-THERMO-CALORIMETRY-MASS-TEMP-SWAP",
+      "pivotal_question": "A thermometer measures temperature rising from 10 deg C to 35 deg C. What is the temperature increase in Kelvin?",
+      "guided_realization": "It is exactly 25 K, NOT 298.15 K! The size of 1 degree Celsius is identical to 1 Kelvin: Delta T_K = (35 + 273.15) - (10 + 273.15) = 35 - 10 = 25 K. Never add 273 to a temperature change!"
+    }
+  ]
+}
