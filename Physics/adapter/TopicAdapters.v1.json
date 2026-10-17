@@ -173,6 +173,74 @@
           "refutation": "Velocity vector turns continuously, requiring inward normal centripetal acceleration a_c = v^2/r."
         }
       ]
+    },
+    "work-energy-power": {
+      "topic_id": "phy-work-energy-power",
+      "display_name": "Work, Energy & Power: Conservative Fields & Potential Wells",
+      "coordinate_conventions": {
+        "system": "1D/2D Cartesian with declared potential energy datum U = 0",
+        "sign_convention": "Work is positive when force has an acute component along displacement (cos theta > 0). Potential energy increases against the conservative force (dU = -F_c dx).",
+        "units": "SI (Work & Energy in Joules = N*m = kg*m^2/s^2, Power in Watts = J/s = kg*m^2/s^3)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": false,
+        "diagram_types": ["POTENTIAL_WELL_CURVE", "FORCE_DISPLACEMENT_GRAPH", "SPRING_MASS_DIAGRAM", "ENERGY_BAR_CHART"],
+        "svg_specifications": [
+          "Coordinate axes labeled with variable and unit: x (m), F (N), U (J), K (J), P (W)",
+          "Minimum SVG text font floor >= 14px on all axis labels, coordinate values, and annotations",
+          "Potential energy curves U(x) must show total mechanical energy line E and turning points where E = U(x)",
+          "Force-displacement graphs must distinguish positive area above axis from negative area below axis"
+        ]
+      },
+      "dimensional_signatures": {
+        "work": "[M L^2 T^-2]",
+        "kinetic_energy": "[M L^2 T^-2]",
+        "potential_energy": "[M L^2 T^-2]",
+        "power": "[M L^2 T^-3]",
+        "spring_constant": "[M T^-2]",
+        "dimensionless": ["mechanical_efficiency", "coefficient_of_restitution", "energy_ratio"]
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_ZERO_DISPLACEMENT",
+        "LIMITING_CASE_PERPENDICULAR_FORCE",
+        "LIMITING_CASE_SMOOTH_INTERFACE_MU_ZERO",
+        "LIMITING_CASE_INFINITE_MASS_MOMENTUM",
+        "WORK_ENERGY_THEOREM_CONSISTENCY",
+        "POTENTIAL_DERIVATIVE_FORCE_CONSISTENCY"
+      ],
+      "misconception_discriminators": [
+        {
+          "code": "MIS-WEP-CENTRIPETAL-WORK",
+          "pattern": "Believing centripetal force does work because it continuously redirects the body.",
+          "refutation": "Centripetal force is strictly perpendicular to velocity (F_c perp v => F_c . dr = 0), doing zero work and leaving kinetic energy unchanged."
+        },
+        {
+          "code": "MIS-WEP-POTENTIAL-ABSOLUTE",
+          "pattern": "Treating potential energy as having an absolute intrinsic value without datum definition.",
+          "refutation": "Potential energy is physically meaningful only through differences Delta U = -W_c. The zero level U = 0 is an arbitrary coordinate convention."
+        },
+        {
+          "code": "MIS-WEP-POWER-WORK-CONFUSION",
+          "pattern": "Confusing total energy transferred (work in Joules) with rate of transfer (power in Watts).",
+          "refutation": "Power is dW/dt. A low-power machine running for a long duration can do vastly more total work than a high-power machine running for a microsecond."
+        },
+        {
+          "code": "MIS-WEP-SPRING-WORK-LINEAR",
+          "pattern": "Assuming spring work equals F_max * x = kx^2 instead of 0.5*k*x^2.",
+          "refutation": "Spring force varies linearly from 0 to kx. The work integral is int_0^x kx' dx' = 0.5 * k * x^2 (half the bounding rectangle)."
+        },
+        {
+          "code": "MIS-WEP-FRICTION-ALWAYS-DISSIPATES",
+          "pattern": "Believing friction can never do positive work on any individual body.",
+          "refutation": "Kinetic friction does positive work on a body that it accelerates forward (e.g. box placed on moving conveyor belt, top block on moving cart)."
+        },
+        {
+          "code": "MIS-WEP-MOMENTUM-KINETIC-CONFUSION",
+          "pattern": "Assuming two objects with equal momentum must possess equal kinetic energy.",
+          "refutation": "K = p^2 / (2m). For equal momentum, kinetic energy is inversely proportional to mass; the lighter object carries vastly greater kinetic energy."
+        }
+      ]
     }
   }
 }

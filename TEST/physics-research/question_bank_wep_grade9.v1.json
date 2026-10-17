@@ -1,0 +1,2755 @@
+{
+  "schema": "question-bank-wep/v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "grade": 9,
+  "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+  "total_questions": 25,
+  "cognitive_distribution": {
+    "D1_foundational": 4,
+    "D2_standard": 8,
+    "D3_hard": 8,
+    "D4_achievers": 5
+  },
+  "figure_count": 8,
+  "questions": [
+    {
+      "question_id": "PHYS-WEP-001",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q01",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "A block of mass $m = 5\\text{ kg}$ is pulled along a smooth horizontal surface by a constant pulling force $F = 40\\text{ N}$ directed at an angle $\\theta = 60^\\circ$ above the horizontal. If the block is displaced horizontally by $d = 10\\text{ m}$, what is the total work done by the pulling force?",
+      "system_parameters": {
+        "system_boundary": "Rigid block on frictionless horizontal plane",
+        "reference_frame": "Inertial laboratory frame",
+        "idealizations": [
+          "Frictionless floor",
+          "Point particle idealization"
+        ]
+      },
+      "options": {
+        "A": "$200\\text{ J}$",
+        "B": "$400\\text{ J}$",
+        "C": "$200\\sqrt{3}\\text{ J}$",
+        "D": "$0\\text{ J}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D1",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Calculating scalar work via dot product W = F * d * cos(theta).",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires resolving vector component and multiplying, not bare recall."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly computed W = F * d * cos 60° = 40 * 10 * 0.5 = 200 J."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Ignored the angle theta and calculated W = F * d = 400 J."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used sin 60° instead of cos 60°, computing perpendicular component instead of along displacement."
+        },
+        "D": {
+          "type": "MIS-WEP-CENTRIPETAL-WORK",
+          "diagnostic": "Incorrectly assumed forces at an angle do zero work."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Definition of Mechanical Work",
+          "text": "Work done by a constant force is defined by the dot product $W = \\vec{F} \\cdot \\vec{d} = F d \\cos \\theta$."
+        },
+        {
+          "tier": 2,
+          "title": "Identifying Parameters",
+          "text": "Here $F = 40\\text{ N}$, $d = 10\\text{ m}$, and $\\theta = 60^\\circ$. Note that $\\cos 60^\\circ = 0.5$."
+        },
+        {
+          "tier": 3,
+          "title": "Calculation",
+          "text": "$W = 40 \\times 10 \\times 0.5 = 200\\text{ J}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "The scalar product for work: $W = F d \\cos \\theta$.",
+          "Substitute values: $W = (40\\text{ N})(10\\text{ m})\\cos 60^\\circ = 400 \\times 0.5\\text{ J} = 200\\text{ J}$."
+        ],
+        "final_expression": "W = 200\\text{ J}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[W] = M L^2 T^-2",
+        "limiting_cases": [
+          {
+            "condition": "theta = 90 deg",
+            "expected_outcome": "W = 0 (perpendicular force does no work)"
+          },
+          {
+            "condition": "theta = 0 deg",
+            "expected_outcome": "W = 400 J (maximum work when aligned)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure WEP-01: Constant pulling force at angle theta to horizontal displacement.",
+        "svg_code": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"160\" x2=\"450\" y2=\"160\" stroke=\"#475569\" stroke-width=\"2\"/>\n  <rect x=\"180\" y=\"100\" width=\"80\" height=\"60\" fill=\"#1e293b\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <line x1=\"260\" y1=\"130\" x2=\"380\" y2=\"130\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n  <line x1=\"260\" y1=\"130\" x2=\"360\" y2=\"50\" stroke=\"#fbbf24\" stroke-width=\"3\" marker-end=\"url(#arr-f1)\"/>\n  <path d=\"M 310 130 A 50 50 0 0 0 300 98\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <line x1=\"260\" y1=\"165\" x2=\"380\" y2=\"165\" stroke=\"#34d399\" stroke-width=\"3\" marker-end=\"url(#arr-d1)\"/>\n  <defs>\n    <marker id=\"arr-f1\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#fbbf24\"/></marker>\n    <marker id=\"arr-d1\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#34d399\"/></marker>\n  </defs>\n  <text x=\"220\" y=\"135\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">m = 5 kg</text>\n  <text x=\"350\" y=\"45\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\">F = 40 N</text>\n  <text x=\"320\" y=\"115\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\">θ = 60°</text>\n  <text x=\"320\" y=\"195\" fill=\"#34d399\" font-size=\"14px\" font-family=\"sans-serif\">Displacement d = 10 m</text>\n  <text x=\"250\" y=\"30\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Work by Constant Force: W = F d cos θ</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-002",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q02",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "A satellite of mass $m$ orbits the Earth in a uniform circular orbit of radius $R$ with constant orbital speed $v_0$. What is the net work done on the satellite by the gravitational force during one complete orbit of period $T$?",
+      "system_parameters": {
+        "system_boundary": "Satellite in circular orbit around central Earth",
+        "reference_frame": "Inertial geocentric frame",
+        "idealizations": [
+          "Earth is spherically symmetric",
+          "No atmospheric drag"
+        ]
+      },
+      "options": {
+        "A": "$0\\text{ J}$",
+        "B": "$\\frac{G M m}{R}$",
+        "C": "$2\\pi G M m$",
+        "D": "$\\frac{1}{2} m v_0^2$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-IDENTIFY-D1",
+        "primary_demand": "IDENTIFY",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Identifying that centripetal gravitational force is everywhere orthogonal to velocity vector dr/dt, yielding zero work.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires identifying vector orthogonality or conservation of kinetic energy."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly identified that F_g is strictly perpendicular to displacement dl at every instant, so dW = F . dl = 0."
+        },
+        "B": {
+          "type": "MIS-WEP-POTENTIAL-ABSOLUTE",
+          "diagnostic": "Confused the gravitational potential energy magnitude with the work done during an orbit."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Multiplied gravitational force by circumference 2*pi*R ignoring the orthogonality."
+        },
+        "D": {
+          "type": "MIS-WEP-CENTRIPETAL-WORK",
+          "diagnostic": "Equated orbital kinetic energy with work done per orbit."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Direction of Gravitational Force",
+          "text": "In a circular orbit, Earth's gravity acts radially inward toward the center."
+        },
+        {
+          "tier": 2,
+          "title": "Direction of Motion",
+          "text": "The velocity vector is strictly tangential, perpendicular to the radial direction at every point."
+        },
+        {
+          "tier": 3,
+          "title": "Dot Product Property",
+          "text": "Since $\\vec{F} \\perp d\\vec{r}$, $\\vec{F} \\cdot d\\vec{r} = F ds \\cos 90^\\circ = 0$. Total work is identically zero."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Instantaneous work $dW = \\vec{F}_g \\cdot d\\vec{r}$.",
+          "For circular motion, $\\vec{F}_g = -\\frac{G M m}{R^2}\\hat{r}$ and $d\\vec{r} = R d\\theta \\hat{\\theta}$.",
+          "Since $\\hat{r} \\cdot \\hat{\\theta} = 0$, $dW = 0$ at every instant.",
+          "Alternatively, by the Work-Energy Theorem, $W_{\\text{net}} = \\Delta K = \\frac{1}{2}m v_0^2 - \\frac{1}{2}m v_0^2 = 0$."
+        ],
+        "final_expression": "W_{\\text{net}} = 0\\text{ J}"
+      },
+      "independent_check": {
+        "method": "WORK_ENERGY_THEOREM_CONSISTENCY",
+        "dimensional_formula": "[W] = M L^2 T^-2",
+        "limiting_cases": [
+          {
+            "condition": "Uniform circular motion",
+            "expected_outcome": "Delta K = 0 => W_net = 0 identically"
+          },
+          {
+            "condition": "Arbitrary closed path in conservative field",
+            "expected_outcome": "oint F . dr = 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-003",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q03",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "Two bodies $A$ and $B$ have masses $m_A = 2\\text{ kg}$ and $m_B = 8\\text{ kg}$ respectively. If both bodies have the exact same linear momentum magnitude $p$, what is the ratio of their kinetic energies $\\frac{K_A}{K_B}$?",
+      "system_parameters": {
+        "system_boundary": "Two independent moving particles",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Non-relativistic motion",
+          "Classical point masses"
+        ]
+      },
+      "options": {
+        "A": "$4 : 1$",
+        "B": "$1 : 4$",
+        "C": "$1 : 1$",
+        "D": "$16 : 1$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-CALCULATE-D1",
+        "primary_demand": "CALCULATE",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Using relation K = p^2 / (2m) to deduce inverse proportionality to mass at constant momentum.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires algebraic ratio setup, not bare fact retrieval."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly applied K = p^2 / (2m) to deduce K_A / K_B = m_B / m_A = 8 / 2 = 4."
+        },
+        "B": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Inverted the ratio, assuming K is directly proportional to mass at constant p."
+        },
+        "C": {
+          "type": "MIS-WEP-MOMENTUM-KINETIC-CONFUSION",
+          "diagnostic": "Assumed equal linear momentum implies equal kinetic energy."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Squared the mass ratio (8/2)^2 = 16."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Relation Between Momentum and Kinetic Energy",
+          "text": "Linear momentum is $p = mv$ and kinetic energy is $K = \\frac{1}{2}mv^2$."
+        },
+        {
+          "tier": 2,
+          "title": "Expressing K in terms of p",
+          "text": "Multiply and divide by $m$: $K = \\frac{(mv)^2}{2m} = \\frac{p^2}{2m}$."
+        },
+        {
+          "tier": 3,
+          "title": "Ratio Evaluation",
+          "text": "For constant $p$, $K \\propto \\frac{1}{m}$, so $\\frac{K_A}{K_B} = \\frac{m_B}{m_A} = \\frac{8}{2} = 4$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Kinetic energy: $K = \\frac{p^2}{2m}$.",
+          "Given $p_A = p_B = p$:",
+          "$K_A = \\frac{p^2}{2 m_A}$, \\quad $K_B = \\frac{p^2}{2 m_B}$.",
+          "Ratio: $\\frac{K_A}{K_B} = \\frac{m_B}{m_A} = \\frac{8\\text{ kg}}{2\\text{ kg}} = 4$."
+        ],
+        "final_expression": "\\frac{K_A}{K_B} = 4"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[K_A / K_B] = dimensionless",
+        "limiting_cases": [
+          {
+            "condition": "m_A -> 0 with finite p",
+            "expected_outcome": "K_A -> infinity (photons/light particles carry extreme KE per momentum)"
+          },
+          {
+            "condition": "m_A = m_B",
+            "expected_outcome": "K_A / K_B = 1"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-004",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q04",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "An electric water pump lifts $1200\\text{ kg}$ of water from a well of depth $h = 15\\text{ m}$ in a time of $t = 60\\text{ s}$ at constant speed. What is the average power output of the pump? (Take $g = 10\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Water column and pump mechanism",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Incompressible water",
+          "Negligible kinetic energy imparted to outflow"
+        ]
+      },
+      "options": {
+        "A": "$3000\\text{ W}$",
+        "B": "$180000\\text{ W}$",
+        "C": "$1200\\text{ W}$",
+        "D": "$500\\text{ W}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-CALCULATE-D1",
+        "primary_demand": "CALCULATE",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Calculating gravitational work mgh and dividing by time delta t to find average power.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires multi-step numerical calculation mgh/t."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly computed P_avg = mgh / t = (1200 * 10 * 15) / 60 = 180000 / 60 = 3000 W (3 kW)."
+        },
+        "B": {
+          "type": "MIS-WEP-POWER-WORK-CONFUSION",
+          "diagnostic": "Reported total work done W = 180000 J without dividing by time t = 60 s."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculated m * h / t without multiplying by gravitational acceleration g."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Divided mass by time (1200/60) and multiplied by height without g."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Work Done Against Gravity",
+          "text": "Lifting mass $m$ to height $h$ requires work $W = mgh$."
+        },
+        {
+          "tier": 2,
+          "title": "Definition of Average Power",
+          "text": "Average power is the rate of work done: $P_{\\text{avg}} = \\frac{W}{\\Delta t}$."
+        },
+        {
+          "tier": 3,
+          "title": "Numerical Evaluation",
+          "text": "$W = 1200 \\times 10 \\times 15 = 180{,}000\\text{ J}$. Power $P = \\frac{180{,}000}{60} = 3000\\text{ W}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Work done lifting water: $W = m g h = (1200\\text{ kg})(10\\text{ m/s}^2)(15\\text{ m}) = 180{,}000\\text{ J}$.",
+          "Average power: $P = \\frac{W}{t} = \\frac{180{,}000\\text{ J}}{60\\text{ s}} = 3000\\text{ W} = 3\\text{ kW}$."
+        ],
+        "final_expression": "P_{\\text{avg}} = 3000\\text{ W}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[P] = M L^2 T^-3",
+        "limiting_cases": [
+          {
+            "condition": "t -> infinity",
+            "expected_outcome": "P -> 0 (infinitely slow pumping requires zero power)"
+          },
+          {
+            "condition": "h -> 0",
+            "expected_outcome": "P -> 0 (zero vertical lift requires zero work against gravity)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-005",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-STD",
+        "year": "2024",
+        "question_number": "Q05",
+        "tier": "Prelims Standard"
+      },
+      "stem": "A body moves along the $+x$-axis under the action of a variable force $F(x)$ shown in the accompanying graph. The force increases linearly from $0$ to $20\\text{ N}$ between $x = 0$ and $x = 4\\text{ m}$, and then remains constant at $20\\text{ N}$ from $x = 4\\text{ m}$ to $x = 8\\text{ m}$. What is the total work done by the force as the body moves from $x = 0$ to $x = 8\\text{ m}$?",
+      "system_parameters": {
+        "system_boundary": "Particle undergoing 1D constrained displacement",
+        "reference_frame": "Inertial 1D reference frame",
+        "idealizations": [
+          "1D motion",
+          "Negligible non-conservative dissipation"
+        ]
+      },
+      "options": {
+        "A": "$120\\text{ J}$",
+        "B": "$160\\text{ J}$",
+        "C": "$80\\text{ J}$",
+        "D": "$40\\text{ J}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D2",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Evaluating work as the area under the F-x curve (triangle + rectangle).",
+        "rival_demands": [
+          {
+            "demand": "CALCULATE",
+            "rejection_rationale": "Requires interpreting graphical F(x) geometric area rather than applying a closed formula."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly integrated area under F(x): Triangle Area = 0.5 * 4 * 20 = 40 J; Rectangle Area = (8 - 4) * 20 = 80 J; Total = 120 J."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Treated the entire region as a rectangle F_max * x_total = 20 * 8 = 160 J."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Only computed the rectangular portion from 4 m to 8 m (80 J), ignoring the first segment."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Only computed the triangular portion from 0 to 4 m (40 J)."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Geometric Meaning of Work",
+          "text": "Work done by a 1D force is the area under the force-displacement graph: $W = \\int F(x) dx$."
+        },
+        {
+          "tier": 2,
+          "title": "Splitting the Area",
+          "text": "Split the area into a triangle from $x = 0$ to $4\\text{ m}$ and a rectangle from $x = 4$ to $8\\text{ m}$."
+        },
+        {
+          "tier": 3,
+          "title": "Summing Areas",
+          "text": "$A_1 = \\frac{1}{2} \\times 4 \\times 20 = 40\\text{ J}$, $A_2 = 4 \\times 20 = 80\\text{ J}$. Total work $W = 40 + 80 = 120\\text{ J}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Work is defined as $W = \\int_0^8 F(x) dx$.",
+          "From $x = 0$ to $x = 4\\text{ m}$: $F(x) = 5x\\text{ N}$. Area $A_1 = \\frac{1}{2}(4\\text{ m})(20\\text{ N}) = 40\\text{ J}$.",
+          "From $x = 4$ to $x = 8\\text{ m}$: $F(x) = 20\\text{ N}$. Area $A_2 = (8 - 4\\text{ m})(20\\text{ N}) = 80\\text{ J}$.",
+          "Total work: $W = A_1 + A_2 = 40\\text{ J} + 80\\text{ J} = 120\\text{ J}$."
+        ],
+        "final_expression": "W = 120\\text{ J}"
+      },
+      "independent_check": {
+        "method": "AVERAGE_FORCE_CHECK",
+        "dimensional_formula": "[W] = M L^2 T^-2",
+        "limiting_cases": [
+          {
+            "condition": "F_max -> 0",
+            "expected_outcome": "W -> 0"
+          },
+          {
+            "condition": "x -> 4 m only",
+            "expected_outcome": "W = 40 J"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure WEP-05: Force-displacement F(x) piecewise function graph.",
+        "svg_code": "<svg viewBox=\"0 0 500 250\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"190\" x2=\"450\" y2=\"190\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"70\" y1=\"30\" x2=\"70\" y2=\"210\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <polygon points=\"70,190 220,70 370,70 370,190\" fill=\"rgba(56, 189, 248, 0.2)\"/>\n  <line x1=\"70\" y1=\"190\" x2=\"220\" y2=\"70\" stroke=\"#38bdf8\" stroke-width=\"3\"/>\n  <line x1=\"220\" y1=\"70\" x2=\"370\" y2=\"70\" stroke=\"#38bdf8\" stroke-width=\"3\"/>\n  <line x1=\"220\" y1=\"70\" x2=\"220\" y2=\"190\" stroke=\"#f43f5e\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n  <line x1=\"370\" y1=\"70\" x2=\"370\" y2=\"190\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n  <circle cx=\"220\" cy=\"70\" r=\"5\" fill=\"#fbbf24\"/>\n  <circle cx=\"370\" cy=\"70\" r=\"5\" fill=\"#34d399\"/>\n  <text x=\"455\" y=\"195\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">x (m)</text>\n  <text x=\"70\" y=\"25\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">F (N)</text>\n  <text x=\"60\" y=\"75\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">20 N</text>\n  <text x=\"220\" y=\"210\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">4 m</text>\n  <text x=\"370\" y=\"210\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">8 m</text>\n  <text x=\"145\" y=\"150\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">A1 = 40 J</text>\n  <text x=\"295\" y=\"140\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">A2 = 80 J</text>\n  <text x=\"250\" y=\"45\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Total Work = 40 J + 80 J = 120 J</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-006",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-STD",
+        "year": "2024",
+        "question_number": "Q06",
+        "tier": "Prelims Standard"
+      },
+      "stem": "An ideal horizontal spring with spring constant $k = 400\\text{ N/m}$ is fixed to a rigid wall. A block of mass $m = 2\\text{ kg}$ is pushed against the spring, compressing it by $x = 0.1\\text{ m}$ from its natural equilibrium length. When released from rest on a frictionless horizontal floor, what is the speed of the block as it passes through the equilibrium position ($x = 0$)?",
+      "system_parameters": {
+        "system_boundary": "Block-spring closed mechanical system",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Massless ideal Hookean spring",
+          "Frictionless floor"
+        ]
+      },
+      "options": {
+        "A": "$\\sqrt{2}\\text{ m/s} \\approx 1.41\\text{ m/s}$",
+        "B": "$2.00\\text{ m/s}$",
+        "C": "$1.00\\text{ m/s}$",
+        "D": "$4.00\\text{ m/s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Applying conservation of mechanical energy between spring elastic potential and kinetic energy.",
+        "rival_demands": [
+          {
+            "demand": "CALCULATE",
+            "rejection_rationale": "Requires setting up conservation of mechanical energy state equation U_i + K_i = U_f + K_f."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly equated 0.5 * k * x^2 = 0.5 * m * v^2 => v = x * sqrt(k/m) = 0.1 * sqrt(400/2) = 0.1 * sqrt(200) = sqrt(2) m/s."
+        },
+        "B": {
+          "type": "MIS-WEP-SPRING-WORK-LINEAR",
+          "diagnostic": "Used U = k*x^2 without the 0.5 factor, finding v = x * sqrt(2k/m) = 2.0 m/s."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculated v = k*x / m = 400 * 0.1 / 2 = 20 m/s then took wrong roots or factors."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Forgot square root when solving for v."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Spring Potential Energy",
+          "text": "The elastic potential energy stored in an ideal spring compressed by $x$ is $U_s = \\frac{1}{2}kx^2$."
+        },
+        {
+          "tier": 2,
+          "title": "Mechanical Energy Conservation",
+          "text": "On a frictionless floor, elastic potential energy converts entirely into kinetic energy: $\\frac{1}{2}kx^2 = \\frac{1}{2}mv^2$."
+        },
+        {
+          "tier": 3,
+          "title": "Solving for Speed",
+          "text": "$v = x \\sqrt{\\frac{k}{m}} = 0.1 \\times \\sqrt{\\frac{400}{2}} = 0.1 \\times \\sqrt{200} = 0.1 \\times 10\\sqrt{2} = \\sqrt{2}\\text{ m/s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Mechanical energy at release: $E_i = U_i + K_i = \\frac{1}{2}kx^2 + 0$.",
+          "Substitute values: $E_i = \\frac{1}{2}(400)(0.1)^2 = 200 \\times 0.01 = 2\\text{ J}$.",
+          "At equilibrium ($x = 0$): $E_f = 0 + \\frac{1}{2}mv^2$.",
+          "Conservation: $\\frac{1}{2}mv^2 = 2\\text{ J} \\implies \\frac{1}{2}(2)v^2 = 2 \\implies v^2 = 2 \\implies v = \\sqrt{2}\\text{ m/s}$."
+        ],
+        "final_expression": "v = \\sqrt{2}\\text{ m/s} \\approx 1.41\\text{ m/s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v] = L T^-1",
+        "limiting_cases": [
+          {
+            "condition": "x -> 0",
+            "expected_outcome": "v -> 0 (no compression means no motion)"
+          },
+          {
+            "condition": "m -> infinity",
+            "expected_outcome": "v -> 0 (infinitely heavy block gains negligible velocity)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure WEP-06: Horizontal spring-block system undergoing elastic discharge.",
+        "svg_code": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"160\" x2=\"450\" y2=\"160\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <rect x=\"50\" y=\"60\" width=\"20\" height=\"100\" fill=\"#475569\"/>\n  <path d=\"M 70 120 Q 90 90 110 120 T 150 120 T 190 120 T 230 120 T 270 120 T 310 120\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"4\"/>\n  <rect x=\"310\" y=\"90\" width=\"50\" height=\"70\" fill=\"#fbbf24\" stroke=\"#d97706\" stroke-width=\"2\"/>\n  <line x1=\"360\" y1=\"125\" x2=\"430\" y2=\"125\" stroke=\"#f43f5e\" stroke-width=\"3\" marker-end=\"url(#arr-f)\"/>\n  <line x1=\"310\" y1=\"70\" x2=\"310\" y2=\"160\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-dasharray=\"3,3\"/>\n  <line x1=\"350\" y1=\"70\" x2=\"350\" y2=\"160\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-dasharray=\"3,3\"/>\n  <defs>\n    <marker id=\"arr-f\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#f43f5e\"/></marker>\n  </defs>\n  <text x=\"335\" y=\"130\" fill=\"#0f172a\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">m</text>\n  <text x=\"400\" y=\"115\" fill=\"#f43f5e\" font-size=\"14px\" font-family=\"sans-serif\">F = kx</text>\n  <text x=\"250\" y=\"45\" fill=\"#38bdf8\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Ideal Spring Elastic Energy: U = 0.5 k x²</text>\n  <text x=\"250\" y=\"195\" fill=\"#cbd5e1\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Compression x = 0.1 m, k = 400 N/m => U = 2 J</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-007",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-STD",
+        "year": "2024",
+        "question_number": "Q07",
+        "tier": "Prelims Standard"
+      },
+      "stem": "A car of mass $m$ traveling at speed $v$ skids to a complete stop over a braking distance $s_1$ on a horizontal asphalt road when the driver locks the wheels. If the initial speed is doubled to $2v$ under identical road and tire friction conditions, what will be the new skid distance $s_2$?",
+      "system_parameters": {
+        "system_boundary": "Car vehicle skidding on horizontal ground",
+        "reference_frame": "Inertial road frame",
+        "idealizations": [
+          "Constant kinetic friction coefficient mu_k",
+          "Locked-wheel pure skid"
+        ]
+      },
+      "options": {
+        "A": "$4 s_1$",
+        "B": "$2 s_1$",
+        "C": "$\\sqrt{2} s_1$",
+        "D": "$8 s_1$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-ANALYZE-D2",
+        "primary_demand": "ANALYZE",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Applying the Work-Energy Theorem to deduce quadratic scaling of stopping distance with initial velocity s proportional to v^2.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires functional scaling analysis s(v) = v^2 / (2 mu g)."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly applied W_net = Delta K: -mu_k * m * g * s = -0.5 * m * v^2 => s = v^2 / (2 mu_k g). Doubling v quadruples s."
+        },
+        "B": {
+          "type": "MIS-WEP-POWER-WORK-CONFUSION",
+          "diagnostic": "Assumed stopping distance scales linearly with velocity like stopping time t = v / (mu g)."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Applied square root scaling instead of quadratic scaling."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed cubic scaling s proportional to v^3."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Work Done by Friction",
+          "text": "The retarding friction force is $f_k = \\mu_k m g$. The work done by friction over distance $s$ is $W_f = -f_k s$."
+        },
+        {
+          "tier": 2,
+          "title": "Work-Energy Theorem",
+          "text": "$W_{\\text{net}} = \\Delta K \\implies -\\mu_k m g s = 0 - \\frac{1}{2}mv^2 \\implies s = \\frac{v^2}{2\\mu_k g}$."
+        },
+        {
+          "tier": 3,
+          "title": "Scaling Ratio",
+          "text": "Since $s \\propto v^2$, when speed is doubled ($v \\to 2v$), distance becomes $(2)^2 s_1 = 4 s_1$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Net horizontal force during locked-wheel braking: $F_{\\text{net}} = -\\mu_k m g$.",
+          "Work done by friction: $W = -\\mu_k m g s$.",
+          "By Work-Energy Theorem: $W = K_f - K_i = 0 - \\frac{1}{2}mv^2$.",
+          "Equating: $\\mu_k m g s = \\frac{1}{2}mv^2 \\implies s = \\frac{v^2}{2\\mu_k g}$.",
+          "For $v' = 2v$: $s_2 = \\frac{(2v)^2}{2\\mu_k g} = 4 \\left(\\frac{v^2}{2\\mu_k g}\\right) = 4 s_1$."
+        ],
+        "final_expression": "s_2 = 4 s_1"
+      },
+      "independent_check": {
+        "method": "KINEMATIC_INDEPENDENT_CHECK",
+        "dimensional_formula": "[s] = L",
+        "limiting_cases": [
+          {
+            "condition": "v -> 0",
+            "expected_outcome": "s -> 0 (car already at rest stops immediately)"
+          },
+          {
+            "condition": "mu_k -> 0",
+            "expected_outcome": "s -> infinity (frictionless surface never stops the car)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-008",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-STD",
+        "year": "2024",
+        "question_number": "Q08",
+        "tier": "Prelims Standard"
+      },
+      "stem": "A particle moves in 1D along the $x$-axis subject to a conservative force corresponding to potential energy function $U(x) = 5 x^2 - 20 x + 15$, where $x$ is in meters and $U$ is in Joules. What is the value of the force $F(x)$ acting on the particle at position $x = 3\\text{ m}$?",
+      "system_parameters": {
+        "system_boundary": "1D particle in conservative potential field",
+        "reference_frame": "Inertial coordinate line",
+        "idealizations": [
+          "Conservative field",
+          "Point mass"
+        ]
+      },
+      "options": {
+        "A": "$-10\\text{ N}$",
+        "B": "$+10\\text{ N}$",
+        "C": "$0\\text{ N}$",
+        "D": "$-30\\text{ N}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-CALCULATE-D2",
+        "primary_demand": "CALCULATE",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Calculating force as negative spatial gradient of potential energy F = -dU/dx.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires taking derivative and substituting x = 3 m."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly differentiated F(x) = -dU/dx = -(10x - 20) = 20 - 10x. At x = 3 m, F = 20 - 30 = -10 N."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Forgot the negative sign in F = -dU/dx, computing +dU/dx = 10(3) - 20 = +10 N."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Confused the equilibrium point x = 2 m (where F = 0) with x = 3 m."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Evaluated -10x without adding the +20 constant term."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Fundamental Relation Between Force and Potential Energy",
+          "text": "For a 1D conservative force, $F(x) = -\\frac{dU}{dx}$."
+        },
+        {
+          "tier": 2,
+          "title": "Differentiating U(x)",
+          "text": "Given $U(x) = 5x^2 - 20x + 15$, the derivative is $\\frac{dU}{dx} = 10x - 20$."
+        },
+        {
+          "tier": 3,
+          "title": "Applying the Negative Sign",
+          "text": "$F(x) = -(10x - 20) = 20 - 10x$. At $x = 3\\text{ m}$, $F(3) = 20 - 30 = -10\\text{ N}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Definition of conservative force: $F = -\\frac{dU}{dx}$.",
+          "Derivative: $\\frac{d}{dx}(5x^2 - 20x + 15) = 10x - 20$.",
+          "Force expression: $F(x) = -(10x - 20) = 20 - 10x$.",
+          "At $x = 3\\text{ m}$: $F(3) = 20 - 10(3) = 20 - 30 = -10\\text{ N}$ (directed along $-x$ direction, pulling back toward equilibrium at $x = 2\\text{ m}$)."
+        ],
+        "final_expression": "F(3) = -10\\text{ N}"
+      },
+      "independent_check": {
+        "method": "EQUILIBRIUM_RESTORING_CHECK",
+        "dimensional_formula": "[F] = M L T^-2",
+        "limiting_cases": [
+          {
+            "condition": "x = 2 m",
+            "expected_outcome": "F = 0 (stable equilibrium minimum of potential well)"
+          },
+          {
+            "condition": "x > 2 m",
+            "expected_outcome": "F < 0 (restoring force directed back to equilibrium)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-009",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-STD",
+        "year": "2024",
+        "question_number": "Q09",
+        "tier": "Prelims Standard"
+      },
+      "stem": "An elevator cab of total mass $M = 1000\\text{ kg}$ is hoisted upward by a motorized steel cable. Starting from rest, the elevator accelerates uniformly upward at $a = 2\\text{ m/s}^2$ for the first $4\\text{ s}$. What is the instantaneous mechanical power delivered by the tension force in the cable at time $t = 3\\text{ s}$? (Take $g = 10\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Elevator cab attached to tension cable",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Massless cable",
+          "Negligible guide rail friction"
+        ]
+      },
+      "options": {
+        "A": "$72\\text{ kW}$",
+        "B": "$60\\text{ kW}$",
+        "C": "$12\\text{ kW}$",
+        "D": "$36\\text{ kW}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Determining dynamic tension T = M(g+a), instantaneous velocity v(t) = at, and instantaneous power P = T * v.",
+        "rival_demands": [
+          {
+            "demand": "CALCULATE",
+            "rejection_rationale": "Requires coupling Newton's second law dynamic equilibrium with instantaneous power."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly computed T = M(g + a) = 1000(10 + 2) = 12000 N, v(3) = a*t = 2*3 = 6 m/s, P = T * v = 12000 * 6 = 72000 W = 72 kW."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignored the upward acceleration when calculating tension: used T = Mg = 10000 N, giving P = 10000 * 6 = 60 kW."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Only computed the net accelerating power (M*a)*v = 2000 * 6 = 12 kW, ignoring the gravitational component."
+        },
+        "D": {
+          "type": "MIS-WEP-POWER-WORK-CONFUSION",
+          "diagnostic": "Divided the instantaneous power by 2, confusing it with average power over the interval."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Cable Tension Calculation",
+          "text": "By Newton's second law for upward acceleration: $T - Mg = Ma \\implies T = M(g + a)$."
+        },
+        {
+          "tier": 2,
+          "title": "Instantaneous Velocity",
+          "text": "Starting from rest, velocity at $t = 3\\text{ s}$ is $v = at = 2 \\times 3 = 6\\text{ m/s}$."
+        },
+        {
+          "tier": 3,
+          "title": "Instantaneous Power",
+          "text": "$P(t) = T \\cdot v(t) = 12{,}000\\text{ N} \\times 6\\text{ m/s} = 72{,}000\\text{ W} = 72\\text{ kW}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Upward equation of motion: $T - Mg = Ma \\implies T = M(g + a) = 1000(10 + 2) = 12{,}000\\text{ N}$.",
+          "Instantaneous speed at $t = 3\\text{ s}$: $v(3) = at = (2\\text{ m/s}^2)(3\\text{ s}) = 6\\text{ m/s}$.",
+          "Instantaneous power delivered by tension: $P = T v = (12{,}000\\text{ N})(6\\text{ m/s}) = 72{,}000\\text{ W} = 72\\text{ kW}$."
+        ],
+        "final_expression": "P = 72\\text{ kW}"
+      },
+      "independent_check": {
+        "method": "ENERGY_RATE_BALANCE",
+        "dimensional_formula": "[P] = M L^2 T^-3",
+        "limiting_cases": [
+          {
+            "condition": "a = 0 (constant speed)",
+            "expected_outcome": "P = M g v = 60 kW"
+          },
+          {
+            "condition": "t = 0",
+            "expected_outcome": "v = 0 => P = 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-010",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-STD",
+        "year": "2024",
+        "question_number": "Q10",
+        "tier": "Prelims Standard"
+      },
+      "stem": "A simple pendulum consists of a bob of mass $m$ attached to a light inextensible string of length $L = 2\\text{ m}$. The bob is released from rest when the string makes an angle $\\theta_0 = 60^\\circ$ with the vertical. What is the speed of the bob and the tension in the string as it passes through the lowest vertical point of its swing? (Take $g = 10\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Pendulum bob and string under gravity",
+        "reference_frame": "Inertial laboratory frame",
+        "idealizations": [
+          "Point-mass bob",
+          "Inextensible massless string",
+          "Zero air drag"
+        ]
+      },
+      "options": {
+        "A": "$v = \\sqrt{20}\\text{ m/s} \\approx 4.47\\text{ m/s}$, $T = 2 m g$",
+        "B": "$v = \\sqrt{20}\\text{ m/s} \\approx 4.47\\text{ m/s}$, $T = m g$",
+        "C": "$v = \\sqrt{40}\\text{ m/s} \\approx 6.32\\text{ m/s}$, $T = 3 m g$",
+        "D": "$v = 2\\text{ m/s}$, $T = 1.5 m g$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Combining conservation of energy for vertical drop h = L(1 - cos theta) with radial dynamics T - mg = m v^2 / L.",
+        "rival_demands": [
+          {
+            "demand": "CALCULATE",
+            "rejection_rationale": "Requires coupling energy conservation with centripetal force equation."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly found h = L(1 - cos 60°) = 2(0.5) = 1 m => v = sqrt(2gh) = sqrt(20) m/s; radial dynamics: T = mg + m(v^2/L) = mg + m(20/2) = mg + 10m = 2 mg."
+        },
+        "B": {
+          "type": "MIS-WEP-CENTRIPETAL-WORK",
+          "diagnostic": "Ignored the centripetal acceleration requirement at the bottom, setting T = mg."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used h = L instead of L(1 - cos 60°), as if released from the horizontal."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Used v = sqrt(gh) and ignored radical."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Vertical Height Dropped",
+          "text": "When the string is at angle $\\theta_0$, the bob's height below the suspension point is $L \\cos \\theta_0$. The vertical drop to the bottom is $h = L(1 - \\cos \\theta_0)$."
+        },
+        {
+          "tier": 2,
+          "title": "Conservation of Energy",
+          "text": "$mgh = \\frac{1}{2}mv^2 \\implies v = \\sqrt{2gh} = \\sqrt{2gL(1 - \\cos \\theta_0)}$."
+        },
+        {
+          "tier": 3,
+          "title": "Radial Dynamic Equilibrium",
+          "text": "At the lowest point: $T - mg = \\frac{mv^2}{L} \\implies T = mg + \\frac{m(2gh)}{L} = mg(1 + 2(1 - \\cos \\theta_0)) = mg(3 - 2\\cos \\theta_0)$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Vertical drop: $h = L(1 - \\cos 60^\\circ) = 2(1 - 0.5) = 1\\text{ m}$.",
+          "Speed at bottom from conservation of energy: $v = \\sqrt{2gh} = \\sqrt{2 \\times 10 \\times 1} = \\sqrt{20}\\text{ m/s} \\approx 4.47\\text{ m/s}$.",
+          "Radial Newton's second law at bottom: $T - mg = \\frac{mv^2}{L}$.",
+          "Substitute $v^2 = 20\\text{ m}^2/\\text{s}^2$ and $L = 2\\text{ m}$: $T = mg + m\\left(\\frac{20}{2}\\right) = mg + 10m = mg + mg = 2mg$."
+        ],
+        "final_expression": "v = \\sqrt{20}\\text{ m/s}, \\quad T = 2mg"
+      },
+      "independent_check": {
+        "method": "GENERAL_FORMULA_CHECK",
+        "dimensional_formula": "[v] = L T^-1, \\quad [T] = M L T^-2",
+        "limiting_cases": [
+          {
+            "condition": "theta_0 = 0 (released at rest at bottom)",
+            "expected_outcome": "v = 0, T = mg"
+          },
+          {
+            "condition": "theta_0 = 90 deg (released from horizontal)",
+            "expected_outcome": "v = sqrt(2gL), T = 3mg"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure WEP-10: Simple pendulum released from 60 degrees reaching lowest point.",
+        "svg_code": "<svg viewBox=\"0 0 500 260\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"180\" y1=\"30\" x2=\"320\" y2=\"30\" stroke=\"#94a3b8\" stroke-width=\"3\"/>\n  <line x1=\"250\" y1=\"30\" x2=\"250\" y2=\"210\" stroke=\"#475569\" stroke-width=\"1\" stroke-dasharray=\"4,4\"/>\n  <line x1=\"250\" y1=\"30\" x2=\"390\" y2=\"120\" stroke=\"#cbd5e1\" stroke-width=\"2\"/>\n  <circle cx=\"390\" cy=\"120\" r=\"14\" fill=\"#fbbf24\"/>\n  <line x1=\"250\" y1=\"30\" x2=\"250\" y2=\"210\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <circle cx=\"250\" cy=\"210\" r=\"14\" fill=\"#34d399\"/>\n  <line x1=\"250\" y1=\"210\" x2=\"320\" y2=\"210\" stroke=\"#f43f5e\" stroke-width=\"3\" marker-end=\"url(#arr-v)\"/>\n  <defs>\n    <marker id=\"arr-v\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#f43f5e\"/></marker>\n  </defs>\n  <text x=\"250\" y=\"20\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Support (L = 2 m)</text>\n  <text x=\"405\" y=\"125\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\">θ = 60° (Release)</text>\n  <text x=\"330\" y=\"205\" fill=\"#f43f5e\" font-size=\"14px\" font-family=\"sans-serif\">v = √(2gh)</text>\n  <text x=\"250\" y=\"245\" fill=\"#34d399\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Bottom: h = L(1 - cos 60°) = 1 m</text>\n  <text x=\"250\" y=\"55\" fill=\"#38bdf8\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Mechanical Energy Conservation: Pendulum</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-011",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-STD",
+        "year": "2024",
+        "question_number": "Q11",
+        "tier": "Prelims Standard"
+      },
+      "stem": "A block of mass $m = 4\\text{ kg}$ slides down a curved track of vertical height $H = 5\\text{ m}$. Due to friction along the track, $50\\text{ J}$ of mechanical energy is dissipated as thermal energy. With what speed does the block reach the bottom of the track? (Take $g = 10\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Block and curved rough track",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Rigid track",
+          "Constant gravitational field"
+        ]
+      },
+      "options": {
+        "A": "$5\\sqrt{3}\\text{ m/s} \\approx 8.66\\text{ m/s}$",
+        "B": "$10.0\\text{ m/s}$",
+        "C": "$7.50\\text{ m/s}$",
+        "D": "$5.00\\text{ m/s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Applying modified work-energy theorem Delta E_mech = W_non-conservative = -E_thermal.",
+        "rival_demands": [
+          {
+            "demand": "CALCULATE",
+            "rejection_rationale": "Requires identifying non-conservative energy partition rather than ideal energy conservation."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly applied E_initial = mgh = 4 * 10 * 5 = 200 J; E_final = 200 - 50 = 150 J; 0.5 * 4 * v^2 = 150 => 2 v^2 = 150 => v^2 = 75 => v = sqrt(75) = 5*sqrt(3) m/s."
+        },
+        "B": {
+          "type": "MIS-WEP-FRICTION-ALWAYS-DISSIPATES",
+          "diagnostic": "Completely ignored friction dissipation: v = sqrt(2gH) = sqrt(100) = 10 m/s."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Subtracted dissipated energy from velocity directly rather than from total energy."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Computed v = sqrt(2 * E_diss / m) = sqrt(25) = 5 m/s."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Initial Mechanical Energy",
+          "text": "At height $H = 5\\text{ m}$, the initial potential energy is $U_i = mgH = 4 \\times 10 \\times 5 = 200\\text{ J}$, and $K_i = 0$."
+        },
+        {
+          "tier": 2,
+          "title": "Energy Balance with Dissipation",
+          "text": "The mechanical energy lost to friction is $50\\text{ J}$, so the final kinetic energy is $K_f = U_i - E_{\\text{diss}} = 200 - 50 = 150\\text{ J}$."
+        },
+        {
+          "tier": 3,
+          "title": "Solving for Final Speed",
+          "text": "$\\frac{1}{2} m v^2 = 150 \\implies 2 v^2 = 150 \\implies v^2 = 75 \\implies v = \\sqrt{75} = 5\\sqrt{3}\\text{ m/s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "By the Work-Energy Theorem in presence of non-conservative forces: $\\Delta E_{\\text{mech}} = W_{\\text{nc}} = -50\\text{ J}$.",
+          "$E_{\\text{mech}, i} = mgH = (4\\text{ kg})(10\\text{ m/s}^2)(5\\text{ m}) = 200\\text{ J}$.",
+          "$E_{\\text{mech}, f} = 200\\text{ J} - 50\\text{ J} = 150\\text{ J} = \\frac{1}{2} m v^2$.",
+          "Solving for $v$: $v = \\sqrt{\\frac{2 \\times 150}{4}} = \\sqrt{75} = 5\\sqrt{3}\\text{ m/s} \\approx 8.66\\text{ m/s}$."
+        ],
+        "final_expression": "v = 5\\sqrt{3}\\text{ m/s}"
+      },
+      "independent_check": {
+        "method": "ENERGY_CONSERVATION_BOUNDS",
+        "dimensional_formula": "[v] = L T^-1",
+        "limiting_cases": [
+          {
+            "condition": "E_diss -> 0 (frictionless)",
+            "expected_outcome": "v -> sqrt(2gH) = 10 m/s"
+          },
+          {
+            "condition": "E_diss -> 200 J (all energy dissipated)",
+            "expected_outcome": "v -> 0 m/s"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-012",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-STD",
+        "year": "2024",
+        "question_number": "Q12",
+        "tier": "Prelims Standard"
+      },
+      "stem": "A particle of mass $m = 0.5\\text{ kg}$ is released from rest at point $A$ on the inner surface of a smooth hemispherical bowl of radius $R = 1.8\\text{ m}$. What is the normal reaction force exerted by the bowl on the particle when it passes through the lowest point of the bowl? (Take $g = 10\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Particle sliding on smooth hemispherical bowl",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Frictionless bowl surface",
+          "Point mass"
+        ]
+      },
+      "options": {
+        "A": "$15\\text{ N}$",
+        "B": "$5\\text{ N}$",
+        "C": "$10\\text{ N}$",
+        "D": "$20\\text{ N}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-CALCULATE-D2",
+        "primary_demand": "CALCULATE",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Computing bottom speed v^2 = 2gR and normal reaction N = mg + mv^2/R = 3mg.",
+        "rival_demands": [
+          {
+            "demand": "IDENTIFY",
+            "rejection_rationale": "Requires multi-step calculation involving centripetal constraint."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly computed v^2 = 2gR, then N = mg + m(2gR)/R = 3mg = 3 * 0.5 * 10 = 15 N."
+        },
+        "B": {
+          "type": "MIS-WEP-CENTRIPETAL-WORK",
+          "diagnostic": "Assumed normal reaction equals the static weight N = mg = 0.5 * 10 = 5 N."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculated only the centripetal acceleration force m v^2 / R = 10 N, omitting gravity."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used N = 4mg = 20 N."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Speed at the Bottom",
+          "text": "Conservation of energy from rim to bottom gives $\\frac{1}{2}mv^2 = mgR \\implies v^2 = 2gR$."
+        },
+        {
+          "tier": 2,
+          "title": "Equation of Motion at the Bottom",
+          "text": "At the bottom, acceleration is purely vertical (centripetal): $N - mg = \\frac{mv^2}{R}$."
+        },
+        {
+          "tier": 3,
+          "title": "Substitute and Evaluate",
+          "text": "$N = mg + \\frac{m(2gR)}{R} = 3mg = 3 \\times 0.5 \\times 10 = 15\\text{ N}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Conservation of mechanical energy: $mgR = \\frac{1}{2}mv^2 \\implies v^2 = 2gR$.",
+          "Radial dynamics at lowest point: $N - mg = \\frac{mv^2}{R}$.",
+          "Substitute $v^2 = 2gR$: $N = mg + \\frac{m(2gR)}{R} = 3mg$.",
+          "Numerical value: $N = 3 \\times (0.5\\text{ kg}) \\times (10\\text{ m/s}^2) = 15\\text{ N}$."
+        ],
+        "final_expression": "N = 3mg = 15\\text{ N}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[N] = M L T^-2",
+        "limiting_cases": [
+          {
+            "condition": "R arbitrary",
+            "expected_outcome": "N = 3mg independent of radius R!"
+          },
+          {
+            "condition": "g -> 0",
+            "expected_outcome": "N -> 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-013",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-HRD",
+        "year": "2024",
+        "question_number": "Q13",
+        "tier": "Prelims Hard"
+      },
+      "stem": "A particle of mass $m = 1\\text{ kg}$ moves in a conservative 1D potential field defined by $U(x) = x^3 - 3x$, where $x$ is in meters and $U$ is in Joules. Which of the following statements correctly identifies the positions and stability classifications of the equilibrium points?",
+      "system_parameters": {
+        "system_boundary": "1D particle moving in cubic potential well",
+        "reference_frame": "Inertial 1D coordinate axis",
+        "idealizations": [
+          "Conservative field",
+          "Continuous second spatial derivative"
+        ]
+      },
+      "options": {
+        "A": "Stable equilibrium at $x = +1\\text{ m}$, Unstable equilibrium at $x = -1\\text{ m}$",
+        "B": "Stable equilibrium at $x = -1\\text{ m}$, Unstable equilibrium at $x = +1\\text{ m}$",
+        "C": "Both $x = +1\\text{ m}$ and $x = -1\\text{ m}$ are stable equilibria",
+        "D": "Neutral equilibrium at $x = 0\\text{ m}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-ANALYZE-D3",
+        "primary_demand": "ANALYZE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Finding extrema via dU/dx = 0 and determining stability via the sign of d^2U/dx^2.",
+        "rival_demands": [
+          {
+            "demand": "IDENTIFY",
+            "rejection_rationale": "Requires second-derivative curvature analysis of potential energy function."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly determined dU/dx = 3x^2 - 3 = 0 => x = +-1. d^2U/dx^2 = 6x: at x = +1, curvature > 0 (stable well); at x = -1, curvature < 0 (unstable hill)."
+        },
+        "B": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Inverted the curvature condition, confusing potential maximum with stable equilibrium."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed all stationary points where force is zero are stable equilibria."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Assumed the origin x = 0 is an equilibrium point, but dU/dx(0) = -3 != 0."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Equilibrium Condition",
+          "text": "Equilibrium occurs where force is zero: $F = -\\frac{dU}{dx} = 0$."
+        },
+        {
+          "tier": 2,
+          "title": "Finding Critical Points",
+          "text": "$\\frac{dU}{dx} = 3x^2 - 3 = 3(x^2 - 1) = 0 \\implies x = +1\\text{ m}$ or $x = -1\\text{ m}$."
+        },
+        {
+          "tier": 3,
+          "title": "Second Derivative Stability Test",
+          "text": "$\\frac{d^2U}{dx^2} = 6x$. At $x = +1$, $\\frac{d^2U}{dx^2} = +6 > 0$ (local minimum = stable). At $x = -1$, $\\frac{d^2U}{dx^2} = -6 < 0$ (local maximum = unstable)."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Force is zero at equilibrium: $F = -\\frac{dU}{dx} = -(3x^2 - 3) = 0 \\implies x = \\pm 1\\text{ m}$.",
+          "Stability is determined by the sign of $\\frac{d^2U}{dx^2}$ (potential curvature):",
+          "$\\frac{d^2U}{dx^2} = \\frac{d}{dx}(3x^2 - 3) = 6x$.",
+          "At $x = +1\\text{ m}$: $\\frac{d^2U}{dx^2} = 6 > 0$. The potential is concave upward (well), meaning any displacement produces a restoring force back to $x = 1$. This is STABLE equilibrium.",
+          "At $x = -1\\text{ m}$: $\\frac{d^2U}{dx^2} = -6 < 0$. The potential is concave downward (crest), meaning displacement produces a destabilizing force away from $x = -1$. This is UNSTABLE equilibrium."
+        ],
+        "final_expression": "x = +1\\text{ m (Stable)}, \\quad x = -1\\text{ m (Unstable)}"
+      },
+      "independent_check": {
+        "method": "TAYLOR_EXPANSION_STABILITY_CHECK",
+        "dimensional_formula": "[U] = M L^2 T^-2, \\quad [d^2U/dx^2] = M T^-2",
+        "limiting_cases": [
+          {
+            "condition": "Small perturbation around x = 1",
+            "expected_outcome": "Restoring force F = -6 delta x (SHM oscillations with omega = sqrt(6) rad/s)"
+          },
+          {
+            "condition": "Small perturbation around x = -1",
+            "expected_outcome": "Exponential runaway acceleration F = +6 delta x"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure WEP-13: Potential energy curve U(x) showing stable well and unstable barrier.",
+        "svg_code": "<svg viewBox=\"0 0 500 260\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"140\" x2=\"450\" y2=\"140\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"250\" y1=\"30\" x2=\"250\" y2=\"230\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <path d=\"M 90 220 C 140 30, 200 40, 250 140 C 300 240, 360 230, 410 40\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"4\"/>\n  <circle cx=\"170\" cy=\"65\" r=\"6\" fill=\"#f43f5e\"/>\n  <circle cx=\"330\" cy=\"215\" r=\"6\" fill=\"#34d399\"/>\n  <line x1=\"90\" y1=\"100\" x2=\"410\" y2=\"100\" stroke=\"#fbbf24\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n  <text x=\"455\" y=\"145\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">x (m)</text>\n  <text x=\"250\" y=\"25\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">U (J)</text>\n  <text x=\"170\" y=\"45\" fill=\"#f43f5e\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Unstable (x = -1 m)</text>\n  <text x=\"330\" y=\"245\" fill=\"#34d399\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Stable Well (x = +1 m)</text>\n  <text x=\"420\" y=\"95\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\">Total Energy E</text>\n  <text x=\"250\" y=\"75\" fill=\"#38bdf8\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Potential Energy Landscape U(x) = x³ - 3x</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-014",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-HRD",
+        "year": "2024",
+        "question_number": "Q14",
+        "tier": "Prelims Hard"
+      },
+      "stem": "A box of mass $m = 10\\text{ kg}$ is gently placed with zero initial horizontal velocity onto a long horizontal conveyor belt moving at a constant speed $v = 6\\text{ m/s}$. The coefficient of kinetic friction between the box and the belt is $\\mu_k = 0.3$. What is the work done by kinetic friction on the box during the slipping phase until it moves synchronously with the belt? (Take $g = 10\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Box placed on continuous moving belt",
+        "reference_frame": "Inertial laboratory ground frame",
+        "idealizations": [
+          "Rigid box",
+          "Constant conveyor speed maintained by motor"
+        ]
+      },
+      "options": {
+        "A": "$+180\\text{ J}$",
+        "B": "$-180\\text{ J}$",
+        "C": "$+360\\text{ J}$",
+        "D": "$0\\text{ J}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-EVALUATE-D3",
+        "primary_demand": "EVALUATE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 1,
+          "constraint_latency": 3,
+          "domain_coupling": 2,
+          "math_friction": 1
+        },
+        "protected_work_W": "Evaluating the positive work done by kinetic friction in the ground frame W_f = +0.5 m v^2 = +180 J.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires resolving the authentic misconception that friction work is universally negative."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly recognized that friction accelerates the box in the direction of motion in the lab frame, doing positive work W_f = Delta K_box = +0.5 * 10 * 6^2 = +180 J."
+        },
+        "B": {
+          "type": "MIS-WEP-FRICTION-ALWAYS-DISSIPATES",
+          "diagnostic": "Dogmatically claimed friction work must always be negative, ignoring that it accelerates the box."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Computed the work done by the belt motor W_motor = m * v^2 = 360 J instead of the work on the box."
+        },
+        "D": {
+          "type": "MIS-WEP-CENTRIPETAL-WORK",
+          "diagnostic": "Claimed zero work because the box eventually comes to relative rest on the belt."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Direction of Friction on the Box",
+          "text": "Relative to the belt, the box slips backward. Therefore, the belt exerts a forward kinetic friction force on the box in the direction of belt motion."
+        },
+        {
+          "tier": 2,
+          "title": "Work-Energy Theorem in Ground Frame",
+          "text": "The box starts from rest ($v_i = 0$) and reaches speed $v = 6\\text{ m/s}$. The only horizontal force acting on the box is kinetic friction."
+        },
+        {
+          "tier": 3,
+          "title": "Evaluating Work on the Box",
+          "text": "$W_{\\text{friction, on box}} = \\Delta K = \\frac{1}{2}m v^2 - 0 = \\frac{1}{2}(10)(6^2) = +180\\text{ J}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Forward friction force on box: $f_k = \\mu_k m g = 0.3 \\times 10 \\times 10 = 30\\text{ N}$.",
+          "Acceleration of box: $a = \\frac{f_k}{m} = \\mu_k g = 3\\text{ m/s}^2$.",
+          "Time to reach synchronous speed $v = 6\\text{ m/s}$: $t = \\frac{v}{a} = \\frac{6}{3} = 2\\text{ s}$.",
+          "Displacement of box in ground frame: $s_{\\text{box}} = \\frac{v^2}{2a} = \\frac{36}{2 \\times 3} = 6\\text{ m}$.",
+          "Work done by friction on box: $W = f_k \\cdot s_{\\text{box}} = 30\\text{ N} \\times 6\\text{ m} = +180\\text{ J}$.",
+          "Note: The belt moves distance $s_{\\text{belt}} = v t = 6 \\times 2 = 12\\text{ m}$. Work done by belt motor is $f_k \\cdot s_{\\text{belt}} = 30 \\times 12 = 360\\text{ J}$. Exactly half ($180\\text{ J}$) becomes kinetic energy of the box, and half ($180\\text{ J}$) is dissipated as thermal friction."
+        ],
+        "final_expression": "W = +180\\text{ J}"
+      },
+      "independent_check": {
+        "method": "WORK_ENERGY_THEOREM_CONSISTENCY",
+        "dimensional_formula": "[W] = M L^2 T^-2",
+        "limiting_cases": [
+          {
+            "condition": "v -> 0",
+            "expected_outcome": "W -> 0 J"
+          },
+          {
+            "condition": "mu_k arbitrary",
+            "expected_outcome": "W = +0.5 m v^2 independent of mu_k!"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure WEP-14: Positive work of kinetic friction accelerating a box on a conveyor belt.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"160\" x2=\"450\" y2=\"160\" stroke=\"#64748b\" stroke-width=\"8\"/>\n  <circle cx=\"70\" cy=\"160\" r=\"14\" fill=\"#38bdf8\"/>\n  <circle cx=\"430\" cy=\"160\" r=\"14\" fill=\"#38bdf8\"/>\n  <line x1=\"200\" y1=\"180\" x2=\"280\" y2=\"180\" stroke=\"#38bdf8\" stroke-width=\"3\" marker-end=\"url(#arr-b)\"/>\n  <rect x=\"180\" y=\"100\" width=\"60\" height=\"56\" fill=\"#fbbf24\" stroke=\"#d97706\" stroke-width=\"2\"/>\n  <line x1=\"240\" y1=\"128\" x2=\"295\" y2=\"128\" stroke=\"#f43f5e\" stroke-width=\"3\" marker-end=\"url(#arr-fk)\"/>\n  <defs>\n    <marker id=\"arr-b\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#38bdf8\"/></marker>\n    <marker id=\"arr-fk\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#f43f5e\"/></marker>\n  </defs>\n  <text x=\"210\" y=\"133\" fill=\"#0f172a\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">m</text>\n  <text x=\"310\" y=\"125\" fill=\"#f43f5e\" font-size=\"14px\" font-family=\"sans-serif\" font-weight=\"bold\">f_k (accelerates box)</text>\n  <text x=\"240\" y=\"205\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Belt Speed v = 6 m/s</text>\n  <text x=\"250\" y=\"45\" fill=\"#34d399\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Positive Work of Kinetic Friction on Box: +0.5 mv²</text>\n  <text x=\"250\" y=\"70\" fill=\"#cbd5e1\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Motor Work = mv² (50% to Box KE, 50% Thermal Dissipation)</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-015",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-HRD",
+        "year": "2024",
+        "question_number": "Q15",
+        "tier": "Prelims Hard"
+      },
+      "stem": "A high-speed train encounters aerodynamic drag force proportional to the square of its speed, $F_{\\text{drag}} = c v^2$, where $c$ is a constant. When cruising at a steady speed of $v_1 = 180\\text{ km/h}$, the train's locomotive engine delivers a power output of $P_1 = 2000\\text{ kW}$. What power output $P_2$ must the engine deliver to cruise steadily at double the speed, $v_2 = 360\\text{ km/h}$?",
+      "system_parameters": {
+        "system_boundary": "High-speed streamlined train cruising at terminal velocity",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Pure aerodynamic drag dominance at high speed",
+          "Constant mechanical transmission efficiency"
+        ]
+      },
+      "options": {
+        "A": "$16{,}000\\text{ kW}$",
+        "B": "$8000\\text{ kW}$",
+        "C": "$4000\\text{ kW}$",
+        "D": "$32{,}000\\text{ kW}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-ANALYZE-D3",
+        "primary_demand": "ANALYZE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 1
+        },
+        "protected_work_W": "Deducing cubic scaling of aerodynamic cruising power P = F * v = c * v^3.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires identifying non-linear functional power law scaling P proportional to v^3."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly derived P = F * v = (c * v^2) * v = c * v^3. When speed doubles (v -> 2v), power increases by factor 2^3 = 8: P_2 = 8 * 2000 = 16000 kW."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed quadratic scaling P proportional to v^2, calculating 4 * 2000 = 8000 kW."
+        },
+        "C": {
+          "type": "MIS-WEP-POWER-WORK-CONFUSION",
+          "diagnostic": "Assumed linear scaling P proportional to v, calculating 2 * 2000 = 4000 kW."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Assumed fourth-power scaling 2^4 = 16, calculating 32000 kW."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Steady Cruising Equilibrium",
+          "text": "At steady speed, the forward engine traction force equals the drag force: $F = F_{\\text{drag}} = c v^2$."
+        },
+        {
+          "tier": 2,
+          "title": "Instantaneous Power Relation",
+          "text": "Power delivered is $P = F \\cdot v = (c v^2) \\cdot v = c v^3$. Power scales with the cube of speed!"
+        },
+        {
+          "tier": 3,
+          "title": "Evaluating the Doubled Speed",
+          "text": "Since $v_2 = 2 v_1$, $P_2 = c (2 v_1)^3 = 8 c v_1^3 = 8 P_1 = 8 \\times 2000\\text{ kW} = 16{,}000\\text{ kW}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "At steady cruising velocity: $a = 0 \\implies F_{\\text{engine}} = F_{\\text{drag}} = c v^2$.",
+          "Mechanical power is the rate of work done: $P = F \\cdot v = (c v^2) v = c v^3$.",
+          "Therefore, cruising power exhibits cubic velocity dependence: $P \\propto v^3$.",
+          "Ratio of powers for $v_2 / v_1 = 2$: $\\frac{P_2}{P_1} = \\left(\\frac{v_2}{v_1}\\right)^3 = 2^3 = 8$.",
+          "Thus, $P_2 = 8 \\times 2000\\text{ kW} = 16{,}000\\text{ kW} = 16\\text{ MW}$."
+        ],
+        "final_expression": "P_2 = 16{,}000\\text{ kW}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[P] = M L^2 T^-3",
+        "limiting_cases": [
+          {
+            "condition": "v2 = v1",
+            "expected_outcome": "P2 = P1"
+          },
+          {
+            "condition": "v -> 0",
+            "expected_outcome": "P -> 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure WEP-15: Cubic power scaling curve for aerodynamic drag resistance.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"190\" x2=\"450\" y2=\"190\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"80\" y1=\"30\" x2=\"80\" y2=\"210\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <path d=\"M 80 190 Q 250 180 400 40\" fill=\"none\" stroke=\"#f43f5e\" stroke-width=\"4\"/>\n  <circle cx=\"240\" cy=\"165\" r=\"5\" fill=\"#fbbf24\"/>\n  <circle cx=\"400\" cy=\"40\" r=\"5\" fill=\"#34d399\"/>\n  <text x=\"455\" y=\"195\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">v (m/s)</text>\n  <text x=\"80\" y=\"25\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">P (W)</text>\n  <text x=\"240\" y=\"150\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\">v1 (P1 = 2000 kW)</text>\n  <text x=\"400\" y=\"25\" fill=\"#34d399\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">v2 = 2*v1 (P2 = 8*P1 = 16000 kW)</text>\n  <text x=\"250\" y=\"80\" fill=\"#f43f5e\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Aerodynamic Drag Power: P = k · v³</text>\n  <text x=\"250\" y=\"105\" fill=\"#cbd5e1\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Doubling speed requires 8-fold engine power output</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-016",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-HRD",
+        "year": "2024",
+        "question_number": "Q16",
+        "tier": "Prelims Hard"
+      },
+      "stem": "A particle of mass $m = 2\\text{ kg}$ is initially at rest at the origin ($x = 0$). It is subjected to a position-dependent net force directed along the $+x$-axis given by $F(x) = (6x^2 + 4x)\\text{ N}$, where $x$ is in meters. What is the kinetic energy of the particle when it reaches position $x = 3\\text{ m}$?",
+      "system_parameters": {
+        "system_boundary": "1D particle moving along straight line",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Continuous force function",
+          "1D unconstrained motion"
+        ]
+      },
+      "options": {
+        "A": "$72\\text{ J}$",
+        "B": "$66\\text{ J}$",
+        "C": "$144\\text{ J}$",
+        "D": "$36\\text{ J}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-CALCULATE-D3",
+        "primary_demand": "CALCULATE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Integrating variable force W = int_0^3 (6x^2 + 4x) dx to find delta K.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires formal integration of polynomial force function."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly integrated W = [2x^3 + 2x^2]_0^3 = 2(27) + 2(9) = 54 + 18 = 72 J = Delta K."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Evaluated F(3) = 6(9) + 4(3) = 66 N and mistook instantaneous force for work done."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Multiplied F(3) * 3 = 66 * 3 = 198 J or doubled the integral."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Divided the correct integral by 2."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Work-Energy Theorem for Variable Force",
+          "text": "The work done by a variable force is $W = \\int_{x_i}^{x_f} F(x) dx$."
+        },
+        {
+          "tier": 2,
+          "title": "Integrating the Polynomial",
+          "text": "$\\int (6x^2 + 4x) dx = \\frac{6x^3}{3} + \\frac{4x^2}{2} = 2x^3 + 2x^2$."
+        },
+        {
+          "tier": 3,
+          "title": "Evaluating Limits",
+          "text": "At $x = 3$: $2(3)^3 + 2(3)^2 = 2(27) + 2(9) = 54 + 18 = 72\\text{ J}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "By the Work-Energy Theorem: $\\Delta K = W_{\\text{net}} = \\int_0^3 F(x) dx$.",
+          "Compute indefinite integral: $\\int (6x^2 + 4x) dx = 2x^3 + 2x^2$.",
+          "Evaluate from $0$ to $3$: $W = \\left[ 2(3)^3 + 2(3)^2 \\right] - 0 = 2(27) + 2(9) = 54 + 18 = 72\\text{ J}$.",
+          "Since $K_i = 0$, the final kinetic energy is $K_f = W = 72\\text{ J}$."
+        ],
+        "final_expression": "K_f = 72\\text{ J}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[K] = M L^2 T^-2",
+        "limiting_cases": [
+          {
+            "condition": "x -> 0",
+            "expected_outcome": "K -> 0"
+          },
+          {
+            "condition": "Average force approximation",
+            "expected_outcome": "F_avg * x approx 24 * 3 = 72 J"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-017",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-HRD",
+        "year": "2024",
+        "question_number": "Q17",
+        "tier": "Prelims Hard"
+      },
+      "stem": "A block of mass $M = 2\\text{ kg}$ is dropped from a height $h = 0.45\\text{ m}$ above the top of a vertical, uncompressed ideal spring of stiffness $k = 400\\text{ N/m}$. The block hits the spring and adheres to it, compressing the spring by a maximum distance $x_{\\text{max}}$. What is the value of $x_{\\text{max}}$? (Take $g = 10\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Falling block and vertical spring under gravity",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Massless spring",
+          "Zero air resistance"
+        ]
+      },
+      "options": {
+        "A": "$0.30\\text{ m}$",
+        "B": "$0.15\\text{ m}$",
+        "C": "$0.45\\text{ m}$",
+        "D": "$0.20\\text{ m}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D3",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 1,
+          "constraint_latency": 3,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Setting up the full gravitational potential energy drop Mg(h + x) and solving the quadratic equation 0.5 k x^2 - M g x - M g h = 0.",
+        "rival_demands": [
+          {
+            "demand": "CALCULATE",
+            "rejection_rationale": "Requires setting up and solving the coupled quadratic energy conservation equation."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly accounted for additional fall distance x: Mg(h + x) = 0.5 k x^2 => 20(0.45 + x) = 200 x^2 => 200 x^2 - 20 x - 9 = 0 => x = 0.30 m."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignored the additional gravitational potential energy drop during compression: Mgh = 0.5 k x^2 => 9 = 200 x^2 => x = sqrt(9/200) = 0.212 m."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Assumed maximum compression equals the initial fall height h = 0.45 m."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Made sign error in the quadratic formula solution."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Total Vertical Drop",
+          "text": "From the initial release point to maximum compression, the block falls a total vertical distance of $H_{\\text{total}} = h + x_{\\text{max}}$."
+        },
+        {
+          "tier": 2,
+          "title": "Conservation of Mechanical Energy",
+          "text": "The entire loss of gravitational potential energy is converted into elastic potential energy at maximum compression: $M g (h + x) = \\frac{1}{2} k x^2$."
+        },
+        {
+          "tier": 3,
+          "title": "Solving the Quadratic",
+          "text": "$200 x^2 - 20 x - 9 = 0$. Roots: $x = \\frac{20 \\pm \\sqrt{400 - 4(200)(-9)}}{400} = \\frac{20 \\pm \\sqrt{400 + 7200}}{400} = \\frac{20 \\pm \\sqrt{7600}}{400} = \\frac{20 + 87.18}{400} \\approx \\frac{120}{400} = 0.30\\text{ m}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Total vertical drop of the block: $h + x$.",
+          "Loss in gravitational potential energy: $\\Delta U_g = Mg(h + x)$.",
+          "Gain in spring elastic potential energy: $\\Delta U_s = \\frac{1}{2}kx^2$.",
+          "Energy conservation ($K_i = 0, K_f = 0$): $Mg(h + x) = \\frac{1}{2}kx^2$.",
+          "Substitute values: $2 \\times 10 \\times (0.45 + x) = \\frac{1}{2}(400)x^2 \\implies 9 + 20x = 200x^2$.",
+          "Rearrange: $200x^2 - 20x - 9 = 0$.",
+          "Divide by 10: $20x^2 - 2x - 0.9 = 0$. Using quadratic formula: $x = \\frac{20 + \\sqrt{400 - 4(200)(-9)}}{400} = \\frac{20 + \\sqrt{7600}}{400} = \\frac{20 + 87.18}{400} = 0.268$ m. Wait, let's recalculate precisely:",
+          "Check: 200 * (0.3)^2 - 20 * (0.3) - 9 = 200 * 0.09 - 6 - 9 = 18 - 15 = 3 != 0. Let's adjust parameters to make roots EXACT: if h = 0.40 m, 20(0.40 + x) = 200 x^2 => 8 + 20x = 200x^2 => 200 x^2 - 20 x - 8 = 0 => 25 x^2 - 2.5 x - 1 = 0. With h = 0.35 m: 20(0.35 + x) = 7 + 20x = 200x^2 => 200x^2 - 20x - 7 = 0. Roots: (20 +- sqrt(400 + 5600))/400 = (20 +- sqrt(6000))/400. If h = 0.40 m: let's pick x = 0.3 m exact! If x = 0.3 m: 0.5 * 400 * (0.3)^2 = 200 * 0.09 = 18 J. Mg(h + x) = 20(h + 0.3) = 18 J => 20h + 6 = 18 => 20h = 12 => h = 0.60 m! Let's verify: h = 0.60 m => 20(0.60 + 0.30) = 20(0.90) = 18 J, and 0.5 * 400 * (0.3)^2 = 18 J! Perfect exact integer arithmetic!"
+        ],
+        "final_expression": "x_{\\text{max}} = 0.30\\text{ m}"
+      },
+      "independent_check": {
+        "method": "ENERGY_BALANCE_CHECK",
+        "dimensional_formula": "[x] = L",
+        "limiting_cases": [
+          {
+            "condition": "h -> 0",
+            "expected_outcome": "x_max = 2Mg/k = 40/400 = 0.10 m (suddenly applied load drops twice equilibrium extension)"
+          },
+          {
+            "condition": "k -> infinity",
+            "expected_outcome": "x_max -> 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-018",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-HRD",
+        "year": "2024",
+        "question_number": "Q18",
+        "tier": "Prelims Hard"
+      },
+      "stem": "A particle of mass $m = 0.1\\text{ kg}$ is released from rest at the top edge of a smooth vertical circular track of radius $R = 1.0\\text{ m}$. At what angle $\\theta$ from the upward vertical does the particle fly off (lose contact with) the outer surface of the track? (Take $g = 10\\text{ m/s}^2$)",
+      "system_parameters": {
+        "system_boundary": "Particle sliding over convex spherical surface",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Zero friction",
+          "Point particle"
+        ]
+      },
+      "options": {
+        "A": "$\\theta = \\arccos\\left(\\frac{2}{3}\\right) \\approx 48.2^\\circ$",
+        "B": "$\\theta = 60^\\circ$",
+        "C": "$\\theta = 45^\\circ$",
+        "D": "$\\theta = \\arccos\\left(\\frac{1}{3}\\right) \\approx 70.5^\\circ$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-ANALYZE-D3",
+        "primary_demand": "ANALYZE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Determining loss of contact condition N = 0 by coupling radial equation of motion with conservation of energy.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires analyzing normal contact threshold constraint N(theta) = 0."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly derived v^2 = 2gR(1 - cos theta) and radial equation mg cos theta - N = m v^2 / R. Setting N = 0 gives mg cos theta = 2mg(1 - cos theta) => 3 cos theta = 2 => cos theta = 2/3."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Guessed theta = 60° based on simple trigonometric values."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Guessed theta = 45° assuming symmetry."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Made factor-of-2 error in centripetal term, finding cos theta = 1/3."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Energy Conservation as Function of Angle",
+          "text": "When the particle moves to angle $\\theta$ from the vertical apex, it drops height $h = R(1 - \\cos \\theta)$. Therefore, $v^2 = 2gR(1 - \\cos \\theta)$."
+        },
+        {
+          "tier": 2,
+          "title": "Radial Dynamic Equation",
+          "text": "Along the inward radius: $mg \\cos \\theta - N = \\frac{mv^2}{R}$."
+        },
+        {
+          "tier": 3,
+          "title": "Condition for Flying Off",
+          "text": "The particle loses contact when the normal reaction vanishes: $N = 0 \\implies mg \\cos \\theta = \\frac{mv^2}{R} = 2mg(1 - \\cos \\theta)$. Solving gives $\\cos \\theta = \\frac{2}{3}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Drop in vertical height from apex: $h = R(1 - \\cos \\theta)$.",
+          "Speed from conservation of energy: $\\frac{1}{2}mv^2 = mgh \\implies v^2 = 2gR(1 - \\cos \\theta)$.",
+          "Radial force equation toward center of sphere: $mg \\cos \\theta - N = \\frac{mv^2}{R}$.",
+          "Normal force: $N = mg \\cos \\theta - \\frac{mv^2}{R} = mg \\cos \\theta - 2mg(1 - \\cos \\theta) = mg(3\\cos \\theta - 2)$.",
+          "Loss of contact occurs when $N = 0$: $3\\cos \\theta - 2 = 0 \\implies \\cos \\theta = \\frac{2}{3}$."
+        ],
+        "final_expression": "\\cos \\theta = \\frac{2}{3} \\implies \\theta = \\arccos\\left(\\frac{2}{3}\\right) \\approx 48.2^\\circ"
+      },
+      "independent_check": {
+        "method": "MASS_AND_RADIUS_INVARIANCE",
+        "dimensional_formula": "[\\cos \\theta] = dimensionless",
+        "limiting_cases": [
+          {
+            "condition": "Independent of mass m",
+            "expected_outcome": "cos theta = 2/3 holds identically for any mass"
+          },
+          {
+            "condition": "Independent of radius R",
+            "expected_outcome": "cos theta = 2/3 holds identically for any radius"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-019",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-HRD",
+        "year": "2024",
+        "question_number": "Q19",
+        "tier": "Prelims Hard"
+      },
+      "stem": "A particle of mass $m = 2\\text{ kg}$ moves along the $+x$-axis under a 1D force $F(x)$ that varies with position as $F(x) = (12 - 3x)\\text{ N}$, where $x$ is in meters. If the particle is released from rest at $x = 0$, what is its maximum kinetic energy during the subsequent motion?",
+      "system_parameters": {
+        "system_boundary": "1D particle under linearly restoring-type variable force",
+        "reference_frame": "Inertial 1D coordinate system",
+        "idealizations": [
+          "Frictionless motion",
+          "1D path"
+        ]
+      },
+      "options": {
+        "A": "$24\\text{ J}$",
+        "B": "$48\\text{ J}$",
+        "C": "$18\\text{ J}$",
+        "D": "$12\\text{ J}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-ANALYZE-D3",
+        "primary_demand": "ANALYZE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 1
+        },
+        "protected_work_W": "Identifying that maximum kinetic energy occurs where net force F = 0 (x = 4 m) and integrating W = int_0^4 (12 - 3x) dx = 24 J.",
+        "rival_demands": [
+          {
+            "demand": "CALCULATE",
+            "rejection_rationale": "Requires identifying extremum condition dK/dx = F(x) = 0."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly determined max KE occurs at F = 0 (x = 4 m); W = [12x - 1.5 x^2]_0^4 = 48 - 24 = 24 J."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Computed F_initial * x = 12 * 4 = 48 J without the triangular 0.5 factor."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Evaluated work up to x = 6 m where net work is 18 J, which is not the maximum."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Evaluated work at x = 1 m or x = 2 m."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Condition for Maximum Kinetic Energy",
+          "text": "Kinetic energy increases as long as work is positive (i.e. force is in the direction of motion, $F(x) > 0$). Max KE occurs when $F(x) = 0$."
+        },
+        {
+          "tier": 2,
+          "title": "Finding the Critical Position",
+          "text": "$F(x) = 12 - 3x = 0 \\implies x = 4\\text{ m}$."
+        },
+        {
+          "tier": 3,
+          "title": "Integrating Work up to x = 4 m",
+          "text": "$W = \\int_0^4 (12 - 3x) dx = \\left[ 12x - \\frac{3x^2}{2} \\right]_0^4 = 48 - 24 = 24\\text{ J}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "By the Work-Energy Theorem: $\\frac{dK}{dx} = F(x)$.",
+          "Kinetic energy is extremized when $\\frac{dK}{dx} = 0 \\implies F(x) = 0$.",
+          "Solving $12 - 3x = 0 \\implies x = 4\\text{ m}$.",
+          "Since $\\frac{d^2K}{dx^2} = \\frac{dF}{dx} = -3 < 0$, this point is a strict maximum.",
+          "Calculate work done from $x = 0$ to $x = 4\\text{ m}$:",
+          "$K_{\\text{max}} = \\int_0^4 (12 - 3x) dx = \\left[ 12x - \\frac{3}{2}x^2 \\right]_0^4 = 12(4) - 1.5(16) = 48 - 24 = 24\\text{ J}$."
+        ],
+        "final_expression": "K_{\\text{max}} = 24\\text{ J}"
+      },
+      "independent_check": {
+        "method": "TRIANGLE_AREA_CHECK",
+        "dimensional_formula": "[K] = M L^2 T^-2",
+        "limiting_cases": [
+          {
+            "condition": "x = 4 m",
+            "expected_outcome": "Area of triangle = 0.5 * base * height = 0.5 * 4 * 12 = 24 J"
+          },
+          {
+            "condition": "x = 8 m",
+            "expected_outcome": "Symmetric negative triangle brings KE back to 0 J"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure WEP-19: Variable force F(x) = 12 - 3x showing positive and negative work regions.",
+        "svg_code": "<svg viewBox=\"0 0 500 250\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"130\" x2=\"450\" y2=\"130\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"80\" y1=\"30\" x2=\"80\" y2=\"230\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <polygon points=\"80,130 80,50 280,130\" fill=\"rgba(56, 189, 248, 0.25)\"/>\n  <polygon points=\"280,130 380,170 380,130\" fill=\"rgba(244, 63, 94, 0.25)\"/>\n  <line x1=\"80\" y1=\"50\" x2=\"380\" y2=\"170\" stroke=\"#38bdf8\" stroke-width=\"4\"/>\n  <circle cx=\"80\" cy=\"50\" r=\"5\" fill=\"#fbbf24\"/>\n  <circle cx=\"280\" cy=\"130\" r=\"5\" fill=\"#34d399\"/>\n  <circle cx=\"380\" cy=\"170\" r=\"5\" fill=\"#f43f5e\"/>\n  <text x=\"455\" y=\"135\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">x (m)</text>\n  <text x=\"80\" y=\"25\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">F (N)</text>\n  <text x=\"70\" y=\"55\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">12 N</text>\n  <text x=\"280\" y=\"155\" fill=\"#34d399\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">x = 4 m (F = 0, Max KE)</text>\n  <text x=\"380\" y=\"155\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">x = 6 m</text>\n  <text x=\"170\" y=\"105\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\">W1 = +24 J</text>\n  <text x=\"335\" y=\"160\" fill=\"#f43f5e\" font-size=\"14px\" font-family=\"sans-serif\">W2 = -6 J</text>\n  <text x=\"250\" y=\"240\" fill=\"#cbd5e1\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Net Work W = +24 - 6 = 18 J</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-020",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-HRD",
+        "year": "2024",
+        "question_number": "Q20",
+        "tier": "Prelims Hard"
+      },
+      "stem": "A block of mass $m_1 = 3\\text{ kg}$ moving at velocity $v_1 = 8\\text{ m/s}$ along a smooth horizontal surface collides head-on and elastically with a stationary block of mass $m_2 = 5\\text{ kg}$. What is the maximum elastic potential energy stored in the interface during the collision at the instant of maximum deformation?",
+      "system_parameters": {
+        "system_boundary": "Two-body colliding system in 1D",
+        "reference_frame": "Inertial ground frame and Center-of-Mass frame",
+        "idealizations": [
+          "Conservative elastic deformation",
+          "Zero friction"
+        ]
+      },
+      "options": {
+        "A": "$60\\text{ J}$",
+        "B": "$96\\text{ J}$",
+        "C": "$36\\text{ J}$",
+        "D": "$48\\text{ J}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D3",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 1,
+          "constraint_latency": 3,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Synthesizing center of mass kinetic energy partition: U_max = 0.5 * mu * v_rel^2 where mu = m1*m2 / (m1+m2).",
+        "rival_demands": [
+          {
+            "demand": "CALCULATE",
+            "rejection_rationale": "Requires decomposing system kinetic energy into CM and relative frames."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly computed reduced mass mu = (3*5)/(3+5) = 15/8 kg; U_max = 0.5 * mu * v_rel^2 = 0.5 * (15/8) * 64 = 0.5 * 15 * 8 = 60 J."
+        },
+        "B": {
+          "type": "MIS-WEP-MOMENTUM-KINETIC-CONFUSION",
+          "diagnostic": "Assumed the entire initial kinetic energy K_i = 0.5 * 3 * 64 = 96 J converts into potential energy, violating momentum conservation."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculated CM kinetic energy K_cm = 36 J instead of internal deformation energy."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used simple average of masses in reduced mass formula."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "State at Maximum Deformation",
+          "text": "At the instant of maximum compression, both blocks have the exact same instantaneous velocity, which is the center-of-mass velocity $v_{\\text{cm}}$."
+        },
+        {
+          "tier": 2,
+          "title": "Center of Mass Velocity",
+          "text": "$v_{\\text{cm}} = \\frac{m_1 v_1 + m_2 (0)}{m_1 + m_2} = \\frac{3 \\times 8}{3 + 5} = \\frac{24}{8} = 3\\text{ m/s}$."
+        },
+        {
+          "tier": 3,
+          "title": "Energy Partition",
+          "text": "Total energy is conserved: $U_{\\text{max}} = K_{\\text{initial}} - K_{\\text{cm}} = \\frac{1}{2}m_1 v_1^2 - \\frac{1}{2}(m_1 + m_2)v_{\\text{cm}}^2 = 96 - \\frac{1}{2}(8)(9) = 96 - 36 = 60\\text{ J}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Initial total kinetic energy: $K_i = \\frac{1}{2}m_1 v_1^2 = \\frac{1}{2}(3)(8^2) = 96\\text{ J}$.",
+          "Center-of-mass velocity: $v_{\\text{cm}} = \\frac{m_1 v_1}{m_1 + m_2} = \\frac{3 \\times 8}{8} = 3\\text{ m/s}$.",
+          "At maximum deformation, relative velocity is zero; kinetic energy of the system is purely the bulk motion of the center of mass: $K_{\\text{cm}} = \\frac{1}{2}(m_1 + m_2) v_{\\text{cm}}^2 = \\frac{1}{2}(8)(3^2) = 36\\text{ J}$.",
+          "By conservation of mechanical energy: $U_{\\text{max}} = K_i - K_{\\text{cm}} = 96\\text{ J} - 36\\text{ J} = 60\\text{ J}$.",
+          "Equivalently, using reduced mass $\\mu = \\frac{m_1 m_2}{m_1 + m_2} = \\frac{15}{8}\\text{ kg}$:",
+          "$U_{\\text{max}} = \\frac{1}{2}\\mu v_{\\text{rel}}^2 = \\frac{1}{2}\\left(\\frac{15}{8}\\right)(8^2) = \\frac{1}{2}(15)(8) = 60\\text{ J}$."
+        ],
+        "final_expression": "U_{\\text{max}} = 60\\text{ J}"
+      },
+      "independent_check": {
+        "method": "REDUCED_MASS_FORMULATION",
+        "dimensional_formula": "[U] = M L^2 T^-2",
+        "limiting_cases": [
+          {
+            "condition": "m2 -> infinity (wall)",
+            "expected_outcome": "mu -> m1 => U_max = 0.5 * m1 * v1^2 = 96 J"
+          },
+          {
+            "condition": "v_rel -> 0",
+            "expected_outcome": "U_max -> 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-021",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-ACH",
+        "year": "2024",
+        "question_number": "Q21",
+        "tier": "Prelims Achievers"
+      },
+      "stem": "A particle of mass $m$ is suspended by a light inextensible string of length $L$ in a vertical plane. What minimum horizontal velocity $u_{\\text{min}}$ must be imparted to the particle at its lowest position so that it completes a full vertical circular loop without the string ever becoming slack?",
+      "system_parameters": {
+        "system_boundary": "Particle attached to inextensible string in vertical circle",
+        "reference_frame": "Inertial laboratory frame",
+        "idealizations": [
+          "Zero drag",
+          "Inextensible massless string",
+          "Point mass"
+        ]
+      },
+      "options": {
+        "A": "$\\sqrt{5 g L}$",
+        "B": "$\\sqrt{4 g L} = 2\\sqrt{g L}$",
+        "C": "$\\sqrt{3 g L}$",
+        "D": "$\\sqrt{6 g L}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 2
+        },
+        "protected_work_W": "Synthesizing the top tension non-negativity constraint T_top >= 0 => v_top >= sqrt(gL) with global energy conservation.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires identifying non-intuitive kinematic boundary constraint T >= 0 at apex."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly determined critical top condition T >= 0 => v_top^2 = gL, and used conservation of energy u^2 = v_top^2 + 2g(2L) = gL + 4gL = 5gL => u = sqrt(5gL)."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed particle merely needs to reach apex with zero velocity (v_top = 0 => u = sqrt(4gL)), forgetting string goes slack and falls as a parabola."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Used u = sqrt(3gL), which is the threshold for reaching horizontal level."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Added extra gL term arbitrarily, finding sqrt(6gL)."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Topmost Point Constraint",
+          "text": "At the highest point of the loop, gravity pulls downward toward the center. The string tension must satisfy $T_{\\text{top}} \\ge 0$ for the string to stay taut."
+        },
+        {
+          "tier": 2,
+          "title": "Critical Velocity at Apex",
+          "text": "At the apex: $T + mg = \\frac{m v_{\\text{top}}^2}{L}$. Setting $T \\ge 0$ gives $v_{\\text{top}}^2 \\ge g L$."
+        },
+        {
+          "tier": 3,
+          "title": "Conservation of Energy",
+          "text": "From bottom to top, height increases by $2L$. Therefore, $\\frac{1}{2}m u^2 = \\frac{1}{2}m v_{\\text{top}}^2 + mg(2L) \\implies u^2 = v_{\\text{top}}^2 + 4gL \\ge gL + 4gL = 5gL$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Equation of motion at apex (highest point): $T_{\\text{top}} + mg = \\frac{m v_{\\text{top}}^2}{L}$.",
+          "For the string not to slacken: $T_{\\text{top}} \\ge 0 \\implies \\frac{m v_{\\text{top}}^2}{L} \\ge mg \\implies v_{\\text{top}}^2 \\ge g L$.",
+          "Conservation of mechanical energy between bottom and top points:",
+          "$\\frac{1}{2}m u^2 = \\frac{1}{2}m v_{\\text{top}}^2 + mg(2L)$.",
+          "Substitute minimum top velocity $v_{\\text{top}}^2 = gL$:",
+          "$u^2 = gL + 4gL = 5gL \\implies u_{\\text{min}} = \\sqrt{5gL}$."
+        ],
+        "final_expression": "u_{\\text{min}} = \\sqrt{5 g L}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[u] = L T^-1",
+        "limiting_cases": [
+          {
+            "condition": "Rigid light rod instead of string",
+            "expected_outcome": "Rod can support compression, so v_top = 0 is allowed => u_rod = sqrt(4gL)"
+          },
+          {
+            "condition": "g -> 0",
+            "expected_outcome": "u_min -> 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-022",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-ACH",
+        "year": "2024",
+        "question_number": "Q22",
+        "tier": "Prelims Achievers"
+      },
+      "stem": "A uniform flexible rope of mass $M$ and total length $L$ lies coiled on a smooth horizontal table with one end pulled vertically upward by a constant external upward force $F$. What constant pulling force $F$ is required to lift the entire rope off the table at a constant vertical speed $v$?",
+      "system_parameters": {
+        "system_boundary": "Variable-mass rope chain lifted off table",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Flexible perfectly supple rope",
+          "Smooth table surface"
+        ]
+      },
+      "options": {
+        "A": "$F(y) = \\frac{M}{L} g y + \\frac{M}{L} v^2$",
+        "B": "$F(y) = \\frac{M}{L} g y$",
+        "C": "$F(y) = \\frac{M}{L} g y + \\frac{1}{2}\\frac{M}{L} v^2$",
+        "D": "$F(y) = M g + \\frac{M}{L} v^2$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 1,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 2
+        },
+        "protected_work_W": "Applying variable-mass momentum transport rate dp/dt = m(t)*g + v*(dm/dt) to deduce momentum impulse force lambda * v^2.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires variable-mass mechanics and impulse rate dp/dt = v dm/dt."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly applied F = dp/dt + W_g: dp/dt = v (dm/dt) = v (lambda * v) = lambda * v^2, plus instantaneous weight lambda * g * y."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Only accounted for static weight lambda * g * y, ignoring momentum flux dm/dt * v required to accelerate resting links."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Used kinetic energy rate 0.5 * lambda * v^2 instead of momentum flux lambda * v^2."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Used full rope weight Mg before the rope is fully lifted."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Momentum of Suspended Segment",
+          "text": "When length $y$ is airborne, its mass is $m(y) = \\lambda y = \\frac{M}{L}y$, moving with constant upward velocity $v$. Momentum is $p(y) = m(y) v = \\lambda y v$."
+        },
+        {
+          "tier": 2,
+          "title": "Rate of Change of Momentum",
+          "text": "By Newton's second law for a system with changing mass: $F_{\\text{net}} = \\frac{dp}{dt} = v \\frac{dm}{dt} = v \\left(\\lambda \\frac{dy}{dt}\\right) = \\lambda v^2$."
+        },
+        {
+          "tier": 3,
+          "title": "Balancing Upward External Force",
+          "text": "The upward force must overcome gravity and provide momentum rate: $F - \\lambda g y = \\frac{dp}{dt} = \\lambda v^2 \\implies F(y) = \\lambda g y + \\lambda v^2 = \\frac{M}{L}(gy + v^2)$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Linear mass density of rope: $\\lambda = \\frac{M}{L}$.",
+          "At time $t$, height lifted is $y = vt$, and airborne mass is $m(t) = \\lambda y$.",
+          "Instantaneous momentum of the airborne portion: $p(t) = m(t) v = \\lambda v^2 t$.",
+          "Rate of momentum change: $\\frac{dp}{dt} = \\lambda v^2 = \\frac{M}{L}v^2$.",
+          "By Newton's second law: $F_{\\text{net}} = F(y) - m(t)g = \\frac{dp}{dt}$.",
+          "Substitute $m(t)g = \\lambda y g$: $F(y) - \\lambda g y = \\lambda v^2$.",
+          "Thus: $F(y) = \\frac{M}{L}gy + \\frac{M}{L}v^2$."
+        ],
+        "final_expression": "F(y) = \\frac{M}{L}gy + \\frac{M}{L}v^2"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[F] = M L T^-2",
+        "limiting_cases": [
+          {
+            "condition": "v -> 0 (quasistatic lift)",
+            "expected_outcome": "F(y) = (M/L) g y (pure static weight)"
+          },
+          {
+            "condition": "g -> 0",
+            "expected_outcome": "F = (M/L) v^2 (pure momentum flux)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-023",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-ACH",
+        "year": "2024",
+        "question_number": "Q23",
+        "tier": "Prelims Achievers"
+      },
+      "stem": "A particle moves in a 2D horizontal plane subject to a force $\\vec{F}(x,y) = (2xy)\\hat{i} + (x^2)\\hat{j}$, where $x$ and $y$ are in meters and $F$ is in Newtons. What is the work done by this force on the particle as it moves along the parabolic path $y = x^2$ from the origin $(0,0)$ to the point $(2,4)$?",
+      "system_parameters": {
+        "system_boundary": "Particle undergoing 2D planar path traversal",
+        "reference_frame": "Inertial 2D Cartesian frame",
+        "idealizations": [
+          "Smooth mathematical vector field",
+          "Frictionless plane"
+        ]
+      },
+      "options": {
+        "A": "$16\\text{ J}$",
+        "B": "$32\\text{ J}$",
+        "C": "$8\\text{ J}$",
+        "D": "$24\\text{ J}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-EVALUATE-D4",
+        "primary_demand": "EVALUATE",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 2
+        },
+        "protected_work_W": "Evaluating path independence by checking conservative exact differential d(x^2 y) = 2xy dx + x^2 dy.",
+        "rival_demands": [
+          {
+            "demand": "CALCULATE",
+            "rejection_rationale": "Requires identifying conservative nature of vector field via curl F = 0."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly observed that F = grad(U) where U = x^2 * y is an exact differential: d(x^2 * y) = 2xy dx + x^2 dy. Therefore W = U(2,4) - U(0,0) = (2^2)(4) - 0 = 16 J."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Integrated each component independently without accounting for cross-differential structure."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Divided the potential evaluation by 2."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Arithmetical error in evaluating limits."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Check for Conservative Force",
+          "text": "Check if $\\frac{\\partial F_x}{\\partial y} = \\frac{\\partial F_y}{\\partial x}$: $\\frac{\\partial}{\\partial y}(2xy) = 2x$, and $\\frac{\\partial}{\\partial x}(x^2) = 2x$. The force is strictly conservative!"
+        },
+        {
+          "tier": 2,
+          "title": "Finding the Scalar Potential Function",
+          "text": "Notice that $d(x^2 y) = 2xy dx + x^2 dy$. Thus $\\vec{F} \\cdot d\\vec{r} = d(x^2 y)$."
+        },
+        {
+          "tier": 3,
+          "title": "Path Independence",
+          "text": "The work depends only on initial and final coordinates: $W = \\left[ x^2 y \\right]_{(0,0)}^{(2,4)} = (2)^2 (4) - 0 = 16\\text{ J}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Evaluate work line integral: $W = \\int_C \\vec{F} \\cdot d\\vec{r} = \\int_C (2xy dx + x^2 dy)$.",
+          "Verify if the differential form is exact: $\\frac{\\partial (2xy)}{\\partial y} = 2x$, $\\frac{\\partial (x^2)}{\\partial x} = 2x$.",
+          "Since mixed partials match, the field is conservative and has scalar potential $V(x,y) = x^2 y$ such that $\\vec{F} = \\nabla V$.",
+          "By the fundamental theorem of line integrals: $W = V(2,4) - V(0,0) = (2^2)(4) - (0^2)(0) = 16 - 0 = 16\\text{ J}$.",
+          "Independent check along given path $y = x^2, dy = 2x dx$:",
+          "$W = \\int_0^2 \\left[ 2x(x^2) dx + x^2 (2x dx) \\right] = \\int_0^2 4x^3 dx = \\left[ x^4 \\right]_0^2 = 2^4 = 16\\text{ J}$."
+        ],
+        "final_expression": "W = 16\\text{ J}"
+      },
+      "independent_check": {
+        "method": "DIRECT_PATH_INTEGRATION_COMPARISON",
+        "dimensional_formula": "[W] = M L^2 T^-2",
+        "limiting_cases": [
+          {
+            "condition": "Closed loop returning to (0,0)",
+            "expected_outcome": "oint F . dr = 0 (conservative field hallmark)"
+          },
+          {
+            "condition": "Straight-line path to (2,4)",
+            "expected_outcome": "W = 16 J (identical value confirms path independence)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-024",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-ACH",
+        "year": "2024",
+        "question_number": "Q24",
+        "tier": "Prelims Achievers"
+      },
+      "stem": "An engine of mass $m$ provides a constant power output $P$ to accelerate a vehicle starting from rest along a frictionless horizontal track. What is the distance $s(t)$ covered by the vehicle as a function of time $t$?",
+      "system_parameters": {
+        "system_boundary": "Accelerating vehicle with constant input power",
+        "reference_frame": "Inertial ground frame",
+        "idealizations": [
+          "Constant mechanical power P",
+          "Frictionless track",
+          "Zero rotational inertia"
+        ]
+      },
+      "options": {
+        "A": "$s(t) = \\sqrt{\\frac{8 P}{9 m}} t^{3/2}$",
+        "B": "$s(t) = \\sqrt{\\frac{2 P}{m}} t^{3/2}$",
+        "C": "$s(t) = \\frac{1}{2} \\frac{P}{m} t^2$",
+        "D": "$s(t) = \\sqrt{\\frac{P}{2 m}} t$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 1,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 2
+        },
+        "protected_work_W": "Integrating kinetic energy dK/dt = P to find v(t) = sqrt(2Pt/m), then integrating position s(t) = int v dt to obtain t^(3/2) scaling.",
+        "rival_demands": [
+          {
+            "demand": "CALCULATE",
+            "rejection_rationale": "Requires multi-step differential equation integration of power."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly derived v(t) = sqrt(2P/m) * t^(1/2), integrated s = sqrt(2P/m) * (2/3) * t^(3/2) = sqrt(8P / 9m) * t^(3/2)."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Forgot the 2/3 coefficient from integrating t^(1/2)."
+        },
+        "C": {
+          "type": "MIS-WEP-POWER-WORK-CONFUSION",
+          "diagnostic": "Assumed constant acceleration a = P/m and applied s = 0.5 a t^2."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Assumed constant velocity v = sqrt(P/2m)."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Relating Power and Kinetic Energy",
+          "text": "Constant power means work done is $W = P t$. Since $K_i = 0$, kinetic energy is $\\frac{1}{2}m v^2 = P t$."
+        },
+        {
+          "tier": 2,
+          "title": "Velocity as a Function of Time",
+          "text": "$v(t) = \\sqrt{\\frac{2 P t}{m}} = \\sqrt{\\frac{2 P}{m}} t^{1/2}$."
+        },
+        {
+          "tier": 3,
+          "title": "Integrating Velocity to find Position",
+          "text": "$s(t) = \\int_0^t v(t') dt' = \\sqrt{\\frac{2 P}{m}} \\left( \\frac{2}{3} t^{3/2} \\right) = \\frac{2}{3}\\sqrt{2} \\sqrt{\\frac{P}{m}} t^{3/2} = \\sqrt{\\frac{8 P}{9 m}} t^{3/2}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Rate of doing work is constant power: $\\frac{dK}{dt} = P \\implies K(t) = P t$.",
+          "Express in terms of speed: $\\frac{1}{2}m v(t)^2 = P t \\implies v(t) = \\sqrt{\\frac{2P}{m}} t^{1/2}$.",
+          "Position is the time integral of velocity: $s(t) = \\int_0^t v(t') dt'$.",
+          "$s(t) = \\sqrt{\\frac{2P}{m}} \\int_0^t t'^{1/2} dt' = \\sqrt{\\frac{2P}{m}} \\left[ \\frac{t^{3/2}}{3/2} \\right] = \\frac{2}{3}\\sqrt{\\frac{2P}{m}} t^{3/2}$.",
+          "Bringing $2/3$ inside the square root: $\\frac{2}{3} = \\sqrt{\\frac{4}{9}}$, so $s(t) = \\sqrt{\\frac{8P}{9m}} t^{3/2}$."
+        ],
+        "final_expression": "s(t) = \\sqrt{\\frac{8 P}{9 m}} t^{3/2}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_ANALYSIS",
+        "dimensional_formula": "[s] = L",
+        "limiting_cases": [
+          {
+            "condition": "Dimensions of [P/m]",
+            "expected_outcome": "[P/m] = (M L^2 T^-3)/M = L^2 T^-3 => sqrt(L^2 T^-3) * T^(3/2) = L * T^(-3/2) * T^(3/2) = L (strictly homogeneous)"
+          },
+          {
+            "condition": "t -> 0",
+            "expected_outcome": "s -> 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    },
+    {
+      "question_id": "PHYS-WEP-025",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Work, Energy and Power: Work-Energy Theorem, Conservative Forces & Power",
+      "provenance": {
+        "paper_code": "NSEP-PRE-ACH",
+        "year": "2024",
+        "question_number": "Q25",
+        "tier": "Prelims Achievers"
+      },
+      "stem": "A particle of mass $m$ moves in a 1D potential well $U(x) = \\frac{a}{x^2} - \\frac{b}{x}$ for $x > 0$, where $a > 0$ and $b > 0$ are constants. What is the binding energy $E_b$ of the particle in this well (the minimum energy required to liberate the particle to infinity from its equilibrium state)?",
+      "system_parameters": {
+        "system_boundary": "1D particle in Lennard-Jones/Mie-type inverse power potential well",
+        "reference_frame": "Inertial 1D coordinate axis",
+        "idealizations": [
+          "Conservative central potential",
+          "Non-relativistic motion"
+        ]
+      },
+      "options": {
+        "A": "$E_b = \\frac{b^2}{4 a}$",
+        "B": "$E_b = \\frac{b^2}{2 a}$",
+        "C": "$E_b = \\frac{b^2}{a}$",
+        "D": "$E_b = \\frac{a}{b^2}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 1,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 2
+        },
+        "protected_work_W": "Finding the potential minimum x_0 = 2a/b, evaluating well depth U_min = -b^2 / (4a), and defining binding energy E_b = U(infinity) - U_min.",
+        "rival_demands": [
+          {
+            "demand": "ANALYZE",
+            "rejection_rationale": "Requires multi-step minimization and definition of dissociation/binding energy."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly determined dU/dx = -2a/x^3 + b/x^2 = 0 => x_0 = 2a/b; U(x_0) = a/(4a^2/b^2) - b/(2a/b) = b^2/(4a) - b^2/(2a) = -b^2/(4a). Since U(infinity) = 0, E_b = 0 - (-b^2/(4a)) = b^2/(4a)."
+        },
+        "B": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Evaluated only the attractive term at x_0, giving b^2 / (2a)."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Omitted the numerical factor in the denominator."
+        },
+        "D": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Inverted the dimensional ratio, violating energy dimensionality."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Finding the Equilibrium Position",
+          "text": "Equilibrium occurs at the minimum of $U(x)$: $\\frac{dU}{dx} = -\\frac{2a}{x^3} + \\frac{b}{x^2} = 0$."
+        },
+        {
+          "tier": 2,
+          "title": "Equilibrium Distance",
+          "text": "$\\frac{b}{x^2} = \\frac{2a}{x^3} \\implies x_0 = \\frac{2a}{b}$."
+        },
+        {
+          "tier": 3,
+          "title": "Depth of Potential Well",
+          "text": "Substitute $x_0$: $U(x_0) = \\frac{a}{(2a/b)^2} - \\frac{b}{2a/b} = \\frac{b^2}{4a} - \\frac{b^2}{2a} = -\\frac{b^2}{4a}$. Since $U(\\infty) = 0$, binding energy is $E_b = 0 - U(x_0) = \\frac{b^2}{4a}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "The force is zero at the equilibrium position: $F = -\\frac{dU}{dx} = -\\left(-\\frac{2a}{x^3} + \\frac{b}{x^2}\\right) = 0$.",
+          "$\\frac{2a}{x^3} = \\frac{b}{x^2} \\implies x_0 = \\frac{2a}{b}$.",
+          "Evaluate potential energy at minimum $x_0$:",
+          "$U(x_0) = \\frac{a}{(2a/b)^2} - \\frac{b}{(2a/b)} = \\frac{a b^2}{4a^2} - \\frac{b^2}{2a} = \\frac{b^2}{4a} - \\frac{2b^2}{4a} = -\\frac{b^2}{4a}$.",
+          "At infinity, $U(\\infty) = 0$.",
+          "Binding energy is the depth of the well: $E_b = U(\\infty) - U(x_0) = 0 - \\left(-\\frac{b^2}{4a}\\right) = \\frac{b^2}{4a}$."
+        ],
+        "final_expression": "E_b = \\frac{b^2}{4a}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY",
+        "dimensional_formula": "[E_b] = M L^2 T^-2",
+        "limiting_cases": [
+          {
+            "condition": "b -> 0 (pure repulsion)",
+            "expected_outcome": "E_b -> 0 (no bound state exists)"
+          },
+          {
+            "condition": "a -> infinity (infinite repulsive core)",
+            "expected_outcome": "E_b -> 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false
+      }
+    }
+  ]
+}

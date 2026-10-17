@@ -35,6 +35,9 @@ def resolve_adapter_for_question(q: dict, adapters: dict):
     if any(k in q_topic or k in qid for k in ["mechanics", "newton", "second-law", "third-law"]):
         if "mechanics-nlm" in adapters:
             return "mechanics-nlm", adapters["mechanics-nlm"]
+    if any(k in q_topic or k in qid for k in ["work", "energy", "power", "wep", "kinetic", "potential"]):
+        if "work-energy-power" in adapters:
+            return "work-energy-power", adapters["work-energy-power"]
     if any(k in q_topic or k in qid for k in ["vector"]):
         if "vectors-and-components" in adapters:
             return "vectors-and-components", adapters["vectors-and-components"]
