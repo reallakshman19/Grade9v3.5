@@ -22,10 +22,10 @@ class TestCirclesBlueprintQRT(unittest.TestCase):
         cls.bank_data = json.loads(cls.bank_path.read_text(encoding="utf-8"))
 
     def test_question_count_and_blueprint_reference(self):
-        """Verify question count is exactly 25 and declares BP-CORE2-SOURCE-QUESTION@1.11.0."""
-        self.assertEqual(len(self.bank_data["questions"]), 25)
+        """Verify question count is exactly 50 and declares BP-CORE2-SOURCE-QUESTION@1.11.0."""
+        self.assertEqual(len(self.bank_data["questions"]), 50)
         self.assertEqual(self.bank_data.get("blueprint_ref"), "BP-CORE2-SOURCE-QUESTION@1.11.0")
-        self.assertEqual(self.bank_data.get("total_questions"), 25)
+        self.assertEqual(self.bank_data.get("total_questions"), 50)
 
     def test_canonical_qrt_demands_and_zero_invalid_demands(self):
         """Verify every question uses a canonical QRT demand and no deprecated CALCULATE remains."""
@@ -84,7 +84,7 @@ class TestCirclesBlueprintQRT(unittest.TestCase):
     def test_hosted_suite_qrt_audit_clean_pass(self):
         """Run audit_hosted_suite on standalone tablet HTML: must be 100% compliance with 0 flagged."""
         report = audit_hosted_suite(self.html_path)
-        self.assertEqual(report["total_questions_audited"], 25)
+        self.assertEqual(report["total_questions_audited"], 50)
         self.assertEqual(report["total_core1_modules_audited"], 8)
 
         summary = report["overall_summary"]

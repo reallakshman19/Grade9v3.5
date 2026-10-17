@@ -1,0 +1,139 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-IMOCIRCLE-GRADE9",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "CIRCLES",
+  "topic_name": "Circles and Cyclic Quadrilaterals",
+  "subtopic": "IMO-CIRCLES-COMPREHENSIVE-CURRICULUM",
+  "target_demand": "SYNTHESIZE",
+  "target_band": "D3",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-CIRCLES-Q001",
+    "SOF-IMO-G09-CIRCLES-Q002",
+    "SOF-IMO-G09-CIRCLES-Q003",
+    "SOF-IMO-G09-CIRCLES-Q004",
+    "SOF-IMO-G09-CIRCLES-Q005",
+    "SOF-IMO-G09-CIRCLES-Q006",
+    "SOF-IMO-G09-CIRCLES-Q007",
+    "SOF-IMO-G09-CIRCLES-Q008",
+    "SOF-IMO-G09-CIRCLES-Q009",
+    "SOF-IMO-G09-CIRCLES-Q010",
+    "SOF-IMO-G09-CIRCLES-Q011",
+    "SOF-IMO-G09-CIRCLES-Q012",
+    "SOF-IMO-G09-CIRCLES-Q013",
+    "SOF-IMO-G09-CIRCLES-Q014",
+    "SOF-IMO-G09-CIRCLES-Q015",
+    "SOF-IMO-G09-CIRCLES-Q016",
+    "SOF-IMO-G09-CIRCLES-Q017",
+    "SOF-IMO-G09-CIRCLES-Q018",
+    "SOF-IMO-G09-CIRCLES-Q019",
+    "SOF-IMO-G09-CIRCLES-Q020",
+    "SOF-IMO-G09-CIRCLES-Q021",
+    "SOF-IMO-G09-CIRCLES-Q022",
+    "SOF-IMO-G09-CIRCLES-Q023",
+    "SOF-IMO-G09-CIRCLES-Q024",
+    "SOF-IMO-G09-CIRCLES-Q025",
+    "SOF-IMO-G09-CIRCLES-Q026",
+    "SOF-IMO-G09-CIRCLES-Q027",
+    "SOF-IMO-G09-CIRCLES-Q028",
+    "SOF-IMO-G09-CIRCLES-Q029",
+    "SOF-IMO-G09-CIRCLES-Q030",
+    "SOF-IMO-G09-CIRCLES-Q031",
+    "SOF-IMO-G09-CIRCLES-Q032",
+    "SOF-IMO-G09-CIRCLES-Q033",
+    "SOF-IMO-G09-CIRCLES-Q034",
+    "SOF-IMO-G09-CIRCLES-Q035",
+    "SOF-IMO-G09-CIRCLES-Q036",
+    "SOF-IMO-G09-CIRCLES-Q037",
+    "SOF-IMO-G09-CIRCLES-Q038",
+    "SOF-IMO-G09-CIRCLES-Q039",
+    "SOF-IMO-G09-CIRCLES-Q040",
+    "SOF-IMO-G09-CIRCLES-Q041",
+    "SOF-IMO-G09-CIRCLES-Q042",
+    "SOF-IMO-G09-CIRCLES-Q043",
+    "SOF-IMO-G09-CIRCLES-Q044",
+    "SOF-IMO-G09-CIRCLES-Q045",
+    "SOF-IMO-G09-CIRCLES-Q046",
+    "SOF-IMO-G09-CIRCLES-Q047",
+    "SOF-IMO-G09-CIRCLES-Q048",
+    "SOF-IMO-G09-CIRCLES-Q049",
+    "SOF-IMO-G09-CIRCLES-Q050"
+  ],
+  "entry_assumptions": [
+    "Circle definitions: centre, radius, chord, arc, sector, and segment.",
+    "Perpendicular from circle centre to chord bisects the chord.",
+    "Angle subtended by an arc at the centre is double the angle subtended by it at any point on the remaining circumference.",
+    "Angles in the same segment of a circle are equal.",
+    "Opposite angles of a cyclic quadrilateral are supplementary (sum to 180 degrees).",
+    "Pythagorean theorem in Euclidean plane geometry."
+  ],
+  "inferential_jump": "Progressing from foundational Euclidean chord bisection and subtended angle theorems to multi-stage Olympiad invariants: annulus area independence from individual radii, concyclicity of orthocenter altitude feet, Ptolemy's diagonal product identity, secant-tangent power invariants, and Euler's incenter-circumcenter distance relation.",
+  "relation_refs": {
+    "domain": "Euclidean Plane Geometry (R^2)",
+    "hypotheses": [
+      "Circles have real positive radii R > 0.",
+      "Points lie on well-defined circles or circular arcs.",
+      "Concentric circles share the identical centre O with R > r.",
+      "Secants and tangents adhere to standard Euclidean incidence axioms."
+    ],
+    "excluded_values": [
+      "Zero radius degenerate circles.",
+      "Collinear triads masquerading as circular arcs.",
+      "Negative length segments or non-Euclidean curvature."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "OM perp AB implies AM = MB = AB / 2",
+      "svg_element_ref": "FIG-IMO-G09-CIRCLES-Q001.svg",
+      "word_meaning": "Perpendicular bisection invariant: the perpendicular from centre O to chord AB bisects the chord, forming right triangle OMA with hypotenuse OA = R."
+    },
+    {
+      "symbol": "angle(BAC) = angle(BDC)",
+      "svg_element_ref": "FIG-IMO-G09-CIRCLES-Q003.svg",
+      "word_meaning": "Angles in the same segment: chords AC and BD intersecting at E create equal inscribed angles subtending the common arc BC."
+    },
+    {
+      "symbol": "AP * PB = CP * PD",
+      "svg_element_ref": "FIG-IMO-G09-CIRCLES-Q008.svg",
+      "word_meaning": "Intersecting Chords Theorem: product of segments of two intersecting chords inside a circle is invariant due to similar triangles (triangle PAC ~ triangle PDB)."
+    },
+    {
+      "symbol": "Area(Annulus) = pi * (R^2 - r^2) = pi * (AB / 2)^2",
+      "svg_element_ref": "FIG-IMO-G09-CIRCLES-Q013.svg",
+      "word_meaning": "Mamikon Annulus Invariant: chord AB of outer circle tangent to inner circle at T yields ring area depending solely on chord length AB, independent of individual radii."
+    },
+    {
+      "symbol": "angle(HDC) = angle(HEC) = 90 deg implies CDHE cyclic",
+      "svg_element_ref": "SOF-IMO-G09-CIRCLES-Q014",
+      "word_meaning": "Concyclic altitude feet: altitudes AD and BE in triangle ABC subtend supplementary right angles at D and E, proving CDHE cyclic with diameter CH."
+    },
+    {
+      "symbol": "EF || DC",
+      "svg_element_ref": "imo-2025-26-a-q50-cyclic-quadrilateral-circles.svg",
+      "word_meaning": "Dual circle secant parallelism: cyclic quads ABFE in C_2 and ABCD in C_1 transfer supplementary angles across shared chord AB to force EF || DC."
+    },
+    {
+      "symbol": "d_1 * d_2 = AC * BD = AB * CD + BC * DA",
+      "svg_element_ref": "FIG-IMO-G09-CIRCLES-Q022.svg",
+      "word_meaning": "Ptolemy's Theorem: for any cyclic quadrilateral, the product of the lengths of the diagonals equals the sum of the products of opposite sides."
+    },
+    {
+      "symbol": "PT^2 = PA * PB",
+      "svg_element_ref": "FIG-IMO-G09-CIRCLES-Q023.svg",
+      "word_meaning": "Secant-Tangent Power of a Point: tangent PT from external point P and secant PAB satisfy PT squared equals the product of external segment PA and entire secant PB."
+    },
+    {
+      "symbol": "d^2 = R * (R - 2r)",
+      "svg_element_ref": "SOF-IMO-G09-CIRCLES-Q025",
+      "word_meaning": "Euler's Incenter-Circumcenter Distance Formula: the distance d between circumcenter O and incenter I satisfies d^2 = R(R - 2r), establishing Euler's inequality R >= 2r."
+    }
+  ],
+  "cognitive_scaffolding": {
+    "band_d1_anchors": "Direct Pythagorean chord distance, angle subtended by chord equal to radius, diameter right angle.",
+    "band_d2_bridges": "Intersecting chord products, cyclic trapezoid symmetry, exterior angles of cyclic quadrilaterals, dual-chord distances.",
+    "band_d3_leaps": "Mamikon annulus invariant, orthocenter concyclicity, external secant half-difference, Van Schooten equilateral triangle invariant.",
+    "band_d4_syntheses": "Ptolemy theorem diagonal product, secant-tangent quadratic power equations, inradius-circumradius relations, Euler distance invariant."
+  }
+}
