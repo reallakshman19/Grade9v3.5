@@ -1,0 +1,101 @@
+{
+  "schema": "core1b-physics-reconstruction/v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "topic": "Newton's Laws of Motion & Friction",
+  "title": "Core 1B Phenomenological Reconstruction Cycles & Cognitive Dissonance Dialog",
+  "reconstruction_cycles": [
+    {
+      "cycle_id": "RECON-01",
+      "phenomenon": "Coupled Multi-Body Acceleration in Atwood Machine",
+      "standard_derivation": "Separate FBDs: m1*g - T = m1*a and T - m2*g = m2*a. Adding equations eliminates tension T: (m1 - m2)*g = (m1 + m2)*a => a = (m1 - m2)*g / (m1 + m2).",
+      "phenomenological_reconstruction": {
+        "perspective": "Whole-System Center-of-Mass Invariant",
+        "conceptual_pivot": "Treat the two masses and the string as an unrolled 1D continuous chain along the string coordinate.",
+        "driving_force": "Net unbalanced external force = (m1 - m2)*g",
+        "inertial_resistance": "Total system inertia to be accelerated = (m1 + m2)",
+        "reconstructed_formula": "a = \\frac{\\text{Net Driving Force}}{\\text{Total Inertia}} = \\frac{(m_1 - m_2)g}{m_1 + m_2}",
+        "tension_reconstruction": "T = \\frac{2 m_1 m_2}{m_1 + m_2} g \\quad \\text{(Harmonic mean of gravitational weights)}"
+      },
+      "limiting_boundary_checks": [
+        {"limit": "m1 = m2", "physical_consequence": "a = 0, T = m1*g (System in neutral static equilibrium)"},
+        {"limit": "m1 >> m2", "physical_consequence": "a -> g, T -> 2*m2*g (m1 essentially in free fall, pulling negligible m2 upward)"},
+        {"limit": "m2 = 0", "physical_consequence": "a = g, T = 0 (Free fall of m1 with disconnected string)"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-02",
+      "phenomenon": "Inclined Plane Slip Threshold & Angle of Repose",
+      "standard_derivation": "Project gravity: along plane F_parallel = mg*sin(theta), normal F_perp = mg*cos(theta). Normal force N = mg*cos(theta). Slip condition f_s <= mu_s * N => mg*sin(theta) <= mu_s * mg*cos(theta) => tan(theta) <= mu_s.",
+      "phenomenological_reconstruction": {
+        "perspective": "Contact Reaction Cone Invariant",
+        "conceptual_pivot": "Combine normal reaction N and friction force f into a single total contact force vector R = N + f. For static equilibrium, R must be strictly vertical and collinear with gravity mg.",
+        "cone_angle": "Maximum angle between R and surface normal is the angle of friction lambda, where tan(lambda) = f_max / N = mu_s.",
+        "equilibrium_condition": "Since R is vertical, the angle of the incline theta equals the angle between R and the normal. Hence equilibrium is maintained if and only if theta <= lambda, yielding tan(theta) <= mu_s.",
+        "mass_independence": "Notice mass m cancels completely: repose angle depends purely on the interface roughness, not the weight of the block."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "mu_s -> 0 (perfectly smooth)", "physical_consequence": "theta_repose = 0 deg; block slides on any non-zero incline"},
+        {"limit": "mu_s -> infinity (glued/toothed)", "physical_consequence": "theta_repose = 90 deg; block never slides along surface"},
+        {"limit": "theta = 0 deg (flat plane)", "physical_consequence": "Driving force = 0, normal N = mg, friction f_s = 0"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-03",
+      "phenomenon": "Stacked Two-Block Slip Threshold on Frictionless Table",
+      "standard_derivation": "Block A (mass m1) rests on Block B (mass m2). Horizontal force F pulls B. Max friction on A is f_max = mu*m1*g, giving A max acceleration a_max = f_max / m1 = mu*g. For no relative slip, whole system must accelerate at <= mu*g, so F_max = (m1 + m2)*a_max = mu*(m1 + m2)*g.",
+      "phenomenological_reconstruction": {
+        "perspective": "Non-Inertial Frame & D'Alembert Pseudo Force",
+        "conceptual_pivot": "Ride in the accelerating frame of bottom block B with acceleration a. A fictitious pseudo force F_pseudo = m1*a pulls block A backward.",
+        "force_balance_on_A": "Static friction f_s pushes block A forward to counter the backward pseudo force: f_s = m1*a.",
+        "slip_criterion": "Block A slips when the pseudo force exceeds the maximum available friction: m1*a > mu*m1*g => a > mu*g.",
+        "whole_system_limit": "Since the external force F accelerates both blocks, F = (m1 + m2)*a <= (m1 + m2)*mu*g."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "mu -> 0", "physical_consequence": "F_max = 0; any non-zero pull causes B to slide out from under A instantly"},
+        {"limit": "m1 >> m2", "physical_consequence": "F_max -> mu*m1*g; inertia dominated entirely by top block"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-04",
+      "phenomenon": "Movable Pulley Kinematic Invariant & Mechanical Advantage",
+      "standard_derivation": "String length L = 2*y_pulley + y_load. Differentiating twice: 2*a_pulley + a_load = 0 => a_load = -2*a_pulley. Balance of forces on massless pulley: 2*T - F = 0 => T = F/2.",
+      "phenomenological_reconstruction": {
+        "perspective": "Virtual Work & Energy Conservation Invariant",
+        "conceptual_pivot": "An ideal machine cannot create energy: Input Work = Output Work. F * Delta x_input = W_load * Delta y_load.",
+        "kinematic_tradeoff": "To lift the load by Delta y, both supporting string segments must shorten by Delta y, requiring 2*Delta y of string to be pulled at the effort end: Delta x_input = 2 * Delta y_load.",
+        "force_ratio": "Hence Effort F = W_load / 2. Acceleration is halved, but lifting force is doubled (Mechanical Advantage = 2)."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "Inextensible string", "physical_consequence": "Work input = Work output (Efficiency = 100%)"},
+        {"limit": "Elastic / stretching string", "physical_consequence": "Mechanical advantage unchanged, but stored elastic potential energy reduces instantaneous output work"}
+      ]
+    }
+  ],
+  "cognitive_dissonance_probes": [
+    {
+      "probe_id": "CDP-01",
+      "scenario": "A 100 kg person stands on a spring bathroom scale in a freely falling elevator (cable snapped, air resistance negligible).",
+      "dissonance_question": "What does the scale read? 100 kg, 980 N, or 0 N?",
+      "resolution": "0 N (Apparent weightlessness). Both person and scale accelerate downward at g. No normal reaction force is required to prevent the person from falling through the scale."
+    },
+    {
+      "probe_id": "CDP-02",
+      "scenario": "A horse pulls a wagon with force F_hw = 500 N. By Newton's 3rd Law, the wagon pulls back on the horse with F_wh = 500 N. How can the wagon possibly accelerate forward if the backward pull equals the forward pull?",
+      "dissonance_question": "Why do these equal and opposite forces not produce static equilibrium?",
+      "resolution": "The forces act on DIFFERENT bodies. To determine wagon acceleration, inspect forces acting ON THE WAGON (500 N forward pull from horse minus friction on wagon wheels). The 500 N backward pull acts ON THE HORSE, which the horse overcomes by pushing backward against the ground with its hooves."
+    },
+    {
+      "probe_id": "CDP-03",
+      "scenario": "You apply a horizontal force of 20 N to a heavy 50 kg crate on a rough floor with static friction coefficient mu_s = 0.5. The crate remains at rest.",
+      "dissonance_question": "Is the static friction force acting on the crate 245 N (mu_s * m * g) or 20 N?",
+      "resolution": "Exactly 20 N. mu_s * N = 0.5 * 50 * 9.8 = 245 N is the MAXIMUM POSSIBLE static friction threshold. Static friction matches the driving force exactly up to that threshold to maintain Sigma F = 0."
+    },
+    {
+      "probe_id": "CDP-04",
+      "scenario": "A block sits at rest on the bed of an accelerating truck. As the truck speeds up forward, the block also speeds up forward without slipping relative to the truck.",
+      "dissonance_question": "Which direction does friction on the block act? Forward or backward?",
+      "resolution": "FORWARD. The only horizontal force acting on the block is static friction from the truck bed. By Newton's 2nd Law, Sigma F = m*a_forward, so friction must point in the direction of acceleration (forward)."
+    }
+  ]
+}

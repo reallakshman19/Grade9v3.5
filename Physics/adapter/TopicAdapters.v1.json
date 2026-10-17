@@ -1,0 +1,106 @@
+{
+  "schema": "topic-adapter/v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "topic_adapters": {
+    "mechanics-nlm": {
+      "topic_id": "phy-mechanics-nlm",
+      "display_name": "Newton's Laws of Motion & System Dynamics",
+      "coordinate_conventions": {
+        "axes": "Cartesian (x along inclined plane or line of motion, y perpendicular)",
+        "sign_convention": "Direction of expected acceleration chosen as positive to eliminate extraneous negative signs",
+        "units": "SI (Mass in kg, Force in N = kg*m/s^2, Acceleration in m/s^2)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": true,
+        "fbd_specifications": [
+          "Body isolated from surroundings with center-of-mass origin",
+          "Every force represented by an arrow whose tail begins at the point of application or COM",
+          "Action-reaction pairs must NEVER appear on the same FBD",
+          "Contact forces (normal reaction N, friction f) separated from field forces (gravity mg)"
+        ]
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_ZERO_MASS",
+        "LIMITING_CASE_INFINITE_MASS",
+        "FRAME_INVARIANCE"
+      ],
+      "misconception_discriminators": [
+        {
+          "code": "ARISTOTELIAN_FORCE_VELOCITY",
+          "pattern": "Believing a net force is needed to maintain constant velocity; confusing v = const with F_net > 0.",
+          "refutation": "Newton's 1st Law: Net force determines acceleration (rate of change of velocity), not velocity itself."
+        },
+        {
+          "code": "THIRD_LAW_INTERNAL_CANCELLATION",
+          "pattern": "Believing action and reaction cancel each other out on the same body.",
+          "refutation": "Newton's 3rd Law pairs act on strictly distinct interacting bodies: F_AB = -F_BA."
+        },
+        {
+          "code": "NORMAL_EQUALS_MG",
+          "pattern": "Assuming normal force N always equals mg, regardless of incline, vertical acceleration, or applied external forces.",
+          "refutation": "Normal force is an self-adjusting constraint force determined by equilibrium/acceleration along the perpendicular axis: Sigma F_perp = m a_perp."
+        }
+      ]
+    },
+    "friction-thresholds": {
+      "topic_id": "phy-friction-thresholds",
+      "display_name": "Static, Limiting, and Kinetic Friction",
+      "coordinate_conventions": {
+        "axes": "Tangential to contact interface",
+        "sign_convention": "Opposing impending relative motion (static) or actual relative sliding (kinetic)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": true,
+        "fbd_specifications": [
+          "Friction vector strictly parallel to contact surface",
+          "Distinguish static inequality f_s <= mu_s * N from limiting f_max = mu_s * N and kinetic f_k = mu_k * N"
+        ]
+      },
+      "independent_checks": [
+        "LIMITING_CASE_SMOOTH_SURFACE_MU_ZERO",
+        "LIMITING_CASE_ROUGH_SURFACE_MU_INF",
+        "ENERGY_DISSIPATION_SIGN_CHECK"
+      ],
+      "misconception_discriminators": [
+        {
+          "code": "STATIC_FRICTION_MAX_FALLACY",
+          "pattern": "Assuming static friction always equals mu_s * N even when external applied force is smaller.",
+          "refutation": "Static friction is self-adjusting: 0 <= f_s <= mu_s * N; it exactly matches applied driving force until slip threshold."
+        },
+        {
+          "code": "FRICTION_OPPOSES_MOTION_ABSOLUTE",
+          "pattern": "Believing friction always opposes the velocity of the body in the lab frame.",
+          "refutation": "Friction opposes relative sliding between surfaces in contact, not absolute motion in the lab frame (e.g. walking, car driving, stacked block accelerating)."
+        }
+      ]
+    },
+    "vectors-and-components": {
+      "topic_id": "phy-vectors-and-components",
+      "display_name": "Vector Decomposition & Geometric Invariants",
+      "coordinate_conventions": {
+        "axes": "Standard right-handed Cartesian (i_hat, j_hat, k_hat)",
+        "angle_reference": "Specified relative to horizontal or declared reference axis"
+      },
+      "representation_rules": {
+        "fbd_mandatory": false,
+        "vector_specifications": [
+          "Resolving vector R into R_x = R * cos(theta) and R_y = R * sin(theta)",
+          "Font floor >= 14px on all vector labels and angles in SVG graphics"
+        ]
+      },
+      "independent_checks": [
+        "PYTHAGOREAN_NORM_CHECK",
+        "EXTREMAL_ANGLE_CHECK_0_90"
+      ],
+      "misconception_discriminators": [
+        {
+          "code": "VECTOR_SCALAR_CONFUSION",
+          "pattern": "Adding vector magnitudes algebraically without vector triangle / component resolution.",
+          "refutation": "Vectors possess both magnitude and direction; magnitude of resultant is sqrt(A^2 + B^2 + 2AB cos theta)."
+        }
+      ]
+    }
+  }
+}

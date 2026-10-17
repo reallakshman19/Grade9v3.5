@@ -1,0 +1,152 @@
+---
+name: physics-curriculum-pipeline
+description: >-
+  Standard operating procedure and automated runbook for end-to-end Olympiad/JEE-Foundation
+  physics curriculum engineering: Question Intake -> 28-Cell Physics QRT Matrix ->
+  Core 1A Physical Construction & Core 1B Phenomenological Reconstruction ->
+  Multi-Engine Validation (Dimensional Analysis, Vector/FBD Assets, Limiting Cases) ->
+  Static DOM Pre-Rendered Standalone HTML Tablet App.
+---
+
+# Olympiad & Foundation Physics Curriculum Engineering Pipeline
+## End-to-End Runbook: Question Intake → 28-Cell QRT → Core 1A/1B → Multi-Engine Physical Validation → Static DOM HTML
+
+This skill defines the canonical lifecycle, schemas, validation gates, and compilation procedures for transforming raw competitive physics questions (e.g. NSEP, IPhO, JEE Foundation) into fully audited, cognitive-tier Core 2 question banks, pedagogical Core 1A/1B units, and zero-JS static DOM pre-rendered tablet applications.
+
+> [!CAUTION]
+> **Strict Concurrency & Remote Policy**:
+> All assets, branches, commits, test suites, and tablet artifacts are developed, verified, and preserved strictly in local workspace custody under the **NEVER MERGE TO REMOTE** protocol. No remote git push, remote pull request merge, or remote issue comment posting is permitted.
+
+---
+
+## 1. Architectural Pipeline Lifecycle
+
+```mermaid
+flowchart TD
+    A["Stage 1: Question Intake & Provenance<br/>(System Boundary, Frame, Idealizations)"] --> B["Stage 2: 28-Cell Physics QRT Formulation<br/>(7 Canonical Demands x 4 Derived Bands)"]
+    B --> C["Stage 3: Core 1A & 1B Blueprint Scaffold<br/>(5 Invariant Pillars, CCM, 4-Cycle Reconstruction)"]
+    C --> D["Stage 4: Multi-Engine Physical Validation<br/>(Dimensions, Limits, FBD Typography, KaTeX DOM)"]
+    D --> E["Stage 5: Bank & Topic Custody Settlement<br/>(JSON Banks, Schema Conformance, Diagnostic Traps)"]
+    E --> F["Stage 6: Static DOM Pre-Rendering<br/>(Node.js KaTeX Compiler -> Standalone Offline HTML)"]
+```
+
+---
+
+## 2. Stage 1: Question Intake & System Parameter Protocol
+
+### Intake Invariants
+Every physics question must be captured through a closed-system physical definition before algebraic manipulation:
+1. **Source Provenance**: Authentic examination metadata badges (`paper_code`, `year`, `question_number`, `tier`).
+2. **System Parameters**:
+   - `system_boundary`: Explicitly demarcates which physical bodies belong to the system and which constitute the external environment.
+   - `reference_frame`: Declares whether the analysis is conducted in an inertial laboratory frame or an accelerated/rotating non-inertial frame (with explicit D'Alembert pseudo-forces).
+   - `idealizations`: Explicitly registers assumptions (e.g., massless inextensible strings, frictionless pulleys, Coulomb dry friction, uniform gravity).
+
+---
+
+## 3. Stage 2: 28-Cell Physics QRT Cognitive Formulation
+
+### A. The 7 Canonical Physical Demands
+Cognitive demands are classified strictly by the **decisive physical cognitive act**:
+- **`RETRIEVE`**: Direct recall and recognition of physical laws, SI dimensional units, and scalar/vector status.
+- **`EXPLAIN`**: Causal phenomenological explanations connecting interactions to observed dynamics without full algebraic computation.
+- **`APPLY`**: Routine execution of Newton's laws, kinematics, or impulse-momentum on a single isolated system with explicit parameters.
+- **`MODEL`**: System boundary isolation, reference frame choice, and threshold condition checks (e.g., static vs. kinetic friction transition).
+- **`REPRESENT`**: Scientific translation across representations: Free-Body Diagrams (FBD), coordinate decomposition, or trajectory graphs.
+- **`SYNTHESIZE`**: Multi-regime coupling bridging distinct domains (e.g., Kinematics $\leftrightarrow$ Dynamics $\leftrightarrow$ Energy Conservation $\leftrightarrow$ Geometric String Constraints).
+- **`JUSTIFY`**: Deductive mathematical and physical proofs of conservation laws, boundary invariants, or asymptotic bounds.
+
+### B. The 5-Factor Physical Complexity Index ($f_1$–$f_5$)
+Difficulty bands ($D_1$ to $D_4$) are derived from 5 objective complexity factors ($f_i \in [1, 4]$):
+1. $f_1$ (**System Boundary & Body Coupling**): $1 = \text{single point mass}$; $2 = \text{single rigid body}$; $3 = \text{two coupled bodies}$; $4 = \text{multi-body constrained system}$.
+2. $f_2$ (**Vector & Coordinate Dimensionality**): $1 = \text{1D scalar}$; $2 = \text{1D vector with signs}$; $3 = \text{2D Cartesian decomposition}$; $4 = \text{intrinsic curvilinear components } (a_t, a_n)$.
+3. $f_3$ (**Constraint Latency**): $1 = \text{explicit parameters}$; $2 = \text{single taut string}$; $3 = \text{movable pulley/wedge constraint}$; $4 = \text{self-adjusting threshold } (f_s \le \mu_s N)$.
+4. $f_4$ (**Domain Coupling**): $1 = \text{single formula}$; $2 = \text{2-stage kinematics}$; $3 = \text{Force + Energy coupling}$; $4 = \text{multi-regime synthesis}$.
+5. $f_5$ (**Mathematical Friction**): $1 = \text{arithmetic evaluation}$; $2 = \text{linear equation}$; $3 = \text{simultaneous linear system}$; $4 = \text{parametric symbolic optimization}$.
+
+$$\text{Derived Score } S = \frac{f_1 + f_2 + f_3 + f_4 + f_5}{5}$$
+- **$D_1$ (Foundational)**: $1.0 \le S \le 1.6$
+- **$D_2$ (Standard Olympiad)**: $1.8 \le S \le 2.6$
+- **$D_3$ (Hard Olympiad)**: $2.8 \le S \le 3.4$
+- **$D_4$ (Achievers HOTS)**: $3.6 \le S \le 4.0$
+
+### C. Protected Learner Work ($W$) & Rival Demands
+- **Protected Work $W$**: The decisive physical insight (e.g., verifying slip threshold before applying $\Sigma F = ma$) that must NEVER be revealed in pre-attempt support.
+- **Rival Demand Rejection**: Every record must document at least one rejected rival cell and provide a falsifying pedagogical rationale.
+
+---
+
+## 4. Stage 3: Core 1A & Core 1B Physical Architectures
+
+### Core 1A: Conceptual Construction
+1. **5 Invariant Physical Pillars**:
+   - *P1 (Inertial Frames & Galilean Invariance)*: $\Sigma \vec{F} = \vec{0} \iff \vec{v} = \text{const}$.
+   - *P2 (System Isolation & Internal Cancellation)*: $\Sigma \vec{F}_{\text{ext}} = M_{\text{tot}} \vec{a}_{\text{cm}}$.
+   - *P3 (Orthogonal Vector Decomposition)*: $\Sigma F_x = m a_x, \; \Sigma F_y = m a_y$.
+   - *P4 (Kinematic String/Pulley Invariants)*: $\sum \vec{T}_i \cdot \vec{a}_i = 0$.
+   - *P5 (Non-Holonomic Friction Thresholds)*: $f_s \le \mu_s N \implies$ static vs. kinetic branch.
+2. **4-Layer Dynamic Dependency Graph**:
+   $$\text{Primitive Definitions } \longrightarrow \text{Axiomatic Laws } \longrightarrow \text{Derived Invariants } \longrightarrow \text{Coupled Synthesis}$$
+3. **Cognitive Conflict Matrix (CCM)**:
+   Juxtaposing Aristotelian/intuitive misconceptions with strict Newtonian invariants and decisive experiments.
+
+### Core 1B: Phenomenological Reconstruction
+1. **4-Cycle Reconstruction**:
+   - Multi-body Atwood Machine (Center-of-mass unrolled chain vs. virtual work).
+   - Inclined plane slip threshold (Angle of repose & total contact reaction cone).
+   - Stacked two-block slip threshold (D'Alembert pseudo-force in accelerating frame).
+   - Movable pulley mechanical advantage (Energy conservation & virtual work).
+2. **Cognitive Dissonance Probes**:
+   Targeted conceptual challenges resolving apparent contradictions (e.g., apparent weightlessness in free fall, Newton's 3rd law action-reaction acceleration).
+
+---
+
+## 5. Stage 4: Multi-Engine Physical Validation Gates
+
+Every question bank and compiled tablet app must pass all 6 fail-closed validation gates:
+
+| Gate | Validation Focus | Falsifying Fail Condition |
+| :--- | :--- | :--- |
+| **Gate 1** | Math & Typography | Unrendered raw LaTeX (`\frac`, `$..$`) outside scripts; invalid TeX syntax. |
+| **Gate 2** | Vector & FBD Typography | Any inline SVG text element with `font-size < 14px`. |
+| **Gate 3** | Dimensional Homogeneity | Expressions violating base SI dimensions $[M]^a [L]^b [T]^c$. |
+| **Gate 4** | Limiting Extremal Cases | Boundary limit failures ($\mu \to 0$, $m_2 \gg m_1$, $\theta \to 0^\circ$). |
+| **Gate 5** | Distractor Disjointness | Any duplicate option values or missing misconception diagnostic mappings. |
+| **Gate 6** | Pre-Rendered KaTeX DOM | Missing pre-rendered `<span class="katex">` DOM elements; touch targets $< 48\text{px}$. |
+
+---
+
+## 6. Stage 5: Static DOM Pre-Rendered Tablet Application
+
+### Offline Architecture Requirements
+1. **Self-Contained Base64 Typography**: Inlined Base64 KaTeX font bundle in HTML `<head>` for 100% offline mathematical fidelity.
+2. **Static DOM Pre-Compilation**: Compile all LaTeX math at build time via Node.js (`scripts/physics_prerender_engine.py`), ensuring instant client paint with zero runtime rendering lag.
+3. **WCAG 2.5.5 Touch Targets**: All option buttons and interactive elements declare strict `min-height: 48px;` and `touch-action: manipulation;`.
+4. **3-Tier Progressive Staggered Hint Ladder**:
+   - Tier 1: System Demarcation & Coordinate Selection (Open).
+   - Tier 2: FBD & Governing Equation Setup (Unlocked via button).
+   - Tier 3: Crux Move & Limit Resolution (Unlocked via button).
+
+---
+
+## 7. Execution CLI Commands
+
+### Validate Question Bank & Master Tablet Application
+```powershell
+python scripts/physics_pipeline_validator.py --bank TEST/physics-research/question_bank_mechanics_grade9.v1.json --app standalone/practice/core2-physics-mechanics-grade9-master.html
+```
+
+### Pre-Render Static KaTeX DOM
+```powershell
+python scripts/physics_prerender_engine.py scratch/_raw_physics_tablet_app.html standalone/practice/core2-physics-mechanics-grade9-master.html
+```
+
+### Audit SVG Font Floor (≥ 14px)
+```powershell
+python -c "import re; content = open('standalone/practice/core2-physics-mechanics-grade9-master.html', encoding='utf-8').read(); fonts = [int(m) for m in re.findall(r'font-size:\s*(\d+)px', content)]; print('Min font:', min(fonts) if fonts else 'N/A', 'Violations (<14px):', [f for f in fonts if f < 14])"
+```
+
+### Audit Pre-Rendered DOM (Zero Raw LaTeX)
+```powershell
+python -c "content = open('standalone/practice/core2-physics-mechanics-grade9-master.html', encoding='utf-8').read(); import re; raw_math = re.findall(r'(\\\([^\)]+\\\)|\\\[[^\]]+\\\]|\$[^\$]+\$)', re.sub(r'<script.*?</script>', '', content, flags=re.DOTALL)); print('Unrendered raw math occurrences outside scripts:', len(raw_math))"
+```
