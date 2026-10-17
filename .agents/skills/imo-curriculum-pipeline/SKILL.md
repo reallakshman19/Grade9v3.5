@@ -238,18 +238,58 @@ All standalone tablet applications must be pre-compiled at build time via Node.j
 # 1. Regenerate question banks and standalone apps with static DOM pre-rendering
 python scratch/build_{topic}_master_app.py
 
-# 2. Run standalone conformance audit (fail-closed)
+# 2. Run all-in-one pipeline validator (enforces all 5 audit gates)
+python .agents/skills/imo-curriculum-pipeline/scripts/pipeline_validator.py --topic {Topic} --html standalone/practice/core2-mathematics-{topic}-grade9-master.html
+
+# 3. Run standalone conformance audit (fail-closed)
 python Shared/tools/standalone_conformance.py standalone/practice/core2-mathematics-{topic}-grade9-master.html
 
-# 3. Run typography, math syntax, and font-floor audit
+# 4. Run typography, math syntax, and font-floor audit
 python Shared/tools/audit_math_and_fonts.py
 
-# 4. Synchronize visual cues manifest
+# 5. Synchronize visual cues manifest
 python Shared/tools/audit_missing_svgs.py --export-cues
 
-# 5. Run topic custody test suite
+# 6. Run topic custody test suite
 python -m unittest tests/test_{Topic}_custody.py -v
-
-# 6. Run full IMO regression test suite
-python -m unittest discover -s tests -p "test_imo_*.py" -v
 ```
+
+---
+
+## 9. Independent Reviewer & Critic Audit Protocol
+
+When evaluating or acting as an **Independent Reviewer / Critic** for any IMO/Olympiad curriculum release, you must execute a strict, fail-closed inspection across the following **7 Core Audit Dimensions**:
+
+### Dimension 1: Mathematical Rigor & Invariant Verification
+- [ ] **Dual-Verification Rule**: Every solution derivation must be cross-verified by a completely distinct mathematical method (e.g., trigonometric identity vs Euclidean similarity; analytic coordinate geometry vs synthetic Ptolemy).
+- [ ] **Domain & Geometric Boundary Bounds**: Check that all radii $R > r > 0$, chords $L \le 2R$, and angle measures $\in (0^\circ, 180^\circ)$. Ensure degenerate cases are mathematically bounded.
+- [ ] **No Hand-Waving or Unwarranted Invariants**: Verify that parallel lines, congruences, and concyclicities have explicit Euclidean warrants (e.g. equal alternate interior angles, opposite angles supplementary).
+
+### Dimension 2: 28-Cell QRT Cognitive Architecture
+- [ ] **Deprecated Demands Zeroed**: Confirm demand `CALCULATE` is 100% absent.
+- [ ] **Difficulty Score Math**: Ensure `difficulty_score` equals the exact sum of its 5 constituent parts (`concept_model_selection` + `representation_translation` + `reasoning_chain_length` + `algebra_computational_load` + `trap_exception_sensitivity`).
+- [ ] **Protected Work $W$ Protected**: Confirm that prompt stems do not leak intermediate lemmas or the final algebraic crux.
+
+### Dimension 3: Distractor Diagnostics & Cognitive Fallacies
+- [ ] **Strict Disjointness**: All 4 option choices ($A, B, C, D$) must have distinct values with zero duplicates or overlapping intervals.
+- [ ] **Actionable Diagnostics**: Every distractor must explain the exact psychological and computational mistake that generates it.
+- [ ] **Tempting Trap Alerts**: High-salience trap warnings must articulate the naive cognitive shortcut (e.g., assuming $PT^2 = PA \cdot AB$ instead of $PA \cdot PB$).
+
+### Dimension 4: Progressive Staggered Assistance Mechanics
+- [ ] **No Full-Disclosure Leaks**: Expanding `<details class="qb-disclosure">` must NEVER reveal all three hints at once.
+- [ ] **Sequential Unlock Gate**: Tier 1 (Conceptual Nudge) is visible by default; Tier 2 (Tactical Step) is locked behind a dedicated unlock button; Tier 3 (Crux Move) is locked until Tier 2 is revealed.
+- [ ] **Visual Progress Tracker**: Indicators (1–2–3 with track fills) must accurately convey the learner's active cognitive stage.
+
+### Dimension 5: Source Provenance & Custody Traceability
+- [ ] **Source Badge Mandate**: Every question card must display `<div class="card-source-tag">` specifying `paper_code`, `year`, `question_number`, and `section`.
+- [ ] **Linked IDs in Core 1A**: Core 1A `linked_core2_refs` must explicitly list every single question ID in the bank.
+
+### Dimension 6: Typography, Assets & Font-Floor Rigor
+- [ ] **Strict $\ge 14\text{px}$ Font Floor**: All text in stylesheets, inline CSS, and SVG `<text>` / `<tspan>` tags must be $\ge 14\text{px}$ (0.88rem).
+- [ ] **KaTeX Offline Base64 Self-Containment**: No external HTTP requests, CDNs, or unresolvable assets. All fonts and stylesheets must be self-contained base64 data URIs.
+- [ ] **Delimiter & Syntax Integrity**: Zero KaTeX `#cc0000` errors, zero unmatched `$`, and zero unescaped `%`.
+
+### Dimension 7: Static DOM Pre-Rendering (CSP & Webview Portability)
+- [ ] **Zero-JS Static Math Spans**: Pre-compilation via `prerender_engine.py` converts all LaTeX into static `<span class="katex"><span class="katex-html">` DOM elements.
+- [ ] **Webview / Iframe Resilience**: Verify that the tablet app renders mathematical formulas flawlessly even when client-side JavaScript execution is blocked by iframe sandboxes or Content Security Policies.
+
