@@ -13,6 +13,7 @@ Tests:
 
 import json
 import re
+import sys
 import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -24,6 +25,8 @@ CORE1A_FILE = REPO_ROOT / "Mathematics" / "units" / "circles" / "core1a-IMOCircl
 CORE1B_FILE = REPO_ROOT / "Mathematics" / "units" / "circles" / "core1b-IMOCircle-grade9.v1.json"
 RESOURCES_FILE = REPO_ROOT / "Mathematics" / "question-bank" / "resources.v1.json"
 HTML_APP = REPO_ROOT / "standalone" / "practice" / "core2-mathematics-circles-grade9-master.html"
+PUBLIC_HTML_APP = REPO_ROOT / "public" / "standalone" / "practice" / "core2-mathematics-circles-grade9-master.html"
+ARTIFACT_HTML_APP = Path(r"C:\Users\reall\.gemini\antigravity\brain\40014ef9-8d66-475e-aff1-d6e53797ebbd\circles_master_app.html")
 
 class TestIMOCircleCustody(unittest.TestCase):
     @classmethod
@@ -146,11 +149,37 @@ class TestIMOCircleCustody(unittest.TestCase):
         self.assertIn("RES-MATH-CORE2-CIRCLES-MASTER", ids)
 
     def test_standalone_tablet_app_zero_findings(self):
-        """Verify the standalone tablet app compiles with 0 findings under audit_html_file."""
+        """Verify the standalone tablet apps compile with 0 findings under audit_html_file."""
         from Shared.tools.audit_math_and_fonts import audit_html_file
         self.assertTrue(HTML_APP.exists())
-        findings = audit_html_file(HTML_APP)
-        self.assertEqual(len(findings), 0, f"Standalone HTML audit findings: {findings}")
+        self.assertTrue(PUBLIC_HTML_APP.exists())
+        f1 = audit_html_file(HTML_APP)
+        f2 = audit_html_file(PUBLIC_HTML_APP)
+        self.assertEqual(len(f1), 0, f"Standalone HTML audit findings: {f1}")
+        self.assertEqual(len(f2), 0, f"Public standalone HTML audit findings: {f2}")
+
+    def test_standalone_conformance_and_katex_self_contained(self):
+        """Verify standalone conformance and that KaTeX typography is 100% self-contained offline."""
+        import subprocess
+        # 1. Run standalone_conformance.py on HTML_APP and PUBLIC_HTML_APP
+        for app_path in [HTML_APP, PUBLIC_HTML_APP]:
+            cmd = [sys.executable, str(REPO_ROOT / "Shared" / "tools" / "standalone_conformance.py"), str(app_path)]
+            res = subprocess.run(cmd, capture_output=True, text=True, cwd=str(REPO_ROOT))
+            self.assertEqual(res.returncode, 0, f"Conformance error for {app_path}: {res.stderr}")
+            self.assertIn("conforms", res.stdout, f"{app_path} did not conform: {res.stdout}")
+
+        # 2. Verify self-contained offline KaTeX tags are embedded (zero missing assets)
+        content = HTML_APP.read_text(encoding="utf-8")
+        self.assertIn('id="offline-katex-css"', content, "Missing offline-katex-css tag")
+        self.assertIn('id="offline-katex-core"', content, "Missing offline-katex-core tag")
+        self.assertIn('id="offline-katex-auto"', content, "Missing offline-katex-auto tag")
+
+        # 3. Verify artifact app exists and conforms
+        if ARTIFACT_HTML_APP.exists():
+            art_res = subprocess.run([sys.executable, str(REPO_ROOT / "Shared" / "tools" / "standalone_conformance.py"), str(ARTIFACT_HTML_APP)],
+                                     capture_output=True, text=True, cwd=str(REPO_ROOT))
+            self.assertIn("conforms", art_res.stdout, f"Artifact did not conform: {art_res.stdout}")
 
 if __name__ == "__main__":
+    import sys
     unittest.main()

@@ -120,6 +120,22 @@ def audit_html_file(html_path: Path) -> List[Dict[str, Any]]:
     findings = []
     text = html_path.read_text(encoding="utf-8", errors="replace")
 
+    # 0. Runtime Script & Asset Resolution (Prevents unrendered KaTeX / broken links)
+    for tag_match in re.finditer(r'<(link|script)\s+[^>]*?(?:href|src)=["\']([^"\']+)["\']', text, re.I):
+        tag, ref = tag_match.group(1).lower(), tag_match.group(2)
+        if ref.startswith("data:") or ref.startswith("http:") or ref.startswith("https:") or ref.startswith("//") or ref.startswith("#"):
+            continue
+        target = (html_path.parent / ref).resolve()
+        if not target.exists():
+            line_no = text.count("\n", 0, tag_match.start()) + 1
+            findings.append({
+                "file": str(html_path),
+                "line": line_no,
+                "rule": "ASSET_UNRESOLVED",
+                "detail": f"Runtime {tag} asset does not exist: {ref}",
+                "severity": "BLOCK"
+            })
+
     # 1. KaTeX Math Block Audit
     blocks = extract_math_blocks(text)
     
