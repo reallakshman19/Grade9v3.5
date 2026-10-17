@@ -12,6 +12,39 @@
     "D3": 8,
     "D4": 5
   },
+  "blueprint_ref": "BP-CORE2-SOURCE-QUESTION@1.11.0",
+  "qrt_matrix_coverage": {
+    "total_questions": 25,
+    "demands_covered": [
+      "APPLY",
+      "REPRESENT",
+      "JUSTIFY",
+      "MODEL",
+      "SYNTHESIZE"
+    ],
+    "bands_covered": [
+      "D1",
+      "D2",
+      "D3",
+      "D4"
+    ],
+    "cells": [
+      "QRT-APPLY-D1",
+      "QRT-APPLY-D2",
+      "QRT-JUSTIFY-D1",
+      "QRT-JUSTIFY-D2",
+      "QRT-JUSTIFY-D3",
+      "QRT-JUSTIFY-D4",
+      "QRT-MODEL-D2",
+      "QRT-MODEL-D3",
+      "QRT-MODEL-D4",
+      "QRT-REPRESENT-D1",
+      "QRT-REPRESENT-D2",
+      "QRT-SYNTHESIZE-D2",
+      "QRT-SYNTHESIZE-D3",
+      "QRT-SYNTHESIZE-D4"
+    ]
+  },
   "questions": [
     {
       "id": "SOF-IMO-G09-CIRCLES-Q001",
@@ -29,9 +62,20 @@
       },
       "cognitive_classification": {
         "difficulty_band": "D1",
-        "primary_demand": "CALCULATE",
-        "qrt_cell": "QRT-CALCULATE-D1",
-        "crux_move": "The perpendicular from the circle centre to a chord bisects the chord, forming a right triangle with the radius."
+        "primary_demand": "APPLY",
+        "qrt_cell": "QRT-APPLY-D1",
+        "crux_move": "The perpendicular from the circle centre to a chord bisects the chord, forming a right triangle with the radius.",
+        "secondary_demands": [
+          "RETRIEVE"
+        ],
+        "difficulty_score": 2,
+        "difficulty_components": {
+          "concept_model_selection": 0,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        }
       },
       "title": "Perpendicular Distance from Centre to Chord",
       "stem": "In a circle of radius $13\\text{ cm}$, a chord $AB$ has length $24\\text{ cm}$. Find the perpendicular distance of the chord from the centre $O$ of the circle.",
@@ -63,6 +107,19 @@
         "C": "Confused distance with diameter quotient $24 / 4 = 6$.",
         "D": "Mistook $(13 - 6) = 7$ as the perpendicular leg.",
         "trap": "Forgetting that the perpendicular bisects the chord, attempting to use the full chord length 24 cm in Pythagoras."
+      },
+      "conditions": [
+        "Circle of radius r = 13 cm",
+        "Chord AB of length 24 cm",
+        "Perpendicular OM dropped from centre O to chord AB"
+      ],
+      "qrt_contract": {
+        "X": "the givens that the perpendicular from the centre to a chord bisects the chord into two equal segments of 12 cm",
+        "Y": "the Pythagorean relation in right triangle OMA formed by centre, chord midpoint, and circle radius",
+        "Z": "instantiate OM^2 + AM^2 = OA^2 with AM = 12 and OA = 13",
+        "W": "solve OM = sqrt(169 - 144) = 5 cm",
+        "wrong_idea": "using the unbisected chord length 24 cm directly in the Pythagorean theorem",
+        "replacement_rule": "always bisect the chord at the foot of the perpendicular before applying the Pythagorean theorem"
       }
     },
     {
@@ -83,7 +140,19 @@
         "difficulty_band": "D1",
         "primary_demand": "REPRESENT",
         "qrt_cell": "QRT-REPRESENT-D1",
-        "crux_move": "A chord equal in length to the radius forms an equilateral triangle with the center, subtending 60 degrees at the center and 30 degrees at the circumference."
+        "crux_move": "A chord equal in length to the radius forms an equilateral triangle with the center, subtending 60 degrees at the center and 30 degrees at the circumference.",
+        "secondary_demands": [
+          "APPLY",
+          "RETRIEVE"
+        ],
+        "difficulty_score": 2,
+        "difficulty_components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        }
       },
       "title": "Subtended Angle by Chord of Length Equal to Radius",
       "stem": "A chord of a circle is equal to the radius of the circle. Find the angle subtended by the chord at the centre of the circle, and the angle subtended by it at a point on the major arc.",
@@ -115,6 +184,18 @@
         "C": "Assumed the chord subtends a right angle at the centre.",
         "D": "Doubled the central angle instead of halving it for the inscribed angle.",
         "trap": "Confusing the major arc inscribed angle ($30^\\circ$) with the minor arc inscribed angle ($150^\\circ$)."
+      },
+      "conditions": [
+        "Chord AB has length equal to circle radius r",
+        "Subtended angles at minor arc and major arc requested"
+      ],
+      "qrt_contract": {
+        "X": "translating the metric equality AB = OA = OB into an equilateral triangle with central angle 60\u00b0",
+        "Y": "Inscribed Angle Theorem stating that angle at circumference is half of central angle",
+        "Z": "compute major arc angle as 60\u00b0/2 = 30\u00b0 and minor arc angle as supplementary 180\u00b0 - 30\u00b0 = 150\u00b0",
+        "W": "state the dual angle pair: 30\u00b0 at major arc, 150\u00b0 at minor arc",
+        "wrong_idea": "confusing major and minor arc angles or assuming the minor arc angle is also acute",
+        "replacement_rule": "the major arc angle is acute (half of central angle), while the minor arc angle forms a cyclic quadrilateral with it summing to 180\u00b0"
       }
     },
     {
@@ -133,9 +214,20 @@
       },
       "cognitive_classification": {
         "difficulty_band": "D1",
-        "primary_demand": "CALCULATE",
-        "qrt_cell": "QRT-CALCULATE-D1",
-        "crux_move": "Angles subtended by the same chord in the same segment of a circle are equal."
+        "primary_demand": "APPLY",
+        "qrt_cell": "QRT-APPLY-D1",
+        "crux_move": "Angles subtended by the same chord in the same segment of a circle are equal.",
+        "secondary_demands": [
+          "RETRIEVE"
+        ],
+        "difficulty_score": 2,
+        "difficulty_components": {
+          "concept_model_selection": 0,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 0
+        }
       },
       "title": "Angles in the Same Segment Intersecting Chords",
       "stem": "In the given figure, points $A, B, C, D$ lie on a circle. Chords $AC$ and $BD$ intersect at point $E$ such that $\\angle BEC = 130^\\circ$ and $\\angle ECD = 20^\\circ$. Find the measure of $\\angle BAC$.",
@@ -167,6 +259,19 @@
         "C": "Calculated $180^\\circ - 130^\\circ + 70^\\circ = 120^\\circ$.",
         "D": "Mistook the vertically opposite or linear pair angle directly.",
         "trap": "Failing to recognize that $\\angle BAC$ and $\\angle BDC$ share the identical chord base $BC$."
+      },
+      "conditions": [
+        "Points A, B, C, D lie on circle",
+        "Chords AC and BD intersect at interior point E",
+        "angle(BEC) = 130\u00b0, angle(ECD) = 20\u00b0"
+      ],
+      "qrt_contract": {
+        "X": "transferring subtended angles in the same segment across chords",
+        "Y": "angles in the same segment of a circle are equal (angle BAC = angle BDC)",
+        "Z": "find angle CED = 180\u00b0 - 130\u00b0 = 50\u00b0, then in triangle CDE find angle CDE = 180\u00b0 - (50\u00b0 + 20\u00b0) = 110\u00b0",
+        "W": "deduce angle BAC = angle BDC = 110\u00b0",
+        "wrong_idea": "assuming intersecting chords form a right angle or misidentifying which angle shares the common chord",
+        "replacement_rule": "trace the endpoints of the subtended arc to ensure both inscribed angles stand on the exact same chord"
       }
     },
     {
@@ -187,7 +292,18 @@
         "difficulty_band": "D1",
         "primary_demand": "JUSTIFY",
         "qrt_cell": "QRT-JUSTIFY-D1",
-        "crux_move": "The angle subtended by a diameter at any point on the circle is a right angle (90 degrees)."
+        "crux_move": "The angle subtended by a diameter at any point on the circle is a right angle (90 degrees).",
+        "secondary_demands": [
+          "RETRIEVE"
+        ],
+        "difficulty_score": 1,
+        "difficulty_components": {
+          "concept_model_selection": 0,
+          "representation_translation": 0,
+          "reasoning_chain_length": 0,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Angle in a Semicircle Invariant",
       "stem": "Segment $AB$ is a diameter of a circle with centre $O$. Point $C$ is any point on the circumference of the circle. If $\\angle CAB = 38^\\circ$, find the measure of $\\angle ABC$.",
@@ -219,6 +335,18 @@
         "C": "Subtracted $38^\\circ$ from $94^\\circ$.",
         "D": "Added $38^\\circ$ incorrectly or subtracted from $100^\\circ$.",
         "trap": "Assuming $\\triangle ABC$ is isosceles with $AC = BC$ instead of using the diameter right-angle property."
+      },
+      "conditions": [
+        "AB is a diameter of circle with centre O",
+        "C is any point on the circumference distinct from A and B"
+      ],
+      "qrt_contract": {
+        "X": "recognizing that a diameter subtends a straight angle (180\u00b0) at the centre",
+        "Y": "Inscribed Angle Theorem: angle at circumference is half of central angle",
+        "Z": "divide the straight central angle 180\u00b0 by 2",
+        "W": "conclude angle ACB is strictly 90\u00b0 for every point C",
+        "wrong_idea": "thinking angle ACB varies as C moves along the semicircle",
+        "replacement_rule": "Thales' theorem guarantees angle in a semicircle is invariant and identically 90\u00b0 regardless of position"
       }
     },
     {
@@ -237,9 +365,20 @@
       },
       "cognitive_classification": {
         "difficulty_band": "D2",
-        "primary_demand": "CALCULATE",
-        "qrt_cell": "QRT-CALCULATE-D2",
-        "crux_move": "A perpendicular from the common centre to a secant line bisects both the outer chord and the inner chord simultaneously."
+        "primary_demand": "APPLY",
+        "qrt_cell": "QRT-APPLY-D2",
+        "crux_move": "A perpendicular from the common centre to a secant line bisects both the outer chord and the inner chord simultaneously.",
+        "secondary_demands": [
+          "MODEL"
+        ],
+        "difficulty_score": 3,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        }
       },
       "title": "Concentric Circle Intercepted Segment Invariant",
       "stem": "Two concentric circles with common centre $O$ have radii $17\\text{ cm}$ and $10\\text{ cm}$. A straight line intersects the outer circle at $A$ and $D$, and the inner circle at $B$ and $C$. If the perpendicular distance from $O$ to the line is $8\\text{ cm}$, find the length of the line segment $AB$.",
@@ -271,6 +410,19 @@
         "C": "Correct segment length $9\\text{ cm}$ from dual chord bisection.",
         "D": "Arithmetic error calculating $16 - 6 = 10\\text{ cm}$.",
         "trap": "Subtracting radii directly ($17 - 10 = 7$) instead of computing the Pythagorean chord projections."
+      },
+      "conditions": [
+        "Concentric circles with common centre O",
+        "Secant line intersects outer circle at A, D and inner circle at B, C",
+        "AD = 18 cm, BC = 10 cm"
+      ],
+      "qrt_contract": {
+        "X": "applying the chord bisection theorem simultaneously from common centre O to both chords AD and BC",
+        "Y": "perpendicular OM from O bisects AD into AM = MD = 9 cm, and bisects BC into BM = MC = 5 cm",
+        "Z": "express AB as AM - BM",
+        "W": "compute AB = 9 - 5 = 4 cm (and verify CD = MD - MC = 4 cm)",
+        "wrong_idea": "assuming AB is half of the difference without establishing perpendicular symmetry",
+        "replacement_rule": "the shared perpendicular bisector guarantees AM = MD and BM = MC, yielding AB = CD = (AD - BC)/2"
       }
     },
     {
@@ -291,7 +443,18 @@
         "difficulty_band": "D2",
         "primary_demand": "MODEL",
         "qrt_cell": "QRT-MODEL-D2",
-        "crux_move": "Complete the circular angular sum around the centre, then apply the inscribed angle theorem to the remaining arc."
+        "crux_move": "Complete the circular angular sum around the centre, then apply the inscribed angle theorem to the remaining arc.",
+        "secondary_demands": [
+          "APPLY"
+        ],
+        "difficulty_score": 3,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Major Arc Subtended Angle from Central Angles",
       "stem": "In a circle with centre $O$, points $A, B, C$ lie on the circumference such that $\\angle AOB = 90^\\circ$ and $\\angle BOC = 120^\\circ$. If point $D$ lies on the circle on the major arc $AC$ (not containing $B$), find the measure of $\\angle ADC$.",
@@ -323,6 +486,18 @@
         "C": "Calculated the inscribed angle at $B$ ($105^\\circ$) instead of the angle at $D$.",
         "D": "Gave the central angle $150^\\circ$ without dividing by 2.",
         "trap": "Selecting the central angle $150^\\circ$ directly, or finding the opposite inscribed angle $105^\\circ$."
+      },
+      "conditions": [
+        "Circle centre O, points A, B, C on circumference",
+        "angle(AOB) = 90\u00b0, angle(BOC) = 110\u00b0"
+      ],
+      "qrt_contract": {
+        "X": "modelling complete 360\u00b0 circular angular sum around centre O to find central angle AOC",
+        "Y": "sum of angles around a point is 360\u00b0, and inscribed angle is half of central angle",
+        "Z": "compute reflex angle AOC = 360\u00b0 - (90\u00b0 + 110\u00b0) = 160\u00b0",
+        "W": "evaluate inscribed angle ABC = 160\u00b0 / 2 = 80\u00b0",
+        "wrong_idea": "taking (90\u00b0 + 110\u00b0)/2 = 100\u00b0 directly without checking whether B lies on the opposite arc",
+        "replacement_rule": "always identify whether the subtended arc is minor or major before halving the central angle"
       }
     },
     {
@@ -343,7 +518,19 @@
         "difficulty_band": "D2",
         "primary_demand": "JUSTIFY",
         "qrt_cell": "QRT-JUSTIFY-D2",
-        "crux_move": "Since opposite angles of a cyclic quad sum to 180 degrees, the sum of their half-angles is 90 degrees, forcing the line joining the arc midpoints to be a diameter."
+        "crux_move": "Since opposite angles of a cyclic quad sum to 180 degrees, the sum of their half-angles is 90 degrees, forcing the line joining the arc midpoints to be a diameter.",
+        "secondary_demands": [
+          "MODEL",
+          "APPLY"
+        ],
+        "difficulty_score": 4,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Cyclic Quadrilateral Opposite Angle Bisectors Invariant",
       "stem": "Let $ABCD$ be a cyclic quadrilateral. The internal angle bisectors of opposite angles $\\angle A$ and $\\angle C$ intersect the circumcircle at points $P$ and $Q$ respectively. What can be concluded about the line segment $PQ$?",
@@ -375,6 +562,19 @@
         "C": "Parallelism to $BD$ only holds in special symmetric configurations.",
         "D": "Perpendicularity to $AC$ does not hold in asymmetric cyclic quads.",
         "trap": "Guessing parallelism to diagonals rather than using the $90^\\circ$ diameter invariant."
+      },
+      "conditions": [
+        "Cyclic quadrilateral ABCD",
+        "Internal bisectors of opposite angles A and C intersect circle at E and F",
+        "Segment EF connects intersection points"
+      ],
+      "qrt_contract": {
+        "X": "relating opposite angles summing to 180\u00b0 with half-angles summing to 90\u00b0",
+        "Y": "sum of opposite angles in cyclic quad is 180\u00b0, so A/2 + C/2 = 90\u00b0",
+        "Z": "inscribed angle theorem implies sum of intercepted arcs is 2 * 90\u00b0 = 180\u00b0",
+        "W": "conclude that arc EBF is a semicircle (180\u00b0), proving chord EF is a diameter",
+        "wrong_idea": "assuming EF is perpendicular to diagonals rather than proving it is a diameter",
+        "replacement_rule": "when half-angles of opposite vertices sum to 90\u00b0, their intercepted arc measures 180\u00b0, which is a semicircle with diameter EF"
       }
     },
     {
@@ -395,7 +595,18 @@
         "difficulty_band": "D2",
         "primary_demand": "SYNTHESIZE",
         "qrt_cell": "QRT-SYNTHESIZE-D2",
-        "crux_move": "For two chords intersecting inside a circle, the product of the segments of one chord equals the product of the segments of the other."
+        "crux_move": "For two chords intersecting inside a circle, the product of the segments of one chord equals the product of the segments of the other.",
+        "secondary_demands": [
+          "APPLY"
+        ],
+        "difficulty_score": 3,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        }
       },
       "title": "Intersecting Chords Segment Product Theorem",
       "stem": "In the given figure, two chords $AB$ and $CD$ of a circle intersect at an interior point $P$. If $AP = 6\\text{ cm}$, $PB = 8\\text{ cm}$, and $CP = 4\\text{ cm}$, find the total length of chord $CD$.",
@@ -427,6 +638,19 @@
         "C": "Correct total chord length $CD = 4 + 12 = 16\\text{ cm}$.",
         "D": "Added $6 + 12 = 18$ mistakenly combining $AP$ and $PD$.",
         "trap": "Reporting the segment $PD = 12\\text{ cm}$ instead of the full chord length $CD = 16\\text{ cm}$."
+      },
+      "conditions": [
+        "Chords AB and CD intersect at interior point P",
+        "AP = 6 cm, PB = 8 cm, CP = 4 cm",
+        "Find total length CD"
+      ],
+      "qrt_contract": {
+        "X": "applying intersecting chords theorem AP * PB = CP * PD",
+        "Y": "intersecting chords power theorem from similar triangles PAC ~ PDB",
+        "Z": "substitute givens: 6 * 8 = 4 * PD => 48 = 4 * PD => PD = 12 cm",
+        "W": "synthesize total chord length CD = CP + PD = 4 + 12 = 16 cm",
+        "wrong_idea": "reporting PD = 12 cm as the final answer instead of full chord CD = CP + PD",
+        "replacement_rule": "always check whether the question asks for segment PD or full chord CD = CP + PD"
       }
     },
     {
@@ -445,9 +669,20 @@
       },
       "cognitive_classification": {
         "difficulty_band": "D2",
-        "primary_demand": "CALCULATE",
-        "qrt_cell": "QRT-CALCULATE-D2",
-        "crux_move": "When two parallel chords lie on opposite sides of the centre, the distance between them is the sum of their individual distances from the centre."
+        "primary_demand": "APPLY",
+        "qrt_cell": "QRT-APPLY-D2",
+        "crux_move": "When two parallel chords lie on opposite sides of the centre, the distance between them is the sum of their individual distances from the centre.",
+        "secondary_demands": [
+          "MODEL"
+        ],
+        "difficulty_score": 4,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        }
       },
       "title": "Distance Between Two Parallel Chords Across Centre",
       "stem": "In a circle of radius $10\\text{ cm}$, two parallel chords $AB$ and $CD$ of lengths $16\\text{ cm}$ and $12\\text{ cm}$ respectively lie on opposite sides of the centre $O$. Find the perpendicular distance between the two chords.",
@@ -479,6 +714,19 @@
         "C": "Correct distance $14\\text{ cm}$ from summing perpendicular distances across centre.",
         "D": "Mistakenly used the chord length $16\\text{ cm}$.",
         "trap": "Subtracting distances ($8 - 6 = 2$) instead of adding them when chords lie on opposite sides of the centre."
+      },
+      "conditions": [
+        "Circle radius r = 10 cm",
+        "Parallel chords AB = 16 cm, CD = 12 cm",
+        "Chords lie on opposite sides of centre"
+      ],
+      "qrt_contract": {
+        "X": "calculating independent perpendicular distances from centre to each chord",
+        "Y": "Pythagorean theorem d = sqrt(r^2 - (chord/2)^2)",
+        "Z": "d1 = sqrt(10^2 - 8^2) = 6 cm; d2 = sqrt(10^2 - 6^2) = 8 cm",
+        "W": "add distances across centre: d = d1 + d2 = 6 + 8 = 14 cm",
+        "wrong_idea": "subtracting distances (8 - 6 = 2 cm) as if chords were on the same side of the centre",
+        "replacement_rule": "opposite sides of the centre requires summing distances (d1 + d2); same side requires subtracting (|d1 - d2|)"
       }
     },
     {
@@ -499,7 +747,18 @@
         "difficulty_band": "D2",
         "primary_demand": "REPRESENT",
         "qrt_cell": "QRT-REPRESENT-D2",
-        "crux_move": "When two equal circles pass through each other's centres, the line of centres equals the radius and is bisected by the common chord."
+        "crux_move": "When two equal circles pass through each other's centres, the line of centres equals the radius and is bisected by the common chord.",
+        "secondary_demands": [
+          "APPLY"
+        ],
+        "difficulty_score": 4,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        }
       },
       "title": "Common Chord of Circles Passing Through Each Other's Centres",
       "stem": "Two circles of equal radius $5\\text{ cm}$ intersect each other such that each circle passes through the centre of the other. Find the exact length of their common chord.",
@@ -531,6 +790,19 @@
         "C": "Correct chord length $5\\sqrt{3}\\text{ cm}$ from equilateral triangle altitude.",
         "D": "Added the two radii $5 + 5 = 10\\text{ cm}$.",
         "trap": "Confusing the equilateral triangle altitude formula with right-isosceles triangle geometry."
+      },
+      "conditions": [
+        "Two circles of equal radius r = 5 cm",
+        "Each circle passes through centre of the other",
+        "Common chord AB intersects line of centres OO' at M"
+      ],
+      "qrt_contract": {
+        "X": "representing intersecting circle geometry where distance between centres OO' equals radius r = 5 cm",
+        "Y": "line of centres is perpendicular bisector of common chord AB, so OM = r/2 = 2.5 cm",
+        "Z": "in right triangle OMA, AM = sqrt(r^2 - (r/2)^2) = r*sqrt(3)/2 = 5*sqrt(3)/2",
+        "W": "common chord AB = 2 * AM = 5*sqrt(3) cm",
+        "wrong_idea": "assuming OM = r and getting 0 or confusing common chord with diameter",
+        "replacement_rule": "each circle passing through the other's centre forces OO' = r, so OM = r/2 and chord = r*sqrt(3)"
       }
     },
     {
@@ -551,7 +823,18 @@
         "difficulty_band": "D2",
         "primary_demand": "JUSTIFY",
         "qrt_cell": "QRT-JUSTIFY-D2",
-        "crux_move": "An inscribed trapezoid in a circle is necessarily isosceles, forcing non-parallel sides to be equal and base angles to be equal."
+        "crux_move": "An inscribed trapezoid in a circle is necessarily isosceles, forcing non-parallel sides to be equal and base angles to be equal.",
+        "secondary_demands": [
+          "MODEL"
+        ],
+        "difficulty_score": 3,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Cyclic Trapezoid Base Angles and Symmetry",
       "stem": "Quadrilateral $ABCD$ is inscribed in a circle such that $AB \\parallel CD$. If $\\angle A = 70^\\circ$, find the measures of $\\angle B, \\angle C$, and $\\angle D$.",
@@ -583,6 +866,18 @@
         "C": "Made $\\angle C = 70^\\circ$, violating the cyclic quad supplementary condition.",
         "D": "Inverted all three supplementary angles.",
         "trap": "Assuming $ABCD$ is a parallelogram (which would require opposite angles to be equal, impossible for a non-rectangular cyclic quad)."
+      },
+      "conditions": [
+        "Quadrilateral ABCD inscribed in circle with AB || CD",
+        "angle(A) = 70\u00b0"
+      ],
+      "qrt_contract": {
+        "X": "establishing that any cyclic trapezoid must be isosceles",
+        "Y": "consecutive interior angles of parallel lines sum to 180\u00b0, and opposite angles of cyclic quad sum to 180\u00b0",
+        "Z": "angle D = 180\u00b0 - 70\u00b0 = 110\u00b0; angle C = 180\u00b0 - angle A = 110\u00b0; angle B = 180\u00b0 - angle D = 70\u00b0",
+        "W": "conclude remaining angles are angle B = 70\u00b0, angle C = 110\u00b0, angle D = 110\u00b0",
+        "wrong_idea": "assuming cyclic trapezoid can have non-equal base angles",
+        "replacement_rule": "inscribed parallel chords intercept equal arcs, forcing opposite sides to be equal and base angles to match"
       }
     },
     {
@@ -603,7 +898,18 @@
         "difficulty_band": "D2",
         "primary_demand": "MODEL",
         "qrt_cell": "QRT-MODEL-D2",
-        "crux_move": "An exterior angle of a cyclic quadrilateral is equal to the interior opposite angle."
+        "crux_move": "An exterior angle of a cyclic quadrilateral is equal to the interior opposite angle.",
+        "secondary_demands": [
+          "APPLY"
+        ],
+        "difficulty_score": 3,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Exterior Angle Transfer in Cyclic Quadrilateral",
       "stem": "In a cyclic quadrilateral $ABCD$, side $AB$ is produced to a point $E$. If $\\angle CBE = 82^\\circ$ and $\\angle BAC = 42^\\circ$, find the measures of $\\angle BDC$ and $\\angle ADC$.",
@@ -635,6 +941,18 @@
         "C": "Subtracted $82^\\circ - 42^\\circ = 40^\\circ$ and used the supplementary angle $98^\\circ$.",
         "D": "Used interior angle $\\angle ABC = 98^\\circ$ in place of $\\angle ADC$.",
         "trap": "Confusing interior opposite angle with adjacent linear pair angle."
+      },
+      "conditions": [
+        "Cyclic quad ABCD, side AB produced to E",
+        "angle(CBE) = 82\u00b0, angle(BAC) = 42\u00b0"
+      ],
+      "qrt_contract": {
+        "X": "applying exterior angle theorem of cyclic quadrilateral: exterior angle equals interior opposite angle",
+        "Y": "angle ADC = exterior angle CBE = 82\u00b0",
+        "Z": "angles in same segment: angle BDC = angle BAC = 42\u00b0, so angle ADB = 82\u00b0 - 42\u00b0 = 40\u00b0",
+        "W": "in triangle ADC, angle ACD = 180\u00b0 - (angle CAD + angle ADC) = 56\u00b0",
+        "wrong_idea": "confusing exterior angle with interior angle and using 180 - 82 = 98\u00b0 incorrectly",
+        "replacement_rule": "exterior angle formed by producing a side of cyclic quad equals interior opposite angle directly"
       }
     },
     {
@@ -653,9 +971,20 @@
       },
       "cognitive_classification": {
         "difficulty_band": "D3",
-        "primary_demand": "CALCULATE",
-        "qrt_cell": "QRT-CALCULATE-D3",
-        "crux_move": "The area of the annulus between concentric circles depends strictly on the square of the half-length of a chord of the outer circle tangent to the inner circle: Area = pi * (L/2)^2."
+        "primary_demand": "MODEL",
+        "qrt_cell": "QRT-MODEL-D3",
+        "crux_move": "The area of the annulus between concentric circles depends strictly on the square of the half-length of a chord of the outer circle tangent to the inner circle: Area = pi * (L/2)^2.",
+        "secondary_demands": [
+          "APPLY"
+        ],
+        "difficulty_score": 5,
+        "difficulty_components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        }
       },
       "title": "Concentric Circles Tangent Chord Annulus Area Invariant",
       "stem": "In the given figure, a chord $AB$ of the outer circle of two concentric circles has length $20\\text{ cm}$ and is tangent to the inner circle at point $T$. Find the exact area of the circular ring (annulus) bounded between the two circles.",
@@ -687,6 +1016,19 @@
         "C": "Correct exact area $100\\pi\\text{ cm}^2$ from Mamikon's sweeping theorem / Pythagorean annulus invariant.",
         "D": "Used full chord length squared without halving: $\\pi \\times 200 = 200\\pi$.",
         "trap": "Believing the problem lacks sufficient information because individual radii $R$ and $r$ are not given."
+      },
+      "conditions": [
+        "Two concentric circles",
+        "Chord AB of outer circle is tangent to inner circle at M",
+        "AB = 20 cm"
+      ],
+      "qrt_contract": {
+        "X": "modelling annulus area pi*(R^2 - r^2) through tangent right triangle OMA",
+        "Y": "tangent is perpendicular to radius, OM = r, OA = R, AM = AB/2 = 10 cm; R^2 - r^2 = AM^2",
+        "Z": "R^2 - r^2 = 10^2 = 100",
+        "W": "Area = pi*(R^2 - r^2) = 100*pi cm^2",
+        "wrong_idea": "thinking individual radii R and r are required to compute the annulus area",
+        "replacement_rule": "annulus area depends strictly on the square of half the tangent chord: Area = pi * (L/2)^2"
       }
     },
     {
@@ -707,7 +1049,19 @@
         "difficulty_band": "D3",
         "primary_demand": "JUSTIFY",
         "qrt_cell": "QRT-JUSTIFY-D3",
-        "crux_move": "Opposite right angles formed by altitudes sum to 180 degrees, creating a cyclic quadrilateral whose circumcircle has diameter equal to the segment connecting vertex to orthocentre."
+        "crux_move": "Opposite right angles formed by altitudes sum to 180 degrees, creating a cyclic quadrilateral whose circumcircle has diameter equal to the segment connecting vertex to orthocentre.",
+        "secondary_demands": [
+          "MODEL",
+          "REPRESENT"
+        ],
+        "difficulty_score": 5,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Concyclicity of Orthocentre and Altitude Feet",
       "stem": "In an acute triangle $ABC$, altitudes $AD$ and $BE$ intersect at the orthocentre $H$. Which of the following statements is mathematically true regarding the points $C, D, H, E$?",
@@ -739,6 +1093,19 @@
         "C": "Chose $DE$, which is a chord of the circle, not the diameter.",
         "D": "Falsely believed concyclicity requires equilateral symmetry.",
         "trap": "Confusing the cyclic quadrilateral of the four vertices and altitude feet ($ABDE$ with diameter $AB$) with the orthocentre cyclic quadrilateral ($CDHE$ with diameter $CH$)."
+      },
+      "conditions": [
+        "Acute triangle ABC with altitudes AD and BE",
+        "Altitudes AD and BE intersect at orthocentre H",
+        "Feet of altitudes D and E lie on sides BC and AC respectively"
+      ],
+      "qrt_contract": {
+        "X": "identifying concyclicity from right angles subtended by common hypotenuses",
+        "Y": "quadrilaterals with opposite right angles (CDHE) or sharing common hypotenuse right angles (ABDE) are cyclic",
+        "Z": "angle CDH + angle CEH = 90\u00b0 + 90\u00b0 = 180\u00b0 forces CDHE cyclic with diameter CH; angle ADB = angle AEB = 90\u00b0 forces ABDE cyclic with diameter AB",
+        "W": "identify the true geometric invariant among statements (CDHE cyclic with diameter CH)",
+        "wrong_idea": "confusing the circumdiameter of CDHE (which is CH) with circumradius of triangle ABC",
+        "replacement_rule": "hypotenuse of right triangles formed by altitudes gives the exact diameter of the concyclic quadrilateral"
       }
     },
     {
@@ -759,7 +1126,19 @@
         "difficulty_band": "D3",
         "primary_demand": "SYNTHESIZE",
         "qrt_cell": "QRT-SYNTHESIZE-D3",
-        "crux_move": "The angle formed by two secants intersecting outside a circle equals half the difference of the intercepted central arcs."
+        "crux_move": "The angle formed by two secants intersecting outside a circle equals half the difference of the intercepted central arcs.",
+        "secondary_demands": [
+          "APPLY",
+          "MODEL"
+        ],
+        "difficulty_score": 5,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "External Secant Angle and Intercepted Arc Difference",
       "stem": "Two secants $PAB$ and $PCD$ are drawn from an external point $P$ to a circle, intersecting the circle at $A, B$ and $C, D$ respectively ($A$ lies on segment $PB$, $C$ lies on segment $PD$). If the major intercepted arc $BD$ subtends a central angle of $110^\\circ$ and the minor intercepted arc $AC$ subtends a central angle of $40^\\circ$, find the measure of $\\angle P$.",
@@ -791,6 +1170,18 @@
         "C": "Took the minor arc measure $40^\\circ$ directly.",
         "D": "Averaged the two arcs: $\\frac{110 + 40}{4} = 37.5$ rounded to $45^\\circ$ or arithmetic slip.",
         "trap": "Adding the arcs instead of subtracting them (which applies to chords intersecting INSIDE a circle: $\\frac{110 + 40}{2} = 75^\\circ$)."
+      },
+      "conditions": [
+        "Two secants PAB and PCD from external point P",
+        "Intercepted arcs BD = 110\u00b0 and AC = 40\u00b0"
+      ],
+      "qrt_contract": {
+        "X": "synthesizing exterior angle of triangle with inscribed angles subtending circular arcs",
+        "Y": "in triangle PAD, angle BCD = 110\u00b0/2 = 55\u00b0, angle ADC = 40\u00b0/2 = 20\u00b0",
+        "Z": "angle BCD is exterior to triangle PCD, so angle BCD = angle P + angle ADC",
+        "W": "angle P = angle BCD - angle ADC = 55\u00b0 - 20\u00b0 = 35\u00b0 = (110\u00b0 - 40\u00b0)/2",
+        "wrong_idea": "adding arcs (110\u00b0 + 40\u00b0)/2 = 75\u00b0 as if secants intersected inside the circle",
+        "replacement_rule": "external intersection angle equals half the difference of intercepted arcs; internal equals half the sum"
       }
     },
     {
@@ -811,7 +1202,19 @@
         "difficulty_band": "D3",
         "primary_demand": "MODEL",
         "qrt_cell": "QRT-MODEL-D3",
-        "crux_move": "For any point on the circumcircle of an equilateral triangle, the distance to the farthest vertex equals the sum of the distances to the other two vertices."
+        "crux_move": "For any point on the circumcircle of an equilateral triangle, the distance to the farthest vertex equals the sum of the distances to the other two vertices.",
+        "secondary_demands": [
+          "APPLY",
+          "JUSTIFY"
+        ],
+        "difficulty_score": 6,
+        "difficulty_components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Van Schooten's Inscribed Equilateral Triangle Invariant",
       "stem": "An equilateral triangle $ABC$ is inscribed in a circle. A point $P$ lies on the minor arc $BC$. If $PB = 5\\text{ cm}$ and $PC = 7\\text{ cm}$, find the exact length of the chord $PA$.",
@@ -843,6 +1246,19 @@
         "C": "Correct: $PA = PB + PC = 12\\text{ cm}$ by Van Schooten's theorem.",
         "D": "Doubled the longer segment: $2 \\times 7 = 14\\text{ cm}$.",
         "trap": "Attempting complicated trigonometry instead of leveraging the linear sum invariant of Ptolemy's theorem on equilateral cyclic quads."
+      },
+      "conditions": [
+        "Equilateral triangle ABC inscribed in circle",
+        "P lies on minor arc BC",
+        "PB = 5 cm, PC = 7 cm"
+      ],
+      "qrt_contract": {
+        "X": "modelling chord lengths using Van Schooten's theorem or Ptolemy's theorem on cyclic quad ABPC",
+        "Y": "Ptolemy: PA * BC = PB * AC + PC * AB; since AB = BC = CA = s, PA * s = (PB + PC) * s => PA = PB + PC",
+        "Z": "substitute known segments PB = 5 and PC = 7",
+        "W": "PA = 5 + 7 = 12 cm",
+        "wrong_idea": "applying Pythagorean theorem assuming PA is a diameter",
+        "replacement_rule": "Van Schooten's theorem states distance from circumcircle point to opposite vertex equals sum of distances to adjacent vertices"
       }
     },
     {
@@ -863,7 +1279,19 @@
         "difficulty_band": "D3",
         "primary_demand": "JUSTIFY",
         "qrt_cell": "QRT-JUSTIFY-D3",
-        "crux_move": "Secants through a point of intersection of two circles intercept chords that subtend equal inscribed angles, proving triangle similarity by AA."
+        "crux_move": "Secants through a point of intersection of two circles intercept chords that subtend equal inscribed angles, proving triangle similarity by AA.",
+        "secondary_demands": [
+          "REPRESENT",
+          "MODEL"
+        ],
+        "difficulty_score": 6,
+        "difficulty_components": {
+          "concept_model_selection": 1,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Intersecting Circles Secant Angle Similarity Proof",
       "stem": "Two circles intersect at points $A$ and $B$. Through the point of intersection $A$, two straight secants $CAD$ and $EAF$ are drawn intersecting the first circle at $C, E$ and the second circle at $D, F$. What is the geometric relationship between $\\triangle CBE$ and $\\triangle DBF$?",
@@ -895,6 +1323,19 @@
         "C": "Claimed right-angled property, which is not required.",
         "D": "Falsely stated that similarity depends on equal radii.",
         "trap": "Assuming the triangles must be congruent instead of recognizing scaling similarity."
+      },
+      "conditions": [
+        "Two circles intersect at A and B",
+        "Two straight secants CAD and EAF drawn through A",
+        "Connect C to E and D to F"
+      ],
+      "qrt_contract": {
+        "X": "transferring inscribed angles across common chord AB",
+        "Y": "in left circle, angle C = angle EBA; in right circle, angle D = angle FBA",
+        "Z": "consecutive angles at B form a line or vertical pair, establishing angle BCE = angle BDF and angle BEC = angle BFD",
+        "W": "prove triangle BCE is similar to triangle BDF by AA similarity",
+        "wrong_idea": "assuming triangles are congruent without knowing side lengths",
+        "replacement_rule": "secant angle transfers through common chords preserve angle measures, proving AA similarity rather than congruence"
       }
     },
     {
@@ -913,9 +1354,21 @@
       },
       "cognitive_classification": {
         "difficulty_band": "D3",
-        "primary_demand": "CALCULATE",
-        "qrt_cell": "QRT-CALCULATE-D3",
-        "crux_move": "Centres of three mutually touching equal circles form an equilateral triangle whose circumradius minus the coin radius gives the central void radius."
+        "primary_demand": "SYNTHESIZE",
+        "qrt_cell": "QRT-SYNTHESIZE-D3",
+        "crux_move": "Centres of three mutually touching equal circles form an equilateral triangle whose circumradius minus the coin radius gives the central void radius.",
+        "secondary_demands": [
+          "APPLY",
+          "MODEL"
+        ],
+        "difficulty_score": 6,
+        "difficulty_components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 0
+        }
       },
       "title": "Radius of Inscribed Circle Among Three Mutually Touching Circles",
       "stem": "Three identical coins of radius $r = 6\\text{ cm}$ lie flat on a table such that each coin touches the other two externally. A smaller coin of radius $r_0$ is placed in the central void touching all three coins externally. Find the exact radius $r_0$ of the smaller coin.",
@@ -947,6 +1400,18 @@
         "C": "Used inradius instead of circumradius formula.",
         "D": "Inverted subtraction order to force positive sign without evaluating root.",
         "trap": "Using the inradius of the equilateral triangle ($r_\\text{in} = \\frac{s}{2\\sqrt{3}}$) instead of the circumradius distance from centroid to vertex."
+      },
+      "conditions": [
+        "Three identical coins of radius r = 6 cm touch externally",
+        "Central void enclosed circle of radius rho touches all three coins"
+      ],
+      "qrt_contract": {
+        "X": "centres of coins form equilateral triangle of side 2r = 12 cm",
+        "Y": "distance from centroid/incentre of equilateral triangle to each vertex is side/sqrt(3) = 2r/sqrt(3)",
+        "Z": "distance from centre to outer contact is rho + r = 2r/sqrt(3)",
+        "W": "solve rho = r * (2/sqrt(3) - 1) = 6 * (2*sqrt(3)/3 - 1) = 4*sqrt(3) - 6 = 2*(2*sqrt(3) - 3) cm",
+        "wrong_idea": "confusing inradius of coin triangle (which is r/sqrt(3)) with distance to vertices",
+        "replacement_rule": "central void radius is distance from centroid to vertex MINUS coin radius: rho = (2r/sqrt(3)) - r"
       }
     },
     {
@@ -967,7 +1432,18 @@
         "difficulty_band": "D3",
         "primary_demand": "MODEL",
         "qrt_cell": "QRT-MODEL-D3",
-        "crux_move": "The product of the segments of any chord passing through a fixed internal point at distance d from the centre is strictly constant and equals R^2 - d^2."
+        "crux_move": "The product of the segments of any chord passing through a fixed internal point at distance d from the centre is strictly constant and equals R^2 - d^2.",
+        "secondary_demands": [
+          "APPLY"
+        ],
+        "difficulty_score": 5,
+        "difficulty_components": {
+          "concept_model_selection": 2,
+          "representation_translation": 0,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Invariant Chord Product through Fixed Interior Point",
       "stem": "Through a fixed point $P$ situated at a distance $d = 7\\text{ cm}$ from the centre of a circle of radius $R = 9\\text{ cm}$, various chords are drawn. Find the exact numerical value of the product $PA \\cdot PB$ for any chord $AB$ passing through $P$.",
@@ -999,6 +1475,18 @@
         "C": "Correct constant power product $R^2 - d^2 = 32$.",
         "D": "Doubled the correct product: $32 \\times 2 = 64$.",
         "trap": "Believing the product changes as the chord rotates around the pivot point $P$."
+      },
+      "conditions": [
+        "Fixed internal point P at distance d = 7 cm from centre of circle of radius R = 9 cm",
+        "Chord through P has segments x and y"
+      ],
+      "qrt_contract": {
+        "X": "applying Power of a Point theorem for internal point P",
+        "Y": "for any chord through P, product of segments equals (R - d)(R + d) = R^2 - d^2",
+        "Z": "substitute R = 9 and d = 7: R^2 - d^2 = 81 - 49",
+        "W": "evaluate constant product x * y = 32 cm^2",
+        "wrong_idea": "thinking chord segment product varies depending on chord orientation",
+        "replacement_rule": "power of an interior point is strictly invariant for all chords through that point and equals R^2 - d^2"
       }
     },
     {
@@ -1019,7 +1507,19 @@
         "difficulty_band": "D3",
         "primary_demand": "SYNTHESIZE",
         "qrt_cell": "QRT-SYNTHESIZE-D3",
-        "crux_move": "For a triangle inscribed in a semicircle with the diameter as base, maximum area occurs when the altitude is maximized, which equals the radius R, giving Area = R^2."
+        "crux_move": "For a triangle inscribed in a semicircle with the diameter as base, maximum area occurs when the altitude is maximized, which equals the radius R, giving Area = R^2.",
+        "secondary_demands": [
+          "MODEL",
+          "APPLY"
+        ],
+        "difficulty_score": 5,
+        "difficulty_components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 1,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Maximum Area of Inscribed Triangle in Semicircle",
       "stem": "A triangle is inscribed in a semicircle of radius $R = 8\\text{ cm}$ such that one of its sides is the diameter of the semicircle. Find the maximum possible area of such an inscribed triangle.",
@@ -1051,6 +1551,18 @@
         "C": "Correct maximum area $R^2 = 64\\text{ cm}^2$.",
         "D": "Multiplied base $16 \\times 8$ without dividing by 2.",
         "trap": "Applying $\\frac{1}{2} R^2$ by treating the radius $R$ as the full base instead of the diameter $2R$."
+      },
+      "conditions": [
+        "Triangle inscribed in semicircle of radius R = 8 cm",
+        "One side of triangle is the diameter 2R = 16 cm"
+      ],
+      "qrt_contract": {
+        "X": "synthesizing triangle area formula with geometric bound on maximum altitude in semicircle",
+        "Y": "Area = 1/2 * base * height; base = 2R; height h cannot exceed radius R",
+        "Z": "max height occurs when third vertex lies directly above centre: h_max = R",
+        "W": "max Area = 1/2 * (2R) * R = R^2 = 8^2 = 64 cm^2",
+        "wrong_idea": "assuming equilateral triangle formula or using 1/2 * R * R = 32",
+        "replacement_rule": "with diameter 2R as base, maximum altitude equals the perpendicular radius R, yielding max Area = R^2"
       }
     },
     {
@@ -1071,7 +1583,19 @@
         "difficulty_band": "D4",
         "primary_demand": "JUSTIFY",
         "qrt_cell": "QRT-JUSTIFY-D4",
-        "crux_move": "Chaining cyclic quadrilateral supplementary angle invariants across the shared radical axis transfers equal corresponding angles, proving lines are strictly parallel."
+        "crux_move": "Chaining cyclic quadrilateral supplementary angle invariants across the shared radical axis transfers equal corresponding angles, proving lines are strictly parallel.",
+        "secondary_demands": [
+          "MODEL",
+          "REPRESENT"
+        ],
+        "difficulty_score": 7,
+        "difficulty_components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 0,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Dual Circle Secant Intersection Parallel Chord Proof",
       "stem": "Two circles $C_1$ and $C_2$ intersect at two distinct points $A$ and $B$. A line through $A$ intersects $C_1$ at $D$ and $C_2$ at $E$. A second line through $B$ intersects $C_1$ at $C$ and $C_2$ at $F$. Which of the following relationships between segments $DC$ and $EF$ is universally and strictly true?",
@@ -1103,6 +1627,19 @@
         "C": "Claimed equal lengths, which falsely assumes both circles have identical radii and symmetric chords.",
         "D": "Falsely conjectured an angle dependence on $\\angle ADB$.",
         "trap": "Assuming non-parallelism because the lines visually look tilted when secants are drawn asymmetrically."
+      },
+      "conditions": [
+        "Two circles C1 and C2 intersect at A and B",
+        "Secant CAD intersects C1 at D and C2 at C",
+        "Secant EBF intersects C1 at F and C2 at E"
+      ],
+      "qrt_contract": {
+        "X": "chaining cyclic quadrilateral opposite angle supplementarity across radical axis AB",
+        "Y": "quadrilateral ABFD in C1 is cyclic, quad ABEC in C2 is cyclic",
+        "Z": "angle D + angle ABF = 180\u00b0; angle E = angle ABF (exterior angle to cyclic quad ABEC)",
+        "W": "substitute: angle D + angle E = 180\u00b0, proving consecutive interior angles supplementary => CD || EF",
+        "wrong_idea": "assuming chords are parallel by visual symmetry without cyclic quadrilateral angle transfer",
+        "replacement_rule": "chaining opposite-angle supplementarity across two intersecting circles transfers equal consecutive interior angles, proving lines parallel"
       }
     },
     {
@@ -1123,7 +1660,18 @@
         "difficulty_band": "D4",
         "primary_demand": "MODEL",
         "qrt_cell": "QRT-MODEL-D4",
-        "crux_move": "In any cyclic quadrilateral, the product of the diagonals is equal to the sum of the products of the pairs of opposite sides: d1 * d2 = a*c + b*d."
+        "crux_move": "In any cyclic quadrilateral, the product of the diagonals is equal to the sum of the products of the pairs of opposite sides: d1 * d2 = a*c + b*d.",
+        "secondary_demands": [
+          "APPLY"
+        ],
+        "difficulty_score": 7,
+        "difficulty_components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Ptolemy's Diagonal-Product Invariant in Cyclic Quadrilateral",
       "stem": "In the given figure, quadrilateral $ABCD$ is cyclic with consecutive side lengths $AB = 3$, $BC = 4$, $CD = 5$, and $DA = 6$. Diagonals $AC$ and $BD$ have lengths $d_1$ and $d_2$ respectively. Find the exact value of the product of the diagonals $d_1 d_2$.",
@@ -1155,6 +1703,19 @@
         "C": "Added $(3 \\times 6) + (4 \\times 5) = 18 + 20 = 38$ or arithmetic slip to 42.",
         "D": "Multiplied $6 \\times 8 = 48$ using perimeter estimates.",
         "trap": "Pairing adjacent sides instead of opposite sides ($(AB \\cdot BC) + (CD \\cdot DA) = 12 + 30 = 42$)."
+      },
+      "conditions": [
+        "Cyclic quadrilateral ABCD",
+        "Sides AB = 3, BC = 4, CD = 5, DA = 6",
+        "Diagonals AC and BD"
+      ],
+      "qrt_contract": {
+        "X": "formulating Ptolemy's theorem for diagonal product of cyclic quadrilateral",
+        "Y": "Ptolemy: AC * BD = AB * CD + BC * DA",
+        "Z": "substitute side lengths: AC * BD = 3 * 5 + 4 * 6 = 15 + 24",
+        "W": "evaluate AC * BD = 39",
+        "wrong_idea": "multiplying adjacent sides (3*4 + 5*6) instead of opposite sides",
+        "replacement_rule": "Ptolemy's theorem requires products of OPPOSITE side pairs: d1 * d2 = a*c + b*d"
       }
     },
     {
@@ -1175,7 +1736,19 @@
         "difficulty_band": "D4",
         "primary_demand": "SYNTHESIZE",
         "qrt_cell": "QRT-SYNTHESIZE-D4",
-        "crux_move": "Apply the Tangent-Secant Theorem (PT^2 = PA * PB) and substitute the linear segment ratio to solve for the full secant length."
+        "crux_move": "Apply the Tangent-Secant Theorem (PT^2 = PA * PB) and substitute the linear segment ratio to solve for the full secant length.",
+        "secondary_demands": [
+          "MODEL",
+          "APPLY"
+        ],
+        "difficulty_score": 8,
+        "difficulty_components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 2,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Secant-Tangent Power of a Point Ratio Invariant",
       "stem": "In the given figure, from an external point $P$, a tangent $PT$ of length $12\\text{ cm}$ is drawn to a circle. A secant line through $P$ intersects the circle at points $A$ and $B$ (with $A$ between $P$ and $B$) such that the internal chord length $AB$ is twice the external segment $PA$ ($AB = 2 PA$). Find the total length of the secant segment $PB$.",
@@ -1207,6 +1780,19 @@
         "C": "Correct total secant length $12\\sqrt{3}\\text{ cm}$.",
         "D": "Mistakenly treated the equation as linear: $3 PA = 12 \\implies PA = 4, PB = 16$.",
         "trap": "Reporting the internal chord $AB = 8\\sqrt{3}$ instead of the full secant length $PB = 12\\sqrt{3}$."
+      },
+      "conditions": [
+        "Tangent PT = 12 cm from external point P",
+        "Secant PAB with PA : AB = 1 : 3",
+        "Find total secant length PB"
+      ],
+      "qrt_contract": {
+        "X": "synthesizing Tangent-Secant theorem PT^2 = PA * PB with segment ratio parameterization",
+        "Y": "let PA = x, AB = 3x, so total secant PB = PA + AB = 4x",
+        "Z": "substitute into theorem: 12^2 = x * (4x) => 144 = 4x^2 => x^2 = 36 => x = 6 cm",
+        "W": "compute total secant PB = 4x = 4 * 6 = 24 cm",
+        "wrong_idea": "using PT^2 = PA * AB => 144 = x * 3x = 3x^2 => x = sqrt(48)",
+        "replacement_rule": "the secant factor in the power theorem is the ENTIRE external-to-far secant PB, not just the chord segment AB"
       }
     },
     {
@@ -1225,9 +1811,20 @@
       },
       "cognitive_classification": {
         "difficulty_band": "D4",
-        "primary_demand": "CALCULATE",
-        "qrt_cell": "QRT-CALCULATE-D4",
-        "crux_move": "In a right-angled triangle, the sum of the inradius and circumradius equals the semi-sum of the two legs: R + r = (a + b) / 2."
+        "primary_demand": "MODEL",
+        "qrt_cell": "QRT-MODEL-D4",
+        "crux_move": "In a right-angled triangle, the sum of the inradius and circumradius equals the semi-sum of the two legs: R + r = (a + b) / 2.",
+        "secondary_demands": [
+          "APPLY"
+        ],
+        "difficulty_score": 7,
+        "difficulty_components": {
+          "concept_model_selection": 2,
+          "representation_translation": 1,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Right Triangle Inradius and Circumradius Sum Invariant",
       "stem": "A right-angled triangle has perpendicular legs of lengths $a = 15\\text{ cm}$ and $b = 20\\text{ cm}$. Let $R$ denote the radius of its circumcircle and $r$ denote the radius of its incircle. Find the exact numerical value of the sum $(R + r)$.",
@@ -1259,6 +1856,18 @@
         "C": "Approximation error in inradius calculation.",
         "D": "Took the longer leg length $20\\text{ cm}$.",
         "trap": "Forgetting that circumcentre is at the midpoint of hypotenuse, attempting complicated angle bisector derivations."
+      },
+      "conditions": [
+        "Right-angled triangle with legs a = 15 cm, b = 20 cm",
+        "Circumradius R and inradius r"
+      ],
+      "qrt_contract": {
+        "X": "modelling circumradius and inradius formulas for right triangles",
+        "Y": "hypotenuse c = sqrt(15^2 + 20^2) = 25 cm; R = c/2 = 12.5 cm; r = (a + b - c)/2 = (15 + 20 - 25)/2 = 5 cm",
+        "Z": "sum R + r = c/2 + (a + b - c)/2 = (a + b)/2",
+        "W": "compute R + r = 12.5 + 5 = 17.5 cm = (15 + 20)/2",
+        "wrong_idea": "confusing inradius formula with Area / semi-perimeter and getting wrong signs",
+        "replacement_rule": "in any right triangle, R + r is identically equal to the semi-sum of the legs: R + r = (a + b)/2"
       }
     },
     {
@@ -1279,7 +1888,19 @@
         "difficulty_band": "D4",
         "primary_demand": "JUSTIFY",
         "qrt_cell": "QRT-JUSTIFY-D4",
-        "crux_move": "Euler's formula gives the exact squared distance between circumcentre and incentre: d^2 = R(R - 2r)."
+        "crux_move": "Euler's formula gives the exact squared distance between circumcentre and incentre: d^2 = R(R - 2r).",
+        "secondary_demands": [
+          "MODEL",
+          "APPLY"
+        ],
+        "difficulty_score": 8,
+        "difficulty_components": {
+          "concept_model_selection": 2,
+          "representation_translation": 2,
+          "reasoning_chain_length": 2,
+          "algebra_computational_load": 1,
+          "trap_exception_sensitivity": 1
+        }
       },
       "title": "Euler's Incentre-Circumcentre Distance Formula Invariant",
       "stem": "In a triangle with circumradius $R = 10\\text{ cm}$ and inradius $r = 4\\text{ cm}$, find the exact distance $d$ between the circumcentre $O$ and the incentre $I$.",
@@ -1311,6 +1932,18 @@
         "C": "Subtracted radii $10 - 2(4) = 2$ and squared to 4.",
         "D": "Calculated $\\sqrt{18} = 3\\sqrt{2}$ through arithmetic slip.",
         "trap": "Guessing $d = R - r = 6$ (which applies to tangent circles, not triangle centres)."
+      },
+      "conditions": [
+        "Triangle with circumradius R = 10 cm and inradius r = 4 cm",
+        "Distance between circumcentre O and incentre I is d"
+      ],
+      "qrt_contract": {
+        "X": "applying Euler's formula for the distance between circumcentre and incentre",
+        "Y": "Euler's theorem: d^2 = R(R - 2r) (derived from power of incentre with respect to circumcircle and chord bisectors)",
+        "Z": "substitute R = 10 and r = 4: d^2 = 10 * (10 - 2 * 4) = 10 * (10 - 8) = 10 * 2 = 20",
+        "W": "evaluate exact distance d = sqrt(20) = 2*sqrt(5) cm",
+        "wrong_idea": "forgetting the factor of 2 and computing d^2 = R(R - r) = 60",
+        "replacement_rule": "Euler's distance invariant formula is d^2 = R(R - 2r), which also proves the fundamental inequality R >= 2r"
       }
     }
   ]
