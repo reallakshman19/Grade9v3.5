@@ -4,6 +4,7 @@
   "package_id": "CORE1B-MATH-IMOCIRCLE-GRADE9",
   "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
   "topic": "CIRCLES",
+  "topic_name": "Circles and Cyclic Quadrilaterals Conceptual Reconstruction",
   "subtopic": "IMO-CIRCLES-COMPREHENSIVE-CURRICULUM",
   "target_demand": "JUSTIFY",
   "target_band": "D4",
@@ -34,16 +35,29 @@
       "reconstruction_route": "INVARIANT_CROSS_EXAMINATION_AND_DUAL_PROOF",
       "dialog_steps": [
         {
+          "step_id": "RECON-01-ANNULUS-MAMIKON",
           "inquiry": "Suppose a student attempts to calculate the annulus area by measuring individual radii R and r. Why is this an unnecessary cognitive burden?",
-          "expected_insight": "Because only the DIFFERENCE of the squares (R^2 - r^2) matters for area, which is directly given by the half-chord squared (L / 2)^2 via the Pythagorean theorem at the point of tangency."
+          "expected_insight": "Because only the DIFFERENCE of the squares (R^2 - r^2) matters for area, which is directly given by the half-chord squared (L / 2)^2 via the Pythagorean theorem at the point of tangency (Mamikon's sweeping principle)."
         },
         {
-          "inquiry": "How does Ptolemy's Theorem generalize when quadrilateral ABCD is NOT cyclic?",
-          "expected_insight": "By Ptolemy's Inequality: for any general quadrilateral, d_1 * d_2 <= ac + bd. Equality holds if and only if ABCD is cyclic, making concyclicity a necessary and sufficient condition."
+          "step_id": "RECON-02-PTOLEMY-INVERSION",
+          "inquiry": "How does Ptolemy's Theorem generalize when quadrilateral ABCD is NOT cyclic, and what is the underlying projective engine?",
+          "expected_insight": "By Ptolemy's Inequality: for any general quadrilateral, d_1 * d_2 <= ac + bd. Under circular inversion centered at vertex D, points A, B, C map to A', B', C'. The triangle inequality A'B' + B'C' >= A'C' translates identically into Ptolemy's relation, with equality holding if and only if A', B', C' are collinear, which occurs if and only if A, B, C, D are concyclic."
         },
         {
-          "inquiry": "In the Secant-Tangent theorem, why is PT^2 = PA * PB, and what is the common student error in setting up this relation?",
-          "expected_insight": "Similar triangles triangle PTA ~ triangle PBT share angle P and have equal alternate-segment angles (angle PTA = angle PBT). The common student trap is writing PT^2 = PA * AB (multiplying external by internal chord) instead of PA * PB (external by entire secant)."
+          "step_id": "RECON-03-SECANT-POWER-TRAP",
+          "inquiry": "In the Secant-Tangent theorem, why is PT^2 = PA * PB, and what is the fatal cognitive trap in setting up this relation?",
+          "expected_insight": "Similar triangles triangle PTA ~ triangle PBT share angle P and have equal alternate-segment angles (angle PTA = angle PBT). The fatal trap is writing PT^2 = PA * AB (multiplying external segment by internal chord) instead of PA * PB (external segment by entire secant)."
+        },
+        {
+          "step_id": "RECON-04-ORTHOCENTER-CONCYCLICITY",
+          "inquiry": "Why are the altitude feet of a triangle concyclic with vertices and orthocenter in cyclic subsets, and how does this guarantee parallel chords in intersecting circles?",
+          "expected_insight": "Right angles subtended by altitudes (e.g. angle ADC = angle AEC = 90 deg) force quadrilateral CDHE to be cyclic with diameter CH. In dual intersecting circles, shared chords transfer supplementarity across common boundaries, forcing consecutive interior angles to sum to 180 deg."
+        },
+        {
+          "step_id": "RECON-05-EULER-DISTANCE-INVARIANT",
+          "inquiry": "In Euler's distance formula d^2 = R(R - 2r), what is the geometric meaning when d = 0, and why is R >= 2r universally?",
+          "expected_insight": "When d = 0, circumcenter O and incenter I coincide, which characterizes equilateral triangles identically. Since d^2 >= 0 always, R(R - 2r) >= 0 implies R >= 2r, establishing the absolute extremal bound for all planar triangles."
         }
       ]
     },
@@ -57,6 +71,46 @@
       ],
       "correct_option": "B",
       "explanation": "When d = 0, R(R - 2r) = 0 implies R = 2r (since R > 0). In any triangle, circumcenter and incenter coincide if and only if the triangle is equilateral. This verifies the absolute lower bound of Euler's inequality R >= 2r."
+    }
+  },
+  "structural_reconstruction_scenarios": [
+    {
+      "scenario_id": "SCEN-01-PTOLEMY-INVERSION",
+      "focus": "Cyclic Diagonal Bilinear Forms vs General Metric Space",
+      "core_question": "Why does concyclicity enforce equality in diagonal products while general quadrilaterals only satisfy an inequality?",
+      "mathematical_core": "Under circular inversion with center D and radius k: A'B' = k^2 * AB / (DA * DB). Applying the triangle inequality to inverted points A', B', C' yields AB * CD + BC * DA >= AC * BD. Equality holds iff A', B', C' are collinear, which maps back to concyclicity of A, B, C, D.",
+      "cognitive_takeaway": "Ptolemy's theorem is not an isolated identity, but the metric shadow of the triangle inequality under conformal circular inversion."
+    },
+    {
+      "scenario_id": "SCEN-02-POWER-OF-A-POINT",
+      "focus": "Projective Chord Products and Constant Radial Distance",
+      "core_question": "Why is the product of segments through point P independent of the chord angle?",
+      "mathematical_core": "For circle C(O, R) and point P at distance d = OP, any line through P intersecting C at A, B satisfies (x - d_A)(x - d_B) with constant product term d^2 - R^2. Thus PA * PB = |d^2 - R^2| is invariant under rotation.",
+      "cognitive_takeaway": "Power of a point is an algebraic polynomial invariant: the constant term of the quadratic intersection equation."
+    },
+    {
+      "scenario_id": "SCEN-03-MAMIKON-ANNULUS",
+      "focus": "Tangent Sweeping and Radial Independence",
+      "core_question": "Why does the annulus area depend only on the tangent chord length and not on individual radii?",
+      "mathematical_core": "Mamikon's theorem states that the area swept out by a tangent segment of constant length L/2 as it moves around the inner circle equals the area of a circle with radius L/2: Area = pi * (L / 2)^2.",
+      "cognitive_takeaway": "Global area integrals can evaluate to local metric constants when geometry exhibits rotational tangent symmetry."
+    },
+    {
+      "scenario_id": "SCEN-04-EULER-EXTREMAL",
+      "focus": "Triangle Center Distance and Inequality Bounds",
+      "core_question": "How does circumcenter-incenter separation d govern the fundamental geometry of the triangle?",
+      "mathematical_core": "Euler's relation OI^2 = R(R - 2r) implies that the ratio R / 2r is strictly 1 + (OI / R)^2 / (1 - OI^2/R^2). As OI -> 0, the triangle converges to equilateral symmetry.",
+      "cognitive_takeaway": "Center distances measure geometric symmetry deficit; zero separation implies maximum symmetry (equilateral)."
+    }
+  ],
+  "cognitive_dissonance_resolution_framework": {
+    "dissonance_1": {
+      "intuitive_bias": "Assuming two circles looking similar have equal power lines.",
+      "resolution": "Radical axis is the unique straight line of equal power: P(P, C_1) = P(P, C_2). It is perpendicular to the line of centers O_1 O_2."
+    },
+    "dissonance_2": {
+      "intuitive_bias": "Assuming chords of equal length subtend equal angles at any point.",
+      "resolution": "Equal chords subtend equal angles ONLY at points on the circumcircle on the same side of the chord, not at arbitrary points in the plane."
     }
   },
   "hint_ladder": {

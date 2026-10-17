@@ -80,16 +80,26 @@ Every question must declare a complete `qrt_contract` object:
 - Exactly 4 disjoint options (`A`, `B`, `C`, `D`) with zero duplicates.
 - `distractor_rationale`: Must contain keys for all options `A`, `B`, `C`, `D` (explaining why distractors fail and why the key is correct) plus `trap` (detailing the exact cognitive pitfall).
 
-### F. 3-Tier Progressive Hint Ladder
-- `hint1_conceptual_nudge`: Broad structural question directing attention to the invariant.
-- `hint2_tactical_step`: Concrete auxiliary construction or intermediate algebraic relation.
-- `hint3_crux_move`: The definitive pivot that unlocks the solution.
+### F. Progressive Staggered Hint Ladder Protocol
+> [!IMPORTANT]
+> **Staggered Progression Mandate**: Hints must NEVER be revealed all at once upon expanding the disclosure. The user interface must enforce a progressive, visually staggered unlock flow:
+> 1. **Tier 1 (Conceptual Nudge)**: Visible immediately when the Hint Ladder `<details>` element is opened. Broad structural question directing attention to the governing invariant.
+> 2. **Tier 2 (Tactical Step)**: Locked initially behind an unlock button (`🔓 Need more guidance? Unlock Tier 2 · Tactical Step`). Hidden until the student explicitly requests deeper assistance. Concrete auxiliary construction or intermediate algebraic relation.
+> 3. **Tier 3 (Crux Move)**: Locked initially behind an unlock button (`🔓 Still stuck? Unlock Tier 3 · Crux Move`). Accessible only after Tier 2 has been unlocked. The definitive mathematical pivot that unlocks the solution.
+> 4. **Progress Tracker**: Visual indicators (steps 1–2–3 with connecting track fills) conveying the active assistance level.
 
-### G. Model Solution & Independent Dual-Check
+### G. Source Provenance Display Mandate
+Every question card in the standalone tablet application must display a prominent **Source Provenance Tag** at the top of the card:
+- Paper Code: e.g., `SOF-IMO-G09-CIRCLES-MASTER`
+- Year & Question Number: e.g., `2025-26 · Q1`
+- Exam Section Badge: e.g., `MATHEMATICAL REASONING`, `ACHIEVERS SECTION`
+- Semantic markup: `<div class="card-source-tag"><span class="source-icon">📜</span>...</div>`.
+
+### H. Model Solution & Independent Dual-Check
 - `solution.derivation`: Numbered, KaTeX-formatted step-by-step mathematical proof.
 - `solution.independent_check`: Alternative verification route (e.g. Cartesian coordinate check, trigonometric form, complex cross-ratio, or boundary limit).
 
-### H. Authentic Vector Figures
+### I. Authentic Vector Figures
 - SVG diagrams referenced in `figure_ref`.
 - Strict **$\ge 14\text{px}$ font-floor** on all `<text>` and `<tspan>` elements.
 - Accessible ARIA labels and semantic element tagging.
@@ -109,6 +119,16 @@ Every question must declare a complete `qrt_contract` object:
   - `symbol`: Formal mathematical notation (e.g., `OM perp AB implies AM = MB = AB / 2`).
   - `svg_element_ref`: Target SVG asset name.
   - `word_meaning`: Pedagogical explanation of the invariant.
+- **`structural_concept_ontology`**: Comprehensive 5-pillar mathematical ontology:
+  - Each pillar contains `name`, `foundational_theorems`, `governing_equation`, and `algebraic_nature`.
+  - Maps fundamental geometric invariants (e.g., Euclidean Chord Metric, Subtended Arc Concyclicity, Projective Chord Products, Cyclic Quad Bilinear Forms, Triangle Center Separation).
+- **`concept_dependency_graph`**: 4-layer epistemic network:
+  - `axiom_layer`: Foundational Euclidean axioms and metric postulates.
+  - `lemma_layer`: Intermediate geometric lemmas (chord bisection, inscribed angles, Thales).
+  - `core_invariant_layer`: Cyclic quad supplementarity, power of a point, Mamikon sweeping.
+  - `olympiad_synthesis_layer`: Ptolemy's theorem, circular inversion, incenter-excenter concyclicity, Euler distance inequality.
+- **`cognitive_conflict_matrix`**: Misconception refutation matrix:
+  - Array of $\ge 5$ items with `naive_misconception`, `mathematical_refutation`, and `governing_invariant`.
 
 ### Core 1B: Pedagogical Reconstruction Cycle (`BP-CORE1B-RECONSTRUCTION`)
 - Schema: `grade9v3-core1b-reconstruction/v1`.
@@ -116,8 +136,13 @@ Every question must declare a complete `qrt_contract` object:
 - Implements 4-Stage Cognitive Commitment Loop:
   1. `stage_1_predict`: Multiple-choice prediction forcing qualitative commitment before calculation.
   2. `stage_2_attempt`: Locked working area requiring user input before revealing model closure.
-  3. `stage_3_reconstruct`: Invariant cross-examination dialog steps and common fallacy refutations.
+  3. `stage_3_reconstruct`: Invariant cross-examination dialog steps and common fallacy refutations across multiple dialog steps.
   4. `stage_4_boundary_test`: Perturbation and extremal limiting test (e.g., $d \to 0$ in Euler's formula).
+- **`structural_reconstruction_scenarios`**:
+  - Array of $\ge 4$ deep multi-scenario cycles, each with `scenario_id`, `focus`, `core_question`, `mathematical_core`, and `cognitive_takeaway`.
+  - Exemplifies invariant preservation under projective and continuous deformations.
+- **`cognitive_dissonance_resolution_framework`**:
+  - Pairs intuitive perceptual traps with formal geometric resolutions (e.g., radical axis equal-power lines, circumcircle angle constancy).
 
 ---
 

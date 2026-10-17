@@ -180,6 +180,65 @@ class TestIMOCircleCustody(unittest.TestCase):
                                      capture_output=True, text=True, cwd=str(REPO_ROOT))
             self.assertIn("conforms", art_res.stdout, f"Artifact did not conform: {art_res.stdout}")
 
+    def test_card_source_provenance_and_staggered_hint_ladder(self):
+        """Verify Source Provenance Tag and Progressive Staggered Hint Ladder in rendered HTML."""
+        content = HTML_APP.read_text(encoding="utf-8")
+        
+        # Verify Source Provenance Tag
+        source_tags = re.findall(r'<div class="card-source-tag">', content)
+        self.assertEqual(len(source_tags), 50, "Expected all 50 question cards to feature Source Provenance Tags")
+        self.assertIn("SOF-IMO-G09-CIRCLES-MASTER", content, "Missing paper code in source provenance")
+        self.assertIn("badge-section", content, "Missing section badge in source provenance")
+
+        # Verify Progressive Staggered Hint Ladder
+        stagger_containers = re.findall(r'<div class="hint-stagger-container">', content)
+        self.assertEqual(len(stagger_containers), 50, "Expected all 50 question cards to feature staggered hint containers")
+        
+        unlock_buttons = re.findall(r'class="hint-unlock-btn"', content)
+        self.assertEqual(len(unlock_buttons), 100, "Expected exactly 100 progressive unlock buttons (Tier 2 & 3 for 50 Qs)")
+        
+        progress_bars = re.findall(r'<div class="hint-progress-bar">', content)
+        self.assertEqual(len(progress_bars), 50, "Expected all 50 question cards to feature progressive progress bars")
+
+    def test_core1_structural_ontology_and_conflict_matrix(self):
+        """Verify Core 1A & 1B structural concept ontology, dependency graph, and cognitive conflict matrix."""
+        # Core 1A structural verification
+        c1a = json.loads(CORE1A_FILE.read_text(encoding="utf-8"))
+        ontology = c1a.get("structural_concept_ontology", {})
+        self.assertGreaterEqual(len(ontology), 5, "Expected at least 5 invariant pillars in Core 1A ontology")
+        for pillar_key, pillar in ontology.items():
+            self.assertIn("name", pillar)
+            self.assertIn("governing_equation", pillar)
+            self.assertIn("algebraic_nature", pillar)
+            self.assertIn("foundational_theorems", pillar)
+
+        dep_graph = c1a.get("concept_dependency_graph", {})
+        self.assertIn("axiom_layer", dep_graph)
+        self.assertIn("lemma_layer", dep_graph)
+        self.assertIn("core_invariant_layer", dep_graph)
+        self.assertIn("olympiad_synthesis_layer", dep_graph)
+
+        conflicts = c1a.get("cognitive_conflict_matrix", [])
+        self.assertGreaterEqual(len(conflicts), 5, "Expected at least 5 misconceptions in conflict matrix")
+        for conf in conflicts:
+            self.assertIn("naive_misconception", conf)
+            self.assertIn("mathematical_refutation", conf)
+            self.assertIn("governing_invariant", conf)
+
+        # Core 1B structural verification
+        c1b = json.loads(CORE1B_FILE.read_text(encoding="utf-8"))
+        scenarios = c1b.get("structural_reconstruction_scenarios", [])
+        self.assertGreaterEqual(len(scenarios), 4, "Expected at least 4 structural reconstruction scenarios in Core 1B")
+        for sc in scenarios:
+            self.assertIn("scenario_id", sc)
+            self.assertIn("focus", sc)
+            self.assertIn("mathematical_core", sc)
+            self.assertIn("cognitive_takeaway", sc)
+
+        dissonance = c1b.get("cognitive_dissonance_resolution_framework", {})
+        self.assertGreaterEqual(len(dissonance), 2, "Expected at least 2 cognitive dissonance resolutions in Core 1B")
+
 if __name__ == "__main__":
     import sys
     unittest.main()
+
