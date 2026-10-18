@@ -205,9 +205,9 @@ def nlm_d4_discriminator_report(items, adapter):
         else:
             counts[kind] += 1
         derived, score = derive_nlm_band(qrt.get("difficulty_factors"))
-        if derived != "D4" or score < 3.8:
+        if derived != "D4" or score is None or score < 3.8:
             errors.append(f"{item['question_id']}: D4 margin too low (S={score}); require S >= 3.8")
-    if sum(counts.values()) and len(counts) < 3:
+    if len(counts) < 3:
         errors.append(f"NLM: D4 discriminator diversity has {len(counts)} types; require >= 3")
     total = sum(counts.values())
     if total:
