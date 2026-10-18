@@ -1,29 +1,41 @@
 {
-  "schema": "core1b-physics-reconstruction/v1",
-  "version": "1.0.0",
+  "schema": "core1b-physics-reconstruction/v2",
+  "version": "2.0.0",
   "subject": "Physics",
   "topic": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
-  "title": "Core 1B Phenomenological Reconstruction Cycles & Cognitive Dissonance Dialog: Kinematics",
+  "title": "Core 1B Phenomenological Reconstruction Cycles, Cognitive Dissonance Dialog & First-Move Priming",
+  "canonical_topic_id": "phy-kinematics-1d-2d",
   "reconstruction_cycles": [
     {
       "cycle_id": "RECON-01",
-      "phenomenon": "Split-Distance Average Speed & Harmonic Mean Invariant",
-      "standard_derivation": "A particle covers distance d at speed v1 and the subsequent equal distance d at speed v2. The elapsed times are t1 = d / v1 and t2 = d / v2. Total distance is 2d and total time is t1 + t2. Average speed is v_avg = 2d / (d/v1 + d/v2) = 2*v1*v2 / (v1 + v2).",
+      "phenomenon": "Harmonic Mean Average Speed for Split Distance Trips",
+      "competency_ref": "KIN-03",
+      "standard_derivation": "Let total distance be 2d, split into two equal segments of length d traveled at constant speeds v1 and v2. Elapsed times are t1 = d/v1 and t2 = d/v2. Total time is t_tot = t1 + t2 = d*(v1 + v2)/(v1*v2). Average speed is v_avg = 2d / t_tot = 2*v1*v2 / (v1 + v2).",
       "phenomenological_reconstruction": {
-        "perspective": "Time-Budget Asymmetry Invariant",
-        "conceptual_pivot": "Instead of weighting by distance, weight by elapsed time. Average speed is the time-weighted average: v_avg = (v1*t1 + v2*t2) / (t1 + t2). Because t = d / v, the traveler inevitably spends more time creeping at the slower speed than sprinting at the higher speed.",
-        "dominant_regime": "The slower speed dominates the time budget; therefore, the average speed must always lie strictly closer to the minimum speed than to the maximum speed.",
-        "arithmetic_contrast": "The arithmetic mean (v1 + v2)/2 represents equal time allocation, which is structurally unattainable when distance intervals are matched."
+        "perspective": "Time Budget Weighting Perspective",
+        "conceptual_pivot": "Speed is distance per unit time. When distance is held fixed, time spent in each leg is inversely proportional to speed: t_k proportional to 1/v_k.",
+        "harmonic_origin": "The driver spends a fraction v2/(v1 + v2) of total time at speed v1 and a fraction v1/(v1 + v2) at speed v2. The slower speed consumes more clock time, heavily skewing the average downward.",
+        "limiting_consequence": "If v2 -> 0, t2 -> infinity, so v_avg -> 0 regardless of how arbitrarily fast v1 is. If v2 -> infinity (instantaneous transport), v_avg -> 2*v1, strictly bounded by twice the slower speed."
       },
       "limiting_boundary_checks": [
-        {"limit": "v2 -> 0 (stalling on second half)", "physical_consequence": "v_avg -> 0 (Total time diverges to infinity; trip is never completed)"},
-        {"limit": "v2 -> infinity (instant teleportation)", "physical_consequence": "v_avg -> 2*v1 (Average speed is strictly bounded by twice the slower speed)"},
-        {"limit": "v1 = v2 = v", "physical_consequence": "v_avg = v (Uniform motion recovered identically)"}
+        {
+          "limit": "v2 -> 0 (stalling on second half)",
+          "physical_consequence": "v_avg -> 0 (Total time diverges to infinity; trip is never completed)"
+        },
+        {
+          "limit": "v2 -> infinity (instant teleportation)",
+          "physical_consequence": "v_avg -> 2*v1 (Average speed is strictly bounded by twice the slower speed)"
+        },
+        {
+          "limit": "v1 = v2 = v",
+          "physical_consequence": "v_avg = v (Uniform motion recovered identically)"
+        }
       ]
     },
     {
       "cycle_id": "RECON-02",
       "phenomenon": "Parabolic Symmetry & Dual-Time Product Measuring Height",
+      "competency_ref": "KIN-07",
       "standard_derivation": "From 1D constant-acceleration free fall: h = u*t - 0.5*g*t^2 => 0.5*g*t^2 - u*t + h = 0. Solving via quadratic formula yields roots t1, t2 = (u +- sqrt(u^2 - 2gh)) / g. The sum of roots is t1 + t2 = 2u / g = T (total flight time), and the product of roots is t1 * t2 = 2h / g => h = 0.5 * g * t1 * t2.",
       "phenomenological_reconstruction": {
         "perspective": "Apex Time-Reversal Symmetry Invariant",
@@ -32,14 +44,24 @@
         "root_decomposition": "Thus, the two passage times decompose as t1 = t_apex - Delta t and t2 = t_apex + Delta t. Adding them yields t1 + t2 = 2*t_apex = T. Multiplying them yields t1*t2 = t_apex^2 - (Delta t)^2 = (u/g)^2 - (u^2 - 2gh)/g^2 = 2h/g, directly proving h = 0.5*g*t1*t2 without quadratic formula memorization."
       },
       "limiting_boundary_checks": [
-        {"limit": "h -> H_max = u^2 / (2g)", "physical_consequence": "t1 = t2 = u/g (Apex coincidence; discriminant vanishes)"},
-        {"limit": "h -> 0 (ground level)", "physical_consequence": "t1 = 0 and t2 = T = 2u/g (Launch and landing)"},
-        {"limit": "h > H_max", "physical_consequence": "Roots become complex; physically unattainable height"}
+        {
+          "limit": "h -> H_max = u^2 / (2g)",
+          "physical_consequence": "t1 = t2 = u/g (Apex coincidence; discriminant vanishes)"
+        },
+        {
+          "limit": "h -> 0 (ground level)",
+          "physical_consequence": "t1 = 0 and t2 = T = 2u/g (Launch and landing)"
+        },
+        {
+          "limit": "h > H_max",
+          "physical_consequence": "Roots become complex; physically unattainable height"
+        }
       ]
     },
     {
       "cycle_id": "RECON-03",
       "phenomenon": "Free-Fall Elevator Equivalence of Dropped vs Fired Projectiles",
+      "competency_ref": "KIN-08",
       "standard_derivation": "Dropped ball has y1(t) = h - 0.5*g*t^2. Horizontally fired projectile has y2(t) = h - 0.5*g*t^2 and x2(t) = u*t. For both particles, the ground landing condition is y(T) = 0 => T = sqrt(2h/g), identical for both regardless of horizontal launch speed u.",
       "phenomenological_reconstruction": {
         "perspective": "Einstein Free-Fall Equivalence Principle",
@@ -49,14 +71,24 @@
         "floor_motion": "The ground floor is accelerating upward at g toward the elevator with speed v_floor(t) = g*t. The upward rushing floor impacts both the stationary ball and the horizontally gliding projectile at the exact same instant, proving identical drop time."
       },
       "limiting_boundary_checks": [
-        {"limit": "u -> 0", "physical_consequence": "Recovers two simultaneous identical 1D drops"},
-        {"limit": "h -> 0", "physical_consequence": "T -> 0 (Instant ground contact)"},
-        {"limit": "g -> 0 (zero gravity)", "physical_consequence": "T -> infinity; particles glide horizontally and remain suspended"}
+        {
+          "limit": "u -> 0",
+          "physical_consequence": "Recovers two simultaneous identical 1D drops"
+        },
+        {
+          "limit": "h -> 0",
+          "physical_consequence": "T -> 0 (Instant ground contact)"
+        },
+        {
+          "limit": "g -> 0 (zero gravity)",
+          "physical_consequence": "T -> infinity; particles glide horizontally and remain suspended"
+        }
       ]
     },
     {
       "cycle_id": "RECON-04",
       "phenomenon": "Zero-Acceleration Relative Frame of Two Free Projectiles",
+      "competency_ref": "KIN-10",
       "standard_derivation": "Particle 1: r1(t) = u1*t + 0.5*g*t^2. Particle 2: r2(t) = r2_0 + u2*t + 0.5*g*t^2. The relative position vector is r_rel(t) = r1(t) - r2(t) = -r2_0 + (u1 - u2)*t. Relative acceleration is a_rel = g - g = 0.",
       "phenomenological_reconstruction": {
         "perspective": "Moving Observer Geometric Rectification",
@@ -66,35 +98,59 @@
         "shortest_distance": "The shortest distance of approach between the two projectiles is simply the perpendicular distance from particle 2 to the straight line of relative motion: d_min = |r2_0 x v_rel| / |v_rel|."
       },
       "limiting_boundary_checks": [
-        {"limit": "u1 = u2 (parallel identical launch)", "physical_consequence": "v_rel = 0; separation distance remains strictly constant for all t"},
-        {"limit": "v_rel directed along line-of-sight", "physical_consequence": "d_min = 0; collision is inevitable regardless of gravity"}
+        {
+          "limit": "u1 = u2 (parallel identical launch)",
+          "physical_consequence": "v_rel = 0; separation distance remains strictly constant for all t"
+        },
+        {
+          "limit": "v_rel directed along line-of-sight",
+          "physical_consequence": "d_min = 0; collision is inevitable regardless of gravity"
+        }
       ]
     }
   ],
   "cognitive_dissonance_probes": [
     {
       "probe_id": "CDP-01",
+      "competency_ref": "KIN-07",
       "student_trap": "At the highest point of a vertical throw, the ball stops moving, so its acceleration must be zero.",
       "socratic_challenge": "If acceleration were zero at the top when velocity is zero, what would happen to its velocity in the next millisecond? By definition, Delta v = a * Delta t = 0 * Delta t = 0. Would the ball remain suspended frozen in the sky?",
       "resolution": "Because acceleration is the non-zero rate of change dv/dt = -9.8 m/s^2, the velocity does not remain zero; it immediately shifts from 0 to negative values, pulling the ball downward."
     },
     {
       "probe_id": "CDP-02",
+      "competency_ref": "KIN-03",
       "student_trap": "Driving half the distance at 40 km/h and half at 60 km/h gives an average speed of 50 km/h.",
       "socratic_challenge": "Suppose the trip is 120 km total (60 km each half). At 40 km/h, the first half takes 1.5 hours. At 60 km/h, the second half takes 1.0 hour. Total time is 2.5 hours. What is 120 km divided by 2.5 hours?",
       "resolution": "120 / 2.5 = 48 km/h! The driver spent 1.5 hours at 40 km/h and only 1.0 hour at 60 km/h. Slower travel consumes more time, lowering the average speed below the arithmetic mean."
     },
     {
       "probe_id": "CDP-03",
+      "competency_ref": "KIN-08",
       "student_trap": "A high-speed bullet fired horizontally stays airborne longer because its high velocity opposes gravity.",
       "socratic_challenge": "Which force opposes gravity along the vertical axis? Is there any upward lift or vertical aerodynamic force in a vacuum?",
       "resolution": "None! Gravity acts strictly downward (-g j) and has zero component horizontally. The bullet falls vertically at the exact same rate as a dropped coin."
     },
     {
       "probe_id": "CDP-04",
+      "competency_ref": "KIN-04",
       "student_trap": "A negative velocity on a motion graph always means the object is decelerating (slowing down).",
       "socratic_challenge": "If a ball is falling downward at -20 m/s and one second later is moving at -30 m/s, is its speed increasing or decreasing? What is the sign of its velocity?",
       "resolution": "Speed is the absolute magnitude |v|: it increased from 20 m/s to 30 m/s! The object is speeding up in the negative direction. Deceleration only occurs when velocity and acceleration have opposite signs."
+    },
+    {
+      "probe_id": "CDP-05",
+      "competency_ref": "KIN-10",
+      "student_trap": "Two stones dropped simultaneously from different heights accelerate toward each other as they fall.",
+      "socratic_challenge": "Both stones experience acceleration a = -9.8 m/s^2. In each millisecond, by how much does stone 1's speed change? By how much does stone 2's speed change? What is the change in their difference in speeds?",
+      "resolution": "Both speeds change at the exact same rate (-g), so their velocity difference Delta v = v1 - v2 remains strictly constant! Their relative acceleration is exactly zero."
+    },
+    {
+      "probe_id": "CDP-06",
+      "competency_ref": "KIN-11",
+      "student_trap": "An x-t curve can form a circular loop if a particle travels in a circle.",
+      "socratic_challenge": "If an x-t graph forms a circle, draw a vertical line through the center. How many x-coordinates does the curve assign to that single instant in time?",
+      "resolution": "Two positions at the exact same clock time! A single physical particle cannot be in two distinct spatial locations simultaneously. Spatial circular trajectory is in the (x, y) plane, NOT the (x, t) plane."
     }
   ]
 }

@@ -669,6 +669,95 @@
           "pattern": "Claiming constant speed in circular motion implies zero acceleration.",
           "refutation": "Velocity vector turns continuously, requiring inward normal centripetal acceleration a_c = v^2/r."
         }
+      ],
+      "blueprint_refs": {
+        "core1a_ontology": "TEST/physics-research/blueprints/core1a_physics_kinematics_ontology.v1.json",
+        "core1b_reconstruction": "TEST/physics-research/blueprints/core1b_physics_kinematics_reconstruction.v1.json"
+      },
+      "canonical_reasoning_moves": {
+        "stage_1_choose": "Declare spatial origin x = 0 (or launch level y = 0), define positive coordinate direction (+), and synchronize clock zero t = 0.",
+        "stage_2_represent": "Construct UVATS 5-parameter state table, signed number line, or motion graph (x-t / v-t) capturing phase boundaries.",
+        "stage_3_connect": "Select the exact kinematic quad equation eliminating the unmeasured variable, or decouple orthogonal 2D components.",
+        "stage_4_execute_and_check": "Solve closed-form algebraic expressions and verify asymptotic limits (a -> 0, g -> 0, t -> 0) and dimensional homogeneity."
+      },
+      "first_move_atlas": [
+        {
+          "competency_id": "KIN-01",
+          "cue": "Reversing direction, turnaround instant, or zigzag path along a straight line",
+          "representation": "Signed 1D number line with start point x_i, turning coordinates x_turn, and end point x_f clearly marked",
+          "first_executable_move": "Write displacement Delta x = x_f - x_i; write distance s = sum |Delta x_k| by summing absolute segment lengths",
+          "anti_pattern": "Converting signed leg displacements to absolute values before computing net displacement"
+        },
+        {
+          "competency_id": "KIN-02",
+          "cue": "Complete round trip or returning to initial origin with known leg speeds",
+          "representation": "Trajectory phase strip with individual segment times t_k = d_k / v_k and total clock Delta t_tot = sum t_k",
+          "first_executable_move": "Immediately set net displacement Delta x = 0 to establish v_avg = 0; compute average speed s_avg = (total distance) / (total time)",
+          "anti_pattern": "Confusing average speed with average velocity magnitude on round trips where displacement vanishes"
+        },
+        {
+          "competency_id": "KIN-03",
+          "cue": "Equal distance segments or equal time intervals covered at different uniform speeds v1 and v2",
+          "representation": "Dual-segment diagram explicitly labeling equal interval variable (Delta t vs d) and calculating dependent parameter",
+          "first_executable_move": "For equal distances, write t_tot = d/v1 + d/v2 to deduce harmonic mean v_avg = 2*v1*v2 / (v1 + v2); for equal times, write arithmetic mean (v1 + v2)/2",
+          "anti_pattern": "Blindly computing the arithmetic mean (v1 + v2)/2 when equal distances are traversed"
+        },
+        {
+          "competency_id": "KIN-04",
+          "cue": "Particle moving with negative velocity u < 0 or experiencing negative acceleration a < 0",
+          "representation": "1D coordinate axis with signed velocity and acceleration arrows placed at particle position",
+          "first_executable_move": "Compare signs of v and a: if sgn(v) == sgn(a), the particle is speeding up; if sgn(v) != sgn(a), the particle is slowing down",
+          "anti_pattern": "Equating negative acceleration directly to deceleration without checking the sign of velocity"
+        },
+        {
+          "competency_id": "KIN-05",
+          "cue": "Uniform acceleration motion with one omitted or unrequested variable among {u, v, a, t, s}",
+          "representation": "UVATS 5-parameter state table listing known values, target quantity, and the single excluded parameter",
+          "first_executable_move": "Select the exact kinematic equation that omits the unrequested parameter (e.g., v^2 = u^2 + 2as when time t is unmentioned)",
+          "anti_pattern": "Solving multi-step quadratic systems for intermediate time t when a direct time-free equation exists"
+        },
+        {
+          "competency_id": "KIN-06",
+          "cue": "Multi-phase piecewise acceleration, delayed vehicle launch, or distance in the n-th second",
+          "representation": "Multi-segment timeline with boundary state continuity (v_1,end = u_2,start) and local clocks tau = t - t_delay",
+          "first_executable_move": "Carry forward boundary speed as initial velocity for next phase; for n-th second, apply s_n = u + 0.5*a*(2n - 1)",
+          "anti_pattern": "Applying a single global kinematic formula across multiple distinct acceleration intervals"
+        },
+        {
+          "competency_id": "KIN-07",
+          "cue": "Vertical toss under gravity, apex summit turnaround, or symmetrical free fall",
+          "representation": "Vertical axis +y upward with a_y = -g labeled continuously at launch, apex, and descent",
+          "first_executable_move": "Set vertical apex velocity v_top = 0 while preserving acceleration a_y = -g; apply v^2 = u^2 - 2gH to find H_max = u^2 / (2g)",
+          "anti_pattern": "Setting acceleration a = 0 at the highest point of flight where instantaneous velocity momentarily vanishes"
+        },
+        {
+          "competency_id": "KIN-08",
+          "cue": "2D projectile launched horizontally from elevated height or obliquely across level ground",
+          "representation": "2D Cartesian coordinate frame with independent 1D horizontal (a_x = 0) and vertical (a_y = -g) projections",
+          "first_executable_move": "Decouple into independent motions: x(t) = (u cos theta)*t and y(t) = (u sin theta)*t - 0.5*g*t^2, linked strictly by clock t",
+          "anti_pattern": "Believing horizontal velocity influences the vertical time of fall or gravitational acceleration"
+        },
+        {
+          "competency_id": "KIN-09",
+          "cue": "Parabolic trajectory equation, maximum range condition, or complementary launch angles",
+          "representation": "Parabolic path sketch showing apex coordinates (R/2, H_max), range landing (R, 0), and velocity vector tangents",
+          "first_executable_move": "Substitute t = x / (u cos theta) into y(t) to form trajectory equation y = x tan theta - g*x^2 / (2*u^2*cos^2 theta)",
+          "anti_pattern": "Using symmetric ground-to-ground range formula R = u^2 sin 2theta / g when launch and landing heights are unequal"
+        },
+        {
+          "competency_id": "KIN-10",
+          "cue": "Two bodies in simultaneous flight under gravity or relative pursuit/interception",
+          "representation": "Relative reference frame anchored on body B with relative position r_rel = r_A - r_B and relative velocity v_rel = v_A - v_B",
+          "first_executable_move": "Notice common acceleration cancellation: a_rel = a_A - a_B = (-g) - (-g) = 0, reducing relative motion to a constant-velocity straight line",
+          "anti_pattern": "Retaining gravitational acceleration terms in the relative trajectory equation of two freely falling projectiles"
+        },
+        {
+          "competency_id": "KIN-11",
+          "cue": "Motion graphs (x-t, v-t, a-t), piecewise linear curves, or physical graph consistency checks",
+          "representation": "Graph geometry inspection: identify curve tangent slope as derivative and signed area under curve as definite integral",
+          "first_executable_move": "Extract physical rates: slope of x-t is v; slope of v-t is a; signed area under v-t is displacement Delta x; area under a-t is Delta v",
+          "anti_pattern": "Confusing the vertical height coordinate of an x-t graph with the instantaneous speed of the particle"
+        }
       ]
     },
     "work-energy-power": {
