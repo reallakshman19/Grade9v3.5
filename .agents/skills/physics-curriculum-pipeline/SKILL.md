@@ -76,6 +76,23 @@ $$\text{Derived Score } S = \frac{f_1 + f_2 + f_3 + f_4 + f_5}{5}$$
 
 ---
 
+
+### D. NLM-FIX1 demand-calibrated generation (Owner pilot, 2026-10-18)
+
+**Authority order:** Owner's competency/demand intent > scientifically defensible physics > source digest > authored example wording. The PDFs are *not* in source custody: their unseen wording, figures and exact difficulty are **UNKNOWN**, not grounds for declaring the benchmark wrong. Core2 scenarios are calibration examples, not stories to copy.
+
+For each NLM item, perform these **separate** operations before asserting a tile:
+1. Choose the benchmark's **decisive physics action** (not its nouns). State the misconception/falsifier and link a Core1 NLM competency to a provisional Core2 demand anchor. Design a genuinely different situation; do not merely rename the characters, numbers, or props.
+2. Identify the correct body/system and physical idealizations; independently solve the new situation and check physical signs, units and edge cases. If a proposed D4 regime exceeds plausible Grade 9 scaffolding, lower the band without fabricating complexity.
+3. **Measure**, never back-fill, the integer vector (system_coupling, vector_dimensionality, constraint_latency, domain_coupling, math_friction), in this precise order. Copy neither a profile's illustrative factor vector nor a sibling item's. Use the scales in §3B. Each question MUST put a concrete one-line justification for each score in `qrt_contract.factor_evidence` keyed by those five fields. State **which actual feature** earns the score and why a higher factor is *not* earned. Profiles are examples, not scoring authority.
+4. Compute `S=(f1+f2+f3+f4+f5)/5` from the recorded scores. Demand and derived band alone determine `cell_id`. D1: S<=1.6; D2: 1.8–2.6; D3: 2.8–3.4; D4: >=3.6. A disagreement is a FAIL, even if a desired cell is empty. Any legacy back-filled vectors [4,3,4,4,4], [3,2,3,3,3], [2,1,2,2,2] are rejected in NLM. A vector reused in a band by more than three items requires a specific `vector_reuse_justification` on every item, and still needs independent factor evidence.
+5. Build and scientifically review the **H1/H2/H3 prompt-reveal** ladder, with `guidance_role` values `decisive_physics`, `representation`, `first_equation_only`. H1 points to the key event, state, body, boundary, axis or invariant; H2 asks for a chosen-body FBD, action/reaction ownership, signed momentum state, v-t/p-t graph, or system representation; H3 writes only the **first** governing equation or inequality, never a solved final result. Reveal the working and answer **only** in the model proof.
+6. Demand-test the result without the benchmark's story in view: a learner must make the same physical decision at a defensible depth. Review false alternatives, hint leakage, multiple physical regimes, and genuine novelty. `REPRESENT` is a first-class demand at every justified depth: require the actual FBD/axis/graph/interaction translation, rather than a hidden calculation with a REPRESENT tag.
+
+**Scope of automatic checks:** NLM score arithmetic, presence of five evidence fields, forbidden vectors, hint-role structure, REPRESENT non-emptiness and missing tile reporting are machine-enforced. Truth of the factor justifications, scenario novelty and equivalence to the unseen PDFs require independent human/Antigravity judgment; a green checker is not that judgment.
+
+**Permission exception:** the Owner-authorized, unmerged NLM-FIX1 stacked PR may be pushed for OTM review despite the general local-only policy above. No app or unrelated-topic regeneration, axis edits or merge is authorized.
+
 ## 4. Stage 3: Core 1A & Core 1B Physical Architectures
 
 ### Core 1A: Conceptual Construction
