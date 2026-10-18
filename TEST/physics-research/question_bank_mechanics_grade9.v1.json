@@ -5,21 +5,22 @@
   "grade": 9,
   "topic": "Newton's Laws of Motion & Friction",
   "meta": {
-    "title": "Grade 9 Olympiad Physics Question Bank - Newton's Laws of Motion & Momentum Systems (Flagship Golden Benchmark Edition)",
-    "item_count": 25,
+    "title": "Grade 9 Physics Newton's Laws — independently authored NLM demand-calibrated bank (pilot, benchmark PDF wording UNKNOWN)",
+    "item_count": 38,
     "difficulty_distribution": {
-      "D1": 4,
-      "D2": 8,
-      "D3": 8,
-      "D4": 5
+      "D1": 9,
+      "D2": 17,
+      "D4": 6,
+      "D3": 6
     },
     "demand_distribution": {
-      "APPLY": 6,
-      "EXPLAIN": 3,
-      "MODEL": 2,
+      "APPLY": 9,
+      "EXPLAIN": 4,
+      "MODEL": 5,
       "RETRIEVE": 2,
-      "JUSTIFY": 5,
-      "SYNTHESIZE": 7
+      "JUSTIFY": 7,
+      "SYNTHESIZE": 7,
+      "REPRESENT": 4
     }
   },
   "questions": [
@@ -3775,6 +3776,1221 @@
           {
             "condition": "Reverse assumed direction of impending motion",
             "expected": "Equal acceleration magnitudes from two constraints do not force equal tensions in different cords."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-030",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-04",
+      "provenance": {
+        "source": "New demand transfer, no benchmark scenario reproduced; PDFs inaccessible",
+        "benchmark_demand_anchor": "Core1 NLM-04",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A 3 kg block on a 30° rough incline is connected to a 4 kg hanging mass over an ideal fixed pulley. The incline block moves upward; μ_k=0.20, g=10 m/s², cos30°=0.866. Find acceleration (hanging-down positive) and string tension; check the energy change over 1 m.",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "ideal massless cords and pulleys where specified",
+          "Coulomb static/kinetic friction as stated"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "a≈2.83 m/s²; T≈28.7 N, consistent with gravitational work less friction.",
+        "B": "a=5 m/s²; T=20 N.",
+        "C": "a≈2.83 m/s² but T≈40 N.",
+        "D": "a=0 because the incline force cancels all load weight."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D3",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "NLM-04",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 3,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 3
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: A ramp block and suspended load have one shared acceleration.",
+          "vector_dimensionality": "Score 3: Weight and friction require slope-normal decomposition.",
+          "constraint_latency": "Score 3: The ideal pulley imposes a rope acceleration constraint.",
+          "domain_coupling": "Score 3: Newton force equations are cross-checked by work-energy over a displacement.",
+          "math_friction": "Score 3: Solve two coupled linear force/tension equations."
+        },
+        "protected_work_W": "The system's drive equals hanging weight minus the uphill block's weight component and kinetic drag.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "This problem requires the stated decisive APPLY physical decision and not just the simpler rival demand."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Net drive=40−15−5.196=19.804 N; a=19.804/7≈2.829 m/s²; T=4(10−a)≈28.69 N. Over 1 m, net work 19.804 J equals (1/2)(7)(a²? velocity-square gain 2a×1)=19.804 J."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "This alternative fails the governing regime or model. Include the incline normal in friction and check the assumed direction."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "The proposed sign or ownership is invalid. The system's drive equals hanging weight minus the uphill block's weight component and kinetic drag."
+        },
+        "D": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omitted coupled force/constraint: Draw the ramp-body FBD with positive uphill and the hanging-body FBD with positive down, sharing one a."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · physical decision",
+          "prompt_question": "Which system, interaction or regime governs this situation?",
+          "reveal_text": "The system's drive equals hanging weight minus the uphill block's weight component and kinetic drag."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "What diagram and signed axes should precede any calculation?",
+          "reveal_text": "Draw the ramp-body FBD with positive uphill and the hanging-body FBD with positive down, sharing one a."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first equation",
+          "prompt_question": "What first equation or inequality starts the solution?",
+          "reveal_text": "Begin with (4g−3g sin30°−μ_k 3g cos30°)=(3+4)a."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "The system's drive equals hanging weight minus the uphill block's weight component and kinetic drag.",
+          "represent": "Draw the ramp-body FBD with positive uphill and the hanging-body FBD with positive down, sharing one a.",
+          "connect": "Begin with (4g−3g sin30°−μ_k 3g cos30°)=(3+4)a.",
+          "calculate": "Net drive=40−15−5.196=19.804 N; a=19.804/7≈2.829 m/s²; T=4(10−a)≈28.69 N. Over 1 m, net work 19.804 J equals (1/2)(7)(a²? velocity-square gain 2a×1)=19.804 J.",
+          "interpret": "a≈2.83 m/s²; T≈28.7 N, consistent with gravitational work less friction."
+        },
+        "final_expression": "a≈2.83 m/s²; T≈28.7 N, consistent with gravitational work less friction.",
+        "final_answer_value": "a≈2.83 m/s²; T≈28.7 N, consistent with gravitational work less friction."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / model consistency",
+        "quick_check": "As μ_k grows, acceleration falls until the assumed direction fails.",
+        "check_it_another_way": "The system's drive equals hanging weight minus the uphill block's weight component and kinetic drag.",
+        "watch_out": "Include the incline normal in friction and check the assumed direction.",
+        "review_this_idea": "Core1 NLM-04",
+        "limiting_cases": [
+          {
+            "condition": "At the relevant ideal or threshold limit",
+            "expected": "As μ_k grows, acceleration falls until the assumed direction fails."
+          },
+          {
+            "condition": "When a driving parameter is reversed or contact becomes frictionless",
+            "expected": "Include the incline normal in friction and check the assumed direction."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-031",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-03",
+      "provenance": {
+        "source": "New demand transfer, no benchmark scenario reproduced; PDFs inaccessible",
+        "benchmark_demand_anchor": "Core1 NLM-03",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A rough-slope trolley is tethered over a pulley to an adjustable hanging weight. When the hanging weight is very light the trolley tends to slide down the slope; with a very heavy hanger it tends to climb. Explain why one fixed-direction friction arrow cannot model every possible resting or moving case.",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "ideal massless cords and pulleys where specified",
+          "Coulomb static/kinetic friction as stated"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "Friction opposes the trolley's impending/actual relative motion, so its arrow may reverse; first test the static limit, then choose kinetic friction if it slips.",
+        "B": "Friction always acts uphill because gravity acts downhill.",
+        "C": "Friction always acts downward because the rope pulls upward.",
+        "D": "Friction must equal μ_s N in every resting position."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-EXPLAIN-D3",
+        "primary_demand": "EXPLAIN",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "NLM-03",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 3,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 1
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: An incline block is tethered to a hanging mass.",
+          "vector_dimensionality": "Score 3: Both slope components and the hanger's vertical axis matter.",
+          "constraint_latency": "Score 4: Static friction can point either way subject to a strict limit.",
+          "domain_coupling": "Score 4: There are distinct rest, upslope-slip and downslope-slip regimes.",
+          "math_friction": "Score 1: Question asks causal sign/regime explanation rather than calculation."
+        },
+        "protected_work_W": "The direction of friction depends on the proposed motion; static friction adjusts within its limit until slip occurs.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "This problem requires the stated decisive EXPLAIN physical decision and not just the simpler rival demand."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "A light hanger can require uphill friction to oppose downslope tendency; a heavy hanger can require downhill friction to oppose upslope tendency. If required friction exceeds μ_s N, the case switches to kinetic friction."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "This alternative fails the governing regime or model. μ_s N is the maximum static friction, not always its actual value."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "The proposed sign or ownership is invalid. The direction of friction depends on the proposed motion; static friction adjusts within its limit until slip occurs."
+        },
+        "D": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omitted coupled force/constraint: Sketch the two alternative slope FBDs with opposite friction arrows and the hanger's vertical FBD."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · physical decision",
+          "prompt_question": "Which system, interaction or regime governs this situation?",
+          "reveal_text": "The direction of friction depends on the proposed motion; static friction adjusts within its limit until slip occurs."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "What diagram and signed axes should precede any calculation?",
+          "reveal_text": "Sketch the two alternative slope FBDs with opposite friction arrows and the hanger's vertical FBD."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first equation",
+          "prompt_question": "What first equation or inequality starts the solution?",
+          "reveal_text": "First write |f_s|≤μ_s N while treating assumed slip direction as a hypothesis."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "The direction of friction depends on the proposed motion; static friction adjusts within its limit until slip occurs.",
+          "represent": "Sketch the two alternative slope FBDs with opposite friction arrows and the hanger's vertical FBD.",
+          "connect": "First write |f_s|≤μ_s N while treating assumed slip direction as a hypothesis.",
+          "calculate": "A light hanger can require uphill friction to oppose downslope tendency; a heavy hanger can require downhill friction to oppose upslope tendency. If required friction exceeds μ_s N, the case switches to kinetic friction.",
+          "interpret": "Friction opposes the trolley's impending/actual relative motion, so its arrow may reverse; first test the static limit, then choose kinetic friction if it slips."
+        },
+        "final_expression": "Friction opposes the trolley's impending/actual relative motion, so its arrow may reverse; first test the static limit, then choose kinetic friction if it slips.",
+        "final_answer_value": "Friction opposes the trolley's impending/actual relative motion, so its arrow may reverse; first test the static limit, then choose kinetic friction if it slips."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / model consistency",
+        "quick_check": "At one balanced hanger mass friction can be zero despite μ_s>0.",
+        "check_it_another_way": "The direction of friction depends on the proposed motion; static friction adjusts within its limit until slip occurs.",
+        "watch_out": "μ_s N is the maximum static friction, not always its actual value.",
+        "review_this_idea": "Core1 NLM-03",
+        "limiting_cases": [
+          {
+            "condition": "At the relevant ideal or threshold limit",
+            "expected": "At one balanced hanger mass friction can be zero despite μ_s>0."
+          },
+          {
+            "condition": "When a driving parameter is reversed or contact becomes frictionless",
+            "expected": "μ_s N is the maximum static friction, not always its actual value."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-032",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-08",
+      "provenance": {
+        "source": "New demand transfer, no benchmark scenario reproduced; PDFs inaccessible",
+        "benchmark_demand_anchor": "Core1 NLM-08",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "When two tiny spacecraft docking plates press against each other, a student says the heavier spacecraft must push harder on the lighter one. Which short argument disproves the statement?",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "ideal massless cords and pulleys where specified",
+          "Coulomb static/kinetic friction as stated"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "At the same contact each pushes the other with equal force magnitude in opposite directions, regardless of their different accelerations.",
+        "B": "The heavier craft always applies twice the contact force.",
+        "C": "The forces cancel because both act on the lighter craft.",
+        "D": "The lighter craft cannot exert any force until it moves."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D1",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D1",
+        "subtopic_competency_ref": "NLM-08",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: Two docking capsules exert a mutual contact interaction.",
+          "vector_dimensionality": "Score 2: Opposite arrows are described on one signed line.",
+          "constraint_latency": "Score 1: No hidden forces or thresholds are needed.",
+          "domain_coupling": "Score 1: Newton III directly proves equal opposite forces.",
+          "math_friction": "Score 1: No arithmetic is needed."
+        },
+        "protected_work_W": "Mutual contact force magnitudes are equal even when the resultant forces and accelerations differ.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "This problem requires the stated decisive JUSTIFY physical decision and not just the simpler rival demand."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Newton III gives equal and opposite interaction forces. Newton II explains any acceleration difference from mass and other forces."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "This alternative fails the governing regime or model. Do not subtract the pair on a single spacecraft FBD."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "The proposed sign or ownership is invalid. Mutual contact force magnitudes are equal even when the resultant forces and accelerations differ."
+        },
+        "D": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omitted coupled force/constraint: Draw one contact force on each separate spacecraft, directed opposite."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · physical decision",
+          "prompt_question": "Which system, interaction or regime governs this situation?",
+          "reveal_text": "Mutual contact force magnitudes are equal even when the resultant forces and accelerations differ."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "What diagram and signed axes should precede any calculation?",
+          "reveal_text": "Draw one contact force on each separate spacecraft, directed opposite."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first equation",
+          "prompt_question": "What first equation or inequality starts the solution?",
+          "reveal_text": "Begin with F_(A on B)=−F_(B on A)."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "Mutual contact force magnitudes are equal even when the resultant forces and accelerations differ.",
+          "represent": "Draw one contact force on each separate spacecraft, directed opposite.",
+          "connect": "Begin with F_(A on B)=−F_(B on A).",
+          "calculate": "Newton III gives equal and opposite interaction forces. Newton II explains any acceleration difference from mass and other forces.",
+          "interpret": "At the same contact each pushes the other with equal force magnitude in opposite directions, regardless of their different accelerations."
+        },
+        "final_expression": "At the same contact each pushes the other with equal force magnitude in opposite directions, regardless of their different accelerations.",
+        "final_answer_value": "At the same contact each pushes the other with equal force magnitude in opposite directions, regardless of their different accelerations."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / model consistency",
+        "quick_check": "Different spacecraft masses can yield different accelerations with equal paired contact forces.",
+        "check_it_another_way": "Mutual contact force magnitudes are equal even when the resultant forces and accelerations differ.",
+        "watch_out": "Do not subtract the pair on a single spacecraft FBD.",
+        "review_this_idea": "Core1 NLM-08",
+        "limiting_cases": [
+          {
+            "condition": "At the relevant ideal or threshold limit",
+            "expected": "Different spacecraft masses can yield different accelerations with equal paired contact forces."
+          },
+          {
+            "condition": "When a driving parameter is reversed or contact becomes frictionless",
+            "expected": "Do not subtract the pair on a single spacecraft FBD."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-033",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-02",
+      "provenance": {
+        "source": "New demand transfer, no benchmark scenario reproduced; PDFs inaccessible",
+        "benchmark_demand_anchor": "Core1 NLM-02",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A hanging temperature sensor is held at rest by a single vertical strap. To calculate the strap's pull on the sensor, what is the correct modeling first move?",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "ideal massless cords and pulleys where specified",
+          "Coulomb static/kinetic friction as stated"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "Isolate the sensor and include strap-on-sensor upward and Earth-on-sensor downward.",
+        "B": "Isolate the strap and treat sensor-on-strap as the force on the sensor.",
+        "C": "Add an upward inertia force just because the sensor is at rest.",
+        "D": "Treat the sensor and the Earth as having no external interactions."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D1",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D1",
+        "subtopic_competency_ref": "NLM-02",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 1: One hanging sensor is the system that must be chosen.",
+          "vector_dimensionality": "Score 2: A vertical up/down sign is needed.",
+          "constraint_latency": "Score 1: The support and Earth interactions are given.",
+          "domain_coupling": "Score 1: An isolated-body model alone settles the task.",
+          "math_friction": "Score 1: No algebra beyond a first force equation."
+        },
+        "protected_work_W": "The body for Newton II must be the object whose acceleration and contact force are sought.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "This problem requires the stated decisive MODEL physical decision and not just the simpler rival demand."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Choose the sensor as the target; gravity and strap tension are the external forces on it."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "This alternative fails the governing regime or model. Do not put sensor-on-strap force on the sensor's own diagram."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "The proposed sign or ownership is invalid. The body for Newton II must be the object whose acceleration and contact force are sought."
+        },
+        "D": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omitted coupled force/constraint: Draw a single-body system boundary around the sensor with T up and mg down."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · physical decision",
+          "prompt_question": "Which system, interaction or regime governs this situation?",
+          "reveal_text": "The body for Newton II must be the object whose acceleration and contact force are sought."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "What diagram and signed axes should precede any calculation?",
+          "reveal_text": "Draw a single-body system boundary around the sensor with T up and mg down."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first equation",
+          "prompt_question": "What first equation or inequality starts the solution?",
+          "reveal_text": "Start with ΣF_y(on sensor)=T−mg=0."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "The body for Newton II must be the object whose acceleration and contact force are sought.",
+          "represent": "Draw a single-body system boundary around the sensor with T up and mg down.",
+          "connect": "Start with ΣF_y(on sensor)=T−mg=0.",
+          "calculate": "Choose the sensor as the target; gravity and strap tension are the external forces on it.",
+          "interpret": "Isolate the sensor and include strap-on-sensor upward and Earth-on-sensor downward."
+        },
+        "final_expression": "Isolate the sensor and include strap-on-sensor upward and Earth-on-sensor downward.",
+        "final_answer_value": "Isolate the sensor and include strap-on-sensor upward and Earth-on-sensor downward."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / model consistency",
+        "quick_check": "If the sensor were accelerating upward, T would exceed mg.",
+        "check_it_another_way": "The body for Newton II must be the object whose acceleration and contact force are sought.",
+        "watch_out": "Do not put sensor-on-strap force on the sensor's own diagram.",
+        "review_this_idea": "Core1 NLM-02",
+        "limiting_cases": [
+          {
+            "condition": "At the relevant ideal or threshold limit",
+            "expected": "If the sensor were accelerating upward, T would exceed mg."
+          },
+          {
+            "condition": "When a driving parameter is reversed or contact becomes frictionless",
+            "expected": "Do not put sensor-on-strap force on the sensor's own diagram."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-034",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-03",
+      "provenance": {
+        "source": "New demand transfer, no benchmark scenario reproduced; PDFs inaccessible",
+        "benchmark_demand_anchor": "Core1 NLM-03",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A rough incline carriage is attached over a fixed pulley to a hanging calibration weight. The static-friction coefficient is known, but the weights are adjustable. Before computing acceleration, which mathematical model correctly decides whether rest is possible and, if not, which direction to take as positive?",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "ideal massless cords and pulleys where specified",
+          "Coulomb static/kinetic friction as stated"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "Draw both FBDs; solve required static friction from zero acceleration, check |f_required|≤μ_s N, then choose a signed moving branch if the inequality fails.",
+        "B": "Always insert kinetic friction μ_k N from the beginning.",
+        "C": "Assume the incline block moves uphill because a rope is attached.",
+        "D": "Apply momentum conservation to the block alone instead of checking external forces."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D3",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "NLM-03",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 3,
+          "constraint_latency": 4,
+          "domain_coupling": 2,
+          "math_friction": 3
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: An inclined carriage and hanging mass share rope acceleration.",
+          "vector_dimensionality": "Score 3: Normal and slope-tangent force components are required.",
+          "constraint_latency": "Score 4: The unknown slip regime is determined by static-friction inequality.",
+          "domain_coupling": "Score 2: One first predicts tendency and then tests the alternate motion direction.",
+          "math_friction": "Score 3: Simultaneous component balances precede any numerical evaluation."
+        },
+        "protected_work_W": "Do not pick an acceleration sign before evaluating the static balance feasibility.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "This problem requires the stated decisive MODEL physical decision and not just the simpler rival demand."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "If the static requirements stay inside the cone of available friction the system may rest; otherwise select the physically consistent slip branch and apply Newton II with kinetic friction."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "This alternative fails the governing regime or model. A failed static inequality is essential evidence for using kinetic friction."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "The proposed sign or ownership is invalid. Do not pick an acceleration sign before evaluating the static balance feasibility."
+        },
+        "D": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omitted coupled force/constraint: Use slope-tangent and slope-normal axes for the carriage, vertical for the hanger, and separate friction hypotheses."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · physical decision",
+          "prompt_question": "Which system, interaction or regime governs this situation?",
+          "reveal_text": "Do not pick an acceleration sign before evaluating the static balance feasibility."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "What diagram and signed axes should precede any calculation?",
+          "reveal_text": "Use slope-tangent and slope-normal axes for the carriage, vertical for the hanger, and separate friction hypotheses."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first equation",
+          "prompt_question": "What first equation or inequality starts the solution?",
+          "reveal_text": "Begin with f_required + T −mg sinθ =0 and |f_required|≤μ_s mg cosθ."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "Do not pick an acceleration sign before evaluating the static balance feasibility.",
+          "represent": "Use slope-tangent and slope-normal axes for the carriage, vertical for the hanger, and separate friction hypotheses.",
+          "connect": "Begin with f_required + T −mg sinθ =0 and |f_required|≤μ_s mg cosθ.",
+          "calculate": "If the static requirements stay inside the cone of available friction the system may rest; otherwise select the physically consistent slip branch and apply Newton II with kinetic friction.",
+          "interpret": "Draw both FBDs; solve required static friction from zero acceleration, check |f_required|≤μ_s N, then choose a signed moving branch if the inequality fails."
+        },
+        "final_expression": "Draw both FBDs; solve required static friction from zero acceleration, check |f_required|≤μ_s N, then choose a signed moving branch if the inequality fails.",
+        "final_answer_value": "Draw both FBDs; solve required static friction from zero acceleration, check |f_required|≤μ_s N, then choose a signed moving branch if the inequality fails."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / model consistency",
+        "quick_check": "At the exact limit the threshold is marginal and not proof of a finite acceleration.",
+        "check_it_another_way": "Do not pick an acceleration sign before evaluating the static balance feasibility.",
+        "watch_out": "A failed static inequality is essential evidence for using kinetic friction.",
+        "review_this_idea": "Core1 NLM-03",
+        "limiting_cases": [
+          {
+            "condition": "At the relevant ideal or threshold limit",
+            "expected": "At the exact limit the threshold is marginal and not proof of a finite acceleration."
+          },
+          {
+            "condition": "When a driving parameter is reversed or contact becomes frictionless",
+            "expected": "A failed static inequality is essential evidence for using kinetic friction."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-035",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-04",
+      "provenance": {
+        "source": "New demand transfer, no benchmark scenario reproduced; PDFs inaccessible",
+        "benchmark_demand_anchor": "Core1 NLM-04",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A 1 kg instrument case rests on a 3 kg cart on a rough horizontal table; a separate 2 kg hanging counterweight pulls the cart by a cord over a pulley. There is friction at case–cart and cart–table contacts, each with its own μ_s and μ_k. Which proposed model can actually distinguish all possible initial and later regimes?",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "ideal massless cords and pulleys where specified",
+          "Coulomb static/kinetic friction as stated"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "Draw three FBDs, apply independent static-friction bounds at both contacts, impose shared acceleration only on bodies that stick, then switch each failed contact to its kinetic law.",
+        "B": "Assign one μ_s to the entire three-body assembly and one acceleration for every later state.",
+        "C": "Ignore the case–cart friction because the upper case has no rope attached.",
+        "D": "Use momentum conservation for the hanging mass alone as the complete model."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D4",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "NLM-04",
+        "difficulty_factors": {
+          "system_coupling": 4,
+          "vector_dimensionality": 3,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 3
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 4: Two stacked crates and a hanging third mass interact through one pulley.",
+          "vector_dimensionality": "Score 3: Normal contacts and vertical hanging load must be resolved on separate axes.",
+          "constraint_latency": "Score 4: Two distinct static contacts impose independent inequalities.",
+          "domain_coupling": "Score 4: The possible outcome branches among both sticking, one slipping, or both slipping.",
+          "math_friction": "Score 3: The chosen free-body system needs multiple simultaneous force equations."
+        },
+        "protected_work_W": "Two contacts can fail independently; their regime variables cannot be replaced by one global friction coefficient.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "This problem requires the stated decisive MODEL physical decision and not just the simpler rival demand."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "The model must test both static inequalities first. If the case slides but the cart is rope-coupled to the hanger, only cart and hanger share acceleration; contact kinetic drag enters different FBDs."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "This alternative fails the governing regime or model. Treating a slipping upper case as sharing the cart acceleration is inconsistent."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "The proposed sign or ownership is invalid. Two contacts can fail independently; their regime variables cannot be replaced by one global friction coefficient."
+        },
+        "D": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omitted coupled force/constraint: Draw case, cart, and hanger separately; distinguish normal forces, rope tension, table friction and internal case friction."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · physical decision",
+          "prompt_question": "Which system, interaction or regime governs this situation?",
+          "reveal_text": "Two contacts can fail independently; their regime variables cannot be replaced by one global friction coefficient."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "What diagram and signed axes should precede any calculation?",
+          "reveal_text": "Draw case, cart, and hanger separately; distinguish normal forces, rope tension, table friction and internal case friction."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first equation",
+          "prompt_question": "What first equation or inequality starts the solution?",
+          "reveal_text": "Start with |f_s,case-cart|≤μ_s1 N_1 and |f_s,cart-table|≤μ_s2 N_2."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "Two contacts can fail independently; their regime variables cannot be replaced by one global friction coefficient.",
+          "represent": "Draw case, cart, and hanger separately; distinguish normal forces, rope tension, table friction and internal case friction.",
+          "connect": "Start with |f_s,case-cart|≤μ_s1 N_1 and |f_s,cart-table|≤μ_s2 N_2.",
+          "calculate": "The model must test both static inequalities first. If the case slides but the cart is rope-coupled to the hanger, only cart and hanger share acceleration; contact kinetic drag enters different FBDs.",
+          "interpret": "Draw three FBDs, apply independent static-friction bounds at both contacts, impose shared acceleration only on bodies that stick, then switch each failed contact to its kinetic law."
+        },
+        "final_expression": "Draw three FBDs, apply independent static-friction bounds at both contacts, impose shared acceleration only on bodies that stick, then switch each failed contact to its kinetic law.",
+        "final_answer_value": "Draw three FBDs, apply independent static-friction bounds at both contacts, impose shared acceleration only on bodies that stick, then switch each failed contact to its kinetic law."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / model consistency",
+        "quick_check": "If all coefficients vanish, both contacts offer zero horizontal friction.",
+        "check_it_another_way": "Two contacts can fail independently; their regime variables cannot be replaced by one global friction coefficient.",
+        "watch_out": "Treating a slipping upper case as sharing the cart acceleration is inconsistent.",
+        "review_this_idea": "Core1 NLM-04",
+        "limiting_cases": [
+          {
+            "condition": "At the relevant ideal or threshold limit",
+            "expected": "If all coefficients vanish, both contacts offer zero horizontal friction."
+          },
+          {
+            "condition": "When a driving parameter is reversed or contact becomes frictionless",
+            "expected": "Treating a slipping upper case as sharing the cart acceleration is inconsistent."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-036",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-09",
+      "provenance": {
+        "source": "New demand transfer, no benchmark scenario reproduced; PDFs inaccessible",
+        "benchmark_demand_anchor": "Core1 NLM-09",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "Two loads are connected over an ideal pulley: one travels up a frictionless 30° guide, the other down vertically. A student argues that the uphill block's momentum alone is conserved because the rope and pulley are ideal. Which justification correctly rejects this and identifies the appropriate joint-system check?",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "ideal massless cords and pulleys where specified",
+          "Coulomb static/kinetic friction as stated"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "Gravity, normal and rope act externally on the block-only system; instead use Newton II for each body and check the combined energy change under ideal constraints.",
+        "B": "The rope is ideal, so every block separately conserves momentum.",
+        "C": "A normal reaction must always be zero on a frictionless guide.",
+        "D": "Both weights cancel in a single-block FBD."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D3",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "NLM-09",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 3,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 3
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: Two blocks constrained by a pulley cross a wedge boundary.",
+          "vector_dimensionality": "Score 3: Wedge-normal and downslope gravity require 2D decomposition.",
+          "constraint_latency": "Score 3: A taut rope/wedge fixes paired displacement magnitudes.",
+          "domain_coupling": "Score 3: Contrast Newton-force and work-energy conditions for each chosen system.",
+          "math_friction": "Score 3: Two body balances and an energy check make a simultaneous proof."
+        },
+        "protected_work_W": "An ideal rope constraint does not remove external forces from the individual-block momentum equation.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "This problem requires the stated decisive JUSTIFY physical decision and not just the simpler rival demand."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "A single block has nonzero external gravity and tension. For an ideal joint system, equal displacement magnitudes let gravitational work transfer into total kinetic energy, while normals do zero work."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "This alternative fails the governing regime or model. Frictionless does not mean force-free, and massless rope does not imply conserved single-body momentum."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "The proposed sign or ownership is invalid. An ideal rope constraint does not remove external forces from the individual-block momentum equation."
+        },
+        "D": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omitted coupled force/constraint: Sketch two system boundaries: one block and both blocks; label external gravity, guide normal and tensions."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · physical decision",
+          "prompt_question": "Which system, interaction or regime governs this situation?",
+          "reveal_text": "An ideal rope constraint does not remove external forces from the individual-block momentum equation."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "What diagram and signed axes should precede any calculation?",
+          "reveal_text": "Sketch two system boundaries: one block and both blocks; label external gravity, guide normal and tensions."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first equation",
+          "prompt_question": "What first equation or inequality starts the solution?",
+          "reveal_text": "Begin with Δp_block=∫ΣF_external dt, not Δp_block=0."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "An ideal rope constraint does not remove external forces from the individual-block momentum equation.",
+          "represent": "Sketch two system boundaries: one block and both blocks; label external gravity, guide normal and tensions.",
+          "connect": "Begin with Δp_block=∫ΣF_external dt, not Δp_block=0.",
+          "calculate": "A single block has nonzero external gravity and tension. For an ideal joint system, equal displacement magnitudes let gravitational work transfer into total kinetic energy, while normals do zero work.",
+          "interpret": "Gravity, normal and rope act externally on the block-only system; instead use Newton II for each body and check the combined energy change under ideal constraints."
+        },
+        "final_expression": "Gravity, normal and rope act externally on the block-only system; instead use Newton II for each body and check the combined energy change under ideal constraints.",
+        "final_answer_value": "Gravity, normal and rope act externally on the block-only system; instead use Newton II for each body and check the combined energy change under ideal constraints."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / model consistency",
+        "quick_check": "At equal gravitational driving components the system may remain at rest.",
+        "check_it_another_way": "An ideal rope constraint does not remove external forces from the individual-block momentum equation.",
+        "watch_out": "Frictionless does not mean force-free, and massless rope does not imply conserved single-body momentum.",
+        "review_this_idea": "Core1 NLM-09",
+        "limiting_cases": [
+          {
+            "condition": "At the relevant ideal or threshold limit",
+            "expected": "At equal gravitational driving components the system may remain at rest."
+          },
+          {
+            "condition": "When a driving parameter is reversed or contact becomes frictionless",
+            "expected": "Frictionless does not mean force-free, and massless rope does not imply conserved single-body momentum."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-037",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-05",
+      "provenance": {
+        "source": "New demand transfer, no benchmark scenario reproduced; PDFs inaccessible",
+        "benchmark_demand_anchor": "Core1 NLM-05",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A 1 kg lab cart moves at 6 m/s and collides inelastically with a 2 kg stationary cart; they latch together. Immediately afterward the joined 3 kg cart goes onto a rough 30° upward track (g=10 m/s², μ_k=0.20, cos30°≈0.866). Neglect loss at the track join. How far uphill does it move before stopping?",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "ideal massless cords and pulleys where specified",
+          "Coulomb static/kinetic friction as stated"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "About 0.30 m.",
+        "B": "About 1.20 m.",
+        "C": "About 0.60 m.",
+        "D": "It keeps climbing at constant speed."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D3",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "NLM-05",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 3,
+          "constraint_latency": 3,
+          "domain_coupling": 4,
+          "math_friction": 2
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: Two carts stick together at impact, then move as one coupled body.",
+          "vector_dimensionality": "Score 3: Their post-impact path tilts onto a 30-degree ramp.",
+          "constraint_latency": "Score 3: The ramp change imposes a geometric/constraint transition.",
+          "domain_coupling": "Score 4: Link collision momentum to subsequent frictional dynamics and stopping kinematics.",
+          "math_friction": "Score 2: Compute a linear momentum result followed by one stopping-distance relation."
+        },
+        "protected_work_W": "The short collision first fixes common speed by momentum; climbing then requires a separate gravity-and-friction stopping model.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "This problem requires the stated decisive SYNTHESIZE physical decision and not just the simpler rival demand."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Momentum gives v_after=(1×6)/3=2 m/s. Uphill deceleration=10×0.5+0.20×10×0.866=6.732 m/s²; s=2²/(2×6.732)=0.297 m."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "This alternative fails the governing regime or model. Mechanical energy is not conserved during the inelastic collision."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "The proposed sign or ownership is invalid. The short collision first fixes common speed by momentum; climbing then requires a separate gravity-and-friction stopping model."
+        },
+        "D": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omitted coupled force/constraint: Draw the two collision momentum arrows, then one uphill cart with downslope mg sinθ and μ_k mg cosθ."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · physical decision",
+          "prompt_question": "Which system, interaction or regime governs this situation?",
+          "reveal_text": "The short collision first fixes common speed by momentum; climbing then requires a separate gravity-and-friction stopping model."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "What diagram and signed axes should precede any calculation?",
+          "reveal_text": "Draw the two collision momentum arrows, then one uphill cart with downslope mg sinθ and μ_k mg cosθ."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first equation",
+          "prompt_question": "What first equation or inequality starts the solution?",
+          "reveal_text": "Start with m_1 u_1=(m_1+m_2)v_after before applying v_f²=v_after²+2as."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "The short collision first fixes common speed by momentum; climbing then requires a separate gravity-and-friction stopping model.",
+          "represent": "Draw the two collision momentum arrows, then one uphill cart with downslope mg sinθ and μ_k mg cosθ.",
+          "connect": "Start with m_1 u_1=(m_1+m_2)v_after before applying v_f²=v_after²+2as.",
+          "calculate": "Momentum gives v_after=(1×6)/3=2 m/s. Uphill deceleration=10×0.5+0.20×10×0.866=6.732 m/s²; s=2²/(2×6.732)=0.297 m.",
+          "interpret": "About 0.30 m."
+        },
+        "final_expression": "About 0.30 m.",
+        "final_answer_value": "About 0.30 m."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / model consistency",
+        "quick_check": "With μ_k=0 it travels farther; doubling post-impact speed quadruples stopping distance.",
+        "check_it_another_way": "The short collision first fixes common speed by momentum; climbing then requires a separate gravity-and-friction stopping model.",
+        "watch_out": "Mechanical energy is not conserved during the inelastic collision.",
+        "review_this_idea": "Core1 NLM-05",
+        "limiting_cases": [
+          {
+            "condition": "At the relevant ideal or threshold limit",
+            "expected": "With μ_k=0 it travels farther; doubling post-impact speed quadruples stopping distance."
+          },
+          {
+            "condition": "When a driving parameter is reversed or contact becomes frictionless",
+            "expected": "Mechanical energy is not conserved during the inelastic collision."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-038",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-04",
+      "provenance": {
+        "source": "New demand transfer, no benchmark scenario reproduced; PDFs inaccessible",
+        "benchmark_demand_anchor": "Core1 NLM-04",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A 4 kg block lies on a rough horizontal tabletop, joined by separate light cords over left and right pulleys to a 2 kg hanging mass on the left and an adjustable M kg hanging mass on the right. Static and kinetic coefficients on the tabletop are μ_s=0.25 and μ_k=0.20, with g=10 m/s². Find the full interval of M allowing rest; then put M=4 kg and find acceleration and direction.",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "ideal massless cords and pulleys where specified",
+          "Coulomb static/kinetic friction as stated"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "Rest for 1≤M≤3 kg; at M=4 kg the right hanger descends with a=1.2 m/s².",
+        "B": "Rest for any M; at M=4 kg all stay still.",
+        "C": "Rest only for M=2 kg; at M=4 kg the left hanger descends.",
+        "D": "Rest for 0≤M≤4 kg; at M=4 kg a=4.0 m/s²."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D4",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "NLM-04",
+        "difficulty_factors": {
+          "system_coupling": 4,
+          "vector_dimensionality": 2,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 4
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 4: A central table block and two oppositely hanging masses form three linked bodies.",
+          "vector_dimensionality": "Score 2: Horizontal and vertical axes are separately signed and related through ropes.",
+          "constraint_latency": "Score 4: Static friction on the central block determines an allowed mass interval.",
+          "domain_coupling": "Score 4: For a hanging mass beyond the interval the system switches to kinetic friction.",
+          "math_friction": "Score 4: Determine both symbolic lower/upper mass bounds before solving a moving state."
+        },
+        "protected_work_W": "The two hanging weights compete; static friction has a bounded adjustable direction, while the moving state uses kinetic friction.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "This problem requires the stated decisive APPLY physical decision and not just the simpler rival demand."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Static requirement |10M−20|≤10 gives 1≤M≤3. At M=4 it must move right: kinetic drag=0.20×40=8 N; net drive 40−20−8=12 N across total mass 4+2+4=10 kg, so a=1.2 m/s² right on table and down on right hanger."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "This alternative fails the governing regime or model. Do not assume friction always points toward the same pulley throughout the parameter interval."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "The proposed sign or ownership is invalid. The two hanging weights compete; static friction has a bounded adjustable direction, while the moving state uses kinetic friction."
+        },
+        "D": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omitted coupled force/constraint: Draw all three FBDs, left tension versus right tension on the table block, and separate vertical axes for both hanging loads."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · physical decision",
+          "prompt_question": "Which system, interaction or regime governs this situation?",
+          "reveal_text": "The two hanging weights compete; static friction has a bounded adjustable direction, while the moving state uses kinetic friction."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "What diagram and signed axes should precede any calculation?",
+          "reveal_text": "Draw all three FBDs, left tension versus right tension on the table block, and separate vertical axes for both hanging loads."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first equation",
+          "prompt_question": "What first equation or inequality starts the solution?",
+          "reveal_text": "First impose |Mg−2g|≤μ_s(4g) to characterize the static interval."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "The two hanging weights compete; static friction has a bounded adjustable direction, while the moving state uses kinetic friction.",
+          "represent": "Draw all three FBDs, left tension versus right tension on the table block, and separate vertical axes for both hanging loads.",
+          "connect": "First impose |Mg−2g|≤μ_s(4g) to characterize the static interval.",
+          "calculate": "Static requirement |10M−20|≤10 gives 1≤M≤3. At M=4 it must move right: kinetic drag=0.20×40=8 N; net drive 40−20−8=12 N across total mass 4+2+4=10 kg, so a=1.2 m/s² right on table and down on right hanger.",
+          "interpret": "Rest for 1≤M≤3 kg; at M=4 kg the right hanger descends with a=1.2 m/s²."
+        },
+        "final_expression": "Rest for 1≤M≤3 kg; at M=4 kg the right hanger descends with a=1.2 m/s².",
+        "final_answer_value": "Rest for 1≤M≤3 kg; at M=4 kg the right hanger descends with a=1.2 m/s²."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / model consistency",
+        "quick_check": "At M=2 kg no friction is required for rest; at μ_s=0 the rest interval collapses to M=2.",
+        "check_it_another_way": "The two hanging weights compete; static friction has a bounded adjustable direction, while the moving state uses kinetic friction.",
+        "watch_out": "Do not assume friction always points toward the same pulley throughout the parameter interval.",
+        "review_this_idea": "Core1 NLM-04",
+        "limiting_cases": [
+          {
+            "condition": "At the relevant ideal or threshold limit",
+            "expected": "At M=2 kg no friction is required for rest; at μ_s=0 the rest interval collapses to M=2."
+          },
+          {
+            "condition": "When a driving parameter is reversed or contact becomes frictionless",
+            "expected": "Do not assume friction always points toward the same pulley throughout the parameter interval."
           }
         ]
       }
