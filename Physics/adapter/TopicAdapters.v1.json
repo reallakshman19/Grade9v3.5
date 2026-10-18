@@ -2014,6 +2014,95 @@
           "remedy": "Tangential acceleration a_t = dv/dt is collinear with velocity; normal acceleration a_n = v^2/R is strictly perpendicular.",
           "trigger_pattern": "setting centripetal acceleration to zero because speed is constant"
         }
+      ],
+      "blueprint_refs": {
+        "core1a_ontology": "TEST/physics-research/blueprints/core1a_physics_planar_motion_ontology.v1.json",
+        "core1b_reconstruction": "TEST/physics-research/blueprints/core1b_physics_planar_motion_reconstruction.v1.json"
+      },
+      "canonical_reasoning_moves": {
+        "stage_1_choose": "Declare orthogonal coordinate axes (x, y), reference directions (+x horizontal, +y vertical), and clock zero t = 0.",
+        "stage_2_represent": "Decompose vectors into orthogonal components (u_x = u cos theta, u_y = u sin theta) or construct Galilean relative velocity triangles (v_A/B = v_A - v_B).",
+        "stage_3_connect": "Select the governing 2D equations: Cartesian parabola y(x) = x tan theta - g*x^2 / (2*u^2*cos^2 theta), or Frenet-Serret decomposition a = a_t u_t + a_n u_n.",
+        "stage_4_execute_and_check": "Solve closed-form algebraic expressions; verify asymptotic limits (theta -> 0 deg, 90 deg, 45 deg, g -> 0, v_rel collinear) and base SI dimensional homogeneity."
+      },
+      "first_move_atlas": [
+        {
+          "competency_id": "PLANE-01",
+          "cue": "2D position vector r(t) or velocity v(t) with orthogonal (x, y) coordinates",
+          "representation": "Orthogonal Cartesian coordinate frame (x, y) with independent 1D projections",
+          "first_executable_move": "Decompose motion into independent perpendicular components: r(t) = x(t) i + y(t) j and v(t) = v_x(t) i + v_y(t) j, linked solely by clock t",
+          "anti_pattern": "Mixing horizontal and vertical kinematic variables inside a single 1D equation"
+        },
+        {
+          "competency_id": "PLANE-02",
+          "cue": "Constant acceleration in 2D with vector quantities u and a",
+          "representation": "Vector UVATS table separating horizontal (i) and vertical (j) components",
+          "first_executable_move": "Apply 2D vector kinematic quad equations: v = u + at and Delta r = ut + 0.5*a*t^2 independently along each orthogonal axis",
+          "anti_pattern": "Adding vector magnitudes algebraically without resolving into orthogonal components"
+        },
+        {
+          "competency_id": "PLANE-03",
+          "cue": "Horizontal launch from cliff or tower with speed u and zero initial vertical velocity (u_y = 0)",
+          "representation": "Origin at launch edge, +x horizontal, +y downward (or +y upward with launch at y = h)",
+          "first_executable_move": "Solve vertical free-fall time first: t_fall = sqrt(2h / g), then determine horizontal range x = u * t_fall",
+          "anti_pattern": "Believing higher horizontal launch velocity changes the vertical time of fall"
+        },
+        {
+          "competency_id": "PLANE-04",
+          "cue": "Oblique ground-to-ground projectile launch at elevation angle theta above horizontal",
+          "representation": "Launch velocity decomposed into u_x = u cos theta and u_y = u sin theta; apex summit at v_y = 0",
+          "first_executable_move": "Set vertical apex velocity v_y = u sin theta - gt = 0 => t_apex = (u sin theta) / g; total flight time T = (2u sin theta) / g",
+          "anti_pattern": "Setting total velocity to zero at the apex (horizontal speed u_x = u cos theta remains strictly non-zero)"
+        },
+        {
+          "competency_id": "PLANE-05",
+          "cue": "Ground-to-ground horizontal range, maximum range, or landing impact coordinate",
+          "representation": "Parabolic trajectory arc with landing coordinates (R, 0)",
+          "first_executable_move": "Compute range R = u_x * T = (u^2 sin 2theta) / g; maximum range occurs at theta = 45 deg where R_max = u^2 / g",
+          "anti_pattern": "Applying the level-ground range formula R = (u^2 sin 2theta)/g when launch and landing heights are unequal"
+        },
+        {
+          "competency_id": "PLANE-06",
+          "cue": "Two projectiles with equal launch speeds achieving identical horizontal range",
+          "representation": "Dual trajectory arcs showing steep lob vs flat drive with complementary launch angles",
+          "first_executable_move": "Apply complementary angle degeneracy: theta_1 + theta_2 = 90 deg => sin(2*theta_1) = sin(2*theta_2); ranges are identical, flight times scale as T1 / T2 = tan theta_1",
+          "anti_pattern": "Assuming equal range implies equal flight times or equal maximum apex heights"
+        },
+        {
+          "competency_id": "PLANE-07",
+          "cue": "Trajectory profile curve, target clearance at (x, y), or path equation without time t",
+          "representation": "Cartesian trajectory curve y(x) plotted on spatial (x, y) coordinate grid",
+          "first_executable_move": "Substitute t = x / (u cos theta) into y(t) to form trajectory equation y = x tan theta - (g x^2) / (2 u^2 cos^2 theta) = x tan theta * (1 - x / R)",
+          "anti_pattern": "Attempting multi-variable time quadratics when the Cartesian trajectory equation connects x and y directly"
+        },
+        {
+          "competency_id": "PLANE-08",
+          "cue": "Boat crossing river with stream current velocity v_r and engine speed v_b",
+          "representation": "Vector velocity triangle: v_net = v_b/r + v_r across river width W",
+          "first_executable_move": "For shortest time, steer perpendicular to bank (theta = 90 deg, t_min = W / v_b); for zero drift (v_b > v_r), steer upstream at sin alpha = v_r / v_b",
+          "anti_pattern": "Steering upstream when asked for shortest crossing time (shortest time strictly requires heading directly across)"
+        },
+        {
+          "competency_id": "PLANE-09",
+          "cue": "Rain falling vertically while observer moves horizontally, or aircraft in crosswind",
+          "representation": "Relative velocity vector subtraction triangle: v_rain/man = v_rain - v_man",
+          "first_executable_move": "Construct relative velocity vector v_rel = -v_rain j - v_man i; tilt umbrella into oncoming relative rain at tan theta = v_man / v_rain from vertical",
+          "anti_pattern": "Tilting umbrella backward or along walking direction instead of into the oncoming relative rain vector"
+        },
+        {
+          "competency_id": "PLANE-10",
+          "cue": "Particle moving along circular path of radius R at uniform speed v or angular velocity omega",
+          "representation": "Circular orbit with tangent velocity vector v and radially inward normal acceleration a_c",
+          "first_executable_move": "Apply centripetal acceleration invariant: a_c = v^2 / R = omega^2 * R = 4*pi^2*R / T^2 directed strictly toward orbit center",
+          "anti_pattern": "Claiming uniform circular motion has zero acceleration because scalar speed |v| is constant"
+        },
+        {
+          "competency_id": "PLANE-11",
+          "cue": "Particle moving along general curved path with changing speed",
+          "representation": "Intrinsic Frenet-Serret coordinate frame: unit tangent u_t and unit inward normal u_n",
+          "first_executable_move": "Decouple acceleration into tangential a_t = dv/dt (changes speed) and normal a_n = v^2 / rho (changes direction); total |a| = sqrt(a_t^2 + a_n^2)",
+          "anti_pattern": "Conflating total acceleration with centripetal acceleration in non-uniform curvilinear motion"
+        }
       ]
     }
   }
