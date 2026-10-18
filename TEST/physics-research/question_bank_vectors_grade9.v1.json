@@ -1,0 +1,2986 @@
+{
+  "schema": "golden-curriculum-bank-v1",
+  "version": "1.0.0",
+  "topic_id": "phy-vectors-and-components",
+  "display_name": "Vectors, Coordinate Frames & Geometric Invariants",
+  "grade": "Grade 9",
+  "subject": "Physics",
+  "questions": [
+    {
+      "question_id": "PHYS-VEC-001",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-01",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q01",
+        "tier": "GRADE-9"
+      },
+      "stem": "Take east as the positive $x$-axis. A laboratory cart moves $+7\\text{ m}$, then $-11\\text{ m}$, and finally $+2\\text{ m}$. Which pair correctly reports its net displacement and total path distance travelled?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 500 120\" width=\"100%\" height=\"120\">\n  <defs><marker id=\"arr1\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"40\" y1=\"60\" x2=\"460\" y2=\"60\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <circle cx=\"200\" cy=\"60\" r=\"5\" fill=\"#0f172a\"/>\n  <text x=\"200\" y=\"85\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#0f172a\">Origin (0 m)</text>\n  <line x1=\"200\" y1=\"40\" x2=\"340\" y2=\"40\" stroke=\"#2563eb\" stroke-width=\"3\" marker-end=\"url(#arr1)\"/>\n  <text x=\"270\" y=\"32\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#2563eb\">+7 m (East)</text>\n  <line x1=\"340\" y1=\"20\" x2=\"120\" y2=\"20\" stroke=\"#dc2626\" stroke-width=\"3\" marker-end=\"url(#arr1)\"/>\n  <text x=\"230\" y=\"14\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#dc2626\">-11 m (West)</text>\n  <line x1=\"120\" y1=\"60\" x2=\"160\" y2=\"60\" stroke=\"#16a34a\" stroke-width=\"3\" marker-end=\"url(#arr1)\"/>\n  <text x=\"140\" y=\"105\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#16a34a\">+2 m</text>\n</svg>",
+        "caption": "1D Directed Vector Line with Declared East As +x"
+      },
+      "options": {
+        "A": "Displacement = $-2\\text{ m}$ (or $2\\text{ m}$ west), Total distance = $20\\text{ m}$",
+        "B": "Displacement = $+2\\text{ m}$ east, Total distance = $20\\text{ m}$",
+        "C": "Displacement = $-2\\text{ m}$ west, Total distance = $2\\text{ m}$",
+        "D": "Displacement = $20\\text{ m}$, Total distance = $20\\text{ m}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-RETRIEVE-D1",
+        "primary_demand": "RETRIEVE",
+        "difficulty_band": "D1",
+        "subtopic_competency_ref": "VEC-01",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Differentiate vector displacement from scalar distance through signed axis projection.",
+        "supporting_demands": [
+          "REPRESENT",
+          "APPLY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. Displacement retains sign as vector algebraic sum: 7 - 11 + 2 = -2 m. Distance is scalar sum of absolute leg lengths: |7| + |-11| + |2| = 20 m."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Confuses final sign orientation, treating net western displacement as positive."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Reduces total distance to magnitude of displacement, ignoring cumulative path length."
+        },
+        "D": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Adds displacements without respecting direction signs."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "Which requested quantity retains orientation along the chosen axis, and which accounts only for path accumulated?",
+          "reveal_text": "Displacement is a vector quantity that depends on direction and initial/final positions; total distance is a scalar accumulated monotonically along the trajectory."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How do you represent the directional movements along the 1D axis?",
+          "reveal_text": "Assign $+7\\text{ m}$, $-11\\text{ m}$, and $+2\\text{ m}$ directly to coordinate offsets along the declared $+x$ axis."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What algebraic expressions give the two results?",
+          "reveal_text": "Displacement is $\\Delta x = (+7) + (-11) + (+2) = -2\\text{ m}$. Distance is $d = |+7| + |-11| + |+2| = 20\\text{ m}$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\text{Motion is strictly 1D along a declared axis } x \\text{ directed eastward.} - Declaring axis orientation converts spatial vector operations into signed 1D algebra.",
+          "represent": "x_0 = 0,\\quad x_1 = +7\\text{ m},\\quad x_2 = 7 - 11 = -4\\text{ m},\\quad x_3 = -4 + 2 = -2\\text{ m}. - Successive displacements chain via head-to-tail addition along the line.",
+          "connect": "\\Delta x = \\sum \\Delta x_i,\\quad d = \\sum |\\Delta x_i| - Displacement is net change in position vector; distance is path length integral.",
+          "calculate": "\\Delta x = 7 - 11 + 2 = -2\\text{ m};\\quad d = |7| + |-11| + |2| = 7 + 11 + 2 = 20\\text{ m} - Direct arithmetic evaluation.",
+          "interpret": "\\Delta x = -2\\text{ m} \\equiv 2\\text{ m west};\\quad d = 20\\text{ m} - A negative displacement indicates final position lies west of origin despite walking 20 meters."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\text{Motion is strictly 1D along a declared axis } x \\text{ directed eastward.} [Declaring axis orientation converts spatial vector operations into signed 1D algebra.]",
+          "Step 2 (Represent the physical configuration): x_0 = 0,\\quad x_1 = +7\\text{ m},\\quad x_2 = 7 - 11 = -4\\text{ m},\\quad x_3 = -4 + 2 = -2\\text{ m}. [Successive displacements chain via head-to-tail addition along the line.]",
+          "Step 3 (Connect governing physical laws): \\Delta x = \\sum \\Delta x_i,\\quad d = \\sum |\\Delta x_i| [Displacement is net change in position vector; distance is path length integral.]",
+          "Step 4 (Calculate & execute formal derivation): \\Delta x = 7 - 11 + 2 = -2\\text{ m};\\quad d = |7| + |-11| + |2| = 7 + 11 + 2 = 20\\text{ m} [Direct arithmetic evaluation.]",
+          "Step 5 (Interpret the physical outcome): \\Delta x = -2\\text{ m} \\equiv 2\\text{ m west};\\quad d = 20\\text{ m} [A negative displacement indicates final position lies west of origin despite walking 20 meters.]"
+        ],
+        "final_expression": "\\Delta x = 7 - 11 + 2 = -2\\text{ m};\\quad d = |7| + |-11| + |2| = 7 + 11 + 2 = 20\\text{ m}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L]",
+        "limiting_cases": [
+          {
+            "condition": "Return to origin (x_final = x_0)",
+            "expected": "Displacement = 0 while distance > 0 => Delta x = 0, d = 2 * leg_length"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-01.",
+        "check_it_another_way": "Graphical number-line traversal tracking instantaneous coordinate. Final point sits at coordinate -2 m; total segments traversed sum to 20 m.",
+        "watch_out": "Treating negative vector components as smaller magnitudes rather than opposite directions.",
+        "review_this_idea": "Core 1: VEC-01 (Scalars, Vectors & Signed Axis Conventions)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-002",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-01",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q02",
+        "tier": "GRADE-9"
+      },
+      "stem": "A particle undergoes a displacement $\\vec{s}_1 = -15\\text{ m}\\;\\hat{i}$ followed by $\\vec{s}_2 = +15\\text{ m}\\;\\hat{i}$. Which statement fundamentally characterizes the physical state of the particle upon completion of $\\vec{s}_2$?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "Its net displacement is zero, and its final position vector coincides identically with its initial position.",
+        "B": "The two displacements cancel dynamically, meaning no physical distance was traversed.",
+        "C": "Its net displacement is $30\\text{ m}\\;\\hat{i}$ because magnitudes always add positively.",
+        "D": "Its position is undefined because the negative sign destroys the reference coordinate frame."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-EXPLAIN-D1",
+        "primary_demand": "EXPLAIN",
+        "difficulty_band": "D1",
+        "subtopic_competency_ref": "VEC-01",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Evaluate physical null vector identity and position return invariance.",
+        "supporting_demands": [
+          "RETRIEVE",
+          "JUSTIFY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. Vector addition yields (-15) + (+15) = 0 m; the particle has returned identically to its starting spatial coordinate."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Confuses kinematic displacement cancellation with path distance traversal."
+        },
+        "C": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Fails to treat displacement as a signed directed vector, adding scalar magnitudes."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Misunderstands coordinate signs, believing negative vectors destroy the reference frame."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What does a negative sign in front of a 1D unit vector physically denote?",
+          "reveal_text": "A negative sign denotes spatial orientation in the direction antiparallel to the declared unit vector $\\hat{i}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How do two equal-magnitude, opposite-direction vectors combine under vector addition?",
+          "reveal_text": "They satisfy $\\vec{s}_1 + \\vec{s}_2 = (-15\\,\\hat{i}) + (+15\\,\\hat{i}) = \\vec{0}$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What does a net displacement of zero imply about starting and ending locations?",
+          "reveal_text": "Zero displacement means $\\vec{r}_{\\text{final}} - \\vec{r}_{\\text{initial}} = \\vec{0}$, so initial and final positions are identical."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\vec{s}_{\\text{net}} = \\vec{s}_1 + \\vec{s}_2 - Displacement is an element of a vector space with additive inverse.",
+          "represent": "\\vec{s}_1 = -15\\,\\hat{i},\\quad \\vec{s}_2 = +15\\,\\hat{i} - Collinear antiparallel vectors along the x-axis.",
+          "connect": "\\vec{s}_{\\text{net}} = (-15 + 15)\\,\\hat{i} = 0\\,\\hat{i} = \\vec{0} - Vector addition of inverse elements yields the null vector.",
+          "calculate": "\\vec{r}_f = \\vec{r}_i + \\vec{s}_{\\text{net}} = \\vec{r}_i + \\vec{0} = \\vec{r}_i - Position vector updates identically to starting coordinate.",
+          "interpret": "\\text{Net displacement is zero; total path distance is } 30\\text{ m}. - Zero net displacement does not erase path distance traversed."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\vec{s}_{\\text{net}} = \\vec{s}_1 + \\vec{s}_2 [Displacement is an element of a vector space with additive inverse.]",
+          "Step 2 (Represent the physical configuration): \\vec{s}_1 = -15\\,\\hat{i},\\quad \\vec{s}_2 = +15\\,\\hat{i} [Collinear antiparallel vectors along the x-axis.]",
+          "Step 3 (Connect governing physical laws): \\vec{s}_{\\text{net}} = (-15 + 15)\\,\\hat{i} = 0\\,\\hat{i} = \\vec{0} [Vector addition of inverse elements yields the null vector.]",
+          "Step 4 (Calculate & execute formal derivation): \\vec{r}_f = \\vec{r}_i + \\vec{s}_{\\text{net}} = \\vec{r}_i + \\vec{0} = \\vec{r}_i [Position vector updates identically to starting coordinate.]",
+          "Step 5 (Interpret the physical outcome): \\text{Net displacement is zero; total path distance is } 30\\text{ m}. [Zero net displacement does not erase path distance traversed.]"
+        ],
+        "final_expression": "\\vec{r}_f = \\vec{r}_i + \\vec{s}_{\\text{net}} = \\vec{r}_i + \\vec{0} = \\vec{r}_i"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L]",
+        "limiting_cases": [
+          {
+            "condition": "Opposite vector pair (A + (-A))",
+            "expected": "Null vector => 0"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-01.",
+        "check_it_another_way": "Coordinate difference r_f - r_i. Delta r = 0.",
+        "watch_out": "Treating negative vector components as smaller magnitudes rather than opposite directions.",
+        "review_this_idea": "Core 1: VEC-01 (Scalars, Vectors & Signed Axis Conventions)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-003",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-02",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q03",
+        "tier": "GRADE-9"
+      },
+      "stem": "Two force vectors $\\vec{F}_1$ and $\\vec{F}_2$ each have a magnitude of $10\\text{ N}$. $\\vec{F}_1$ acts due east at the origin $(0,0)$, while $\\vec{F}_2$ acts due east at point $(0, 5\\text{ m})$. Under the laws of free vectors in particle mechanics, which condition holds regarding their vector equality?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 450 140\" width=\"100%\" height=\"140\">\n  <defs><marker id=\"arr2\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"60\" y1=\"100\" x2=\"200\" y2=\"100\" stroke=\"#2563eb\" stroke-width=\"3\" marker-end=\"url(#arr2)\"/>\n  <circle cx=\"60\" cy=\"100\" r=\"4\" fill=\"#0f172a\"/>\n  <text x=\"60\" y=\"125\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#0f172a\">(0, 0)</text>\n  <text x=\"130\" y=\"90\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\">F₁ = 10 N East</text>\n  <line x1=\"60\" y1=\"40\" x2=\"200\" y2=\"40\" stroke=\"#2563eb\" stroke-width=\"3\" marker-end=\"url(#arr2)\"/>\n  <circle cx=\"60\" cy=\"40\" r=\"4\" fill=\"#0f172a\"/>\n  <text x=\"60\" y=\"30\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#0f172a\">(0, 5 m)</text>\n  <text x=\"130\" y=\"30\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\">F₂ = 10 N East</text>\n</svg>",
+        "caption": "Parallel Translation of Vectors in Euclidean Space"
+      },
+      "options": {
+        "A": "$\\vec{F}_1 = \\vec{F}_2$ because free vectors depend solely on magnitude and spatial direction, invariant to parallel translation.",
+        "B": "$\\vec{F}_1 \\neq \\vec{F}_2$ because vectors must possess identical initial points of application to be equal.",
+        "C": "$\\vec{F}_1 = -\\vec{F}_2$ because shifting along the $y$-axis inverts the vector sign.",
+        "D": "$\\vec{F}_1$ is larger because it originates at the primary coordinate origin."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D1",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D1",
+        "subtopic_competency_ref": "VEC-02",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Verify translational invariance of free vectors and component equivalence.",
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. In Euclidean vector space, two vectors are equal if and only if they possess identical magnitude and orientation, regardless of spatial point of application."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Confuses free vector identity in translational mechanics with line-of-action torque considerations in rigid bodies."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Falsely assumes spatial translation along a perpendicular axis negates vector direction."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Attaches preferential magnitude to origin-rooted vectors."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What two fundamental properties define a free vector in physics?",
+          "reveal_text": "A vector is uniquely and completely determined by its magnitude and its spatial direction."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "Does translating a directed line segment parallel to itself in Euclidean space alter its magnitude or direction?",
+          "reveal_text": "No, parallel translation preserves both length and angle with respect to coordinate axes identically."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What is the formal criterion for vector equality $\\vec{A} = \\vec{B}$?",
+          "reveal_text": "$\\vec{A} = \\vec{B} \\iff |\\vec{A}| = |\\vec{B}|$ and $\\hat{A} = \\hat{B}$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\text{Free vectors in translation mechanics are equivalence classes of directed segments.} - Vector identity is independent of location in space.",
+          "represent": "\\vec{F}_1 = 10\\,\\hat{i}\\text{ N},\\quad \\vec{F}_2 = 10\\,\\hat{i}\\text{ N} - Both vectors share identical Cartesian components in basis {i, j}.",
+          "connect": "\\vec{A} = \\vec{B} \\iff A_x = B_x \\text{ and } A_y = B_y - Equality of vectors requires equality of all orthogonal components.",
+          "calculate": "F_{1x} = 10 = F_{2x},\\quad F_{1y} = 0 = F_{2y} \\implies \\vec{F}_1 = \\vec{F}_2 - Components match identically across all axes.",
+          "interpret": "\\vec{F}_1 \\text{ and } \\vec{F}_2 \\text{ represent the exact same vector element in } \\mathbb{R}^2. - Parallel translation preserves vector identity."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\text{Free vectors in translation mechanics are equivalence classes of directed segments.} [Vector identity is independent of location in space.]",
+          "Step 2 (Represent the physical configuration): \\vec{F}_1 = 10\\,\\hat{i}\\text{ N},\\quad \\vec{F}_2 = 10\\,\\hat{i}\\text{ N} [Both vectors share identical Cartesian components in basis {i, j}.]",
+          "Step 3 (Connect governing physical laws): \\vec{A} = \\vec{B} \\iff A_x = B_x \\text{ and } A_y = B_y [Equality of vectors requires equality of all orthogonal components.]",
+          "Step 4 (Calculate & execute formal derivation): F_{1x} = 10 = F_{2x},\\quad F_{1y} = 0 = F_{2y} \\implies \\vec{F}_1 = \\vec{F}_2 [Components match identically across all axes.]",
+          "Step 5 (Interpret the physical outcome): \\vec{F}_1 \\text{ and } \\vec{F}_2 \\text{ represent the exact same vector element in } \\mathbb{R}^2. [Parallel translation preserves vector identity.]"
+        ],
+        "final_expression": "F_{1x} = 10 = F_{2x},\\quad F_{1y} = 0 = F_{2y} \\implies \\vec{F}_1 = \\vec{F}_2"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[M][L][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "Rotation angle phi (phi = 0)",
+            "expected": "Identical vectors => F1 = F2"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-02.",
+        "check_it_another_way": "Component difference vector F1 - F2. F1 - F2 = 0 i + 0 j = 0.",
+        "watch_out": "Judging vector equality solely by arrow length while ignoring spatial direction.",
+        "review_this_idea": "Core 1: VEC-02 (Vector Equality, Opposite Vectors & Null Vector)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-004",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-02",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q04",
+        "tier": "GRADE-9"
+      },
+      "stem": "A student claims that if two vectors satisfy $\\vec{A} + \\vec{B} = \\vec{0}$, then their dot product $\\vec{A} \\cdot \\vec{B}$ must be strictly non-positive, and their magnitudes must be equal. Is this claim mathematically and physically justified?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "Fully justified: $\\vec{B} = -\\vec{A}$, so $|\\vec{B}| = |\\vec{A}|$ and $\\vec{A} \\cdot \\vec{B} = -|\\vec{A}|^2 \\le 0$.",
+        "B": "Unjustified: two vectors can sum to zero with different magnitudes if one has negative mass.",
+        "C": "Partially justified: magnitudes are equal, but the dot product is always zero because the vectors cancel.",
+        "D": "Unjustified: $\\vec{A} + \\vec{B} = \\vec{0}$ implies $\\vec{A}$ and $\\vec{B}$ must both be the null vector $\\vec{0}$."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D2",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D2",
+        "subtopic_competency_ref": "VEC-02",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Deduce opposite vector magnitude equality and non-positive scalar product invariant.",
+        "supporting_demands": [
+          "MODEL",
+          "SYNTHESIZE"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $\\vec{A} + \\vec{B} = \\vec{0} \\implies \\vec{B} = -\\vec{A}$. Hence $|\\vec{B}| = |-\\vec{A}| = |\\vec{A}|$, and $\\vec{A} \\cdot \\vec{B} = \\vec{A} \\cdot (-\\vec{A}) = -|\\vec{A}|^2 \\le 0$ (strictly negative unless both are null)."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Invents unphysical negative mass concept; vector norms are strictly non-negative."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Confuses vector sum cancellation with scalar product, which measures parallel projection."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumes only the trivial solution exists, ignoring all non-zero antiparallel pairs."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "If $\\vec{A} + \\vec{B} = \\vec{0}$, what is the algebraic relation between $\\vec{B}$ and $\\vec{A}$?",
+          "reveal_text": "Subtracting $\\vec{A}$ yields $\\vec{B} = -\\vec{A}$; $\\vec{B}$ is the additive inverse (opposite vector) of $\\vec{A}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How does the magnitude $|-\\vec{A}|$ compare to $|\\vec{A}|$?",
+          "reveal_text": "By definition of vector norm, $|-\\vec{A}| = |-1|\\,|\\vec{A}| = |\\vec{A}|$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "Substitute $\\vec{B} = -\\vec{A}$ into the dot product $\\vec{A} \\cdot \\vec{B}$. What is the result?",
+          "reveal_text": "$\\vec{A} \\cdot \\vec{B} = \\vec{A} \\cdot (-\\vec{A}) = -(\\vec{A} \\cdot \\vec{A}) = -|\\vec{A}|^2$, which is strictly $\\le 0$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\vec{A} + \\vec{B} = \\vec{0} \\implies \\vec{B} = -\\vec{A} - Additive inverse in vector space.",
+          "represent": "|\\vec{B}| = |-\\vec{A}| = |\\vec{A}| - Opposite vectors have identical length and reversed orientation.",
+          "connect": "\\vec{A} \\cdot \\vec{B} = |\\vec{A}||\\vec{B}| \\cos(180^\\circ) = -|\\vec{A}||\\vec{A}| = -|\\vec{A}|^2 - Angle between a vector and its opposite is exactly 180 degrees.",
+          "calculate": "-|\\vec{A}|^2 \\le 0 \\text{ for all } \\vec{A} \\in \\mathbb{R}^n - The square of any real magnitude is non-negative, so its negation is non-positive.",
+          "interpret": "\\text{The claim is fully justified: } |\\vec{A}| = |\\vec{B}| \\text{ and } \\vec{A} \\cdot \\vec{B} \\le 0. - Rigorous algebraic and geometric consistency demonstrated."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\vec{A} + \\vec{B} = \\vec{0} \\implies \\vec{B} = -\\vec{A} [Additive inverse in vector space.]",
+          "Step 2 (Represent the physical configuration): |\\vec{B}| = |-\\vec{A}| = |\\vec{A}| [Opposite vectors have identical length and reversed orientation.]",
+          "Step 3 (Connect governing physical laws): \\vec{A} \\cdot \\vec{B} = |\\vec{A}||\\vec{B}| \\cos(180^\\circ) = -|\\vec{A}||\\vec{A}| = -|\\vec{A}|^2 [Angle between a vector and its opposite is exactly 180 degrees.]",
+          "Step 4 (Calculate & execute formal derivation): -|\\vec{A}|^2 \\le 0 \\text{ for all } \\vec{A} \\in \\mathbb{R}^n [The square of any real magnitude is non-negative, so its negation is non-positive.]",
+          "Step 5 (Interpret the physical outcome): \\text{The claim is fully justified: } |\\vec{A}| = |\\vec{B}| \\text{ and } \\vec{A} \\cdot \\vec{B} \\le 0. [Rigorous algebraic and geometric consistency demonstrated.]"
+        ],
+        "final_expression": "-|\\vec{A}|^2 \\le 0 \\text{ for all } \\vec{A} \\in \\mathbb{R}^n"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L]",
+        "limiting_cases": [
+          {
+            "condition": "Null vector (A = 0)",
+            "expected": "Dot product = 0 => -|0|^2 = 0"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-02.",
+        "check_it_another_way": "Evaluate using angle definition |A||B| cos(theta) with theta = pi. cos(pi) = -1, yielding -|A|^2.",
+        "watch_out": "Judging vector equality solely by arrow length while ignoring spatial direction.",
+        "review_this_idea": "Core 1: VEC-02 (Vector Equality, Opposite Vectors & Null Vector)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-005",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-03",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q05",
+        "tier": "GRADE-9"
+      },
+      "stem": "A vector $\\vec{A}$ has magnitude $10.0\\text{ units}$ and an $x$-component $A_x = +6.0\\text{ units}$. Knowing that its $y$-component $A_y$ is strictly positive, what is the value of $A_y$ and the angle $\\theta$ it makes with the positive $x$-axis?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 350 220\" width=\"100%\" height=\"220\">\n  <defs><marker id=\"arr3\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"50\" y1=\"180\" x2=\"300\" y2=\"180\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"50\" y1=\"180\" x2=\"50\" y2=\"30\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <text x=\"310\" y=\"185\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#64748b\">+x</text>\n  <text x=\"45\" y=\"20\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#64748b\">+y</text>\n  <line x1=\"50\" y1=\"180\" x2=\"230\" y2=\"60\" stroke=\"#2563eb\" stroke-width=\"3\" marker-end=\"url(#arr3)\"/>\n  <text x=\"130\" y=\"110\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\" font-weight=\"bold\">A = 10.0</text>\n  <line x1=\"230\" y1=\"180\" x2=\"230\" y2=\"60\" stroke=\"#dc2626\" stroke-dasharray=\"4\" stroke-width=\"2\"/>\n  <text x=\"240\" y=\"125\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#dc2626\">A_y = ?</text>\n  <line x1=\"50\" y1=\"180\" x2=\"230\" y2=\"180\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n  <text x=\"130\" y=\"205\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#16a34a\">A_x = +6.0</text>\n</svg>",
+        "caption": "Orthogonal Component Resolution in Quadrant I"
+      },
+      "options": {
+        "A": "$A_y = +8.0\\text{ units},\\quad \\theta = \\arctan(8.0/6.0) \\approx 53.1^\\circ$",
+        "B": "$A_y = +4.0\\text{ units},\\quad \\theta = \\arctan(4.0/6.0) \\approx 33.7^\\circ$",
+        "C": "$A_y = +8.0\\text{ units},\\quad \\theta = \\arctan(6.0/8.0) \\approx 36.9^\\circ$",
+        "D": "$A_y = 16.0\\text{ units},\\quad \\theta = 45.0^\\circ$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D1",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D1",
+        "subtopic_competency_ref": "VEC-03",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Execute Pythagorean component extraction and arctangent angle recovery.",
+        "supporting_demands": [
+          "REPRESENT",
+          "MODEL"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $A_y = \\sqrt{|\\vec{A}|^2 - A_x^2} = \\sqrt{100 - 36} = 8.0$. Angle from $+x$ axis is $\\arctan(A_y / A_x) = \\arctan(8/6) \\approx 53.1^\\circ$."
+        },
+        "B": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculates $A_y = 10 - 6 = 4$, failing to use Pythagorean sum of squares."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Inverts the tangent ratio as $A_x / A_y$, yielding the complementary angle from vertical."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Adds squares $100 + 36 = 136$ or misapplies trigonometry."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What geometric theorem connects orthogonal vector components $A_x, A_y$ to magnitude $|\u000bec{A}|$?",
+          "reveal_text": "The Pythagorean relation holds: $A_x^2 + A_y^2 = |\\vec{A}|^2$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How do you solve for the positive component $A_y$?",
+          "reveal_text": "Isolate $A_y = +\\sqrt{|\\vec{A}|^2 - A_x^2} = \\sqrt{10.0^2 - 6.0^2} = \\sqrt{64.0} = 8.0\\text{ units}$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What trigonometric ratio gives the direction angle $\\theta$ from the $+x$-axis?",
+          "reveal_text": "$\\tan\\theta = \\frac{A_y}{A_x} = \\frac{8.0}{6.0} = \\frac{4}{3} \\implies \\theta \\approx 53.1^\\circ$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\vec{A} = A_x \\hat{i} + A_y \\hat{j},\\quad |\\vec{A}| = 10.0,\\quad A_x = 6.0,\\quad A_y > 0 - Vector resolution in Quadrant I.",
+          "represent": "A_x^2 + A_y^2 = |\\vec{A}|^2 - Pythagorean metric invariant in Euclidean coordinates.",
+          "connect": "A_y = \\sqrt{|\\vec{A}|^2 - A_x^2} - Extract orthogonal leg length.",
+          "calculate": "A_y = \\sqrt{100.0 - 36.0} = \\sqrt{64.0} = 8.0\\text{ units};\\quad \\tan\\theta = \\frac{8.0}{6.0} = 1.333 \\implies \\theta = 53.13^\\circ - Exact 3-4-5 right triangle geometry scaled by factor 2.",
+          "interpret": "A_y = +8.0\\text{ units},\\quad \\theta \\approx 53.1^\\circ \\text{ above }+x\\text{ axis}. - Both components positive confirms Quadrant I positioning."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\vec{A} = A_x \\hat{i} + A_y \\hat{j},\\quad |\\vec{A}| = 10.0,\\quad A_x = 6.0,\\quad A_y > 0 [Vector resolution in Quadrant I.]",
+          "Step 2 (Represent the physical configuration): A_x^2 + A_y^2 = |\\vec{A}|^2 [Pythagorean metric invariant in Euclidean coordinates.]",
+          "Step 3 (Connect governing physical laws): A_y = \\sqrt{|\\vec{A}|^2 - A_x^2} [Extract orthogonal leg length.]",
+          "Step 4 (Calculate & execute formal derivation): A_y = \\sqrt{100.0 - 36.0} = \\sqrt{64.0} = 8.0\\text{ units};\\quad \\tan\\theta = \\frac{8.0}{6.0} = 1.333 \\implies \\theta = 53.13^\\circ [Exact 3-4-5 right triangle geometry scaled by factor 2.]",
+          "Step 5 (Interpret the physical outcome): A_y = +8.0\\text{ units},\\quad \\theta \\approx 53.1^\\circ \\text{ above }+x\\text{ axis}. [Both components positive confirms Quadrant I positioning.]"
+        ],
+        "final_expression": "A_y = \\sqrt{100.0 - 36.0} = \\sqrt{64.0} = 8.0\\text{ units};\\quad \\tan\\theta = \\frac{8.0}{6.0} = 1.333 \\implies \\theta = 53.13^\\circ"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L]",
+        "limiting_cases": [
+          {
+            "condition": "Purely horizontal (Ax = 10)",
+            "expected": "Ay = 0, theta = 0 => Ay = sqrt(100 - 100) = 0"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-03.",
+        "check_it_another_way": "Check norm: sqrt(6^2 + 8^2) = sqrt(36 + 64) = sqrt(100) = 10. Matches specified vector magnitude 10.0 units exactly.",
+        "watch_out": "Memorizing cos theta always belongs to x-axis, failing when angle is referenced to vertical.",
+        "review_this_idea": "Core 1: VEC-03 (Orthogonal Components, Quadrants & Angle References)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-006",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-03",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q06",
+        "tier": "GRADE-9"
+      },
+      "stem": "A displacement vector of magnitude $12.0\\text{ m}$ is directed at an angle of $40.0^\\circ$ North of West. Declaring East as $+x$ and North as $+y$, which pair represents its Cartesian components $(d_x, d_y)$?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 240\" width=\"100%\" height=\"240\">\n  <defs><marker id=\"arr4\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"40\" y1=\"180\" x2=\"340\" y2=\"180\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"200\" y1=\"220\" x2=\"200\" y2=\"40\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <text x=\"345\" y=\"185\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#64748b\">+x (East)</text>\n  <text x=\"195\" y=\"30\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#64748b\">+y (North)</text>\n  <text x=\"40\" y=\"170\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#64748b\">West (-x)</text>\n  <line x1=\"200\" y1=\"180\" x2=\"90\" y2=\"90\" stroke=\"#2563eb\" stroke-width=\"3\" marker-end=\"url(#arr4)\"/>\n  <text x=\"110\" y=\"125\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\" font-weight=\"bold\">12.0 m</text>\n  <path d=\"M 160 180 A 40 40 0 0 1 170 155\" fill=\"none\" stroke=\"#e11d48\" stroke-width=\"2\"/>\n  <text x=\"145\" y=\"165\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#e11d48\">40°</text>\n</svg>",
+        "caption": "Quadrant II Angle Reference from Negative X-Axis"
+      },
+      "options": {
+        "A": "$d_x = -12.0 \\cos 40.0^\\circ \\approx -9.19\\text{ m},\\quad d_y = +12.0 \\sin 40.0^\\circ \\approx +7.71\\text{ m}$",
+        "B": "$d_x = +12.0 \\cos 40.0^\\circ \\approx +9.19\\text{ m},\\quad d_y = +12.0 \\sin 40.0^\\circ \\approx +7.71\\text{ m}$",
+        "C": "$d_x = -12.0 \\sin 40.0^\\circ \\approx -7.71\\text{ m},\\quad d_y = +12.0 \\cos 40.0^\\circ \\approx +9.19\\text{ m}$",
+        "D": "$d_x = -12.0 \\cos 40.0^\\circ \\approx -9.19\\text{ m},\\quad d_y = -12.0 \\sin 40.0^\\circ \\approx -7.71\\text{ m}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D2",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D2",
+        "subtopic_competency_ref": "VEC-03",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Map compass reference angle to Cartesian Quadrant II signed trigonometric projections.",
+        "supporting_demands": [
+          "MODEL",
+          "APPLY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. In Quadrant II (North of West), the adjacent horizontal leg points West (-x), giving dx = -12 cos 40°. The opposite vertical leg points North (+y), giving dy = +12 sin 40°."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails to assign negative sign to western component."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Swaps sine and cosine by misreferencing the angle to North instead of West."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assigns negative sign to vertical component, erroneously placing vector in Quadrant III."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "In which Cartesian quadrant does 'North of West' point?",
+          "reveal_text": "West corresponds to negative $x$ and North to positive $y$; hence the vector lies in Quadrant II ($x < 0, y > 0$)."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "Which axis is adjacent to the specified $40.0^\\circ$ angle?",
+          "reveal_text": "'North of West' measures $40.0^\\circ$ away from the West axis; the adjacent component is along the West ($-x$) axis."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "How do trigonometric definitions translate into signed components?",
+          "reveal_text": "$d_x = -|\\vec{d}| \\cos 40.0^\\circ$ and $d_y = +|\\vec{d}| \\sin 40.0^\\circ$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\text{Vector in Quadrant II with reference angle } 40^\\circ \\text{ from negative } x\\text{-axis}. - Compass specification 'North of West' establishes base axis as West.",
+          "represent": "\\vec{d} = d_x \\hat{i} + d_y \\hat{j},\\quad d_x < 0,\\quad d_y > 0 - Quadrant II Cartesian sign signature.",
+          "connect": "d_x = -|\\vec{d}| \\cos\\theta,\\quad d_y = +|\\vec{d}| \\sin\\theta - Standard right-triangle projection onto adjacent and opposite axes.",
+          "calculate": "d_x = -12.0 \\times 0.7660 = -9.19\\text{ m};\\quad d_y = +12.0 \\times 0.6428 = +7.71\\text{ m} - Direct numerical computation.",
+          "interpret": "(-9.19\\text{ m}, +7.71\\text{ m}) \\text{ gives norm } \\sqrt{(-9.19)^2 + 7.71^2} = \\sqrt{84.46 + 59.44} = 12.0\\text{ m}. - Preserves vector length invariant exactly."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\text{Vector in Quadrant II with reference angle } 40^\\circ \\text{ from negative } x\\text{-axis}. [Compass specification 'North of West' establishes base axis as West.]",
+          "Step 2 (Represent the physical configuration): \\vec{d} = d_x \\hat{i} + d_y \\hat{j},\\quad d_x < 0,\\quad d_y > 0 [Quadrant II Cartesian sign signature.]",
+          "Step 3 (Connect governing physical laws): d_x = -|\\vec{d}| \\cos\\theta,\\quad d_y = +|\\vec{d}| \\sin\\theta [Standard right-triangle projection onto adjacent and opposite axes.]",
+          "Step 4 (Calculate & execute formal derivation): d_x = -12.0 \\times 0.7660 = -9.19\\text{ m};\\quad d_y = +12.0 \\times 0.6428 = +7.71\\text{ m} [Direct numerical computation.]",
+          "Step 5 (Interpret the physical outcome): (-9.19\\text{ m}, +7.71\\text{ m}) \\text{ gives norm } \\sqrt{(-9.19)^2 + 7.71^2} = \\sqrt{84.46 + 59.44} = 12.0\\text{ m}. [Preserves vector length invariant exactly.]"
+        ],
+        "final_expression": "d_x = -12.0 \\times 0.7660 = -9.19\\text{ m};\\quad d_y = +12.0 \\times 0.6428 = +7.71\\text{ m}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L]",
+        "limiting_cases": [
+          {
+            "condition": "Angle goes to 0 (Due West) (theta = 0)",
+            "expected": "dx = -12 m, dy = 0 m => -12 cos(0) = -12, 12 sin(0) = 0"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-03.",
+        "check_it_another_way": "Use standard polar angle measured counterclockwise from +x: phi = 180 - 40 = 140 deg. 12 cos(140) = -9.19 m, 12 sin(140) = +7.71 m. Identical.",
+        "watch_out": "Memorizing cos theta always belongs to x-axis, failing when angle is referenced to vertical.",
+        "review_this_idea": "Core 1: VEC-03 (Orthogonal Components, Quadrants & Angle References)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-007",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-04",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q07",
+        "tier": "GRADE-9"
+      },
+      "stem": "A student navigates across a campus by walking $9.0\\text{ m}$ due East, then turning and walking $12.0\\text{ m}$ due North. What is the magnitude and compass-style direction of the net displacement vector?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 260\" width=\"100%\" height=\"260\">\n  <defs><marker id=\"arr5\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"60\" y1=\"210\" x2=\"220\" y2=\"210\" stroke=\"#16a34a\" stroke-width=\"3\" marker-end=\"url(#arr5)\"/>\n  <text x=\"140\" y=\"235\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#16a34a\">9.0 m East</text>\n  <line x1=\"220\" y1=\"210\" x2=\"220\" y2=\"50\" stroke=\"#dc2626\" stroke-width=\"3\" marker-end=\"url(#arr5)\"/>\n  <text x=\"235\" y=\"130\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#dc2626\">12.0 m North</text>\n  <line x1=\"60\" y1=\"210\" x2=\"220\" y2=\"50\" stroke=\"#2563eb\" stroke-width=\"3\" stroke-dasharray=\"6\" marker-end=\"url(#arr5)\"/>\n  <text x=\"110\" y=\"115\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\" font-weight=\"bold\">R = 15.0 m</text>\n  <path d=\"M 100 210 A 40 40 0 0 0 95 180\" fill=\"none\" stroke=\"#e11d48\" stroke-width=\"2\"/>\n  <text x=\"115\" y=\"195\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#e11d48\">θ</text>\n</svg>",
+        "caption": "Orthogonal Head-to-Tail Displacement Triangle"
+      },
+      "options": {
+        "A": "Magnitude = $15.0\\text{ m},\\quad \\text{Direction} = 53.1^\\circ\\text{ North of East}$",
+        "B": "Magnitude = $21.0\\text{ m},\\quad \\text{Direction} = 45.0^\\circ\\text{ North of East}$",
+        "C": "Magnitude = $15.0\\text{ m},\\quad \\text{Direction} = 36.9^\\circ\\text{ North of East}$",
+        "D": "Magnitude = $10.8\\text{ m},\\quad \\text{Direction} = 53.1^\\circ\\text{ East of North}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "subtopic_competency_ref": "VEC-04",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Execute orthogonal vector synthesis and recover compass angle.",
+        "supporting_demands": [
+          "REPRESENT",
+          "MODEL"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $R = \\sqrt{9^2 + 12^2} = \\sqrt{81 + 144} = \\sqrt{225} = 15.0\\text{ m}$. Direction is $\\arctan(12/9) = \\arctan(4/3) \\approx 53.1^\\circ$ North of East."
+        },
+        "B": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Adds scalar path lengths $9 + 12 = 21\\text{ m}$, ignoring right-triangle geometry."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Computes $\\arctan(9/12) = 36.9^\\circ$, which is East of North, but labels it North of East."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Computes incorrect magnitude from faulty square roots."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What makes this different from simply adding 9 m and 12 m?",
+          "reveal_text": "The two legs point in perpendicular directions. The requested quantity is the straight-line displacement from start to finish, not the 21 m path length."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How do you represent the two legs so the resultant is visible?",
+          "reveal_text": "Choose East as $+x$ and North as $+y$. Draw 9 m East, then 12 m North head-to-tail; the resultant is the hypotenuse from start to end."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What relations give the magnitude and orientation angle?",
+          "reveal_text": "Start with $R^2 = 9.0^2 + 12.0^2$. Direction angle relative to East comes from $\\tan\\theta = \\frac{12.0}{9.0}$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\vec{R} = \\vec{d}_1 + \\vec{d}_2 = 9.0\\,\\hat{i} + 12.0\\,\\hat{j} - Perpendicular displacement addition in Euclidean plane.",
+          "represent": "d_{1x} = 9.0,\\quad d_{1y} = 0;\\quad d_{2x} = 0,\\quad d_{2y} = 12.0 - Resolution along principal compass axes.",
+          "connect": "R = \\sqrt{R_x^2 + R_y^2},\\quad \\tan\\theta = \\frac{R_y}{R_x} - Pythagorean metric and tangent angle definition.",
+          "calculate": "R = \\sqrt{9^2 + 12^2} = \\sqrt{81 + 144} = 15.0\\text{ m};\\quad \\tan\\theta = \\frac{12}{9} = \\frac{4}{3} \\implies \\theta = 53.13^\\circ - Standard Pythagorean 3-4-5 integer triple.",
+          "interpret": "\\vec{R} = 15.0\\text{ m at } 53.1^\\circ\\text{ North of East}. - Straight-line displacement is strictly shorter than 21 m path distance."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\vec{R} = \\vec{d}_1 + \\vec{d}_2 = 9.0\\,\\hat{i} + 12.0\\,\\hat{j} [Perpendicular displacement addition in Euclidean plane.]",
+          "Step 2 (Represent the physical configuration): d_{1x} = 9.0,\\quad d_{1y} = 0;\\quad d_{2x} = 0,\\quad d_{2y} = 12.0 [Resolution along principal compass axes.]",
+          "Step 3 (Connect governing physical laws): R = \\sqrt{R_x^2 + R_y^2},\\quad \\tan\\theta = \\frac{R_y}{R_x} [Pythagorean metric and tangent angle definition.]",
+          "Step 4 (Calculate & execute formal derivation): R = \\sqrt{9^2 + 12^2} = \\sqrt{81 + 144} = 15.0\\text{ m};\\quad \\tan\\theta = \\frac{12}{9} = \\frac{4}{3} \\implies \\theta = 53.13^\\circ [Standard Pythagorean 3-4-5 integer triple.]",
+          "Step 5 (Interpret the physical outcome): \\vec{R} = 15.0\\text{ m at } 53.1^\\circ\\text{ North of East}. [Straight-line displacement is strictly shorter than 21 m path distance.]"
+        ],
+        "final_expression": "R = \\sqrt{9^2 + 12^2} = \\sqrt{81 + 144} = 15.0\\text{ m};\\quad \\tan\\theta = \\frac{12}{9} = \\frac{4}{3} \\implies \\theta = 53.13^\\circ"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L]",
+        "limiting_cases": [
+          {
+            "condition": "Collinear North leg zero (dy = 0)",
+            "expected": "R = 9 m East => sqrt(9^2 + 0) = 9 m"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-04.",
+        "check_it_another_way": "Law of cosines on right triangle with angle 90 degrees. R = sqrt(9^2 + 12^2 - 2(9)(12)cos(90)) = sqrt(81 + 144) = 15 m.",
+        "watch_out": "Adding vector magnitudes algebraically without vector decomposition.",
+        "review_this_idea": "Core 1: VEC-04 (Vector Addition, Triangle & Parallelogram Laws, Resultant)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-008",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-04",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q08",
+        "tier": "GRADE-9"
+      },
+      "stem": "An autonomous drone flies $4.0\\text{ km}$ due East, then $3.0\\text{ km}$ due North. It then executes a third displacement $\\vec{d}_3$ that returns it exactly to its initial launching pad. What is the magnitude and directional heading of $\\vec{d}_3$?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "Magnitude = $5.0\\text{ km},\\quad \\text{Direction} = 36.9^\\circ\\text{ South of West (or } 216.9^\\circ\\text{)}$",
+        "B": "Magnitude = $5.0\\text{ km},\\quad \\text{Direction} = 36.9^\\circ\\text{ North of East}$",
+        "C": "Magnitude = $7.0\\text{ km},\\quad \\text{Direction} = \\text{Southwest}$",
+        "D": "Magnitude = $1.0\\text{ km},\\quad \\text{Direction} = \\text{Due West}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D2",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D2",
+        "subtopic_competency_ref": "VEC-04",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Model closed vector polygon equilibrium condition and invert net displacement.",
+        "supporting_demands": [
+          "REPRESENT",
+          "SYNTHESIZE"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. Return to origin requires closed polygon $\\vec{d}_1 + \\vec{d}_2 + \\vec{d}_3 = \\vec{0} \\implies \\vec{d}_3 = -(\\vec{d}_1 + \\vec{d}_2) = -4\\hat{i} - 3\\hat{j}$. Magnitude is $\\sqrt{(-4)^2 + (-3)^2} = 5.0\\text{ km}$, angle is $\\arctan(3/4) \\approx 36.9^\\circ$ South of West."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Provides the net forward displacement $\\vec{d}_1 + \\vec{d}_2$ instead of the return vector $\\vec{d}_3$."
+        },
+        "C": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Adds scalar legs $4 + 3 = 7\\text{ km}$."
+        },
+        "D": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Subtracts scalar legs $4 - 3 = 1\\text{ km}$."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What does 'returns exactly to the start' mean for the vector sum of all three displacements?",
+          "reveal_text": "A closed loop means the total resultant displacement is the null vector: $\\vec{d}_1 + \\vec{d}_2 + \\vec{d}_3 = \\vec{0}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How is $\\vec{d}_3$ related algebraically to $\\vec{d}_1 + \\vec{d}_2$?",
+          "reveal_text": "$\\vec{d}_3 = -(\\vec{d}_1 + \\vec{d}_2)$. It is the exact opposite of the net displacement of the first two legs."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What are the components of $\\vec{d}_3$?",
+          "reveal_text": "$d_{3x} = -4.0\\text{ km}$ (West) and $d_{3y} = -3.0\\text{ km}$ (South). Magnitude is $\\sqrt{(-4)^2 + (-3)^2} = 5.0\\text{ km}$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\sum_{i=1}^3 \\vec{d}_i = \\vec{0} \\implies \\text{Closed triangle in Euclidean plane.} - Returning to start forms a closed vector polygon.",
+          "represent": "\\vec{d}_1 = 4.0\\,\\hat{i},\\quad \\vec{d}_2 = 3.0\\,\\hat{j},\\quad \\vec{d}_3 = d_{3x}\\,\\hat{i} + d_{3y}\\,\\hat{j} - Orthogonal basis representation.",
+          "connect": "\\vec{d}_3 = -(\\vec{d}_1 + \\vec{d}_2) = -4.0\\,\\hat{i} - 3.0\\,\\hat{j} - Additive inverse closure condition.",
+          "calculate": "|\\vec{d}_3| = \\sqrt{(-4.0)^2 + (-3.0)^2} = \\sqrt{16 + 9} = 5.0\\text{ km};\\quad \\tan\\theta = \\frac{-3.0}{-4.0} = 0.75 \\implies 36.87^\\circ\\text{ S of W} - Component evaluation in Quadrant III.",
+          "interpret": "\\vec{d}_3 \\text{ points directly back to the origin with magnitude } 5.0\\text{ km}. - Validates polygon closure identity."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\sum_{i=1}^3 \\vec{d}_i = \\vec{0} \\implies \\text{Closed triangle in Euclidean plane.} [Returning to start forms a closed vector polygon.]",
+          "Step 2 (Represent the physical configuration): \\vec{d}_1 = 4.0\\,\\hat{i},\\quad \\vec{d}_2 = 3.0\\,\\hat{j},\\quad \\vec{d}_3 = d_{3x}\\,\\hat{i} + d_{3y}\\,\\hat{j} [Orthogonal basis representation.]",
+          "Step 3 (Connect governing physical laws): \\vec{d}_3 = -(\\vec{d}_1 + \\vec{d}_2) = -4.0\\,\\hat{i} - 3.0\\,\\hat{j} [Additive inverse closure condition.]",
+          "Step 4 (Calculate & execute formal derivation): |\\vec{d}_3| = \\sqrt{(-4.0)^2 + (-3.0)^2} = \\sqrt{16 + 9} = 5.0\\text{ km};\\quad \\tan\\theta = \\frac{-3.0}{-4.0} = 0.75 \\implies 36.87^\\circ\\text{ S of W} [Component evaluation in Quadrant III.]",
+          "Step 5 (Interpret the physical outcome): \\vec{d}_3 \\text{ points directly back to the origin with magnitude } 5.0\\text{ km}. [Validates polygon closure identity.]"
+        ],
+        "final_expression": "|\\vec{d}_3| = \\sqrt{(-4.0)^2 + (-3.0)^2} = \\sqrt{16 + 9} = 5.0\\text{ km};\\quad \\tan\\theta = \\frac{-3.0}{-4.0} = 0.75 \\implies 36.87^\\circ\\text{ S of W}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L]",
+        "limiting_cases": [
+          {
+            "condition": "Second leg zero (d2 = 0)",
+            "expected": "d3 = -d1 = -4 km East = 4 km West => -4 i_hat"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-04.",
+        "check_it_another_way": "Verify vector sum d1 + d2 + d3. (4 - 4) i + (3 - 3) j = 0 i + 0 j = 0.",
+        "watch_out": "Adding vector magnitudes algebraically without vector decomposition.",
+        "review_this_idea": "Core 1: VEC-04 (Vector Addition, Triangle & Parallelogram Laws, Resultant)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-009",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-05",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q09",
+        "tier": "GRADE-9"
+      },
+      "stem": "A cyclist travels at $6.0\\text{ m/s}$ due East, then rounds a sharp street corner and immediately travels at $6.0\\text{ m/s}$ due North. What is the magnitude and spatial direction of the cyclist's change in velocity $\\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i$?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 240\" width=\"100%\" height=\"240\">\n  <defs><marker id=\"arr6\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"190\" y1=\"180\" x2=\"310\" y2=\"180\" stroke=\"#94a3b8\" stroke-width=\"2\" marker-end=\"url(#arr6)\"/>\n  <text x=\"240\" y=\"205\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#64748b\">v_i = 6 m/s East</text>\n  <line x1=\"190\" y1=\"180\" x2=\"70\" y2=\"180\" stroke=\"#dc2626\" stroke-width=\"3\" marker-end=\"url(#arr6)\"/>\n  <text x=\"80\" y=\"205\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#dc2626\">-v_i = 6 m/s West</text>\n  <line x1=\"70\" y1=\"180\" x2=\"70\" y2=\"60\" stroke=\"#16a34a\" stroke-width=\"3\" marker-end=\"url(#arr6)\"/>\n  <text x=\"15\" y=\"125\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#16a34a\">v_f = 6 m/s N</text>\n  <line x1=\"190\" y1=\"180\" x2=\"70\" y2=\"60\" stroke=\"#2563eb\" stroke-width=\"3\" stroke-dasharray=\"6\" marker-end=\"url(#arr6)\"/>\n  <text x=\"145\" y=\"115\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\" font-weight=\"bold\">Δv = 8.49 m/s NW</text>\n</svg>",
+        "caption": "Velocity Subtraction Triangle: Δv = v_f + (-v_i)"
+      },
+      "options": {
+        "A": "Magnitude = $6.0\\sqrt{2} \\approx 8.49\\text{ m/s},\\quad \\text{Direction} = \\text{Northwest (or } 45.0^\\circ\\text{ North of West)}$",
+        "B": "Magnitude = $0\\text{ m/s}$ because speed did not change ($6 - 6 = 0$).",
+        "C": "Magnitude = $12.0\\text{ m/s},\\quad \\text{Direction} = \\text{Northeast}$",
+        "D": "Magnitude = $8.49\\text{ m/s},\\quad \\text{Direction} = \\text{Northeast (or } 45.0^\\circ\\text{ North of East)}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "subtopic_competency_ref": "VEC-05",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Construct vector difference triangle and prevent scalar speed cancellation error.",
+        "supporting_demands": [
+          "REPRESENT",
+          "MODEL"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $\\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i = 6.0\\hat{j} - 6.0\\hat{i}$. Magnitude is $\\sqrt{(-6)^2 + 6^2} = 6\\sqrt{2} \\approx 8.49\\text{ m/s}$. Direction is along $-\\hat{i} + \\hat{j}$, which is Northwest."
+        },
+        "B": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses change in speed $\\Delta v = 0$ with magnitude of change in vector velocity $|\\Delta\\vec{v}|$."
+        },
+        "C": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Adds scalar speeds $6 + 6 = 12\\text{ m/s}$."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculates $\\vec{v}_f + \\vec{v}_i$ instead of $\\vec{v}_f - \\vec{v}_i$, yielding Northeast instead of Northwest."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "Is the question asking for the change in speed or the change in velocity vector?",
+          "reveal_text": "It asks for the change in the vector velocity $\\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i$. Because velocity is a vector, a change in direction produces a non-zero $\\Delta\\vec{v}$ even if speed remains constant."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How do you represent vector subtraction geometrically?",
+          "reveal_text": "Rewrite subtraction as addition of the opposite vector: $\\Delta\\vec{v} = \\vec{v}_f + (-\\vec{v}_i)$. Here, $-\\vec{v}_i$ is $6.0\\text{ m/s}$ West."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "How do you combine $\\vec{v}_f = 6.0\\text{ m/s North}$ and $-\\vec{v}_i = 6.0\\text{ m/s West}$?",
+          "reveal_text": "They form two perpendicular sides of a right triangle: $|\\Delta\\vec{v}| = \\sqrt{6.0^2 + 6.0^2} = 6\\sqrt{2} \\approx 8.49\\text{ m/s}$, pointing Northwest ($45^\\circ$ North of West)."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i - Change in velocity requires vector difference between final and initial states.",
+          "represent": "\\vec{v}_i = 6.0\\,\\hat{i}\\text{ m/s},\\quad \\vec{v}_f = 6.0\\,\\hat{j}\\text{ m/s} - Standard Cartesian basis alignment.",
+          "connect": "\\Delta\\vec{v} = \\vec{v}_f + (-\\vec{v}_i) = -6.0\\,\\hat{i} + 6.0\\,\\hat{j} - Vector subtraction as addition of additive inverse.",
+          "calculate": "|\\Delta\\vec{v}| = \\sqrt{(-6.0)^2 + (6.0)^2} = \\sqrt{72.0} = 6.0\\sqrt{2} \\approx 8.49\\text{ m/s};\\quad \\theta = \\arctan\\left(\\frac{6.0}{-6.0}\\right) = 135^\\circ - Pythagorean norm and Quadrant II orientation.",
+          "interpret": "|\\Delta\\vec{v}| = 8.49\\text{ m/s}\\text{ pointing Northwest.} - Even at constant speed, turning through 90 degrees requires a large transverse acceleration impulse."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i [Change in velocity requires vector difference between final and initial states.]",
+          "Step 2 (Represent the physical configuration): \\vec{v}_i = 6.0\\,\\hat{i}\\text{ m/s},\\quad \\vec{v}_f = 6.0\\,\\hat{j}\\text{ m/s} [Standard Cartesian basis alignment.]",
+          "Step 3 (Connect governing physical laws): \\Delta\\vec{v} = \\vec{v}_f + (-\\vec{v}_i) = -6.0\\,\\hat{i} + 6.0\\,\\hat{j} [Vector subtraction as addition of additive inverse.]",
+          "Step 4 (Calculate & execute formal derivation): |\\Delta\\vec{v}| = \\sqrt{(-6.0)^2 + (6.0)^2} = \\sqrt{72.0} = 6.0\\sqrt{2} \\approx 8.49\\text{ m/s};\\quad \\theta = \\arctan\\left(\\frac{6.0}{-6.0}\\right) = 135^\\circ [Pythagorean norm and Quadrant II orientation.]",
+          "Step 5 (Interpret the physical outcome): |\\Delta\\vec{v}| = 8.49\\text{ m/s}\\text{ pointing Northwest.} [Even at constant speed, turning through 90 degrees requires a large transverse acceleration impulse.]"
+        ],
+        "final_expression": "|\\Delta\\vec{v}| = \\sqrt{(-6.0)^2 + (6.0)^2} = \\sqrt{72.0} = 6.0\\sqrt{2} \\approx 8.49\\text{ m/s};\\quad \\theta = \\arctan\\left(\\frac{6.0}{-6.0}\\right) = 135^\\circ"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "Turn angle goes to 0 (No change) (v_f = v_i)",
+            "expected": "Delta v = 0 => 6 i - 6 i = 0"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-05.",
+        "check_it_another_way": "Law of cosines: |Delta v|^2 = v_1^2 + v_2^2 - 2 v_1 v_2 cos(90) = 36 + 36 - 0 = 72. sqrt(72) = 8.49 m/s.",
+        "watch_out": "Assuming change in velocity is zero when speed remains constant along a curved path.",
+        "review_this_idea": "Core 1: VEC-05 (Vector Subtraction & Change Vectors)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-010",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-05",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q10",
+        "tier": "GRADE-9"
+      },
+      "stem": "An object's velocity changes from $\\vec{v}_i = (4.0, 0.0)\\text{ m/s}$ to $\\vec{v}_f = (0.0, 4.0)\\text{ m/s}$. Which component expression correctly represents the change vector $\\Delta\\vec{v}$, and what angle does it form relative to the positive $x$-axis?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "$\\Delta\\vec{v} = (-4.0, 4.0)\\text{ m/s},\\quad \\theta = 135.0^\\circ$",
+        "B": "$\\Delta\\vec{v} = (4.0, 4.0)\\text{ m/s},\\quad \\theta = 45.0^\\circ$",
+        "C": "$\\Delta\\vec{v} = (4.0, -4.0)\\text{ m/s},\\quad \\theta = 315.0^\\circ$",
+        "D": "$\\Delta\\vec{v} = (-4.0, -4.0)\\text{ m/s},\\quad \\theta = 225.0^\\circ$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D2",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D2",
+        "subtopic_competency_ref": "VEC-05",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Execute component-wise vector subtraction and determine Quadrant II polar direction.",
+        "supporting_demands": [
+          "MODEL",
+          "APPLY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $\\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i = (0 - 4, 4 - 0) = (-4.0, 4.0)\\text{ m/s}$. In Quadrant II, angle is $180^\\circ - 45^\\circ = 135.0^\\circ$."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Adds vectors instead of subtracting: $(0+4, 4+0) = (4, 4)$."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Calculates $\\vec{v}_i - \\vec{v}_f = (4, -4)$ instead of final minus initial."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Applies negative sign to both components indiscriminately."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What is the universal definition of a change vector $\\Delta\\vec{X}$?",
+          "reveal_text": "A change vector is always defined as final minus initial: $\\Delta\\vec{X} = \\vec{X}_{\\text{final}} - \\vec{X}_{\\text{initial}}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How do you evaluate component-by-component subtraction?",
+          "reveal_text": "$\\Delta v_x = v_{fx} - v_{ix} = 0.0 - 4.0 = -4.0\\text{ m/s}$, and $\\Delta v_y = v_{fy} - v_{iy} = 4.0 - 0.0 = +4.0\\text{ m/s}$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What angle does $(-4.0, +4.0)$ make with the positive $x$-axis?",
+          "reveal_text": "It lies in Quadrant II with equal magnitude legs, so $\\theta = 180^\\circ - 45^\\circ = 135.0^\\circ$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i - Definition of physical change vector.",
+          "represent": "\\vec{v}_i = (4.0, 0.0),\\quad \\vec{v}_f = (0.0, 4.0) - Input state vectors in Cartesian coordinate representation.",
+          "connect": "\\Delta\\vec{v} = (v_{fx} - v_{ix})\\,\\hat{i} + (v_{fy} - v_{iy})\\,\\hat{j} - Component-wise linear vector operation.",
+          "calculate": "\\Delta\\vec{v} = (0.0 - 4.0)\\,\\hat{i} + (4.0 - 0.0)\\,\\hat{j} = -4.0\\,\\hat{i} + 4.0\\,\\hat{j};\\quad \\theta = 180^\\circ - \\arctan(4/4) = 135^\\circ - Exact Quadrant II angle determination.",
+          "interpret": "\\Delta\\vec{v} = (-4.0, 4.0)\\text{ m/s at } 135.0^\\circ. - The impulse required to stop horizontal motion and initiate vertical motion points up and back."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i [Definition of physical change vector.]",
+          "Step 2 (Represent the physical configuration): \\vec{v}_i = (4.0, 0.0),\\quad \\vec{v}_f = (0.0, 4.0) [Input state vectors in Cartesian coordinate representation.]",
+          "Step 3 (Connect governing physical laws): \\Delta\\vec{v} = (v_{fx} - v_{ix})\\,\\hat{i} + (v_{fy} - v_{iy})\\,\\hat{j} [Component-wise linear vector operation.]",
+          "Step 4 (Calculate & execute formal derivation): \\Delta\\vec{v} = (0.0 - 4.0)\\,\\hat{i} + (4.0 - 0.0)\\,\\hat{j} = -4.0\\,\\hat{i} + 4.0\\,\\hat{j};\\quad \\theta = 180^\\circ - \\arctan(4/4) = 135^\\circ [Exact Quadrant II angle determination.]",
+          "Step 5 (Interpret the physical outcome): \\Delta\\vec{v} = (-4.0, 4.0)\\text{ m/s at } 135.0^\\circ. [The impulse required to stop horizontal motion and initiate vertical motion points up and back.]"
+        ],
+        "final_expression": "\\Delta\\vec{v} = (0.0 - 4.0)\\,\\hat{i} + (4.0 - 0.0)\\,\\hat{j} = -4.0\\,\\hat{i} + 4.0\\,\\hat{j};\\quad \\theta = 180^\\circ - \\arctan(4/4) = 135^\\circ"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "Zero initial velocity (v_i = 0)",
+            "expected": "Delta v = v_f => (0, 4) - (0, 0) = (0, 4)"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-05.",
+        "check_it_another_way": "Check vector addition closure: v_i + Delta v = (4, 0) + (-4, 4) = (0, 4) = v_f. Matches final velocity vector identically.",
+        "watch_out": "Assuming change in velocity is zero when speed remains constant along a curved path.",
+        "review_this_idea": "Core 1: VEC-05 (Vector Subtraction & Change Vectors)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-011",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-06",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q11",
+        "tier": "GRADE-9"
+      },
+      "stem": "Two perpendicular horizontal forces act simultaneously on an object: $\\vec{F}_1 = 9.0\\text{ N}$ due East and $\\vec{F}_2 = 12.0\\text{ N}$ due South. What is the magnitude of the net force and its direction angle relative to the East axis?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 250\" width=\"100%\" height=\"250\">\n  <defs><marker id=\"arr7\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"60\" y1=\"50\" x2=\"220\" y2=\"50\" stroke=\"#16a34a\" stroke-width=\"3\" marker-end=\"url(#arr7)\"/>\n  <text x=\"140\" y=\"40\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#16a34a\">9.0 N East</text>\n  <line x1=\"60\" y1=\"50\" x2=\"60\" y2=\"210\" stroke=\"#dc2626\" stroke-width=\"3\" marker-end=\"url(#arr7)\"/>\n  <text x=\"75\" y=\"140\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#dc2626\">12.0 N South</text>\n  <line x1=\"60\" y1=\"50\" x2=\"220\" y2=\"210\" stroke=\"#2563eb\" stroke-width=\"3\" stroke-dasharray=\"6\" marker-end=\"url(#arr7)\"/>\n  <text x=\"150\" y=\"140\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\" font-weight=\"bold\">F_net = 15.0 N</text>\n  <path d=\"M 100 50 A 40 40 0 0 1 95 80\" fill=\"none\" stroke=\"#e11d48\" stroke-width=\"2\"/>\n  <text x=\"110\" y=\"75\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#e11d48\">θ</text>\n</svg>",
+        "caption": "Orthogonal Forces in Quadrant IV"
+      },
+      "options": {
+        "A": "Magnitude = $15.0\\text{ N},\\quad \\text{Direction} = 53.1^\\circ\\text{ South of East (or } -53.1^\\circ\\text{)}$",
+        "B": "Magnitude = $21.0\\text{ N},\\quad \\text{Direction} = 45.0^\\circ\\text{ South of East}$",
+        "C": "Magnitude = $15.0\\text{ N},\\quad \\text{Direction} = 36.9^\\circ\\text{ South of East}$",
+        "D": "Magnitude = $3.0\\text{ N},\\quad \\text{Direction} = \\text{South}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "subtopic_competency_ref": "VEC-06",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Synthesize orthogonal forces into single resultant vector and angle.",
+        "supporting_demands": [
+          "REPRESENT",
+          "MODEL"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $F_{\\text{net}} = \\sqrt{9.0^2 + 12.0^2} = \\sqrt{81 + 144} = 15.0\\text{ N}$. The angle below the East axis is $\\arctan(12.0 / 9.0) = \\arctan(4/3) \\approx 53.1^\\circ$ South of East."
+        },
+        "B": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Adds scalar magnitudes $9 + 12 = 21\\text{ N}$."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Computes $\\arctan(9/12) = 36.9^\\circ$, measuring angle from South instead of East."
+        },
+        "D": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Subtracts forces $12 - 9 = 3\\text{ N}$."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What theorem relates the resultant force of two perpendicular forces to their magnitudes?",
+          "reveal_text": "By the Pythagorean theorem: $F_{\\text{net}} = \\sqrt{F_{\\text{East}}^2 + F_{\\text{South}}^2}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How do you set up the coordinate system?",
+          "reveal_text": "Assign East as $+x$ and North as $+y$. South becomes $-y$. Thus $\\vec{F}_{\\text{net}} = 9.0\\hat{i} - 12.0\\hat{j}$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What trigonometric formula determines the angle relative to East?",
+          "reveal_text": "$\\tan\\theta = \\frac{|F_y|}{|F_x|} = \\frac{12.0}{9.0} = \\frac{4}{3} \\implies \\theta \\approx 53.1^\\circ$ South of East."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\vec{F}_{\\text{net}} = \\vec{F}_1 + \\vec{F}_2 - Vector superposition of concurrent forces acting on a body.",
+          "represent": "\\vec{F}_{\\text{net}} = 9.0\\,\\hat{i} - 12.0\\,\\hat{j}\\text{ N} - Cartesian representation in Quadrant IV.",
+          "connect": "F_{\\text{net}} = \\sqrt{F_x^2 + F_y^2},\\quad \\theta = \\arctan\\left(\\frac{|F_y|}{F_x}\\right) - Norm and azimuth definitions.",
+          "calculate": "F_{\\text{net}} = \\sqrt{9^2 + (-12)^2} = \\sqrt{81 + 144} = 15.0\\text{ N};\\quad \\theta = \\arctan(12/9) = 53.13^\\circ - Evaluation of integer Pythagorean triple (9, 12, 15).",
+          "interpret": "\\vec{F}_{\\text{net}} = 15.0\\text{ N at } 53.1^\\circ\\text{ South of East}. - Net acceleration will develop along this exact heading by Newton's second law."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\vec{F}_{\\text{net}} = \\vec{F}_1 + \\vec{F}_2 [Vector superposition of concurrent forces acting on a body.]",
+          "Step 2 (Represent the physical configuration): \\vec{F}_{\\text{net}} = 9.0\\,\\hat{i} - 12.0\\,\\hat{j}\\text{ N} [Cartesian representation in Quadrant IV.]",
+          "Step 3 (Connect governing physical laws): F_{\\text{net}} = \\sqrt{F_x^2 + F_y^2},\\quad \\theta = \\arctan\\left(\\frac{|F_y|}{F_x}\\right) [Norm and azimuth definitions.]",
+          "Step 4 (Calculate & execute formal derivation): F_{\\text{net}} = \\sqrt{9^2 + (-12)^2} = \\sqrt{81 + 144} = 15.0\\text{ N};\\quad \\theta = \\arctan(12/9) = 53.13^\\circ [Evaluation of integer Pythagorean triple (9, 12, 15).]",
+          "Step 5 (Interpret the physical outcome): \\vec{F}_{\\text{net}} = 15.0\\text{ N at } 53.1^\\circ\\text{ South of East}. [Net acceleration will develop along this exact heading by Newton's second law.]"
+        ],
+        "final_expression": "F_{\\text{net}} = \\sqrt{9^2 + (-12)^2} = \\sqrt{81 + 144} = 15.0\\text{ N};\\quad \\theta = \\arctan(12/9) = 53.13^\\circ"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[M][L][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "South force goes to 0 (F_y = 0)",
+            "expected": "F_net = 9 N East => sqrt(9^2 + 0) = 9 N"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-06.",
+        "check_it_another_way": "Decompose into polar coordinates: (15 cos(-53.13), 15 sin(-53.13)) = (9.0, -12.0). Exact match to original force components.",
+        "watch_out": "Accepting raw calculator arctan output without adjusting for quadrant.",
+        "review_this_idea": "Core 1: VEC-06 (Magnitude & Direction Angle Recovery)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-012",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-06",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q12",
+        "tier": "GRADE-9"
+      },
+      "stem": "A resultant vector is given in Cartesian form as $\\vec{R} = 12.0\\,\\hat{i} - 5.0\\,\\hat{j}\\text{ m}$. Which option correctly states its magnitude $|\u000bec{R}|$ and its standard polar angle $\\theta$ measured counterclockwise from the positive $x$-axis?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "$|\\vec{R}| = 13.0\\text{ m},\\quad \\theta = 337.4^\\circ\\text{ (or } -22.6^\\circ\\text{)}$",
+        "B": "$|\\vec{R}| = 17.0\\text{ m},\\quad \\theta = 337.4^\\circ$",
+        "C": "$|\\vec{R}| = 13.0\\text{ m},\\quad \\theta = 202.6^\\circ$",
+        "D": "$|\\vec{R}| = 13.0\\text{ m},\\quad \\theta = 112.6^\\circ$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D2",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D2",
+        "subtopic_competency_ref": "VEC-06",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Model Quadrant IV polar angle transformation and 5-12-13 integer metric.",
+        "supporting_demands": [
+          "REPRESENT",
+          "APPLY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $|\u000bec{R}| = \\sqrt{12^2 + (-5)^2} = \\sqrt{144 + 25} = 13.0\\text{ m}$. Since $x > 0$ and $y < 0$ (Quadrant IV), standard angle is $360^\\circ - \\arctan(5/12) \\approx 360^\\circ - 22.62^\\circ = 337.38^\\circ$."
+        },
+        "B": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Calculates magnitude as $12 + 5 = 17\\text{ m}$."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Places vector in Quadrant III ($180^\\circ + 22.6^\\circ = 202.6^\\circ$)."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Places vector in Quadrant II ($180^\\circ - 67.4^\\circ = 112.6^\\circ$)."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What is the formula for recovering the magnitude of a vector from its Cartesian components?",
+          "reveal_text": "$|\\vec{R}| = \\sqrt{R_x^2 + R_y^2} = \\sqrt{12.0^2 + (-5.0)^2} = \\sqrt{169.0} = 13.0\\text{ m}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "Which quadrant does $(+12.0, -5.0)$ lie in?",
+          "reveal_text": "Positive $x$ and negative $y$ places the vector in Quadrant IV."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "How do you calculate the standard counterclockwise angle for a Quadrant IV vector?",
+          "reveal_text": "The reference angle is $\\alpha = \\arctan(5.0/12.0) \\approx 22.6^\\circ$. The standard angle is $\\theta = 360.0^\\circ - 22.6^\\circ = 337.4^\\circ$ (or $-22.6^\\circ$)."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\vec{R} = R_x \\hat{i} + R_y \\hat{j},\\quad R_x = 12.0,\\quad R_y = -5.0 - Cartesian component representation in Quadrant IV.",
+          "represent": "|\\vec{R}| = \\sqrt{R_x^2 + R_y^2} - Euclidean vector metric.",
+          "connect": "|\\vec{R}| = \\sqrt{144.0 + 25.0} = \\sqrt{169.0} = 13.0\\text{ m} - Pythagorean 5-12-13 integer triple.",
+          "calculate": "\\alpha = \\arctan(5/12) = 22.62^\\circ \\implies \\theta = 360^\\circ - 22.62^\\circ = 337.38^\\circ - Standard counterclockwise azimuth from positive x-axis.",
+          "interpret": "|\\vec{R}| = 13.0\\text{ m},\\quad \\theta = 337.4^\\circ. - Full recovery of magnitude and directional orientation."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\vec{R} = R_x \\hat{i} + R_y \\hat{j},\\quad R_x = 12.0,\\quad R_y = -5.0 [Cartesian component representation in Quadrant IV.]",
+          "Step 2 (Represent the physical configuration): |\\vec{R}| = \\sqrt{R_x^2 + R_y^2} [Euclidean vector metric.]",
+          "Step 3 (Connect governing physical laws): |\\vec{R}| = \\sqrt{144.0 + 25.0} = \\sqrt{169.0} = 13.0\\text{ m} [Pythagorean 5-12-13 integer triple.]",
+          "Step 4 (Calculate & execute formal derivation): \\alpha = \\arctan(5/12) = 22.62^\\circ \\implies \\theta = 360^\\circ - 22.62^\\circ = 337.38^\\circ [Standard counterclockwise azimuth from positive x-axis.]",
+          "Step 5 (Interpret the physical outcome): |\\vec{R}| = 13.0\\text{ m},\\quad \\theta = 337.4^\\circ. [Full recovery of magnitude and directional orientation.]"
+        ],
+        "final_expression": "\\alpha = \\arctan(5/12) = 22.62^\\circ \\implies \\theta = 360^\\circ - 22.62^\\circ = 337.38^\\circ"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L]",
+        "limiting_cases": [
+          {
+            "condition": "Ry = 0 (Ry = 0)",
+            "expected": "|R| = 12 m, theta = 0 deg => sqrt(12^2 + 0) = 12, theta = 0"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-06.",
+        "check_it_another_way": "Check component projections: 13 cos(337.38 deg) = 12.0 m, 13 sin(337.38 deg) = -5.0 m. Reconstructs original components perfectly.",
+        "watch_out": "Accepting raw calculator arctan output without adjusting for quadrant.",
+        "review_this_idea": "Core 1: VEC-06 (Magnitude & Direction Angle Recovery)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-013",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-07",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q13",
+        "tier": "GRADE-9"
+      },
+      "stem": "Cyclist A travels due East at $8.0\\text{ m/s}$ along a straight bike lane. Cyclist B travels along the same lane due East at $5.0\\text{ m/s}$. What is the velocity of cyclist A relative to cyclist B ($\\vec{v}_{A/B}$)?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 420 160\" width=\"100%\" height=\"160\">\n  <defs><marker id=\"arr8\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"40\" y1=\"50\" x2=\"280\" y2=\"50\" stroke=\"#2563eb\" stroke-width=\"3\" marker-end=\"url(#arr8)\"/>\n  <text x=\"300\" y=\"55\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\">v_A = 8.0 m/s East</text>\n  <line x1=\"40\" y1=\"100\" x2=\"190\" y2=\"100\" stroke=\"#16a34a\" stroke-width=\"3\" marker-end=\"url(#arr8)\"/>\n  <text x=\"210\" y=\"105\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#16a34a\">v_B = 5.0 m/s East</text>\n  <line x1=\"190\" y1=\"130\" x2=\"280\" y2=\"130\" stroke=\"#dc2626\" stroke-width=\"3\" stroke-dasharray=\"4\" marker-end=\"url(#arr8)\"/>\n  <text x=\"290\" y=\"135\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#dc2626\" font-weight=\"bold\">v_A/B = +3.0 m/s East</text>\n</svg>",
+        "caption": "1D Collinear Relative Velocity Vectors"
+      },
+      "options": {
+        "A": "$\\vec{v}_{A/B} = +3.0\\text{ m/s}\\text{ due East}$",
+        "B": "$\\vec{v}_{A/B} = -3.0\\text{ m/s}\\text{ (or } 3.0\\text{ m/s due West)}$",
+        "C": "$\\vec{v}_{A/B} = +13.0\\text{ m/s}\\text{ due East}$",
+        "D": "$\\vec{v}_{A/B} = +40.0\\text{ m/s}\\text{ due East}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D3",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "VEC-07",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Apply Galilean relative frame transformation and observer subtraction principle.",
+        "supporting_demands": [
+          "MODEL",
+          "JUSTIFY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $\\vec{v}_{A/B} = \\vec{v}_A - \\vec{v}_B = (+8.0) - (+5.0) = +3.0\\text{ m/s}$ East. Observer B sees A pulling ahead eastward at 3.0 m/s."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Computes $\\vec{v}_{B/A} = \\vec{v}_B - \\vec{v}_A = 5 - 8 = -3\\text{ m/s}$, reversing observer and target."
+        },
+        "C": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Adds speeds $8 + 5 = 13\\text{ m/s}$ as if moving in opposite directions."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Multiplies velocities together ($8 \\times 5 = 40$)."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "Who is the observer, and what does transforming into that observer's reference frame require?",
+          "reveal_text": "Observer is cyclist B. Transforming into frame B brings B to rest by subtracting $\\vec{v}_B$ from all velocities: $\\vec{v}_{A/B} = \\vec{v}_A - \\vec{v}_B$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "What are the declared signs of $\\vec{v}_A$ and $\\vec{v}_B$ along the East axis?",
+          "reveal_text": "Both cyclists travel East, so $\\vec{v}_A = +8.0\\text{ m/s}$ and $\\vec{v}_B = +5.0\\text{ m/s}$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "Execute the subtraction $\\vec{v}_A - \\vec{v}_B$. What is the signed result?",
+          "reveal_text": "$\\vec{v}_{A/B} = (+8.0\\text{ m/s}) - (+5.0\\text{ m/s}) = +3.0\\text{ m/s}$. The positive sign denotes motion directed East."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\text{Galilean relative velocity in 1D inertial frame.} - Non-relativistic relative velocity rule applies.",
+          "represent": "v_A = +8.0\\,\\hat{i}\\text{ m/s},\\quad v_B = +5.0\\,\\hat{i}\\text{ m/s} - Collinear vectors aligned with East axis.",
+          "connect": "\\vec{v}_{A/B} = \\vec{v}_A - \\vec{v}_B - Relative velocity formula for object A relative to observer B.",
+          "calculate": "\\vec{v}_{A/B} = (8.0 - 5.0)\\,\\hat{i} = +3.0\\,\\hat{i}\\text{ m/s} - Direct component evaluation.",
+          "interpret": "\\vec{v}_{A/B} = 3.0\\text{ m/s East}. - B observes A pulling away at 3.0 m/s in the forward direction."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\text{Galilean relative velocity in 1D inertial frame.} [Non-relativistic relative velocity rule applies.]",
+          "Step 2 (Represent the physical configuration): v_A = +8.0\\,\\hat{i}\\text{ m/s},\\quad v_B = +5.0\\,\\hat{i}\\text{ m/s} [Collinear vectors aligned with East axis.]",
+          "Step 3 (Connect governing physical laws): \\vec{v}_{A/B} = \\vec{v}_A - \\vec{v}_B [Relative velocity formula for object A relative to observer B.]",
+          "Step 4 (Calculate & execute formal derivation): \\vec{v}_{A/B} = (8.0 - 5.0)\\,\\hat{i} = +3.0\\,\\hat{i}\\text{ m/s} [Direct component evaluation.]",
+          "Step 5 (Interpret the physical outcome): \\vec{v}_{A/B} = 3.0\\text{ m/s East}. [B observes A pulling away at 3.0 m/s in the forward direction.]"
+        ],
+        "final_expression": "\\vec{v}_{A/B} = (8.0 - 5.0)\\,\\hat{i} = +3.0\\,\\hat{i}\\text{ m/s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "Equal velocities (v_A = v_B)",
+            "expected": "v_{A/B} = 0 (relative rest) => 8.0 - 8.0 = 0"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-07.",
+        "check_it_another_way": "Check Galilean addition: v_A = v_B + v_{A/B} = 5.0 + 3.0 = 8.0 m/s. Recovers ground velocity of A perfectly.",
+        "watch_out": "Reversing subtraction order or adding frame velocity instead of subtracting it.",
+        "review_this_idea": "Core 1: VEC-07 (Relative Velocity in 1D & 2D Frames)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-014",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-07",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q14",
+        "tier": "GRADE-9"
+      },
+      "stem": "Train A travels East at $20.0\\text{ m/s}$ along a straight railway. Train B travels West at $15.0\\text{ m/s}$ on an adjacent parallel track. Taking East as the positive direction, what is the relative velocity of train A with respect to a passenger seated inside train B, and what is its physical interpretation?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "$\\vec{v}_{A/B} = +35.0\\text{ m/s}\\text{ (Train A appears to rush past Eastward at } 35.0\\text{ m/s)}$",
+        "B": "$\\vec{v}_{A/B} = +5.0\\text{ m/s}\\text{ East}$",
+        "C": "$\\vec{v}_{A/B} = -35.0\\text{ m/s}\\text{ West}$",
+        "D": "$\\vec{v}_{A/B} = 0\\text{ m/s}\\text{ because both are on parallel tracks}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D3",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "VEC-07",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Model signed observer subtraction for antiparallel motion regimes.",
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. With East as $+x$, $\\vec{v}_A = +20.0\\text{ m/s}$ and $\\vec{v}_B = -15.0\\text{ m/s}$. The relative velocity is $\\vec{v}_{A/B} = \\vec{v}_A - \\vec{v}_B = (+20.0) - (-15.0) = +35.0\\text{ m/s}$ East."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Subtracts speeds directly without respecting the opposite direction: $20 - 15 = 5\\text{ m/s}$."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Computes relative velocity of B with respect to A: $-15 - 20 = -35\\text{ m/s}$."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumes parallel tracks eliminate relative motion."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What are the signed algebraic representations of both train velocities?",
+          "reveal_text": "With East as positive: $\\vec{v}_A = +20.0\\,\\hat{i}\\text{ m/s}$ and $\\vec{v}_B = -15.0\\,\\hat{i}\\text{ m/s}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How does vector subtraction handle a negative subtrahend?",
+          "reveal_text": "Subtracting a negative quantity is equivalent to adding its absolute magnitude: $(+20.0) - (-15.0) = 20.0 + 15.0$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What does a passenger looking out the window of train B physically see?",
+          "reveal_text": "Because train B is moving West, train A appears to rush past eastward at the combined closing speed of $35.0\\text{ m/s}$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\text{1D relative velocity with counter-propagating bodies.} - Galilean kinematic observer transformation.",
+          "represent": "v_A = +20.0\\,\\hat{i}\\text{ m/s},\\quad v_B = -15.0\\,\\hat{i}\\text{ m/s} - Strict adherence to declared coordinate axis.",
+          "connect": "\\vec{v}_{A/B} = \\vec{v}_A - \\vec{v}_B - Definition of relative velocity.",
+          "calculate": "\\vec{v}_{A/B} = (+20.0\\,\\hat{i}) - (-15.0\\,\\hat{i}) = (20.0 + 15.0)\\,\\hat{i} = +35.0\\,\\hat{i}\\text{ m/s} - Double negative arithmetic simplification.",
+          "interpret": "\\vec{v}_{A/B} = +35.0\\text{ m/s East}. - Approaching trains experience closing speed equal to sum of their individual ground speeds."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\text{1D relative velocity with counter-propagating bodies.} [Galilean kinematic observer transformation.]",
+          "Step 2 (Represent the physical configuration): v_A = +20.0\\,\\hat{i}\\text{ m/s},\\quad v_B = -15.0\\,\\hat{i}\\text{ m/s} [Strict adherence to declared coordinate axis.]",
+          "Step 3 (Connect governing physical laws): \\vec{v}_{A/B} = \\vec{v}_A - \\vec{v}_B [Definition of relative velocity.]",
+          "Step 4 (Calculate & execute formal derivation): \\vec{v}_{A/B} = (+20.0\\,\\hat{i}) - (-15.0\\,\\hat{i}) = (20.0 + 15.0)\\,\\hat{i} = +35.0\\,\\hat{i}\\text{ m/s} [Double negative arithmetic simplification.]",
+          "Step 5 (Interpret the physical outcome): \\vec{v}_{A/B} = +35.0\\text{ m/s East}. [Approaching trains experience closing speed equal to sum of their individual ground speeds.]"
+        ],
+        "final_expression": "\\vec{v}_{A/B} = (+20.0\\,\\hat{i}) - (-15.0\\,\\hat{i}) = (20.0 + 15.0)\\,\\hat{i} = +35.0\\,\\hat{i}\\text{ m/s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "Train B at rest (v_B = 0)",
+            "expected": "v_{A/B} = v_A = 20 m/s East => 20 - 0 = 20"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-07.",
+        "check_it_another_way": "Closing rate: d(separation)/dt = -(v_A + |v_B|) = -35 m/s. Separation shrinks at 35 m/s, confirming relative velocity magnitude.",
+        "watch_out": "Reversing subtraction order or adding frame velocity instead of subtracting it.",
+        "review_this_idea": "Core 1: VEC-07 (Relative Velocity in 1D & 2D Frames)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-015",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-08",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q15",
+        "tier": "GRADE-9"
+      },
+      "stem": "A motorcycle travels counterclockwise around a circular track at a constant speed of $20.0\\text{ m/s}$. At the instant the motorcycle is located at the easternmost point of the circle (3 o'clock position), what are the spatial directions of its velocity vector $\\vec{v}$ and its acceleration vector $\\vec{a}$?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 280\" width=\"100%\" height=\"280\">\n  <defs><marker id=\"arr9\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <circle cx=\"140\" cy=\"140\" r=\"90\" fill=\"none\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-dasharray=\"4\"/>\n  <circle cx=\"140\" cy=\"140\" r=\"4\" fill=\"#0f172a\"/>\n  <text x=\"140\" y=\"165\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#0f172a\">Centre</text>\n  <circle cx=\"230\" cy=\"140\" r=\"6\" fill=\"#e11d48\"/>\n  <line x1=\"230\" y1=\"140\" x2=\"230\" y2=\"40\" stroke=\"#16a34a\" stroke-width=\"3\" marker-end=\"url(#arr9)\"/>\n  <text x=\"240\" y=\"80\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#16a34a\" font-weight=\"bold\">v (North)</text>\n  <line x1=\"230\" y1=\"140\" x2=\"160\" y2=\"140\" stroke=\"#2563eb\" stroke-width=\"3\" marker-end=\"url(#arr9)\"/>\n  <text x=\"180\" y=\"130\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\" font-weight=\"bold\">a (West)</text>\n</svg>",
+        "caption": "Orthogonality of Tangential Velocity and Centripetal Acceleration"
+      },
+      "options": {
+        "A": "Velocity points due North (tangential); Acceleration points due West (radial, toward the center).",
+        "B": "Velocity points due East; Acceleration points due North.",
+        "C": "Velocity points due North; Acceleration is zero because speed is constant.",
+        "D": "Velocity points due North; Acceleration points due East (radially outward)."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D3",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "VEC-08",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Decompose curvilinear acceleration into vanishing tangential and inward centripetal vectors.",
+        "supporting_demands": [
+          "MODEL",
+          "JUSTIFY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. In counterclockwise motion, tangent at the rightmost (Eastern) point points North. Since speed is constant, tangential acceleration is zero, and net acceleration is purely centripetal (directed radially inward toward the center, which is West)."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Confuses radial position vector (East) with velocity vector."
+        },
+        "C": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Believes constant speed implies zero acceleration, ignoring continuous change in velocity direction."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Directs acceleration outward away from the center instead of centripetally inward."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "In what direction does the tangent point at the 3 o'clock position of a circle traversed counterclockwise?",
+          "reveal_text": "Moving counterclockwise from 3 o'clock goes upward on the page, which corresponds to due North."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "If the speed is constant, what component of acceleration exists?",
+          "reveal_text": "Because speed is constant, tangential acceleration $a_t = \\frac{dv}{dt} = 0$. Only centripetal (normal) acceleration $a_n = \\frac{v^2}{R}$ exists."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "Where does the center of the circle lie relative to the easternmost point?",
+          "reveal_text": "The center lies to the left of the easternmost point, which is due West. Centripetal acceleration always points directly toward the center."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\text{Uniform Circular Motion (UCM) in planar kinematics.} - Constant speed on circular trajectory.",
+          "represent": "\\vec{r} = R\\,\\hat{i} \\implies \\hat{u}_t = \\hat{j}\\text{ (North)},\\quad \\hat{u}_r = -\\hat{i}\\text{ (West, inward)} - Frenet-Serret intrinsic basis on circular curve at 3 o'clock.",
+          "connect": "\\vec{v} = v\\,\\hat{u}_t,\\quad \\vec{a} = \\frac{dv}{dt}\\,\\hat{u}_t + \\frac{v^2}{R}\\,(-\\hat{r}) - Acceleration decomposition in curvilinear coordinates.",
+          "calculate": "\\frac{dv}{dt} = 0 \\implies \\vec{a} = \\frac{v^2}{R}\\,(-\\hat{i}) = a_c\\text{ (West)} - Tangential acceleration vanishes identically at constant speed.",
+          "interpret": "\\vec{v} \\perp \\vec{a}\\text{ everywhere in UCM: } \\vec{v} \\text{ is North, } \\vec{a} \\text{ is West.} - Confirms perpendicularity of velocity and acceleration during uniform circular motion."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\text{Uniform Circular Motion (UCM) in planar kinematics.} [Constant speed on circular trajectory.]",
+          "Step 2 (Represent the physical configuration): \\vec{r} = R\\,\\hat{i} \\implies \\hat{u}_t = \\hat{j}\\text{ (North)},\\quad \\hat{u}_r = -\\hat{i}\\text{ (West, inward)} [Frenet-Serret intrinsic basis on circular curve at 3 o'clock.]",
+          "Step 3 (Connect governing physical laws): \\vec{v} = v\\,\\hat{u}_t,\\quad \\vec{a} = \\frac{dv}{dt}\\,\\hat{u}_t + \\frac{v^2}{R}\\,(-\\hat{r}) [Acceleration decomposition in curvilinear coordinates.]",
+          "Step 4 (Calculate & execute formal derivation): \\frac{dv}{dt} = 0 \\implies \\vec{a} = \\frac{v^2}{R}\\,(-\\hat{i}) = a_c\\text{ (West)} [Tangential acceleration vanishes identically at constant speed.]",
+          "Step 5 (Interpret the physical outcome): \\vec{v} \\perp \\vec{a}\\text{ everywhere in UCM: } \\vec{v} \\text{ is North, } \\vec{a} \\text{ is West.} [Confirms perpendicularity of velocity and acceleration during uniform circular motion.]"
+        ],
+        "final_expression": "\\frac{dv}{dt} = 0 \\implies \\vec{a} = \\frac{v^2}{R}\\,(-\\hat{i}) = a_c\\text{ (West)}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "Radius goes to infinity (R -> infty)",
+            "expected": "Straight line motion, a -> 0 => v^2 / infty = 0"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-08.",
+        "check_it_another_way": "Evaluate r(t) = (R cos wt, R sin wt); at wt = 0: v(t) = (0, R w) = North; a(t) = (-R w^2, 0) = West. Direct Cartesian parametric derivative confirms North and West directions.",
+        "watch_out": "Drawing release or instantaneous velocity radially outward due to centrifugal fallacy.",
+        "review_this_idea": "Core 1: VEC-08 (Radial & Tangential Decomposition in Curvilinear Paths)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-016",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-08",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q16",
+        "tier": "GRADE-9"
+      },
+      "stem": "A stone whirled on a string moves clockwise in a horizontal circle. At the instant the stone reaches the northernmost point of the circle (12 o'clock position), the string suddenly snaps. Under Newton's first law of motion, in what direction does the stone travel immediately after the break (neglecting air resistance)?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "Tangentially due East, along its instantaneous velocity vector at the release instant.",
+        "B": "Radially outward due North, pushed by centrifugal force.",
+        "C": "In a spiraling curved arc outward that gradually straightens out.",
+        "D": "Radially inward toward the center of the circle before falling."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D3",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "VEC-08",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Justify inertial tangent trajectory upon cessation of centripetal tension constraint.",
+        "supporting_demands": [
+          "MODEL",
+          "EXPLAIN"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. At 12 o'clock in clockwise rotation, instantaneous velocity is tangent to the circle pointing East. When the string breaks, tension vanishes ($F_{\\text{net}} = 0$ horizontally), so by Newton's first law the stone continues rectilinearly along its tangent velocity vector (East)."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Believes a real outward force flings the body radially away from the center."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Believes an object retains a 'memory of curvature' after forces vanish, contradicting Newton I."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Suggests stone moves toward the center with no centripetal force."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "At the instant before the string snaps, what is the direction of the stone's velocity vector at the 12 o'clock position of a clockwise circle?",
+          "reveal_text": "Moving clockwise, at the top of the circle the path is directed toward the right, which corresponds to due East."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "What horizontal forces act on the stone immediately after the string breaks?",
+          "reveal_text": "None. The only force providing circular motion was the inward tension of the string. Once snapped, the horizontal net force is strictly zero: $\\vec{F}_{\\text{net}} = \\vec{0}$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "How does an object move when the net force acting on it is zero?",
+          "reveal_text": "According to Newton's First Law, an object in motion continues in uniform straight-line motion at constant velocity: $\\vec{v}(t) = \\vec{v}_0 = \\text{East} = \\text{const}$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\text{Transition from circular constrained motion to unconstrained inertial motion.} - Vanishing centripetal constraint force.",
+          "represent": "\\vec{v}(t_0) = v_0\\,\\hat{i}\\text{ (East)},\\quad \\vec{F}_{\\text{net}}(t > t_0) = \\vec{0}\\text{ (horizontal plane)} - Instantaneous state vector at string breakage.",
+          "connect": "\\vec{F}_{\\text{net}} = m\\frac{d\\vec{v}}{dt} = \\vec{0} \\implies \\frac{d\\vec{v}}{dt} = \\vec{0} \\implies \\vec{v}(t) = \\vec{v}(t_0) - Newton's First Law of Motion (Inertia).",
+          "calculate": "\\vec{r}(t) = \\vec{r}(t_0) + \\vec{v}(t_0)(t - t_0) = \\vec{r}_0 + v_0(t - t_0)\\,\\hat{i} - Integration of constant velocity equation.",
+          "interpret": "\\text{The stone moves in a rectilinear tangent line due East.} - Debunks the centrifugal force misconception and curved inertia myth."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\text{Transition from circular constrained motion to unconstrained inertial motion.} [Vanishing centripetal constraint force.]",
+          "Step 2 (Represent the physical configuration): \\vec{v}(t_0) = v_0\\,\\hat{i}\\text{ (East)},\\quad \\vec{F}_{\\text{net}}(t > t_0) = \\vec{0}\\text{ (horizontal plane)} [Instantaneous state vector at string breakage.]",
+          "Step 3 (Connect governing physical laws): \\vec{F}_{\\text{net}} = m\\frac{d\\vec{v}}{dt} = \\vec{0} \\implies \\frac{d\\vec{v}}{dt} = \\vec{0} \\implies \\vec{v}(t) = \\vec{v}(t_0) [Newton's First Law of Motion (Inertia).]",
+          "Step 4 (Calculate & execute formal derivation): \\vec{r}(t) = \\vec{r}(t_0) + \\vec{v}(t_0)(t - t_0) = \\vec{r}_0 + v_0(t - t_0)\\,\\hat{i} [Integration of constant velocity equation.]",
+          "Step 5 (Interpret the physical outcome): \\text{The stone moves in a rectilinear tangent line due East.} [Debunks the centrifugal force misconception and curved inertia myth.]"
+        ],
+        "final_expression": "\\vec{r}(t) = \\vec{r}(t_0) + \\vec{v}(t_0)(t - t_0) = \\vec{r}_0 + v_0(t - t_0)\\,\\hat{i}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L]",
+        "limiting_cases": [
+          {
+            "condition": "Tension unbroken (T > 0)",
+            "expected": "Circular path continues => a = v^2/R inward"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-08.",
+        "check_it_another_way": "Analyze instantaneous momentum vector: p = m v_0 i_hat; since impulse J = 0, p remains constant. Direct conservation of linear momentum confirms straight-line eastward travel.",
+        "watch_out": "Drawing release or instantaneous velocity radially outward due to centrifugal fallacy.",
+        "review_this_idea": "Core 1: VEC-08 (Radial & Tangential Decomposition in Curvilinear Paths)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-017",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-09",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q17",
+        "tier": "GRADE-9"
+      },
+      "stem": "A textbook rests motionless on a horizontal wooden table. Two vertical forces act: the Earth's downward gravity on the book $\\vec{F}_{g}$ and the upward normal contact force of the table on the book $\\vec{N}$. Why do $\\vec{F}_{g}$ and $\\vec{N}$ NOT constitute a Newton's third law action-reaction pair?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "They act on the same body (the book) and originate from different physical interactions (gravitational vs electromagnetic contact).",
+        "B": "Their magnitudes are not strictly equal if the table surface has friction.",
+        "C": "Action-reaction pairs only apply to moving objects, whereas the book is in static equilibrium.",
+        "D": "The normal force is a reactive fictitious force that does not obey vector algebra."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-EXPLAIN-D3",
+        "primary_demand": "EXPLAIN",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "VEC-09",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Differentiate equilibrium resultant balance from mutual Newton-III dual-body interaction.",
+        "supporting_demands": [
+          "RETRIEVE",
+          "JUSTIFY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. Newton's Third Law requires interaction pairs to act on two different mutually interacting bodies ($\u000bec{F}_{A\\text{ on }B} = -\\vec{F}_{B\\text{ on }A}$) and arise from the same fundamental interaction. $\u000bec{F}_g$ and $\u000bec{N}$ both act on the book; their equality $\u000bec{N} + \u000bec{F}_g = \u000bec{0}$ is a Newton's First Law equilibrium consequence, not an action-reaction identity."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Friction is horizontal and irrelevant to vertical equilibrium on a level table."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Falsely restricts Newton's third law to dynamic systems."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Labels normal force as fictitious, confusing macroscopic contact repulsion with non-inertial pseudo forces."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What is the single most critical structural criterion of a Newton-III interaction pair?",
+          "reveal_text": "A Newton's third law pair must act on two *different* bodies: $\\vec{F}_{12} = -\\vec{F}_{21}$ (body 1 on body 2, and body 2 on body 1)."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "On what object does the upward normal force act, and on what object does Earth's gravity act in this problem?",
+          "reveal_text": "Both forces act directly on the same single object: the textbook."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What is the actual Newton-III reaction partner to the table's upward normal push on the book?",
+          "reveal_text": "The reaction partner is the downward contact force exerted by the book on the table ($\u000bec{N}_{\\text{book on table}}$)."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\text{Static equilibrium of a single body vs mutual interaction between two bodies.} - Distinguishing Newton I from Newton III.",
+          "represent": "\\text{On book: } \\sum \\vec{F} = \\vec{N}_{\\text{table on book}} + \\vec{F}_{g,\\text{Earth on book}} = \\vec{0} - Newton's First Law condition for zero acceleration.",
+          "connect": "\\vec{F}_{A\\text{ on }B} = -\\vec{F}_{B\\text{ on }A} - Newton's Third Law axiom.",
+          "calculate": "\\vec{N}_{\\text{table on book}} = -\\vec{N}_{\\text{book on table}};\\quad \\vec{F}_{g,\\text{Earth on book}} = -\\vec{F}_{g,\\text{book on Earth}} - Identification of true third-law reaction partners.",
+          "interpret": "\\vec{N} \\text{ and } \\vec{F}_g \\text{ act on the same body, so they cannot form a Newton-III pair.} - Resolves classical textbook physics misconception."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\text{Static equilibrium of a single body vs mutual interaction between two bodies.} [Distinguishing Newton I from Newton III.]",
+          "Step 2 (Represent the physical configuration): \\text{On book: } \\sum \\vec{F} = \\vec{N}_{\\text{table on book}} + \\vec{F}_{g,\\text{Earth on book}} = \\vec{0} [Newton's First Law condition for zero acceleration.]",
+          "Step 3 (Connect governing physical laws): \\vec{F}_{A\\text{ on }B} = -\\vec{F}_{B\\text{ on }A} [Newton's Third Law axiom.]",
+          "Step 4 (Calculate & execute formal derivation): \\vec{N}_{\\text{table on book}} = -\\vec{N}_{\\text{book on table}};\\quad \\vec{F}_{g,\\text{Earth on book}} = -\\vec{F}_{g,\\text{book on Earth}} [Identification of true third-law reaction partners.]",
+          "Step 5 (Interpret the physical outcome): \\vec{N} \\text{ and } \\vec{F}_g \\text{ act on the same body, so they cannot form a Newton-III pair.} [Resolves classical textbook physics misconception.]"
+        ],
+        "final_expression": "\\vec{N}_{\\text{table on book}} = -\\vec{N}_{\\text{book on table}};\\quad \\vec{F}_{g,\\text{Earth on book}} = -\\vec{F}_{g,\\text{book on Earth}}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[M][L][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "Elevator accelerating upward (a > 0)",
+            "expected": "N > F_g, showing they are not inherently tied by Newton III => N - mg = ma"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-09.",
+        "check_it_another_way": "Place system in accelerating frame: N changes but F_g remains mg, proving they do not form an immutable action-reaction pair. N != F_g in accelerating elevator confirms lack of Newton-III bond.",
+        "watch_out": "Conflating incline angle theta with complement, swapping sine and cosine components.",
+        "review_this_idea": "Core 1: VEC-09 (Component Ownership & Inclined Plane Decomposition)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-018",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-09",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q18",
+        "tier": "GRADE-9"
+      },
+      "stem": "A block of mass $m$ rests on a frictionless plane inclined at an angle $\\theta$ above the horizontal. By rotating the Cartesian coordinate axes such that the $x$-axis lies parallel down the incline and the $y$-axis lies perpendicular outward from the incline, what are the components of the downward gravitational force vector $\\vec{F}_g$ in this rotated frame?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 260\" width=\"100%\" height=\"260\">\n  <defs><marker id=\"arr10\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <polygon points=\"40,220 320,220 320,80\" fill=\"#f1f5f9\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <rect x=\"160\" y=\"125\" width=\"45\" height=\"35\" rx=\"3\" fill=\"#cbd5e1\" stroke=\"#475569\" stroke-width=\"2\" transform=\"rotate(-26.5 182 142)\"/>\n  <line x1=\"182\" y1=\"142\" x2=\"182\" y2=\"240\" stroke=\"#0f172a\" stroke-width=\"3\" marker-end=\"url(#arr10)\"/>\n  <text x=\"190\" y=\"210\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#0f172a\" font-weight=\"bold\">mg</text>\n  <line x1=\"182\" y1=\"142\" x2=\"230\" y2=\"166\" stroke=\"#2563eb\" stroke-width=\"3\" marker-end=\"url(#arr10)\"/>\n  <text x=\"235\" y=\"160\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\">mg sin θ</text>\n  <line x1=\"182\" y1=\"142\" x2=\"155\" y2=\"196\" stroke=\"#dc2626\" stroke-width=\"3\" marker-end=\"url(#arr10)\"/>\n  <text x=\"90\" y=\"195\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#dc2626\">mg cos θ</text>\n  <path d=\"M 90 220 A 50 50 0 0 0 85 198\" fill=\"none\" stroke=\"#e11d48\" stroke-width=\"2\"/>\n  <text x=\"100\" y=\"212\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#e11d48\">θ</text>\n</svg>",
+        "caption": "Rotated Incline Coordinate System: Axis Ownership"
+      },
+      "options": {
+        "A": "$F_{gx} = +mg \\sin\\theta\\text{ (down incline)},\\quad F_{gy} = -mg \\cos\\theta\\text{ (into surface)}$",
+        "B": "$F_{gx} = +mg \\cos\\theta\\text{ (down incline)},\\quad F_{gy} = -mg \\sin\\theta\\text{ (into surface)}$",
+        "C": "$F_{gx} = +mg \\tan\\theta,\\quad F_{gy} = -mg$",
+        "D": "$F_{gx} = -mg \\sin\\theta,\\quad F_{gy} = +mg \\cos\\theta$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D3",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "VEC-09",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Rotate Cartesian basis and project gravitational force onto inclined constraint axes.",
+        "supporting_demands": [
+          "REPRESENT",
+          "JUSTIFY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. Gravity acts vertically downward. The angle between the vertical and the inward normal to the incline is $\\theta$. Thus, the normal component is $mg \\cos\\theta$ pointing into the surface ($-y$), and the component parallel down the incline is $mg \\sin\\theta$ ($+x$)."
+        },
+        "B": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Swaps sine and cosine, confusing the angle referenced to the normal with angle to incline."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Uses tangent ratio instead of orthogonal projection of hypotenuse $mg$."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Inverts signs, suggesting gravity accelerates the block up the ramp."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "In standard horizontal/vertical axes, what direction does gravity point?",
+          "reveal_text": "Gravity points strictly vertically downward: $\\vec{F}_g = -mg\\,\\hat{j}_{\\text{global}}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "When the surface is tilted by angle $\\theta$, what is the angle between the downward vertical and the line perpendicular into the surface?",
+          "reveal_text": "By simple geometry of similar right triangles, the angle between the vertical and the perpendicular to the incline is exactly $\\theta$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "How does the hypotenuse $mg$ project onto the adjacent (normal) and opposite (parallel) incline axes?",
+          "reveal_text": "The adjacent leg along the normal is $mg \\cos\\theta$ (into the incline). The opposite leg parallel down the plane is $mg \\sin\\theta$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\text{Coordinate frame rotation to match physical constraint of the inclined plane.} - Aligning axes with the incline decouples normal constraint from downhill acceleration.",
+          "represent": "\\hat{u}_{\\parallel} = \\cos\\theta\\,\\hat{i} - \\sin\\theta\\,\\hat{j},\\quad \\hat{u}_{\\perp} = \\sin\\theta\\,\\hat{i} + \\cos\\theta\\,\\hat{j} - Unit basis rotation by angle -theta.",
+          "connect": "\\vec{F}_g = -mg\\,\\hat{j} = (\\vec{F}_g \\cdot \\hat{u}_{\\parallel})\\,\\hat{u}_{\\parallel} + (\\vec{F}_g \\cdot \\hat{u}_{\\perp})\\,\\hat{u}_{\\perp} - Orthogonal basis projection theorem.",
+          "calculate": "F_{gx} = -mg(-\\sin\\theta) = +mg\\sin\\theta;\\quad F_{gy} = -mg(\\cos\\theta) = -mg\\cos\\theta - Direct evaluation of scalar dot products with basis vectors.",
+          "interpret": "F_{gx} = mg\\sin\\theta\\text{ drives downhill acceleration; } F_{gy} = -mg\\cos\\theta\\text{ presses block into ramp.} - Matches physical reality of sliding downhill and pressing into surface."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\text{Coordinate frame rotation to match physical constraint of the inclined plane.} [Aligning axes with the incline decouples normal constraint from downhill acceleration.]",
+          "Step 2 (Represent the physical configuration): \\hat{u}_{\\parallel} = \\cos\\theta\\,\\hat{i} - \\sin\\theta\\,\\hat{j},\\quad \\hat{u}_{\\perp} = \\sin\\theta\\,\\hat{i} + \\cos\\theta\\,\\hat{j} [Unit basis rotation by angle -theta.]",
+          "Step 3 (Connect governing physical laws): \\vec{F}_g = -mg\\,\\hat{j} = (\\vec{F}_g \\cdot \\hat{u}_{\\parallel})\\,\\hat{u}_{\\parallel} + (\\vec{F}_g \\cdot \\hat{u}_{\\perp})\\,\\hat{u}_{\\perp} [Orthogonal basis projection theorem.]",
+          "Step 4 (Calculate & execute formal derivation): F_{gx} = -mg(-\\sin\\theta) = +mg\\sin\\theta;\\quad F_{gy} = -mg(\\cos\\theta) = -mg\\cos\\theta [Direct evaluation of scalar dot products with basis vectors.]",
+          "Step 5 (Interpret the physical outcome): F_{gx} = mg\\sin\\theta\\text{ drives downhill acceleration; } F_{gy} = -mg\\cos\\theta\\text{ presses block into ramp.} [Matches physical reality of sliding downhill and pressing into surface.]"
+        ],
+        "final_expression": "F_{gx} = -mg(-\\sin\\theta) = +mg\\sin\\theta;\\quad F_{gy} = -mg(\\cos\\theta) = -mg\\cos\\theta"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[M][L][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "Incline angle theta = 0 (Flat table) (theta = 0)",
+            "expected": "F_gx = 0, F_gy = -mg (pure downward) => mg sin(0) = 0, -mg cos(0) = -mg"
+          },
+          {
+            "condition": "Incline angle theta = 90 deg (Vertical cliff) (theta = 90 deg)",
+            "expected": "F_gx = mg, F_gy = 0 (pure free fall) => mg sin(90) = mg, -mg cos(90) = 0"
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-09.",
+        "check_it_another_way": "Pythagorean norm sum of squares: (mg sin theta)^2 + (-mg cos theta)^2 = (mg)^2 (sin^2 theta + cos^2 theta) = (mg)^2. Recovers exact original gravity magnitude mg regardless of theta.",
+        "watch_out": "Conflating incline angle theta with complement, swapping sine and cosine components.",
+        "review_this_idea": "Core 1: VEC-09 (Component Ownership & Inclined Plane Decomposition)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-019",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-10",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q19",
+        "tier": "GRADE-9"
+      },
+      "stem": "A braking mechanism applies a constant resisting force of $200.0\\text{ N}$ directed exactly opposite to the $15.0\\text{ m}$ forward rectilinear displacement of a test cart. Using the scalar dot product definition of mechanical work $W = \\vec{F} \\cdot \\vec{s}$, what is the work performed by this braking force?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 420 150\" width=\"100%\" height=\"150\">\n  <defs><marker id=\"arr11\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"140\" y1=\"60\" x2=\"340\" y2=\"60\" stroke=\"#16a34a\" stroke-width=\"3\" marker-end=\"url(#arr11)\"/>\n  <text x=\"240\" y=\"50\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#16a34a\">Displacement s = 15.0 m (+x)</text>\n  <line x1=\"140\" y1=\"100\" x2=\"30\" y2=\"100\" stroke=\"#dc2626\" stroke-width=\"3\" marker-end=\"url(#arr11)\"/>\n  <text x=\"40\" y=\"125\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#dc2626\">Braking Force F = 200.0 N (-x)</text>\n  <path d=\"M 170 60 A 30 30 0 0 1 110 100\" fill=\"none\" stroke=\"#e11d48\" stroke-width=\"2\"/>\n  <text x=\"145\" y=\"85\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#e11d48\">θ = 180°</text>\n</svg>",
+        "caption": "Antiparallel Vectors and Negative Scalar Work"
+      },
+      "options": {
+        "A": "$W = -3000.0\\text{ J}$",
+        "B": "$W = +3000.0\\text{ J}$",
+        "C": "$W = 0.0\\text{ J}$ because force and displacement cancel out.",
+        "D": "$W = -13.3\\text{ J}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D3",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "VEC-10",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Apply scalar dot product to antiparallel vector configuration and deduce energy dissipation.",
+        "supporting_demands": [
+          "MODEL",
+          "JUSTIFY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $W = |\\vec{F}||\\vec{s}|\\cos\\theta = 200.0 \\times 15.0 \\times \\cos(180^\\circ) = 3000.0 \\times (-1) = -3000.0\\text{ J}$. Negative work removes kinetic energy from the cart."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Ignores directional cosine $\\cos(180^\\circ) = -1$, yielding positive work."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Confuses scalar energy transfer with vector sum equilibrium."
+        },
+        "D": {
+          "type": "INCORRECT_FORCE_RATIO",
+          "diagnostic": "Divides force by displacement ($200 / 15$)."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What is the angle $\\theta$ between two vectors that point in exactly opposite directions?",
+          "reveal_text": "Two antiparallel vectors point in opposite directions along the same line, so the angle between them is $\\theta = 180.0^\\circ$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "What is the trigonometric value of $\\cos(180.0^\\circ)$?",
+          "reveal_text": "$\\cos(180.0^\\circ) = -1.0$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "Substitute the values into $W = |\\vec{F}||\\vec{s}|\\cos\\theta$. What is the computed work?",
+          "reveal_text": "$W = (200.0\\text{ N}) \\times (15.0\\text{ m}) \\times (-1.0) = -3000.0\\text{ J}$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "W = \\vec{F} \\cdot \\vec{s} = |\\vec{F}||\\vec{s}|\\cos\\theta - Definition of mechanical work via scalar dot product.",
+          "represent": "\\vec{F} = -200.0\\,\\hat{i}\\text{ N},\\quad \\vec{s} = +15.0\\,\\hat{i}\\text{ m},\\quad \\theta = 180^\\circ - Antiparallel collinear vectors.",
+          "connect": "\\vec{F} \\cdot \\vec{s} = F_x s_x + F_y s_y - Component dot product formula.",
+          "calculate": "W = (-200.0)(+15.0) + (0)(0) = -3000.0\\text{ N}\\cdot\\text{m} = -3000.0\\text{ J} - Direct arithmetic computation.",
+          "interpret": "W = -3000.0\\text{ J} \\implies \\Delta K = -3000.0\\text{ J} - Work-energy theorem confirms cart kinetic energy decreases by 3000 J."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): W = \\vec{F} \\cdot \\vec{s} = |\\vec{F}||\\vec{s}|\\cos\\theta [Definition of mechanical work via scalar dot product.]",
+          "Step 2 (Represent the physical configuration): \\vec{F} = -200.0\\,\\hat{i}\\text{ N},\\quad \\vec{s} = +15.0\\,\\hat{i}\\text{ m},\\quad \\theta = 180^\\circ [Antiparallel collinear vectors.]",
+          "Step 3 (Connect governing physical laws): \\vec{F} \\cdot \\vec{s} = F_x s_x + F_y s_y [Component dot product formula.]",
+          "Step 4 (Calculate & execute formal derivation): W = (-200.0)(+15.0) + (0)(0) = -3000.0\\text{ N}\\cdot\\text{m} = -3000.0\\text{ J} [Direct arithmetic computation.]",
+          "Step 5 (Interpret the physical outcome): W = -3000.0\\text{ J} \\implies \\Delta K = -3000.0\\text{ J} [Work-energy theorem confirms cart kinetic energy decreases by 3000 J.]"
+        ],
+        "final_expression": "W = (-200.0)(+15.0) + (0)(0) = -3000.0\\text{ N}\\cdot\\text{m} = -3000.0\\text{ J}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[M][L^2][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "Angle theta = 90 deg (theta = 90 deg)",
+            "expected": "W = 0 (perpendicular force does no work) => cos(90) = 0"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-10.",
+        "check_it_another_way": "Evaluate via angle formula: |F||s| cos(180) = 200 * 15 * (-1) = -3000 J. Matches Cartesian dot product identically.",
+        "watch_out": "Assigning a direction to a scalar dot product or failing to check sign from cosine.",
+        "review_this_idea": "Core 1: VEC-10 (Scalar (Dot) Product, Projection & Work Mechanics)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-020",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-10",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q20",
+        "tier": "GRADE-9"
+      },
+      "stem": "A constant pulling force of magnitude $10.0\\text{ N}$ acts at an angle of $60.0^\\circ$ relative to a horizontal displacement vector of magnitude $5.0\\text{ m}$. What is the work done by this force, and what fraction of the force's total magnitude actively performs mechanical work?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "Work = $25.0\\text{ J}$; active fraction = $50.0\\%\\text{ (or } \\cos 60.0^\\circ = 0.50\\text{)}$",
+        "B": "Work = $50.0\\text{ J}$; active fraction = $100.0\\%$",
+        "C": "Work = $43.3\\text{ J}$; active fraction = $86.6\\%\\text{ (or } \\sin 60.0^\\circ\\text{)}$",
+        "D": "Work = $2.0\\text{ J}$; active fraction = $20.0\\%$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D3",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "VEC-10",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Evaluate parallel force projection and dot product energy transfer.",
+        "supporting_demands": [
+          "REPRESENT",
+          "MODEL"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $W = |\\vec{F}||\\vec{s}|\\cos\\theta = 10.0 \\times 5.0 \\times \\cos(60.0^\\circ) = 50.0 \\times 0.50 = 25.0\\text{ J}$. Only the parallel component $F_\\parallel = F \\cos 60^\\circ = 5.0\\text{ N}$ (50% of total force) does work; the perpendicular component does zero work."
+        },
+        "B": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Ignores angle completely: $10 \\times 5 = 50\\text{ J}$."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Uses $\\sin(60^\\circ)$ instead of $\\cos(60^\\circ)$, computing the work of the perpendicular component (which actually does zero work)."
+        },
+        "D": {
+          "type": "INCORRECT_FORCE_RATIO",
+          "diagnostic": "Divides force by displacement ($10 / 5 = 2$)."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What component of a force vector performs mechanical work along a displacement?",
+          "reveal_text": "Only the component of force strictly parallel to the displacement ($F_\\parallel = |\\vec{F}|\\cos\\theta$) performs work. The perpendicular component ($F_\\perp = |\\vec{F}|\\sin\\theta$) does zero work."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "What is the numerical value of $\\cos(60.0^\\circ)$?",
+          "reveal_text": "$\\cos(60.0^\\circ) = 0.50$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "Calculate the work done using $W = |\\vec{F}||\\vec{s}|\\cos 60.0^\\circ$.",
+          "reveal_text": "$W = 10.0\\text{ N} \\times 5.0\\text{ m} \\times 0.50 = 25.0\\text{ J}$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "W = \\vec{F} \\cdot \\vec{s} = |\\vec{F}||\\vec{s}|\\cos\\theta - Definition of work as projection of force onto displacement.",
+          "represent": "|\\vec{F}| = 10.0\\text{ N},\\quad |\\vec{s}| = 5.0\\text{ m},\\quad \\theta = 60.0^\\circ - Geometric parameters given.",
+          "connect": "F_\\parallel = |\\vec{F}|\\cos\\theta = 10.0 \\cos(60^\\circ) = 5.0\\text{ N} - Decomposition into work-producing and non-work-producing components.",
+          "calculate": "W = F_\\parallel |\\vec{s}| = 5.0\\text{ N} \\times 5.0\\text{ m} = 25.0\\text{ J};\\quad \\frac{F_\\parallel}{|\\vec{F}|} = \\cos(60^\\circ) = 0.50 - Evaluation of active component fraction.",
+          "interpret": "W = 25.0\\text{ J},\\quad \\text{active fraction} = 50.0\\%. - Demonstrates geometric role of cosine in vector dot product."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): W = \\vec{F} \\cdot \\vec{s} = |\\vec{F}||\\vec{s}|\\cos\\theta [Definition of work as projection of force onto displacement.]",
+          "Step 2 (Represent the physical configuration): |\\vec{F}| = 10.0\\text{ N},\\quad |\\vec{s}| = 5.0\\text{ m},\\quad \\theta = 60.0^\\circ [Geometric parameters given.]",
+          "Step 3 (Connect governing physical laws): F_\\parallel = |\\vec{F}|\\cos\\theta = 10.0 \\cos(60^\\circ) = 5.0\\text{ N} [Decomposition into work-producing and non-work-producing components.]",
+          "Step 4 (Calculate & execute formal derivation): W = F_\\parallel |\\vec{s}| = 5.0\\text{ N} \\times 5.0\\text{ m} = 25.0\\text{ J};\\quad \\frac{F_\\parallel}{|\\vec{F}|} = \\cos(60^\\circ) = 0.50 [Evaluation of active component fraction.]",
+          "Step 5 (Interpret the physical outcome): W = 25.0\\text{ J},\\quad \\text{active fraction} = 50.0\\%. [Demonstrates geometric role of cosine in vector dot product.]"
+        ],
+        "final_expression": "W = F_\\parallel |\\vec{s}| = 5.0\\text{ N} \\times 5.0\\text{ m} = 25.0\\text{ J};\\quad \\frac{F_\\parallel}{|\\vec{F}|} = \\cos(60^\\circ) = 0.50"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[M][L^2][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "Angle theta = 0 deg (theta = 0)",
+            "expected": "W = 50 J (100% active) => 10 * 5 * cos(0) = 50 J"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-10.",
+        "check_it_another_way": "Integrate dW = F_parallel dx over [0, 5]: integral_0^5 5 dx = 25 J. Exact match to scalar product.",
+        "watch_out": "Assigning a direction to a scalar dot product or failing to check sign from cosine.",
+        "review_this_idea": "Core 1: VEC-10 (Scalar (Dot) Product, Projection & Work Mechanics)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-021",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-04",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q21",
+        "tier": "GRADE-9"
+      },
+      "stem": "Two coplanar vectors $\\vec{A}$ and $\\vec{B}$, each having an identical magnitude of $5.0\\text{ units}$, act concurrently at right angles to one another ($\\theta = 90.0^\\circ$). If the angle between them is now continuously decreased toward $0.0^\\circ$, between what theoretical bounds does the resultant magnitude $|\u000bec{A} + \\vec{B}|$ vary, and what is its exact value at $\\theta = 90.0^\\circ$?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "At $\\theta = 90.0^\\circ$: $|\u000bec{R}| = 5\\sqrt{2} \\approx 7.07\\text{ units}$; Bounds: $[0.0, 10.0]\\text{ units}$ as $\\theta$ ranges from $180^\\circ$ to $0^\\circ$.",
+        "B": "At $\\theta = 90.0^\\circ$: $|\u000bec{R}| = 10.0\\text{ units}$; Bounds: $[5.0, 10.0]\\text{ units}$.",
+        "C": "At $\\theta = 90.0^\\circ$: $|\u000bec{R}| = 5.0\\text{ units}$; Bounds: $[0.0, 5.0]\\text{ units}$.",
+        "D": "At $\\theta = 90.0^\\circ$: $|\u000bec{R}| = 25.0\\text{ units}$; Bounds: $[0.0, 25.0]\\text{ units}$."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "VEC-04",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 3,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Synthesize parallelogram resultant invariant across continuous angle bounds.",
+        "supporting_demands": [
+          "MODEL",
+          "APPLY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. By the law of cosines for vectors: $R = \\sqrt{A^2 + B^2 + 2AB\\cos\\theta}$. At $90^\\circ$, $R = \\sqrt{25 + 25 + 0} = 5\\sqrt{2} \\approx 7.07\\text{ units}$. The extreme triangle inequality bounds for two 5-unit vectors are $|A - B| = 0$ (at $180^\\circ$) and $A + B = 10$ (at $0^\\circ$)."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumes orthogonal vectors add linearly like collinear vectors ($5 + 5 = 10$)."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumes resultant equals leg magnitude ($5$)."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Reports sum of squares $25 + 25$ without taking square root."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What formula governs the magnitude of the sum of two vectors of magnitude $A$ and $B$ separated by angle $\\theta$?",
+          "reveal_text": "The parallelogram law yields $R = \\sqrt{A^2 + B^2 + 2AB\\cos\\theta}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "What does this formula give when $\\theta = 90.0^\\circ$?",
+          "reveal_text": "Since $\\cos(90^\\circ) = 0$, $R = \\sqrt{5.0^2 + 5.0^2} = \\sqrt{50.0} = 5\\sqrt{2} \\approx 7.07\\text{ units}$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What are the minimum and maximum possible values of $R$ for two 5-unit vectors?",
+          "reveal_text": "Minimum occurs when antiparallel ($\\theta = 180^\\circ$): $5 - 5 = 0$. Maximum occurs when parallel ($\\theta = 0^\\circ$): $5 + 5 = 10$. The resultant is strictly bounded by $[0, 10]$."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "R = |\\vec{A} + \\vec{B}| = \\sqrt{A^2 + B^2 + 2AB\\cos\\theta} - General parallelogram law of vector addition.",
+          "represent": "A = 5.0,\\quad B = 5.0,\\quad \\theta = 90.0^\\circ - Equal magnitude orthogonal vector state.",
+          "connect": "|A - B| \\le R \\le A + B - Triangle inequality in normed vector spaces.",
+          "calculate": "R(90^\\circ) = \\sqrt{5^2 + 5^2 + 2(5)(5)(0)} = \\sqrt{50} = 5\\sqrt{2} \\approx 7.071;\\quad R_{\\min} = 0,\\quad R_{\\max} = 10 - Evaluation at orthogonal and extreme collinear angles.",
+          "interpret": "R = 7.07\\text{ units},\\quad \\text{Bounds: } [0, 10]\\text{ units}. - Confirms vector resultant is bounded by triangle inequality."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): R = |\\vec{A} + \\vec{B}| = \\sqrt{A^2 + B^2 + 2AB\\cos\\theta} [General parallelogram law of vector addition.]",
+          "Step 2 (Represent the physical configuration): A = 5.0,\\quad B = 5.0,\\quad \\theta = 90.0^\\circ [Equal magnitude orthogonal vector state.]",
+          "Step 3 (Connect governing physical laws): |A - B| \\le R \\le A + B [Triangle inequality in normed vector spaces.]",
+          "Step 4 (Calculate & execute formal derivation): R(90^\\circ) = \\sqrt{5^2 + 5^2 + 2(5)(5)(0)} = \\sqrt{50} = 5\\sqrt{2} \\approx 7.071;\\quad R_{\\min} = 0,\\quad R_{\\max} = 10 [Evaluation at orthogonal and extreme collinear angles.]",
+          "Step 5 (Interpret the physical outcome): R = 7.07\\text{ units},\\quad \\text{Bounds: } [0, 10]\\text{ units}. [Confirms vector resultant is bounded by triangle inequality.]"
+        ],
+        "final_expression": "R(90^\\circ) = \\sqrt{5^2 + 5^2 + 2(5)(5)(0)} = \\sqrt{50} = 5\\sqrt{2} \\approx 7.071;\\quad R_{\\min} = 0,\\quad R_{\\max} = 10"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L]",
+        "limiting_cases": [
+          {
+            "condition": "theta = 0 deg (cos(0) = 1)",
+            "expected": "R = 10 => sqrt(25 + 25 + 50) = 10"
+          },
+          {
+            "condition": "theta = 180 deg (cos(180) = -1)",
+            "expected": "R = 0 => sqrt(25 + 25 - 50) = 0"
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-04.",
+        "check_it_another_way": "Pythagorean diagonal of 5x5 square: d = s sqrt(2) = 5 sqrt(2). Direct geometric identity confirms 5 sqrt(2).",
+        "watch_out": "Adding vector magnitudes algebraically without vector decomposition.",
+        "review_this_idea": "Core 1: VEC-04 (Vector Addition, Triangle & Parallelogram Laws, Resultant)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-022",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-05",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q22",
+        "tier": "GRADE-9"
+      },
+      "stem": "A $0.50\\text{ kg}$ rubber ball travels horizontally due East at $8.0\\text{ m/s}$, strikes a rigid vertical steel wall, and rebounds horizontally due West at $6.0\\text{ m/s}$. Declaring East as the positive direction, what is the vector change in momentum $\\Delta\\vec{p} = m\\vec{v}_f - m\\vec{v}_i$, and what magnitude of impulse did the wall impart?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 420 180\" width=\"100%\" height=\"180\">\n  <defs><marker id=\"arr12\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <rect x=\"360\" y=\"20\" width=\"20\" height=\"140\" fill=\"#64748b\" stroke=\"#334155\" stroke-width=\"2\"/>\n  <text x=\"370\" y=\"175\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#334155\">Wall</text>\n  <circle cx=\"160\" cy=\"70\" r=\"14\" fill=\"#3b82f6\"/>\n  <line x1=\"160\" y1=\"70\" x2=\"300\" y2=\"70\" stroke=\"#2563eb\" stroke-width=\"3\" marker-end=\"url(#arr12)\"/>\n  <text x=\"230\" y=\"60\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\">v_i = +8.0 m/s East</text>\n  <circle cx=\"280\" cy=\"115\" r=\"14\" fill=\"#ef4444\"/>\n  <line x1=\"280\" y1=\"115\" x2=\"160\" y2=\"115\" stroke=\"#dc2626\" stroke-width=\"3\" marker-end=\"url(#arr12)\"/>\n  <text x=\"210\" y=\"140\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#dc2626\">v_f = -6.0 m/s West</text>\n</svg>",
+        "caption": "Rebound Collision: Antiparallel Momentum Reversal"
+      },
+      "options": {
+        "A": "$\\Delta\\vec{p} = -7.0\\text{ kg}\\cdot\\text{m/s}\\;\\hat{i}\\text{ (or } 7.0\\text{ kg}\\cdot\\text{m/s West)},\\quad \\text{Impulse magnitude} = 7.0\\text{ N}\\cdot\\text{s}$",
+        "B": "$\\Delta\\vec{p} = -1.0\\text{ kg}\\cdot\\text{m/s}\\;\\hat{i},\\quad \\text{Impulse magnitude} = 1.0\\text{ N}\\cdot\\text{s}$",
+        "C": "$\\Delta\\vec{p} = +7.0\\text{ kg}\\cdot\\text{m/s}\\;\\hat{i},\\quad \\text{Impulse magnitude} = 7.0\\text{ N}\\cdot\\text{s}$",
+        "D": "$\\Delta\\vec{p} = -14.0\\text{ kg}\\cdot\\text{m/s}\\;\\hat{i},\\quad \\text{Impulse magnitude} = 14.0\\text{ N}\\cdot\\text{s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "VEC-05",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 3,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Synthesize momentum reversal vector difference and resolve scalar speed subtraction misconception.",
+        "supporting_demands": [
+          "MODEL",
+          "APPLY"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. With East as $+x$, $\\vec{v}_i = +8.0\\text{ m/s}$ and $\\vec{v}_f = -6.0\\text{ m/s}$. Thus $\\Delta\\vec{p} = m(v_f - v_i) = 0.50 \\times (-6.0 - 8.0) = 0.50 \\times (-14.0) = -7.0\\text{ kg}\\cdot\\text{m/s}$. Impulse magnitude is $|\\Delta\\vec{p}| = 7.0\\text{ N}\\cdot\\text{s}$ directed West."
+        },
+        "B": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Fails to treat velocity as a directed vector: $0.50 \\times (8 - 6) = 1.0\\text{ kg}\\cdot\\text{m/s}$."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Calculates $\\Delta p = +7.0$, pointing impulse East into the wall rather than outward."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Calculates change in velocity without multiplying by mass $0.50\\text{ kg}$."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What are the signed velocities $\\vec{v}_i$ and $\\vec{v}_f$ along the East-West axis?",
+          "reveal_text": "Taking East as $+x$: $\\vec{v}_i = +8.0\\,\\hat{i}\\text{ m/s}$, and because it rebounds West, $\\vec{v}_f = -6.0\\,\\hat{i}\\text{ m/s}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How do you evaluate $\\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i$ with proper signs?",
+          "reveal_text": "$\\Delta\\vec{v} = (-6.0) - (+8.0) = -14.0\\,\\hat{i}\\text{ m/s}$. The velocities add in magnitude because direction reversed!"
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "Multiply by mass $m = 0.50\\text{ kg}$ to get momentum change and impulse.",
+          "reveal_text": "$\\Delta\\vec{p} = m\\Delta\\vec{v} = 0.50 \\times (-14.0) = -7.0\\,\\hat{i}\\text{ kg}\\cdot\\text{m/s}$. The impulse from the wall is $7.0\\text{ N}\\cdot\\text{s}$ pointing West."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\vec{J} = \\Delta\\vec{p} = m\\vec{v}_f - m\\vec{v}_i - Impulse-momentum theorem for 1D rebound collision.",
+          "represent": "m = 0.50\\text{ kg},\\quad v_i = +8.0\\,\\hat{i},\\quad v_f = -6.0\\,\\hat{i} - Declaring East as positive reference orientation.",
+          "connect": "\\Delta\\vec{p} = m(v_f - v_i)\\,\\hat{i} - Factoring mass out of linear vector difference.",
+          "calculate": "\\Delta\\vec{p} = 0.50(-6.0 - 8.0)\\,\\hat{i} = 0.50(-14.0)\\,\\hat{i} = -7.0\\,\\hat{i}\\text{ kg}\\cdot\\text{m/s};\\quad |\\vec{J}| = 7.0\\text{ N}\\cdot\\text{s} - Direct arithmetic computation.",
+          "interpret": "\\Delta\\vec{p} = -7.0\\,\\hat{i}\\text{ kg}\\cdot\\text{m/s} \\implies \\text{Wall exerted westward impulse of } 7.0\\text{ N}\\cdot\\text{s}. - Demonstrates why reversing velocity generates larger impulse than merely stopping."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\vec{J} = \\Delta\\vec{p} = m\\vec{v}_f - m\\vec{v}_i [Impulse-momentum theorem for 1D rebound collision.]",
+          "Step 2 (Represent the physical configuration): m = 0.50\\text{ kg},\\quad v_i = +8.0\\,\\hat{i},\\quad v_f = -6.0\\,\\hat{i} [Declaring East as positive reference orientation.]",
+          "Step 3 (Connect governing physical laws): \\Delta\\vec{p} = m(v_f - v_i)\\,\\hat{i} [Factoring mass out of linear vector difference.]",
+          "Step 4 (Calculate & execute formal derivation): \\Delta\\vec{p} = 0.50(-6.0 - 8.0)\\,\\hat{i} = 0.50(-14.0)\\,\\hat{i} = -7.0\\,\\hat{i}\\text{ kg}\\cdot\\text{m/s};\\quad |\\vec{J}| = 7.0\\text{ N}\\cdot\\text{s} [Direct arithmetic computation.]",
+          "Step 5 (Interpret the physical outcome): \\Delta\\vec{p} = -7.0\\,\\hat{i}\\text{ kg}\\cdot\\text{m/s} \\implies \\text{Wall exerted westward impulse of } 7.0\\text{ N}\\cdot\\text{s}. [Demonstrates why reversing velocity generates larger impulse than merely stopping.]"
+        ],
+        "final_expression": "\\Delta\\vec{p} = 0.50(-6.0 - 8.0)\\,\\hat{i} = 0.50(-14.0)\\,\\hat{i} = -7.0\\,\\hat{i}\\text{ kg}\\cdot\\text{m/s};\\quad |\\vec{J}| = 7.0\\text{ N}\\cdot\\text{s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "Elastic collision with equal speed (vf = -vi)",
+            "expected": "Delta p = -2 m vi => 0.50(-8 - 8) = -8 kg m/s"
+          },
+          {
+            "condition": "Inelastic sticking to wall (vf = 0)",
+            "expected": "Delta p = -m vi = -4 kg m/s => 0.50(0 - 8) = -4 kg m/s"
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-05.",
+        "check_it_another_way": "Evaluate initial and final momenta separately: p_i = +4.0 kg m/s, p_f = -3.0 kg m/s. Difference = -3.0 - 4.0 = -7.0 kg m/s. Direct subtraction confirms -7.0 kg m/s.",
+        "watch_out": "Assuming change in velocity is zero when speed remains constant along a curved path.",
+        "review_this_idea": "Core 1: VEC-05 (Vector Subtraction & Change Vectors)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-023",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-07",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q23",
+        "tier": "GRADE-9"
+      },
+      "stem": "At an instantaneous point along its curved planar trajectory, a projectile's velocity components are measured as $v_x = 6.0\\text{ m/s}$ and $v_y = 8.0\\text{ m/s}$. To specify its complete instantaneous velocity state as a foundational bridge into 2D kinematics, which complete vector statement is required?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "Speed = $10.0\\text{ m/s}$, directed at $\\theta = 53.1^\\circ$ above the positive $x$-axis (or $\\vec{v} = 6.0\\,\\hat{i} + 8.0\\,\\hat{j}\\text{ m/s}$)",
+        "B": "Speed = $14.0\\text{ m/s}$, directed at $\\theta = 45.0^\\circ$",
+        "C": "Speed = $10.0\\text{ m/s}$, directed at $\\theta = 36.9^\\circ$ above the positive $x$-axis",
+        "D": "Velocity = $10.0\\text{ m/s}$ (magnitude alone completely specifies the vector state)"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "VEC-07",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 3,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Synthesize 2D velocity vector state from orthogonal components as planar kinematics bridge.",
+        "supporting_demands": [
+          "REPRESENT",
+          "MODEL"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. Speed is scalar magnitude $|\\vec{v}| = \\sqrt{6^2 + 8^2} = 10.0\\text{ m/s}$. Direction is angle $\\theta = \\arctan(v_y / v_x) = \\arctan(8/6) \\approx 53.13^\\circ$ above horizontal. Both magnitude and direction (or full Cartesian components) are strictly mandatory to define the velocity vector."
+        },
+        "B": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Adds scalar components $6 + 8 = 14\\text{ m/s}$."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Computes $\\arctan(6/8) = 36.9^\\circ$, which is angle with the vertical, not horizontal."
+        },
+        "D": {
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Claims magnitude alone is sufficient, omitting required directional orientation."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "How is scalar speed related to velocity components $v_x$ and $v_y$?",
+          "reveal_text": "Speed is the Euclidean norm of the velocity vector: $v = |\\vec{v}| = \\sqrt{v_x^2 + v_y^2} = \\sqrt{6.0^2 + 8.0^2} = 10.0\\text{ m/s}$."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "Why is speed alone insufficient to specify the velocity of the projectile?",
+          "reveal_text": "Velocity is a physical vector. A complete specification requires both magnitude (speed) and spatial direction (angle relative to a declared axis)."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What angle does the velocity make with the horizontal $+x$-axis?",
+          "reveal_text": "$\\tan\\theta = \\frac{v_y}{v_x} = \\frac{8.0}{6.0} = \\frac{4}{3} \\implies \\theta = \\arctan(4/3) \\approx 53.1^\\circ$ above horizontal."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\vec{v} = v_x \\hat{i} + v_y \\hat{j} \\implies \\text{Full state representation in 2D kinematics.} - Bridge from 1D components to 2D planar vector dynamics.",
+          "represent": "v_x = 6.0\\text{ m/s},\\quad v_y = 8.0\\text{ m/s} - Orthogonal Cartesian coordinates.",
+          "connect": "|\\vec{v}| = \\sqrt{v_x^2 + v_y^2},\\quad \\theta = \\arctan\\left(\\frac{v_y}{v_x}\\right) - Conversion from rectangular to polar vector coordinates.",
+          "calculate": "|\\vec{v}| = \\sqrt{36.0 + 64.0} = 10.0\\text{ m/s};\\quad \\theta = \\arctan(8.0/6.0) = 53.13^\\circ - Standard Pythagorean 6-8-10 integer triangle.",
+          "interpret": "\\vec{v} = (10.0\\text{ m/s}, 53.1^\\circ\\text{ above }+x) \\equiv 6.0\\,\\hat{i} + 8.0\\,\\hat{j}\\text{ m/s}. - Establishes necessary condition for 2D trajectory simulation."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\vec{v} = v_x \\hat{i} + v_y \\hat{j} \\implies \\text{Full state representation in 2D kinematics.} [Bridge from 1D components to 2D planar vector dynamics.]",
+          "Step 2 (Represent the physical configuration): v_x = 6.0\\text{ m/s},\\quad v_y = 8.0\\text{ m/s} [Orthogonal Cartesian coordinates.]",
+          "Step 3 (Connect governing physical laws): |\\vec{v}| = \\sqrt{v_x^2 + v_y^2},\\quad \\theta = \\arctan\\left(\\frac{v_y}{v_x}\\right) [Conversion from rectangular to polar vector coordinates.]",
+          "Step 4 (Calculate & execute formal derivation): |\\vec{v}| = \\sqrt{36.0 + 64.0} = 10.0\\text{ m/s};\\quad \\theta = \\arctan(8.0/6.0) = 53.13^\\circ [Standard Pythagorean 6-8-10 integer triangle.]",
+          "Step 5 (Interpret the physical outcome): \\vec{v} = (10.0\\text{ m/s}, 53.1^\\circ\\text{ above }+x) \\equiv 6.0\\,\\hat{i} + 8.0\\,\\hat{j}\\text{ m/s}. [Establishes necessary condition for 2D trajectory simulation.]"
+        ],
+        "final_expression": "|\\vec{v}| = \\sqrt{36.0 + 64.0} = 10.0\\text{ m/s};\\quad \\theta = \\arctan(8.0/6.0) = 53.13^\\circ"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "At trajectory apex (vy = 0)",
+            "expected": "Speed = vx = 6 m/s, theta = 0 => sqrt(6^2 + 0) = 6 m/s"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-07.",
+        "check_it_another_way": "Check Cartesian recovery: 10 cos(53.13) = 6.0 m/s, 10 sin(53.13) = 8.0 m/s. Recovers input components identically.",
+        "watch_out": "Reversing subtraction order or adding frame velocity instead of subtracting it.",
+        "review_this_idea": "Core 1: VEC-07 (Relative Velocity in 1D & 2D Frames)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-024",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-10",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q24",
+        "tier": "GRADE-9"
+      },
+      "stem": "An artificial satellite of mass $m$ moves in a circular orbit of radius $r$ around Earth at constant speed $v$. A student asserts that although a massive gravitational force acts continuously on the satellite, the net work done by gravity over any arbitrary orbital arc is strictly zero. Which rigorous vector justification validates this assertion?",
+      "figure": {
+        "has_figure": false
+      },
+      "options": {
+        "A": "At every instant along the orbit, the gravitational force is radial ($\\vec{F}_g \\perp d\\vec{s}$), making $\\cos(90^\\circ) = 0$ in the differential work $dW = \\vec{F}_g \\cdot d\\vec{s} = 0$.",
+        "B": "The work is zero because Earth is in a vacuum where no frictional energy can be created.",
+        "C": "Gravity only does work when an object moves in a straight vertical line.",
+        "D": "Work is non-zero over a quarter orbit, but cancels to zero only over a complete $360^\\circ$ revolution."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D4",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "VEC-10",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 3,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Justify point-wise vanishing work differential from continuous radial-tangential orthogonality.",
+        "supporting_demands": [
+          "MODEL",
+          "EXPLAIN"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. In a circular orbit, the instantaneous displacement $d\\vec{s}$ is tangential, while the gravitational force $\\vec{F}_g$ is strictly radial. Because radial and tangential unit vectors are orthogonal everywhere ($\\vec{F}_g \\cdot d\\vec{s} = F_g ds \\cos 90^\\circ = 0$), the instantaneous power $P = \\vec{F} \\cdot \\vec{v} = 0$ and work $W = \\int dW = 0$ identically across *any* arc."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Confuses absence of atmospheric friction with the mathematical orthogonality of gravitational force and displacement."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Falsely claims gravity only works in 1D vertical motion."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumes work is non-zero over partial arcs and cancels globally, failing to see that $dW = 0$ point-by-point everywhere in circular motion."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What is the angle between the radial gravitational force and the tangential displacement in a circular orbit?",
+          "reveal_text": "A circle's radius and its tangent line are perpendicular at every point; therefore, $\\theta = 90.0^\\circ$ everywhere."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "What does the scalar dot product evaluate to when the angle between two non-zero vectors is $90.0^\\circ$?",
+          "reveal_text": "$\\vec{A} \\cdot \\vec{B} = |\\vec{A}||\\vec{B}|\\cos(90^\\circ) = 0$. Orthogonal vectors have zero scalar product."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "Does this zero work condition depend on completing a full revolution?",
+          "reveal_text": "No! Because $dW = \\vec{F} \\cdot d\\vec{s} = 0$ at *every single instant*, the work done over *any* arc—even a microscopic fraction of a degree—is identically zero."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "W = \\int_{C} \\vec{F} \\cdot d\\vec{s} - General line integral definition of mechanical work along a path C.",
+          "represent": "\\vec{F}_g = -\\frac{G M m}{r^2}\\,\\hat{r},\\quad d\\vec{s} = r\\,d\\phi\\,\\hat{\\phi} - Polar coordinate vector representation on circular orbit.",
+          "connect": "\\hat{r} \\cdot \\hat{\\phi} = 0 \\implies \\vec{F}_g \\cdot d\\vec{s} = 0 - Orthogonality of radial and azimuthal basis vectors in Euclidean plane.",
+          "calculate": "dW = \\vec{F}_g \\cdot d\\vec{s} = 0 \\implies W = \\int_{\\phi_1}^{\\phi_2} 0\\,d\\phi = 0\\text{ for any } [\\phi_1, \\phi_2] - Vanishing integrand yields zero integral over any arbitrary domain.",
+          "interpret": "W = 0 \\implies \\Delta K = 0 \\implies v = \\text{const} - Work-energy theorem confirms speed remains invariant in uniform circular orbits."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): W = \\int_{C} \\vec{F} \\cdot d\\vec{s} [General line integral definition of mechanical work along a path C.]",
+          "Step 2 (Represent the physical configuration): \\vec{F}_g = -\\frac{G M m}{r^2}\\,\\hat{r},\\quad d\\vec{s} = r\\,d\\phi\\,\\hat{\\phi} [Polar coordinate vector representation on circular orbit.]",
+          "Step 3 (Connect governing physical laws): \\hat{r} \\cdot \\hat{\\phi} = 0 \\implies \\vec{F}_g \\cdot d\\vec{s} = 0 [Orthogonality of radial and azimuthal basis vectors in Euclidean plane.]",
+          "Step 4 (Calculate & execute formal derivation): dW = \\vec{F}_g \\cdot d\\vec{s} = 0 \\implies W = \\int_{\\phi_1}^{\\phi_2} 0\\,d\\phi = 0\\text{ for any } [\\phi_1, \\phi_2] [Vanishing integrand yields zero integral over any arbitrary domain.]",
+          "Step 5 (Interpret the physical outcome): W = 0 \\implies \\Delta K = 0 \\implies v = \\text{const} [Work-energy theorem confirms speed remains invariant in uniform circular orbits.]"
+        ],
+        "final_expression": "dW = \\vec{F}_g \\cdot d\\vec{s} = 0 \\implies W = \\int_{\\phi_1}^{\\phi_2} 0\\,d\\phi = 0\\text{ for any } [\\phi_1, \\phi_2]"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[M][L^2][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "Elliptical orbit eccentricity e > 0 (r != const)",
+            "expected": "F is not perpendicular to ds; gravity does work => W != 0 over partial arcs"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-10.",
+        "check_it_another_way": "Potential energy difference: Delta U = U(r2) - U(r1) = -GMm/r - (-GMm/r) = 0. Delta U = 0 confirms work W = -Delta U = 0 J.",
+        "watch_out": "Assigning a direction to a scalar dot product or failing to check sign from cosine.",
+        "review_this_idea": "Core 1: VEC-10 (Scalar (Dot) Product, Projection & Work Mechanics)"
+      }
+    },
+    {
+      "question_id": "PHYS-VEC-025",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_competency_ref": "VEC-11",
+      "provenance": {
+        "paper_code": "VEC-REV",
+        "year": "2026",
+        "question_number": "Q25",
+        "tier": "GRADE-9"
+      },
+      "stem": "A rigid horizontal lever arm of length $\\vec{r} = 2.0\\,\\hat{i}\\text{ m}$ lies along the positive $x$-axis pivoted at the origin. A force $\\vec{F} = 15.0\\,\\hat{j}\\text{ N}$ acts at its tip in the positive $y$-direction. Using the vector cross product definition of torque $\\vec{\\tau} = \\vec{r} \\times \\vec{F}$, what is the torque vector and its rotational direction when viewed from the positive $z$-axis?",
+      "figure": {
+        "has_figure": true,
+        "svg_code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 200\" width=\"100%\" height=\"200\">\n  <defs><marker id=\"arr13\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"60\" y1=\"140\" x2=\"260\" y2=\"140\" stroke=\"#0f172a\" stroke-width=\"4\"/>\n  <circle cx=\"60\" cy=\"140\" r=\"7\" fill=\"#e11d48\"/>\n  <text x=\"60\" y=\"170\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#e11d48\">Pivot (Origin)</text>\n  <text x=\"160\" y=\"130\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#0f172a\">r = 2.0 m (+x)</text>\n  <line x1=\"260\" y1=\"140\" x2=\"260\" y2=\"30\" stroke=\"#2563eb\" stroke-width=\"3\" marker-end=\"url(#arr13)\"/>\n  <text x=\"270\" y=\"70\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#2563eb\" font-weight=\"bold\">F = 15.0 N (+y)</text>\n  <path d=\"M 120 100 A 30 30 0 0 1 80 120\" fill=\"none\" stroke=\"#16a34a\" stroke-width=\"3\" marker-end=\"url(#arr13)\"/>\n  <text x=\"110\" y=\"80\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#16a34a\">Counterclockwise (out of page, +z)</text>\n</svg>",
+        "caption": "Torque Cross Product: τ = r × F"
+      },
+      "options": {
+        "A": "$\\vec{\\tau} = +30.0\\text{ N}\\cdot\\text{m}\\;\\hat{k}\\text{ (out of the page, inducing counterclockwise rotation)}$",
+        "B": "$\\vec{\\tau} = -30.0\\text{ N}\\cdot\\text{m}\\;\\hat{k}\\text{ (into the page, inducing clockwise rotation)}$",
+        "C": "$\\vec{\\tau} = 30.0\\text{ J}\\;\\hat{i}\\text{ along the lever arm}$",
+        "D": "$\\vec{\\tau} = 0.0\\text{ N}\\cdot\\text{m}\\text{ because cross products vanish for perpendicular vectors}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "VEC-11",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 3,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Synthesize vector cross product determinant and assign orthogonal right-hand torque orientation.",
+        "supporting_demands": [
+          "REPRESENT",
+          "MODEL"
+        ],
+        "topic_adapters": [
+          "vectors-and-components"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correct. $\\vec{\\tau} = \\vec{r} \\times \\vec{F} = (2.0\\hat{i}) \\times (15.0\\hat{j}) = 30.0(\\hat{i} \\times \\hat{j}) = +30.0\\hat{k}\\text{ N}\\cdot\\text{m}$. By the right-hand rule, curling fingers from $+x$ into $+y$ points the thumb out of the page ($+z$), corresponding to counterclockwise rotation."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Computes $\\vec{F} \\times \\vec{r} = -30.0\\hat{k}$, failing to recognize that cross products are antisymmetric ($A \\times B = -(B \\times A)$)."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Confuses torque units with Joules and directs torque parallel to the arm."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Confuses cross products with dot products; cross product is *maximized* when vectors are perpendicular."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Decisive Physical Invariant",
+          "prompt_question": "What is the unit vector cross product $\\hat{i} \\times \\hat{j}$ in a standard right-handed Cartesian coordinate system?",
+          "reveal_text": "In a right-handed system, $\\hat{i} \\times \\hat{j} = +\\hat{k}$ (pointing out of the page along the positive $z$-axis)."
+        },
+        {
+          "tier": 2,
+          "title": "Geometric Representation",
+          "prompt_question": "How do you evaluate $\\vec{\\tau} = \\vec{r} \\times \\vec{F}$ with the given components?",
+          "reveal_text": "$\\vec{\\tau} = (2.0\\,\\hat{i}) \\times (15.0\\,\\hat{j}) = (2.0 \\times 15.0)(\\hat{i} \\times \\hat{j}) = +30.0\\,\\hat{k}\\text{ N}\\cdot\\text{m}$."
+        },
+        {
+          "tier": 3,
+          "title": "First Mathematical Pivot",
+          "prompt_question": "What physical rotational motion does a positive $z$-component ($+\\hat{k}$) torque produce in the $xy$-plane?",
+          "reveal_text": "By convention of the right-hand grip rule, a torque vector pointing out of the page ($+\\hat{k}$) produces counterclockwise rotational acceleration."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "\\vec{\\tau} = \\vec{r} \\times \\vec{F} - Axial pseudo-vector definition of rotational moment (torque).",
+          "represent": "\\vec{r} = 2.0\\,\\hat{i}\\text{ m},\\quad \\vec{F} = 15.0\\,\\hat{j}\\text{ N} - Position vector from pivot and applied force vector.",
+          "connect": "\\hat{i} \\times \\hat{j} = \\hat{k},\\quad \\vec{A} \\times \\vec{B} = -(\\vec{B} \\times \\vec{A}) - Antisymmetric right-handed Lie algebra of Euclidean 3-space.",
+          "calculate": "\\vec{\\tau} = (2.0)(15.0)(\\hat{i} \\times \\hat{j}) = +30.0\\,\\hat{k}\\text{ N}\\cdot\\text{m} - Bilinear evaluation of vector cross product.",
+          "interpret": "\\vec{\\tau} = +30.0\\,\\hat{k}\\text{ N}\\cdot\\text{m} \\implies \\text{Counterclockwise rotation about z-axis.} - Establishes planar torque orthogonality and right-hand orientation."
+        },
+        "derivation_steps": [
+          "Step 1 (Understand the physical regime): \\vec{\\tau} = \\vec{r} \\times \\vec{F} [Axial pseudo-vector definition of rotational moment (torque).]",
+          "Step 2 (Represent the physical configuration): \\vec{r} = 2.0\\,\\hat{i}\\text{ m},\\quad \\vec{F} = 15.0\\,\\hat{j}\\text{ N} [Position vector from pivot and applied force vector.]",
+          "Step 3 (Connect governing physical laws): \\hat{i} \\times \\hat{j} = \\hat{k},\\quad \\vec{A} \\times \\vec{B} = -(\\vec{B} \\times \\vec{A}) [Antisymmetric right-handed Lie algebra of Euclidean 3-space.]",
+          "Step 4 (Calculate & execute formal derivation): \\vec{\\tau} = (2.0)(15.0)(\\hat{i} \\times \\hat{j}) = +30.0\\,\\hat{k}\\text{ N}\\cdot\\text{m} [Bilinear evaluation of vector cross product.]",
+          "Step 5 (Interpret the physical outcome): \\vec{\\tau} = +30.0\\,\\hat{k}\\text{ N}\\cdot\\text{m} \\implies \\text{Counterclockwise rotation about z-axis.} [Establishes planar torque orthogonality and right-hand orientation.]"
+        ],
+        "final_expression": "\\vec{\\tau} = (2.0)(15.0)(\\hat{i} \\times \\hat{j}) = +30.0\\,\\hat{k}\\text{ N}\\cdot\\text{m}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[M][L^2][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "Collinear force F || r (F || r)",
+            "expected": "tau = 0 (no rotation) => i x i = 0"
+          },
+          {
+            "condition": "Null state / Zero magnitude input",
+            "expected": "All component projections and dependent vector products evaluate to 0."
+          }
+        ],
+        "quick_check": "Order of magnitude and directional orientation match physical expectations for VEC-11.",
+        "check_it_another_way": "Lever arm scalar formula: tau = r_perp F = (2.0 m)(15.0 N) = 30.0 N m; right hand rule gives +z. Matches cross product determinant expansion identically.",
+        "watch_out": "Assuming cross product is commutative (A x B = B x A).",
+        "review_this_idea": "Core 1: VEC-11 (Vector (Cross) Product, Torque & Planar Orthogonal Invariants)"
+      }
+    }
+  ]
+}
