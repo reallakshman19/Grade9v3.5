@@ -359,7 +359,7 @@ def validate_master_app(app_path: str, expected_q_count: int = 25):
     errors = []
     
     # Check question count rendered
-    q_matches = re.findall(r'class="card-source-tag"', html)
+    q_matches = re.findall(r'class="[^"]*card-source-tag[^"]*"', html)
     if len(q_matches) < expected_q_count:
         errors.append(f"Rendered question cards ({len(q_matches)}) less than expected ({expected_q_count})")
     
@@ -389,7 +389,7 @@ def validate_master_app(app_path: str, expected_q_count: int = 25):
         errors.append("CSS touch target min-height 48px floor declaration missing.")
     
     # Check progressive hint ladder interactive elements
-    if 'class="hint-unlock-btn"' not in html and 'hint-toggle' not in html and 'data-hint-idx' not in html:
+    if not re.search(r'class="[^"]*hint-unlock-btn[^"]*"', html) and 'hint-toggle' not in html and 'data-hint-idx' not in html:
         errors.append("Interactive progressive hint ladder unlock buttons missing.")
     
     # Check base64 KaTeX fonts bundle presence
