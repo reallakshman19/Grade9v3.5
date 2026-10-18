@@ -30,21 +30,22 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-01",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q01",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A trolley moves to the right along a smooth horizontal track, and its speed increases steadily from rest. Which statement about the net horizontal force acting on the trolley is necessarily true?",
+      "stem": "A service lift is descending but its downward speed is decreasing. Taking upward as positive, what direction must its net force point?",
       "system_parameters": {},
       "figure": {
-        "has_figure": true,
-        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 120\" width=\"100%\" height=\"120\">\n  <defs><marker id=\"ar_q1\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#38bdf8\"/></marker></defs>\n  <line x1=\"20\" y1=\"90\" x2=\"300\" y2=\"90\" stroke=\"#475569\" stroke-width=\"2\"/>\n  <rect x=\"80\" y=\"45\" width=\"100\" height=\"40\" rx=\"4\" fill=\"#1e293b\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <circle cx=\"100\" cy=\"90\" r=\"8\" fill=\"#94a3b8\"/>\n  <circle cx=\"160\" cy=\"90\" r=\"8\" fill=\"#94a3b8\"/>\n  <text x=\"130\" y=\"70\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#fff\" font-weight=\"bold\">trolley</text>\n  <line x1=\"185\" y1=\"55\" x2=\"245\" y2=\"55\" stroke=\"#22c55e\" stroke-width=\"2.5\" marker-end=\"url(#ar_q1)\"/>\n  <text x=\"255\" y=\"60\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#22c55e\" font-weight=\"bold\">v \u2192</text>\n  <line x1=\"185\" y1=\"75\" x2=\"245\" y2=\"75\" stroke=\"#38bdf8\" stroke-width=\"2.5\" marker-end=\"url(#ar_q1)\"/>\n  <text x=\"255\" y=\"80\" font-size=\"14\" font-family=\"sans-serif\" fill=\"#38bdf8\" font-weight=\"bold\">a \u2192</text>\n</svg>",
-        "caption": "Figure 1: Trolley moving right and steadily speeding up along track."
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
       },
       "options": {
-        "A": "The net horizontal force is strictly non-zero and points to the right.",
-        "B": "The net horizontal force is zero because the speed increase is steady.",
-        "C": "The net horizontal force must exceed the forward momentum of the trolley.",
-        "D": "The net horizontal force points to the left to balance the forward inertia."
+        "A": "Upward, since its acceleration opposes its downward velocity.",
+        "B": "Downward, because it is moving downward.",
+        "C": "Zero, because the slowing is steady.",
+        "D": "The direction cannot be inferred without its mass."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -54,12 +55,12 @@
         "subtopic_competency_ref": "NLM-01",
         "difficulty_factors": {
           "system_coupling": 1,
-          "vector_dimensionality": 1,
+          "vector_dimensionality": 2,
           "constraint_latency": 1,
-          "domain_coupling": 1,
+          "domain_coupling": 2,
           "math_friction": 1
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-01 to APPLY demand.",
+        "protected_work_W": "Deceleration while descending is upward acceleration, not upward velocity.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -72,71 +73,81 @@
         "supporting_demands": [
           "RETRIEVE",
           "EXPLAIN"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 1: Only the lift cabin's motion is evaluated.",
+          "vector_dimensionality": "Score 2: Up is chosen positive although velocity is downward.",
+          "constraint_latency": "Score 1: Mass and slowing trend are supplied directly.",
+          "domain_coupling": "Score 2: Translate change of velocity into acceleration then use Newton II.",
+          "math_friction": "Score 1: Only a sign inference, no equation system."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Speeding up rightward implies acceleration is directed rightward; by Newton II, $\\Sigma F_{\\text{net}} = m a_x > 0$."
+          "diagnostic": "Since the downward velocity becomes less negative, a_y is positive and so is ΣF_y."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Confuses constant speed with steadily changing speed; steady speed increase means non-zero constant acceleration."
+          "diagnostic": "Incorrect: Velocity direction and acceleration direction need not agree."
         },
         "C": {
-          "type": "ARISTOTELIAN_FORCE_VELOCITY",
-          "diagnostic": "Confuses force with momentum; force has dimensions of [M L T^-2] while momentum is [M L T^-1]."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; Deceleration while descending is upward acceleration, not upward velocity."
         },
         "D": {
           "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Invents a fictitious opposing force of inertia in an inertial frame."
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; At constant downward velocity a_y becomes zero."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "The trolley is moving right and speeding up. What does that tell you about the direction of its acceleration?",
-          "reveal_text": "Its acceleration points to the right, the same direction as the velocity while the speed increases."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "Deceleration while descending is upward acceleration, not upward velocity."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "For one chosen trolley, what representation connects that acceleration to the forces acting on it?",
-          "reveal_text": "Draw the trolley FBD and form the horizontal vector sum $\\Sigma F_x$."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Use a vertical signed axis and mark velocity down, acceleration up."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "What law would you write first after determining the acceleration direction?",
-          "reveal_text": "Write $\\Sigma F_x = m a_x$. Use the acceleration direction from H1 only after you have written the law."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "The first constraint is ΣF_y = m a_y, with upward chosen positive."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The velocity magnitude is increasing to the right, so acceleration is rightward.",
-          "represent": "Use one trolley FBD and the horizontal axis.",
-          "connect": "Newton II requires $\\Sigma F_x = m a_x$.",
-          "calculate": "Since $a_x > 0$, $\\Sigma F_x > 0$: the net horizontal force is rightward.",
-          "interpret": "A rightward net force is required; individual forces need not all point right."
+          "understand": "Deceleration while descending is upward acceleration, not upward velocity.",
+          "represent": "Use a vertical signed axis and mark velocity down, acceleration up.",
+          "connect": "The first constraint is ΣF_y = m a_y, with upward chosen positive.",
+          "calculate": "Since the downward velocity becomes less negative, a_y is positive and so is ΣF_y.",
+          "interpret": "Upward, since its acceleration opposes its downward velocity."
         },
-        "final_expression": "The net horizontal force is strictly non-zero and points to the right.",
-        "final_answer_value": "The net horizontal force is strictly non-zero and points to the right."
+        "final_expression": "Upward, since its acceleration opposes its downward velocity.",
+        "final_answer_value": "Upward, since its acceleration opposes its downward velocity."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "If the net force were zero, the velocity could not be changing.",
-        "check_it_another_way": "A leftward net force would make a right-moving trolley slow down, not speed up.",
-        "watch_out": "Do not infer force direction from velocity alone; use the change of velocity.",
-        "review_this_idea": "Core 1: NLM 01-04",
+        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
+        "quick_check": "At constant downward velocity a_y becomes zero.",
+        "check_it_another_way": "Deceleration while descending is upward acceleration, not upward velocity.",
+        "watch_out": "Velocity direction and acceleration direction need not agree.",
+        "review_this_idea": "Core 1: NLM-01",
         "limiting_cases": [
           {
-            "condition": "dv/dt = 0 (constant velocity)",
-            "expected": "$F_{\\text{net}}$ = 0"
+            "condition": "Ideal or zero-change limit",
+            "expected": "At constant downward velocity a_y becomes zero."
           },
           {
-            "condition": "dv/dt < 0 (slowing down rightward)",
-            "expected": "$F_{\\text{net}}$ directed left"
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "Velocity direction and acceleration direction need not agree."
           }
         ]
       }
@@ -148,21 +159,22 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-08",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q02",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A student standing on the ground pushes horizontally against a rigid vertical wall with a force of $120\\text{ N}$. What force does the wall exert on the student?",
+      "stem": "Two small robots pull against the ends of the same taut strap. Robot A pulls the strap left with 40 N. Which two forces make a Newton-third-law pair at A's connection to the strap?",
       "system_parameters": {},
       "figure": {
-        "has_figure": true,
-        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 120\" width=\"100%\" height=\"120\">\n  <defs><marker id=\"ar_q2\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1.5 L 8 5 L 0 8.5 z\" fill=\"#38bdf8\"/></marker></defs>\n  <rect x=\"250\" y=\"10\" width=\"25\" height=\"100\" fill=\"#475569\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <circle cx=\"90\" cy=\"50\" r=\"18\" fill=\"#1e293b\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <text x=\"90\" y=\"55\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#fff\">Student</text>\n  <line x1=\"115\" y1=\"50\" x2=\"245\" y2=\"50\" stroke=\"#22c55e\" stroke-width=\"2.5\" marker-end=\"url(#ar_q2)\"/>\n  <text x=\"180\" y=\"40\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#22c55e\">F_push = 120 N \u2192</text>\n  <line x1=\"245\" y1=\"75\" x2=\"115\" y2=\"75\" stroke=\"#ef4444\" stroke-width=\"2.5\" marker-end=\"url(#ar_q2)\"/>\n  <text x=\"180\" y=\"95\" font-size=\"14\" font-family=\"sans-serif\" text-anchor=\"middle\" fill=\"#ef4444\">\u2190 F_wall = 120 N</text>\n</svg>",
-        "caption": "Figure 2: Newton III reciprocal interaction pair between student and wall."
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
       },
       "options": {
-        "A": "Exactly $120\\text{ N}$ directed horizontally away from the wall (opposite the push).",
-        "B": "Zero, because the wall is fixed and does not accelerate or move.",
-        "C": "Less than $120\\text{ N}$, because the wall absorbs energy elastically.",
-        "D": "More than $120\\text{ N}$, because the wall is much more massive than the student."
+        "A": "A's leftward pull on the strap and the strap's 40 N rightward pull on A.",
+        "B": "A's pull on the strap and B's pull on the strap.",
+        "C": "A's pull on the strap and A's weight.",
+        "D": "The strap's force on A and the floor's force on A."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -171,13 +183,13 @@
         "difficulty_band": "D1",
         "subtopic_competency_ref": "NLM-08",
         "difficulty_factors": {
-          "system_coupling": 1,
-          "vector_dimensionality": 1,
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
           "constraint_latency": 1,
           "domain_coupling": 1,
           "math_friction": 1
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-08 to EXPLAIN demand.",
+        "protected_work_W": "Newton-third-law partners act on different owners at the same interaction.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -189,71 +201,81 @@
         ],
         "supporting_demands": [
           "RETRIEVE"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 3: Two tugging robots form one force-interaction pair.",
+          "vector_dimensionality": "Score 2: Opposite horizontal arrows need owner labels.",
+          "constraint_latency": "Score 1: The interaction is explicitly specified.",
+          "domain_coupling": "Score 1: One third-law principle is sufficient.",
+          "math_friction": "Score 1: No algebra beyond equality of magnitudes."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Newton III mandates that the mutual interaction between student and wall consists of equal and opposite forces: F_(student by wall) = -F_(wall by student) = 120 N away from wall."
+          "diagnostic": "A exerts 40 N on the strap to the left; that same connection exerts 40 N on A to the right."
         },
         "B": {
-          "type": "THIRD_LAW_INTERNAL_CANCELLATION",
-          "diagnostic": "Confuses absence of acceleration of the wall with absence of contact reaction force."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect: A pair cannot be two forces drawn on one single-body FBD."
         },
         "C": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Claims contact force depends on material elasticity rather than universal 3rd law reciprocity."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; Newton-third-law partners act on different owners at the same interaction."
         },
         "D": {
-          "type": "INCORRECT_FORCE_RATIO",
-          "diagnostic": "Believes more massive or rigid bodies exert greater interaction forces than lighter ones."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; The two forces have identical magnitude even if robot A accelerates."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "The student and wall are one interaction pair. What does Newton III say about the two interaction forces?",
-          "reveal_text": "They are equal in magnitude, opposite in direction, and act on different bodies."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "Newton-third-law partners act on different owners at the same interaction."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "How would you label the pair so body ownership cannot be confused?",
-          "reveal_text": "Use 'force on wall by student' and 'force on student by wall'."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Draw one arrow on A and the opposite arrow on the strap, explicitly naming each owner."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "If the student-on-wall force is +120 N, what relation would you write first for the wall-on-student force?",
-          "reveal_text": "F_(student by wall) = -F_(wall by student)."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "First write F_(A on strap) = -F_(strap on A)."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "This is one contact interaction between two bodies: student and wall.",
-          "represent": "Represent the pair on two different bodies with explicit vectors.",
-          "connect": "Newton III: F(on student by wall) = -F(on wall by student).",
-          "calculate": "Magnitude is therefore 120 N, opposite the push direction.",
-          "interpret": "The wall exerts 120 N horizontally on the student away from the wall."
+          "understand": "Newton-third-law partners act on different owners at the same interaction.",
+          "represent": "Draw one arrow on A and the opposite arrow on the strap, explicitly naming each owner.",
+          "connect": "First write F_(A on strap) = -F_(strap on A).",
+          "calculate": "A exerts 40 N on the strap to the left; that same connection exerts 40 N on A to the right.",
+          "interpret": "A's leftward pull on the strap and the strap's 40 N rightward pull on A."
         },
-        "final_expression": "Exactly $120\\text{ N}$ directed horizontally away from the wall (opposite the push).",
-        "final_answer_value": "Exactly $120\\text{ N}$ directed horizontally away from the wall (opposite the push)."
+        "final_expression": "A's leftward pull on the strap and the strap's 40 N rightward pull on A.",
+        "final_answer_value": "A's leftward pull on the strap and the strap's 40 N rightward pull on A."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "The two forces are equal even if the wall barely accelerates.",
-        "check_it_another_way": "The student acceleration depends on the net force on the student, not on 'cancelling' this pair.",
-        "watch_out": "Do not put both third-law forces on the same FBD.",
-        "review_this_idea": "Core 1: NLM 08",
+        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
+        "quick_check": "The two forces have identical magnitude even if robot A accelerates.",
+        "check_it_another_way": "Newton-third-law partners act on different owners at the same interaction.",
+        "watch_out": "A pair cannot be two forces drawn on one single-body FBD.",
+        "review_this_idea": "Core 1: NLM-08",
         "limiting_cases": [
           {
-            "condition": "F_push -> 0",
-            "expected": "F_reaction -> 0"
+            "condition": "Ideal or zero-change limit",
+            "expected": "The two forces have identical magnitude even if robot A accelerates."
           },
           {
-            "condition": "Wall mass M -> infinity",
-            "expected": "F_reaction remains exactly 120 N"
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "A pair cannot be two forces drawn on one single-body FBD."
           }
         ]
       }
@@ -265,10 +287,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-07",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q03",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A cricket ball of mass $m = 0.40\\text{ kg}$ traveling horizontally at $v_i = 15\\text{ m/s}$ is caught and brought to rest. Compare the magnitude of the average force exerted on the fielder's hands if the ball is stopped in $\\Delta t_1 = 0.10\\text{ s}$ versus cushioned over $\\Delta t_2 = 0.30\\text{ s}$.",
+      "stem": "A 0.50 kg test parcel moving at 8 m/s is brought to rest by two alternative landing pads. One stops it in 0.20 s, the other in 0.50 s. What are the average resisting-force magnitudes?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -276,10 +299,10 @@
         "caption": ""
       },
       "options": {
-        "A": "60 N in the 0.10 s catch versus 20 N in the 0.30 s catch (one-third the force).",
-        "B": "6.0 N in both catches because the momentum change is identical.",
-        "C": "180 N in the 0.10 s catch versus 60 N in the 0.30 s catch.",
-        "D": "20 N in the 0.10 s catch versus 60 N in the 0.30 s catch."
+        "A": "20 N and 8 N, respectively.",
+        "B": "8 N and 20 N, respectively.",
+        "C": "4 N and 4 N, respectively.",
+        "D": "40 N and 16 N, respectively."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -289,12 +312,12 @@
         "subtopic_competency_ref": "NLM-07",
         "difficulty_factors": {
           "system_coupling": 2,
-          "vector_dimensionality": 1,
-          "constraint_latency": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
           "domain_coupling": 2,
           "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-07 to APPLY demand.",
+        "protected_work_W": "The parcel undergoes the same impulse for both stopping pads.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -307,71 +330,81 @@
         "supporting_demands": [
           "RETRIEVE",
           "EXPLAIN"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 2: The foam parcel is a finite body being brought to rest.",
+          "vector_dimensionality": "Score 2: Incoming velocity and average force are signed along one axis.",
+          "constraint_latency": "Score 1: Mass, speed and both stopping times are explicit.",
+          "domain_coupling": "Score 2: Momentum change is combined with two stopping durations.",
+          "math_friction": "Score 2: Compute two linear force/time ratios."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: $\\Delta p$ = 0 - (0.40)(15) = -6.0 kg m/s. $F_{\\text{avg}}$,1 = 6.0/0.10 = 60 N; $F_{\\text{avg}}$,2 = 6.0/0.30 = 20 N."
+          "diagnostic": "The momentum change magnitude is 0.50×8=4 kg m/s; 4/0.20=20 N and 4/0.50=8 N."
         },
         "B": {
-          "type": "UNITS_CONVERSION_ERROR",
-          "diagnostic": "Confuses impulse $\\Delta p$ = 6 N*s with average force $F_{\\text{avg}}$ in Newtons."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect: Do not confuse impulse (N s) with average force (N)."
         },
         "C": {
-          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
-          "diagnostic": "Multiplied by velocity twice or made an arithmetic scaling error."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; The parcel undergoes the same impulse for both stopping pads."
         },
         "D": {
-          "type": "RECIPROCAL_ERROR",
-          "diagnostic": "Inverted the time dependency, assuming longer impact duration increases contact force."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; A longer stopping time lowers average force for the same momentum change."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "The initial and final momenta are the same in both catches. What quantity changes between the two cases?",
-          "reveal_text": "Only the stopping time changes; the momentum change is the same."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "The parcel undergoes the same impulse for both stopping pads."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "Which state representation makes the sign and size of the momentum change explicit?",
-          "reveal_text": "Write $p_i$ = m v_i, $p_f$ = 0, then $\\Delta p$ = $p_f$ - $p_i$ for each case."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Sketch signed momentum before (+4 kg m/s) and after (zero), with force opposite motion."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "What force relation would you write first once $\\Delta p$ is known?",
-          "reveal_text": "$F_{\\text{avg}}$ = $\\Delta p$ / $\\Delta t$."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "Begin with F_avg Δt = p_after − p_before."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Same $\\Delta p$ in both catches; only $\\Delta t$ differs.",
-          "represent": "Take motion as positive: $p_i$ = 0.40(15) = 6 kg m/s and $p_f$ = 0.",
-          "connect": "Use $F_{\\text{avg}} = \\frac{\\Delta p}{\\Delta t}$ with $\\Delta p = -6\\text{ kg}\\cdot\\text{m/s}$.",
-          "calculate": "|F_1| = 6.0 / 0.10 = 60 N; |F_2| = 6.0 / 0.30 = 20 N.",
-          "interpret": "Tripling stopping time reduces average force magnitude to one-third."
+          "understand": "The parcel undergoes the same impulse for both stopping pads.",
+          "represent": "Sketch signed momentum before (+4 kg m/s) and after (zero), with force opposite motion.",
+          "connect": "Begin with F_avg Δt = p_after − p_before.",
+          "calculate": "The momentum change magnitude is 0.50×8=4 kg m/s; 4/0.20=20 N and 4/0.50=8 N.",
+          "interpret": "20 N and 8 N, respectively."
         },
-        "final_expression": "60 N in the 0.10 s catch versus 20 N in the 0.30 s catch (one-third the force).",
-        "final_answer_value": "60 N in the 0.10 s catch versus 20 N in the 0.30 s catch (one-third the force)."
+        "final_expression": "20 N and 8 N, respectively.",
+        "final_answer_value": "20 N and 8 N, respectively."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "60 * 0.10 = 20 * 0.30 = 6 N*s, the same impulse magnitude.",
-        "check_it_another_way": "A longer stopping time with the same impulse must lower average force.",
-        "watch_out": "Do not compare force using speed alone; compare $\\Delta p$ and $\\Delta t$.",
-        "review_this_idea": "Core 1: NLM 06-07",
+        "dimensional_formula": "[M L T^-2] or [L T^-1]",
+        "quick_check": "A longer stopping time lowers average force for the same momentum change.",
+        "check_it_another_way": "The parcel undergoes the same impulse for both stopping pads.",
+        "watch_out": "Do not confuse impulse (N s) with average force (N).",
+        "review_this_idea": "Core 1: NLM-07",
         "limiting_cases": [
           {
-            "condition": "$\\Delta t$ -> 0 (infinitely stiff)",
-            "expected": "$F_{\\text{avg}}$ -> infinity"
+            "condition": "Ideal or zero-change limit",
+            "expected": "A longer stopping time lowers average force for the same momentum change."
           },
           {
-            "condition": "$\\Delta t$ -> infinity",
-            "expected": "$F_{\\text{avg}}$ -> 0"
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "Do not confuse impulse (N s) with average force (N)."
           }
         ]
       }
@@ -383,10 +416,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-01",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q04",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A passenger standing upright in an aisle of a city bus lurches forward when the driver brakes suddenly. Which statement explains this phenomenon correctly without inventing a fictitious forward force of inertia?",
+      "stem": "A coin rests on a fast airport conveyor. When the conveyor abruptly halts, the coin initially slides onward relative to the belt. Why?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -394,10 +428,10 @@
         "caption": ""
       },
       "options": {
-        "A": "The passenger's body continues forward with its pre-braking velocity because no horizontal force acts on the upper torso until muscles or handrails intervene.",
-        "B": "A forward 'force of inertia' is created by the braking system that pushes the passenger forward.",
-        "C": "The bus exerts a forward reaction force on the passenger's feet to keep them moving.",
-        "D": "Gravitational attraction shifts forward toward the front of the decelerating bus."
+        "A": "Its previous forward motion persists until a horizontal contact force changes it.",
+        "B": "The stopped conveyor gives the coin an extra forward force.",
+        "C": "Gravity is pulling the coin horizontally.",
+        "D": "The coin becomes heavier at the instant of braking."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -407,12 +441,12 @@
         "subtopic_competency_ref": "NLM-01",
         "difficulty_factors": {
           "system_coupling": 1,
-          "vector_dimensionality": 1,
+          "vector_dimensionality": 2,
           "constraint_latency": 1,
           "domain_coupling": 1,
           "math_friction": 1
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-01 to EXPLAIN demand.",
+        "protected_work_W": "The conveyor decelerates before the coin's horizontal velocity fully changes.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -424,71 +458,81 @@
         ],
         "supporting_demands": [
           "RETRIEVE"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 1: Track one loose coin as an object.",
+          "vector_dimensionality": "Score 2: The belt motion is along one signed horizontal direction.",
+          "constraint_latency": "Score 1: The belt stopping event is explicit.",
+          "domain_coupling": "Score 1: Only Newton's first law is needed.",
+          "math_friction": "Score 1: No calculation is requested."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: By Newton I, an object in motion continues with constant velocity in an inertial frame unless acted upon by a net external force; braking decelerates the bus and feet, while the upper body tends to retain pre-braking forward velocity."
+          "diagnostic": "Inertia means the coin initially maintains its velocity; friction then slows its motion."
         },
         "B": {
-          "type": "ARISTOTELIAN_FORCE_VELOCITY",
-          "diagnostic": "Invents a fictitious forward force of inertia in an inertial frame."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect: Inertia is not a separate forward force."
         },
         "C": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Friction between bus floor and passenger feet acts backward to decelerate feet, not forward."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; The conveyor decelerates before the coin's horizontal velocity fully changes."
         },
         "D": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Gravity acts downward toward Earth's center and does not rotate forward during vehicle deceleration."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; With no friction, it would continue at its old velocity relative to the ground."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "Immediately before braking, what horizontal velocity does the passenger's upper body already have?",
-          "reveal_text": "The forward velocity of the bus relative to the road."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "The conveyor decelerates before the coin's horizontal velocity fully changes."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "When the bus decelerates, what horizontal contact force acts on the passenger's shoes from the floor?",
-          "reveal_text": "Backward static friction decelerating the feet."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Mark the coin as the chosen body and place its pre-stop velocity arrow forward."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "What horizontal force acts on the upper body before it tilts or grips a handrail?",
-          "reveal_text": "Essentially zero; by Newton I, it tends to continue forward at constant velocity."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "Start with ΣF_x = m a_x for the coin, not the stopped conveyor."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The passenger initially shares the bus forward velocity.",
-          "represent": "Represent the bus as slowing beneath the passenger; avoid a fictitious forward force in an inertial-frame FBD.",
-          "connect": "Newton I explains persistence of velocity until external forces change it.",
-          "calculate": "Feet are decelerated by backward floor contact; the upper body continues forward briefly, producing the lurch.",
-          "interpret": "The forward lurch is an inertia effect, not evidence of a new forward force."
+          "understand": "The conveyor decelerates before the coin's horizontal velocity fully changes.",
+          "represent": "Mark the coin as the chosen body and place its pre-stop velocity arrow forward.",
+          "connect": "Start with ΣF_x = m a_x for the coin, not the stopped conveyor.",
+          "calculate": "Inertia means the coin initially maintains its velocity; friction then slows its motion.",
+          "interpret": "Its previous forward motion persists until a horizontal contact force changes it."
         },
-        "final_expression": "The passenger's body continues forward with its pre-braking velocity because no horizontal force acts on the upper torso until muscles or handrails intervene.",
-        "final_answer_value": "The passenger's body continues forward with its pre-braking velocity because no horizontal force acts on the upper torso until muscles or handrails intervene."
+        "final_expression": "Its previous forward motion persists until a horizontal contact force changes it.",
+        "final_answer_value": "Its previous forward motion persists until a horizontal contact force changes it."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "If the bus braked gently over a longer time, the lurch would be smaller.",
-        "check_it_another_way": "The actual contact force during braking is backward on the passenger, not forward.",
-        "watch_out": "Do not invent a forward force of inertia in an inertial frame.",
-        "review_this_idea": "Core 1: NLM 01-02",
+        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
+        "quick_check": "With no friction, it would continue at its old velocity relative to the ground.",
+        "check_it_another_way": "The conveyor decelerates before the coin's horizontal velocity fully changes.",
+        "watch_out": "Inertia is not a separate forward force.",
+        "review_this_idea": "Core 1: NLM-01",
         "limiting_cases": [
           {
-            "condition": "Acceleration a_bus = 0",
-            "expected": "No lurch (velocity unchanged)"
+            "condition": "Ideal or zero-change limit",
+            "expected": "With no friction, it would continue at its old velocity relative to the ground."
           },
           {
-            "condition": "Floor perfectly frictionless",
-            "expected": "Feet also glide forward at constant pre-braking velocity"
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "Inertia is not a separate forward force."
           }
         ]
       }
@@ -500,10 +544,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-01",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q05",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "Inside a passenger train moving along a straight horizontal track with constant forward acceleration $a_0$, a seated passenger tosses a coin vertically upward. Relative to the passenger, where does the coin land?",
+      "stem": "An inspection cart accelerates east at a constant rate a on level ground. A vertical launcher fixed on the cart fires a bead straight upward. Ignoring air drag, where does the bead land relative to the moving launcher?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -511,10 +556,10 @@
         "caption": ""
       },
       "options": {
-        "A": "Strictly behind the passenger's hand.",
-        "B": "Exactly back into the passenger's hand.",
-        "C": "In front of the passenger's hand.",
-        "D": "To the right or left of the hand depending on the coin's spin."
+        "A": "West of the launcher because the cart moves farther east during flight.",
+        "B": "Directly back in the launcher because both started together.",
+        "C": "East of the launcher because the bead carries additional eastward acceleration.",
+        "D": "It depends only on the bead's mass."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -524,12 +569,12 @@
         "subtopic_competency_ref": "NLM-01",
         "difficulty_factors": {
           "system_coupling": 2,
-          "vector_dimensionality": 1,
-          "constraint_latency": 2,
+          "vector_dimensionality": 3,
+          "constraint_latency": 1,
           "domain_coupling": 2,
           "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-01 to MODEL demand.",
+        "protected_work_W": "The free bead retains the cart's release velocity but not its continuing horizontal acceleration.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -542,71 +587,81 @@
         "supporting_demands": [
           "REPRESENT",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 2: The cart and launched bead are compared as distinct bodies.",
+          "vector_dimensionality": "Score 3: Vertical flight and horizontal acceleration use two axes.",
+          "constraint_latency": "Score 1: Uniform cart acceleration and bead release are given.",
+          "domain_coupling": "Score 2: Combine horizontal inertial motion with the cart frame.",
+          "math_friction": "Score 2: One quadratic flight time and a displacement difference."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Once airborne, gravity is the only force; the coin maintains its initial horizontal velocity $v_0$. Meanwhile, the train accelerates, covering a greater horizontal distance during the flight time $\\Delta t$, so the floor and passenger advance ahead of the coin."
+          "diagnostic": "For positive flight time the cart gains (1/2)at² east on the bead, so the bead is west of the launcher."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "True only if the train moves at constant velocity (a = 0) in an inertial frame."
+          "diagnostic": "Incorrect: A vertical launch does not confer the cart's later horizontal acceleration."
         },
         "C": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Would occur only if the train were decelerating (braking), not accelerating forward."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; The free bead retains the cart's release velocity but not its continuing horizontal acceleration."
         },
         "D": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Lateral spin does not generate aerodynamic Magnus deflection in typical vertical coin tosses."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; If a=0 both return to the same horizontal position."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "While the coin is airborne, does it automatically share the train's continuing forward acceleration?",
-          "reveal_text": "No; in flight, no horizontal force acts on the coin, so its horizontal velocity remains constant."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "The free bead retains the cart's release velocity but not its continuing horizontal acceleration."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "During the flight time $\\Delta t$, which covers a greater horizontal distance: the coin or the accelerating train?",
-          "reveal_text": "The train, because its horizontal speed steadily increases while the coin's horizontal speed is fixed."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Represent separate horizontal x(t) paths for free bead and accelerating launcher."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "What coordinate difference x_train - x_coin develops over time $\\Delta t$?",
-          "reveal_text": "$\\Delta x$ = 1/2 $a_0$ ($\\Delta t$)^2 > 0 (train advances ahead of the coin)."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "First compare x_bead=x0+v0t and x_cart=x0+v0t+(1/2)at²."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The coin is launched vertically with horizontal velocity $v_0$ equal to the train's instantaneous velocity at launch.",
-          "represent": "In the ground frame, coin executes projectile motion with $v_x$ = $v_0$ = const, while train position is x_train = $v_0$ t + 1/2 $a_0$ t^2.",
-          "connect": "Newton I governs horizontal motion of coin ($\\Sigma F_x = 0 \\implies a_x = 0$).",
-          "calculate": "Relative horizontal position: x_coin,rel = x_coin - x_train = -1/2 $a_0$ t^2 < 0.",
-          "interpret": "Because $\\Delta x$ < 0, the coin lands behind the passenger."
+          "understand": "The free bead retains the cart's release velocity but not its continuing horizontal acceleration.",
+          "represent": "Represent separate horizontal x(t) paths for free bead and accelerating launcher.",
+          "connect": "First compare x_bead=x0+v0t and x_cart=x0+v0t+(1/2)at².",
+          "calculate": "For positive flight time the cart gains (1/2)at² east on the bead, so the bead is west of the launcher.",
+          "interpret": "West of the launcher because the cart moves farther east during flight."
         },
-        "final_expression": "Strictly behind the passenger's hand.",
-        "final_answer_value": "Strictly behind the passenger's hand."
+        "final_expression": "West of the launcher because the cart moves farther east during flight.",
+        "final_answer_value": "West of the launcher because the cart moves farther east during flight."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "If train acceleration $a_0$ = 0, the coin returns exactly to the hand.",
-        "check_it_another_way": "In the accelerating frame of the train, an apparent backward pseudo force F_pseudo = -m $a_0$ deflects the coin backward.",
-        "watch_out": "Do not assume airborne objects maintain the acceleration of their launch vehicle.",
-        "review_this_idea": "Core 1: NLM 01-02",
+        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
+        "quick_check": "If a=0 both return to the same horizontal position.",
+        "check_it_another_way": "The free bead retains the cart's release velocity but not its continuing horizontal acceleration.",
+        "watch_out": "A vertical launch does not confer the cart's later horizontal acceleration.",
+        "review_this_idea": "Core 1: NLM-01",
         "limiting_cases": [
           {
-            "condition": "$a_0$ = 0",
-            "expected": "Lands in hand"
+            "condition": "Ideal or zero-change limit",
+            "expected": "If a=0 both return to the same horizontal position."
           },
           {
-            "condition": "$a_0$ < 0 (braking)",
-            "expected": "Lands in front of hand"
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "A vertical launch does not confer the cart's later horizontal acceleration."
           }
         ]
       }
@@ -618,10 +673,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-01",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q06",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A hockey puck slides across a perfectly smooth, ideal frictionless horizontal ice rink with constant velocity $\\vec{v} = 4.0\\text{ m/s}\\hat{i}$. What horizontal force is required to keep the puck moving at this constant velocity?",
+      "stem": "Far from other objects, a space probe coasts at a fixed speed in a straight line with its thrusters off. What net force is needed to maintain that motion?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -629,10 +685,10 @@
         "caption": ""
       },
       "options": {
-        "A": "Exactly 0 N.",
-        "B": "A forward force proportional to the puck's mass: F = m v.",
-        "C": "A forward force equal to the puck's weight: F = mg.",
-        "D": "A force equal to half the puck's kinetic energy: F = 1/2 m v^2."
+        "A": "Zero net force.",
+        "B": "A forward force proportional to its speed.",
+        "C": "A force opposite the direction of travel.",
+        "D": "A force equal in magnitude to its momentum."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -647,7 +703,7 @@
           "domain_coupling": 1,
           "math_friction": 1
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-01 to RETRIEVE demand.",
+        "protected_work_W": "Uniform straight-line velocity needs no unbalanced force.",
         "rival_demands": [
           {
             "demand": "APPLY",
@@ -657,71 +713,81 @@
         "topic_adapters": [
           "mechanics-nlm"
         ],
-        "supporting_demands": []
+        "supporting_demands": [],
+        "factor_evidence": {
+          "system_coupling": "Score 1: One coasting space probe is isolated.",
+          "vector_dimensionality": "Score 1: Only one translational direction is relevant.",
+          "constraint_latency": "Score 1: Vacuum and no-thruster assumptions are given.",
+          "domain_coupling": "Score 1: Newton's first law is directly recalled.",
+          "math_friction": "Score 1: No computation is necessary."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: By Newton's First Law, an object in motion continues with constant velocity in an inertial frame when net force is zero; no sustaining force is needed."
+          "diagnostic": "No acceleration occurs, so Newton II gives zero net force."
         },
         "B": {
-          "type": "ARISTOTELIAN_FORCE_VELOCITY",
-          "diagnostic": "Classical Aristotelian fallacy: believing force is needed to sustain constant motion."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect: Force changes velocity; it does not maintain it."
         },
         "C": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Weight mg acts vertically downward, balanced by normal force N; no horizontal component exists."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; Uniform straight-line velocity needs no unbalanced force."
         },
         "D": {
-          "type": "UNITS_CONVERSION_ERROR",
-          "diagnostic": "Confuses energy in Joules with force in Newtons."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; The answer is unchanged if the probe is faster but still constant in velocity."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "The velocity of the puck is constant. What does Newton I say about constant velocity?",
-          "reveal_text": "Constant velocity means acceleration is zero, which means net force is zero."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "Uniform straight-line velocity needs no unbalanced force."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What vertical forces act on the puck, and do they balance?",
-          "reveal_text": "Gravity downward and normal upward balance completely: N = mg."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Show a constant velocity arrow and no resultant force arrow."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "What horizontal force is required to keep an object moving at constant velocity on a frictionless surface?",
-          "reveal_text": "Zero Newtons."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "Use ΣF = 0 whenever velocity is constant in an inertial frame."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The puck moves at constant velocity on a frictionless horizontal plane.",
-          "represent": "One-body FBD has downward mg and upward normal N. No horizontal interaction exists.",
-          "connect": "Newton I: $\\Sigma F = 0$ when velocity is constant in an inertial frame.",
-          "calculate": "$\\Sigma F_x = 0 \\implies F_x = 0\\text{ N}$.",
-          "interpret": "Motion itself does not require a sustaining force; force is required only to change velocity."
+          "understand": "Uniform straight-line velocity needs no unbalanced force.",
+          "represent": "Show a constant velocity arrow and no resultant force arrow.",
+          "connect": "Use ΣF = 0 whenever velocity is constant in an inertial frame.",
+          "calculate": "No acceleration occurs, so Newton II gives zero net force.",
+          "interpret": "Zero net force."
         },
-        "final_expression": "Exactly 0 N.",
-        "final_answer_value": "Exactly 0 N."
+        "final_expression": "Zero net force.",
+        "final_answer_value": "Zero net force."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "If a forward force acted without friction, the puck would speed up, violating constant velocity.",
-        "check_it_another_way": "By work-energy theorem, W_net = Delta K = 0; since displacement > 0, $F_{\\text{net}}$ must be 0.",
-        "watch_out": "Do not assume that moving objects automatically require a forward driving force.",
-        "review_this_idea": "Core 1: NLM 01-03",
+        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
+        "quick_check": "The answer is unchanged if the probe is faster but still constant in velocity.",
+        "check_it_another_way": "Uniform straight-line velocity needs no unbalanced force.",
+        "watch_out": "Force changes velocity; it does not maintain it.",
+        "review_this_idea": "Core 1: NLM-01",
         "limiting_cases": [
           {
-            "condition": "Friction mu = 0",
-            "expected": "F_applied = 0"
+            "condition": "Ideal or zero-change limit",
+            "expected": "The answer is unchanged if the probe is faster but still constant in velocity."
           },
           {
-            "condition": "Friction mu > 0",
-            "expected": "F_applied = mu mg to maintain constant velocity"
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "Force changes velocity; it does not maintain it."
           }
         ]
       }
@@ -733,10 +799,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-10",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q07",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A chemical rocket drifts at constant velocity in deep interstellar space far from any celestial gravitational fields. When its engine fires, it ejects hot exhaust gases backward at high speed. Explain why the rocket accelerates forward.",
+      "stem": "In empty space an astronaut at rest uses a gas maneuvering pack. The 90 kg astronaut-plus-pack ejects 1 kg of gas at 9 m/s backward, measured in the initial inertial frame. Immediately after, what forward velocity does the remaining 89 kg have?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -744,25 +811,25 @@
         "caption": ""
       },
       "options": {
-        "A": "Backward momentum of ejected exhaust gases must be balanced by forward momentum of the rocket, conserving total system momentum (Delta P_total = 0).",
-        "B": "The ejected exhaust pushes backward against the surrounding vacuum of space, which pushes back on the rocket.",
-        "C": "The rocket loses mass, which automatically increases its speed to keep kinetic energy constant.",
-        "D": "Thermal expansion of hot gas inside the combustion chamber creates an electrostatic repulsive field."
+        "A": "About 0.101 m/s forward.",
+        "B": "9 m/s forward.",
+        "C": "About 0.101 m/s backward.",
+        "D": "Zero, because the astronaut and gas exert equal forces."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-MODEL-D3",
+        "cell_id": "PHYS-MODEL-D2",
         "primary_demand": "MODEL",
-        "difficulty_band": "D3",
+        "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-10",
         "difficulty_factors": {
           "system_coupling": 3,
           "vector_dimensionality": 2,
-          "constraint_latency": 3,
+          "constraint_latency": 1,
           "domain_coupling": 3,
-          "math_friction": 3
+          "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-10 to MODEL demand.",
+        "protected_work_W": "Choose gas plus remaining astronaut as one isolated system before ejection.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -775,71 +842,81 @@
         "supporting_demands": [
           "REPRESENT",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 3: A gas tank and drifting astronaut exchange momentum.",
+          "vector_dimensionality": "Score 2: Select a signed one-dimensional exhaust direction.",
+          "constraint_latency": "Score 1: The expelled mass and speed are specified.",
+          "domain_coupling": "Score 3: Combine system conservation with expelled-gas recoil.",
+          "math_friction": "Score 2: One linear momentum-balance unknown."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Rocket + exhaust form an isolated system. Backward exhaust momentum $\\Delta p_{\\text{exhaust}}$ < 0 requires equal forward rocket momentum $\\Delta p_{\\text{rocket}}$ > 0."
+          "diagnostic": "Momentum balance gives v=9/89 ≈0.101 m/s forward."
         },
         "B": {
-          "type": "THIRD_LAW_INTERNAL_CANCELLATION",
-          "diagnostic": "Misconception that rockets require external atmosphere to push against; vacuum propulsion works by internal momentum exchange."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect: Third-law equal forces do not imply equal speeds."
         },
         "C": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Kinetic energy is not conserved in chemical propulsion; chemical potential energy is converted to kinetic energy."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; Choose gas plus remaining astronaut as one isolated system before ejection."
         },
         "D": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Rocket thrust is dynamic fluid momentum transfer, not electrostatic repulsion."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; A heavier astronaut recoils more slowly for the same emitted gas momentum."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "Which two parts exchange momentum during the short ejection event?",
-          "reveal_text": "Rocket and exhaust."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "Choose gas plus remaining astronaut as one isolated system before ejection."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What is the net external impulse acting on the rocket+exhaust system in deep space?",
-          "reveal_text": "Zero, because there are no external gravitational or contact forces."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Mark expelled gas momentum negative and remaining astronaut momentum positive."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "If the exhaust acquires backward momentum -$\\Delta p$, what must the rocket acquire to keep total momentum constant?",
-          "reveal_text": "+$\\Delta p$ (forward momentum)."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "Begin with 0 = (89 kg)v + (1 kg)(−9 m/s)."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The rocket and its fuel form an isolated multi-body system in deep space.",
-          "represent": "System boundary encloses rocket body and ejected exhaust gas.",
-          "connect": "System momentum conservation: $\\Delta P_{\\text{system}} = 0 \\implies \\Delta p_{\\text{rocket}} + \\Delta p_{\\text{exhaust}} = 0$.",
-          "calculate": "$\\Delta p_{\\text{rocket}} = -\\Delta p_{\\text{exhaust}} > 0$.",
-          "interpret": "The rocket accelerates forward as a direct consequence of ejecting mass backward."
+          "understand": "Choose gas plus remaining astronaut as one isolated system before ejection.",
+          "represent": "Mark expelled gas momentum negative and remaining astronaut momentum positive.",
+          "connect": "Begin with 0 = (89 kg)v + (1 kg)(−9 m/s).",
+          "calculate": "Momentum balance gives v=9/89 ≈0.101 m/s forward.",
+          "interpret": "About 0.101 m/s forward."
         },
-        "final_expression": "Backward momentum of ejected exhaust gases must be balanced by forward momentum of the rocket, conserving total system momentum (Delta P_total = 0).",
-        "final_answer_value": "Backward momentum of ejected exhaust gases must be balanced by forward momentum of the rocket, conserving total system momentum (Delta P_total = 0)."
+        "final_expression": "About 0.101 m/s forward.",
+        "final_answer_value": "About 0.101 m/s forward."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Forward rocket momentum balances backward exhaust momentum in the simplified system.",
-        "check_it_another_way": "By Newton III, nozzle walls exert a backward force on the gas; the expanding gas exerts an equal forward thrust on the nozzle.",
-        "watch_out": "Rockets do not need an atmosphere to push against; they push against their own expelled propellant.",
-        "review_this_idea": "Core 1: NLM 08-10",
+        "dimensional_formula": "[M L T^-2] or [L T^-1]",
+        "quick_check": "A heavier astronaut recoils more slowly for the same emitted gas momentum.",
+        "check_it_another_way": "Choose gas plus remaining astronaut as one isolated system before ejection.",
+        "watch_out": "Third-law equal forces do not imply equal speeds.",
+        "review_this_idea": "Core 1: NLM-10",
         "limiting_cases": [
           {
-            "condition": "Exhaust ejection velocity v_rel = 0",
-            "expected": "Thrust = 0"
+            "condition": "Ideal or zero-change limit",
+            "expected": "A heavier astronaut recoils more slowly for the same emitted gas momentum."
           },
           {
-            "condition": "Mass ejection rate dm/dt -> 0",
-            "expected": "Thrust = 0"
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "Third-law equal forces do not imply equal speeds."
           }
         ]
       }
@@ -851,10 +928,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-01",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q08",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A road tanker carrying water is filled to three-quarters of its capacity and travels along a straight level road. When the driver applies the brakes suddenly, in which direction does the water surge inside the tank?",
+      "stem": "A fragile sculpture is loosely placed on a motorized display platform moving east. The platform brakes abruptly; the sculpture slides toward its east edge. Which justification is physically correct?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -862,10 +940,10 @@
         "caption": ""
       },
       "options": {
-        "A": "The water surges forward toward the front of the tanker.",
-        "B": "The water remains completely level because liquids cannot exhibit inertia.",
-        "C": "The water surges backward toward the rear of the tanker.",
-        "D": "The water compresses uniformly at the bottom of the tank without shifting forward or backward."
+        "A": "The sculpture retains its earlier eastward velocity while the platform slows beneath it.",
+        "B": "A new eastward inertia force acts on the sculpture.",
+        "C": "Its mass increases briefly when the motor brakes.",
+        "D": "The sculpture must have a net eastward force throughout the slide."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -874,13 +952,13 @@
         "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-01",
         "difficulty_factors": {
-          "system_coupling": 2,
-          "vector_dimensionality": 1,
-          "constraint_latency": 2,
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
           "domain_coupling": 2,
-          "math_friction": 2
+          "math_friction": 1
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-01 to JUSTIFY demand.",
+        "protected_work_W": "The sculpture and platform do not instantly acquire the same new horizontal velocity.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -893,71 +971,81 @@
         "supporting_demands": [
           "EXPLAIN",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 3: Package and moving belt have different deceleration histories.",
+          "vector_dimensionality": "Score 2: Forward direction is marked along the conveyor.",
+          "constraint_latency": "Score 1: The belt's braking event is explicit.",
+          "domain_coupling": "Score 2: Compare belt kinematics with package's inertial continuation.",
+          "math_friction": "Score 1: Only a sign comparison, no algebraic solving."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: By Newton's First Law, the water possesses inertia of motion and continues with its pre-braking forward velocity relative to the road, surging forward against the decelerating tanker walls."
+          "diagnostic": "The platform loses speed more rapidly; relative to it the sculpture advances east."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Fluids possess mass and therefore possess inertia identical to solids."
+          "diagnostic": "Incorrect: Relative forward motion need not mean a net forward force."
         },
         "C": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Water surges backward during forward acceleration, not during braking."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; The sculpture and platform do not instantly acquire the same new horizontal velocity."
         },
         "D": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Water is essentially incompressible and exhibits free-surface sloshing."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; If firmly fastened, the sculpture would decelerate with the platform."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "Before braking, what velocity does the water already have relative to the road?",
-          "reveal_text": "Approximately the tanker's forward velocity."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "The sculpture and platform do not instantly acquire the same new horizontal velocity."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "When the tanker brakes, the tank walls decelerate. What horizontal force immediately decelerates the bulk water?",
-          "reveal_text": "Only pressure forces once the water collides with the front bulkhead."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Compare two eastward velocity arrows just after braking, one on each owner."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "By Newton's First Law, what does the water tend to do while the tanker slows down beneath it?",
-          "reveal_text": "It tends to maintain its forward speed, piling up toward the front of the tank."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "Represent a_sculpture and a_platform separately under ΣF_x=m a_x."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The water initially shares the tanker's forward velocity.",
-          "represent": "In ground frame, the tanker decelerates (a_tank < 0) while bulk fluid continues at speed $v_0$.",
-          "connect": "Newton I: mass tends to persist in uniform motion until external forces act.",
-          "calculate": "Relative displacement Delta x_water = x_water - x_tank > 0.",
-          "interpret": "Water surges forward toward the front bulkhead until pressure gradients balance deceleration."
+          "understand": "The sculpture and platform do not instantly acquire the same new horizontal velocity.",
+          "represent": "Compare two eastward velocity arrows just after braking, one on each owner.",
+          "connect": "Represent a_sculpture and a_platform separately under ΣF_x=m a_x.",
+          "calculate": "The platform loses speed more rapidly; relative to it the sculpture advances east.",
+          "interpret": "The sculpture retains its earlier eastward velocity while the platform slows beneath it."
         },
-        "final_expression": "The water surges forward toward the front of the tanker.",
-        "final_answer_value": "The water surges forward toward the front of the tanker."
+        "final_expression": "The sculpture retains its earlier eastward velocity while the platform slows beneath it.",
+        "final_answer_value": "The sculpture retains its earlier eastward velocity while the platform slows beneath it."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Water surges toward the front during deceleration, exactly like a standing bus passenger.",
-        "check_it_another_way": "In the tanker's decelerating frame, a forward pseudo force F_pseudo = -m a_tank tilts the effective gravity forward.",
-        "watch_out": "Do not assume liquids behave differently from solids regarding Newton's First Law.",
-        "review_this_idea": "Core 1: NLM 01",
+        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
+        "quick_check": "If firmly fastened, the sculpture would decelerate with the platform.",
+        "check_it_another_way": "The sculpture and platform do not instantly acquire the same new horizontal velocity.",
+        "watch_out": "Relative forward motion need not mean a net forward force.",
+        "review_this_idea": "Core 1: NLM-01",
         "limiting_cases": [
           {
-            "condition": "Tanker acceleration a = 0",
-            "expected": "Water surface remains horizontal"
+            "condition": "Ideal or zero-change limit",
+            "expected": "If firmly fastened, the sculpture would decelerate with the platform."
           },
           {
-            "condition": "Tanker accelerating forward (a > 0)",
-            "expected": "Water surges backward toward rear"
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "Relative forward motion need not mean a net forward force."
           }
         ]
       }
@@ -969,10 +1057,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-04",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q09",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "Three solid blocks $A$, $B$, and $C$ of identical exterior shape and dimensions have masses $m_A = 1.0\\text{ kg}$, $m_B = 3.0\\text{ kg}$, and $m_C = 5.0\\text{ kg}$ respectively. Rank the blocks in order of increasing translational inertia.",
+      "stem": "Three calibration satellites have equal external dimensions but masses 2 kg, 6 kg and 3 kg. Rank them from least to greatest resistance to a given change in velocity.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -980,25 +1069,25 @@
         "caption": ""
       },
       "options": {
-        "A": "A < B < C (1 kg < 3 kg < 5 kg).",
-        "B": "C < B < A (5 kg < 3 kg < 1 kg).",
-        "C": "A = B = C because all three blocks have identical volume and geometry.",
-        "D": "Inertia depends only on velocity, so they cannot be ranked without knowing their speeds."
+        "A": "2 kg, 3 kg, 6 kg.",
+        "B": "6 kg, 3 kg, 2 kg.",
+        "C": "They have equal inertia because they look identical.",
+        "D": "3 kg, 2 kg, 6 kg."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-RETRIEVE-D2",
+        "cell_id": "PHYS-RETRIEVE-D1",
         "primary_demand": "RETRIEVE",
-        "difficulty_band": "D2",
+        "difficulty_band": "D1",
         "subtopic_competency_ref": "NLM-04",
         "difficulty_factors": {
-          "system_coupling": 2,
+          "system_coupling": 1,
           "vector_dimensionality": 1,
-          "constraint_latency": 2,
-          "domain_coupling": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
           "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-04 to RETRIEVE demand.",
+        "protected_work_W": "Translational inertia is measured by mass, not silhouette.",
         "rival_demands": [
           {
             "demand": "APPLY",
@@ -1008,71 +1097,81 @@
         "topic_adapters": [
           "mechanics-nlm"
         ],
-        "supporting_demands": []
+        "supporting_demands": [],
+        "factor_evidence": {
+          "system_coupling": "Score 1: Each calibration satellite is ranked by its own mass.",
+          "vector_dimensionality": "Score 1: Direction plays no part in inertia ranking.",
+          "constraint_latency": "Score 1: Three masses are given without hidden constraints.",
+          "domain_coupling": "Score 1: Directly recognize inertial mass.",
+          "math_friction": "Score 2: Order the three mass numbers."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: In classical mechanics, mass is the quantitative measure of translational inertia; larger mass exhibits greater resistance to change in velocity."
+          "diagnostic": "The 2 kg satellite has the least inertia, then 3 kg, then 6 kg."
         },
         "B": {
-          "type": "RECIPROCAL_ERROR",
-          "diagnostic": "Inverted the relationship between mass and inertia."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect: Appearance and volume alone do not measure inertial mass."
         },
         "C": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Confuses geometric volume with inertial mass."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; Translational inertia is measured by mass, not silhouette."
         },
         "D": {
-          "type": "ARISTOTELIAN_FORCE_VELOCITY",
-          "diagnostic": "Confuses momentum (mv) with inertia (m)."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; Doubling mass halves acceleration under identical net force."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "What property measures resistance to a change in velocity in translational motion?",
-          "reveal_text": "Mass."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "Translational inertia is measured by mass, not silhouette."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "Do the exterior dimensions or geometric volume dictate inertia when masses are known?",
-          "reveal_text": "No; mass alone determines translational inertia."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Construct a smallest-to-largest ordered list of the three masses."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "How do the three given masses compare in numerical magnitude?",
-          "reveal_text": "1 kg < 3 kg < 5 kg."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "Recall a=F_net/m for the same applied force."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Three bodies with identical geometry have different masses: 1 kg, 3 kg, 5 kg.",
-          "represent": "State the mass values along a 1D scalar scale.",
-          "connect": "Inertia scales directly with mass m.",
-          "calculate": "m_A (1 kg) < m_B (3 kg) < m_C (5 kg).",
-          "interpret": "Inertia ranking is strictly 5 kg > 3 kg > 1 kg (A < B < C)."
+          "understand": "Translational inertia is measured by mass, not silhouette.",
+          "represent": "Construct a smallest-to-largest ordered list of the three masses.",
+          "connect": "Recall a=F_net/m for the same applied force.",
+          "calculate": "The 2 kg satellite has the least inertia, then 3 kg, then 6 kg.",
+          "interpret": "2 kg, 3 kg, 6 kg."
         },
-        "final_expression": "A < B < C (1 kg < 3 kg < 5 kg).",
-        "final_answer_value": "A < B < C (1 kg < 3 kg < 5 kg)."
+        "final_expression": "2 kg, 3 kg, 6 kg.",
+        "final_answer_value": "2 kg, 3 kg, 6 kg."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "A larger mass accelerates less under the same force (a = F/m).",
-        "check_it_another_way": "Accelerating 5 kg at 1 m/s^2 requires 5 N; accelerating 1 kg requires only 1 N.",
-        "watch_out": "Do not confuse mass with volume or weight.",
-        "review_this_idea": "Core 1: NLM 01, NLM 04",
+        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
+        "quick_check": "Doubling mass halves acceleration under identical net force.",
+        "check_it_another_way": "Translational inertia is measured by mass, not silhouette.",
+        "watch_out": "Appearance and volume alone do not measure inertial mass.",
+        "review_this_idea": "Core 1: NLM-04",
         "limiting_cases": [
           {
-            "condition": "m -> 0",
-            "expected": "Inertia -> 0 (infinite acceleration for any non-zero force)"
+            "condition": "Ideal or zero-change limit",
+            "expected": "Doubling mass halves acceleration under identical net force."
           },
           {
-            "condition": "m -> infinity",
-            "expected": "Inertia -> infinity (zero acceleration)"
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "Appearance and volume alone do not measure inertial mass."
           }
         ]
       }
@@ -1084,10 +1183,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-02",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q10",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A textbook question describes solid spheres resting on the floor of a train that brakes suddenly and claims the spheres 'roll forward'. Under the strict, literal idealization of a 'smooth' (frictionless) floor, which conclusion is physically valid?",
+      "stem": "A solid sphere is placed on a perfectly frictionless laboratory table with horizontal translational speed but initially no spin. Must it begin to roll without slipping?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1095,10 +1195,10 @@
         "caption": ""
       },
       "options": {
-        "A": "On a truly smooth floor, only normal force and gravity act; without horizontal friction there is zero torque about the center of mass, so the spheres slide forward without rolling.",
-        "B": "The spheres roll forward because inertia of rest always produces rotational torque.",
-        "C": "The spheres roll backward because the decelerating floor drags them clockwise.",
-        "D": "The spheres lift off the floor due to centrifugal force."
+        "A": "No; without tangential contact force it has no frictional torque to start spinning.",
+        "B": "Yes; every moving sphere automatically rotates.",
+        "C": "Yes; the table's normal force supplies a horizontal torque.",
+        "D": "No; it must immediately stop translating."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -1108,12 +1208,12 @@
         "subtopic_competency_ref": "NLM-02",
         "difficulty_factors": {
           "system_coupling": 2,
-          "vector_dimensionality": 1,
-          "constraint_latency": 2,
+          "vector_dimensionality": 3,
+          "constraint_latency": 1,
           "domain_coupling": 2,
           "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-02 to JUSTIFY demand.",
+        "protected_work_W": "Check the body's applied torque instead of inferring rolling from shape.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -1126,71 +1226,81 @@
         "supporting_demands": [
           "EXPLAIN",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 2: A rigid sphere can translate and rotate.",
+          "vector_dimensionality": "Score 3: Normal and gravity are vertical while translation is horizontal.",
+          "constraint_latency": "Score 1: The perfectly frictionless surface is explicit.",
+          "domain_coupling": "Score 2: Relate no frictional torque to translational motion.",
+          "math_friction": "Score 2: Use zero-torque angular acceleration reasoning."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: A truly frictionless surface cannot exert a horizontal shear force; without a shear force at the contact point, torque tau = r x $F_f$ = 0, so rotational acceleration alpha = 0. The spheres simply translate/slide."
+          "diagnostic": "Gravity and normal give no torque about the center, so α=0 and the sphere keeps translating without gaining spin."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Torque requires a physical force acting at non-zero lever arm; inertia does not generate torque in an inertial frame."
+          "diagnostic": "Incorrect: A rolling constraint requires a physical coupling such as static friction."
         },
         "C": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Floor deceleration cannot drag frictionless surfaces."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; Check the body's applied torque instead of inferring rolling from shape."
         },
         "D": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Normal force N = mg balances vertical gravity; no vertical lift-off occurs."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; If it initially spun, the spin would persist independently in the idealization."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "If the floor is truly frictionless, what horizontal contact force and rolling torque can it exert on a ball?",
-          "reveal_text": "Zero horizontal force and zero torque."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "Check the body's applied torque instead of inferring rolling from shape."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What forces appear on the FBD of the ball on an ideal smooth surface?",
-          "reveal_text": "Vertical normal force N and vertical gravitational force mg only."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Draw the sphere FBD: gravity down and normal up, no horizontal friction arrow."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "Can an object undergo angular acceleration about its center of mass without net torque?",
-          "reveal_text": "No; tau = I alpha = 0 implies alpha = 0 (no rolling)."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "Start with Στ_about_CM=Iα and identify any nonzero contact torque."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The question tests whether rolling motion can occur on an ideal frictionless floor.",
-          "represent": "Draw FBD of sphere: downward mg at COM, upward normal N at contact point. Zero horizontal force.",
-          "connect": "Rotational dynamics requires net torque tau = I alpha to initiate rolling.",
-          "calculate": "Torque about COM: tau = r x F_horizontal = r(0) = 0 => alpha = 0.",
-          "interpret": "Rolling is not justified by the literal smooth-floor model; the sphere translates without rolling."
+          "understand": "Check the body's applied torque instead of inferring rolling from shape.",
+          "represent": "Draw the sphere FBD: gravity down and normal up, no horizontal friction arrow.",
+          "connect": "Start with Στ_about_CM=Iα and identify any nonzero contact torque.",
+          "calculate": "Gravity and normal give no torque about the center, so α=0 and the sphere keeps translating without gaining spin.",
+          "interpret": "No; without tangential contact force it has no frictional torque to start spinning."
         },
-        "final_expression": "On a truly smooth floor, only normal force and gravity act; without horizontal friction there is zero torque about the center of mass, so the spheres slide forward without rolling.",
-        "final_answer_value": "On a truly smooth floor, only normal force and gravity act; without horizontal friction there is zero torque about the center of mass, so the spheres slide forward without rolling."
+        "final_expression": "No; without tangential contact force it has no frictional torque to start spinning.",
+        "final_answer_value": "No; without tangential contact force it has no frictional torque to start spinning."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Rolling requires friction to provide tangential torque about the center of mass.",
-        "check_it_another_way": "On an icy surface, a bowling ball skids forward without spinning until friction engages.",
-        "watch_out": "Do not accept informal claims of rolling without checking the physical source of torque.",
-        "review_this_idea": "Core 1: NLM 01-03",
+        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
+        "quick_check": "If it initially spun, the spin would persist independently in the idealization.",
+        "check_it_another_way": "Check the body's applied torque instead of inferring rolling from shape.",
+        "watch_out": "A rolling constraint requires a physical coupling such as static friction.",
+        "review_this_idea": "Core 1: NLM-02",
         "limiting_cases": [
           {
-            "condition": "Friction coefficient mu = 0",
-            "expected": "Pure sliding, zero rotation"
+            "condition": "Ideal or zero-change limit",
+            "expected": "If it initially spun, the spin would persist independently in the idealization."
           },
           {
-            "condition": "Friction coefficient mu >> 0",
-            "expected": "Immediate pure rolling"
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "A rolling constraint requires a physical coupling such as static friction."
           }
         ]
       }
