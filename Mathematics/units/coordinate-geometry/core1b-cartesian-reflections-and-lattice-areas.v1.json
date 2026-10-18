@@ -1,0 +1,68 @@
+{
+  "schema": "imo-core1b-self-tutor-dialogue/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1B-COORD-GEOM-REFLECTIONS-AREAS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+  "paired_core1a_ref": "PKG-CORE1A-COORD-GEOM-REFLECTIONS-AREAS",
+  "topic": "Coordinate Geometry",
+  "target_demand": "SYNTHESIZE",
+  "target_band": "D3",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating: When reflecting a point P(x, y) across the x-axis, which coordinate inverts its sign, and which coordinate remains invariant?",
+      "options": [
+        "A. The x-coordinate inverts to -x; the y-coordinate is invariant.",
+        "B. The y-coordinate inverts to -y; the x-coordinate is invariant.",
+        "C. Both x and y invert their signs.",
+        "D. Neither coordinate changes sign."
+      ],
+      "predict_rationale": "Forces unassisted recall of horizontal vs vertical mirror isometries in the Cartesian plane before algebraic computation."
+    },
+    "stage_2_attempt": {
+      "task": "In the attempt-box below, formulate the step-by-step solution: Point Q(7, -9) is reflected across the vertical y-axis to obtain point Q'. State the coordinates of Q', verify which quadrant Q' belongs to, and compute the distance between Q and Q'.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Reflection across the vertical y-axis inverts the horizontal abscissa: (x, y) -> (-x, y). Therefore Q(7, -9) maps to Q'(-7, -9).",
+        "step_2": "In Q'(-7, -9), both x < 0 and y < 0. Thus Q' lies in Quadrant III.",
+        "step_3": "Distance QQ' = |7 - (-7)| = 14 units along the horizontal line y = -9.",
+        "conclusion": "The reflected point is Q'(-7, -9) in Quadrant III with distance QQ' = 14 units."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_ENGINEERING_FROM_GOAL",
+      "dialog_steps": [
+        {
+          "inquiry": "Working backwards: If two points have coordinates (x, y) and (-x, y), what is the equation of the line of symmetry that bisects the segment joining them?",
+          "expected_insight": "The vertical line x = 0 (the y-axis), which is the perpendicular bisector of the horizontal segment."
+        },
+        {
+          "inquiry": "If you reflect a point across both axes sequentially (first x-axis, then y-axis), what single transformation is this equivalent to?",
+          "expected_insight": "Reflection across the origin: (x, y) -> (x, -y) -> (-x, -y), which is a half-turn (180° rotation) about (0,0)."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Boundary test on limiting case: Suppose point P lies directly on the axis of reflection, e.g., P(5, 0) reflected across the x-axis. What are the reflected coordinates?",
+      "options": [
+        "A. (5, 0), because -0 = 0 and points lying on the line of reflection are invariant fixed points.",
+        "B. (-5, 0), because reflection always flips positive to negative.",
+        "C. (0, 5), because reflection swaps coordinates.",
+        "D. Undefined, because axes do not have reflections."
+      ],
+      "correct_option": "A",
+      "explanation": "Points on the mirror line satisfy y = 0. Inverting y gives -0 = 0, so the point maps to itself: (5, 0) -> (5, 0). All points on the reflection axis are invariant fixed points of the isometry."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Identify which axis serves as the mirror line. Reflection across a coordinate axis negates the perpendicular coordinate while keeping the parallel coordinate unchanged."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "For vertical reflection across the y-axis, map (x, y) -> (-x, y). Thus Q(7, -9) becomes Q'(-7, -9). Because both points share the same ordinate y = -9, their separation is strictly |7 - (-7)| = 14 units."
+    }
+  }
+}

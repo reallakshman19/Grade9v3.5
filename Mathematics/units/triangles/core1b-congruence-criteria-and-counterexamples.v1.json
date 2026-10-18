@@ -1,0 +1,68 @@
+{
+  "schema": "imo-core1b-self-tutor-dialogue/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1B-TRIANGLES-CONGRUENCE-COUNTEREXAMPLES",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+  "paired_core1a_ref": "PKG-CORE1A-TRIANGLES-CONGRUENCE-COUNTEREXAMPLES",
+  "topic": "TRIANGLES",
+  "target_demand": "JUSTIFY",
+  "target_band": "D3",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating or citing theorems: Suppose two triangles have angles measuring 45°, 45°, 90° and 45°, 45°, 90°. Can you deduce that they are congruent without any side information?",
+      "options": [
+        "A. Yes, AAA guarantees congruence.",
+        "B. No, they are similar but may have completely different sizes.",
+        "C. Yes, because it is an isosceles right triangle.",
+        "D. No, because the angle sum does not equal 180°."
+      ],
+      "predict_rationale": "Forces unassisted recall of the distinction between geometric similarity and metric congruence before checking answer choices."
+    },
+    "stage_2_attempt": {
+      "task": "In the attempt-box below, formulate a proof: In ∆ABC and ∆PQR, ∠A = ∠P, ∠B = ∠Q, and AB = PQ. Prove that ∆ABC ≅ ∆PQR and specify which congruence criterion applies.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Given ∠A = ∠P and ∠B = ∠Q, the side AB lies between the two specified angles in ∆ABC, and PQ lies between ∠P and ∠Q in ∆PQR.",
+        "step_2": "The side AB is equal in length to PQ: AB = PQ.",
+        "step_3": "By the ASA (Angle-Side-Angle) criterion, two angles and the included side of ∆ABC are equal to two angles and the included side of ∆PQR.",
+        "conclusion": "Therefore, ∆ABC ≅ ∆PQR by the ASA congruence criterion."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_ENGINEERING_FROM_GOAL",
+      "dialog_steps": [
+        {
+          "inquiry": "Working backwards: If you need to prove ∆ABC ≅ ∆PQR, what is the absolute minimum number of corresponding side equalities you must establish?",
+          "expected_insight": "At least 1 side equality is mandatory; without a side length constraint, triangles can be scaled arbitrarily."
+        },
+        {
+          "inquiry": "If you are given two angles and a non-included side (AAS), how does the triangle angle sum theorem convert this into the ASA criterion?",
+          "expected_insight": "Since the three angles sum to 180°, knowing two angles immediately fixes the third angle, so any side becomes the included side between two known angles."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Boundary test on limiting case: Suppose one angle of a triangle approaches 180° (flattening into a degenerate line segment). Does the concept of triangle congruence still apply?",
+      "options": [
+        "A. Yes, collinear segments always form congruent triangles.",
+        "B. No, the triangle degenerates into a straight line segment and ceases to be a valid planar triangle.",
+        "C. Yes, because AAS holds for zero-area polygons.",
+        "D. No, because the angles would sum to more than 180°."
+      ],
+      "correct_option": "B",
+      "explanation": "In Euclidean geometry, a triangle requires three non-collinear vertices. As one angle approaches 180°, the area collapses to zero and the figure degenerates into a line segment, violating the non-collinearity hypothesis."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Recall that triangles with identical angles (AAA) can be scaled freely by any dilation factor. To fix the metric scale and force congruence, at least one corresponding side length must be pinned down."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Check whether the known side is included between the two known angles (ASA) or lies opposite one of the known angles (AAS). Because the three angles sum to 180°, knowing any two angles immediately fixes the third, so both ASA and AAS guarantee unique triangle congruence."
+    }
+  }
+}

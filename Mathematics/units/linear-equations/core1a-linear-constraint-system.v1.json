@@ -1,0 +1,136 @@
+{
+  "schema": "grade9v3-core1a-construction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1A-MATH-LINEAR-EQUATIONS-CONSTRAINT-SYSTEM",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION",
+  "topic": "Linear Equations in Two Variables",
+  "topic_name": "Linear Equations in Two Variables",
+  "subtopic": "LINEAR-CONSTRAINT-SYSTEM-MODELING",
+  "target_demand": "MODEL",
+  "target_band": "D2",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-A-Q001",
+    "SOF-IMO-G09-L1-2025-26-A-Q020",
+    "SOF-IMO-G09-L1-2025-26-A-Q023",
+    "SOF-IMO-G09-L1-2025-26-A-Q031",
+    "SOF-IMO-G09-L1-2025-26-A-Q037",
+    "SOF-IMO-G09-L1-2025-26-A-Q038",
+    "SOF-IMO-G09-L1-2025-26-A-Q042",
+    "SOF-IMO-G09-L1-2025-26-A-Q044",
+    "SOF-IMO-G09-L1-2025-26-B-Q020",
+    "SOF-IMO-G09-L1-2025-26-B-Q023",
+    "SOF-IMO-G09-L1-2025-26-B-Q032",
+    "SOF-IMO-G09-L1-2025-26-B-Q038",
+    "SOF-IMO-G09-L1-2025-26-B-Q039",
+    "SOF-IMO-G09-L1-2024-25-B-Q020",
+    "SOF-IMO-G09-L1-2024-25-B-Q029",
+    "SOF-IMO-G09-L1-2024-25-B-Q037",
+    "SOF-IMO-G09-L1-2024-25-B-Q039",
+    "SOF-IMO-G09-L1-2024-25-B-Q041",
+    "SOF-IMO-G09-L1-2024-25-B-Q043",
+    "SOF-IMO-G09-L1-2023-24-A-Q036",
+    "SOF-IMO-G09-L1-2023-24-A-Q037",
+    "SOF-IMO-G09-L1-2023-24-A-Q038",
+    "SOF-IMO-G09-L1-2023-24-A-Q042",
+    "SOF-IMO-G09-L1-2023-24-A-Q043",
+    "SOF-IMO-G09-L1-2023-24-A-Q045",
+    "SOF-IMO-G09-SAMPLE-2026-27-Q008"
+  ],
+  "entry_assumptions": [
+    "Understanding of Cartesian coordinates (x, y) and standard linear equations in one variable.",
+    "Basic mastery of algebraic balance operations (adding/subtracting equals, scalar multiplication)."
+  ],
+  "inferential_jump": "Why translating word problem constraints into linear algebraic equations requires identifying independent invariant quantities, assigning dimensional variables, formulating simultaneous linear constraints ax + by = c, and proving that the algebraic intersection represents the unique physical state satisfying all conditions.",
+  "relation_refs": {
+    "domain": "Linear Systems over R and Real-World Constraint Modeling",
+    "hypotheses": [
+      "Let x and y denote distinct unknown real quantities (e.g. costs, rates, ages, coordinates).",
+      "Each independent condition in the problem stem defines a linear affine hyperplane: a*x + b*y = c.",
+      "The system is non-degenerate: det([a1, b1; a2, b2]) != 0, ensuring a unique model solution."
+    ],
+    "excluded_values": [
+      "Degenerate parallel constraints that share no solution.",
+      "Assigning variable names without explicit units of measure."
+    ]
+  },
+  "representation": [
+    {
+      "symbol": "x, y",
+      "svg_element_ref": "state-variables",
+      "word_meaning": "Explicitly defined state variables with physical units (e.g. price per unit, distance in km)."
+    },
+    {
+      "symbol": "a_1 x + b_1 y = c_1",
+      "svg_element_ref": "primary-constraint-line",
+      "word_meaning": "The locus of all state pairs satisfying the first independent physical relationship."
+    },
+    {
+      "symbol": "a_2 x + b_2 y = c_2",
+      "svg_element_ref": "secondary-constraint-line",
+      "word_meaning": "The locus of all state pairs satisfying the second independent physical relationship."
+    },
+    {
+      "symbol": "(x_0, y_0)",
+      "svg_element_ref": "intersection-solution-point",
+      "word_meaning": "The unique concurrent intersection point representing the exact model solution."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step_ref": "STEP-01",
+      "claim": "Identify the two unknown target quantities and define them with precise units: let x be the first quantity and y be the second quantity.",
+      "derivation": "A physical situation with two degrees of freedom requires two orthogonal coordinates to parameterize its state space.",
+      "why_valid": "Formal variable assignment establishes a bijective map between the physical word statement and the mathematical model."
+    },
+    {
+      "step_ref": "STEP-02",
+      "claim": "Translate the first physical relationship into an exact linear equation: a1*x + b1*y = c1.",
+      "derivation": "Summing the weighted contributions of each component equals the total measured value.",
+      "why_valid": "The principle of linear superposition warrants that composite totals equal the sum of their constituent parts."
+    },
+    {
+      "step_ref": "STEP-03",
+      "claim": "Translate the second physical relationship into an independent linear equation: a2*x + b2*y = c2.",
+      "derivation": "The second condition provides an independent constraint on the same variables (x, y).",
+      "why_valid": "Two non-parallel lines in the Cartesian plane R^2 intersect at exactly one point."
+    },
+    {
+      "step_ref": "STEP-04",
+      "claim": "Solve the simultaneous system using elimination or substitution to extract the physical parameters.",
+      "derivation": "Multiply equations by suitable scalar coefficients to eliminate one variable, solve for the remaining unknown, and back-substitute.",
+      "why_valid": "Elementary row operations preserve the exact solution set of a linear system."
+    }
+  ],
+  "misconceptions": [
+    {
+      "code": "VARIABLE_UNIT_OMISSION",
+      "wrong_idea": "Treating variables as dimensionless numbers and adding apples to rupees or hours to minutes.",
+      "diagnostic_prompt": "What are the physical dimensions of x and y, and do both sides of your equation have the same units?",
+      "repair": "Every term in an equation must possess identical physical dimensions (Dimensional Homogeneity Principle)."
+    },
+    {
+      "code": "TRIAL_AND_ERROR_SUBSTITUTION_FALLACY",
+      "wrong_idea": "Guessing numbers from the multiple-choice options without formulating the governing constraint equations.",
+      "diagnostic_prompt": "If the options were not provided, how would you systematically deduce the solution?",
+      "repair": "Competitive olympiad problems deliberately engineer options that trap guessers. Always formulate the two governing linear constraints first."
+    }
+  ],
+  "worked_concept_anchor": {
+    "status": "CANONICAL_ANCHOR_PROOF",
+    "prompt": "The cost of 5 pens and 3 notebooks is Rs 105, while 3 pens and 4 notebooks cost Rs 85. Formulate the system of linear equations and find the cost of each item.",
+    "model_answer": "Let the cost of one pen be Rs x, and one notebook be Rs y. Condition 1 gives: 5x + 3y = 105. Condition 2 gives: 3x + 4y = 85. Multiplying the first equation by 4 gives: 20x + 12y = 420. Multiplying the second equation by 3 gives: 9x + 12y = 255. Subtracting eliminates y: 11x = 165 => x = 15. Substituting x = 15 into 3(15) + 4y = 85 gives 45 + 4y = 85 => 4y = 40 => y = 10. The cost of one pen is Rs 15 and one notebook is Rs 10."
+  },
+  "exit_task": {
+    "prompt": "AUTHORED INDEPENDENT EXIT (modified case). A transport provider offers two candidate pricing models for moving cargo distance d (km) with cost C (Rs): Model 1 is linear C = 12d + 50; Model 2 is square-offset C = d^2 + 100. For four observed trips (2, 74), (4, 98), (6, 122), and (8, 164), determine which model fits the first three trips, identify why the fourth trip is an exception, and state what C(8) should equal under that winning rule.",
+    "answer": {
+      "kind": "MODEL_RESPONSE",
+      "summary": "Model 1 (C = 12d + 50) correctly predicts the first three observations; trip (8, 164) is the exception because 12(8) + 50 = 146.",
+      "reasoning": [
+        "Evaluate Model 1: for d=2, C = 12(2)+50 = 74 (matches); for d=4, C = 12(4)+50 = 98 (matches); for d=6, C = 12(6)+50 = 122 (matches).",
+        "Evaluate Model 2: for d=2, C = 2^2+100 = 104 != 74 (fails immediately).",
+        "For the fourth trip (d=8), Model 1 predicts C = 12(8)+50 = 96 + 50 = 146, whereas the observed cost was 164. The residual is +18."
+      ],
+      "check": "Residuals for Model 1: 74-74=0, 98-98=0, 122-122=0, 164-146=+18. Exactly 3 points fit the linear model with a unique non-zero outlier."
+    }
+  }
+}

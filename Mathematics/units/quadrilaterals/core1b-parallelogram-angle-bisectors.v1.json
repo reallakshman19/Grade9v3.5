@@ -1,0 +1,73 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-QUADRILATERALS-PARALLELOGRAM-ANGLE-BISECTORS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "QUADRILATERALS",
+  "subtopic": "QUADRILATERALS-PARALLELOGRAM-ANGLE-BISECTORS",
+  "target_demand": "JUSTIFY",
+  "target_band": "D2",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before computing any algebraic steps: Suppose you draw any general parallelogram ABCD with unequal adjacent sides (AB != BC), and draw the internal angle bisectors of all four interior angles. What specific geometric figure is always formed by the intersection of these four bisectors?",
+      "options": [
+        "A. A square, because angle bisectors always create four equal sides and four right angles.",
+        "B. A rectangle (non-square in general), because consecutive bisectors intersect at 90 degrees, but adjacent sides are unequal unless ABCD is a rhombus.",
+        "C. A rhombus, because bisectors create equal angles at every apex.",
+        "D. A trapezium, because only one pair of opposite bisectors can be parallel."
+      ],
+      "predict_rationale": "Forces the student to distinguish between equal angles (which guarantees a rectangle) and equal sides (which would require a rhombus), preventing the common fallacy of assuming a square without equal adjacent sides."
+    },
+    "stage_2_attempt": {
+      "task": "Formulate the exact chain of geometric warrants that proves angle(ASB) = 90 degrees (where S is the intersection of bisectors of angle A and angle B in parallelogram ABCD), and explain how this transfers to vertex S of the enclosed quadrilateral PQRS.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "In parallelogram ABCD with AD || BC, consecutive interior angles on the same side of transversal AB are supplementary: angle(A) + angle(B) = 180 deg.",
+        "step_2": "Since ray AS bisects angle A and ray BS bisects angle B, angle(SAB) = (1/2) * angle(A) and angle(SBA) = (1/2) * angle(B).",
+        "step_3": "Their sum in triangle ASB is angle(SAB) + angle(SBA) = (1/2) * (angle(A) + angle(B)) = (1/2) * 180 deg = 90 deg.",
+        "step_4": "By the triangle angle sum theorem in triangle ASB, angle(ASB) = 180 deg - 90 deg = 90 deg.",
+        "conclusion": "Since line segments AP and CR intersect at S, the interior angle of quadrilateral PQRS at vertex S is vertically opposite to angle(ASB), so angle(PSR) = angle(ASB) = 90 deg."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "COORDINATE_AND_SLOPE_ORTHOGONALITY_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose instead of synthetic Euclidean angle-sum, we assign coordinates with vertex A at origin (0,0), side AB along positive x-axis of length a, and AD at angle theta. What are the direction angles of bisector AS and bisector BS?",
+          "expected_insight": "Bisector AS makes angle theta/2 with the positive x-axis. Bisector BS bisects angle B = (180 - theta), so relative to ray BA (negative x-axis), it makes angle (180 - theta)/2 = 90 - theta/2."
+        },
+        {
+          "inquiry": "What is the angle between the two lines in the plane?",
+          "expected_insight": "The angle between line AS (inclination theta/2) and line BS (inclination 180 - (90 - theta/2) = 90 + theta/2) is exactly (90 + theta/2) - (theta/2) = 90 degrees, proving perpendicularity regardless of theta or side lengths!"
+        },
+        {
+          "inquiry": "How does this independent slope derivation reinforce the synthetic proof?",
+          "expected_insight": "It demonstrates that the orthogonality is an algebraic invariant of the parallel lines condition, completely independent of the choice of diagram or scaling."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: Suppose parallelogram ABCD is continuously deformed so that all four sides become equal (a rhombus), or deformed into a rectangle. What happens to the enclosed quadrilateral PQRS at these boundary limits?",
+      "options": [
+        "A. For a rhombus, all four angle bisectors meet at a single concurrent point (the incenter/center), collapsing PQRS to a degenerate single point; for a rectangle, PQRS becomes a square.",
+        "B. PQRS remains identical in size regardless of whether ABCD is a rhombus or rectangle.",
+        "C. In a rhombus, PQRS expands to fill the entire area of ABCD.",
+        "D. In a rectangle, PQRS becomes a circle."
+      ],
+      "correct_option": "A",
+      "explanation": "In a rhombus, diagonals bisect the opposite angles, meaning opposite angle bisectors coincide and all four bisectors intersect at the single central point of symmetry (collapsing PQRS to a point of area 0). In a rectangle where angles are already 90 degrees, each bisector is at 45 degrees, creating isosceles right triangles at each corner and forcing the enclosed rectangle to have equal adjacent sides, becoming a square."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Recall the consecutive interior angles theorem: when two parallel lines are cut by a transversal, the sum of co-interior angles is 180 degrees. What is half of this sum?"
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Write: angle(SAB) = angle(A)/2 and angle(SBA) = angle(B)/2. Since angle(A) + angle(B) = 180 deg, angle(SAB) + angle(SBA) = 90 deg. Now apply triangle angle sum in triangle ASB to find angle(ASB)."
+    }
+  }
+}

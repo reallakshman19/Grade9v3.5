@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" role="img" aria-label="Pie chart showing subject preferences of students" font-family="system-ui, sans-serif">
+  <title>Student Subject Preferences Pie Chart</title>
+  <desc>Circular pie chart representing subject preferences: Mathematics 35 percent, Social Studies 20 percent, Science 25 percent, English 15 percent, and Hindi 5 percent.</desc>
+  <style>
+    .slice { stroke: #1e293b; stroke-width: 2.5; stroke-linejoin: round; }
+    .label-title { font-size: 19px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .label-pct { font-size: 17px; font-weight: 600; fill: #334155; text-anchor: middle; }
+  </style>
+
+  <!-- Center (350, 250), radius 170 -->
+  <!-- 
+    Percentages:
+    1. Mathematics: 35% = 126 deg (from -90 to +36 deg)
+    2. Science: 25% = 90 deg (from +36 to +126 deg)
+    3. English: 15% = 54 deg (from +126 to +180 deg)
+    4. Hindi: 5% = 18 deg (from +180 to +198 deg)
+    5. Social Studies: 20% = 72 deg (from +198 to +270 deg / -90 deg)
+  -->
+
+  <!-- Mathematics (35% = 126 deg): -90 to +36 deg -->
+  <!-- cos(36)=0.8090, sin(36)=0.5878 -> (350 + 170*0.8090, 250 + 170*0.5878) = (487.5, 349.9) -->
+  <path d="M 350 250 L 350 80 A 170 170 0 0 1 487.5 350 Z" fill="#e0f2fe" class="slice"/>
+  <text x="440" y="190" class="label-title">Mathematics</text>
+  <text x="440" y="215" class="label-pct">35%</text>
+
+  <!-- Science (25% = 90 deg): +36 to +126 deg -->
+  <!-- cos(126)=-0.5878, sin(126)=0.8090 -> (250.1, 387.5) -->
+  <path d="M 350 250 L 487.5 350 A 170 170 0 0 1 250.1 387.5 Z" fill="#dcfce7" class="slice"/>
+  <text x="360" y="380" class="label-title">Science</text>
+  <text x="360" y="405" class="label-pct">25%</text>
+
+  <!-- English (15% = 54 deg): +126 to +180 deg -->
+  <!-- cos(180)=-1, sin(180)=0 -> (180, 250) -->
+  <path d="M 350 250 L 250.1 387.5 A 170 170 0 0 1 180 250 Z" fill="#fef3c7" class="slice"/>
+  <text x="230" y="310" class="label-title">English</text>
+  <text x="230" y="332" class="label-pct">15%</text>
+
+  <!-- Hindi (5% = 18 deg): +180 to +198 deg -->
+  <!-- cos(198)=-0.9511, sin(198)=-0.3090 -> (188.3, 197.5) -->
+  <path d="M 350 250 L 180 250 A 170 170 0 0 1 188.3 197.5 Z" fill="#fce7f3" class="slice"/>
+  <text x="210" y="220" font-size="14" font-weight="700" fill="#0f172a">Hindi 5%</text>
+
+  <!-- Social Studies (20% = 72 deg): +198 to +270 deg -->
+  <path d="M 350 250 L 188.3 197.5 A 170 170 0 0 1 350 80 Z" fill="#ede9fe" class="slice"/>
+  <text x="260" y="140" class="label-title">Social Studies</text>
+  <text x="260" y="162" class="label-pct">20%</text>
+
+  <!-- Info Annotation -->
+  <rect x="30" y="30" width="220" height="45" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="140" y="58" font-size="16" font-weight="600" fill="#334155" text-anchor="middle">Maths = 140 Students</text>
+</svg>

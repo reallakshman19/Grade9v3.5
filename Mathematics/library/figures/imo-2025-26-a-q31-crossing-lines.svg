@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" role="img" aria-label="Intersecting lines PQ and RS with ray OT" font-family="system-ui, sans-serif">
+  <title>Angle Relations at Intersecting Lines PQ and RS</title>
+  <desc>Straight lines PQ and RS intersect at O. Ray OT is drawn such that angle POT is 75 degrees. The angles are labeled 4b, 2c, a, b, and 75 degrees.</desc>
+  <style>
+    .line-main { stroke: #1e293b; stroke-width: 3.5; stroke-linecap: round; }
+    .line-ray { stroke: #0284c7; stroke-width: 3.5; stroke-linecap: round; }
+    .label { font-size: 22px; font-weight: 700; fill: #0f172a; }
+    .angle-label { font-size: 20px; font-weight: 700; fill: #b91c1c; }
+    .angle-arc { fill: none; stroke: #b91c1c; stroke-width: 2.2; }
+    .given-box { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 2; rx: 8; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arrow-ray" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7"/>
+    </marker>
+  </defs>
+
+  <!-- Line PQ (from bottom-left to top-right) -->
+  <line x1="120" y1="360" x2="560" y2="120" class="line-main" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="95" y="380" class="label">P</text>
+  <text x="575" y="125" class="label">Q</text>
+
+  <!-- Line RS (from top-left to bottom-right) -->
+  <line x1="120" y1="120" x2="560" y2="360" class="line-main" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="95" y="125" class="label">R</text>
+  <text x="575" y="380" class="label">S</text>
+
+  <!-- Intersection O -->
+  <circle cx="340" cy="240" r="5" fill="#0f172a"/>
+  <text x="345" y="225" class="label">O</text>
+
+  <!-- Ray OT pointing downwards -->
+  <line x1="340" y1="240" x2="430" y2="440" class="line-ray" marker-end="url(#arrow-ray)"/>
+  <text x="435" y="465" class="label" fill="#0284c7">T</text>
+
+  <!-- Angle 4b (between OP and OR) -->
+  <path d="M 285 270 A 65 65 0 0 1 285 210" class="angle-arc"/>
+  <text x="240" y="245" class="angle-label">4b</text>
+
+  <!-- Angle 2c (between OR and OQ) -->
+  <path d="M 315 195 A 55 55 0 0 1 375 195" class="angle-arc"/>
+  <text x="330" y="175" class="angle-label">2c</text>
+
+  <!-- Angle a (between OQ and OS) -->
+  <path d="M 395 210 A 65 65 0 0 1 395 270" class="angle-arc"/>
+  <text x="415" y="245" class="angle-label">a</text>
+
+  <!-- Angle 75 deg (between OP and OT) -->
+  <path d="M 295 265 A 65 65 0 0 0 365 295" class="angle-arc"/>
+  <text x="305" y="325" class="angle-label" font-size="18">75°</text>
+
+  <!-- Angle b (between OT and OS) -->
+  <path d="M 370 305 A 75 75 0 0 0 395 270" class="angle-arc"/>
+  <text x="390" y="325" class="angle-label">b</text>
+</svg>

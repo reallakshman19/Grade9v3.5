@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520" role="img" aria-label="Circle with diameter AB, chord CD equal to radius, and secants AC and BD intersecting at E" font-family="system-ui, sans-serif">
+  <title>Secant Intersection Outside Circle with Chord Equal to Radius</title>
+  <desc>Circle with diameter AB along the horizontal axis, chord CD equal in length to the circle radius, and rays AC and BD extended to intersect at point E, forming angle AEB equal to 60 degrees.</desc>
+  <style>
+    .circle { fill: none; stroke: #1e293b; stroke-width: 3.5; }
+    .line-diameter { stroke: #1e293b; stroke-width: 3.5; }
+    .line-secant { stroke: #0284c7; stroke-width: 3; }
+    .chord-radius { stroke: #b91c1c; stroke-width: 3.5; }
+    .label { font-size: 22px; font-weight: 700; fill: #0f172a; }
+    .label-accent { font-size: 22px; font-weight: 700; fill: #b91c1c; }
+    .angle-text { font-size: 18px; font-weight: 700; fill: #0284c7; }
+  </style>
+
+  <!-- Circle with center O at (350, 320), radius R = 160 -->
+  <circle cx="350" cy="320" r="160" class="circle"/>
+
+  <!-- Diameter AB from (190, 320) to (510, 320) -->
+  <line x1="190" y1="320" x2="510" y2="320" class="line-diameter"/>
+  <circle cx="190" cy="320" r="5" fill="#0f172a"/><text x="165" y="328" class="label">A</text>
+  <circle cx="510" cy="320" r="5" fill="#0f172a"/><text x="525" y="328" class="label">B</text>
+  <circle cx="350" cy="320" r="4" fill="#64748b"/><text x="345" y="350" class="label" fill="#64748b">O</text>
+
+  <!-- External intersection point E at (350, 80) -->
+  <circle cx="350" cy="80" r="6" fill="#0284c7"/>
+  <text x="345" y="60" class="label" fill="#0284c7">E</text>
+
+  <!-- Chord CD of length equal to radius (subtends 60 deg at O) -->
+  <!-- Let C be at angle 120 deg from center: (350 + 160*cos(120), 320 - 160*sin(120)) = (270, 181.4) -->
+  <!-- Let D be at angle 60 deg from center: (350 + 160*cos(60), 320 - 160*sin(60)) = (430, 181.4) -->
+  <!-- Secant ACE from A(190, 320) through C(270, 181.4) to E(350, 80) -->
+  <line x1="190" y1="320" x2="350" y2="80" class="line-secant"/>
+  <!-- Secant BDE from B(510, 320) through D(430, 181.4) to E(350, 80) -->
+  <line x1="510" y1="320" x2="350" y2="80" class="line-secant"/>
+
+  <!-- Chord CD -->
+  <line x1="270" y1="181.4" x2="430" y2="181.4" class="chord-radius"/>
+  <circle cx="270" cy="181.4" r="5" fill="#b91c1c"/><text x="245" y="175" class="label-accent">C</text>
+  <circle cx="430" cy="181.4" r="5" fill="#b91c1c"/><text x="445" y="175" class="label-accent">D</text>
+
+  <!-- Angle AEB Arc at E -->
+  <path d="M 335 105 A 30 30 0 0 0 365 105" fill="none" stroke="#0284c7" stroke-width="2.5"/>
+  <text x="340" y="130" class="angle-text">60°</text>
+
+  <!-- Info Annotation -->
+  <rect x="40" y="40" width="220" height="70" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="55" y="68" font-size="16" font-weight="600" fill="#334155">AB = Diameter</text>
+  <text x="55" y="94" font-size="16" font-weight="700" fill="#b91c1c">CD = Radius</text>
+</svg>

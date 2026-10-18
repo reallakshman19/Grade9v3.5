@@ -1,0 +1,119 @@
+name: Issue 254 source repair generator and Chromium witness
+
+on:
+  push:
+    branches:
+      - repair/issue254-source-standalone-attempt-first
+
+permissions:
+  contents: write
+
+concurrency:
+  group: issue254-source-repair-build
+  cancel-in-progress: true
+
+jobs:
+  rebuild-research-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pin source revision and build the four research HTML outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin repair/issue254-source-standalone-attempt-first
+          git checkout -B repair/issue254-source-standalone-attempt-first origin/repair/issue254-source-standalone-attempt-first
+          git rev-parse HEAD
+          python Mathematics/research/build_full_master_suite.py
+      - name: Run source-owned P0 and academic correction regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scratch
+          python -m unittest tests/test_imo_research_attempt_first.py -v
+          python -m unittest tests/test_imo_figure_reference_resolution.py -v
+          python -m unittest tests/test_imo_math_and_font_quality.py -v
+      - name: Run all existing IMO research source regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scratch
+          python -m unittest discover -s tests -p 'test_imo_*.py' -v
+      - name: Commit exactly four generated outputs to isolated repair branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add standalone/mathematics-imo-grade9-master-suite.html
+          git add public/standalone/mathematics-imo-grade9-master-suite.html
+          git add public/test/imo-grade9/core2.html
+          git add docs/test/imo-grade9/core2.html
+          git diff --cached --stat
+          # An unchanged, deterministic re-build is success, not stale output.
+          # All four endpoints must be tracked and present at the exact head.
+          git ls-files --error-unmatch standalone/mathematics-imo-grade9-master-suite.html \
+            public/standalone/mathematics-imo-grade9-master-suite.html \
+            public/test/imo-grade9/core2.html \
+            docs/test/imo-grade9/core2.html
+          if git diff --cached --quiet; then
+            echo "Four generated endpoints are already byte-identical to HEAD"
+          else
+            git commit -m "build(imo): regenerate all four protected 260-question research endpoints"
+          fi
+          git rev-parse HEAD
+      - name: Capture generated HTML SHA-256 and deterministic build
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p TEST/imo-qrt-repair
+          sha256sum standalone/mathematics-imo-grade9-master-suite.html \
+            public/standalone/mathematics-imo-grade9-master-suite.html \
+            public/test/imo-grade9/core2.html \
+            docs/test/imo-grade9/core2.html | tee TEST/imo-qrt-repair/four-html-hashes.txt
+          python Mathematics/research/build_full_master_suite.py
+          git diff --exit-code -- \
+            standalone/mathematics-imo-grade9-master-suite.html \
+            public/standalone/mathematics-imo-grade9-master-suite.html \
+            public/test/imo-grade9/core2.html \
+            docs/test/imo-grade9/core2.html
+      - name: Run independent PR 250 standalone gate without modifying its code
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin refs/pull/250/head:refs/remotes/origin/issue254-locked-validator
+          git worktree add --detach /tmp/issue254-validator refs/remotes/origin/issue254-locked-validator
+          python /tmp/issue254-validator/Shared/tools/imo_qrt_standalone_gate.py \
+            --root "$GITHUB_WORKSPACE" --baseline-sha "$(git rev-parse HEAD)" \
+            --output TEST/imo-qrt-repair/independent-standalone-gate.json
+      - name: Set up real Chromium
+        shell: bash
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Check 4 viewport widths, commitment, keyboard, reload, navigation
+        run: python tests/imo_issue254_browser.py
+      - name: Push exact reproducible generated repair commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git push origin HEAD:refs/heads/repair/issue254-source-standalone-attempt-first
+          git rev-parse HEAD
+      - name: Upload source repair evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: issue254-source-repair-receipts
+          path: |
+            TEST/imo-qrt-repair/four-html-hashes.txt
+            TEST/imo-qrt-repair/independent-standalone-gate.json
+            TEST/imo-qrt-repair/browser-evidence/
+            public/test/imo-grade9/core2.html
+          if-no-files-found: warn

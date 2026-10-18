@@ -1,0 +1,115 @@
+{
+  "schema": "imo-core1a-declarative-anchor/v1",
+  "version": "1.0.0",
+  "package_id": "PKG-CORE1A-SURF-VOL-INSCRIBED-SPHERE-CUBE",
+  "blueprint_ref": "BP-CORE1A-CONSTRUCTION@1.8.0",
+  "topic": "SURF_VOL",
+  "topic_name": "Surface Areas and Volumes",
+  "subtopic": "SPHERE_CUBE_CONE_EXTREMUM",
+  "target_demand": "JUSTIFY",
+  "target_band": "D3",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-L1-2025-26-A-Q048"
+  ],
+  "entry_assumptions": [
+    "Familiarity with standard metric volume formulas for cubes (s³), spheres ((4/3)πr³), and right circular cones ((1/3)πr²h).",
+    "Understanding of geometric tangency and bounding planes in three-dimensional space."
+  ],
+  "inferential_jump": "Establish geometric extrema for 3D solid enclosures, proving that the largest sphere inscribed within a cube of side a has diameter exactly a, and deduce volume conservation in multi-solid liquid transfers.",
+  "relation_refs": {
+    "domain": "Euclidean Solid Metric Geometry (R^3)",
+    "hypotheses": [
+      "The inscribed sphere is contained within all 6 boundary planes of the cube of side a.",
+      "The shortest distance between opposing boundary planes of the cube is strictly a."
+    ],
+    "cube_side": "a",
+    "inscribed_sphere_radius": "r = a / 2",
+    "inscribed_sphere_volume": "V_{sphere} = \\frac{4}{3}\\pi \\left(\\frac{a}{2}\\right)^3 = \\frac{\\pi a^3}{6}",
+    "cone_volume": "V_{cone} = \\frac{1}{3}\\pi r^2 h",
+    "cylinder_volume": "V_{cyl} = \\pi R^2 H"
+  },
+  "representation": [
+    {
+      "symbol": "V_{sphere} / V_{cube} = \\pi / 6",
+      "svg_element_ref": "cube-sphere-inscribed-extremum-cross-section",
+      "word_meaning": "Visual representation bridge showing volumetric ratio of inscribed sphere to enclosing cube is constant pi/6 ≈ 0.5236."
+    },
+    {
+      "symbol": "V_{cone} = \\frac{1}{3}\\pi r^2 h",
+      "svg_element_ref": "cone-to-cylinder-liquid-transfer-diagram",
+      "word_meaning": "Formula correspondence relating conical liquid transfer to cylindrical rise."
+    }
+  ],
+  "completed_teaching_path": [
+    {
+      "step": 1,
+      "claim": "Define the geometric boundary constraint for a sphere bounded inside a cube of side a.",
+      "derivation": "The sphere's diameter cannot exceed the distance between opposing parallel faces of the cube, d_max = a.",
+      "why_valid": "A sphere has rotational symmetry in all directions; any diameter exceeding a breaches the planar faces."
+    },
+    {
+      "step": 2,
+      "claim": "Prove maximum inscribed sphere volume.",
+      "derivation": "With radius r = a / 2, V = (4/3) pi (a/2)^3 = (pi * a^3) / 6.",
+      "why_valid": "Standard Euclidean sphere volume formula V = (4/3) pi r^3 evaluated at maximal radius r = a/2."
+    },
+    {
+      "step": 3,
+      "claim": "Derive the volume of a right circular cone of equal radius and height equal to diameter.",
+      "derivation": "V_cone = (1/3) pi r^2 (2r) = (2/3) pi r^3, which is exactly half the volume of the sphere.",
+      "why_valid": "Cone volume formula V = (1/3) pi r^2 h with height h = 2r."
+    },
+    {
+      "step": 4,
+      "claim": "Formulate liquid transfer conservation across disparate cross-sections.",
+      "derivation": "V_cone = V_cylinder_rise implies (1/3) pi r_cone^2 h_cone = pi r_cyl^2 h_rise.",
+      "why_valid": "Incompressible fluid volume conservation law in rigid vessels."
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "MISC-DIAMETER-SPACE-DIAGONAL",
+      "wrong_idea": "Assuming the largest sphere inside a cube can expand along the space diagonal to have diameter a√3.",
+      "diagnostic_prompt": "Can a sphere expand along the corner diagonal without bulging through the square side faces?",
+      "repair": "Apply the replacement rule: A sphere is spherically symmetric in all 3 dimensions. Expanding along the space diagonal would cause the sphere to breach the six square planar faces. The limiting bottleneck is the shortest face-to-face separation, d = a. Refute space-diagonal diameter assumptions."
+    },
+    {
+      "id": "MISC-CYLINDER-CONE-EQUIVALENCE",
+      "wrong_idea": "Forgetting the factor 1/3 when relating conical volumes to cylindrical water rise.",
+      "diagnostic_prompt": "Does a cone of radius r and height h have the same volume as a cylinder with identical dimensions?",
+      "repair": "Apply the replacement rule: A cylinder of equal base and height has three times the volume of the cone: V_cyl = 3 V_cone. Always include the (1/3) factor for conical volumes."
+    }
+  ],
+  "worked_concept_anchor": {
+    "problem_statement": "A solid metal cube has side length s = 6 cm. What is the volume of the largest sphere that can be carved out of this cube, and what is the volume of a right circular cone whose height equals this sphere's diameter and whose base radius equals the sphere's radius? (Use π = 3.14)",
+    "conventions_declared": "Let s denote the cube edge length. The inscribed sphere is bounded by all 6 face planes, enforcing diameter d ≤ s. Dimensions are in centimeters.",
+    "deductive_chain": [
+      {
+        "step": 1,
+        "statement": "The maximum diameter of an inscribed sphere inside a cube of edge s = 6 cm is d = 6 cm, which implies radius r = 3 cm.",
+        "why_valid": "Any sphere with d > s would protrude past at least one pair of parallel planar cube faces, so the inscribed extremum is achieved at tangency with all six faces where d = s."
+      },
+      {
+        "step": 2,
+        "statement": "The volume of the carved sphere is V_{sphere} = \\frac{4}{3}\\pi r^3 = \\frac{4}{3}(3.14)(3^3) = \\frac{4}{3}(3.14)(27) = 4(3.14)(9) = 113.04\\text{ cm}^3.",
+        "why_valid": "Standard Euclidean sphere volume formula applied to maximal radius r = 3 cm."
+      },
+      {
+        "step": 3,
+        "statement": "For a cone with radius r = 3 cm and height h = d = 6 cm, its volume is V_{cone} = \\frac{1}{3}\\pi r^2 h = \\frac{1}{3}(3.14)(3^2)(6) = \\frac{1}{3}(3.14)(9)(6) = 18(3.14) = 56.52\\text{ cm}^3.",
+        "why_valid": "Cone volume formula V = (1/3)π r² h evaluated at the specified geometric parameters."
+      },
+      {
+        "step": 4,
+        "statement": "The ratio V_{cone} : V_{sphere} = 56.52 : 113.04 = 1 : 2.",
+        "why_valid": "Algebraically, V_cone = (1/3)π r² (2r) = (2/3)π r³, which is exactly half of V_sphere = (4/3)π r³."
+      }
+    ],
+    "invariant_proved": "The largest sphere inscribed in a cube of edge a has volume V = (π/6)a³. Any cone with the same base and height has exactly half that volume: V_cone = (1/2) V_sphere."
+  },
+  "exit_task": {
+    "prompt": "A solid cube of edge length 12 cm has a sphere carved out of it such that the sphere touches all six faces. Then, a right circular cone is carved out of the sphere such that its circular base lies on the equatorial circle of the sphere and its vertex lies at the sphere's north pole. Compute the exact ratio of the volume of the cone to the volume of the initial cube.",
+    "answer": "The sphere touches all 6 faces, so its diameter is d = 12 cm, giving radius r = 6 cm. The cone has base radius r = 6 cm and height h = r = 6 cm. Its volume is V_cone = (1/3)π r² h = (1/3)π (6²) (6) = 72π cm³. The cube volume is V_cube = 12³ = 1728 cm³. The ratio is V_cone / V_cube = 72π / 1728 = π / 24.",
+    "check": "Verify that since V_sphere / V_cube = π / 6 and a cone with base radius r and height r has volume (1/3)π r³ = (1/4) V_sphere, the ratio must be (1/4)(π / 6) = π / 24, exactly matching."
+  }
+}

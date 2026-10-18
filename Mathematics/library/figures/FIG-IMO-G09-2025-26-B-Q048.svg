@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 380" role="img" aria-label="Parallel ray zig-zag and multi-transversal angle synthesis diagrams for Part i and Part ii" font-family="system-ui, sans-serif">
+  <title>Parallel Ray Zig-Zag and Multi-Transversal Angles</title>
+  <desc>Part (i) shows parallel lines AB and CD with transversal zig-zag points B, R, O, D, angle ABR = 45 deg and angle ROD = 105 deg. Part (ii) shows dual parallel lines AB parallel to CF and CD parallel to FE with transversal intersecting ray GFE.</desc>
+  <style>
+    .bg-panel { fill: #101826; stroke: #263854; stroke-width: 2; rx: 12; }
+    .par-line { stroke: #38bdf8; stroke-width: 3; }
+    .trans-line { stroke: #f97316; stroke-width: 2.5; }
+    .aux-line { stroke: #34d399; stroke-width: 2; stroke-dasharray: 5,4; }
+    .node-pt { fill: #f1f5f9; stroke: #0284c7; stroke-width: 2; r: 5; }
+    .pt-label { font-size: 16px; font-weight: 800; fill: #f1f5f9; }
+    .angle-arc { fill: none; stroke: #fbbf24; stroke-width: 2; }
+    .angle-text { font-size: 15px; font-weight: 750; fill: #fbbf24; }
+    .panel-title { font-size: 17px; font-weight: 800; fill: #38bdf8; text-anchor: middle; }
+  </style>
+
+  <!-- PANEL 1: Part (i) Zig-Zag -->
+  <g transform="translate(30, 20)">
+    <rect width="380" height="340" class="bg-panel"/>
+    <text x="190" y="35" class="panel-title">Part (i): Zig-Zag Transversal (AB || CD)</text>
+
+    <!-- Top Parallel Line AB -->
+    <line x1="50" y1="80" x2="330" y2="80" class="par-line"/>
+    <text x="50" y="70" class="pt-label">A</text>
+    <text x="325" y="70" class="pt-label">B</text>
+
+    <!-- Bottom Parallel Line CD -->
+    <line x1="50" y1="280" x2="330" y2="280" class="par-line"/>
+    <text x="50" y="305" class="pt-label">C</text>
+    <text x="325" y="305" class="pt-label">D</text>
+
+    <!-- Intermediate Auxiliary Line OX -->
+    <line x1="120" y1="180" x2="330" y2="180" class="aux-line"/>
+    <text x="335" y="185" font-size="14px" font-weight="700" fill="#34d399">X (OX || AB || CD)</text>
+
+    <!-- Zig-Zag Transversal: B -> R(200, 130) -> O(140, 180) -> D(280, 280) -->
+    <polyline points="290,80 200,130 140,180 280,280" class="trans-line" fill="none"/>
+    
+    <circle cx="290" cy="80" class="node-pt"/>
+    <circle cx="200" cy="130" class="node-pt"/>
+    <text x="210" y="130" class="pt-label">R</text>
+
+    <circle cx="140" cy="180" class="node-pt"/>
+    <text x="115" y="185" class="pt-label">O</text>
+
+    <circle cx="280" cy="280" class="node-pt"/>
+    <text x="280" y="305" class="pt-label">D</text>
+
+    <!-- Angles -->
+    <text x="240" y="105" class="angle-text">45°</text>
+    <text x="155" y="210" class="angle-text">105° (ROD)</text>
+  </g>
+
+  <!-- PANEL 2: Part (ii) Multi-Transversal Intersecting Rays -->
+  <g transform="translate(440, 20)">
+    <rect width="380" height="340" class="bg-panel"/>
+    <text x="190" y="35" class="panel-title">Part (ii): Dual Parallel Pairs (AB || CF, CD || FE)</text>
+
+    <!-- Line AB -->
+    <line x1="50" y1="100" x2="200" y2="100" class="par-line"/>
+    <text x="45" y="90" class="pt-label">A</text>
+    <text x="195" y="90" class="pt-label">B</text>
+
+    <!-- Line CF (Parallel to AB) -->
+    <line x1="120" y1="200" x2="280" y2="200" class="par-line"/>
+    <text x="105" y="210" class="pt-label">C</text>
+    <text x="285" y="200" class="pt-label">F</text>
+
+    <!-- Line CD -->
+    <line x1="120" y1="200" x2="220" y2="290" stroke="#a855f7" stroke-width="2.5"/>
+    <text x="225" y="305" class="pt-label">D</text>
+
+    <!-- Line FE (Parallel to CD) -->
+    <line x1="280" y1="200" x2="350" y2="270" stroke="#a855f7" stroke-width="2.5"/>
+    <text x="355" y="285" class="pt-label">E</text>
+
+    <!-- Transversal Ray G-F-E -->
+    <line x1="80" y1="280" x2="310" y2="70" class="trans-line"/>
+    <text x="70" y="295" class="pt-label">G</text>
+
+    <circle cx="80" cy="100" class="node-pt"/>
+    <circle cx="120" cy="200" class="node-pt"/>
+    <circle cx="280" cy="200" class="node-pt"/>
+    <text x="180" y="170" class="angle-text">Apex: 40°</text>
+  </g>
+</svg>
