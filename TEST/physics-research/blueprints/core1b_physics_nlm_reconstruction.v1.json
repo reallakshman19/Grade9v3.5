@@ -32,7 +32,8 @@
         "conceptual_pivot": "Combine normal reaction N and friction force f into a single total contact force vector R = N + f. For static equilibrium, R must be strictly vertical and collinear with gravity mg.",
         "cone_angle": "Maximum angle between R and surface normal is the angle of friction lambda, where tan(lambda) = f_max / N = mu_s.",
         "equilibrium_condition": "Since R is vertical, the angle of the incline theta equals the angle between R and the normal. Hence equilibrium is maintained if and only if theta <= lambda, yielding tan(theta) <= mu_s.",
-        "mass_independence": "Notice mass m cancels completely: repose angle depends purely on the interface roughness, not the weight of the block."
+        "mass_independence": "Notice mass m cancels completely: repose angle depends purely on the interface roughness, not the weight of the block.",
+        "reconstructed_formula": "\\tan\\theta \\le \\mu_s \\iff \\theta \\le \\lambda = \\arctan(\\mu_s)"
       },
       "limiting_boundary_checks": [
         {"limit": "mu_s -> 0 (perfectly smooth)", "physical_consequence": "theta_repose = 0 deg; block slides on any non-zero incline"},
@@ -49,7 +50,8 @@
         "conceptual_pivot": "Ride in the accelerating frame of bottom block B with acceleration a. A fictitious pseudo force F_pseudo = m1*a pulls block A backward.",
         "force_balance_on_A": "Static friction f_s pushes block A forward to counter the backward pseudo force: f_s = m1*a.",
         "slip_criterion": "Block A slips when the pseudo force exceeds the maximum available friction: m1*a > mu*m1*g => a > mu*g.",
-        "whole_system_limit": "Since the external force F accelerates both blocks, F = (m1 + m2)*a <= (m1 + m2)*mu*g."
+        "whole_system_limit": "Since the external force F accelerates both blocks, F = (m1 + m2)*a <= (m1 + m2)*mu*g.",
+        "reconstructed_formula": "F_{\\max} = (m_1 + m_2) a_{\\max} = \\mu (m_1 + m_2) g"
       },
       "limiting_boundary_checks": [
         {"limit": "mu -> 0", "physical_consequence": "F_max = 0; any non-zero pull causes B to slide out from under A instantly"},
@@ -64,7 +66,8 @@
         "perspective": "Virtual Work & Energy Conservation Invariant",
         "conceptual_pivot": "An ideal machine cannot create energy: Input Work = Output Work. F * Delta x_input = W_load * Delta y_load.",
         "kinematic_tradeoff": "To lift the load by Delta y, both supporting string segments must shorten by Delta y, requiring 2*Delta y of string to be pulled at the effort end: Delta x_input = 2 * Delta y_load.",
-        "force_ratio": "Hence Effort F = W_load / 2. Acceleration is halved, but lifting force is doubled (Mechanical Advantage = 2)."
+        "force_ratio": "Hence Effort F = W_load / 2. Acceleration is halved, but lifting force is doubled (Mechanical Advantage = 2).",
+        "reconstructed_formula": "W_{\\text{in}} = W_{\\text{out}} \\implies F \\cdot (2\\Delta y) = W_{\\text{load}} \\cdot \\Delta y \\implies F = \\frac{W_{\\text{load}}}{2}"
       },
       "limiting_boundary_checks": [
         {"limit": "Inextensible string", "physical_consequence": "Work input = Work output (Efficiency = 100%)"},
