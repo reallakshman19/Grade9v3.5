@@ -6,10 +6,10 @@
   "topic": "Newton's Laws of Motion & Friction",
   "meta": {
     "title": "Grade 9 Physics Newton's Laws — independently authored NLM demand-calibrated bank (pilot, benchmark PDF wording UNKNOWN)",
-    "item_count": 38,
+    "item_count": 39,
     "difficulty_distribution": {
       "D1": 9,
-      "D2": 17,
+      "D2": 18,
       "D4": 6,
       "D3": 6
     },
@@ -17,7 +17,7 @@
       "APPLY": 9,
       "EXPLAIN": 4,
       "MODEL": 5,
-      "RETRIEVE": 2,
+      "RETRIEVE": 3,
       "JUSTIFY": 7,
       "SYNTHESIZE": 7,
       "REPRESENT": 4
@@ -4991,6 +4991,141 @@
           {
             "condition": "When a driving parameter is reversed or contact becomes frictionless",
             "expected": "Do not assume friction always points toward the same pulley throughout the parameter interval."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-039",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-03",
+      "provenance": {
+        "source": "New independently authored RETRIEVE-D2 contrast; benchmark PDFs UNKNOWN",
+        "benchmark_demand_anchor": "Core1 NLM-03",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "Two trolleys A and B are joined by one taut massless cord on a frictionless horizontal track. A laboratory motor pulls A right with external force F, and both share rightward acceleration a. Without calculating any value, which stored Newton-II system relation should a student recall for the combined A+B system?",
+      "system_parameters": {
+        "reference_frame": "inertial lab",
+        "idealizations": [
+          "single taut massless cord",
+          "frictionless horizontal motion"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "F_external=(m_A+m_B)a because internal string tension cancels for the combined system.",
+        "B": "F_external=m_A a because tension is external.",
+        "C": "F_external=(m_A−m_B)a because B opposes A.",
+        "D": "F_external=0 because the internal tensions cancel."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-RETRIEVE-D2",
+        "primary_demand": "RETRIEVE",
+        "difficulty_band": "D2",
+        "subtopic_competency_ref": "NLM-03",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: Two trolleys share one system through an internal string.",
+          "vector_dimensionality": "Score 2: The prescribed pull and acceleration share a signed one-dimensional axis.",
+          "constraint_latency": "Score 2: The one taut coupling string imposes common acceleration.",
+          "domain_coupling": "Score 1: The requested fact is the single Newton-II system law.",
+          "math_friction": "Score 1: Recognize the equation without algebraic computation."
+        },
+        "protected_work_W": "Identify internal-string forces as canceling only in the two-body total system.",
+        "rival_demands": [
+          {
+            "demand": "MODEL",
+            "rejection_rationale": "No boundary discovery or numeric modeling required: recall the system statement with bodies already chosen."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "REPRESENT",
+          "APPLY"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "The internal tension acts on different internal bodies and sums to zero; total external F accelerates both masses."
+        },
+        "B": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Drops the inertia of cart B from the declared whole system."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Internal opposition does not subtract one cart's mass."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Internal forces cancel but the external motor pull does not."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · system ownership",
+          "prompt_question": "Which forces remain external for the selected A+B system?",
+          "reveal_text": "String pulls are internal to A+B, but the motor's pull acts from outside the boundary."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · chosen system",
+          "prompt_question": "What FBD summarizes the entire two-cart system?",
+          "reveal_text": "Draw one enclosure around both trolleys with only the rightward motor pull crossing its horizontal boundary."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first law",
+          "prompt_question": "Which Newton-II statement starts a whole-system description?",
+          "reveal_text": "First write ΣF_external=M_total a_cm, then identify the declared total mass."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "Two taut-string-connected carts share acceleration but tension is internal.",
+          "represent": "Draw one system enclosing A and B and label external motor force F.",
+          "connect": "Apply ΣF_external=M_total a_cm.",
+          "calculate": "M_total=m_A+m_B, so F_external=(m_A+m_B)a.",
+          "interpret": "F_external=(m_A+m_B)a because internal string tension cancels for the combined system."
+        },
+        "final_expression": "F_external=(m_A+m_B)a because internal string tension cancels for the combined system.",
+        "final_answer_value": "F_external=(m_A+m_B)a because internal string tension cancels for the combined system."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2]",
+        "quick_check": "If either cart mass doubles under fixed F, their common acceleration drops.",
+        "check_it_another_way": "Sum individual FBD equations: (F−T)+T=(m_A+m_B)a.",
+        "watch_out": "Cancel internal tension without canceling external pull.",
+        "review_this_idea": "Core1 NLM-03",
+        "limiting_cases": [
+          {
+            "condition": "m_B approaches zero",
+            "expected": "Relation approaches F=m_Aa."
+          },
+          {
+            "condition": "F_external=0",
+            "expected": "Common acceleration is zero for a free system."
           }
         ]
       }
