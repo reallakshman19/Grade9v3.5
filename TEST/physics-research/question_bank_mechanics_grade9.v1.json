@@ -3238,6 +3238,546 @@
           }
         ]
       }
+    },
+    {
+      "question_id": "PHYS-NLM-026",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-02",
+      "provenance": {
+        "source": "New scenario authored from Core1 NLM REPRESENT demand; benchmark PDFs unseen",
+        "benchmark_demand_anchor": "Core1 NLM-02",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A festival lantern hangs motionless from one vertical cord. Choose the correct free-body diagram for the lantern itself; every arrow must identify a force ON the lantern.",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "massless ideal cords when used",
+          "specified static friction prior to slip"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": "Text FBD identification is assessed through force-owner arrow descriptions."
+      },
+      "options": {
+        "A": "One upward cord-on-lantern tension arrow and one downward Earth-on-lantern weight arrow.",
+        "B": "Upward lantern-on-cord and downward Earth-on-lantern arrows.",
+        "C": "Only one upward tension arrow.",
+        "D": "Two upward arrows and a downward lantern-on-Earth arrow."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D1",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D1",
+        "subtopic_competency_ref": "NLM-02",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 1: One stationary lantern is the object to isolate.",
+          "vector_dimensionality": "Score 2: A vertical axis distinguishes up tension from down weight.",
+          "constraint_latency": "Score 1: The stationary condition and cord are explicit.",
+          "domain_coupling": "Score 1: One Newton-I equilibrium representation suffices.",
+          "math_friction": "Score 1: No algebra is needed to draw the two arrows."
+        },
+        "protected_work_W": "For an FBD, draw only forces on the selected lantern, never forces that it exerts on others.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "The decisive task is constructing or selecting a valid physical representation, not evaluating final quantities."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "MODEL",
+          "EXPLAIN"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "The cord pulls the lantern up, Earth pulls it down; their equal, opposite actions are both ON the lantern."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Wrong direction or force owner. A lantern-on-cord pull belongs on the cord's FBD, not the lantern's."
+        },
+        "C": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Incomplete FBD. For an FBD, draw only forces on the selected lantern, never forces that it exerts on others."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignores contact constraints. Removing the cord leaves only gravity down."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · body ownership",
+          "prompt_question": "Which body owns each force and what state or possible direction is assumed?",
+          "reveal_text": "For an FBD, draw only forces on the selected lantern, never forces that it exerts on others."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · FBD/axis",
+          "prompt_question": "What forces and signed directions belong in the diagram?",
+          "reveal_text": "Draw the lantern as a dot, T upward from the cord and mg downward from Earth."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "What is the first consistency law without evaluating an answer?",
+          "reveal_text": "First register ΣF_y=T−mg=0 without calculating T."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "For an FBD, draw only forces on the selected lantern, never forces that it exerts on others.",
+          "represent": "Draw the lantern as a dot, T upward from the cord and mg downward from Earth.",
+          "connect": "First register ΣF_y=T−mg=0 without calculating T.",
+          "calculate": "The cord pulls the lantern up, Earth pulls it down; their equal, opposite actions are both ON the lantern.",
+          "interpret": "One upward cord-on-lantern tension arrow and one downward Earth-on-lantern weight arrow."
+        },
+        "final_expression": "One upward cord-on-lantern tension arrow and one downward Earth-on-lantern weight arrow.",
+        "final_answer_value": "One upward cord-on-lantern tension arrow and one downward Earth-on-lantern weight arrow."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] force-arrow and sign consistency",
+        "quick_check": "Removing the cord leaves only gravity down.",
+        "check_it_another_way": "For an FBD, draw only forces on the selected lantern, never forces that it exerts on others.",
+        "watch_out": "A lantern-on-cord pull belongs on the cord's FBD, not the lantern's.",
+        "review_this_idea": "Core1 NLM-02",
+        "limiting_cases": [
+          {
+            "condition": "Remove the relevant interaction",
+            "expected": "Removing the cord leaves only gravity down."
+          },
+          {
+            "condition": "Reverse assumed direction of impending motion",
+            "expected": "A lantern-on-cord pull belongs on the cord's FBD, not the lantern's."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-027",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-08",
+      "provenance": {
+        "source": "New scenario authored from Core1 NLM REPRESENT demand; benchmark PDFs unseen",
+        "benchmark_demand_anchor": "Core1 NLM-08",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A robot gripper's left jaw pushes a rubber ball toward the right. Which paired-arrow representation correctly identifies its Newton-third-law contact pair?",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "massless ideal cords when used",
+          "specified static friction prior to slip"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": "Text FBD identification is assessed through force-owner arrow descriptions."
+      },
+      "options": {
+        "A": "Rightward force labelled 'jaw on ball' ON ball, and leftward 'ball on jaw' ON jaw.",
+        "B": "Both arrows rightward on the ball.",
+        "C": "Rightward 'jaw on ball' and downward 'Earth on ball' on the same ball.",
+        "D": "Two equal opposite arrows on the ball cancelling each other."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D2",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D2",
+        "subtopic_competency_ref": "NLM-08",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 2,
+          "math_friction": 1
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: The gripper and rubber ball are distinct force owners.",
+          "vector_dimensionality": "Score 2: The contact pushes horizontally in opposite signed directions.",
+          "constraint_latency": "Score 1: The point of contact is fully identified.",
+          "domain_coupling": "Score 2: Translate paired interactions into two owner-specific FBDs.",
+          "math_friction": "Score 1: No numerical force solving is needed."
+        },
+        "protected_work_W": "Third-law partners are different forces placed on different bodies.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "The decisive task is constructing or selecting a valid physical representation, not evaluating final quantities."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "MODEL",
+          "EXPLAIN"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "The jaw pushes the ball right; the ball reacts on the jaw left with equal magnitude."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Wrong direction or force owner. Opposite forces on the same body are not the third-law interaction pair."
+        },
+        "C": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Incomplete FBD. Third-law partners are different forces placed on different bodies."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignores contact constraints. The pair still has equal magnitude even if the ball accelerates."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · body ownership",
+          "prompt_question": "Which body owns each force and what state or possible direction is assumed?",
+          "reveal_text": "Third-law partners are different forces placed on different bodies."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · FBD/axis",
+          "prompt_question": "What forces and signed directions belong in the diagram?",
+          "reveal_text": "Make two small FBDs: ball gets a rightward contact arrow, left jaw gets a leftward reaction arrow."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "What is the first consistency law without evaluating an answer?",
+          "reveal_text": "Write F_(jaw on ball)=−F_(ball on jaw)."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "Third-law partners are different forces placed on different bodies.",
+          "represent": "Make two small FBDs: ball gets a rightward contact arrow, left jaw gets a leftward reaction arrow.",
+          "connect": "Write F_(jaw on ball)=−F_(ball on jaw).",
+          "calculate": "The jaw pushes the ball right; the ball reacts on the jaw left with equal magnitude.",
+          "interpret": "Rightward force labelled 'jaw on ball' ON ball, and leftward 'ball on jaw' ON jaw."
+        },
+        "final_expression": "Rightward force labelled 'jaw on ball' ON ball, and leftward 'ball on jaw' ON jaw.",
+        "final_answer_value": "Rightward force labelled 'jaw on ball' ON ball, and leftward 'ball on jaw' ON jaw."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] force-arrow and sign consistency",
+        "quick_check": "The pair still has equal magnitude even if the ball accelerates.",
+        "check_it_another_way": "Third-law partners are different forces placed on different bodies.",
+        "watch_out": "Opposite forces on the same body are not the third-law interaction pair.",
+        "review_this_idea": "Core1 NLM-08",
+        "limiting_cases": [
+          {
+            "condition": "Remove the relevant interaction",
+            "expected": "The pair still has equal magnitude even if the ball accelerates."
+          },
+          {
+            "condition": "Reverse assumed direction of impending motion",
+            "expected": "Opposite forces on the same body are not the third-law interaction pair."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-028",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-02",
+      "provenance": {
+        "source": "New scenario authored from Core1 NLM REPRESENT demand; benchmark PDFs unseen",
+        "benchmark_demand_anchor": "Core1 NLM-02",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A rough incline slider is attached by a light string over a fixed pulley to a hanging counterweight. An investigator hypothesizes that the counterweight is about to descend and the slider is about to climb the incline. Which representation is consistent before calculating a threshold?",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "massless ideal cords when used",
+          "specified static friction prior to slip"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": "Text FBD identification is assessed through force-owner arrow descriptions."
+      },
+      "options": {
+        "A": "On the slider: weight down, normal perpendicular to ramp, tension up slope, static friction down slope; on the hanger: weight down and tension up.",
+        "B": "On the slider: tension and friction both up slope whenever the hanger descends.",
+        "C": "On the hanger: weight and tension both downward.",
+        "D": "On the slider: replace friction by μ_k N without testing whether sliding begins."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D3",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D3",
+        "subtopic_competency_ref": "NLM-02",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 3,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 2
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: An inclined slider and hanging counterweight are string-coupled.",
+          "vector_dimensionality": "Score 3: Ramp-normal and ramp-tangent directions require 2D resolution.",
+          "constraint_latency": "Score 4: The impending friction direction depends on which slip regime is proposed.",
+          "domain_coupling": "Score 4: Separate hypothetical rest, upward-slip and downward-slip force diagrams.",
+          "math_friction": "Score 2: State friction inequalities and directions, without solving numerical parameters."
+        },
+        "protected_work_W": "The hypothesized impending motion decides the possible friction direction; static friction magnitude is bounded, not automatically maximal.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "The decisive task is constructing or selecting a valid physical representation, not evaluating final quantities."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "MODEL",
+          "EXPLAIN"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "For impending upward slider motion, friction acts down the slope. Tension points up the slope; the hanger has tension up and gravity down. Test the static bound before selecting a kinetic model."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Wrong direction or force owner. Do not place a force exerted by the slider on the rope into the slider FBD."
+        },
+        "C": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Incomplete FBD. The hypothesized impending motion decides the possible friction direction; static friction magnitude is bounded, not automatically maximal."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignores contact constraints. Reversing hypothetical motion reverses friction direction, not weight."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · body ownership",
+          "prompt_question": "Which body owns each force and what state or possible direction is assumed?",
+          "reveal_text": "The hypothesized impending motion decides the possible friction direction; static friction magnitude is bounded, not automatically maximal."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · FBD/axis",
+          "prompt_question": "What forces and signed directions belong in the diagram?",
+          "reveal_text": "Draw separate slope-aligned and vertical FBDs, and label the assumed up-slope slider motion."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "What is the first consistency law without evaluating an answer?",
+          "reveal_text": "Start with |f_s|≤μ_s N together with N=m_slider g cosθ."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "The hypothesized impending motion decides the possible friction direction; static friction magnitude is bounded, not automatically maximal.",
+          "represent": "Draw separate slope-aligned and vertical FBDs, and label the assumed up-slope slider motion.",
+          "connect": "Start with |f_s|≤μ_s N together with N=m_slider g cosθ.",
+          "calculate": "For impending upward slider motion, friction acts down the slope. Tension points up the slope; the hanger has tension up and gravity down. Test the static bound before selecting a kinetic model.",
+          "interpret": "On the slider: weight down, normal perpendicular to ramp, tension up slope, static friction down slope; on the hanger: weight down and tension up."
+        },
+        "final_expression": "On the slider: weight down, normal perpendicular to ramp, tension up slope, static friction down slope; on the hanger: weight down and tension up.",
+        "final_answer_value": "On the slider: weight down, normal perpendicular to ramp, tension up slope, static friction down slope; on the hanger: weight down and tension up."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] force-arrow and sign consistency",
+        "quick_check": "Reversing hypothetical motion reverses friction direction, not weight.",
+        "check_it_another_way": "The hypothesized impending motion decides the possible friction direction; static friction magnitude is bounded, not automatically maximal.",
+        "watch_out": "Do not place a force exerted by the slider on the rope into the slider FBD.",
+        "review_this_idea": "Core1 NLM-02",
+        "limiting_cases": [
+          {
+            "condition": "Remove the relevant interaction",
+            "expected": "Reversing hypothetical motion reverses friction direction, not weight."
+          },
+          {
+            "condition": "Reverse assumed direction of impending motion",
+            "expected": "Do not place a force exerted by the slider on the rope into the slider FBD."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-029",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-02",
+      "provenance": {
+        "source": "New scenario authored from Core1 NLM REPRESENT demand; benchmark PDFs unseen",
+        "benchmark_demand_anchor": "Core1 NLM-02",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "Two separate rough slopes each carry one crate, A and B. Separate light cords over fixed pulleys connect both crates to the same hanging mass C. Suppose C is about to descend, so A and B each ascend their slopes. Which force-and-constraint representation correctly prepares a no-slip-versus-slip analysis?",
+      "system_parameters": {
+        "reference_frame": "inertial laboratory frame",
+        "idealizations": [
+          "massless ideal cords when used",
+          "specified static friction prior to slip"
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": "Text FBD identification is assessed through force-owner arrow descriptions."
+      },
+      "options": {
+        "A": "Each slope crate has T up its slope, mg sinθ and friction down slope, N=mg cosθ; C has mg down and both tensions up; all three signed accelerations share magnitude while cords remain taut.",
+        "B": "Both slope crates have friction up slope, and C has only one tension.",
+        "C": "All three weights point along their string directions, with no normal reactions.",
+        "D": "Both string tensions must have the same numerical value even though they belong to different cords."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D4",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "NLM-02",
+        "difficulty_factors": {
+          "system_coupling": 4,
+          "vector_dimensionality": 3,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 3
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 4: Two separate ramp sliders A and B and shared hanging mass C are constrained by two cords.",
+          "vector_dimensionality": "Score 3: Slope-aligned and vertical axes require distinct gravity resolutions.",
+          "constraint_latency": "Score 4: Both friction contacts have separate threshold inequalities.",
+          "domain_coupling": "Score 4: The model must represent rest and both alternative sliding directions.",
+          "math_friction": "Score 3: Three coupled force equations and two independent static limits must remain coherent."
+        },
+        "protected_work_W": "The two cords constrain three different bodies; their separate tensions and separate friction thresholds cannot be collapsed into one contact.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "The decisive task is constructing or selecting a valid physical representation, not evaluating final quantities."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "MODEL",
+          "EXPLAIN"
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Represent both incline normals, weight components and distinct string tensions on their owners. The imposed motion makes friction oppose each ascending slider; each static bound must be checked before substituting kinetic terms."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Wrong direction or force owner. Equal acceleration magnitudes from two constraints do not force equal tensions in different cords."
+        },
+        "C": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Incomplete FBD. The two cords constrain three different bodies; their separate tensions and separate friction thresholds cannot be collapsed into one contact."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignores contact constraints. With one cord slack, its acceleration equality and transmitted tension no longer apply."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · body ownership",
+          "prompt_question": "Which body owns each force and what state or possible direction is assumed?",
+          "reveal_text": "The two cords constrain three different bodies; their separate tensions and separate friction thresholds cannot be collapsed into one contact."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · FBD/axis",
+          "prompt_question": "What forces and signed directions belong in the diagram?",
+          "reveal_text": "Choose positive up both slopes, positive down for C; draw three FBDs with T_A and T_B distinct and conditional friction directions."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "What is the first consistency law without evaluating an answer?",
+          "reveal_text": "Begin with a_A=a_B=a_C for taut cords and |f_s,A|≤μ_s,A N_A, |f_s,B|≤μ_s,B N_B."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "The two cords constrain three different bodies; their separate tensions and separate friction thresholds cannot be collapsed into one contact.",
+          "represent": "Choose positive up both slopes, positive down for C; draw three FBDs with T_A and T_B distinct and conditional friction directions.",
+          "connect": "Begin with a_A=a_B=a_C for taut cords and |f_s,A|≤μ_s,A N_A, |f_s,B|≤μ_s,B N_B.",
+          "calculate": "Represent both incline normals, weight components and distinct string tensions on their owners. The imposed motion makes friction oppose each ascending slider; each static bound must be checked before substituting kinetic terms.",
+          "interpret": "Each slope crate has T up its slope, mg sinθ and friction down slope, N=mg cosθ; C has mg down and both tensions up; all three signed accelerations share magnitude while cords remain taut."
+        },
+        "final_expression": "Each slope crate has T up its slope, mg sinθ and friction down slope, N=mg cosθ; C has mg down and both tensions up; all three signed accelerations share magnitude while cords remain taut.",
+        "final_answer_value": "Each slope crate has T up its slope, mg sinθ and friction down slope, N=mg cosθ; C has mg down and both tensions up; all three signed accelerations share magnitude while cords remain taut."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] force-arrow and sign consistency",
+        "quick_check": "With one cord slack, its acceleration equality and transmitted tension no longer apply.",
+        "check_it_another_way": "The two cords constrain three different bodies; their separate tensions and separate friction thresholds cannot be collapsed into one contact.",
+        "watch_out": "Equal acceleration magnitudes from two constraints do not force equal tensions in different cords.",
+        "review_this_idea": "Core1 NLM-02",
+        "limiting_cases": [
+          {
+            "condition": "Remove the relevant interaction",
+            "expected": "With one cord slack, its acceleration equality and transmitted tension no longer apply."
+          },
+          {
+            "condition": "Reverse assumed direction of impending motion",
+            "expected": "Equal acceleration magnitudes from two constraints do not force equal tensions in different cords."
+          }
+        ]
+      }
     }
   ]
 }
