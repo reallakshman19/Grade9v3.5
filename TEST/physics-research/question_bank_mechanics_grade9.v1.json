@@ -2601,10 +2601,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-04",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Original NLM extension redesigned/retagged against measured factor rubric; benchmark PDF UNKNOWN",
+        "benchmark_demand_anchor": "Core1 NLM-04",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "In an ideal Atwood machine with a massless, frictionless pulley, two masses $m_1 = 3.0\\text{ kg}$ and $m_2 = 2.0\\text{ kg}$ are connected by a light, inextensible string. Taking $g = 9.8\\text{ m/s}^2$, determine the system acceleration $a$ and the tension $T$ in the string.",
+      "stem": "A 4.0 kg sample box lies on a 30° rough slope and is joined over an ideal fixed pulley to a hanging counterweight of variable mass M. Coefficients between box and slope are μ_s=0.30 and μ_k=0.20; take g=10 m/s² and cos30°≈0.866. First find the largest M for which rest is possible. Then replace it with M=3.20 kg and find the subsequent acceleration and direction.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -2612,10 +2613,10 @@
         "caption": ""
       },
       "options": {
-        "A": "a = 1.96 m/s^2; T = 23.52 N (the harmonic mean of gravitational weights).",
-        "B": "a = 0.98 m/s^2; T = 24.50 N.",
-        "C": "a = 4.90 m/s^2; T = 19.60 N.",
-        "D": "a = 9.80 m/s^2; T = 0 N."
+        "A": "M_limit≈3.04 kg; with 3.20 kg hanging it moves downward at about 0.70 m/s².",
+        "B": "M_limit=2.00 kg; the two masses remain at rest.",
+        "C": "M_limit=4.00 kg; the slope box moves down at 3 m/s².",
+        "D": "M_limit≈3.04 kg; with 3.20 kg it remains motionless."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -2624,13 +2625,13 @@
         "difficulty_band": "D4",
         "subtopic_competency_ref": "NLM-04",
         "difficulty_factors": {
-          "system_coupling": 4,
+          "system_coupling": 3,
           "vector_dimensionality": 3,
           "constraint_latency": 4,
           "domain_coupling": 4,
           "math_friction": 4
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-04 to SYNTHESIZE demand.",
+        "protected_work_W": "Static holding requires the hanging tendency to be resisted by downslope weight and limited upslope/down-slope friction; test the inequality before switching to kinetic friction.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -2643,71 +2644,81 @@
         "supporting_demands": [
           "MODEL",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 3: One inclined block and one hanging mass share rope acceleration.",
+          "vector_dimensionality": "Score 3: Resolve gravity and normal on the 30-degree slope.",
+          "constraint_latency": "Score 4: Unknown static friction direction and static-limit inequality determine motion.",
+          "domain_coupling": "Score 4: The solution branches between static holding and kinetic sliding.",
+          "math_friction": "Score 4: Find limiting suspended mass parametrically before calculating sliding acceleration."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: a = (m1 - m2)g / (m1 + m2) = (1.0)(9.8)/5.0 = 1.96 m/s^2. T = 2 m1 m2 g / (m1 + m2) = 2(3)(2)(9.8)/5 = 23.52 N."
+          "diagnostic": "M_limit=4(0.5+0.30×0.866)=3.0392 kg. For M=3.20 it exceeds the limit: kinetic net drive=32−20−0.20×40×0.866=5.072 N, total mass=7.20 kg, a=5.072/7.20≈0.704 m/s² hanging down."
         },
         "B": {
-          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
-          "diagnostic": "Arithmetic error in denominator sum or tension calculation."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect model: Static friction is an inequality, not automatically μ_s N; do not use μ_k until slip is established."
         },
         "C": {
-          "type": "INCORRECT_FORCE_RATIO",
-          "diagnostic": "Used (m1 - m2)g / m1 for acceleration."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Invalid regime or force ownership: Static holding requires the hanging tendency to be resisted by downslope weight and limited upslope/down-slope friction; test the inequality before switching to kinetic friction."
         },
         "D": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Free-fall limit applicable only if m2 = 0."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails threshold/check: At M=M_limit the static state is marginal; μ_s→0 reduces the limit to 2.0 kg."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "Treat the Atwood machine as an unrolled 1D system. What is the net driving force?",
-          "reveal_text": "Net driving force = (m1 - m2)g = (3.0 - 2.0)(9.8) = 9.8 N."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · key physical decision",
+          "prompt_question": "Which regime, body, or contact constraint must be decided before calculation?",
+          "reveal_text": "Static holding requires the hanging tendency to be resisted by downslope weight and limited upslope/down-slope friction; test the inequality before switching to kinetic friction."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What is the total system inertia being accelerated by that driving force?",
-          "reveal_text": "Total inertia = m1 + m2 = 3.0 + 2.0 = 5.0 kg."
+          "guidance_role": "representation",
+          "title": "H2 · force representation",
+          "prompt_question": "How should the system and signed axes be drawn?",
+          "reveal_text": "Draw separate FBDs; incline axis up-slope positive, hanging axis downward positive, and label both possible friction senses."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "How do you evaluate acceleration a and string tension T?",
-          "reveal_text": "a = 9.8 / 5.0 = 1.96 m/s^2; T = m2(g + a) = 2.0(9.8 + 1.96) = 23.52 N."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first governing constraint",
+          "prompt_question": "Write only the first inequality or force equation, not its solution.",
+          "reveal_text": "Begin with Mg ≤ 4g(sin30°+μ_s cos30°) for the upper hanging-mass limit."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Two masses m1 = 3 kg and m2 = 2 kg are coupled by a light string over a frictionless pulley.",
-          "represent": "Draw individual FBDs: m1 has downward m1 g and upward T; m2 has downward m2 g and upward T.",
-          "connect": "Equations of motion: m1 g - T = m1 a; T - m2 g = m2 a.",
-          "calculate": "Add equations: (m1 - m2)g = (m1 + m2)a => a = (1.0)(9.8)/5.0 = 1.96 m/s^2. T = 2(3)(2)(9.8)/5 = 23.52 N.",
-          "interpret": "Acceleration is 1.96 m/s^2; tension is 23.52 N (less than m1 g = 29.4 N, greater than m2 g = 19.6 N)."
+          "understand": "Static holding requires the hanging tendency to be resisted by downslope weight and limited upslope/down-slope friction; test the inequality before switching to kinetic friction.",
+          "represent": "Draw separate FBDs; incline axis up-slope positive, hanging axis downward positive, and label both possible friction senses.",
+          "connect": "Begin with Mg ≤ 4g(sin30°+μ_s cos30°) for the upper hanging-mass limit.",
+          "calculate": "M_limit=4(0.5+0.30×0.866)=3.0392 kg. For M=3.20 it exceeds the limit: kinetic net drive=32−20−0.20×40×0.866=5.072 N, total mass=7.20 kg, a=5.072/7.20≈0.704 m/s² hanging down.",
+          "interpret": "M_limit≈3.04 kg; with 3.20 kg hanging it moves downward at about 0.70 m/s²."
         },
-        "final_expression": "a = 1.96 m/s^2; T = 23.52 N (the harmonic mean of gravitational weights).",
-        "final_answer_value": "a = 1.96 m/s^2; T = 23.52 N (the harmonic mean of gravitational weights)."
+        "final_expression": "M_limit≈3.04 kg; with 3.20 kg hanging it moves downward at about 0.70 m/s².",
+        "final_answer_value": "M_limit≈3.04 kg; with 3.20 kg hanging it moves downward at about 0.70 m/s²."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Tension 23.52 N is strictly between m2 g (19.6 N) and m1 g (29.4 N), as required for acceleration.",
-        "check_it_another_way": "Tension formula T = [2 m1 m2 / (m1 + m2)] g represents the harmonic mean of the two gravitational weights.",
-        "watch_out": "Tension is NOT equal to (m1 + m2)g or (m1 - m2)g.",
-        "review_this_idea": "Core 1: NLM 04-05",
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / dimensionless threshold",
+        "quick_check": "At M=M_limit the static state is marginal; μ_s→0 reduces the limit to 2.0 kg.",
+        "check_it_another_way": "Static holding requires the hanging tendency to be resisted by downslope weight and limited upslope/down-slope friction; test the inequality before switching to kinetic friction.",
+        "watch_out": "Static friction is an inequality, not automatically μ_s N; do not use μ_k until slip is established.",
+        "review_this_idea": "Core 1: NLM-04",
         "limiting_cases": [
           {
-            "condition": "m1 = m2",
-            "expected": "a = 0, T = m1 g (neutral static equilibrium)"
+            "condition": "At the limiting static-friction threshold",
+            "expected": "At M=M_limit the static state is marginal; μ_s→0 reduces the limit to 2.0 kg."
           },
           {
-            "condition": "m2 -> 0",
-            "expected": "a -> g, T -> 0 (free fall of m1)"
+            "condition": "Beyond that limit, use kinetic friction and recompute",
+            "expected": "Static friction is an inequality, not automatically μ_s N; do not use μ_k until slip is established."
           }
         ]
       }
@@ -2719,10 +2730,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-03",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Original NLM extension redesigned/retagged against measured factor rubric; benchmark PDF UNKNOWN",
+        "benchmark_demand_anchor": "Core1 NLM-03",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A block of mass $m$ rests on a rough ramp whose inclination angle $\\theta$ can be varied. The coefficient of static friction is $\\mu_s$. Using the Contact Reaction Cone invariant, at what maximum angle $\\theta_{\\text{repose}}$ can the ramp be tilted before the block slips down?",
+      "stem": "A single wooden sample block rests on a rough laboratory tilting tray. Its static-friction coefficient is μ_s=0.40. Prove that the first angle at which it can begin to slide is independent of the sample's mass, and give its approximate value.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -2730,25 +2742,25 @@
         "caption": ""
       },
       "options": {
-        "A": "tan(theta_repose) = $\\mu_s$ (independent of block mass m).",
-        "B": "sin(theta_repose) = $\\mu_s$ m g.",
-        "C": "cos(theta_repose) = $\\mu_s$ / m.",
-        "D": "theta_repose = 45 deg for all surface materials."
+        "A": "tanθ_critical=0.40, so θ≈21.8°, independent of mass.",
+        "B": "θ_critical=40°, increasing with sample mass.",
+        "C": "sinθ_critical=0.40 times its mass.",
+        "D": "There is no finite critical angle."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-JUSTIFY-D4",
+        "cell_id": "PHYS-JUSTIFY-D2",
         "primary_demand": "JUSTIFY",
-        "difficulty_band": "D4",
+        "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-03",
         "difficulty_factors": {
-          "system_coupling": 4,
+          "system_coupling": 2,
           "vector_dimensionality": 3,
           "constraint_latency": 4,
-          "domain_coupling": 4,
-          "math_friction": 4
+          "domain_coupling": 2,
+          "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-03 to JUSTIFY demand.",
+        "protected_work_W": "Compare the downhill component of gravity with the greatest available static friction; the mass factor cancels.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -2761,71 +2773,81 @@
         "supporting_demands": [
           "EXPLAIN",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 2: One rigid block has normal and gravity as separate forces.",
+          "vector_dimensionality": "Score 3: Weight splits into slope-parallel and normal components.",
+          "constraint_latency": "Score 4: Onset of slipping invokes the static friction threshold.",
+          "domain_coupling": "Score 2: Combine force resolution and impending-motion criterion.",
+          "math_friction": "Score 2: Solve one trigonometric ratio without optimization."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Reaction vector R = N + f_s must be vertical to balance mg. Max cone angle $\\lambda$ satisfies tan($\\lambda$) = f_max / N = $\\mu_s$. Thus theta_repose = $\\lambda$ => tan($\\theta$) = $\\mu_s$."
+          "diagnostic": "Divide by mg cosθ to get tanθ≤μ_s; therefore θ_critical=arctan(0.40)≈21.8° independent of mass."
         },
         "B": {
-          "type": "DIMENSIONAL_HOMOGENEITY",
-          "diagnostic": "Dimensional mismatch: sin($\\theta$) is dimensionless while $\\mu_s$ m g has dimensions of force [M L T^-2]."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect model: The equality applies only at impending slip, not at every resting angle."
         },
         "C": {
-          "type": "RECIPROCAL_ERROR",
-          "diagnostic": "Inverted trigonometric relation and included non-cancelling mass."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Invalid regime or force ownership: Compare the downhill component of gravity with the greatest available static friction; the mass factor cancels."
         },
         "D": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Angle of repose depends directly on the interface friction coefficient $\\mu_s$."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails threshold/check: At μ_s=0 any nonzero positive tilt causes motion."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "Combine the normal reaction N and friction force f into a single total contact vector R.",
-          "reveal_text": "R = N + f. For equilibrium, R must be vertical and collinear with gravity mg."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · key physical decision",
+          "prompt_question": "Which regime, body, or contact constraint must be decided before calculation?",
+          "reveal_text": "Compare the downhill component of gravity with the greatest available static friction; the mass factor cancels."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What is the maximum angle $\\lambda$ between contact reaction vector R and the surface normal?",
-          "reveal_text": "tan($\\lambda$) = f_max / N = ($\\mu_s$ N) / N = $\\mu_s$."
+          "guidance_role": "representation",
+          "title": "H2 · force representation",
+          "prompt_question": "How should the system and signed axes be drawn?",
+          "reveal_text": "FBD with mg sinθ down slope, N=mg cosθ normal, and potential friction up slope."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "Since R is vertical, what is the geometric relationship between the incline angle $\\theta$ and cone angle $\\lambda$?",
-          "reveal_text": "$\\theta$ = $\\lambda$, meaning slip occurs when tan($\\theta$) > $\\mu_s$."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first governing constraint",
+          "prompt_question": "Write only the first inequality or force equation, not its solution.",
+          "reveal_text": "Start from mg sinθ ≤ μ_s mg cosθ at the resting limit."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Find threshold angle $\\theta$ before slip occurs on inclined plane with static friction $\\mu_s$.",
-          "represent": "Draw FBD with contact reaction cone: R = N + f, gravity mg downward.",
-          "connect": "Static equilibrium: R balances mg => R is vertical. Angle between R and normal is $\\theta$.",
-          "calculate": "At slip threshold: f_s = f_max = $\\mu_s$ N => tan($\\theta$) = f_max / N = $\\mu_s$.",
-          "interpret": "Repose angle satisfies tan(theta_repose) = $\\mu_s$, completely independent of mass m."
+          "understand": "Compare the downhill component of gravity with the greatest available static friction; the mass factor cancels.",
+          "represent": "FBD with mg sinθ down slope, N=mg cosθ normal, and potential friction up slope.",
+          "connect": "Start from mg sinθ ≤ μ_s mg cosθ at the resting limit.",
+          "calculate": "Divide by mg cosθ to get tanθ≤μ_s; therefore θ_critical=arctan(0.40)≈21.8° independent of mass.",
+          "interpret": "tanθ_critical=0.40, so θ≈21.8°, independent of mass."
         },
-        "final_expression": "tan(theta_repose) = $\\mu_s$ (independent of block mass m).",
-        "final_answer_value": "tan(theta_repose) = $\\mu_s$ (independent of block mass m)."
+        "final_expression": "tanθ_critical=0.40, so θ≈21.8°, independent of mass.",
+        "final_answer_value": "tanθ_critical=0.40, so θ≈21.8°, independent of mass."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Mass m cancels identically in mg sin($\\theta$) = $\\mu_s$ mg cos($\\theta$).",
-        "check_it_another_way": "Project forces along incline: mg sin($\\theta$) <= $\\mu_s$ mg cos($\\theta$) => tan($\\theta$) <= $\\mu_s$.",
-        "watch_out": "Angle of repose depends only on surface roughness $\\mu_s$, not on block weight.",
-        "review_this_idea": "Core 1: NLM 03, NLM 06",
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / dimensionless threshold",
+        "quick_check": "At μ_s=0 any nonzero positive tilt causes motion.",
+        "check_it_another_way": "Compare the downhill component of gravity with the greatest available static friction; the mass factor cancels.",
+        "watch_out": "The equality applies only at impending slip, not at every resting angle.",
+        "review_this_idea": "Core 1: NLM-03",
         "limiting_cases": [
           {
-            "condition": "$\\mu_s$ -> 0 (perfectly smooth)",
-            "expected": "theta_repose = 0 deg (slides on any incline)"
+            "condition": "At the limiting static-friction threshold",
+            "expected": "At μ_s=0 any nonzero positive tilt causes motion."
           },
           {
-            "condition": "$\\mu_s$ -> infinity (toothed)",
-            "expected": "theta_repose = 90 deg (never slides)"
+            "condition": "Beyond that limit, use kinetic friction and recompute",
+            "expected": "The equality applies only at impending slip, not at every resting angle."
           }
         ]
       }
@@ -2837,10 +2859,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-04",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Original NLM extension redesigned/retagged against measured factor rubric; benchmark PDF UNKNOWN",
+        "benchmark_demand_anchor": "Core1 NLM-04",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "Block $A$ of mass $m_1 = 2.0\\text{ kg}$ rests on top of block $B$ of mass $m_2 = 3.0\\text{ kg}$, which sits on a frictionless horizontal table. The coefficient of static friction between block $A$ and block $B$ is $\\mu_s = 0.40$. A horizontal force $F$ is applied to bottom block $B$. What is the maximum force $F_{\\max}$ that can be applied without block $A$ slipping relative to block $B$? (Take $g = 9.8\\text{ m/s}^2$).",
+      "stem": "On a frictionless straight track, a 2 kg block A lies on a 3 kg cart B; cart B is tethered by a taut light string to a 1 kg cart C. A horizontal force F pulls C right. Only contact A–B has friction: μ_s=0.40, μ_k=0.25; g=10 m/s². Find the greatest F that keeps A from sliding. If F=30 N, find both accelerations (A and linked B+C), and string tension.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -2848,10 +2871,10 @@
         "caption": ""
       },
       "options": {
-        "A": "F_max = $\\mu_s$ (m1 + m2) g = 0.40(5.0)(9.8) = 19.6 N.",
-        "B": "F_max = $\\mu_s$ m1 g = 0.40(2.0)(9.8) = 7.84 N.",
-        "C": "F_max = $\\mu_s$ m2 g = 0.40(3.0)(9.8) = 11.76 N.",
-        "D": "F_max = $\\mu_s$ (m1 + m2) g / 2 = 9.8 N."
+        "A": "F_limit=24 N; at F=30 N, a_A=2.5 m/s², a_(B+C)=6.25 m/s², T=23.75 N.",
+        "B": "F_limit=8 N; all three accelerate at 5 m/s².",
+        "C": "F_limit=24 N; all three still accelerate together at 5 m/s².",
+        "D": "F_limit=30 N; the upper block remains at rest."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -2861,12 +2884,12 @@
         "subtopic_competency_ref": "NLM-04",
         "difficulty_factors": {
           "system_coupling": 4,
-          "vector_dimensionality": 3,
+          "vector_dimensionality": 2,
           "constraint_latency": 4,
           "domain_coupling": 4,
           "math_friction": 4
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-04 to SYNTHESIZE demand.",
+        "protected_work_W": "In the no-slip regime A needs friction m_A F/(m_A+m_B+m_C); once beyond μ_s m_Ag, kinetic friction gives A a different acceleration.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -2879,71 +2902,81 @@
         "supporting_demands": [
           "MODEL",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 4: Upper block A, lower cart B and linked cart C form a three-body constrained system.",
+          "vector_dimensionality": "Score 2: Motion and the contact friction are signed along the track.",
+          "constraint_latency": "Score 4: Static friction on A must be checked before a kinetic branch can apply.",
+          "domain_coupling": "Score 4: Solve a common-acceleration regime and a separated-acceleration regime.",
+          "math_friction": "Score 4: Find the maximal allowed external pull as a parameter, then coupled accelerations and tension."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Top block A has max acceleration a_max = ($\\mu_s$ m1 g)/m1 = $\\mu_s$ g = 3.92 m/s^2. For no slip, both blocks accelerate together: F_max = (m1 + m2) a_max = (m1 + m2) $\\mu_s$ g = 19.6 N."
+          "diagnostic": "Together a=F/6 and A needs f=F/3≤8 N, giving F_limit=24 N. At F=30, f_k=0.25×2×10=5 N. A accelerates 5/2=2.5; linked B+C accelerate (30−5)/4=6.25; for C, T=30−1×6.25=23.75 N."
         },
         "B": {
-          "type": "SINGLE_FORCE_NEGLECT",
-          "diagnostic": "Considers only the friction force on A rather than the total force accelerating both masses."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect model: Do not keep the common-acceleration assumption after static friction is exceeded."
         },
         "C": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Uses bottom block mass instead of normal force between A and B."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Invalid regime or force ownership: In the no-slip regime A needs friction m_A F/(m_A+m_B+m_C); once beyond μ_s m_Ag, kinetic friction gives A a different acceleration."
         },
         "D": {
-          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
-          "diagnostic": "Divided total force by 2 without physical justification."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails threshold/check: For F just below 24 N both groups must share acceleration F/6."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "What is the only horizontal force that can accelerate top block A forward?",
-          "reveal_text": "Static friction f_s from the top surface of block B."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · key physical decision",
+          "prompt_question": "Which regime, body, or contact constraint must be decided before calculation?",
+          "reveal_text": "In the no-slip regime A needs friction m_A F/(m_A+m_B+m_C); once beyond μ_s m_Ag, kinetic friction gives A a different acceleration."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What is the maximum horizontal acceleration that friction can impart to block A?",
-          "reveal_text": "a_max = f_max / m1 = ($\\mu_s$ m1 g) / m1 = $\\mu_s$ g = 0.40(9.8) = 3.92 m/s^2."
+          "guidance_role": "representation",
+          "title": "H2 · force representation",
+          "prompt_question": "How should the system and signed axes be drawn?",
+          "reveal_text": "Draw the FBD for each cart/block and one external FBD for the combined system, with two possible motion regimes."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "If both blocks move together at a_max, what total horizontal force F_max must pull the composite mass (m1 + m2)?",
-          "reveal_text": "F_max = (m1 + m2) a_max = (2.0 + 3.0)(3.92) = 19.6 N."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first governing constraint",
+          "prompt_question": "Write only the first inequality or force equation, not its solution.",
+          "reveal_text": "First test m_A F/(m_A+m_B+m_C) ≤ μ_s m_A g."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "m1 = 2 kg on m2 = 3 kg on smooth table; static friction $\\mu_s$ = 0.40 between blocks. Find max F on m2 for no slip.",
-          "represent": "Draw FBD for m1: forward friction f_s. For m2: forward pull F, backward friction f_s from m1.",
-          "connect": "No slip condition: a1 = a2 = a <= a_max. Max friction on m1: f_max = $\\mu_s$ m1 g.",
-          "calculate": "a_max = f_max / m1 = $\\mu_s$ g = 3.92 m/s^2. System force: F_max = (m1 + m2) a_max = 5.0 * 3.92 = 19.6 N.",
-          "interpret": "Maximum pull force without slip is exactly 19.6 N."
+          "understand": "In the no-slip regime A needs friction m_A F/(m_A+m_B+m_C); once beyond μ_s m_Ag, kinetic friction gives A a different acceleration.",
+          "represent": "Draw the FBD for each cart/block and one external FBD for the combined system, with two possible motion regimes.",
+          "connect": "First test m_A F/(m_A+m_B+m_C) ≤ μ_s m_A g.",
+          "calculate": "Together a=F/6 and A needs f=F/3≤8 N, giving F_limit=24 N. At F=30, f_k=0.25×2×10=5 N. A accelerates 5/2=2.5; linked B+C accelerate (30−5)/4=6.25; for C, T=30−1×6.25=23.75 N.",
+          "interpret": "F_limit=24 N; at F=30 N, a_A=2.5 m/s², a_(B+C)=6.25 m/s², T=23.75 N."
         },
-        "final_expression": "F_max = $\\mu_s$ (m1 + m2) g = 0.40(5.0)(9.8) = 19.6 N.",
-        "final_answer_value": "F_max = $\\mu_s$ (m1 + m2) g = 0.40(5.0)(9.8) = 19.6 N."
+        "final_expression": "F_limit=24 N; at F=30 N, a_A=2.5 m/s², a_(B+C)=6.25 m/s², T=23.75 N.",
+        "final_answer_value": "F_limit=24 N; at F=30 N, a_A=2.5 m/s², a_(B+C)=6.25 m/s², T=23.75 N."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "If F = 19.6 N, a = 19.6/5 = 3.92 m/s^2; friction on A is m1 a = 2(3.92) = 7.84 N = $\\mu_s$ m1 g.",
-        "check_it_another_way": "In accelerated frame of B, pseudo force on A is m1 a; slip occurs when m1 a > $\\mu_s$ m1 g => a > $\\mu_s$ g.",
-        "watch_out": "Do not use $\\mu_s$ (m1 + m2)g as friction; normal force at interface is m1 g, not (m1 + m2)g.",
-        "review_this_idea": "Core 1: NLM 04-06",
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / dimensionless threshold",
+        "quick_check": "For F just below 24 N both groups must share acceleration F/6.",
+        "check_it_another_way": "In the no-slip regime A needs friction m_A F/(m_A+m_B+m_C); once beyond μ_s m_Ag, kinetic friction gives A a different acceleration.",
+        "watch_out": "Do not keep the common-acceleration assumption after static friction is exceeded.",
+        "review_this_idea": "Core 1: NLM-04",
         "limiting_cases": [
           {
-            "condition": "$\\mu_s$ -> 0",
-            "expected": "F_max = 0 (slips under any non-zero force)"
+            "condition": "At the limiting static-friction threshold",
+            "expected": "For F just below 24 N both groups must share acceleration F/6."
           },
           {
-            "condition": "m1 >> m2",
-            "expected": "F_max -> $\\mu_s$ m1 g"
+            "condition": "Beyond that limit, use kinetic friction and recompute",
+            "expected": "Do not keep the common-acceleration assumption after static friction is exceeded."
           }
         ]
       }
@@ -2955,10 +2988,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-04",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Original NLM extension redesigned/retagged against measured factor rubric; benchmark PDF UNKNOWN",
+        "benchmark_demand_anchor": "Core1 NLM-04",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "An ideal movable pulley supports a load of mass $M = 20\\text{ kg}$ ($W = M g = 196\\text{ N}$). A person pulls the free end of the light string upward with an effort force $F$. Assuming frictionless, massless pulleys and an inextensible string, what effort force $F$ is required to hold the load in static equilibrium, and what is the mechanical advantage?",
+      "stem": "A stage technician holds a 20 kg lighting unit at rest using one ideal movable pulley supported by two vertical parts of a massless cord. With g=9.8 m/s², what upward effort is necessary at the free end, and what is the ideal mechanical advantage?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -2966,25 +3000,25 @@
         "caption": ""
       },
       "options": {
-        "A": "Effort force F = W/2 = 98 N; Mechanical Advantage = 2.",
-        "B": "Effort force F = W = 196 N; Mechanical Advantage = 1.",
-        "C": "Effort force F = 2W = 392 N; Mechanical Advantage = 0.5.",
-        "D": "Effort force F = W/4 = 49 N; Mechanical Advantage = 4."
+        "A": "98 N and mechanical advantage 2.",
+        "B": "196 N and mechanical advantage 1.",
+        "C": "392 N and mechanical advantage 0.5.",
+        "D": "49 N and mechanical advantage 4."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-SYNTHESIZE-D4",
-        "primary_demand": "SYNTHESIZE",
-        "difficulty_band": "D4",
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-04",
         "difficulty_factors": {
-          "system_coupling": 4,
-          "vector_dimensionality": 3,
-          "constraint_latency": 4,
-          "domain_coupling": 4,
-          "math_friction": 4
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 3,
+          "domain_coupling": 2,
+          "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-04 to SYNTHESIZE demand.",
+        "protected_work_W": "The weight is shared by two supporting string sections of equal tension.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -2997,71 +3031,81 @@
         "supporting_demands": [
           "MODEL",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 2: One rigid load hangs on the moving pulley.",
+          "vector_dimensionality": "Score 1: All forces act along the vertical line.",
+          "constraint_latency": "Score 3: A movable-pulley two-segment string constraint must be counted.",
+          "domain_coupling": "Score 2: Use force balance and mechanical-advantage ratio.",
+          "math_friction": "Score 2: A linear tension equation and division."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: String length L = 2 y_pulley + y_free => Delta x_input = 2 Delta y_load. By virtual work: F * (2 $\\Delta y$) = W * $\\Delta y$ => F = W/2 = 98 N. MA = W/F = 2."
+          "diagnostic": "W=20×9.8=196 N; equal string tension gives F_effort=196/2=98 N and W/F_effort=2."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Applies to a fixed pulley, which changes direction but provides no mechanical advantage."
+          "diagnostic": "Incorrect model: A single moving pulley is not a four-segment block-and-tackle."
         },
         "C": {
-          "type": "RECIPROCAL_ERROR",
-          "diagnostic": "Inverted the mechanical advantage, assuming lifting effort must be doubled."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Invalid regime or force ownership: The weight is shared by two supporting string sections of equal tension."
         },
         "D": {
-          "type": "INCORRECT_FORCE_RATIO",
-          "diagnostic": "Assumes a 4-pulley compound block-and-tackle rather than a single movable pulley."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails threshold/check: Work balance doubles the free-end movement relative to the load displacement."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "How many string segments directly support the movable pulley and its load W?",
-          "reveal_text": "Two vertical string segments, each carrying string tension T."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · key physical decision",
+          "prompt_question": "Which regime, body, or contact constraint must be decided before calculation?",
+          "reveal_text": "The weight is shared by two supporting string sections of equal tension."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What does vertical force balance on the massless movable pulley require?",
-          "reveal_text": "2 T - W = 0 => 2 T = W => T = W / 2."
+          "guidance_role": "representation",
+          "title": "H2 · force representation",
+          "prompt_question": "How should the system and signed axes be drawn?",
+          "reveal_text": "Make the moving pulley-plus-load FBD with two upward T arrows and one downward W arrow."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "Since the person pulls the continuous string, effort force F equals tension T. What is F and MA?",
-          "reveal_text": "F = T = W / 2 = 196 / 2 = 98 N. Mechanical Advantage MA = W / F = 2."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first governing constraint",
+          "prompt_question": "Write only the first inequality or force equation, not its solution.",
+          "reveal_text": "Begin with ΣF_y=2T−W=0 and F_effort=T."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Load W = 196 N supported by an ideal movable pulley; find effort force F and MA.",
-          "represent": "FBD of movable pulley: upward 2T, downward load W. Inextensible string constraint.",
-          "connect": "Kinematic constraint: Delta x_effort = 2 Delta y_load. Virtual work: W_in = W_out => F(2 $\\Delta y$) = W $\\Delta y$.",
-          "calculate": "F = W / 2 = 196 / 2 = 98 N; MA = W / F = 196 / 98 = 2.",
-          "interpret": "Effort force is halved (98 N) with a mechanical advantage of 2."
+          "understand": "The weight is shared by two supporting string sections of equal tension.",
+          "represent": "Make the moving pulley-plus-load FBD with two upward T arrows and one downward W arrow.",
+          "connect": "Begin with ΣF_y=2T−W=0 and F_effort=T.",
+          "calculate": "W=20×9.8=196 N; equal string tension gives F_effort=196/2=98 N and W/F_effort=2.",
+          "interpret": "98 N and mechanical advantage 2."
         },
-        "final_expression": "Effort force F = W/2 = 98 N; Mechanical Advantage = 2.",
-        "final_answer_value": "Effort force F = W/2 = 98 N; Mechanical Advantage = 2."
+        "final_expression": "98 N and mechanical advantage 2.",
+        "final_answer_value": "98 N and mechanical advantage 2."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Work conservation: pulling 2 meters with 98 N gives 196 J; lifting 196 N by 1 meter requires 196 J.",
-        "check_it_another_way": "Newton II on massless pulley: $\\Sigma F_y = 2T - W = 0 \\implies T = W/2$.",
-        "watch_out": "Do not forget that effort displacement is twice load displacement.",
-        "review_this_idea": "Core 1: NLM 04-05",
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / dimensionless threshold",
+        "quick_check": "Work balance doubles the free-end movement relative to the load displacement.",
+        "check_it_another_way": "The weight is shared by two supporting string sections of equal tension.",
+        "watch_out": "A single moving pulley is not a four-segment block-and-tackle.",
+        "review_this_idea": "Core 1: NLM-04",
         "limiting_cases": [
           {
-            "condition": "String inextensible",
-            "expected": "Efficiency = 100%, MA = 2"
+            "condition": "At the limiting static-friction threshold",
+            "expected": "Work balance doubles the free-end movement relative to the load displacement."
           },
           {
-            "condition": "Load W = 0",
-            "expected": "Effort F = 0"
+            "condition": "Beyond that limit, use kinetic friction and recompute",
+            "expected": "A single moving pulley is not a four-segment block-and-tackle."
           }
         ]
       }
@@ -3073,10 +3117,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-03",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Original NLM extension redesigned/retagged against measured factor rubric; benchmark PDF UNKNOWN",
+        "benchmark_demand_anchor": "Core1 NLM-03",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A conical pendulum consists of a small bob of mass $m = 0.50\\text{ kg}$ suspended by a light string of length $L = 1.0\\text{ m}$ revolving at constant speed in a horizontal circle of radius $r$, with the string making a constant angle $\\theta = 60^\\circ$ to the vertical. Taking $g = 9.8\\text{ m/s}^2$, what are the string tension $T$ and the net horizontal centripetal force $F_{\\text{net}}$?",
+      "stem": "Two crates of masses 2 kg and 3 kg share a 30° incline and are joined by a taut cord; the upper crate is also linked over an ideal pulley to a 4 kg hanging load. Both slope contacts have μ_s=0.30 and μ_k=0.20, with g=10 m/s² and cos30°≈0.866. Justify whether rest is possible; if not, justify the hanging load's direction and acceleration.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -3084,10 +3129,10 @@
         "caption": ""
       },
       "options": {
-        "A": "Tension T = mg / cos(60 deg) = 9.80 N; Net horizontal force $F_{\\text{net}}$ = mg tan(60 deg) = 4.90 sqrt(3) N approx 8.49 N.",
-        "B": "Tension T = mg cos(60 deg) = 2.45 N; Net horizontal force $F_{\\text{net}}$ = mg sin(60 deg) = 4.24 N.",
-        "C": "Tension T = mg = 4.90 N; Net horizontal force $F_{\\text{net}}$ = 0 N because speed is constant.",
-        "D": "Tension T = 2mg sin(60 deg) = 8.49 N; Net horizontal force $F_{\\text{net}}$ = 9.80 N."
+        "A": "Rest is impossible; the 4 kg load descends and the linked system accelerates about 0.704 m/s².",
+        "B": "The system remains at rest because friction always equals μ_s N.",
+        "C": "The 4 kg load rises at 0.704 m/s².",
+        "D": "The load drops at 4.44 m/s² because slope friction cancels gravity."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -3100,9 +3145,9 @@
           "vector_dimensionality": 3,
           "constraint_latency": 4,
           "domain_coupling": 4,
-          "math_friction": 4
+          "math_friction": 3
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-03 to JUSTIFY demand.",
+        "protected_work_W": "Treat the three linked bodies as a system for net drive but inspect contact friction limits before asserting motion.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -3115,71 +3160,81 @@
         "supporting_demands": [
           "EXPLAIN",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 4: Two ramp boxes A and B tether to a third hanging load C.",
+          "vector_dimensionality": "Score 3: Two ramp weight resolutions and one vertical hanging axis require 2D force components.",
+          "constraint_latency": "Score 4: Both ramp contacts have static slip limits before a kinetic branch.",
+          "domain_coupling": "Score 4: Compare a three-body static boundary with post-slip coupled dynamics.",
+          "math_friction": "Score 3: Use three linked force equations with two string tensions after testing inequality."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Vertical equilibrium: T cos($\\theta$) = mg => T = mg/cos(60 deg) = 0.50(9.8)/0.5 = 9.80 N. Horizontal net force: $F_{\\text{net}}$ = T sin($\\theta$) = mg tan(60 deg) = 4.90 * sqrt(3) = 8.49 N."
+          "diagnostic": "Downward drive=40−25=15 N; max static total=0.30×50×0.866≈12.99 N, so it slides hanging-down. Kinetic drag=0.20×50×0.866=8.66 N; a=(40−25−8.66)/(2+3+4)≈0.704 m/s²."
         },
         "B": {
-          "type": "RECIPROCAL_ERROR",
-          "diagnostic": "Inverted trigonometric component: multiplied by cos($\\theta$) instead of dividing."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect model: Do not assume momentum is conserved for boxes-plus-load in external gravity fields."
         },
         "C": {
-          "type": "ARISTOTELIAN_FORCE_VELOCITY",
-          "diagnostic": "Assumes constant speed implies zero net force, ignoring circular centripetal acceleration."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Invalid regime or force ownership: Treat the three linked bodies as a system for net drive but inspect contact friction limits before asserting motion."
         },
         "D": {
-          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
-          "diagnostic": "Formula misapplication in resolving orthogonal components."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails threshold/check: If μ_s were raised above 15/(50×0.866)≈0.346, a static configuration could exist."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "What forces act on the bob, and along which axes do they resolve?",
-          "reveal_text": "Tension T along the string and gravity mg downward. Resolve T into horizontal T sin($\\theta$) and vertical T cos($\\theta$)."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · key physical decision",
+          "prompt_question": "Which regime, body, or contact constraint must be decided before calculation?",
+          "reveal_text": "Treat the three linked bodies as a system for net drive but inspect contact friction limits before asserting motion."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "Is there any vertical acceleration for the bob revolving in a horizontal circle?",
-          "reveal_text": "No; $a_y$ = 0, so T cos($\\theta$) = mg => T = mg / cos($\\theta$)."
+          "guidance_role": "representation",
+          "title": "H2 · force representation",
+          "prompt_question": "How should the system and signed axes be drawn?",
+          "reveal_text": "Three owner-specific FBDs; draw ramp weight components, both normal forces, rope tensions and a signed hanging-down axis."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "What provides the net centripetal force directed toward the center of the horizontal circle?",
-          "reveal_text": "The horizontal component of tension: $F_{\\text{net}}$ = T sin($\\theta$) = mg tan($\\theta$)."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first governing constraint",
+          "prompt_question": "Write only the first inequality or force equation, not its solution.",
+          "reveal_text": "Test 4g−(2+3)g sin30° ≤ μ_s(2+3)g cos30° before using μ_k."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Bob of mass m = 0.50 kg revolves at angle $\\theta$ = 60 deg to vertical; find T and horizontal $F_{\\text{net}}$.",
-          "represent": "Draw FBD of bob: downward mg, tension T at angle $\\theta$ to vertical.",
-          "connect": "Vertical equilibrium: $\\Sigma F_y = T \\cos\\theta - mg = 0$. Horizontal dynamics: $\\Sigma F_x = T \\sin\\theta = F_{\\text{net}}$.",
-          "calculate": "T = 0.50(9.8) / cos(60 deg) = 4.90 / 0.50 = 9.80 N. $F_{\\text{net}}$ = 9.80 sin(60 deg) = 9.80(sqrt(3)/2) = 4.90 sqrt(3) approx 8.49 N.",
-          "interpret": "Tension is 9.80 N; net horizontal centripetal force is 8.49 N."
+          "understand": "Treat the three linked bodies as a system for net drive but inspect contact friction limits before asserting motion.",
+          "represent": "Three owner-specific FBDs; draw ramp weight components, both normal forces, rope tensions and a signed hanging-down axis.",
+          "connect": "Test 4g−(2+3)g sin30° ≤ μ_s(2+3)g cos30° before using μ_k.",
+          "calculate": "Downward drive=40−25=15 N; max static total=0.30×50×0.866≈12.99 N, so it slides hanging-down. Kinetic drag=0.20×50×0.866=8.66 N; a=(40−25−8.66)/(2+3+4)≈0.704 m/s².",
+          "interpret": "Rest is impossible; the 4 kg load descends and the linked system accelerates about 0.704 m/s²."
         },
-        "final_expression": "Tension T = mg / cos(60 deg) = 9.80 N; Net horizontal force $F_{\\text{net}}$ = mg tan(60 deg) = 4.90 sqrt(3) N approx 8.49 N.",
-        "final_answer_value": "Tension T = mg / cos(60 deg) = 9.80 N; Net horizontal force $F_{\\text{net}}$ = mg tan(60 deg) = 4.90 sqrt(3) N approx 8.49 N."
+        "final_expression": "Rest is impossible; the 4 kg load descends and the linked system accelerates about 0.704 m/s².",
+        "final_answer_value": "Rest is impossible; the 4 kg load descends and the linked system accelerates about 0.704 m/s²."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "T = 9.80 N is greater than mg = 4.90 N, which is required because T must support weight and provide horizontal acceleration.",
-        "check_it_another_way": "Vector triangle of forces: T^2 = (mg)^2 + ($F_{\\text{net}}$)^2 => 9.80^2 = 4.90^2 + 8.487^2 => 96.04 = 24.01 + 72.03 = 96.04.",
-        "watch_out": "Do not assume net force is zero merely because speed is constant in uniform circular motion.",
-        "review_this_idea": "Core 1: NLM 03-04",
+        "dimensional_formula": "[M L T^-2] / [L T^-2] / dimensionless threshold",
+        "quick_check": "If μ_s were raised above 15/(50×0.866)≈0.346, a static configuration could exist.",
+        "check_it_another_way": "Treat the three linked bodies as a system for net drive but inspect contact friction limits before asserting motion.",
+        "watch_out": "Do not assume momentum is conserved for boxes-plus-load in external gravity fields.",
+        "review_this_idea": "Core 1: NLM-03",
         "limiting_cases": [
           {
-            "condition": "$\\theta$ -> 0 (rest at bottom)",
-            "expected": "T -> mg = 4.90 N, $F_{\\text{net}}$ -> 0"
+            "condition": "At the limiting static-friction threshold",
+            "expected": "If μ_s were raised above 15/(50×0.866)≈0.346, a static configuration could exist."
           },
           {
-            "condition": "$\\theta$ -> 90 deg (horizontal string)",
-            "expected": "T -> infinity, $F_{\\text{net}}$ -> infinity"
+            "condition": "Beyond that limit, use kinetic friction and recompute",
+            "expected": "Do not assume momentum is conserved for boxes-plus-load in external gravity fields."
           }
         ]
       }
