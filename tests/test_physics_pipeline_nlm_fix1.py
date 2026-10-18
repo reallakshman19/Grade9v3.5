@@ -192,5 +192,19 @@ class NLMDemandCalibrationTest(unittest.TestCase):
         self.assertEqual(min([0.2*10/0.5, 0.4*10/1, 0.3*10/1.5]), 2)
 
 
+    def test_no_d4_discriminators_fails_closed(self):
+        adapter = json.loads(ADAPTERS.read_text(encoding="utf-8"))["topic_adapters"]["mechanics-nlm"]
+        _, errors, _ = validator.nlm_d4_discriminator_report([], adapter)
+        self.assertTrue(any("diversity" in err for err in errors))
+
+    def test_malformed_d4_vector_fails_not_crashes(self):
+        item = next(q for q in self.bank["questions"] if q["qrt_contract"]["difficulty_band"] == "D4")
+        item["qrt_contract"]["difficulty_factors"].pop("math_friction")
+        ok, output = self.run_bank()
+        self.assertFalse(ok)
+        self.assertIn("five integer scores", output)
+        self.assertIn("D4 margin too low", output)
+
+
 if __name__ == "__main__":
     unittest.main()
