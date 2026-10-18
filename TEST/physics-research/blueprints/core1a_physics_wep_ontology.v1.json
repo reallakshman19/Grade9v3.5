@@ -10,35 +10,55 @@
       "name": "The Work Dot-Product Invariant",
       "statement": "Work is the scalar line integral of force along the path of displacement. Only force components collinear with instantaneous displacement contribute to work. Perpendicular forces perform identically zero work.",
       "mathematical_invariant": "W = \\int_{\\vec{r}_1}^{\\vec{r}_2} \\vec{F} \\cdot d\\vec{r} = \\int F\\cos\\theta\\,ds, \\quad \\vec{F} \\perp \\vec{v} \\implies dW = 0",
-      "scope_condition": "Holds for all forces in classical mechanics; work is a scalar invariant under coordinate rotations."
+      "scope_condition": "Holds for all forces in classical mechanics; work is a scalar invariant under coordinate rotations.",
+      "competency_refs": [
+        "WEP-01",
+        "WEP-08"
+      ]
     },
     {
       "pillar_id": "P2",
       "name": "Universal Work-Energy Theorem (WET)",
       "statement": "The net work done by all forces (conservative, non-conservative, internal, and external) acting on a body equals the exact change in its kinetic energy.",
       "mathematical_invariant": "W_{\\text{net}} = \\sum_{i} W_i = \\Delta K = \\frac{1}{2}m v_f^2 - \\frac{1}{2}m v_i^2 = \\frac{p_f^2 - p_i^2}{2m}",
-      "scope_condition": "Valid in any Newtonian inertial frame; applies to both constant and continuously varying forces."
+      "scope_condition": "Valid in any Newtonian inertial frame; applies to both constant and continuously varying forces.",
+      "competency_refs": [
+        "WEP-02",
+        "WEP-03"
+      ]
     },
     {
       "pillar_id": "P3",
       "name": "Conservative Field Path-Independence & Closed-Loop Vanishing",
       "statement": "A force is conservative if and only if the line integral around any closed loop vanishes. The work done between two spatial configurations depends strictly on the endpoints, independent of the intervening trajectory.",
       "mathematical_invariant": "\\oint \\vec{F}_c \\cdot d\\vec{r} = 0 \\iff \\vec{\\nabla} \\times \\vec{F}_c = \\vec{0} \\iff W_{A \\to B} = U(A) - U(B)",
-      "scope_condition": "Applies to static gravitational, ideal elastic spring, and electrostatic fields; fails for dissipative friction or viscous drag."
+      "scope_condition": "Applies to static gravitational, ideal elastic spring, and electrostatic fields; fails for dissipative friction or viscous drag.",
+      "competency_refs": [
+        "WEP-04",
+        "WEP-09"
+      ]
     },
     {
       "pillar_id": "P4",
       "name": "Potential Energy Negative Gradient Identity",
       "statement": "Potential energy U is defined exclusively for conservative interactions as the negative of work done. Force always drives the physical system toward lower potential energy configurations.",
       "mathematical_invariant": "\\Delta U = -W_c = -\\int_{\\vec{r}_i}^{\\vec{r}_f} \\vec{F}_c \\cdot d\\vec{r} \\iff \\vec{F}_c = -\\vec{\\nabla} U \\implies F_x = -\\frac{dU}{dx}",
-      "scope_condition": "Potential energy belongs to the interaction between parts of a system; requires explicit declaration of a datum U = 0."
+      "scope_condition": "Potential energy belongs to the interaction between parts of a system; requires explicit declaration of a datum U = 0.",
+      "competency_refs": [
+        "WEP-05",
+        "WEP-06"
+      ]
     },
     {
       "pillar_id": "P5",
       "name": "Mechanical Energy Conservation & Dissipative Friction Ledger",
       "statement": "When non-conservative forces act, the change in total mechanical energy (K + U) equals the non-conservative work. When non-conservative work is zero, mechanical energy is strictly conserved.",
       "mathematical_invariant": "\\Delta E_{\\text{mech}} = \\Delta(K + U) = W_{nc} = -\\int f_k\\,ds \\le 0, \\quad W_{nc} = 0 \\implies K_i + U_i = K_f + U_f",
-      "scope_condition": "Requires an enclosed system boundary where internal potential energies are accounted for and non-conservative boundaries are monitored."
+      "scope_condition": "Requires an enclosed system boundary where internal potential energies are accounted for and non-conservative boundaries are monitored.",
+      "competency_refs": [
+        "WEP-07",
+        "WEP-10"
+      ]
     }
   ],
   "dependency_graph": {
@@ -47,36 +67,107 @@
         "layer_index": 1,
         "name": "Primitive Physical Definitions",
         "nodes": [
-          {"id": "NODE-1.1", "term": "System Demarcation & Boundary", "description": "Defining the spatial boundary enclosing interacting masses and energy stores."},
-          {"id": "NODE-1.2", "term": "Dot-Product Work Definition", "description": "Scalar product W = F * s * cos(theta) mapping vector force and displacement to energy."},
-          {"id": "NODE-1.3", "term": "Translational Kinetic Energy", "description": "Scalar motion energy K = 0.5 * m * v^2 = p^2 / (2m)."}
+          {
+            "id": "NODE-1.1",
+            "term": "System Demarcation & Boundary",
+            "description": "Defining the spatial boundary enclosing interacting masses and energy stores."
+          },
+          {
+            "id": "NODE-1.2",
+            "term": "Dot-Product Work Definition",
+            "description": "Scalar product W = F * s * cos(theta) mapping vector force and displacement to energy."
+          },
+          {
+            "id": "NODE-1.3",
+            "term": "Translational Kinetic Energy",
+            "description": "Scalar motion energy K = 0.5 * m * v^2 = p^2 / (2m)."
+          }
         ]
       },
       {
         "layer_index": 2,
         "name": "Fundamental Energy Theorems",
         "nodes": [
-          {"id": "NODE-2.1", "term": "Work-Energy Theorem", "depends_on": ["NODE-1.2", "NODE-1.3"]},
-          {"id": "NODE-2.2", "term": "Conservative Force Criteria", "depends_on": ["NODE-1.2"]},
-          {"id": "NODE-2.3", "term": "Non-Conservative Dissipation", "depends_on": ["NODE-1.2", "NODE-2.1"]}
+          {
+            "id": "NODE-2.1",
+            "term": "Work-Energy Theorem",
+            "depends_on": [
+              "NODE-1.2",
+              "NODE-1.3"
+            ]
+          },
+          {
+            "id": "NODE-2.2",
+            "term": "Conservative Force Criteria",
+            "depends_on": [
+              "NODE-1.2"
+            ]
+          },
+          {
+            "id": "NODE-2.3",
+            "term": "Non-Conservative Dissipation",
+            "depends_on": [
+              "NODE-1.2",
+              "NODE-2.1"
+            ]
+          }
         ]
       },
       {
         "layer_index": 3,
         "name": "Potential Energy Stores & Landscapes",
         "nodes": [
-          {"id": "NODE-3.1", "term": "Gravitational Potential Energy (mgh)", "depends_on": ["NODE-2.2"]},
-          {"id": "NODE-3.2", "term": "Spring Elastic Potential Energy (0.5 k x^2)", "depends_on": ["NODE-2.2"]},
-          {"id": "NODE-3.3", "term": "Potential Energy Landscape (F = -dU/dx)", "depends_on": ["NODE-2.2"]}
+          {
+            "id": "NODE-3.1",
+            "term": "Gravitational Potential Energy (mgh)",
+            "depends_on": [
+              "NODE-2.2"
+            ]
+          },
+          {
+            "id": "NODE-3.2",
+            "term": "Spring Elastic Potential Energy (0.5 k x^2)",
+            "depends_on": [
+              "NODE-2.2"
+            ]
+          },
+          {
+            "id": "NODE-3.3",
+            "term": "Potential Energy Landscape (F = -dU/dx)",
+            "depends_on": [
+              "NODE-2.2"
+            ]
+          }
         ]
       },
       {
         "layer_index": 4,
         "name": "Coupled Olympiad Synthesis",
         "nodes": [
-          {"id": "NODE-4.1", "term": "Equilibrium Stability Criteria (d^2U/dx^2)", "depends_on": ["NODE-3.3"]},
-          {"id": "NODE-4.2", "term": "Mechanical Energy Conservation with Friction", "depends_on": ["NODE-2.1", "NODE-3.1", "NODE-3.2"]},
-          {"id": "NODE-4.3", "term": "Instantaneous Power & Aerodynamic Drag Scaling (P = k v^3)", "depends_on": ["NODE-1.2", "NODE-2.1"]}
+          {
+            "id": "NODE-4.1",
+            "term": "Equilibrium Stability Criteria (d^2U/dx^2)",
+            "depends_on": [
+              "NODE-3.3"
+            ]
+          },
+          {
+            "id": "NODE-4.2",
+            "term": "Mechanical Energy Conservation with Friction",
+            "depends_on": [
+              "NODE-2.1",
+              "NODE-3.1",
+              "NODE-3.2"
+            ]
+          },
+          {
+            "id": "NODE-4.3",
+            "term": "Instantaneous Power & Aerodynamic Drag Scaling (P = k v^3)",
+            "depends_on": [
+              "NODE-1.2",
+              "NODE-2.1"
+            ]
+          }
         ]
       }
     ]
@@ -124,5 +215,6 @@
       "newtonian_scientific_truth": "K = p^2 / (2m). For equal momentum, kinetic energy is inversely proportional to mass. The lighter body has vastly greater velocity and therefore carries vastly greater kinetic energy.",
       "decisive_experiment": "Firing a rifle: rifle and bullet have equal and opposite momentum (p_bullet = -p_rifle). However, bullet mass m << rifle mass M, so bullet absorbs over 99% of the powder's kinetic energy."
     }
-  ]
+  ],
+  "canonical_topic_id": "phy-work-energy-power"
 }

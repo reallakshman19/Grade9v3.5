@@ -10,35 +10,56 @@
       "name": "Galilean Superposition & Orthogonal Decoupling",
       "statement": "Motion along mutually perpendicular Cartesian axes is completely independent. The position, velocity, and acceleration along the x-axis decouple from those along the y-axis, linked solely by the single shared parameter of time t.",
       "mathematical_invariant": "\\vec{r}(t) = x(t)\\hat{i} + y(t)\\hat{j}, \\quad a_x = \\frac{d^2x}{dt^2}, \\quad a_y = \\frac{d^2y}{dt^2}, \\quad \\frac{\\partial x}{\\partial y} = 0",
-      "scope_condition": "Holds in all Newtonian inertial reference frames where spatial coordinate axes are orthogonal and non-rotating."
+      "scope_condition": "Holds in all Newtonian inertial reference frames where spatial coordinate axes are orthogonal and non-rotating.",
+      "competency_refs": [
+        "KIN-01",
+        "KIN-08"
+      ]
     },
     {
       "pillar_id": "P2",
       "name": "Differential Rate Duality & Motion Graph Geometry",
       "statement": "Velocity is the instantaneous time rate of change of position; acceleration is the instantaneous time rate of change of the velocity vector. Tangent slopes on coordinate-time curves represent rates; definite integrals (enclosed area) represent cumulative changes.",
       "mathematical_invariant": "\\vec{v} = \\frac{d\\vec{r}}{dt}, \\quad \\vec{a} = \\frac{d\\vec{v}}{dt} = v\\frac{dv}{dx}\\hat{i}, \\quad \\Delta x = \\int_{t_1}^{t_2} v(t)\\,dt, \\quad \\Delta v = \\int_{t_1}^{t_2} a(t)\\,dt",
-      "scope_condition": "Valid for all continuous kinematic trajectories, regardless of whether acceleration is constant or variable."
+      "scope_condition": "Valid for all continuous kinematic trajectories, regardless of whether acceleration is constant or variable.",
+      "competency_refs": [
+        "KIN-02",
+        "KIN-11"
+      ]
     },
     {
       "pillar_id": "P3",
       "name": "Galileo's Odd-Number Invariant of Uniform Acceleration",
       "statement": "For any body starting from rest under constant acceleration, the distances traversed in successive equal time intervals follow the exact ratio of consecutive odd integers: 1 : 3 : 5 : 7 : ... : (2n-1).",
       "mathematical_invariant": "\\Delta s_n = s(n\\,\\Delta t) - s((n-1)\\,\\Delta t) = \\frac{1}{2}a(\\Delta t)^2 (2n - 1) \\implies \\frac{\\Delta s_n}{\\Delta s_1} = 2n - 1",
-      "scope_condition": "Requires zero initial velocity (u = 0) and strictly constant acceleration (a = const) across all intervals."
+      "scope_condition": "Requires zero initial velocity (u = 0) and strictly constant acceleration (a = const) across all intervals.",
+      "competency_refs": [
+        "KIN-03",
+        "KIN-05",
+        "KIN-07"
+      ]
     },
     {
       "pillar_id": "P4",
       "name": "Parabolic Trajectory Symmetry & Height Splitting",
       "statement": "Under uniform gravity with zero air resistance, horizontal velocity is invariant, making the trajectory a symmetric parabola y(x) = x tan(theta)(1 - x/R). Any intermediate height h < H is reached at two distinct times t1 and t2 symmetrically placed about apex.",
       "mathematical_invariant": "t_1 + t_2 = T = \\frac{2u\\sin\\theta}{g}, \\quad t_1 t_2 = \\frac{2h}{g}, \\quad h = \\frac{1}{2}g t_1 t_2, \\quad R = \\frac{u^2\\sin 2\\theta}{g}",
-      "scope_condition": "Applies to flat-ground projectile launch in a uniform gravitational field without aerodynamic drag."
+      "scope_condition": "Applies to flat-ground projectile launch in a uniform gravitational field without aerodynamic drag.",
+      "competency_refs": [
+        "KIN-04",
+        "KIN-06",
+        "KIN-09"
+      ]
     },
     {
       "pillar_id": "P5",
       "name": "Galilean Relative Frame Invariance & Zero Relative Acceleration",
       "statement": "The relative motion between two particles is governed by vector difference r_rel = r1 - r2 and v_rel = v1 - v2. When both particles are free falling under uniform gravity, their relative acceleration is identically zero, rendering their relative trajectory a straight line.",
       "mathematical_invariant": "\\vec{a}_{1/2} = \\vec{a}_1 - \\vec{a}_2 = \\vec{g} - \\vec{g} = \\vec{0} \\implies \\vec{r}_{1/2}(t) = \\vec{r}_{1/2}(0) + (\\vec{u}_1 - \\vec{u}_2)t",
-      "scope_condition": "Requires both bodies to move under the same uniform gravitational field without additional non-gravitational external forces."
+      "scope_condition": "Requires both bodies to move under the same uniform gravitational field without additional non-gravitational external forces.",
+      "competency_refs": [
+        "KIN-10"
+      ]
     }
   ],
   "dependency_graph": {
@@ -47,39 +68,131 @@
         "layer_index": 1,
         "name": "Primitive Physical Definitions",
         "nodes": [
-          {"id": "NODE-1.1", "term": "Reference Frame & Origin", "description": "Declared spatial origin and clock setting the zero coordinates (x0, y0, t0)."},
-          {"id": "NODE-1.2", "term": "Position Vector & Scalar Distance", "description": "Position vector r(t) vs cumulative scalar path length s = int |v| dt."},
-          {"id": "NODE-1.3", "term": "Vector Displacement", "description": "Net change in position vector: Delta r = r(t2) - r(t1)."}
+          {
+            "id": "NODE-1.1",
+            "term": "Reference Frame & Origin",
+            "description": "Declared spatial origin and clock setting the zero coordinates (x0, y0, t0)."
+          },
+          {
+            "id": "NODE-1.2",
+            "term": "Position Vector & Scalar Distance",
+            "description": "Position vector r(t) vs cumulative scalar path length s = int |v| dt."
+          },
+          {
+            "id": "NODE-1.3",
+            "term": "Vector Displacement",
+            "description": "Net change in position vector: Delta r = r(t2) - r(t1)."
+          }
         ]
       },
       {
         "layer_index": 2,
         "name": "Kinematic Rates & Graph Duals",
         "nodes": [
-          {"id": "NODE-2.1", "term": "Average Rates (Speed vs Velocity)", "depends_on": ["NODE-1.2", "NODE-1.3"]},
-          {"id": "NODE-2.2", "term": "Instantaneous Velocity (v = dr/dt)", "depends_on": ["NODE-1.3"]},
-          {"id": "NODE-2.3", "term": "Instantaneous Acceleration (a = dv/dt)", "depends_on": ["NODE-2.2"]},
-          {"id": "NODE-2.4", "term": "Motion Graph Slope & Area Duals", "depends_on": ["NODE-2.2", "NODE-2.3"]}
+          {
+            "id": "NODE-2.1",
+            "term": "Average Rates (Speed vs Velocity)",
+            "depends_on": [
+              "NODE-1.2",
+              "NODE-1.3"
+            ]
+          },
+          {
+            "id": "NODE-2.2",
+            "term": "Instantaneous Velocity (v = dr/dt)",
+            "depends_on": [
+              "NODE-1.3"
+            ]
+          },
+          {
+            "id": "NODE-2.3",
+            "term": "Instantaneous Acceleration (a = dv/dt)",
+            "depends_on": [
+              "NODE-2.2"
+            ]
+          },
+          {
+            "id": "NODE-2.4",
+            "term": "Motion Graph Slope & Area Duals",
+            "depends_on": [
+              "NODE-2.2",
+              "NODE-2.3"
+            ]
+          }
         ]
       },
       {
         "layer_index": 3,
         "name": "Constrained Motion Models (1D & 2D)",
         "nodes": [
-          {"id": "NODE-3.1", "term": "Constant Acceleration Equations", "depends_on": ["NODE-2.3", "NODE-2.4"]},
-          {"id": "NODE-3.2", "term": "Free Fall & Galileo's Odd Number Law", "depends_on": ["NODE-3.1"]},
-          {"id": "NODE-3.3", "term": "Orthogonal Independence Principle", "depends_on": ["NODE-1.1", "NODE-3.1"]},
-          {"id": "NODE-3.4", "term": "Centripetal Acceleration in UCM", "depends_on": ["NODE-2.2", "NODE-2.3"]}
+          {
+            "id": "NODE-3.1",
+            "term": "Constant Acceleration Equations",
+            "depends_on": [
+              "NODE-2.3",
+              "NODE-2.4"
+            ]
+          },
+          {
+            "id": "NODE-3.2",
+            "term": "Free Fall & Galileo's Odd Number Law",
+            "depends_on": [
+              "NODE-3.1"
+            ]
+          },
+          {
+            "id": "NODE-3.3",
+            "term": "Orthogonal Independence Principle",
+            "depends_on": [
+              "NODE-1.1",
+              "NODE-3.1"
+            ]
+          },
+          {
+            "id": "NODE-3.4",
+            "term": "Centripetal Acceleration in UCM",
+            "depends_on": [
+              "NODE-2.2",
+              "NODE-2.3"
+            ]
+          }
         ]
       },
       {
         "layer_index": 4,
         "name": "Coupled Olympiad Synthesis",
         "nodes": [
-          {"id": "NODE-4.1", "term": "Projectile Trajectory & Parabolic Invariants", "depends_on": ["NODE-3.2", "NODE-3.3"]},
-          {"id": "NODE-4.2", "term": "Complementary Angle Range Degeneracy", "depends_on": ["NODE-4.1"]},
-          {"id": "NODE-4.3", "term": "Trajectory Radius of Curvature (rho = v^2/a_perp)", "depends_on": ["NODE-3.4", "NODE-4.1"]},
-          {"id": "NODE-4.4", "term": "Relative Projectile Motion & Collision Criteria", "depends_on": ["NODE-3.3", "NODE-4.1"]}
+          {
+            "id": "NODE-4.1",
+            "term": "Projectile Trajectory & Parabolic Invariants",
+            "depends_on": [
+              "NODE-3.2",
+              "NODE-3.3"
+            ]
+          },
+          {
+            "id": "NODE-4.2",
+            "term": "Complementary Angle Range Degeneracy",
+            "depends_on": [
+              "NODE-4.1"
+            ]
+          },
+          {
+            "id": "NODE-4.3",
+            "term": "Trajectory Radius of Curvature (rho = v^2/a_perp)",
+            "depends_on": [
+              "NODE-3.4",
+              "NODE-4.1"
+            ]
+          },
+          {
+            "id": "NODE-4.4",
+            "term": "Relative Projectile Motion & Collision Criteria",
+            "depends_on": [
+              "NODE-3.3",
+              "NODE-4.1"
+            ]
+          }
         ]
       }
     ]
@@ -127,5 +240,6 @@
       "newtonian_scientific_truth": "Acceleration is the derivative of the velocity vector. Because the direction of velocity continuously changes, uniform circular motion requires a continuous inward centripetal acceleration a_c = v^2/r.",
       "decisive_experiment": "Whirling a stone on a string: cutting the string releases the stone tangentially in a straight line, proving the string's inward pull was continuously accelerating the stone toward the center."
     }
-  ]
+  ],
+  "canonical_topic_id": "phy-kinematics-1d-2d"
 }

@@ -1,0 +1,128 @@
+{
+  "schema": "core1a-ontology-v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "topic": "phy-motion-in-a-plane",
+  "canonical_topic_id": "phy-motion-in-a-plane",
+  "title": "Grade 9 Olympiad Physics Core 1A Ontology: Motion in a Plane (Projectiles & Relative Frames)",
+  "structural_pillars": [
+    {
+      "pillar_id": "P1",
+      "name": "Orthogonal Planar Coordinate Decoupling",
+      "statement": "Motion in a plane decomposes into two mutually perpendicular 1D motions that evolve completely independently under a shared universal time parameter t.",
+      "mathematical_invariant": "a_x = 0 => v_x(t) = u cos theta = const; a_y = -g => v_y(t) = u sin theta - g t; r(t) = x(t) i_hat + y(t) j_hat",
+      "scope_condition": "Uniform vertical gravitational field without aerodynamic drag in Cartesian inertial frame.",
+      "competency_refs": [
+        "PLANE-01",
+        "PLANE-02"
+      ]
+    },
+    {
+      "pillar_id": "P2",
+      "name": "Vertical Free-Fall Clock Invariance",
+      "statement": "Vertical fall time from height h is governed strictly by vertical motion parameters and is completely invariant to horizontal launch speed.",
+      "mathematical_invariant": "t_f = sqrt(2h/g); At apex v_y = 0 => H = (u sin theta)^2 / (2g); T_flight = 2 u sin theta / g",
+      "scope_condition": "Level or elevated launch under uniform gravity g.",
+      "competency_refs": [
+        "PLANE-03",
+        "PLANE-04"
+      ]
+    },
+    {
+      "pillar_id": "P3",
+      "name": "Symmetric Trajectory Geometry & Range Invariants",
+      "statement": "Horizontal range on flat ground is maximized at launch angle 45 degrees; complementary angles theta and (90 - theta) yield identical range with different flight times.",
+      "mathematical_invariant": "R = u^2 sin(2 theta) / g; R(theta) = R(90 - theta); R_max = u^2 / g; R / H = 4 cot theta; T_1 T_2 = 2 R / g",
+      "scope_condition": "Symmetric level-ground projectile motion.",
+      "competency_refs": [
+        "PLANE-05",
+        "PLANE-06"
+      ]
+    },
+    {
+      "pillar_id": "P4",
+      "name": "Cartesian Path Function & Geometric Trajectory Parabola",
+      "statement": "Eliminating time t from orthogonal component equations yields an explicit parabolic path function connecting spatial coordinates (x, y).",
+      "mathematical_invariant": "y(x) = x tan theta - (g x^2) / (2 u^2 cos^2 theta) = x tan theta [1 - x / R]",
+      "scope_condition": "Non-vertical launch u cos theta != 0 in Cartesian plane.",
+      "competency_refs": [
+        "PLANE-07"
+      ]
+    },
+    {
+      "pillar_id": "P5",
+      "name": "Planar Relative Kinematics & Curvilinear Acceleration Invariants",
+      "statement": "Relative velocity transforms by vector subtraction v_{AB} = v_A - v_B; curvilinear acceleration decomposes into tangential rate of change of speed and normal centripetal rate of change of direction.",
+      "mathematical_invariant": "v_{boat/ground} = v_{boat/water} + v_{water}; a_{net} = sqrt(a_t^2 + a_n^2) where a_t = dv/dt, a_n = v^2 / rho",
+      "scope_condition": "Galilean planar reference frames and smooth osculating curvature paths.",
+      "competency_refs": [
+        "PLANE-08",
+        "PLANE-09",
+        "PLANE-10",
+        "PLANE-11"
+      ]
+    }
+  ],
+  "dependency_graph": {
+    "layers": [
+      {
+        "layer_index": 1,
+        "name": "Primitive Planar Vectors",
+        "nodes": [
+          {"id": "NODE-1.1", "term": "2D Position & Displacement Vector"},
+          {"id": "NODE-1.2", "term": "Orthogonal Projection (i_hat, j_hat)"},
+          {"id": "NODE-1.3", "term": "Shared Universal Time Clock (t)"}
+        ]
+      },
+      {
+        "layer_index": 2,
+        "name": "Independent Axis Dynamics",
+        "nodes": [
+          {"id": "NODE-2.1", "term": "Uniform Horizontal Velocity (v_x = u_x)", "depends_on": ["NODE-1.1", "NODE-1.2"]},
+          {"id": "NODE-2.2", "term": "Uniformly Accelerated Vertical Free Fall", "depends_on": ["NODE-1.1", "NODE-1.3"]}
+        ]
+      },
+      {
+        "layer_index": 3,
+        "name": "Trajectory & Flight Invariants",
+        "nodes": [
+          {"id": "NODE-3.1", "term": "Flight Time & Apex Velocity Invariants", "depends_on": ["NODE-2.2"]},
+          {"id": "NODE-3.2", "term": "Range & Complementary Angles", "depends_on": ["NODE-2.1", "NODE-3.1"]},
+          {"id": "NODE-3.3", "term": "Cartesian Trajectory Parabola y(x)", "depends_on": ["NODE-2.1", "NODE-2.2"]}
+        ]
+      },
+      {
+        "layer_index": 4,
+        "name": "Relative Frames & Curvilinear Acceleration",
+        "nodes": [
+          {"id": "NODE-4.1", "term": "River-Boat Shortest Time vs Zero Drift", "depends_on": ["NODE-1.2", "NODE-2.1"]},
+          {"id": "NODE-4.2", "term": "Rain-Man Relative Weather Frame", "depends_on": ["NODE-1.2"]},
+          {"id": "NODE-4.3", "term": "Tangential vs Normal Acceleration in Curvature", "depends_on": ["NODE-3.3"]}
+        ]
+      }
+    ]
+  },
+  "cognitive_conflict_matrix": [
+    {
+      "id": "CCM-01",
+      "concept": "Apex Speed in Oblique Projectile",
+      "intuitive_misconception": "At the highest point of projectile flight, the speed is zero because the ball momentarily stops.",
+      "newtonian_scientific_truth": "Only the vertical velocity component vanishes (v_y = 0). The horizontal velocity v_x = u cos theta remains unaffected, so total speed reaches a non-zero minimum v_min = u cos theta > 0.",
+      "decisive_experiment": "A horizontal ball launch or high-speed strobe photography of an oblique toss: ball continues travelling horizontally at apex."
+    },
+    {
+      "id": "CCM-02",
+      "concept": "Horizontal Launch Fall Time",
+      "intuitive_misconception": "A bullet fired horizontally hits the ground much later than a bullet dropped from the exact same height because the fired bullet 'flies'.",
+      "newtonian_scientific_truth": "Both bullets hit the ground at the exact same instant: t = sqrt(2h/g). Perpendicular horizontal motion cannot delay downward gravitational acceleration.",
+      "decisive_experiment": "Simultaneous electronic release of a dropped sphere and horizontally projected sphere: acoustic sensors detect simultaneous ground strike."
+    },
+    {
+      "id": "CCM-03",
+      "concept": "River-Boat Fastest Crossing Route",
+      "intuitive_misconception": "To cross a river in the shortest possible time, you must angle upstream so the current doesn't push you downstream.",
+      "newtonian_scientific_truth": "Aiming upstream reduces the across-river velocity component (v_y = v_bw cos theta < v_bw), making the trip take longer. Shortest time strictly requires aiming perpendicular to the banks (theta = 0 => t_min = d / v_bw), completely ignoring downstream drift.",
+      "decisive_experiment": "Motorboat trials with GPS timing: perpendicular heading achieves fastest bank-to-bank crossing despite downstream landing."
+    }
+  ]
+}

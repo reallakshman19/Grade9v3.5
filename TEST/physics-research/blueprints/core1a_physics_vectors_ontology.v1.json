@@ -10,35 +10,56 @@
       "name": "Geometric Invariance & Vector Identity",
       "statement": "A physical vector represents an objective geometric entity possessing magnitude and spatial orientation, independent of the Cartesian frame chosen to measure it.",
       "mathematical_invariant": "|A|^2 = A_x^2 + A_y^2 = A_{x'}^2 + A_{y'}^2 (Scalar norm is preserved under rigid spatial coordinate rotations)",
-      "scope_condition": "Euclidean 3D space with flat Riemannian metric."
+      "scope_condition": "Euclidean 3D space with flat Riemannian metric.",
+      "competency_refs": [
+        "VEC-01",
+        "VEC-02"
+      ]
     },
     {
       "pillar_id": "P2",
       "name": "Orthogonal Basis Decomposition & Coordinate Projections",
       "statement": "Any coplanar vector A can be resolved into a unique linear combination of mutually perpendicular unit vectors: A = A_x i_hat + A_y j_hat, where A_x = |A| cos theta and A_y = |A| sin theta.",
       "mathematical_invariant": "i_hat . j_hat = 0, |i_hat| = |j_hat| = 1; Angle theta must strictly reference the declared adjacent axis",
-      "scope_condition": "Right-handed orthogonal Cartesian coordinate systems."
+      "scope_condition": "Right-handed orthogonal Cartesian coordinate systems.",
+      "competency_refs": [
+        "VEC-03",
+        "VEC-06"
+      ]
     },
     {
       "pillar_id": "P3",
       "name": "Vector Space Linear Superposition",
       "statement": "Vectors combine according to geometric head-to-tail triangle law or equivalent parallelogram law; resultant vector magnitude is bounded by the triangle inequality |A - B| <= |R| <= A + B.",
       "mathematical_invariant": "R^2 = A^2 + B^2 + 2 A B cos theta; tan beta = (B sin theta) / (A + B cos theta)",
-      "scope_condition": "Concurrent vectors acting on a single point particle or rigid body center of mass."
+      "scope_condition": "Concurrent vectors acting on a single point particle or rigid body center of mass.",
+      "competency_refs": [
+        "VEC-04",
+        "VEC-05",
+        "VEC-09"
+      ]
     },
     {
       "pillar_id": "P4",
       "name": "Galilean Relative Kinematics & Observer Subtraction",
       "statement": "The velocity of object A as perceived by observer B is obtained by subtracting the observer's velocity vector: v_{AB} = v_A - v_B. To transform to frame B, apply -v_B to all entities.",
       "mathematical_invariant": "v_{AB} = - v_{BA}; v_{AC} = v_{AB} + v_{BC} (Transitive Galilean velocity chain rule)",
-      "scope_condition": "Inertial and accelerating reference frames at non-relativistic speeds (v << c)."
+      "scope_condition": "Inertial and accelerating reference frames at non-relativistic speeds (v << c).",
+      "competency_refs": [
+        "VEC-07",
+        "VEC-08"
+      ]
     },
     {
       "pillar_id": "P5",
       "name": "Metric Products: Scalar Projection & Vector Normal Generation",
       "statement": "The scalar (dot) product evaluates parallel projection and physical work (W = F . d = |F||d| cos theta), while vector (cross) product generates a perpendicular pseudo-vector representing rotational moment or torque (tau = r x F = |r||F| sin theta n_hat).",
       "mathematical_invariant": "A . B = B . A (Commutative); A x B = -(B x A) (Antisymmetric); A perp B <=> A . B = 0; A || B <=> A x B = 0",
-      "scope_condition": "Dot product maps V x V -> R; Cross product is uniquely defined in 3D Euclidean space."
+      "scope_condition": "Dot product maps V x V -> R; Cross product is uniquely defined in 3D Euclidean space.",
+      "competency_refs": [
+        "VEC-10",
+        "VEC-11"
+      ]
     }
   ],
   "dependency_graph": {
@@ -71,17 +92,27 @@
           {
             "id": "NODE-2.1",
             "term": "Orthogonal Projection & Trigonometric Components",
-            "depends_on": ["NODE-1.1", "NODE-1.2", "NODE-1.3"]
+            "depends_on": [
+              "NODE-1.1",
+              "NODE-1.2",
+              "NODE-1.3"
+            ]
           },
           {
             "id": "NODE-2.2",
             "term": "Head-to-Tail Triangle Addition",
-            "depends_on": ["NODE-1.1", "NODE-1.2"]
+            "depends_on": [
+              "NODE-1.1",
+              "NODE-1.2"
+            ]
           },
           {
             "id": "NODE-2.3",
             "term": "Vector Subtraction & Additive Inverse",
-            "depends_on": ["NODE-1.2", "NODE-2.2"]
+            "depends_on": [
+              "NODE-1.2",
+              "NODE-2.2"
+            ]
           }
         ]
       },
@@ -92,17 +123,24 @@
           {
             "id": "NODE-3.1",
             "term": "Change Vector Delta v and Acceleration Direction",
-            "depends_on": ["NODE-2.3"]
+            "depends_on": [
+              "NODE-2.3"
+            ]
           },
           {
             "id": "NODE-3.2",
             "term": "Galilean Relative Motion Frames",
-            "depends_on": ["NODE-2.3"]
+            "depends_on": [
+              "NODE-2.3"
+            ]
           },
           {
             "id": "NODE-3.3",
             "term": "Curvilinear Normal & Tangential Decomposition",
-            "depends_on": ["NODE-2.1", "NODE-3.1"]
+            "depends_on": [
+              "NODE-2.1",
+              "NODE-3.1"
+            ]
           }
         ]
       },
@@ -113,17 +151,24 @@
           {
             "id": "NODE-4.1",
             "term": "Scalar Dot Product & Direction Cosines",
-            "depends_on": ["NODE-2.1"]
+            "depends_on": [
+              "NODE-2.1"
+            ]
           },
           {
             "id": "NODE-4.2",
             "term": "Vector Cross Product & Moment Arm Antisymmetry",
-            "depends_on": ["NODE-2.1"]
+            "depends_on": [
+              "NODE-2.1"
+            ]
           },
           {
             "id": "NODE-4.3",
             "term": "Planar 2D Decoupling (Bridge to Projectiles)",
-            "depends_on": ["NODE-2.1", "NODE-3.1"]
+            "depends_on": [
+              "NODE-2.1",
+              "NODE-3.1"
+            ]
           }
         ]
       }
@@ -165,5 +210,6 @@
       "newtonian_scientific_truth": "The apparent velocity of rain relative to you is v_{rain/man} = v_{rain} - v_{man}. Since v_{man} is forward (+x), -v_{man} is backward (-x), causing the rain to arrive slanted from the front, requiring you to tilt your umbrella forward.",
       "decisive_experiment": "Walking in vertically falling rain: dry front of shirt gets soaked while back remains dry unless umbrella is tilted forward."
     }
-  ]
+  ],
+  "canonical_topic_id": "phy-vectors-and-components"
 }

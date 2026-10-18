@@ -1,0 +1,87 @@
+{
+  "schema": "core1b-reconstruction-v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "topic": "phy-motion-in-a-plane",
+  "title": "Grade 9 Olympiad Physics Core 1B Phenomenological Reconstruction: Motion in a Plane",
+  "reconstruction_cycles": [
+    {
+      "cycle_id": "RECON-01",
+      "phenomenon": "Simultaneous Dropped vs Horizontally Projected Sphere Impact",
+      "standard_derivation": "y = (1/2) g t^2 => t = sqrt(2h/g) for both; horizontal velocity u_x = u has zero projection onto y-axis.",
+      "phenomenological_reconstruction": "Reconstruct from Galilean relativity. Suppose you drop a ball inside a train moving at constant speed u. In your frame, it falls vertically in time sqrt(2h/g). To a platform observer, the ball follows a parabolic arc with horizontal range u sqrt(2h/g). Because the laws of mechanics are identical in both frames, the flight time cannot depend on train velocity.",
+      "limiting_boundary_checks": [
+        {
+          "condition": "Zero horizontal speed (u -> 0)",
+          "expected_outcome": "Reduces to 1D vertical drop from height h: t = sqrt(2h/g), x = 0"
+        },
+        {
+          "condition": "Infinite launch speed (u -> infinity)",
+          "expected_outcome": "Fall time remains strictly sqrt(2h/g); landing range scales to infinity: x -> infinity"
+        }
+      ]
+    },
+    {
+      "cycle_id": "RECON-02",
+      "phenomenon": "Complementary Launch Angles & Range Invariance",
+      "standard_derivation": "R(theta) = u^2 sin(2 theta) / g. Since sin(2(90 - theta)) = sin(180 - 2 theta) = sin(2 theta), R(theta) = R(90 - theta). Flight time T = 2u sin theta / g; ratio of flight times T_1 / T_2 = tan theta.",
+      "phenomenological_reconstruction": "A shallow launch (e.g. 30 degrees) has high horizontal speed but spends brief time in the air. A steep launch (60 degrees) spends prolonged time aloft but advances horizontally at sluggish pace. At complementary angles, the trade-off balances with mathematical precision: (Fast speed x Short time) equals (Slow speed x Long time).",
+      "limiting_boundary_checks": [
+        {
+          "condition": "Launch angle 45 degrees",
+          "expected_outcome": "sin(2 * 45) = sin(90) = 1 => Maximum possible range R_max = u^2 / g"
+        },
+        {
+          "condition": "Vertical launch (theta -> 90 degrees)",
+          "expected_outcome": "sin(180) = 0 => Range R = 0; vertical height H = u^2 / (2g)"
+        }
+      ]
+    },
+    {
+      "cycle_id": "RECON-03",
+      "phenomenon": "River-Boat Shortest Time vs Zero Drift",
+      "standard_derivation": "Crossing time t = d / (v_bw cos theta). Minimum time t_min = d / v_bw at theta = 0. Zero drift requires v_bw sin theta = v_w => sin theta = v_w / v_bw with crossing time t = d / sqrt(v_bw^2 - v_w^2).",
+      "phenomenological_reconstruction": "Separate across-river travel from along-river drift. The river current pushes only downstream; it has zero capability to transport the boat across the river. To get across as quickly as possible, 100% of boat propulsion must point directly across. Angling upstream wastes engine power fighting downstream drift rather than crossing.",
+      "limiting_boundary_checks": [
+        {
+          "condition": "Zero river current (v_w = 0)",
+          "expected_outcome": "Zero-drift and minimum-time paths become identical: theta = 0, t = d / v_bw"
+        },
+        {
+          "condition": "Current equals engine speed (v_w = v_bw)",
+          "expected_outcome": "Zero drift requires theta = 90 degrees; crossing time t -> infinity (boat hovers stationary)"
+        }
+      ]
+    },
+    {
+      "cycle_id": "RECON-04",
+      "phenomenon": "Relative Rain Velocity & Forward Umbrella Tilt",
+      "standard_derivation": "v_{rel} = v_{rain} - v_{runner} = -v_r j_hat - v_m i_hat. Relative angle from vertical is tan phi = v_m / v_r. Umbrella tilt is forward at angle phi.",
+      "phenomenological_reconstruction": "To understand relative motion, bring the runner to rest by adding equal and opposite velocity -v_m to everything. Rain now possesses downward speed v_r and horizontal headwind speed v_m blowing directly into the runner's face. The resultant vector slants from the front, requiring the umbrella to tilt forward.",
+      "limiting_boundary_checks": [
+        {
+          "condition": "Stationary person (v_m = 0)",
+          "expected_outcome": "tan phi = 0 => phi = 0; umbrella held vertical"
+        },
+        {
+          "condition": "High-speed sprinting (v_m >> v_r)",
+          "expected_outcome": "tan phi -> infinity => phi -> 90 degrees; rain appears horizontal"
+        }
+      ]
+    }
+  ],
+  "cognitive_dissonance_probes": [
+    {
+      "probe_id": "CDP-01",
+      "scenario": "A cannon on a flat horizontal plain fires a shell at 30 degrees with initial speed 100 m/s. An identical shell is fired at 60 degrees with the same 100 m/s speed.",
+      "dissonance_question": "Which shell lands farther away? Which shell stays in the air longer?",
+      "resolution": "Both shells land at the exact same distance (R = 866 m, since 30 and 60 degrees are complementary). However, the 60-degree shell spends sqrt(3) times longer in the air (T_60 = 17.3 s vs T_30 = 10.0 s) and reaches three times the maximum height."
+    },
+    {
+      "probe_id": "CDP-02",
+      "scenario": "A boat can travel at 5 m/s in still water. It crosses a 100 m wide river flowing at 3 m/s.",
+      "dissonance_question": "What is the shortest possible time to reach the opposite bank? Does downstream drift increase this time?",
+      "resolution": "The shortest crossing time is exactly 20.0 seconds (t = 100 m / 5 m/s). Downstream drift has zero impact on crossing time because river flow is strictly orthogonal to the crossing direction."
+    }
+  ]
+}

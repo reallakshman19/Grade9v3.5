@@ -120,10 +120,26 @@ def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter
         demand_counts[demand] = demand_counts.get(demand, 0) + 1
         band_counts[band] = band_counts.get(band, 0) + 1
         
-        if demand not in ["RETRIEVE", "EXPLAIN", "APPLY", "MODEL", "REPRESENT", "SYNTHESIZE", "JUSTIFY"]:
+        valid_demands = ["RETRIEVE", "EXPLAIN", "APPLY", "MODEL", "REPRESENT", "SYNTHESIZE", "JUSTIFY"]
+        if demand not in valid_demands:
             errors.append(f"{qid}: Invalid QRT primary_demand '{demand}'")
         if band not in ["D1", "D2", "D3", "D4"]:
             errors.append(f"{qid}: Invalid QRT difficulty_band '{band}'")
+            
+        if strict_golden:
+            supporting = qrt.get("supporting_demands", [])
+            for sd in supporting:
+                if sd not in valid_demands:
+                    errors.append(f"{qid}: Invalid supporting_demand '{sd}'")
+            factors = qrt.get("difficulty_factors", {})
+            if not factors:
+                errors.append(f"{qid}: Missing difficulty_factors in qrt_contract")
+            else:
+                for fk, fv in factors.items():
+                    if not (1 <= fv <= 4):
+                        errors.append(f"{qid}: difficulty_factor '{fk}'={fv} out of range [1, 4]")
+            if not qrt.get("protected_work_W"):
+                errors.append(f"{qid}: Missing protected_work_W in qrt_contract")
             
         # ----------------------------------------------------
         # GATE 3: Topic Adapter & Subtopic Competency Map

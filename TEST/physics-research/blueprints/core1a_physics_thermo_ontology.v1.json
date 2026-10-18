@@ -10,35 +10,55 @@
       "name": "Zeroth Law & Temperature as an Intensive State Invariant",
       "statement": "If systems A and B are each in thermal equilibrium with system C, then they are in thermal equilibrium with each other. This establishes temperature T as a unique, transitive intensive state variable: two systems are in thermal equilibrium if and only if their temperatures are equal, dictating that heat spontaneously flows strictly from higher to lower temperature.",
       "mathematical_invariant": "T_A = T_C \\land T_B = T_C \\implies T_A = T_B, \\quad \\dot{Q}_{A \\to B} > 0 \\iff T_A > T_B",
-      "scope_condition": "Holds for macroscopic systems in thermodynamic equilibrium."
+      "scope_condition": "Holds for macroscopic systems in thermodynamic equilibrium.",
+      "competency_refs": [
+        "THERMO-01",
+        "THERMO-02"
+      ]
     },
     {
       "pillar_id": "P2",
       "name": "First Law of Thermodynamics & Internal Energy State Invariant",
       "statement": "Energy is strictly conserved across all thermodynamic processes. Heat Q transferred to a system equals the increase in internal energy U plus the work W performed by the system. Internal energy U is an exact mathematical state function whose cyclic integral is zero, whereas heat Q and work W are path-dependent process quantities.",
       "mathematical_invariant": "dQ = dU + dW = dU + P\\,dV, \\quad \\oint dU = 0, \\quad \\oint dW = \\oint P\\,dV = \\text{Area}_{PV} \\ne 0",
-      "scope_condition": "Valid for closed thermodynamic systems undergoing quasi-static or irreversible transitions."
+      "scope_condition": "Valid for closed thermodynamic systems undergoing quasi-static or irreversible transitions.",
+      "competency_refs": [
+        "THERMO-05",
+        "THERMO-06"
+      ]
     },
     {
       "pillar_id": "P3",
       "name": "Calorimetric Principle of Mixtures & Isolated Thermal Ledger",
       "statement": "In a thermally isolated system with no non-thermal external interactions, the total heat lost by higher-temperature components equals the total heat gained by lower-temperature components until a uniform final equilibrium temperature is attained. The thermal capacity of the container vessel (water equivalent) is strictly conserved in the ledger.",
       "mathematical_invariant": "\\sum Q_{\\text{lost}} = \\sum Q_{\\text{gained}} \\iff \\sum_{i} m_i c_i (T_f - T_i) + \\sum_{j} m_j L_j = 0, \\quad W_{\\text{eq}} = \\frac{m_{\\text{cal}} c_{\\text{cal}}}{c_{\\text{water}}}",
-      "scope_condition": "Requires an adiabatic container boundary (zero heat leak to ambient environment) at constant pressure."
+      "scope_condition": "Requires an adiabatic container boundary (zero heat leak to ambient environment) at constant pressure.",
+      "competency_refs": [
+        "THERMO-03",
+        "THERMO-09"
+      ]
     },
     {
       "pillar_id": "P4",
       "name": "First-Order Phase Transitions & Isothermal Latent Heat Invariant",
       "statement": "During a first-order phase transition (melting, boiling, sublimation) at constant pressure, thermal energy supplied does not increase particle kinetic energy (temperature remains strictly constant). Instead, latent heat breaks intermolecular potential binding networks, reorganizing the structural phase of the substance.",
       "mathematical_invariant": "Q = m L, \\quad \\Delta T = 0, \\quad \\Delta U = m L - P\\Delta V",
-      "scope_condition": "Applies to pure homogeneous substances at invariant transition pressure."
+      "scope_condition": "Applies to pure homogeneous substances at invariant transition pressure.",
+      "competency_refs": [
+        "THERMO-04"
+      ]
     },
     {
       "pillar_id": "P5",
       "name": "Ideal Gas Processes & Polytropic Heat Capacity Invariants",
       "statement": "For an ideal gas governed by PV = nRT, internal energy depends exclusively on temperature (Joule's Law: dU = n Cv dT). Along any polytropic path PV^n = const, work done is the PV area integral, and the effective molar heat capacity is uniquely determined by the polytropic index n.",
       "mathematical_invariant": "dU = n C_v dT, \\quad W = \\int P\\,dV, \\quad C = C_v + \\frac{R}{1 - n}, \\quad C_p - C_v = R",
-      "scope_condition": "Applies to dilute gases obeying the ideal gas equation of state with constant specific heat ratio gamma = Cp / Cv."
+      "scope_condition": "Applies to dilute gases obeying the ideal gas equation of state with constant specific heat ratio gamma = Cp / Cv.",
+      "competency_refs": [
+        "THERMO-07",
+        "THERMO-08",
+        "THERMO-10"
+      ]
     }
   ],
   "dependency_graph": {
@@ -47,37 +67,116 @@
         "layer_index": 1,
         "name": "Primitive Thermal Definitions",
         "nodes": [
-          {"id": "NODE-1.1", "term": "Thermal Equilibrium & Empirical Temperature", "description": "State where net macroscopic heat exchange between contacting bodies ceases."},
-          {"id": "NODE-1.2", "term": "Heat Capacity (C) & Specific Heat (c)", "description": "Heat required per unit mass to raise temperature by 1 Kelvin: c = dQ / (m dT)."},
-          {"id": "NODE-1.3", "term": "Latent Heat of Transformation (L)", "description": "Energy absorbed or released per unit mass during isothermal phase change Q = mL."}
+          {
+            "id": "NODE-1.1",
+            "term": "Thermal Equilibrium & Empirical Temperature",
+            "description": "State where net macroscopic heat exchange between contacting bodies ceases."
+          },
+          {
+            "id": "NODE-1.2",
+            "term": "Heat Capacity (C) & Specific Heat (c)",
+            "description": "Heat required per unit mass to raise temperature by 1 Kelvin: c = dQ / (m dT)."
+          },
+          {
+            "id": "NODE-1.3",
+            "term": "Latent Heat of Transformation (L)",
+            "description": "Energy absorbed or released per unit mass during isothermal phase change Q = mL."
+          }
         ]
       },
       {
         "layer_index": 2,
         "name": "Thermodynamic Axioms & Energy Conservation",
         "nodes": [
-          {"id": "NODE-2.1", "term": "Zeroth Law Transitivity", "depends_on": ["NODE-1.1"]},
-          {"id": "NODE-2.2", "term": "Internal Energy State Function U", "depends_on": ["NODE-1.1"]},
-          {"id": "NODE-2.3", "term": "First Law of Thermodynamics (dQ = dU + dW)", "depends_on": ["NODE-1.2", "NODE-2.2"]}
+          {
+            "id": "NODE-2.1",
+            "term": "Zeroth Law Transitivity",
+            "depends_on": [
+              "NODE-1.1"
+            ]
+          },
+          {
+            "id": "NODE-2.2",
+            "term": "Internal Energy State Function U",
+            "depends_on": [
+              "NODE-1.1"
+            ]
+          },
+          {
+            "id": "NODE-2.3",
+            "term": "First Law of Thermodynamics (dQ = dU + dW)",
+            "depends_on": [
+              "NODE-1.2",
+              "NODE-2.2"
+            ]
+          }
         ]
       },
       {
         "layer_index": 3,
         "name": "Processes & Heat Balances",
         "nodes": [
-          {"id": "NODE-3.1", "term": "Calorimetric Principle of Mixtures", "depends_on": ["NODE-1.2", "NODE-1.3", "NODE-2.3"]},
-          {"id": "NODE-3.2", "term": "Boundary Work Integral W = int P dV", "depends_on": ["NODE-2.3"]},
-          {"id": "NODE-3.3", "term": "Ideal Gas Thermodynamic Paths", "depends_on": ["NODE-2.2", "NODE-3.2"]}
+          {
+            "id": "NODE-3.1",
+            "term": "Calorimetric Principle of Mixtures",
+            "depends_on": [
+              "NODE-1.2",
+              "NODE-1.3",
+              "NODE-2.3"
+            ]
+          },
+          {
+            "id": "NODE-3.2",
+            "term": "Boundary Work Integral W = int P dV",
+            "depends_on": [
+              "NODE-2.3"
+            ]
+          },
+          {
+            "id": "NODE-3.3",
+            "term": "Ideal Gas Thermodynamic Paths",
+            "depends_on": [
+              "NODE-2.2",
+              "NODE-3.2"
+            ]
+          }
         ]
       },
       {
         "layer_index": 4,
         "name": "Coupled Olympiad Synthesis",
         "nodes": [
-          {"id": "NODE-4.1", "term": "Multi-Phase Ice-Water-Steam Final State Settlement", "depends_on": ["NODE-3.1"]},
-          {"id": "NODE-4.2", "term": "Polytropic Path Molar Heat Capacity (C = Cv + R/(1-n))", "depends_on": ["NODE-3.2", "NODE-3.3"]},
-          {"id": "NODE-4.3", "term": "Adiabatic Expansion Temperature Drops (T V^(gamma-1) = const)", "depends_on": ["NODE-2.3", "NODE-3.3"]},
-          {"id": "NODE-4.4", "term": "Cyclic Thermal Efficiency & PV Loop Area", "depends_on": ["NODE-2.3", "NODE-3.2"]}
+          {
+            "id": "NODE-4.1",
+            "term": "Multi-Phase Ice-Water-Steam Final State Settlement",
+            "depends_on": [
+              "NODE-3.1"
+            ]
+          },
+          {
+            "id": "NODE-4.2",
+            "term": "Polytropic Path Molar Heat Capacity (C = Cv + R/(1-n))",
+            "depends_on": [
+              "NODE-3.2",
+              "NODE-3.3"
+            ]
+          },
+          {
+            "id": "NODE-4.3",
+            "term": "Adiabatic Expansion Temperature Drops (T V^(gamma-1) = const)",
+            "depends_on": [
+              "NODE-2.3",
+              "NODE-3.3"
+            ]
+          },
+          {
+            "id": "NODE-4.4",
+            "term": "Cyclic Thermal Efficiency & PV Loop Area",
+            "depends_on": [
+              "NODE-2.3",
+              "NODE-3.2"
+            ]
+          }
         ]
       }
     ]
@@ -125,5 +224,6 @@
       "newtonian_scientific_truth": "The Kelvin and Celsius degree step sizes are identical by definition: 1 K == 1 deg C. While absolute temperature requires T(K) = T(C) + 273.15, any TEMPERATURE DIFFERENCE is identical: Delta T(K) == Delta T(C). Adding 273 to a temperature difference is a severe categorical error.",
       "decisive_experiment": "Heating water from 20 deg C (293.15 K) to 50 deg C (323.15 K): Delta T_C = 50 - 20 = 30 deg C, and Delta T_K = 323.15 - 293.15 = 30 K. Delta T_C == Delta T_K exactly."
     }
-  ]
+  ],
+  "canonical_topic_id": "phy-thermo-first-second-law"
 }

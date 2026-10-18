@@ -10,35 +10,55 @@
       "name": "Newton's Universal Gravitation & Central Force Invariant",
       "statement": "Every point mass in the universe attracts every other point mass with a force along the line intersecting them, proportional to the product of their masses and inversely proportional to the square of their separation distance. Gravitational force is strictly conservative and central.",
       "mathematical_invariant": "\\vec{F}_{12} = -\\frac{G m_1 m_2}{r^2} \\hat{r}_{12}, \\quad \\vec{F}_{21} = -\\vec{F}_{12}, \\quad \\vec{\\tau} = \\vec{r} \\times \\vec{F} = \\vec{0}",
-      "scope_condition": "Holds for point particles and spherically symmetric mass distributions in non-relativistic regimes (v << c, weak gravitational potentials)."
+      "scope_condition": "Holds for point particles and spherically symmetric mass distributions in non-relativistic regimes (v << c, weak gravitational potentials).",
+      "competency_refs": [
+        "GRAV-01",
+        "GRAV-02"
+      ]
     },
     {
       "pillar_id": "P2",
       "name": "Newton's Shell Theorem & Interior Solid Sphere Linear Scaling",
       "statement": "A uniform spherical shell of matter exerts no net gravitational force on any particle located inside it. Outside the shell, it exerts the exact gravitational force as if its entire mass were concentrated at its center. Consequently, inside a uniform solid sphere of radius R, gravitational field scales strictly linearly with distance r from the center.",
       "mathematical_invariant": "g(r) = \\begin{cases} \\frac{G M}{R^3} r, & r \\le R \\\\ \\frac{G M}{r^2}, & r \\ge R \\end{cases}, \\quad g_{\\text{cavity}} \\equiv 0",
-      "scope_condition": "Requires strict spherically symmetric density distribution rho(r)."
+      "scope_condition": "Requires strict spherically symmetric density distribution rho(r).",
+      "competency_refs": [
+        "GRAV-03",
+        "GRAV-07"
+      ]
     },
     {
       "pillar_id": "P3",
       "name": "Gravitational Potential Field & Universal Datum at Infinity",
       "statement": "Gravitational potential energy is defined as the work done by an external agent against the gravitational field to bring masses from infinite separation to separation r. By establishing the universal datum U(infinity) = 0, gravitational potential energy is strictly negative for all finite bound configurations.",
       "mathematical_invariant": "U(r) = -\\int_{\\infty}^r \\vec{F}_g \\cdot d\\vec{r} = -\\frac{G M m}{r}, \\quad V(r) = -\\frac{G M}{r}, \\quad \\vec{g} = -\\vec{\\nabla} V",
-      "scope_condition": "Applies to localized, asymptotically flat mass distributions where U vanishes at infinity."
+      "scope_condition": "Applies to localized, asymptotically flat mass distributions where U vanishes at infinity.",
+      "competency_refs": [
+        "GRAV-04",
+        "GRAV-05"
+      ]
     },
     {
       "pillar_id": "P4",
       "name": "Kepler's Laws & Angular Momentum Conservation",
       "statement": "Because gravity is a strictly central force, the net torque about the primary center of mass is identically zero. Therefore, orbital angular momentum is conserved, ensuring planar motion and constant areal velocity (Kepler's Second Law). Planetary orbits are ellipses with the primary mass at one focus (Kepler's First Law), and orbital periods satisfy T^2 proportional to a^3 (Kepler's Third Law).",
       "mathematical_invariant": "\\frac{d\\vec{L}}{dt} = \\vec{r} \\times \\vec{F} = \\vec{0} \\implies \\frac{dA}{dt} = \\frac{L}{2m} = \\text{constant}, \\quad T^2 = \\frac{4\\pi^2}{G M} a^3",
-      "scope_condition": "Valid for two-body Keplerian systems dominated by a central mass M >> m."
+      "scope_condition": "Valid for two-body Keplerian systems dominated by a central mass M >> m.",
+      "competency_refs": [
+        "GRAV-06",
+        "GRAV-08"
+      ]
     },
     {
       "pillar_id": "P5",
       "name": "Orbital Energy Partition, Virial Theorem & Escape Velocity",
       "statement": "For any bound circular Keplerian orbit of radius r, kinetic energy equals exactly half the magnitude of the potential energy, and total mechanical energy is negative. Escape velocity from a gravitational well is the minimum speed required to achieve zero total mechanical energy (parabolic trajectory reaching infinity with zero residual kinetic energy).",
       "mathematical_invariant": "v_{\\text{orb}} = \\sqrt{\\frac{GM}{r}}, \\quad K = \\frac{1}{2}|U| = \\frac{GMm}{2r}, \\quad E = -K = -\\frac{GMm}{2r}, \\quad v_{\\text{esc}} = \\sqrt{\\frac{2GM}{r}} = \\sqrt{2}v_{\\text{orb}}",
-      "scope_condition": "Applies to inverse-square central force fields; E < 0 defines bound elliptical orbits, E = 0 defines parabolic escape, and E > 0 defines hyperbolic flybys."
+      "scope_condition": "Applies to inverse-square central force fields; E < 0 defines bound elliptical orbits, E = 0 defines parabolic escape, and E > 0 defines hyperbolic flybys.",
+      "competency_refs": [
+        "GRAV-09",
+        "GRAV-10"
+      ]
     }
   ],
   "dependency_graph": {
@@ -47,38 +67,120 @@
         "layer_index": 1,
         "name": "Primitive Physical Definitions",
         "nodes": [
-          {"id": "NODE-1.1", "term": "Inertial vs Gravitational Mass", "description": "Equivalence principle equating resistance to acceleration with source of gravitational attraction."},
-          {"id": "NODE-1.2", "term": "Point Mass & Separation Distance", "description": "Idealization of macroscopic bodies as spatial points separated by scalar distance r."},
-          {"id": "NODE-1.3", "term": "Universal Gravitational Constant G", "description": "Dimensional coupling constant G = 6.674 x 10^-11 N m^2 / kg^2."}
+          {
+            "id": "NODE-1.1",
+            "term": "Inertial vs Gravitational Mass",
+            "description": "Equivalence principle equating resistance to acceleration with source of gravitational attraction."
+          },
+          {
+            "id": "NODE-1.2",
+            "term": "Point Mass & Separation Distance",
+            "description": "Idealization of macroscopic bodies as spatial points separated by scalar distance r."
+          },
+          {
+            "id": "NODE-1.3",
+            "term": "Universal Gravitational Constant G",
+            "description": "Dimensional coupling constant G = 6.674 x 10^-11 N m^2 / kg^2."
+          }
         ]
       },
       {
         "layer_index": 2,
         "name": "Field & Potential Axioms",
         "nodes": [
-          {"id": "NODE-2.1", "term": "Newton's Inverse-Square Law", "depends_on": ["NODE-1.2", "NODE-1.3"]},
-          {"id": "NODE-2.2", "term": "Gravitational Field Vector g(r)", "depends_on": ["NODE-2.1"]},
-          {"id": "NODE-2.3", "term": "Newton's Shell Theorem", "depends_on": ["NODE-2.1", "NODE-2.2"]},
-          {"id": "NODE-2.4", "term": "Gravitational Potential V(r) & Energy U(r)", "depends_on": ["NODE-2.1"]}
+          {
+            "id": "NODE-2.1",
+            "term": "Newton's Inverse-Square Law",
+            "depends_on": [
+              "NODE-1.2",
+              "NODE-1.3"
+            ]
+          },
+          {
+            "id": "NODE-2.2",
+            "term": "Gravitational Field Vector g(r)",
+            "depends_on": [
+              "NODE-2.1"
+            ]
+          },
+          {
+            "id": "NODE-2.3",
+            "term": "Newton's Shell Theorem",
+            "depends_on": [
+              "NODE-2.1",
+              "NODE-2.2"
+            ]
+          },
+          {
+            "id": "NODE-2.4",
+            "term": "Gravitational Potential V(r) & Energy U(r)",
+            "depends_on": [
+              "NODE-2.1"
+            ]
+          }
         ]
       },
       {
         "layer_index": 3,
         "name": "Orbital Mechanics & Conservation Laws",
         "nodes": [
-          {"id": "NODE-3.1", "term": "Central Force Angular Momentum Invariant", "depends_on": ["NODE-2.1"]},
-          {"id": "NODE-3.2", "term": "Kepler's Second Law (Areal Velocity)", "depends_on": ["NODE-3.1"]},
-          {"id": "NODE-3.3", "term": "Circular Orbital Dynamics", "depends_on": ["NODE-2.2", "NODE-3.1"]}
+          {
+            "id": "NODE-3.1",
+            "term": "Central Force Angular Momentum Invariant",
+            "depends_on": [
+              "NODE-2.1"
+            ]
+          },
+          {
+            "id": "NODE-3.2",
+            "term": "Kepler's Second Law (Areal Velocity)",
+            "depends_on": [
+              "NODE-3.1"
+            ]
+          },
+          {
+            "id": "NODE-3.3",
+            "term": "Circular Orbital Dynamics",
+            "depends_on": [
+              "NODE-2.2",
+              "NODE-3.1"
+            ]
+          }
         ]
       },
       {
         "layer_index": 4,
         "name": "Coupled Olympiad Synthesis",
         "nodes": [
-          {"id": "NODE-4.1", "term": "Kepler's Third Law Harmonic Scaling", "depends_on": ["NODE-3.3"]},
-          {"id": "NODE-4.2", "term": "Virial Energy Theorem & Escape Velocity", "depends_on": ["NODE-2.4", "NODE-3.3"]},
-          {"id": "NODE-4.3", "term": "Interior Tunnel Simple Harmonic Motion", "depends_on": ["NODE-2.3"]},
-          {"id": "NODE-4.4", "term": "Differential Tidal Field Gradients", "depends_on": ["NODE-2.2"]}
+          {
+            "id": "NODE-4.1",
+            "term": "Kepler's Third Law Harmonic Scaling",
+            "depends_on": [
+              "NODE-3.3"
+            ]
+          },
+          {
+            "id": "NODE-4.2",
+            "term": "Virial Energy Theorem & Escape Velocity",
+            "depends_on": [
+              "NODE-2.4",
+              "NODE-3.3"
+            ]
+          },
+          {
+            "id": "NODE-4.3",
+            "term": "Interior Tunnel Simple Harmonic Motion",
+            "depends_on": [
+              "NODE-2.3"
+            ]
+          },
+          {
+            "id": "NODE-4.4",
+            "term": "Differential Tidal Field Gradients",
+            "depends_on": [
+              "NODE-2.2"
+            ]
+          }
         ]
       }
     ]
@@ -126,5 +228,6 @@
       "newtonian_scientific_truth": "Mass is an invariant intrinsic scalar quantifying matter and inertia; it is identical everywhere in the universe. Weight is the local gravitational force W = m * g. On the Moon, g_moon approx 1.62 m/s^2 (one-sixth of Earth's), so the astronaut's weight is reduced to 1/6, while their mass m is unchanged.",
       "decisive_experiment": "An astronaut on the Moon trying to kick a 100 kg rock horizontally finds it just as difficult to accelerate (F = ma) as on Earth, despite its scale weight reading only 16.7 kg-equivalent."
     }
-  ]
+  ],
+  "canonical_topic_id": "phy-grav-universal-law"
 }
