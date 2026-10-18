@@ -17,43 +17,75 @@ def resolve_adapter_for_question(q: dict, adapters: dict):
     q_topic = (q.get("topic") or "").lower()
     qid = (q.get("question_id") or "").lower()
     
-    # Direct ID match
-    for adapter_key, adapter in adapters.items():
-        if adapter_key in q_topic or adapter.get("topic_id", "").lower() in q_topic:
-            return adapter_key, adapter
-            
-    # Specific QID prefix or topic match
-    if "phys-grav" in qid or any(k in q_topic for k in ["gravitat", "planetary", "kepler"]):
+    # Explicit QRT contract adapter declaration
+    qrt = q.get("qrt_contract", {})
+    for explicit_key in qrt.get("topic_adapters", []):
+        if explicit_key in adapters:
+            return explicit_key, adapters[explicit_key]
+    explicit_key = qrt.get("topic_adapter_key")
+    if explicit_key in adapters:
+        return explicit_key, adapters[explicit_key]
+
+    # Specific QID prefix matches (highest precedence for question identity)
+    if "phys-plane" in qid:
+        if "motion-in-a-plane" in adapters:
+            return "motion-in-a-plane", adapters["motion-in-a-plane"]
+    if "phys-vec" in qid:
+        if "vectors-and-components" in adapters:
+            return "vectors-and-components", adapters["vectors-and-components"]
+    if "phys-grav" in qid:
         if "gravitation-orbital-motion" in adapters:
             return "gravitation-orbital-motion", adapters["gravitation-orbital-motion"]
-    if "phys-fluid" in qid or any(k in q_topic for k in ["fluid", "hydrostatic", "archimedes", "pascal", "buoyancy", "manometer"]):
+    if "phys-fluid" in qid:
         if "fluids-hydrostatics" in adapters:
             return "fluids-hydrostatics", adapters["fluids-hydrostatics"]
-    if "phys-thermo" in qid or any(k in q_topic for k in ["heat", "thermo", "calorimetry"]):
+    if "phys-thermo" in qid:
         if "heat-thermodynamics" in adapters:
             return "heat-thermodynamics", adapters["heat-thermodynamics"]
-    if "phys-wep" in qid or any(k in q_topic for k in ["work, energy", "work-energy", "work energy"]):
+    if "phys-wep" in qid:
         if "work-energy-power" in adapters:
             return "work-energy-power", adapters["work-energy-power"]
-    if "phys-kin" in qid or any(k in q_topic for k in ["kinematics", "projectile", "1d-motion", "2d-motion"]):
+    if "phys-kin" in qid:
         if "kinematics-1d-2d" in adapters:
             return "kinematics-1d-2d", adapters["kinematics-1d-2d"]
     if "phys-nlm" in qid or "nlm" in qid:
         if "mechanics-nlm" in adapters:
             return "mechanics-nlm", adapters["mechanics-nlm"]
-    if "friction" in q_topic and "newton" not in q_topic and "nlm" not in qid:
-        if "friction-thresholds" in adapters:
-            return "friction-thresholds", adapters["friction-thresholds"]
-    if "phys-plane" in qid or any(k in q_topic for k in ["motion-in-a-plane", "motion in a plane", "planar motion"]):
+
+    # Direct ID match in topic text
+    for adapter_key, adapter in adapters.items():
+        if adapter_key in q_topic or adapter.get("topic_id", "").lower() in q_topic:
+            return adapter_key, adapter
+
+    # Broader topic keyword fallback
+    if any(k in q_topic for k in ["gravitat", "planetary", "kepler"]):
+        if "gravitation-orbital-motion" in adapters:
+            return "gravitation-orbital-motion", adapters["gravitation-orbital-motion"]
+    if any(k in q_topic for k in ["fluid", "hydrostatic", "archimedes", "pascal", "buoyancy", "manometer"]):
+        if "fluids-hydrostatics" in adapters:
+            return "fluids-hydrostatics", adapters["fluids-hydrostatics"]
+    if any(k in q_topic for k in ["heat", "thermo", "calorimetry"]):
+        if "heat-thermodynamics" in adapters:
+            return "heat-thermodynamics", adapters["heat-thermodynamics"]
+    if any(k in q_topic for k in ["work, energy", "work-energy", "work energy"]):
+        if "work-energy-power" in adapters:
+            return "work-energy-power", adapters["work-energy-power"]
+    if any(k in q_topic for k in ["motion-in-a-plane", "motion in a plane", "planar motion"]):
         if "motion-in-a-plane" in adapters:
             return "motion-in-a-plane", adapters["motion-in-a-plane"]
-    if "phys-vec" in qid or any(k in q_topic or k in qid for k in ["vector", "vectors"]):
+    if any(k in q_topic for k in ["kinematics", "projectile", "1d-motion", "2d-motion"]):
+        if "kinematics-1d-2d" in adapters:
+            return "kinematics-1d-2d", adapters["kinematics-1d-2d"]
+    if "friction" in q_topic and "newton" not in q_topic:
+        if "friction-thresholds" in adapters:
+            return "friction-thresholds", adapters["friction-thresholds"]
+    if any(k in q_topic for k in ["vector", "vectors"]):
         if "vectors-and-components" in adapters:
             return "vectors-and-components", adapters["vectors-and-components"]
-    if any(k in q_topic or k in qid for k in ["mechanics", "newton", "second-law", "third-law"]):
+    if any(k in q_topic for k in ["mechanics", "newton", "second-law", "third-law"]):
         if "mechanics-nlm" in adapters:
             return "mechanics-nlm", adapters["mechanics-nlm"]
-            
+
     return None, None
 
 def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter/TopicAdapters.v1.json", strict_golden: bool = False):
