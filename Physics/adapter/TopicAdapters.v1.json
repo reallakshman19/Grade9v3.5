@@ -91,7 +91,12 @@
       },
       "representation_rules": {
         "fbd_mandatory": true,
-        "diagram_types": ["FREE_BODY_DIAGRAM", "INTERACTION_PAIR_MAP", "ACCELERATION_SCALING_GRAPH", "ATWOOD_MACHINE_SCHEMATIC"],
+        "diagram_types": [
+          "FREE_BODY_DIAGRAM",
+          "INTERACTION_PAIR_MAP",
+          "ACCELERATION_SCALING_GRAPH",
+          "ATWOOD_MACHINE_SCHEMATIC"
+        ],
         "svg_specifications": [
           "Body isolated from environment with center-of-mass origin",
           "Force arrows begin at point of contact or COM and point along direction of push/pull",
@@ -107,7 +112,11 @@
         "momentum": "[M L T^-1]",
         "impulse": "[M L T^-1]",
         "coefficient_of_friction": "[1]",
-        "dimensionless": ["mass_ratio", "angle", "trigonometric_ratio"]
+        "dimensionless": [
+          "mass_ratio",
+          "angle",
+          "trigonometric_ratio"
+        ]
       },
       "independent_checks": [
         "DIMENSIONAL_HOMOGENEITY",
@@ -125,7 +134,10 @@
           "scope_condition": "Inertial reference frames; non-accelerating observers.",
           "model_check": "Distinguish between zero net force (Sigma F = 0) and absence of individual physical interactions.",
           "easy_mistake_to_make": "Assuming an object moving forward must have a net forward force pushing it.",
-          "core2_transfer_target": ["PHYS-NLM-001", "PHYS-NLM-006"]
+          "core2_transfer_target": [
+            "PHYS-NLM-001",
+            "PHYS-NLM-006"
+          ]
         },
         "NLM-02": {
           "title": "Choose the Body Before Drawing Forces",
@@ -133,7 +145,10 @@
           "scope_condition": "Closed system boundary demarcating internal from external interactions.",
           "model_check": "Never include forces that the chosen body exerts ON other objects.",
           "easy_mistake_to_make": "Drawing forces exerted BY the body onto its own Free-Body Diagram.",
-          "core2_transfer_target": ["PHYS-NLM-002", "PHYS-NLM-012"]
+          "core2_transfer_target": [
+            "PHYS-NLM-002",
+            "PHYS-NLM-012"
+          ]
         },
         "NLM-03": {
           "title": "Net Force is a Vector Sum",
@@ -141,7 +156,10 @@
           "scope_condition": "Orthogonal Cartesian coordinate decomposition (Sigma F_x = m a_x, Sigma F_y = m a_y).",
           "model_check": "Decompose all diagonal forces into rectangular components before summing.",
           "easy_mistake_to_make": "Adding vector magnitudes directly without trigonometric component resolution.",
-          "core2_transfer_target": ["PHYS-NLM-003", "PHYS-NLM-004"]
+          "core2_transfer_target": [
+            "PHYS-NLM-003",
+            "PHYS-NLM-004"
+          ]
         },
         "NLM-04": {
           "title": "Newton II Dynamic Scaling",
@@ -149,7 +167,10 @@
           "scope_condition": "Constant mass systems (non-relativistic, non-rocket mass shedding).",
           "model_check": "When bodies move with common acceleration, treat the coupled assembly as a single composite system.",
           "easy_mistake_to_make": "Using individual applied force instead of vector net force in a = F/m.",
-          "core2_transfer_target": ["PHYS-NLM-005", "PHYS-NLM-015"]
+          "core2_transfer_target": [
+            "PHYS-NLM-005",
+            "PHYS-NLM-015"
+          ]
         },
         "NLM-05": {
           "title": "Stopping Force Couplings",
@@ -157,7 +178,10 @@
           "scope_condition": "Uniform stopping acceleration over displacement s or duration t.",
           "model_check": "Use v^2 = u^2 + 2as or v = u + at to isolate a, then evaluate F_stop = m|a|.",
           "easy_mistake_to_make": "Attempting to calculate stopping force without determining acceleration or time.",
-          "core2_transfer_target": ["PHYS-NLM-007", "PHYS-NLM-018"]
+          "core2_transfer_target": [
+            "PHYS-NLM-007",
+            "PHYS-NLM-018"
+          ]
         },
         "NLM-06": {
           "title": "Static vs Kinetic Friction Thresholds",
@@ -165,7 +189,10 @@
           "scope_condition": "Coulomb dry friction model; contact normal force N determined by equilibrium perpendicular to interface.",
           "model_check": "Friction opposes RELATIVE sliding between surfaces in contact, not absolute motion in the lab frame.",
           "easy_mistake_to_make": "Assuming static friction always equals mu_s * N even when external applied force is smaller.",
-          "core2_transfer_target": ["PHYS-NLM-014", "PHYS-NLM-017"]
+          "core2_transfer_target": [
+            "PHYS-NLM-014",
+            "PHYS-NLM-017"
+          ]
         },
         "NLM-07": {
           "title": "Momentum is a Signed Vector State",
@@ -173,7 +200,10 @@
           "scope_condition": "1D and 2D particle dynamics.",
           "model_check": "Always establish a positive axis before assigning signs to momentum states.",
           "easy_mistake_to_make": "Subtracting momentum magnitudes without accounting for opposite directional signs.",
-          "core2_transfer_target": ["PHYS-NLM-008", "PHYS-NLM-013"]
+          "core2_transfer_target": [
+            "PHYS-NLM-008",
+            "PHYS-NLM-013"
+          ]
         },
         "NLM-08": {
           "title": "Impulse and Average Force",
@@ -181,7 +211,10 @@
           "scope_condition": "Collision dynamics; short-duration impact events.",
           "model_check": "Area under F-t curve equals total momentum change Delta p.",
           "easy_mistake_to_make": "Confusing impulse (change in momentum in N*s) with work done (energy transferred in Joules).",
-          "core2_transfer_target": ["PHYS-NLM-009", "PHYS-NLM-010"]
+          "core2_transfer_target": [
+            "PHYS-NLM-009",
+            "PHYS-NLM-010"
+          ]
         },
         "NLM-09": {
           "title": "Newton III Action-Reaction Invariance",
@@ -189,7 +222,10 @@
           "scope_condition": "Universal interaction law valid across all mass ratios and contact/field interfaces.",
           "model_check": "Because action and reaction act on strictly different bodies, they NEVER cancel each other out on an individual body's FBD.",
           "easy_mistake_to_make": "Believing a massive object exerts a greater gravitational or contact force than a lighter object.",
-          "core2_transfer_target": ["PHYS-NLM-002", "PHYS-NLM-016"]
+          "core2_transfer_target": [
+            "PHYS-NLM-002",
+            "PHYS-NLM-016"
+          ]
         },
         "NLM-10": {
           "title": "System Momentum Conservation",
@@ -197,7 +233,10 @@
           "scope_condition": "Isolated multi-body systems; internal interaction forces cancel identically by Newton III.",
           "model_check": "Choose the system boundary large enough that all explosive or collision forces become internal.",
           "easy_mistake_to_make": "Applying momentum conservation to an isolated single body under external gravity.",
-          "core2_transfer_target": ["PHYS-NLM-011", "PHYS-NLM-019"]
+          "core2_transfer_target": [
+            "PHYS-NLM-011",
+            "PHYS-NLM-019"
+          ]
         },
         "NLM-11": {
           "title": "Dynamic Interpretation of Motion Graphs",
@@ -205,7 +244,10 @@
           "scope_condition": "Piecewise linear or differentiable 1D kinematics.",
           "model_check": "Zero slope indicates zero net force; constant non-zero slope indicates constant net force; sign of slope dictates force direction.",
           "easy_mistake_to_make": "Inferring force from the height of the velocity curve rather than its slope.",
-          "core2_transfer_target": ["PHYS-NLM-020", "PHYS-NLM-025"]
+          "core2_transfer_target": [
+            "PHYS-NLM-020",
+            "PHYS-NLM-025"
+          ]
         }
       },
       "misconception_discriminators": [
@@ -248,7 +290,12 @@
       },
       "representation_rules": {
         "fbd_mandatory": false,
-        "diagram_types": ["MOTION_GRAPH", "TRAJECTORY_PARABOLA", "RELATIVE_VELOCITY_TRIANGLE", "COMPONENT_RESOLUTION_DIAGRAM"],
+        "diagram_types": [
+          "MOTION_GRAPH",
+          "TRAJECTORY_PARABOLA",
+          "RELATIVE_VELOCITY_TRIANGLE",
+          "COMPONENT_RESOLUTION_DIAGRAM"
+        ],
         "svg_specifications": [
           "Coordinate axes labeled with variable and unit: x (m), y (m), v (m/s), t (s)",
           "Minimum SVG text font floor >= 14px on all axis labels, coordinate values, and annotations",
@@ -262,7 +309,12 @@
         "acceleration": "[L T^-2]",
         "time": "[T]",
         "radius_of_curvature": "[L]",
-        "dimensionless": ["angle", "trigonometric_ratio", "ratio_of_heights", "ratio_of_times"]
+        "dimensionless": [
+          "angle",
+          "trigonometric_ratio",
+          "ratio_of_heights",
+          "ratio_of_times"
+        ]
       },
       "independent_checks": [
         "DIMENSIONAL_HOMOGENEITY",
@@ -280,7 +332,10 @@
           "scope_condition": "1D and 2D trajectories.",
           "model_check": "Distance equals magnitude of displacement IF AND ONLY IF motion is along a straight line without reversal.",
           "easy_mistake_to_make": "Equating distance with displacement magnitude when motion reverses direction.",
-          "core2_transfer_target": ["PHYS-KIN-001", "PHYS-KIN-002"]
+          "core2_transfer_target": [
+            "PHYS-KIN-001",
+            "PHYS-KIN-002"
+          ]
         },
         "KIN-02": {
           "title": "Average Speed vs Average Velocity",
@@ -288,7 +343,10 @@
           "scope_condition": "Any finite time interval.",
           "model_check": "For closed round trips, average velocity is identically zero, whereas average speed is strictly positive.",
           "easy_mistake_to_make": "Calculating average speed by averaging initial and final velocities in non-uniformly accelerated motion.",
-          "core2_transfer_target": ["PHYS-KIN-003", "PHYS-KIN-004"]
+          "core2_transfer_target": [
+            "PHYS-KIN-003",
+            "PHYS-KIN-004"
+          ]
         },
         "KIN-03": {
           "title": "Weighted Kinematic Averages",
@@ -296,7 +354,9 @@
           "scope_condition": "Piecewise uniform speed segments.",
           "model_check": "Never use arithmetic mean when equal distances are covered at different speeds.",
           "easy_mistake_to_make": "Using arithmetic average for equal distance segments.",
-          "core2_transfer_target": ["PHYS-KIN-005"]
+          "core2_transfer_target": [
+            "PHYS-KIN-005"
+          ]
         },
         "KIN-04": {
           "title": "Signs, Direction & Acceleration Reversal",
@@ -304,7 +364,10 @@
           "scope_condition": "1D motion along signed axis.",
           "model_check": "Speeding up occurs when v and a have identical signs; slowing down occurs when v and a have opposing signs.",
           "easy_mistake_to_make": "Assuming negative acceleration always means slowing down (deceleration).",
-          "core2_transfer_target": ["PHYS-KIN-006", "PHYS-KIN-007"]
+          "core2_transfer_target": [
+            "PHYS-KIN-006",
+            "PHYS-KIN-007"
+          ]
         },
         "KIN-05": {
           "title": "Constant Acceleration Equation Selection",
@@ -312,7 +375,10 @@
           "scope_condition": "Strictly uniform acceleration: da/dt = 0.",
           "model_check": "Select the single kinematic equation that eliminates the unmeasured/unrequested parameter.",
           "easy_mistake_to_make": "Applying constant-acceleration equations to non-uniform or variable-acceleration motion.",
-          "core2_transfer_target": ["PHYS-KIN-008", "PHYS-KIN-009"]
+          "core2_transfer_target": [
+            "PHYS-KIN-008",
+            "PHYS-KIN-009"
+          ]
         },
         "KIN-06": {
           "title": "Multiphase & Delayed-Start Motion",
@@ -320,7 +386,10 @@
           "scope_condition": "Piecewise constant acceleration phases.",
           "model_check": "For delayed start, adjust time coordinate: t_B = t_A - Delta t.",
           "easy_mistake_to_make": "Using a single global equation across multiple acceleration regimes.",
-          "core2_transfer_target": ["PHYS-KIN-010", "PHYS-KIN-011"]
+          "core2_transfer_target": [
+            "PHYS-KIN-010",
+            "PHYS-KIN-011"
+          ]
         },
         "KIN-07": {
           "title": "Vertical Free Fall & Apex Invariants",
@@ -328,7 +397,10 @@
           "scope_condition": "Near-Earth surface; neglect aerodynamic drag.",
           "model_check": "Time of ascent equals time of descent to the same horizontal level: t_up = t_down = u/g.",
           "easy_mistake_to_make": "Assuming acceleration is zero at the highest point (apex) of flight.",
-          "core2_transfer_target": ["PHYS-KIN-012", "PHYS-KIN-013"]
+          "core2_transfer_target": [
+            "PHYS-KIN-012",
+            "PHYS-KIN-013"
+          ]
         },
         "KIN-08": {
           "title": "2D Projectile Component Decoupling",
@@ -336,7 +408,10 @@
           "scope_condition": "2D motion in uniform gravity field.",
           "model_check": "Horizontal velocity u_x = u cos theta remains constant; vertical motion is free fall u_y = u sin theta under a_y = -g.",
           "easy_mistake_to_make": "Believing horizontal velocity influences vertical flight time or rate of vertical fall.",
-          "core2_transfer_target": ["PHYS-KIN-014", "PHYS-KIN-015"]
+          "core2_transfer_target": [
+            "PHYS-KIN-014",
+            "PHYS-KIN-015"
+          ]
         },
         "KIN-09": {
           "title": "Projectile Trajectory & Flight Landmarks",
@@ -344,7 +419,10 @@
           "scope_condition": "Launch and landing on horizontal plane.",
           "model_check": "Complementary launch angles (theta and 90 deg - theta) yield identical horizontal ranges at equal launch speeds.",
           "easy_mistake_to_make": "Using symmetric range formula when launch and landing heights are unequal.",
-          "core2_transfer_target": ["PHYS-KIN-016", "PHYS-KIN-017"]
+          "core2_transfer_target": [
+            "PHYS-KIN-016",
+            "PHYS-KIN-017"
+          ]
         },
         "KIN-10": {
           "title": "Relative Velocity & Common Acceleration Cancellation",
@@ -352,7 +430,10 @@
           "scope_condition": "Classical Galilean relative frames.",
           "model_check": "Because a_rel = 0, the trajectory of one projectile as viewed from another projectile is a straight line at constant velocity.",
           "easy_mistake_to_make": "Adding velocities algebraically without vector subtraction.",
-          "core2_transfer_target": ["PHYS-KIN-018", "PHYS-KIN-019"]
+          "core2_transfer_target": [
+            "PHYS-KIN-018",
+            "PHYS-KIN-019"
+          ]
         },
         "KIN-11": {
           "title": "Motion Graphs & Geometric Calculus",
@@ -360,7 +441,10 @@
           "scope_condition": "Continuous 1D motion graphs.",
           "model_check": "Sharp corners on x-t graphs imply infinite acceleration (physically impossible in finite force regimes).",
           "easy_mistake_to_make": "Confusing position graph height with velocity, or negative velocity with deceleration.",
-          "core2_transfer_target": ["PHYS-KIN-020", "PHYS-KIN-025"]
+          "core2_transfer_target": [
+            "PHYS-KIN-020",
+            "PHYS-KIN-025"
+          ]
         }
       },
       "misconception_discriminators": [
@@ -408,7 +492,12 @@
       },
       "representation_rules": {
         "fbd_mandatory": false,
-        "diagram_types": ["POTENTIAL_WELL_CURVE", "FORCE_DISPLACEMENT_GRAPH", "SPRING_MASS_DIAGRAM", "ENERGY_BAR_CHART"],
+        "diagram_types": [
+          "POTENTIAL_WELL_CURVE",
+          "FORCE_DISPLACEMENT_GRAPH",
+          "SPRING_MASS_DIAGRAM",
+          "ENERGY_BAR_CHART"
+        ],
         "svg_specifications": [
           "Coordinate axes labeled with variable and unit: x (m), F (N), U (J), K (J), P (W)",
           "Minimum SVG text font floor >= 14px on all axis labels, coordinate values, and annotations",
@@ -422,7 +511,11 @@
         "potential_energy": "[M L^2 T^-2]",
         "power": "[M L^2 T^-3]",
         "spring_constant": "[M T^-2]",
-        "dimensionless": ["mechanical_efficiency", "coefficient_of_restitution", "energy_ratio"]
+        "dimensionless": [
+          "mechanical_efficiency",
+          "coefficient_of_restitution",
+          "energy_ratio"
+        ]
       },
       "independent_checks": [
         "DIMENSIONAL_HOMOGENEITY",
@@ -440,7 +533,10 @@
           "scope_condition": "Constant force and straight displacement.",
           "model_check": "Centripetal force is strictly perpendicular to velocity (F_c perp v), doing zero work and keeping kinetic energy constant.",
           "easy_mistake_to_make": "Assuming centripetal force does work because it redirects the path.",
-          "core2_transfer_target": ["PHYS-WEP-001", "PHYS-WEP-002"]
+          "core2_transfer_target": [
+            "PHYS-WEP-001",
+            "PHYS-WEP-002"
+          ]
         },
         "WEP-02": {
           "title": "Work by Variable Forces & Spring Integration",
@@ -448,7 +544,10 @@
           "scope_condition": "1D variable force.",
           "model_check": "Spring force increases linearly from 0 to kx, so average force is 1/2 kx, producing triangular area 1/2 kx^2.",
           "easy_mistake_to_make": "Multiplying maximum spring force by displacement: W = F_max * x = kx^2.",
-          "core2_transfer_target": ["PHYS-WEP-003", "PHYS-WEP-004"]
+          "core2_transfer_target": [
+            "PHYS-WEP-003",
+            "PHYS-WEP-004"
+          ]
         },
         "WEP-03": {
           "title": "Work-Energy Theorem",
@@ -456,7 +555,10 @@
           "scope_condition": "Valid in any inertial reference frame across both conservative and non-conservative forces.",
           "model_check": "W_net includes conservative forces, non-conservative friction, and external applied forces.",
           "easy_mistake_to_make": "Equating work done by a single force to total change in kinetic energy when other forces act.",
-          "core2_transfer_target": ["PHYS-WEP-005", "PHYS-WEP-006"]
+          "core2_transfer_target": [
+            "PHYS-WEP-005",
+            "PHYS-WEP-006"
+          ]
         },
         "WEP-04": {
           "title": "Conservative Forces & Path Independence",
@@ -464,7 +566,10 @@
           "scope_condition": "Conservative vector fields (gravity, ideal spring, electrostatic).",
           "model_check": "Non-conservative forces (kinetic friction, air drag) dissipate mechanical energy into heat; work depends on actual path length.",
           "easy_mistake_to_make": "Assuming friction work is path-independent.",
-          "core2_transfer_target": ["PHYS-WEP-007", "PHYS-WEP-008"]
+          "core2_transfer_target": [
+            "PHYS-WEP-007",
+            "PHYS-WEP-008"
+          ]
         },
         "WEP-05": {
           "title": "Gravitational & Elastic Potential Energy Wells",
@@ -472,7 +577,10 @@
           "scope_condition": "Declared reference datum where U = 0.",
           "model_check": "Only potential energy differences Delta U have physical meaning; absolute value depends on chosen arbitrary datum.",
           "easy_mistake_to_make": "Treating potential energy as having an absolute intrinsic value without datum definition.",
-          "core2_transfer_target": ["PHYS-WEP-009", "PHYS-WEP-010"]
+          "core2_transfer_target": [
+            "PHYS-WEP-009",
+            "PHYS-WEP-010"
+          ]
         },
         "WEP-06": {
           "title": "Conservative Force as Negative Potential Gradient",
@@ -480,7 +588,10 @@
           "scope_condition": "1D potential energy curves U(x).",
           "model_check": "Stable equilibrium: d^2U/dx^2 > 0 (potential minimum); Unstable equilibrium: d^2U/dx^2 < 0 (potential maximum).",
           "easy_mistake_to_make": "Equating force directly to potential energy U(x) instead of its negative spatial derivative.",
-          "core2_transfer_target": ["PHYS-WEP-011", "PHYS-WEP-012"]
+          "core2_transfer_target": [
+            "PHYS-WEP-011",
+            "PHYS-WEP-012"
+          ]
         },
         "WEP-07": {
           "title": "Mechanical Energy Conservation & Turning Points",
@@ -488,7 +599,10 @@
           "scope_condition": "Zero non-conservative work: W_nc = 0.",
           "model_check": "Motion is bounded in regions where E >= U(x); turning points occur where E = U(x) and kinetic energy vanishes (K = 0).",
           "easy_mistake_to_make": "Assuming energy is conserved when non-conservative friction is active.",
-          "core2_transfer_target": ["PHYS-WEP-013", "PHYS-WEP-014"]
+          "core2_transfer_target": [
+            "PHYS-WEP-013",
+            "PHYS-WEP-014"
+          ]
         },
         "WEP-08": {
           "title": "Power as Rate of Energy Transfer",
@@ -496,7 +610,10 @@
           "scope_condition": "Mechanical work and energy transfer.",
           "model_check": "Distinguish between total work in Joules and delivery rate in Watts: a low-power engine running long can do more total work than a high-power engine running briefly.",
           "easy_mistake_to_make": "Confusing total work (Joules) with power (Watts).",
-          "core2_transfer_target": ["PHYS-WEP-015", "PHYS-WEP-016"]
+          "core2_transfer_target": [
+            "PHYS-WEP-015",
+            "PHYS-WEP-016"
+          ]
         },
         "WEP-09": {
           "title": "Non-Holonomic Friction Work in Multi-Body Systems",
@@ -504,7 +621,10 @@
           "scope_condition": "Coupled bodies or conveyor belts.",
           "model_check": "A box placed on a moving conveyor belt accelerates due to forward kinetic friction, which does positive work on the box in the lab frame.",
           "easy_mistake_to_make": "Believing friction can never do positive work on any individual body.",
-          "core2_transfer_target": ["PHYS-WEP-017", "PHYS-WEP-018"]
+          "core2_transfer_target": [
+            "PHYS-WEP-017",
+            "PHYS-WEP-018"
+          ]
         },
         "WEP-10": {
           "title": "Momentum vs Kinetic Energy Scaling",
@@ -512,7 +632,10 @@
           "scope_condition": "Non-relativistic particle dynamics.",
           "model_check": "When a gun fires a bullet, gun and bullet have equal and opposite momentum (p_g = p_b), but the light bullet carries vastly greater kinetic energy.",
           "easy_mistake_to_make": "Assuming two objects with equal momentum must carry equal kinetic energy.",
-          "core2_transfer_target": ["PHYS-WEP-019", "PHYS-WEP-020"]
+          "core2_transfer_target": [
+            "PHYS-WEP-019",
+            "PHYS-WEP-020"
+          ]
         }
       },
       "misconception_discriminators": [
@@ -560,7 +683,12 @@
       },
       "representation_rules": {
         "fbd_mandatory": false,
-        "diagram_types": ["ORBITAL_ELLIPSE_DIAGRAM", "GRAVITATIONAL_FIELD_RADIUS_GRAPH", "POTENTIAL_WELL_CURVE", "TIDAL_BULGE_DECOMPOSITION"],
+        "diagram_types": [
+          "ORBITAL_ELLIPSE_DIAGRAM",
+          "GRAVITATIONAL_FIELD_RADIUS_GRAPH",
+          "POTENTIAL_WELL_CURVE",
+          "TIDAL_BULGE_DECOMPOSITION"
+        ],
         "svg_specifications": [
           "Coordinate axes labeled: r (m), g (m/s^2), U (J), v (m/s)",
           "Minimum SVG text font floor >= 14px on all labels and annotations",
@@ -591,7 +719,10 @@
           "scope_condition": "Point masses and spherically symmetric mass distributions in non-relativistic regimes.",
           "model_check": "Earth attracts an apple with the exact same force magnitude that the apple attracts the Earth.",
           "easy_mistake_to_make": "Assuming a massive planet exerts a greater gravitational force than a smaller attracted object.",
-          "core2_transfer_target": ["PHYS-GRAV-001", "PHYS-GRAV-002"]
+          "core2_transfer_target": [
+            "PHYS-GRAV-001",
+            "PHYS-GRAV-002"
+          ]
         },
         "GRAV-02": {
           "title": "Surface Gravity & Proportional Scaling",
@@ -599,7 +730,10 @@
           "scope_condition": "Spherical celestial bodies with uniform or radially symmetric density rho(r).",
           "model_check": "Doubling mass and doubling radius halves surface gravity: 2 / 2^2 = 1/2.",
           "easy_mistake_to_make": "Scaling surface gravity linearly with radius or mass without squaring radius.",
-          "core2_transfer_target": ["PHYS-GRAV-003", "PHYS-GRAV-004"]
+          "core2_transfer_target": [
+            "PHYS-GRAV-003",
+            "PHYS-GRAV-004"
+          ]
         },
         "GRAV-03": {
           "title": "Altitude Variation of Gravity",
@@ -607,7 +741,10 @@
           "scope_condition": "Exterior gravitational field (r >= R).",
           "model_check": "At h = R, gravity is exactly 1/4 g_0; binomial approximation yields 1 - 2(1) = -1 (completely invalid).",
           "easy_mistake_to_make": "Using the small-altitude linear approximation for large planetary altitudes.",
-          "core2_transfer_target": ["PHYS-GRAV-006", "PHYS-GRAV-009"]
+          "core2_transfer_target": [
+            "PHYS-GRAV-006",
+            "PHYS-GRAV-009"
+          ]
         },
         "GRAV-04": {
           "title": "Newton's Shell Theorem & Interior Depth Field",
@@ -615,7 +752,10 @@
           "scope_condition": "Uniform density solid sphere.",
           "model_check": "Only the enclosed core mass M(r) = M*(r/R)^3 attracts; outer layers cancel to zero by solid angle symmetry.",
           "easy_mistake_to_make": "Assuming gravity increases to infinity as one descends toward Earth's center according to 1/r^2.",
-          "core2_transfer_target": ["PHYS-GRAV-005", "PHYS-GRAV-012"]
+          "core2_transfer_target": [
+            "PHYS-GRAV-005",
+            "PHYS-GRAV-012"
+          ]
         },
         "GRAV-05": {
           "title": "Earth Tunnel Simple Harmonic Motion",
@@ -623,7 +763,10 @@
           "scope_condition": "Uniform Earth density; frictionless evacuated tunnel.",
           "model_check": "Along any chord tunnel, the transverse normal force cancels, leaving F_x = -(mg_0/R)*x with identical effective stiffness k = mg_0/R.",
           "easy_mistake_to_make": "Assuming a chord tunnel has a different period because it is shorter than a diametrical tunnel.",
-          "core2_transfer_target": ["PHYS-GRAV-013", "PHYS-GRAV-014"]
+          "core2_transfer_target": [
+            "PHYS-GRAV-013",
+            "PHYS-GRAV-014"
+          ]
         },
         "GRAV-06": {
           "title": "Gravitational Potential Energy Well",
@@ -631,7 +774,10 @@
           "scope_condition": "Asymptotically flat space; datum at infinity.",
           "model_check": "Negative sign signifies bound state; external agent must inject positive energy to separate masses to infinity.",
           "easy_mistake_to_make": "Using flat-Earth W = mgh = mg_0 R at planetary altitudes where field dilutes.",
-          "core2_transfer_target": ["PHYS-GRAV-010", "PHYS-GRAV-015"]
+          "core2_transfer_target": [
+            "PHYS-GRAV-010",
+            "PHYS-GRAV-015"
+          ]
         },
         "GRAV-07": {
           "title": "Kepler's Second Law & Angular Momentum Conservation",
@@ -639,7 +785,9 @@
           "scope_condition": "Central inverse-square force.",
           "model_check": "Orbital speed is strictly maximum at perihelion (closest) and minimum at aphelion (farthest).",
           "easy_mistake_to_make": "Assuming planets travel at uniform speed in elliptical orbits.",
-          "core2_transfer_target": ["PHYS-GRAV-007"]
+          "core2_transfer_target": [
+            "PHYS-GRAV-007"
+          ]
         },
         "GRAV-08": {
           "title": "Kepler's Third Law Harmonic Scaling",
@@ -647,7 +795,10 @@
           "scope_condition": "Two-body Keplerian system dominated by central mass M >> m.",
           "model_check": "Period scaling follows power 3/2: T proportional to r^(1.5).",
           "easy_mistake_to_make": "Assuming orbital period scales linearly with orbital radius.",
-          "core2_transfer_target": ["PHYS-GRAV-008", "PHYS-GRAV-017"]
+          "core2_transfer_target": [
+            "PHYS-GRAV-008",
+            "PHYS-GRAV-017"
+          ]
         },
         "GRAV-09": {
           "title": "Orbital Speed, Escape Speed & Virial Theorem",
@@ -655,7 +806,12 @@
           "scope_condition": "Bound Keplerian orbits.",
           "model_check": "Escape velocity is 41.4% higher than circular orbital velocity; escaping with residual speed yields v_inf = sqrt(v_0^2 - v_esc^2).",
           "easy_mistake_to_make": "Confusing circular orbital velocity with parabolic escape velocity.",
-          "core2_transfer_target": ["PHYS-GRAV-011", "PHYS-GRAV-016", "PHYS-GRAV-018", "PHYS-GRAV-025"]
+          "core2_transfer_target": [
+            "PHYS-GRAV-011",
+            "PHYS-GRAV-016",
+            "PHYS-GRAV-018",
+            "PHYS-GRAV-025"
+          ]
         },
         "GRAV-10": {
           "title": "Multi-Body Gravity, Cavities & Tides",
@@ -663,7 +819,14 @@
           "scope_condition": "Multi-body configurations and differential field gradients.",
           "model_check": "Tides are differential (dg/dd proportional to 1/d^3), pulling near water toward Moon and pulling Earth away from far water, creating two symmetric bulges.",
           "easy_mistake_to_make": "Believing tides pull only on the near side of Earth or that cavity field is non-uniform.",
-          "core2_transfer_target": ["PHYS-GRAV-019", "PHYS-GRAV-020", "PHYS-GRAV-021", "PHYS-GRAV-022", "PHYS-GRAV-023", "PHYS-GRAV-024"]
+          "core2_transfer_target": [
+            "PHYS-GRAV-019",
+            "PHYS-GRAV-020",
+            "PHYS-GRAV-021",
+            "PHYS-GRAV-022",
+            "PHYS-GRAV-023",
+            "PHYS-GRAV-024"
+          ]
         }
       },
       "misconception_discriminators": [
@@ -711,7 +874,12 @@
       },
       "representation_rules": {
         "fbd_mandatory": true,
-        "diagram_types": ["U_TUBE_MANOMETER", "SUBMERGED_BODY_FBD", "HYDRAULIC_PRESS_DIAGRAM", "HYDROSTATIC_PRESSURE_PROFILE"],
+        "diagram_types": [
+          "U_TUBE_MANOMETER",
+          "SUBMERGED_BODY_FBD",
+          "HYDRAULIC_PRESS_DIAGRAM",
+          "HYDROSTATIC_PRESSURE_PROFILE"
+        ],
         "svg_specifications": [
           "Liquid levels, interfaces, and free surfaces marked with distinct color/pattern",
           "Minimum SVG text font floor >= 14px on all labels and annotations",
@@ -725,7 +893,10 @@
         "buoyant_force": "[M L T^-2]",
         "surface_tension": "[M T^-2]",
         "volume": "[L^3]",
-        "dimensionless": ["specific_gravity", "submerged_fraction"]
+        "dimensionless": [
+          "specific_gravity",
+          "submerged_fraction"
+        ]
       },
       "independent_checks": [
         "DIMENSIONAL_HOMOGENEITY",
@@ -741,7 +912,10 @@
           "scope_condition": "Static fluids in thermal equilibrium.",
           "model_check": "Pressure force always acts strictly perpendicular to any immersed surface boundary regardless of surface orientation.",
           "easy_mistake_to_make": "Treating pressure as a directional vector rather than an isotropic scalar.",
-          "core2_transfer_target": ["PHYS-FLUID-001", "PHYS-FLUID-002"]
+          "core2_transfer_target": [
+            "PHYS-FLUID-001",
+            "PHYS-FLUID-002"
+          ]
         },
         "FLUID-02": {
           "title": "Hydrostatic Depth Law & Paradox",
@@ -749,7 +923,10 @@
           "scope_condition": "Incompressible fluids in uniform gravity.",
           "model_check": "Containers of different shapes with identical base areas and liquid depths experience identical bottom pressures and base forces (Hydrostatic Paradox).",
           "easy_mistake_to_make": "Assuming liquid pressure at container bottom depends on container shape or total liquid volume.",
-          "core2_transfer_target": ["PHYS-FLUID-003", "PHYS-FLUID-004"]
+          "core2_transfer_target": [
+            "PHYS-FLUID-003",
+            "PHYS-FLUID-004"
+          ]
         },
         "FLUID-03": {
           "title": "Pascal's Principle & Hydraulic Leverage",
@@ -757,7 +934,10 @@
           "scope_condition": "Enclosed, incompressible fluids in static equilibrium.",
           "model_check": "Work done on input piston equals work done by output piston (F1 * d1 = F2 * d2); mechanical advantage multiplies force while conserving energy.",
           "easy_mistake_to_make": "Assuming hydraulic press creates energy rather than multiplying force through displacement trade-off.",
-          "core2_transfer_target": ["PHYS-FLUID-005", "PHYS-FLUID-006"]
+          "core2_transfer_target": [
+            "PHYS-FLUID-005",
+            "PHYS-FLUID-006"
+          ]
         },
         "FLUID-04": {
           "title": "U-Tube Manometry & Immiscible Interfaces",
@@ -765,7 +945,10 @@
           "scope_condition": "Static equilibrium in connected open tubes.",
           "model_check": "Equate pressures at the horizontal datum passing through the lowest common interface.",
           "easy_mistake_to_make": "Equating liquid heights directly without weighting by fluid densities.",
-          "core2_transfer_target": ["PHYS-FLUID-007", "PHYS-FLUID-008"]
+          "core2_transfer_target": [
+            "PHYS-FLUID-007",
+            "PHYS-FLUID-008"
+          ]
         },
         "FLUID-05": {
           "title": "Archimedes' Law & Buoyant Force Origin",
@@ -773,7 +956,11 @@
           "scope_condition": "Immersed bodies in static fluid under gravity.",
           "model_check": "Buoyant force equals the weight of displaced fluid; once completely submerged, F_B is constant and independent of depth in incompressible liquid.",
           "easy_mistake_to_make": "Believing buoyant force increases as an object sinks deeper into an incompressible liquid.",
-          "core2_transfer_target": ["PHYS-FLUID-009", "PHYS-FLUID-010", "PHYS-FLUID-023"]
+          "core2_transfer_target": [
+            "PHYS-FLUID-009",
+            "PHYS-FLUID-010",
+            "PHYS-FLUID-023"
+          ]
         },
         "FLUID-06": {
           "title": "Floating Equilibrium & Submerged Fraction",
@@ -781,7 +968,11 @@
           "scope_condition": "Free floating body with rho_body <= rho_fluid.",
           "model_check": "The submerged fraction equals the specific gravity ratio rho_body / rho_fluid; melting ice floating in water leaves liquid level unchanged.",
           "easy_mistake_to_make": "Inverting the ratio to V_sub / V_tot = rho_fluid / rho_body.",
-          "core2_transfer_target": ["PHYS-FLUID-011", "PHYS-FLUID-012", "PHYS-FLUID-022"]
+          "core2_transfer_target": [
+            "PHYS-FLUID-011",
+            "PHYS-FLUID-012",
+            "PHYS-FLUID-022"
+          ]
         },
         "FLUID-07": {
           "title": "Apparent Weight & Scale Readings",
@@ -789,7 +980,11 @@
           "scope_condition": "Bodies suspended or resting on scales inside fluid.",
           "model_check": "If rho_body = rho_fluid (neutral buoyancy), apparent weight is identically zero.",
           "easy_mistake_to_make": "Assuming an object loses mass when submerged in liquid.",
-          "core2_transfer_target": ["PHYS-FLUID-013", "PHYS-FLUID-014", "PHYS-FLUID-025"]
+          "core2_transfer_target": [
+            "PHYS-FLUID-013",
+            "PHYS-FLUID-014",
+            "PHYS-FLUID-025"
+          ]
         },
         "FLUID-08": {
           "title": "Newton's Third Law in Buoyancy",
@@ -797,7 +992,10 @@
           "scope_condition": "Beakers resting on weighing scales containing suspended immersed bodies.",
           "model_check": "Suspended mass decreases tension scale by F_B and increases beaker scale reading by F_B.",
           "easy_mistake_to_make": "Assuming a suspended object exerts no downward force on the beaker containing the fluid.",
-          "core2_transfer_target": ["PHYS-FLUID-015", "PHYS-FLUID-016"]
+          "core2_transfer_target": [
+            "PHYS-FLUID-015",
+            "PHYS-FLUID-016"
+          ]
         },
         "FLUID-09": {
           "title": "Accelerating Fluids & Effective Gravity",
@@ -805,7 +1003,11 @@
           "scope_condition": "Rigid body fluid acceleration without sloshing turbulence.",
           "model_check": "In free-falling fluid (a = g downward), g_eff = 0, so hydrostatic pressure differences and buoyant forces vanish identically.",
           "easy_mistake_to_make": "Assuming buoyant force persists in free fall.",
-          "core2_transfer_target": ["PHYS-FLUID-017", "PHYS-FLUID-018", "PHYS-FLUID-021"]
+          "core2_transfer_target": [
+            "PHYS-FLUID-017",
+            "PHYS-FLUID-018",
+            "PHYS-FLUID-021"
+          ]
         },
         "FLUID-10": {
           "title": "Surface Energy & Capillary Invariants",
@@ -813,7 +1015,11 @@
           "scope_condition": "Narrow cylindrical capillary tubes and curved liquid interfaces.",
           "model_check": "Jurin's law: capillary height is inversely proportional to tube radius (h * r = const).",
           "easy_mistake_to_make": "Confusing excess pressure of a liquid droplet (1 surface: 2gamma/R) with a soap bubble (2 surfaces: 4gamma/R).",
-          "core2_transfer_target": ["PHYS-FLUID-019", "PHYS-FLUID-020", "PHYS-FLUID-024"]
+          "core2_transfer_target": [
+            "PHYS-FLUID-019",
+            "PHYS-FLUID-020",
+            "PHYS-FLUID-024"
+          ]
         }
       },
       "misconception_discriminators": [
@@ -856,7 +1062,11 @@
       },
       "representation_rules": {
         "fbd_mandatory": false,
-        "diagram_types": ["PV_INDICATOR_DIAGRAM", "CALORIMETRY_HEATING_CURVE", "HEAT_ENGINE_FLOW_DIAGRAM"],
+        "diagram_types": [
+          "PV_INDICATOR_DIAGRAM",
+          "CALORIMETRY_HEATING_CURVE",
+          "HEAT_ENGINE_FLOW_DIAGRAM"
+        ],
         "svg_specifications": [
           "State paths on PV diagrams marked with arrows indicating process direction",
           "Minimum SVG text font floor >= 14px on all labels and annotations",
@@ -870,7 +1080,10 @@
         "latent_heat": "[L^2 T^-2]",
         "thermal_conductivity": "[M L T^-3 Theta^-1]",
         "internal_energy": "[M L^2 T^-2]",
-        "dimensionless": ["efficiency", "ratio_of_specific_heats_gamma"]
+        "dimensionless": [
+          "efficiency",
+          "ratio_of_specific_heats_gamma"
+        ]
       },
       "independent_checks": [
         "DIMENSIONAL_HOMOGENEITY",
@@ -886,7 +1099,10 @@
           "scope_condition": "Thermodynamic equilibrium.",
           "model_check": "Two bodies in thermal equilibrium have identical temperatures, not necessarily equal heat or internal energy.",
           "easy_mistake_to_make": "Conflating heat Q (energy in transit) with temperature T.",
-          "core2_transfer_target": ["PHYS-THERMO-001", "PHYS-THERMO-002"]
+          "core2_transfer_target": [
+            "PHYS-THERMO-001",
+            "PHYS-THERMO-002"
+          ]
         },
         "THERMO-02": {
           "title": "Specific Heat Capacity & Sensible Heat",
@@ -894,7 +1110,10 @@
           "scope_condition": "Uniform temperature change away from phase transition points.",
           "model_check": "Water has a very high specific heat capacity (4186 J/(kg K)), allowing it to store large amounts of heat with small temperature shifts.",
           "easy_mistake_to_make": "Assuming bodies receiving equal heat experience equal temperature rises regardless of mass and specific heat.",
-          "core2_transfer_target": ["PHYS-THERMO-003", "PHYS-THERMO-004"]
+          "core2_transfer_target": [
+            "PHYS-THERMO-003",
+            "PHYS-THERMO-004"
+          ]
         },
         "THERMO-03": {
           "title": "Latent Heat & Phase Transitions",
@@ -902,7 +1121,10 @@
           "scope_condition": "Constant pressure phase transition.",
           "model_check": "On heating curves, phase transitions appear as horizontal plateau lines (Delta T = 0).",
           "easy_mistake_to_make": "Assuming temperature must rise whenever heat is supplied during a phase transition.",
-          "core2_transfer_target": ["PHYS-THERMO-005", "PHYS-THERMO-006"]
+          "core2_transfer_target": [
+            "PHYS-THERMO-005",
+            "PHYS-THERMO-006"
+          ]
         },
         "THERMO-04": {
           "title": "Principle of Calorimetry & Water Equivalent",
@@ -910,7 +1132,11 @@
           "scope_condition": "Thermally isolated mixing container (adiabatic boundary).",
           "model_check": "Check whether mixture reaches equilibrium before or after complete phase melting.",
           "easy_mistake_to_make": "Neglecting the heat absorbed by the calorimeter container vessel.",
-          "core2_transfer_target": ["PHYS-THERMO-007", "PHYS-THERMO-008"]
+          "core2_transfer_target": [
+            "PHYS-THERMO-007",
+            "PHYS-THERMO-008",
+            "PHYS-THERMO-021"
+          ]
         },
         "THERMO-05": {
           "title": "Thermal Expansion in Solids & Liquids",
@@ -918,7 +1144,11 @@
           "scope_condition": "Small temperature intervals.",
           "model_check": "Holes in metal plates expand when heated at the exact same fractional rate as if filled with solid metal.",
           "easy_mistake_to_make": "Assuming a central hole in a heated metal ring shrinks.",
-          "core2_transfer_target": ["PHYS-THERMO-009", "PHYS-THERMO-010"]
+          "core2_transfer_target": [
+            "PHYS-THERMO-009",
+            "PHYS-THERMO-010",
+            "PHYS-THERMO-022"
+          ]
         },
         "THERMO-06": {
           "title": "Modes of Heat Transfer",
@@ -926,7 +1156,10 @@
           "scope_condition": "Steady-state heat transport.",
           "model_check": "Radiation requires no material medium and dominates at high temperatures due to T^4 dependence.",
           "easy_mistake_to_make": "Assuming heat transfer rate depends on mass rather than temperature gradient and surface area.",
-          "core2_transfer_target": ["PHYS-THERMO-011", "PHYS-THERMO-012"]
+          "core2_transfer_target": [
+            "PHYS-THERMO-011",
+            "PHYS-THERMO-012"
+          ]
         },
         "THERMO-07": {
           "title": "First Law of Thermodynamics",
@@ -934,7 +1167,11 @@
           "scope_condition": "Closed thermodynamic systems.",
           "model_check": "Internal energy of an ideal gas depends solely on temperature: Delta U = n * C_v * Delta T.",
           "easy_mistake_to_make": "Treating heat Q and work W as state functions.",
-          "core2_transfer_target": ["PHYS-THERMO-013", "PHYS-THERMO-014"]
+          "core2_transfer_target": [
+            "PHYS-THERMO-013",
+            "PHYS-THERMO-014",
+            "PHYS-THERMO-024"
+          ]
         },
         "THERMO-08": {
           "title": "Thermodynamic Work & PV Diagrams",
@@ -942,7 +1179,11 @@
           "scope_condition": "Quasi-static reversible processes.",
           "model_check": "Enclosed area in a cyclic PV diagram represents net work done per cycle; clockwise cycles produce positive net work (engines).",
           "easy_mistake_to_make": "Calculating work without integrating under the specific PV path.",
-          "core2_transfer_target": ["PHYS-THERMO-015", "PHYS-THERMO-016"]
+          "core2_transfer_target": [
+            "PHYS-THERMO-015",
+            "PHYS-THERMO-016",
+            "PHYS-THERMO-023"
+          ]
         },
         "THERMO-09": {
           "title": "Special Thermodynamic Processes",
@@ -950,7 +1191,10 @@
           "scope_condition": "Ideal gases undergoing standard quasi-static processes.",
           "model_check": "Adiabatic expansion performs work at the expense of internal energy, causing temperature to fall (Delta T < 0).",
           "easy_mistake_to_make": "Believing an adiabatic expansion (Q = 0) maintains constant temperature.",
-          "core2_transfer_target": ["PHYS-THERMO-017", "PHYS-THERMO-018"]
+          "core2_transfer_target": [
+            "PHYS-THERMO-017",
+            "PHYS-THERMO-018"
+          ]
         },
         "THERMO-10": {
           "title": "Cyclic Engines & Second Law Invariants",
@@ -958,7 +1202,11 @@
           "scope_condition": "Cyclic heat engines operating between thermal reservoirs.",
           "model_check": "Kelvin-Planck statement: No engine can convert 100% of absorbed heat into work in a complete cycle; Carnot efficiency eta_max = 1 - T_C / T_H sets the thermodynamic ceiling.",
           "easy_mistake_to_make": "Assuming an ideal frictionless engine can achieve 100% thermal efficiency.",
-          "core2_transfer_target": ["PHYS-THERMO-019", "PHYS-THERMO-020"]
+          "core2_transfer_target": [
+            "PHYS-THERMO-019",
+            "PHYS-THERMO-020",
+            "PHYS-THERMO-025"
+          ]
         }
       },
       "misconception_discriminators": [
@@ -1001,7 +1249,11 @@
       },
       "representation_rules": {
         "fbd_mandatory": false,
-        "diagram_types": ["VECTOR_TRIANGLE", "POLAR_COMPONENT_RESOLUTION", "HEAD_TO_TAIL_ADDITION"],
+        "diagram_types": [
+          "VECTOR_TRIANGLE",
+          "POLAR_COMPONENT_RESOLUTION",
+          "HEAD_TO_TAIL_ADDITION"
+        ],
         "svg_specifications": [
           "Resolving vector R into R_x = R * cos(theta) and R_y = R * sin(theta)",
           "Font floor >= 14px on all vector labels and angles in SVG graphics"
@@ -1009,7 +1261,11 @@
       },
       "dimensional_signatures": {
         "vector_magnitude": "Inherits physical quantity dimensions",
-        "dimensionless": ["angle", "trigonometric_ratio", "direction_cosine"]
+        "dimensionless": [
+          "angle",
+          "trigonometric_ratio",
+          "direction_cosine"
+        ]
       },
       "independent_checks": [
         "PYTHAGOREAN_NORM_CHECK",
@@ -1023,7 +1279,9 @@
           "scope_condition": "Classical spatial geometry.",
           "model_check": "Physical quantities like distance, speed, mass, work are scalars; displacement, velocity, force, momentum are vectors.",
           "easy_mistake_to_make": "Adding vector quantities by direct algebraic addition of their magnitudes.",
-          "core2_transfer_target": ["PHYS-VEC-001"]
+          "core2_transfer_target": [
+            "PHYS-VEC-001"
+          ]
         },
         "VEC-02": {
           "title": "Head-to-Tail Triangle Addition",
@@ -1031,7 +1289,9 @@
           "scope_condition": "Geometric Euclidean vector space.",
           "model_check": "Triangle inequality: |A - B| <= |R| <= |A + B|.",
           "easy_mistake_to_make": "Drawing resultant from head of B to tail of A (reversing resultant sign).",
-          "core2_transfer_target": ["PHYS-VEC-002"]
+          "core2_transfer_target": [
+            "PHYS-VEC-002"
+          ]
         },
         "VEC-03": {
           "title": "Rectangular Component Resolution",
@@ -1039,7 +1299,9 @@
           "scope_condition": "2D Cartesian coordinate planes.",
           "model_check": "Angle theta must be measured from the specific axis whose adjacent side uses cosine.",
           "easy_mistake_to_make": "Always using cos theta for horizontal even when theta is given relative to vertical.",
-          "core2_transfer_target": ["PHYS-VEC-003"]
+          "core2_transfer_target": [
+            "PHYS-VEC-003"
+          ]
         },
         "VEC-04": {
           "title": "Vector Subtraction & Relative Invariants",
@@ -1047,7 +1309,9 @@
           "scope_condition": "Relative frames and change in velocity Delta v = v_f - v_i.",
           "model_check": "When a particle turns through angle theta at constant speed v, |Delta v| = 2v sin(theta/2).",
           "easy_mistake_to_make": "Assuming change in velocity magnitude is zero because speed is constant.",
-          "core2_transfer_target": ["PHYS-VEC-004"]
+          "core2_transfer_target": [
+            "PHYS-VEC-004"
+          ]
         },
         "VEC-05": {
           "title": "Scalar (Dot) Product",
@@ -1055,7 +1319,9 @@
           "scope_condition": "Work, power, and flux definitions.",
           "model_check": "Dot product evaluates projection of one vector along another: A_parallel = (A . B) / |B|.",
           "easy_mistake_to_make": "Assigning a direction to a dot product result.",
-          "core2_transfer_target": ["PHYS-VEC-005"]
+          "core2_transfer_target": [
+            "PHYS-VEC-005"
+          ]
         },
         "VEC-06": {
           "title": "Vector (Cross) Product & Torque",
@@ -1063,7 +1329,9 @@
           "scope_condition": "Rotational mechanics, torque, and angular momentum.",
           "model_check": "Cross product is anti-commutative: B x A = -(A x B).",
           "easy_mistake_to_make": "Assuming A x B = B x A.",
-          "core2_transfer_target": ["PHYS-VEC-006"]
+          "core2_transfer_target": [
+            "PHYS-VEC-006"
+          ]
         }
       },
       "misconception_discriminators": [
