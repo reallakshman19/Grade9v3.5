@@ -148,8 +148,10 @@ def validate_nlm_factor_contract(q):
     else:
         for key in NLM_FACTOR_KEYS:
             detail = evidence[key]
-            if not isinstance(detail, str) or len(detail.strip()) < 18:
-                errors.append(f"{qid}: factor_evidence[{key}] must name a concrete scored feature")
+            score = factors[key]
+            if (not isinstance(detail, str) or len(detail.strip()) < 30
+                    or not re.match(r"^Score\\s+" + str(score) + r"\\s*:", detail)):
+                errors.append(f"{qid}: factor_evidence[{key}] must cite score {score} and a concrete feature (>=30 chars)")
     vector = tuple(factors[key] for key in NLM_FACTOR_KEYS)
     if vector in NLM_LEGACY_TEMPLATES:
         errors.append(f"{qid}: forbidden back-filled template factor vector {vector}")
@@ -174,7 +176,7 @@ def nlm_evidence_similarity(left, right):
         return " ".join(re.sub(r"\\s+", " ", re.sub(r"[^a-z0-9 ]+", " ",
                       str(evidence.get(k, "")).lower())).strip() for k in NLM_FACTOR_KEYS)
     a, b = normalized(left), normalized(right)
-    return difflib.SequenceMatcher(None, a, b, autojunk=False).ratio() if a and b else 0.0
+    return difflib.SequenceMatcher(None, a.split(), b.split(), autojunk=False).ratio() if a and b else 0.0
 
 
 def nlm_validate_evidence_uniqueness(items, threshold=0.87):
