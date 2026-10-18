@@ -1312,10 +1312,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-10",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q11",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "Two rifles of masses $M_1 = 3.0\\text{ kg}$ and $M_2 = 6.0\\text{ kg}$ fire identical bullets with the same forward muzzle momentum $p_{\\text{bullet}} = 12\\text{ kg}\\cdot\\text{m/s}$. Compare their recoil momenta and recoil speeds.",
+      "stem": "Two wheeled laboratory launchers of masses 4 kg and 8 kg each expel a test pellet carrying 16 kg m/s of eastward momentum. Compare the two launchers' westward recoil momenta and speeds.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1323,25 +1324,25 @@
         "caption": ""
       },
       "options": {
-        "A": "Both rifles have identical recoil momentum magnitude (12 kg m/s), but the lighter rifle has twice the recoil speed (4.0 m/s vs 2.0 m/s).",
-        "B": "The heavier rifle has twice the recoil momentum and twice the recoil speed.",
-        "C": "The lighter rifle has half the recoil momentum and half the recoil speed.",
-        "D": "Both rifles have identical recoil speed because they fire identical bullets."
+        "A": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west.",
+        "B": "The heavy launcher has twice the recoil momentum.",
+        "C": "Their recoil speeds are equal because impulses match.",
+        "D": "The light launcher recoils east while the heavy one goes west."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-APPLY-D3",
+        "cell_id": "PHYS-APPLY-D2",
         "primary_demand": "APPLY",
-        "difficulty_band": "D3",
+        "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-10",
         "difficulty_factors": {
           "system_coupling": 3,
           "vector_dimensionality": 2,
-          "constraint_latency": 3,
-          "domain_coupling": 3,
-          "math_friction": 3
+          "constraint_latency": 1,
+          "domain_coupling": 2,
+          "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-10 to APPLY demand.",
+        "protected_work_W": "An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -1354,71 +1355,81 @@
         "supporting_demands": [
           "RETRIEVE",
           "EXPLAIN"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 3: Compare two interacting launchers and their ejected payloads.",
+          "vector_dimensionality": "Score 2: Recoil is recorded on a signed forward/backward axis.",
+          "constraint_latency": "Score 1: Muzzle impulse and both chassis masses are given.",
+          "domain_coupling": "Score 2: Use shared ejection momentum then each launcher's speed.",
+          "math_friction": "Score 2: Two simple linear recoil divisions."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Momentum conservation gives p_recoil = -p_bullet = 12 kg m/s for both. v_recoil = p/M, so v1 = 12/3 = 4 m/s and v2 = 12/6 = 2 m/s."
+          "diagnostic": "The launcher momentum is −16 kg m/s in both cases. Divide by 4 and 8 kg to get −4 and −2 m/s."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Violates momentum conservation; both rifles experience identical momentum transfer."
+          "diagnostic": "Incorrect. Equal momentum does not imply equal kinetic energy or speed."
         },
         "C": {
-          "type": "INCORRECT_FORCE_RATIO",
-          "diagnostic": "Assumes recoil momentum scales with gun mass."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Incorrect physical model. An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed."
         },
         "D": {
-          "type": "RECIPROCAL_ERROR",
-          "diagnostic": "Assumes equal momentum implies equal recoil speed, ignoring inverse mass scaling v = p/M."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Inconsistent with the signed equations. Doubling chassis mass halves recoil speed under the same impulse."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "For rifle+bullet systems initially at rest, what must the rifle momentum do when the bullet gets forward momentum?",
-          "reveal_text": "Rifle momentum must be equal in magnitude and opposite in direction to conserve total p."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "Which interaction, state change, or system must you decide first?",
+          "reveal_text": "An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "How does recoil velocity relate to momentum and mass for each rifle?",
-          "reveal_text": "v = p / M."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+          "reveal_text": "Mark east positive and write separate signed momentum balances for both launchers."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "For equal momentum p = 12 kg m/s, how do the recoil speeds of 3 kg and 6 kg compare?",
-          "reveal_text": "v_1 = 12/3 = 4 m/s; v_2 = 12/6 = 2 m/s (lighter rifle has twice the speed)."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "Write the first law before computing any final quantity.",
+          "reveal_text": "First use 0=p_pellet+p_launcher for either initially stationary launch event."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Two rifles of different masses fire bullets with identical momentum p.",
-          "represent": "Write momentum equations: p_bullet = +p, p_rifle = -p for both systems.",
-          "connect": "Momentum conservation P_tot = 0 => |p_recoil| = |p_bullet| = 12 kg m/s.",
-          "calculate": "Speed: v1 = 12 / 3.0 = 4.0 m/s; v2 = 12 / 6.0 = 2.0 m/s => v1 = 2 v2.",
-          "interpret": "Equal recoil momentum; lighter rifle has twice the recoil speed."
+          "understand": "An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed.",
+          "represent": "Mark east positive and write separate signed momentum balances for both launchers.",
+          "connect": "First use 0=p_pellet+p_launcher for either initially stationary launch event.",
+          "calculate": "The launcher momentum is −16 kg m/s in both cases. Divide by 4 and 8 kg to get −4 and −2 m/s.",
+          "interpret": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west."
         },
-        "final_expression": "Both rifles have identical recoil momentum magnitude (12 kg m/s), but the lighter rifle has twice the recoil speed (4.0 m/s vs 2.0 m/s).",
-        "final_answer_value": "Both rifles have identical recoil momentum magnitude (12 kg m/s), but the lighter rifle has twice the recoil speed (4.0 m/s vs 2.0 m/s)."
+        "final_expression": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west.",
+        "final_answer_value": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Kinetic energy K = p^2/(2M) is also twice as large for the lighter rifle.",
-        "check_it_another_way": "Lighter rifle has half the mass, so under the same internal impulse it acquires twice the acceleration.",
-        "watch_out": "Equal momentum does not mean equal recoil speed or equal recoil energy.",
-        "review_this_idea": "Core 1: NLM 09-10",
+        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
+        "quick_check": "Doubling chassis mass halves recoil speed under the same impulse.",
+        "check_it_another_way": "An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed.",
+        "watch_out": "Equal momentum does not imply equal kinetic energy or speed.",
+        "review_this_idea": "Core 1: NLM-10",
         "limiting_cases": [
           {
-            "condition": "M_rifle -> infinity",
-            "expected": "v_recoil -> 0, p_recoil = 12 kg m/s"
+            "condition": "Zero net-change limit",
+            "expected": "Doubling chassis mass halves recoil speed under the same impulse."
           },
           {
-            "condition": "M_rifle = M_bullet",
-            "expected": "v_recoil = v_bullet"
+            "condition": "Change driving input or reverse direction",
+            "expected": "Equal momentum does not imply equal kinetic energy or speed."
           }
         ]
       }
@@ -1430,10 +1441,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-03",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q12",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A horse pulls a cart along a level horizontal road at constant speed. The horse exerts a forward horizontal pull of $500\\text{ N}$ on the cart. What is the total backward resistive force acting on the cart?",
+      "stem": "A powered cable pulls a service platform east with 300 N while the platform travels at constant velocity on level rails. What total horizontal resistance acts on it?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1441,25 +1453,25 @@
         "caption": ""
       },
       "options": {
-        "A": "Exactly 500 N backward, balancing the pull to yield zero net force and zero acceleration.",
-        "B": "Zero, because the cart is moving forward.",
-        "C": "Greater than 500 N, because the horse must overcome inertia.",
-        "D": "Less than 500 N, otherwise the cart would come to rest immediately."
+        "A": "300 N west.",
+        "B": "300 N east.",
+        "C": "Zero, because there is no acceleration.",
+        "D": "More than 300 N west."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-APPLY-D2",
+        "cell_id": "PHYS-APPLY-D1",
         "primary_demand": "APPLY",
-        "difficulty_band": "D2",
+        "difficulty_band": "D1",
         "subtopic_competency_ref": "NLM-03",
         "difficulty_factors": {
-          "system_coupling": 2,
-          "vector_dimensionality": 1,
-          "constraint_latency": 2,
-          "domain_coupling": 2,
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
           "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-03 to APPLY demand.",
+        "protected_work_W": "A constant velocity means horizontal acceleration and resultant force both vanish.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -1472,71 +1484,81 @@
         "supporting_demands": [
           "RETRIEVE",
           "EXPLAIN"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 1: Isolate one cable-towed service platform.",
+          "vector_dimensionality": "Score 2: The tow and resistance are opposite on one axis.",
+          "constraint_latency": "Score 1: The given constant speed implies a_x=0.",
+          "domain_coupling": "Score 1: Only horizontal force balance is needed.",
+          "math_friction": "Score 2: One direct equality of two forces."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Constant velocity implies zero acceleration ($a = 0$). By Newton's Second Law along horizontal: $\\Sigma F_x = F_{\\text{pull}} - F_{\\text{resist}} = 0 \\implies F_{\\text{resist}} = 500\\text{ N}$."
+          "diagnostic": "R must equal 300 N west to balance the eastward cable force."
         },
         "B": {
-          "type": "ARISTOTELIAN_FORCE_VELOCITY",
-          "diagnostic": "Believes moving objects must experience zero resistance unless stopping."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect. Zero net force does not mean zero individual forces."
         },
         "C": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Overcoming inertia requires net force only during acceleration, not at constant velocity."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Incorrect physical model. A constant velocity means horizontal acceleration and resultant force both vanish."
         },
         "D": {
-          "type": "ARISTOTELIAN_FORCE_VELOCITY",
-          "diagnostic": "Believes a forward net force is necessary to sustain constant velocity."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Inconsistent with the signed equations. If resistance exceeded cable pull, the platform would slow."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "The cart moves at constant velocity. What does that say about its acceleration and net horizontal force?",
-          "reveal_text": "Acceleration is zero, so the net horizontal force must be zero."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "Which interaction, state change, or system must you decide first?",
+          "reveal_text": "A constant velocity means horizontal acceleration and resultant force both vanish."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What horizontal forces act on the cart FBD?",
-          "reveal_text": "Forward pull from the horse (500 N) and backward resistive friction/drag."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+          "reveal_text": "Choose the platform; sketch eastward cable tension and westward resistance."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "If $F_{\\text{net}}$ = $F_{\\text{pull}}$ - $F_{\\text{resist}}$ = 0, what is $F_{\\text{resist}}$?",
-          "reveal_text": "$F_{\\text{resist}}$ = 500 N."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "Write the first law before computing any final quantity.",
+          "reveal_text": "Begin with ΣF_x=T−R=ma_x=0."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The cart moves horizontally at constant speed under a 500 N forward pull.",
-          "represent": "Draw cart FBD: $F_{\\text{pull}}$ = +500 N right, $F_{\\text{resist}}$ left.",
-          "connect": "Newton II: $\\Sigma F_x = m a_x = 0$ (since $v = \\text{const} \\implies a = 0$).",
-          "calculate": "500 - $F_{\\text{resist}}$ = 0 => $F_{\\text{resist}}$ = 500 N backward.",
-          "interpret": "Total backward resistance on the cart is exactly 500 N."
+          "understand": "A constant velocity means horizontal acceleration and resultant force both vanish.",
+          "represent": "Choose the platform; sketch eastward cable tension and westward resistance.",
+          "connect": "Begin with ΣF_x=T−R=ma_x=0.",
+          "calculate": "R must equal 300 N west to balance the eastward cable force.",
+          "interpret": "300 N west."
         },
-        "final_expression": "Exactly 500 N backward, balancing the pull to yield zero net force and zero acceleration.",
-        "final_answer_value": "Exactly 500 N backward, balancing the pull to yield zero net force and zero acceleration."
+        "final_expression": "300 N west.",
+        "final_answer_value": "300 N west."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "If resistance were not 500 N, the cart would speed up or slow down.",
-        "check_it_another_way": "Work done by horse exactly equals thermal energy dissipated by road resistance per meter.",
-        "watch_out": "Do not confuse the pull on the cart with the horse's push on the ground.",
-        "review_this_idea": "Core 1: NLM 01-03, NLM 08",
+        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
+        "quick_check": "If resistance exceeded cable pull, the platform would slow.",
+        "check_it_another_way": "A constant velocity means horizontal acceleration and resultant force both vanish.",
+        "watch_out": "Zero net force does not mean zero individual forces.",
+        "review_this_idea": "Core 1: NLM-03",
         "limiting_cases": [
           {
-            "condition": "Resistance = 0 (ideal ice)",
-            "expected": "Cart accelerates forward under any non-zero pull"
+            "condition": "Zero net-change limit",
+            "expected": "If resistance exceeded cable pull, the platform would slow."
           },
           {
-            "condition": "Speed = 0 (static equilibrium)",
-            "expected": "Resistance matches pull up to static threshold"
+            "condition": "Change driving input or reverse direction",
+            "expected": "Zero net force does not mean zero individual forces."
           }
         ]
       }
@@ -1548,10 +1570,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-09",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q13",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A tennis ball of mass $m$ is dropped from a cliff. As it falls, its downward speed and momentum increase continuously. Can we claim that momentum is conserved for the ball-only system?",
+      "stem": "A motor hoists a tool bucket upward and its upward momentum increases. A student says the bucket's momentum is conserved because it is one object. Which objection is valid?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1559,25 +1582,25 @@
         "caption": ""
       },
       "options": {
-        "A": "No, because an external force (gravity from the Earth) exerts an external downward impulse J = $F_{\\text{ext}}$ $\\Delta t$ across the system boundary.",
-        "B": "Yes, because momentum is always conserved in every system under all circumstances.",
-        "C": "Yes, because air resistance cancels out gravity during free fall.",
-        "D": "No, because momentum can only be conserved when objects collide horizontally."
+        "A": "The rope and Earth exert external impulses on the bucket-only system, so its momentum need not be constant.",
+        "B": "Momentum is conserved for every single moving object.",
+        "C": "Only the bucket's weight acts, so upward momentum must be conserved.",
+        "D": "The bucket has no momentum because it is being lifted by a rope."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-JUSTIFY-D3",
+        "cell_id": "PHYS-JUSTIFY-D2",
         "primary_demand": "JUSTIFY",
-        "difficulty_band": "D3",
+        "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-09",
         "difficulty_factors": {
           "system_coupling": 3,
           "vector_dimensionality": 2,
-          "constraint_latency": 3,
-          "domain_coupling": 3,
-          "math_friction": 3
+          "constraint_latency": 1,
+          "domain_coupling": 2,
+          "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-09 to JUSTIFY demand.",
+        "protected_work_W": "Conservation is a property of a specified isolated system, not of any arbitrary object.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -1590,71 +1613,81 @@
         "supporting_demands": [
           "EXPLAIN",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 3: A lifting bucket, rope and Earth require explicit system ownership.",
+          "vector_dimensionality": "Score 2: Vertical positive direction fixes impulse sign.",
+          "constraint_latency": "Score 1: The hoist force and gravitational interaction are specified.",
+          "domain_coupling": "Score 2: Distinguish internal interactions from external system impulse.",
+          "math_friction": "Score 2: Write an impulse balance over an interval."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Total momentum is conserved only for an isolated system where $\\Sigma F_{\\text{ext}} = 0$. For the ball alone, Earth's gravity is external, producing $\\Delta p = mg \\Delta t$."
+          "diagnostic": "Since net external impulse is not zero, the bucket's upward momentum changes without violating any conservation law."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Fails to check system boundary; single bodies under external forces do not conserve momentum."
+          "diagnostic": "Incorrect. Do not label rope tension internal unless the rope belongs to the chosen system."
         },
         "C": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Free fall neglects air resistance, and even if terminal velocity were reached, momentum would be constant, not increasing."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Incorrect physical model. Conservation is a property of a specified isolated system, not of any arbitrary object."
         },
         "D": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Conservation of momentum applies in 3D to any isolated system, not merely horizontal collisions."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Inconsistent with the signed equations. When T=mg the momentum can be constant, even if the bucket is moving."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "What external force acts on the ball-only system during the fall?",
-          "reveal_text": "Gravity from the Earth."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "Which interaction, state change, or system must you decide first?",
+          "reveal_text": "Conservation is a property of a specified isolated system, not of any arbitrary object."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What is required for a chosen system to conserve total momentum?",
-          "reveal_text": "The net external impulse over the interaction must be zero."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+          "reveal_text": "Draw a bucket-only system boundary with tension entering upward and weight downward."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "Can a single body under an unbalanced external force conserve momentum?",
-          "reveal_text": "No; $\\Delta p$ = $F_{\\text{ext}}$ $\\Delta t$ != 0."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "Write the first law before computing any final quantity.",
+          "reveal_text": "Start with Δp_bucket = ∫(T−mg)dt."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The ball accelerates downward under Earth's gravity.",
-          "represent": "Draw system boundary tightly around the ball alone. Gravity arrow crosses the boundary from outside.",
-          "connect": "Momentum theorem: $\\frac{dP_{\\text{system}}}{dt} = \\Sigma F_{\\text{ext}}$. Here $\\Sigma F_{\\text{ext}} = mg \\neq 0$.",
-          "calculate": "$\\Delta p = mg \\Delta t > 0$ (downward momentum increases).",
-          "interpret": "Momentum is NOT conserved for the ball-only system because gravity is external."
+          "understand": "Conservation is a property of a specified isolated system, not of any arbitrary object.",
+          "represent": "Draw a bucket-only system boundary with tension entering upward and weight downward.",
+          "connect": "Start with Δp_bucket = ∫(T−mg)dt.",
+          "calculate": "Since net external impulse is not zero, the bucket's upward momentum changes without violating any conservation law.",
+          "interpret": "The rope and Earth exert external impulses on the bucket-only system, so its momentum need not be constant."
         },
-        "final_expression": "No, because an external force (gravity from the Earth) exerts an external downward impulse J = $F_{\\text{ext}}$ $\\Delta t$ across the system boundary.",
-        "final_answer_value": "No, because an external force (gravity from the Earth) exerts an external downward impulse J = $F_{\\text{ext}}$ $\\Delta t$ across the system boundary."
+        "final_expression": "The rope and Earth exert external impulses on the bucket-only system, so its momentum need not be constant.",
+        "final_answer_value": "The rope and Earth exert external impulses on the bucket-only system, so its momentum need not be constant."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "If the system is expanded to (Ball + Earth), gravity becomes internal and total momentum is conserved.",
-        "check_it_another_way": "Earth accelerates upward by an undetectable amount m_ball g / M_Earth, conserving total momentum.",
-        "watch_out": "Never assert momentum conservation without checking the system boundary for external forces.",
-        "review_this_idea": "Core 1: NLM 09",
+        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
+        "quick_check": "When T=mg the momentum can be constant, even if the bucket is moving.",
+        "check_it_another_way": "Conservation is a property of a specified isolated system, not of any arbitrary object.",
+        "watch_out": "Do not label rope tension internal unless the rope belongs to the chosen system.",
+        "review_this_idea": "Core 1: NLM-09",
         "limiting_cases": [
           {
-            "condition": "g -> 0 (deep space)",
-            "expected": "Ball momentum is strictly conserved"
+            "condition": "Zero net-change limit",
+            "expected": "When T=mg the momentum can be constant, even if the bucket is moving."
           },
           {
-            "condition": "System = Ball + Earth",
-            "expected": "Total momentum is strictly conserved"
+            "condition": "Change driving input or reverse direction",
+            "expected": "Do not label rope tension internal unless the rope belongs to the chosen system."
           }
         ]
       }
@@ -1666,10 +1699,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-11",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q14",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A test slider of mass $m = 50\\text{ g} = 0.050\\text{ kg}$ is launched across a rough track. Its velocity-time graph shows a linear decline from $v_0 = 80\\text{ m/s}$ to rest in $t = 8.0\\text{ s}$. If friction is the sole horizontal force acting, what is the magnitude and direction of the friction force?",
+      "stem": "A 0.20 kg miniature rover moves east on a rough level test strip. Its velocity-time sensor shows 6 m/s at t=0 and 2 m/s at t=4 s, with a straight graph between. If friction is the only horizontal force, what friction acts?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1677,10 +1711,10 @@
         "caption": ""
       },
       "options": {
-        "A": "0.50 N directed opposite to the direction of motion.",
-        "B": "5.0 N directed in the direction of motion.",
-        "C": "400 N directed opposite to motion.",
-        "D": "0.050 N directed perpendicular to the track."
+        "A": "0.20 N west.",
+        "B": "0.20 N east.",
+        "C": "1.0 N west.",
+        "D": "1.2 N east."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -1690,12 +1724,12 @@
         "subtopic_competency_ref": "NLM-11",
         "difficulty_factors": {
           "system_coupling": 2,
-          "vector_dimensionality": 1,
-          "constraint_latency": 2,
-          "domain_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 3,
           "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-11 to SYNTHESIZE demand.",
+        "protected_work_W": "The negative slope of a signed velocity-time graph is the horizontal acceleration.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -1708,71 +1742,81 @@
         "supporting_demands": [
           "MODEL",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 2: A mobile inspection rover is treated as one rigid body.",
+          "vector_dimensionality": "Score 2: The deceleration sign is read from a velocity-time axis.",
+          "constraint_latency": "Score 1: Mass and graph end-points are explicit.",
+          "domain_coupling": "Score 3: Combine graph-derived acceleration with Newton II friction.",
+          "math_friction": "Score 2: One slope calculation followed by force multiplication."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: a = $\\Delta v$ / $\\Delta t$ = (0 - 80)/8 = -10 m/s^2. F_friction = m a = (0.050 kg)(-10 m/s^2) = -0.50 N (0.50 N retarding)."
+          "diagnostic": "a_x=(2−6)/4=−1 m/s², so F_x=0.20×(−1)=−0.20 N, west."
         },
         "B": {
-          "type": "UNITS_CONVERSION_ERROR",
-          "diagnostic": "Failed to convert mass from grams to kilograms (used 50 g as 50 or made factor of 10 error)."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect. A positive velocity can coexist with negative acceleration."
         },
         "C": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Multiplied initial speed by 50 or calculated area under curve instead of slope."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Incorrect physical model. The negative slope of a signed velocity-time graph is the horizontal acceleration."
         },
         "D": {
           "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Confused friction with normal force; normal force is perpendicular, friction is parallel."
+          "diagnostic": "Inconsistent with the signed equations. A horizontal velocity line would imply zero resultant horizontal force."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "What physical quantity does the slope of a velocity-time graph represent?",
-          "reveal_text": "Acceleration: a = $\\Delta v$ / $\\Delta t$."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "Which interaction, state change, or system must you decide first?",
+          "reveal_text": "The negative slope of a signed velocity-time graph is the horizontal acceleration."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What is the slope of the graph from (0 s, 80 m/s) to (8 s, 0 m/s)?",
-          "reveal_text": "a = (0 - 80) / 8 = -10 m/s^2."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+          "reveal_text": "Mark east positive; find the signed rise/run of the v-t segment."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "What force equation connects mass and acceleration?",
-          "reveal_text": "$F = ma$. Convert 50 g to 0.050 kg first."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "Write the first law before computing any final quantity.",
+          "reveal_text": "First write a_x = Δv_x/Δt, then ΣF_x=m a_x."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Mass m = 50 g = 0.050 kg; v drops from 80 m/s to 0 in 8 s.",
-          "represent": "v-t graph with linear slope; horizontal FBD contains only friction $F_f$.",
-          "connect": "a = $\\Delta v$ / $\\Delta t$; $F_{\\text{net}} = ma$; here $F_{\\text{net}}$ = -$F_f$.",
-          "calculate": "a = (0 - 80)/8 = -10 m/s^2; $F_{\\text{net}}$ = 0.050(-10) = -0.50 N.",
-          "interpret": "Friction magnitude is 0.50 N, pointing opposite the motion."
+          "understand": "The negative slope of a signed velocity-time graph is the horizontal acceleration.",
+          "represent": "Mark east positive; find the signed rise/run of the v-t segment.",
+          "connect": "First write a_x = Δv_x/Δt, then ΣF_x=m a_x.",
+          "calculate": "a_x=(2−6)/4=−1 m/s², so F_x=0.20×(−1)=−0.20 N, west.",
+          "interpret": "0.20 N west."
         },
-        "final_expression": "0.50 N directed opposite to the direction of motion.",
-        "final_answer_value": "0.50 N directed opposite to the direction of motion."
+        "final_expression": "0.20 N west.",
+        "final_answer_value": "0.20 N west."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Deceleration is 10 m/s^2; 0.050 kg * 10 m/s^2 = 0.50 N.",
-        "check_it_another_way": "Impulse J = $\\Delta p$ = 0.050(0 - 80) = -4.0 N*s; $F_{\\text{avg}}$ = J/$\\Delta t$ = -4.0/8 = -0.50 N.",
-        "watch_out": "Do not compute area under the curve (which is displacement = 320 m) when force is requested.",
-        "review_this_idea": "Core 1: NLM 11",
+        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
+        "quick_check": "A horizontal velocity line would imply zero resultant horizontal force.",
+        "check_it_another_way": "The negative slope of a signed velocity-time graph is the horizontal acceleration.",
+        "watch_out": "A positive velocity can coexist with negative acceleration.",
+        "review_this_idea": "Core 1: NLM-11",
         "limiting_cases": [
           {
-            "condition": "Stopping time t -> infinity",
-            "expected": "Friction -> 0"
+            "condition": "Zero net-change limit",
+            "expected": "A horizontal velocity line would imply zero resultant horizontal force."
           },
           {
-            "condition": "Mass m -> 0",
-            "expected": "Friction -> 0"
+            "condition": "Change driving input or reverse direction",
+            "expected": "A positive velocity can coexist with negative acceleration."
           }
         ]
       }
@@ -1784,10 +1828,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-04",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q15",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "An object of mass $m$ accelerates at $a$ under a net horizontal force $F$. If the net force is halved ($F' = F/2$) while the mass of the object is doubled ($m' = 2m$), what is the new acceleration $a'$?",
+      "stem": "A workshop's robotic vehicle accelerates at a under thrust F and mass m. In a second test its thrust is tripled while a payload doubles its total mass. What acceleration follows under the stated frictionless model?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1795,10 +1840,10 @@
         "caption": ""
       },
       "options": {
-        "A": "a' = a/4.",
-        "B": "a' = a (unchanged).",
-        "C": "a' = 4a.",
-        "D": "a' = a/2."
+        "A": "3a/2.",
+        "B": "6a.",
+        "C": "a/6.",
+        "D": "a/2."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -1808,12 +1853,12 @@
         "subtopic_competency_ref": "NLM-04",
         "difficulty_factors": {
           "system_coupling": 2,
-          "vector_dimensionality": 1,
-          "constraint_latency": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
           "domain_coupling": 2,
           "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-04 to APPLY demand.",
+        "protected_work_W": "Acceleration depends on the ratio of resultant force to total mass.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -1826,71 +1871,81 @@
         "supporting_demands": [
           "RETRIEVE",
           "EXPLAIN"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 2: Compare the same wheeled vehicle under two tested setups.",
+          "vector_dimensionality": "Score 2: Motion is confined to one signed direction.",
+          "constraint_latency": "Score 1: Changes in force and carried mass are explicit.",
+          "domain_coupling": "Score 2: Apply Newton II ratios to both changed parameters.",
+          "math_friction": "Score 2: Solve the linear force-over-mass ratio."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: By Newton II, a = F/m. The new acceleration is a' = (F/2)/(2m) = (1/4)(F/m) = a/4."
+          "diagnostic": "Dividing the expressions gives a_new/a=3/2."
         },
         "B": {
-          "type": "RECIPROCAL_ERROR",
-          "diagnostic": "Assumed halving force and doubling mass cancel out instead of compounding."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect. Scaling force and scaling mass have opposite effects on acceleration."
         },
         "C": {
-          "type": "INCORRECT_FORCE_RATIO",
-          "diagnostic": "Inverted both scaling factors."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Incorrect physical model. Acceleration depends on the ratio of resultant force to total mass."
         },
         "D": {
-          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
-          "diagnostic": "Accounted for only one of the two changes (either halving force or doubling mass, but not both)."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Inconsistent with the signed equations. If force and mass both tripled, acceleration would remain unchanged."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "How does acceleration depend on net force at fixed mass?",
-          "reveal_text": "Directly proportional: a proportional to F."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "Which interaction, state change, or system must you decide first?",
+          "reveal_text": "Acceleration depends on the ratio of resultant force to total mass."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "How does acceleration depend on mass at fixed force?",
-          "reveal_text": "Inversely proportional: a proportional to 1/m."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+          "reveal_text": "Write original and modified force-over-mass expressions side by side."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "Combine both scaling factors into the ratio a'/a.",
-          "reveal_text": "a'/a = (F'/F) * (m/m') = (1/2) * (1/2) = 1/4."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "Write the first law before computing any final quantity.",
+          "reveal_text": "First set a=F/m and a_new=(3F)/(2m)."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Initial state: a = F/m. Final state: F' = F/2, m' = 2m.",
-          "represent": "Set up state scaling table: State 1 (F, m, a) -> State 2 (F/2, 2m, a').",
-          "connect": "Newton II: a = $F_{\\text{net}}$ / m.",
-          "calculate": "a' = (F/2)/(2m) = (1/4)(F/m) = a/4.",
-          "interpret": "The new acceleration is one-fourth of the original acceleration (a/4)."
+          "understand": "Acceleration depends on the ratio of resultant force to total mass.",
+          "represent": "Write original and modified force-over-mass expressions side by side.",
+          "connect": "First set a=F/m and a_new=(3F)/(2m).",
+          "calculate": "Dividing the expressions gives a_new/a=3/2.",
+          "interpret": "3a/2."
         },
-        "final_expression": "a' = a/4.",
-        "final_answer_value": "a' = a/4."
+        "final_expression": "3a/2.",
+        "final_answer_value": "3a/2."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Halving force cuts acceleration in half; doubling mass cuts it in half again: (1/2)*(1/2) = 1/4.",
-        "check_it_another_way": "Take numbers: F = 20 N, m = 2 kg => a = 10 m/s^2. New: F = 10 N, m = 4 kg => a' = 2.5 m/s^2 = 10/4.",
-        "watch_out": "'Half the force means half the acceleration' applies only when mass is held constant.",
-        "review_this_idea": "Core 1: NLM 04",
+        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
+        "quick_check": "If force and mass both tripled, acceleration would remain unchanged.",
+        "check_it_another_way": "Acceleration depends on the ratio of resultant force to total mass.",
+        "watch_out": "Scaling force and scaling mass have opposite effects on acceleration.",
+        "review_this_idea": "Core 1: NLM-04",
         "limiting_cases": [
           {
-            "condition": "Mass unchanged (m' = m)",
-            "expected": "a' = a/2"
+            "condition": "Zero net-change limit",
+            "expected": "If force and mass both tripled, acceleration would remain unchanged."
           },
           {
-            "condition": "Force unchanged (F' = F)",
-            "expected": "a' = a/2"
+            "condition": "Change driving input or reverse direction",
+            "expected": "Scaling force and scaling mass have opposite effects on acceleration."
           }
         ]
       }
@@ -1902,10 +1957,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-09",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q16",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "Two ice skaters of masses $m_1 = 50\\text{ kg}$ and $m_2 = 75\\text{ kg}$ stand facing each other at rest on a frictionless frozen pond. They push apart, and skater 1 moves to the left at speed $v_1 = 3.0\\text{ m/s}$. What is the velocity of skater 2?",
+      "stem": "Two frictionless magnetic trolleys of masses 2 kg and 5 kg initially drift east together at 1 m/s. Their compressed spring releases; the 2 kg trolley subsequently moves west at 4 m/s. What is the other trolley's final velocity?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1913,25 +1969,25 @@
         "caption": ""
       },
       "options": {
-        "A": "2.0 m/s directed to the right (+2.0 m/s).",
-        "B": "3.0 m/s directed to the right (+3.0 m/s).",
-        "C": "4.5 m/s directed to the right (+4.5 m/s).",
-        "D": "1.5 m/s directed to the left (-1.5 m/s)."
+        "A": "3 m/s east.",
+        "B": "3 m/s west.",
+        "C": "1 m/s east.",
+        "D": "5 m/s east."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-APPLY-D3",
+        "cell_id": "PHYS-APPLY-D2",
         "primary_demand": "APPLY",
-        "difficulty_band": "D3",
+        "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-09",
         "difficulty_factors": {
           "system_coupling": 3,
           "vector_dimensionality": 2,
-          "constraint_latency": 3,
+          "constraint_latency": 1,
           "domain_coupling": 3,
-          "math_friction": 3
+          "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-09 to APPLY demand.",
+        "protected_work_W": "The spring impulse changes each trolley's momentum but not the system total.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -1944,71 +2000,81 @@
         "supporting_demands": [
           "RETRIEVE",
           "EXPLAIN"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 3: Two magnetic trolleys exchange internal momentum.",
+          "vector_dimensionality": "Score 2: Choose east positive and retain a westward negative final velocity.",
+          "constraint_latency": "Score 1: Initial drift and one final velocity are specified.",
+          "domain_coupling": "Score 3: Use conservation before and after a spring release.",
+          "math_friction": "Score 2: One two-body linear momentum equation."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: Initial total P = 0. By momentum conservation: 0 = m1 v1 + m2 v2 => 50(-3.0) + 75 v2 = 0 => 75 v2 = 150 => v2 = +2.0 m/s (to the right)."
+          "diagnostic": "Initial p=7; final p=−8+5v_2, hence 5v_2=15 and v_2=+3 m/s."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Assumes both skaters acquire identical speed regardless of their unequal masses."
+          "diagnostic": "Incorrect. Opposite directions require opposite algebraic signs."
         },
         "C": {
-          "type": "INCORRECT_FORCE_RATIO",
-          "diagnostic": "Inverted mass ratio: computed (75/50)*3 = 4.5 m/s instead of (50/75)*3 = 2.0 m/s."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Incorrect physical model. The spring impulse changes each trolley's momentum but not the system total."
         },
         "D": {
           "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Incorrect sign and magnitude; skaters must push in opposite directions to conserve momentum."
+          "diagnostic": "Inconsistent with the signed equations. The computed total final momentum −8+15 equals the initial +7."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "For the two-skater system initially at rest, what is the total momentum before they push?",
-          "reveal_text": "Zero: P_initial = 0."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "Which interaction, state change, or system must you decide first?",
+          "reveal_text": "The spring impulse changes each trolley's momentum but not the system total."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What external horizontal force acts on the two skaters on frictionless ice?",
-          "reveal_text": "Zero; push forces between them are strictly internal."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+          "reveal_text": "Choose east positive; draw initial momenta +2 and +5 and final first-cart momentum −8."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "If skater 1 has momentum (50 kg)(-3.0 m/s) = -150 kg m/s, what must skater 2 have?",
-          "reveal_text": "+150 kg m/s to keep total momentum zero. Then solve v_2 = 150 / 75."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "Write the first law before computing any final quantity.",
+          "reveal_text": "Start with (2+5)(+1)=2(−4)+5v_2."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Isolated two-skater system starts from rest; internal forces push them apart.",
-          "represent": "Draw 1D axis with right positive: v_1 = -3.0 m/s, v_2 unknown.",
-          "connect": "Momentum conservation: P_initial = P_final => 0 = m1 v1 + m2 v2.",
-          "calculate": "0 = 50(-3.0) + 75(v2) => 75 v2 = 150 => v2 = +2.0 m/s.",
-          "interpret": "Skater 2 moves to the right at 2.0 m/s."
+          "understand": "The spring impulse changes each trolley's momentum but not the system total.",
+          "represent": "Choose east positive; draw initial momenta +2 and +5 and final first-cart momentum −8.",
+          "connect": "Start with (2+5)(+1)=2(−4)+5v_2.",
+          "calculate": "Initial p=7; final p=−8+5v_2, hence 5v_2=15 and v_2=+3 m/s.",
+          "interpret": "3 m/s east."
         },
-        "final_expression": "2.0 m/s directed to the right (+2.0 m/s).",
-        "final_answer_value": "2.0 m/s directed to the right (+2.0 m/s)."
+        "final_expression": "3 m/s east.",
+        "final_answer_value": "3 m/s east."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "50 * 3.0 = 150 kg m/s; 75 * 2.0 = 150 kg m/s; total momentum is zero.",
-        "check_it_another_way": "Heavier skater has 1.5x the mass, so acquires 1/1.5 = 2/3 of the speed: 3.0 * (2/3) = 2.0 m/s.",
-        "watch_out": "Keep signs explicit: velocities must point in opposite directions.",
-        "review_this_idea": "Core 1: NLM 09-10",
+        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
+        "quick_check": "The computed total final momentum −8+15 equals the initial +7.",
+        "check_it_another_way": "The spring impulse changes each trolley's momentum but not the system total.",
+        "watch_out": "Opposite directions require opposite algebraic signs.",
+        "review_this_idea": "Core 1: NLM-09",
         "limiting_cases": [
           {
-            "condition": "m1 = m2",
-            "expected": "v2 = -v1 = +3.0 m/s"
+            "condition": "Zero net-change limit",
+            "expected": "The computed total final momentum −8+15 equals the initial +7."
           },
           {
-            "condition": "m2 -> infinity",
-            "expected": "v2 -> 0"
+            "condition": "Change driving input or reverse direction",
+            "expected": "Opposite directions require opposite algebraic signs."
           }
         ]
       }
@@ -2020,10 +2086,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-08",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q17",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A garden lawn sprinkler features horizontal radial arms with nozzles bent tangentially. When water under pressure is ejected backward from the nozzles, the sprinkler arms begin to rotate in the opposite sense. Why does this rotation occur?",
+      "stem": "A freely turning spacecraft test table expels compressed air through a tangential nozzle at its rim toward the clockwise direction. What makes the table rotate counterclockwise?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -2031,25 +2098,25 @@
         "caption": ""
       },
       "options": {
-        "A": "By Newton's Third Law, when nozzle walls push water backward, the ejected water exerts an equal and opposite forward reaction force on the nozzles, generating a driving torque.",
-        "B": "The water pushes against the surrounding ambient air, and compressed air pushes the sprinkler arms.",
-        "C": "Centrifugal force of water inside the pipe forces the arms outward in the direction of spin.",
-        "D": "Gravity acts tangentially on water leaving the nozzles."
+        "A": "The exiting gas receives clockwise tangential momentum; its reaction exerts counterclockwise torque on the table.",
+        "B": "The gas exerts only a radial force and therefore no torque.",
+        "C": "The table turns clockwise because motion follows the escaping gas.",
+        "D": "An external atmosphere is necessary to push the table."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-EXPLAIN-D3",
+        "cell_id": "PHYS-EXPLAIN-D2",
         "primary_demand": "EXPLAIN",
-        "difficulty_band": "D3",
+        "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-08",
         "difficulty_factors": {
           "system_coupling": 3,
-          "vector_dimensionality": 2,
-          "constraint_latency": 3,
-          "domain_coupling": 3,
-          "math_friction": 3
+          "vector_dimensionality": 3,
+          "constraint_latency": 1,
+          "domain_coupling": 2,
+          "math_friction": 1
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-08 to EXPLAIN demand.",
+        "protected_work_W": "The nozzle and departing gas exchange opposite tangential momenta and torques.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -2061,71 +2128,81 @@
         ],
         "supporting_demands": [
           "RETRIEVE"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 3: Turntable and exhaust jets act as different interacting bodies.",
+          "vector_dimensionality": "Score 3: Radial geometry and tangential nozzle direction form a 2D picture.",
+          "constraint_latency": "Score 1: Jet direction and fixed central bearing are explicit.",
+          "domain_coupling": "Score 2: Couple interaction reaction with sense of torque about pivot.",
+          "math_friction": "Score 1: No numerical torque calculation is required."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: The nozzle and the water form an interaction pair. Force on water by nozzle is backward; by Newton III, force on nozzle by water is forward, providing a torque that spins the sprinkler."
+          "diagnostic": "Air is pushed clockwise; the equal opposite force on the nozzle produces counterclockwise torque."
         },
         "B": {
-          "type": "THIRD_LAW_INTERNAL_CANCELLATION",
-          "diagnostic": "Believes fluid propulsion requires external atmospheric resistance to push against."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect. A force on the gas must not be drawn as a force on the table."
         },
         "C": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Centrifugal force is a pseudo force in rotating frames, not the primary interaction causing angular acceleration from rest."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Incorrect physical model. The nozzle and departing gas exchange opposite tangential momenta and torques."
         },
         "D": {
           "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Gravity acts vertically downward, producing zero torque about the vertical rotation axis."
+          "diagnostic": "Inconsistent with the signed equations. If a nozzle pointed through the rotation axis its lever arm would be zero."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "Which two bodies interact at each nozzle tip?",
-          "reveal_text": "The nozzle metal and the water stream."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "Which interaction, state change, or system must you decide first?",
+          "reveal_text": "The nozzle and departing gas exchange opposite tangential momenta and torques."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "If the nozzle exerts a force on the water to deflect it tangentially backward, what does the water exert on the nozzle?",
-          "reveal_text": "An equal and opposite tangential force forward."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+          "reveal_text": "Draw two opposite tangential force arrows on distinct owners at a nonzero lever arm."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "Does that forward reaction force generate a torque about the central pivot?",
-          "reveal_text": "Yes; torque tau = r * F_reaction spins the arms in the sense opposite to the water jets."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "Write the first law before computing any final quantity.",
+          "reveal_text": "First identify τ_z = r×F_reaction and its sign about the pivot."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Water is forced tangentially out of nozzles; arms rotate opposite to the jets.",
-          "represent": "Draw nozzle arm: water force vector points backward, reaction vector on arm points forward.",
-          "connect": "Newton III: F_(arm by water) = -F_(water by arm).",
-          "calculate": "Torque tau = r * F_reaction > 0 opposite to water spray.",
-          "interpret": "Sprinkler rotates opposite to the water jets due to third-law contact reaction."
+          "understand": "The nozzle and departing gas exchange opposite tangential momenta and torques.",
+          "represent": "Draw two opposite tangential force arrows on distinct owners at a nonzero lever arm.",
+          "connect": "First identify τ_z = r×F_reaction and its sign about the pivot.",
+          "calculate": "Air is pushed clockwise; the equal opposite force on the nozzle produces counterclockwise torque.",
+          "interpret": "The exiting gas receives clockwise tangential momentum; its reaction exerts counterclockwise torque on the table."
         },
-        "final_expression": "By Newton's Third Law, when nozzle walls push water backward, the ejected water exerts an equal and opposite forward reaction force on the nozzles, generating a driving torque.",
-        "final_answer_value": "By Newton's Third Law, when nozzle walls push water backward, the ejected water exerts an equal and opposite forward reaction force on the nozzles, generating a driving torque."
+        "final_expression": "The exiting gas receives clockwise tangential momentum; its reaction exerts counterclockwise torque on the table.",
+        "final_answer_value": "The exiting gas receives clockwise tangential momentum; its reaction exerts counterclockwise torque on the table."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "If water flow stops, the reaction force ceases and viscous friction brings arms to rest.",
-        "check_it_another_way": "Angular momentum conservation of the (Sprinkler + Water) system requires counter-rotation when water carries angular momentum away.",
-        "watch_out": "Do not invoke air resistance; the sprinkler operates even more freely in a vacuum chamber.",
-        "review_this_idea": "Core 1: NLM 08",
+        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
+        "quick_check": "If a nozzle pointed through the rotation axis its lever arm would be zero.",
+        "check_it_another_way": "The nozzle and departing gas exchange opposite tangential momenta and torques.",
+        "watch_out": "A force on the gas must not be drawn as a force on the table.",
+        "review_this_idea": "Core 1: NLM-08",
         "limiting_cases": [
           {
-            "condition": "Nozzle angle = 0 (radial spray)",
-            "expected": "Torque = 0 (no rotation)"
+            "condition": "Zero net-change limit",
+            "expected": "If a nozzle pointed through the rotation axis its lever arm would be zero."
           },
           {
-            "condition": "Water mass flow rate -> 0",
-            "expected": "Torque -> 0"
+            "condition": "Change driving input or reverse direction",
+            "expected": "A force on the gas must not be drawn as a force on the table."
           }
         ]
       }
@@ -2137,10 +2214,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-05",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q18",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A rifle bullet of mass $m = 0.020\\text{ kg}$ strikes a ballistic gel block at $u = 100\\text{ m/s}$ and penetrates a distance $s = 0.10\\text{ m}$ before coming to rest with uniform deceleration. Determine the average stopping force exerted on the bullet and the duration of the stopping event.",
+      "stem": "An unmanned 40 kg land test capsule slides at 5 m/s onto a braking mat. If the mat provides uniform retarding force and the capsule stops in 2.0 m, find the resisting-force magnitude and stopping time.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -2148,25 +2226,25 @@
         "caption": ""
       },
       "options": {
-        "A": "Average retarding force |F| = 1000 N; stopping duration t = 0.0020 s.",
-        "B": "Average retarding force |F| = 500 N; stopping duration t = 0.0010 s.",
-        "C": "Average retarding force |F| = 2000 N; stopping duration t = 0.0040 s.",
-        "D": "Average retarding force |F| = 100 N; stopping duration t = 0.020 s."
+        "A": "250 N and 0.80 s.",
+        "B": "100 N and 0.40 s.",
+        "C": "500 N and 1.60 s.",
+        "D": "250 N and 2.0 s."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-SYNTHESIZE-D3",
+        "cell_id": "PHYS-SYNTHESIZE-D2",
         "primary_demand": "SYNTHESIZE",
-        "difficulty_band": "D3",
+        "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-05",
         "difficulty_factors": {
-          "system_coupling": 3,
+          "system_coupling": 2,
           "vector_dimensionality": 2,
-          "constraint_latency": 3,
+          "constraint_latency": 1,
           "domain_coupling": 3,
-          "math_friction": 3
+          "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-05 to SYNTHESIZE demand.",
+        "protected_work_W": "Stopping distance first determines signed acceleration; dynamics then gives force.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -2179,71 +2257,81 @@
         "supporting_demands": [
           "MODEL",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 2: A landing capsule is treated as a single rigid body.",
+          "vector_dimensionality": "Score 2: The resisting force opposes one signed velocity axis.",
+          "constraint_latency": "Score 1: Initial speed and stopping distance are given.",
+          "domain_coupling": "Score 3: Combine a kinematic stopping model with Newton II.",
+          "math_friction": "Score 2: One quadratic relation and one linear force multiplication."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: $v^2 = u^2 + 2as$ => a = (0 - 100^2)/(2 * 0.10) = -50,000 m/s^2. F = m a = (0.020)(-50,000) = -1000 N. t = 2s/u = 2(0.10)/100 = 0.0020 s."
+          "diagnostic": "0=25+4a gives a=−6.25 m/s²; |F|=40×6.25=250 N and t=5/6.25=0.80 s."
         },
         "B": {
-          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
-          "diagnostic": "Used s instead of 2s in denominator for acceleration: a = u^2/s instead of u^2/(2s)."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect. Do not confuse retarding force direction with the positive stopping distance."
         },
         "C": {
-          "type": "INCORRECT_FORCE_RATIO",
-          "diagnostic": "Multiplied acceleration by 2 or doubled the stopping force."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Incorrect physical model. Stopping distance first determines signed acceleration; dynamics then gives force."
         },
         "D": {
-          "type": "UNITS_CONVERSION_ERROR",
-          "diagnostic": "Factor of 10 error in mass or displacement conversion."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Inconsistent with the signed equations. Doubling stopping distance at fixed initial speed halves average resisting force."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "Distance is given but acceleration is not. Which model must be used before Newton II?",
-          "reveal_text": "Kinematics: $v^2 = u^2 + 2as$ to find acceleration a."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "Which interaction, state change, or system must you decide first?",
+          "reveal_text": "Stopping distance first determines signed acceleration; dynamics then gives force."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "With u = 100 m/s, v = 0, and s = 0.10 m, what is acceleration a?",
-          "reveal_text": "a = (0 - 10000) / (2 * 0.10) = -50,000 m/s^2."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+          "reveal_text": "Choose positive along initial motion and mark v_initial=+5, v_final=0, Δx=+2."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "How do you find stopping force F and time t once a is known?",
-          "reveal_text": "$F = ma$ = (0.020)(-50,000) = -1000 N; t = (v - u)/a = -100 / -50,000 = 0.0020 s."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "Write the first law before computing any final quantity.",
+          "reveal_text": "Start with v_f²=v_i²+2aΔx before writing F=ma."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "m = 0.020 kg, u = 100 m/s, v = 0, s = 0.10 m. Unknowns: $F_{\\text{stop}}$ and t.",
-          "represent": "Kinematic 1D state line: u -> v=0 over distance s.",
-          "connect": "Kinematic relation $v^2 = u^2 + 2as$; Newton II $F = ma$; time relation $v = u + at$.",
-          "calculate": "a = -100^2 / 0.20 = -50,000 m/s^2; F = 0.020(-50000) = -1000 N; t = 100 / 50000 = 0.0020 s.",
-          "interpret": "Average stopping force is 1000 N opposite to motion; stopping time is 0.0020 s."
+          "understand": "Stopping distance first determines signed acceleration; dynamics then gives force.",
+          "represent": "Choose positive along initial motion and mark v_initial=+5, v_final=0, Δx=+2.",
+          "connect": "Start with v_f²=v_i²+2aΔx before writing F=ma.",
+          "calculate": "0=25+4a gives a=−6.25 m/s²; |F|=40×6.25=250 N and t=5/6.25=0.80 s.",
+          "interpret": "250 N and 0.80 s."
         },
-        "final_expression": "Average retarding force |F| = 1000 N; stopping duration t = 0.0020 s.",
-        "final_answer_value": "Average retarding force |F| = 1000 N; stopping duration t = 0.0020 s."
+        "final_expression": "250 N and 0.80 s.",
+        "final_answer_value": "250 N and 0.80 s."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Average velocity is 50 m/s; t = s / v_avg = 0.10 / 50 = 0.0020 s; F * t = 1000 * 0.0020 = 2.0 N*s = $\\Delta p$.",
-        "check_it_another_way": "Work-energy: W = F * s = Delta K => F(0.10) = 1/2(0.020)(100^2) = 100 J => F = 1000 N.",
-        "watch_out": "Do not treat stopping distance and stopping time as interchangeable.",
-        "review_this_idea": "Core 1: NLM 05-07",
+        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
+        "quick_check": "Doubling stopping distance at fixed initial speed halves average resisting force.",
+        "check_it_another_way": "Stopping distance first determines signed acceleration; dynamics then gives force.",
+        "watch_out": "Do not confuse retarding force direction with the positive stopping distance.",
+        "review_this_idea": "Core 1: NLM-05",
         "limiting_cases": [
           {
-            "condition": "s -> 0 (infinitely rigid barrier)",
-            "expected": "F -> infinity, t -> 0"
+            "condition": "Zero net-change limit",
+            "expected": "Doubling stopping distance at fixed initial speed halves average resisting force."
           },
           {
-            "condition": "u -> 0",
-            "expected": "F = 0, t = 0"
+            "condition": "Change driving input or reverse direction",
+            "expected": "Do not confuse retarding force direction with the positive stopping distance."
           }
         ]
       }
@@ -2255,10 +2343,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-04",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q19",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "A constant horizontal force $F = 5.0\\text{ N}$ produces an acceleration $a_1 = 8.0\\text{ m/s}^2$ on mass $m_1$, and an acceleration $a_2 = 24.0\\text{ m/s}^2$ on mass $m_2$. If the two masses are rigidly tied together and the same force $F = 5.0\\text{ N}$ acts on the composite system, what acceleration is produced?",
+      "stem": "A thruster supplies 12 N to orbital lab module A, causing 3 m/s² acceleration, and separately to module B, causing 4 m/s². If the modules dock rigidly and that same thruster supplies 12 N to their combined mass, find the acceleration.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -2266,25 +2355,25 @@
         "caption": ""
       },
       "options": {
-        "A": "a_combined = 6.0 m/s^2.",
-        "B": "a_combined = 16.0 m/s^2 (the arithmetic average).",
-        "C": "a_combined = 32.0 m/s^2 (the sum of accelerations).",
-        "D": "a_combined = 4.0 m/s^2."
+        "A": "12/7 m/s² (about 1.71 m/s²).",
+        "B": "7 m/s².",
+        "C": "3.5 m/s².",
+        "D": "1/7 m/s²."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-SYNTHESIZE-D3",
+        "cell_id": "PHYS-SYNTHESIZE-D2",
         "primary_demand": "SYNTHESIZE",
-        "difficulty_band": "D3",
+        "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-04",
         "difficulty_factors": {
           "system_coupling": 3,
           "vector_dimensionality": 2,
-          "constraint_latency": 3,
+          "constraint_latency": 1,
           "domain_coupling": 3,
-          "math_friction": 3
+          "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-04 to SYNTHESIZE demand.",
+        "protected_work_W": "The same thrust gives each object's mass; docked masses add before acceleration is found.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -2297,71 +2386,81 @@
         "supporting_demands": [
           "MODEL",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 3: Two separately tested modules become one docked system.",
+          "vector_dimensionality": "Score 2: One horizontal signed thrust direction applies throughout.",
+          "constraint_latency": "Score 1: The thrust and accelerations are explicit.",
+          "domain_coupling": "Score 3: Infer individual masses and then apply Newton II to the combined body.",
+          "math_friction": "Score 2: Two mass inversions and a combined linear relation."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: m1 = F/a1 = 5/8 kg; m2 = F/a2 = 5/24 kg. Total M = 5/8 + 5/24 = 20/24 = 5/6 kg. a_combined = F/M = 5/(5/6) = 6.0 m/s^2. Equivalent to a_tot = (a1*a2)/(a1+a2) = (8*24)/(32) = 6.0 m/s^2."
+          "diagnostic": "m_A=4 kg and m_B=3 kg; together mass=7 kg so a=12/7 m/s²."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Arithmetic mean fallacy: averaged the accelerations (8+24)/2 = 16 m/s^2 instead of mass harmonic mean."
+          "diagnostic": "Incorrect. Add masses, not accelerations."
         },
         "C": {
-          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
-          "diagnostic": "Added the accelerations together: 8 + 24 = 32 m/s^2; adding mass reduces acceleration, never increases it."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Incorrect physical model. The same thrust gives each object's mass; docked masses add before acceleration is found."
         },
         "D": {
-          "type": "RECIPROCAL_ERROR",
-          "diagnostic": "Arithmetic calculation error in fraction addition."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Inconsistent with the signed equations. The combined acceleration must be lower than either individual acceleration under fixed force."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "How do you find the masses m1 and m2 from the given force and accelerations?",
-          "reveal_text": "m1 = F / a1 = 5/8 kg; m2 = F / a2 = 5/24 kg."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "Which interaction, state change, or system must you decide first?",
+          "reveal_text": "The same thrust gives each object's mass; docked masses add before acceleration is found."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "What is the total mass when they are tied together?",
-          "reveal_text": "M_tot = m1 + m2 = 5/8 + 5/24 = 15/24 + 5/24 = 20/24 = 5/6 kg."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+          "reveal_text": "Draw separate masses inferred from each test, then one enclosing system boundary after docking."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "What is the acceleration under the same force F = 5.0 N?",
-          "reveal_text": "a = F / M_tot = 5 / (5/6) = 6.0 m/s^2. Or use 1/a = 1/a1 + 1/a2."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "Write the first law before computing any final quantity.",
+          "reveal_text": "Begin with m_A=F/a_A and m_B=F/a_B."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Force F = 5 N accelerates m1 at 8 m/s^2 and m2 at 24 m/s^2; find acceleration of (m1 + m2).",
-          "represent": "Table of states: Case 1 (m1 = F/8), Case 2 (m2 = F/24), Combined (M = m1 + m2).",
-          "connect": "Newton II: a_combined = F / (m1 + m2) = 1 / (m1/F + m2/F) = 1 / (1/a1 + 1/a2).",
-          "calculate": "1/a = 1/8 + 1/24 = 3/24 + 1/24 = 4/24 = 1/6 => a = 6.0 m/s^2.",
-          "interpret": "Combined mass accelerates at 6.0 m/s^2 (strictly less than either mass alone)."
+          "understand": "The same thrust gives each object's mass; docked masses add before acceleration is found.",
+          "represent": "Draw separate masses inferred from each test, then one enclosing system boundary after docking.",
+          "connect": "Begin with m_A=F/a_A and m_B=F/a_B.",
+          "calculate": "m_A=4 kg and m_B=3 kg; together mass=7 kg so a=12/7 m/s².",
+          "interpret": "12/7 m/s² (about 1.71 m/s²)."
         },
-        "final_expression": "a_combined = 6.0 m/s^2.",
-        "final_answer_value": "a_combined = 6.0 m/s^2."
+        "final_expression": "12/7 m/s² (about 1.71 m/s²).",
+        "final_answer_value": "12/7 m/s² (about 1.71 m/s²)."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Adding mass must lower the acceleration below min(a1, a2) = 8 m/s^2; 6 m/s^2 satisfies this.",
-        "check_it_another_way": "Formula a_tot = (a1 * a2)/(a1 + a2) = (8 * 24) / 32 = 192 / 32 = 6.0 m/s^2.",
-        "watch_out": "Do not average accelerations; mass adds linearly, so accelerations add harmonically.",
-        "review_this_idea": "Core 1: NLM 04",
+        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
+        "quick_check": "The combined acceleration must be lower than either individual acceleration under fixed force.",
+        "check_it_another_way": "The same thrust gives each object's mass; docked masses add before acceleration is found.",
+        "watch_out": "Add masses, not accelerations.",
+        "review_this_idea": "Core 1: NLM-04",
         "limiting_cases": [
           {
-            "condition": "m2 -> 0 (a2 -> infinity)",
-            "expected": "a_combined -> a1 = 8 m/s^2"
+            "condition": "Zero net-change limit",
+            "expected": "The combined acceleration must be lower than either individual acceleration under fixed force."
           },
           {
-            "condition": "m1 = m2 (a1 = a2 = a)",
-            "expected": "a_combined = a/2"
+            "condition": "Change driving input or reverse direction",
+            "expected": "Add masses, not accelerations."
           }
         ]
       }
@@ -2373,10 +2472,11 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-06",
       "provenance": {
-        "source": "Golden Fixture (physics-nlm-revised-core1.pdf / core2.pdf)",
-        "author": "Antigravity Olympiad Physics Engine"
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q20",
+        "author": "NLM-FIX1 demand calibration"
       },
-      "stem": "From the definition of linear momentum $\\vec{p} = m\\vec{v}$, what do the slopes of a momentum-velocity ($p-v$) graph at fixed mass and a momentum-mass ($p-m$) graph at fixed velocity represent? Furthermore, how is net force related to the momentum curve?",
+      "stem": "A linear glider's momentum plots yield these gradients: at fixed glider mass, the p-v slope is 2 kg; at fixed velocity, the p-m slope is +3 m/s. A separate signed p-t trace grows from 0 to 12 kg m/s in 3 s. What physical values follow?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -2384,25 +2484,25 @@
         "caption": ""
       },
       "options": {
-        "A": "The slope of p-v equals mass m; the slope of p-m equals velocity v; and the time slope (dp/dt) of a momentum-time graph equals the net force $F_{\\text{net}}$.",
-        "B": "The slope of p-v equals velocity; the slope of p-m equals mass; and net force is the area under the momentum-time curve.",
-        "C": "The slope of p-v equals acceleration; the slope of p-m equals impulse; and net force is constant regardless of dp/dt.",
-        "D": "Both graph slopes equal kinetic energy; net force is given by p^2/(2m)."
+        "A": "Mass 2 kg, speed +3 m/s, net force +4 N.",
+        "B": "Mass 3 kg, speed 2 m/s, net force 36 N.",
+        "C": "Mass 2 kg, speed −3 m/s, net force zero.",
+        "D": "Mass 6 kg, speed +4 m/s, net force +3 N."
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-SYNTHESIZE-D3",
+        "cell_id": "PHYS-SYNTHESIZE-D2",
         "primary_demand": "SYNTHESIZE",
-        "difficulty_band": "D3",
+        "difficulty_band": "D2",
         "subtopic_competency_ref": "NLM-06",
         "difficulty_factors": {
-          "system_coupling": 3,
-          "vector_dimensionality": 2,
-          "constraint_latency": 3,
+          "system_coupling": 2,
+          "vector_dimensionality": 3,
+          "constraint_latency": 1,
           "domain_coupling": 3,
-          "math_friction": 3
+          "math_friction": 2
         },
-        "protected_work_W": "Rigorous physical reasoning execution connecting NLM-06 to SYNTHESIZE demand.",
+        "protected_work_W": "Each graph holds a different variable fixed; only p-t slope is net force.",
         "rival_demands": [
           {
             "demand": "RETRIEVE",
@@ -2415,71 +2515,81 @@
         "supporting_demands": [
           "MODEL",
           "APPLY"
-        ]
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 2: A motorized linear glider is the measured physical body.",
+          "vector_dimensionality": "Score 3: Compare p-v, p-m and signed p-t axes.",
+          "constraint_latency": "Score 1: Fixed-mass and fixed-speed conditions are explicitly stated.",
+          "domain_coupling": "Score 3: Link two momentum definition plots with the impulse-rate law.",
+          "math_friction": "Score 2: Read independent linear slopes with their correct units."
+        }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Correct: dp/dv = m (linear slope is mass); dp/dm = v (linear slope is velocity); and Newton II states $F_{\\text{net}}$ = dp/dt."
+          "diagnostic": "Slope of p against v is m=2 kg, slope of p against m is v=+3 m/s, and slope of p against t is +12/3=+4 N."
         },
         "B": {
-          "type": "RECIPROCAL_ERROR",
-          "diagnostic": "Swapped the axes and confused slope with area."
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect. Do not mix a p-v graph slope with a p-t slope."
         },
         "C": {
-          "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Confused velocity with acceleration and momentum with impulse."
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Incorrect physical model. Each graph holds a different variable fixed; only p-t slope is net force."
         },
         "D": {
-          "type": "UNITS_CONVERSION_ERROR",
-          "diagnostic": "Confused momentum graphs with kinetic energy formulas."
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Inconsistent with the signed equations. The signed p-t slope must carry force units kg m/s²."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
-          "title": "Hint Tier 1: What is the Key Physics?",
-          "prompt_question": "Differentiate $p = mv$ with respect to v when mass m is constant.",
-          "reveal_text": "dp/dv = m (the slope is mass)."
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "Which interaction, state change, or system must you decide first?",
+          "reveal_text": "Each graph holds a different variable fixed; only p-t slope is net force."
         },
         {
           "tier": 2,
-          "title": "Hint Tier 2: How Would You Represent It?",
-          "prompt_question": "Differentiate $p = mv$ with respect to m when velocity v is constant.",
-          "reveal_text": "dp/dm = v (the slope is velocity)."
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+          "reveal_text": "Label the horizontal variable and units for each p-v, p-m and p-t axis."
         },
         {
           "tier": 3,
-          "title": "Hint Tier 3: What Would You Write First?",
-          "prompt_question": "What does Newton's Second Law say about the time derivative of momentum dp/dt?",
-          "reveal_text": "$F_{\\text{net}}$ = dp/dt (net force equals the rate of change of momentum)."
+          "guidance_role": "first_equation_only",
+          "title": "H3 · first constraint",
+          "prompt_question": "Write the first law before computing any final quantity.",
+          "reveal_text": "Start with p=mv and F_net=Δp/Δt."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Analyze physical meaning of gradients of p-v, p-m, and p-t graphs.",
-          "represent": "Graph axes: p vs v (slope = dp/dv); p vs m (slope = dp/dm); p vs t (slope = dp/dt).",
-          "connect": "From $p = mv$: partial p / partial v = m; partial p / partial m = v; Newton II: $F_{\\text{net}}$ = dp/dt.",
-          "calculate": "slope(p-v) = m; slope(p-m) = v; slope(p-t) = $F_{\\text{net}}$.",
-          "interpret": "Gradients represent mass, velocity, and instantaneous net force respectively."
+          "understand": "Each graph holds a different variable fixed; only p-t slope is net force.",
+          "represent": "Label the horizontal variable and units for each p-v, p-m and p-t axis.",
+          "connect": "Start with p=mv and F_net=Δp/Δt.",
+          "calculate": "Slope of p against v is m=2 kg, slope of p against m is v=+3 m/s, and slope of p against t is +12/3=+4 N.",
+          "interpret": "Mass 2 kg, speed +3 m/s, net force +4 N."
         },
-        "final_expression": "The slope of p-v equals mass m; the slope of p-m equals velocity v; and the time slope (dp/dt) of a momentum-time graph equals the net force $F_{\\text{net}}$.",
-        "final_answer_value": "The slope of p-v equals mass m; the slope of p-m equals velocity v; and the time slope (dp/dt) of a momentum-time graph equals the net force $F_{\\text{net}}$."
+        "final_expression": "Mass 2 kg, speed +3 m/s, net force +4 N.",
+        "final_answer_value": "Mass 2 kg, speed +3 m/s, net force +4 N."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2]",
-        "quick_check": "Units check: [dp/dv] = (kg m/s)/(m/s) = kg [M]; [dp/dm] = (kg m/s)/kg = m/s [L T^-1]; [dp/dt] = (kg m/s)/s = N [M L T^-2].",
-        "check_it_another_way": "When net force is zero, p-t graph is horizontal (slope = 0), confirming momentum conservation.",
-        "watch_out": "Do not confuse rate of change with area under a curve.",
-        "review_this_idea": "Core 1: NLM 06-07",
+        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
+        "quick_check": "The signed p-t slope must carry force units kg m/s².",
+        "check_it_another_way": "Each graph holds a different variable fixed; only p-t slope is net force.",
+        "watch_out": "Do not mix a p-v graph slope with a p-t slope.",
+        "review_this_idea": "Core 1: NLM-06",
         "limiting_cases": [
           {
-            "condition": "v = 0",
-            "expected": "p = 0, slope(p-m) = 0"
+            "condition": "Zero net-change limit",
+            "expected": "The signed p-t slope must carry force units kg m/s²."
           },
           {
-            "condition": "m = 0",
-            "expected": "p = 0, slope(p-v) = 0"
+            "condition": "Change driving input or reverse direction",
+            "expected": "Do not mix a p-v graph slope with a p-t slope."
           }
         ]
       }
