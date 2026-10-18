@@ -1,0 +1,2780 @@
+{
+  "schema": "question-bank-gravitation/v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "grade": 9,
+  "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+  "total_questions": 25,
+  "cognitive_distribution": {
+    "D1_foundational": 4,
+    "D2_standard": 8,
+    "D3_hard": 8,
+    "D4_achievers": 5
+  },
+  "figure_count": 8,
+  "questions": [
+    {
+      "question_id": "PHYS-GRAV-001",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q01",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "Two point particles of mass $m_1 = 4.0\\text{ kg}$ and $m_2 = 9.0\\text{ kg}$ are separated by a center-to-center distance of $r = 3.0\\text{ m}$ in empty space. Given the universal gravitational constant $G = 6.67 \\times 10^{-11}\\text{ N}\\cdot\\text{m}^2/\\text{kg}^2$, what is the magnitude of the mutual gravitational attractive force between them?",
+      "system_parameters": {
+        "system_boundary": "Two isolated point masses in vacuum",
+        "reference_frame": "Inertial laboratory frame",
+        "idealizations": [
+          "Point masses",
+          "Absence of external gravitational sources"
+        ]
+      },
+      "options": {
+        "A": "$2.67 \\times 10^{-10}\\text{ N}$",
+        "B": "$8.00 \\times 10^{-10}\\text{ N}$",
+        "C": "$8.90 \\times 10^{-11}\\text{ N}$",
+        "D": "$2.40 \\times 10^{-9}\\text{ N}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D1",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Applying Newton's universal inverse-square law F = G * m1 * m2 / r^2 with proper distance squaring.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires parameter substitution and quantitative arithmetic evaluation, not bare recall."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly evaluated F = (6.67e-11 * 4 * 9) / (3.0^2) = (6.67e-11 * 36) / 9 = 6.67e-11 * 4 = 2.668e-10 N ≈ 2.67e-10 N."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Forgot to square the separation distance r in the denominator: F = G * m1 * m2 / r = 8.00e-10 N."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Divided by r^3 instead of r^2 in the denominator: F = G * m1 * m2 / r^3 = 8.89e-11 N."
+        },
+        "D": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Multiplied by r^2 instead of dividing: F = G * m1 * m2 * r^2 = 2.40e-9 N."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Newton's Law of Universal Gravitation",
+          "text": "The mutual gravitational force between two point masses is given by $F = G \\frac{m_1 m_2}{r^2}$."
+        },
+        {
+          "tier": 2,
+          "title": "Substitute Parameters",
+          "text": "Plug in $m_1 = 4.0\\text{ kg}$, $m_2 = 9.0\\text{ kg}$, $r = 3.0\\text{ m}$, and $G = 6.67 \\times 10^{-11}\\text{ N}\\cdot\\text{m}^2/\\text{kg}^2$. Notice that $r^2 = 9.0\\text{ m}^2$ cancels directly with $m_2 = 9.0\\text{ kg}$."
+        },
+        {
+          "tier": 3,
+          "title": "Compute Final Value",
+          "text": "$F = 6.67 \\times 10^{-11} \\times \\frac{4.0 \\times 9.0}{9.0} = 6.67 \\times 10^{-11} \\times 4.0 = 2.668 \\times 10^{-10}\\text{ N}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "State Newton's gravitational formula: $F = G \\frac{m_1 m_2}{r^2}$.",
+          "Substitute numerical constants and variables: $F = (6.67 \\times 10^{-11}\\text{ N}\\cdot\\text{m}^2/\\text{kg}^2) \\frac{(4.0\\text{ kg})(9.0\\text{ kg})}{(3.0\\text{ m})^2}$.",
+          "Simplify terms: $\\frac{36.0}{9.0} = 4.0$.",
+          "Multiply: $F = 4.0 \\times 6.67 \\times 10^{-11}\\text{ N} = 2.67 \\times 10^{-10}\\text{ N}$."
+        ],
+        "final_expression": "F = 2.67 \\times 10^{-10}\\text{ N}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[F] = [M][L][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "r -> infinity",
+            "expected_outcome": "F -> 0 (gravitational attraction vanishes at asymptotic separation)"
+          },
+          {
+            "condition": "m1 -> 0 or m2 -> 0",
+            "expected_outcome": "F -> 0 (zero mass yields zero gravitational interaction)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure GRAV-01: Mutual gravitational interaction between two isolated point masses.",
+        "svg_code": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"120\" y1=\"120\" x2=\"380\" y2=\"120\" stroke=\"#475569\" stroke-width=\"2\" stroke-dasharray=\"6,4\"/>\n  <circle cx=\"120\" cy=\"120\" r=\"26\" fill=\"#38bdf8\" stroke=\"#0284c7\" stroke-width=\"2\"/>\n  <text x=\"120\" y=\"126\" fill=\"#0f172a\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">m₁</text>\n  <circle cx=\"380\" cy=\"120\" r=\"34\" fill=\"#a855f7\" stroke=\"#7e22ce\" stroke-width=\"2\"/>\n  <text x=\"380\" y=\"126\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">m₂</text>\n  <line x1=\"146\" y1=\"120\" x2=\"210\" y2=\"120\" stroke=\"#38bdf8\" stroke-width=\"3\" marker-end=\"url(#arr-f1)\"/>\n  <line x1=\"346\" y1=\"120\" x2=\"282\" y2=\"120\" stroke=\"#a855f7\" stroke-width=\"3\" marker-end=\"url(#arr-f2)\"/>\n  <line x1=\"120\" y1=\"175\" x2=\"380\" y2=\"175\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"120\" y1=\"168\" x2=\"120\" y2=\"182\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"380\" y1=\"168\" x2=\"380\" y2=\"182\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <text x=\"250\" y=\"196\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Separation Distance r</text>\n  <text x=\"175\" y=\"105\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">F₁₂</text>\n  <text x=\"315\" y=\"105\" fill=\"#a855f7\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">F₂₁ = -F₁₂</text>\n  <text x=\"250\" y=\"38\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Newton's Third Law Invariant: |F₁₂| = |F₂₁| = G m₁ m₂ / r²</text>\n  <defs>\n    <marker id=\"arr-f1\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#38bdf8\"/></marker>\n    <marker id=\"arr-f2\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#a855f7\"/></marker>\n  </defs>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-002",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q02",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "The Earth has mass $M_E \\approx 5.97 \\times 10^{24}\\text{ kg}$ and an apple falling near Earth's surface has mass $m_a = 0.20\\text{ kg}$. If the Earth exerts a downward gravitational force of magnitude $F_E = 1.96\\text{ N}$ on the apple, what is the magnitude of the upward gravitational force $F_a$ exerted by the apple on the Earth?",
+      "system_parameters": {
+        "system_boundary": "Two-body Earth-apple coupled system",
+        "reference_frame": "Inertial laboratory frame",
+        "idealizations": [
+          "Point masses",
+          "Absence of aerodynamic drag"
+        ]
+      },
+      "options": {
+        "A": "$1.96\\text{ N}$",
+        "B": "$6.57 \\times 10^{-26}\\text{ N}$",
+        "C": "$5.85 \\times 10^{25}\\text{ N}$",
+        "D": "$0\\text{ N}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-RETRIEVE-D1",
+        "primary_demand": "RETRIEVE",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Recognizing that Newton's third law requires gravitational action-reaction forces to be strictly equal in magnitude regardless of mass disparity.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires no algebraic calculation; relies on fundamental Third Law invariance."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "By Newton's Third Law, gravitational interaction forms an action-reaction pair: F_apple_on_Earth = F_Earth_on_apple = 1.96 N exactly."
+        },
+        "B": {
+          "type": "MIS-GRAV-MASS-WEIGHT-CONFUSION",
+          "diagnostic": "Scaled force down by the mass ratio m_a / M_E, assuming a lighter body exerts a proportionately smaller force."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Scaled force up by Earth's mass M_E, confusing force with planetary mass."
+        },
+        "D": {
+          "type": "MIS-GRAV-ZERO-G-IN-SPACE",
+          "diagnostic": "Assumed small objects cannot exert any gravitational force on a massive planet."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Newton's Third Law of Motion",
+          "text": "Every action has an equal and opposite reaction. If object 1 exerts force $\\vec{F}_{12}$ on object 2, then object 2 exerts force $\\vec{F}_{21} = -\\vec{F}_{12}$ on object 1."
+        },
+        {
+          "tier": 2,
+          "title": "Universal Gravitation Symmetry",
+          "text": "The gravitational force magnitude is $F = G \\frac{M_E m_a}{r^2}$. Both masses enter this formula symmetrically as a product $M_E m_a$."
+        },
+        {
+          "tier": 3,
+          "title": "Conclusion",
+          "text": "Because the product $M_E m_a$ is identical whether viewed from the Earth or the apple, the apple attracts the Earth with the exact same magnitude: $F_a = F_E = 1.96\\text{ N}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Gravitational force on the apple by Earth: $F_E = G \\frac{M_E m_a}{R_E^2} = 1.96\\text{ N}$.",
+          "Gravitational force on Earth by the apple: $F_a = G \\frac{m_a M_E}{R_E^2}$.",
+          "By commutativity of multiplication, $M_E m_a = m_a M_E$, so $F_a = F_E = 1.96\\text{ N}$."
+        ],
+        "final_expression": "F_a = 1.96\\text{ N}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[F] = [M][L][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "m_a = M_E (two identical planets)",
+            "expected_outcome": "F_1 = F_2 (manifest symmetry)"
+          },
+          {
+            "condition": "m_a -> 0",
+            "expected_outcome": "F_a = F_E -> 0 (both forces vanish simultaneously)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-003",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q03",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "From Newton's universal gravitational law $F = G \\frac{m_1 m_2}{r^2}$, what are the base SI dimensions of the universal gravitational constant $G$?",
+      "system_parameters": {
+        "system_boundary": "Dimensional equation for universal gravitational constant",
+        "reference_frame": "Inertial frame",
+        "idealizations": [
+          "Standard SI base units [M], [L], [T]"
+        ]
+      },
+      "options": {
+        "A": "$[M^{-1} L^3 T^{-2}]$",
+        "B": "$[M L^3 T^{-2}]$",
+        "C": "$[M^{-1} L^2 T^{-2}]$",
+        "D": "$[M L^2 T^{-1}]$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-RETRIEVE-D1",
+        "primary_demand": "RETRIEVE",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Isolating G = F * r^2 / (m1 * m2) and substituting base SI dimensions [M L T^-2] * [L^2] / [M^2].",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Direct dimensional formula derivation from primitive base dimensions."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly derived [G] = [F][r^2]/[m^2] = [M L T^-2][L^2]/[M^2] = [M^-1 L^3 T^-2]."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Incorrectly assigned positive exponent to mass: [M L^3 T^-2]."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used [L^2] instead of [L^3] for length dimension: [M^-1 L^2 T^-2]."
+        },
+        "D": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Confused dimensions of G with angular momentum [M L^2 T^-1]."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Rearrange for G",
+          "text": "Isolate $G$ from $F = G \\frac{m_1 m_2}{r^2}$: $G = \\frac{F r^2}{m_1 m_2}$."
+        },
+        {
+          "tier": 2,
+          "title": "Insert SI Base Dimensions",
+          "text": "Force has dimensions $[F] = [M L T^{-2}]$, distance squared $[r^2] = [L^2]$, and mass squared $[m_1 m_2] = [M^2]$."
+        },
+        {
+          "tier": 3,
+          "title": "Combine Dimensions",
+          "text": "$[G] = \\frac{[M L T^{-2}] [L^2]}{[M^2]} = [M^{1-2} L^{1+2} T^{-2}] = [M^{-1} L^3 T^{-2}]$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Formula: $G = \\frac{F r^2}{m_1 m_2}$.",
+          "Dimensional breakdown: $[F] = M L T^{-2}$, $[r^2] = L^2$, $[m_1 m_2] = M^2$.",
+          "Substitution: $[G] = \\frac{(M L T^{-2})(L^2)}{M^2} = M^{-1} L^3 T^{-2}$."
+        ],
+        "final_expression": "[G] = [M^{-1} L^3 T^{-2}]"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[G] = [M^-1][L^3][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "SI unit equivalence",
+            "expected_outcome": "1 N m^2 / kg^2 = 1 (kg m s^-2) m^2 / kg^2 = 1 m^3 kg^-1 s^-2"
+          },
+          {
+            "condition": "Acceleration g = GM/R^2",
+            "expected_outcome": "[g] = [G][M]/[L^2] = (M^-1 L^3 T^-2)(M)/(L^2) = L T^-2 (consistent)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-004",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-PRE-FND",
+        "year": "2024",
+        "question_number": "Q04",
+        "tier": "Prelims Foundation"
+      },
+      "stem": "An exoplanet has twice the mass of Earth ($M_p = 2 M_E$) and twice the radius of Earth ($R_p = 2 R_E$). If the acceleration due to gravity at Earth's surface is $g_E = 9.8\\text{ m/s}^2$, what is the acceleration due to gravity $g_p$ at the surface of this exoplanet?",
+      "system_parameters": {
+        "system_boundary": "Spherical exoplanet surface",
+        "reference_frame": "Planetary surface frame",
+        "idealizations": [
+          "Spherically symmetric mass distribution",
+          "Non-rotating planet"
+        ]
+      },
+      "options": {
+        "A": "$4.9\\text{ m/s}^2$",
+        "B": "$9.8\\text{ m/s}^2$",
+        "C": "$19.6\\text{ m/s}^2$",
+        "D": "$2.45\\text{ m/s}^2$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D1",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D1",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Applying surface gravity formula g = GM / R^2 and scaling by (M_p / M_E) / (R_p / R_E)^2 = 2 / 2^2 = 1/2.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires proportional algebraic ratio scaling, not direct recall."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly determined g_p = G (2 M_E) / (2 R_E)^2 = (2 / 4) * (G M_E / R_E^2) = 0.5 * 9.8 = 4.9 m/s^2."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed g scales linearly with radius: 2 / 2 = 1, giving 9.8 m/s^2."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Multiplied by mass factor 2 without dividing by radius squared: 2 * 9.8 = 19.6 m/s^2."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Divided by 2^2 = 4 without multiplying by the mass factor of 2: 9.8 / 4 = 2.45 m/s^2."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Surface Gravity Formula",
+          "text": "Surface gravity is given by $g = \\frac{GM}{R^2}$."
+        },
+        {
+          "tier": 2,
+          "title": "Set Up Ratio",
+          "text": "For the exoplanet, $\\frac{g_p}{g_E} = \\frac{M_p}{M_E} \\times \\left(\\frac{R_E}{R_p}\\right)^2$."
+        },
+        {
+          "tier": 3,
+          "title": "Substitute Ratios",
+          "text": "With $M_p / M_E = 2$ and $R_p / R_E = 2$, $\\frac{g_p}{g_E} = 2 \\times \\left(\\frac{1}{2}\\right)^2 = \\frac{2}{4} = \\frac{1}{2}$, so $g_p = \\frac{9.8}{2} = 4.9\\text{ m/s}^2$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Earth surface gravity: $g_E = \\frac{G M_E}{R_E^2}$.",
+          "Exoplanet surface gravity: $g_p = \\frac{G M_p}{R_p^2} = \\frac{G (2 M_E)}{(2 R_E)^2} = \\frac{2}{4} \\frac{G M_E}{R_E^2} = \\frac{1}{2} g_E$.",
+          "Evaluate: $g_p = 0.5 \\times 9.8\\text{ m/s}^2 = 4.9\\text{ m/s}^2$."
+        ],
+        "final_expression": "g_p = 4.9\\text{ m/s}^2"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[g] = [L][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "R_p = R_E and M_p = M_E",
+            "expected_outcome": "g_p = g_E (recovers Earth value)"
+          },
+          {
+            "condition": "R_p -> infinity at fixed mass",
+            "expected_outcome": "g_p -> 0 (dilution over infinite surface)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-005",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-STAGE1",
+        "year": "2023",
+        "question_number": "Q08",
+        "tier": "State Olympiad"
+      },
+      "stem": "Assuming the Earth is a uniform solid sphere of radius $R_E$ and surface gravity $g_0$, at what depth $d$ below the Earth's surface does the acceleration due to gravity equal $25\\%$ of its surface value ($g = 0.25 g_0$)?",
+      "system_parameters": {
+        "system_boundary": "Uniform solid spherical Earth",
+        "reference_frame": "Planetary frame",
+        "idealizations": [
+          "Uniform mass density rho",
+          "Spherical symmetry"
+        ]
+      },
+      "options": {
+        "A": "$0.75 R_E$",
+        "B": "$0.25 R_E$",
+        "C": "$0.50 R_E$",
+        "D": "$0.87 R_E$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D2",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Applying Newton's Shell Theorem to establish linear field scaling g(r) = g_0 * (r/R_E) and converting distance from center r = 0.25 R_E into depth from surface d = R_E - r = 0.75 R_E.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires shell theorem integration and distinguishing depth from radial distance."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Inside a uniform sphere, g(d) = g_0 (1 - d/R_E). Setting g = 0.25 g_0 gives 1 - d/R_E = 0.25, so d = 0.75 R_E."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Confused depth from surface d with distance from center r = 0.25 R_E."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Assumed gravity decreases as square root of depth, giving d = 0.50 R_E."
+        },
+        "D": {
+          "type": "MIS-GRAV-INTERIOR-INVERSE-SQUARE",
+          "diagnostic": "Mistakenly applied exterior inverse-square law inside Earth: 1/r^2 = 0.25 => r = 2 R_E, d = 0.87 R_E."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Shell Theorem Inside a Solid Sphere",
+          "text": "By Newton's shell theorem, all outer shells exert zero net force. The enclosed mass is $M(r) = M_E (r/R_E)^3$."
+        },
+        {
+          "tier": 2,
+          "title": "Linear Variation with Depth",
+          "text": "The field at radial distance $r = R_E - d$ is $g(d) = g_0 \\frac{r}{R_E} = g_0 \\left(1 - \\frac{d}{R_E}\\right)$."
+        },
+        {
+          "tier": 3,
+          "title": "Solve for Depth d",
+          "text": "Set $g(d) = 0.25 g_0$: $1 - \\frac{d}{R_E} = 0.25 \\implies \\frac{d}{R_E} = 1 - 0.25 = 0.75 \\implies d = 0.75 R_E$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Gravitational field at distance $r \\le R_E$ from center: $g(r) = \\frac{G M(r)}{r^2} = \\frac{G (M_E r^3 / R_E^3)}{r^2} = \\frac{G M_E}{R_E^3} r = g_0 \\frac{r}{R_E}$.",
+          "Depth $d$ is defined as $d = R_E - r$, so $r = R_E - d$.",
+          "Substitute: $g(d) = g_0 \\left(\\frac{R_E - d}{R_E}\\right) = g_0 \\left(1 - \\frac{d}{R_E}\\right)$.",
+          "Set $g(d) = 0.25 g_0 \\implies 1 - \\frac{d}{R_E} = 0.25 \\implies d = 0.75 R_E$."
+        ],
+        "final_expression": "d = 0.75 R_E"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[d] = [L]",
+        "limiting_cases": [
+          {
+            "condition": "d = 0 (surface)",
+            "expected_outcome": "g(0) = g_0 (1 - 0) = g_0 (surface value)"
+          },
+          {
+            "condition": "d = R_E (Earth center)",
+            "expected_outcome": "g(R_E) = g_0 (1 - 1) = 0 (perfect spherical symmetry cancellation)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure GRAV-02: Gravitational field strength g(r) inside and outside a uniform solid spherical planet.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"60\" y1=\"200\" x2=\"460\" y2=\"200\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"60\" y1=\"200\" x2=\"60\" y2=\"30\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <text x=\"460\" y=\"218\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">r</text>\n  <text x=\"40\" y=\"35\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">g(r)</text>\n  <line x1=\"220\" y1=\"200\" x2=\"220\" y2=\"70\" stroke=\"#64748b\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n  <text x=\"220\" y=\"222\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">r = R_E</text>\n  <line x1=\"60\" y1=\"200\" x2=\"220\" y2=\"70\" stroke=\"#38bdf8\" stroke-width=\"3\"/>\n  <path d=\"M 220 70 Q 280 140 440 185\" fill=\"none\" stroke=\"#f59e0b\" stroke-width=\"3\"/>\n  <circle cx=\"220\" cy=\"70\" r=\"5\" fill=\"#38bdf8\"/>\n  <text x=\"50\" y=\"75\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">g₀</text>\n  <line x1=\"55\" y1=\"70\" x2=\"220\" y2=\"70\" stroke=\"#64748b\" stroke-width=\"1\" stroke-dasharray=\"2,2\"/>\n  <text x=\"130\" y=\"125\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">g ∝ r (Inside)</text>\n  <text x=\"340\" y=\"120\" fill=\"#f59e0b\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">g ∝ 1/r² (Outside)</text>\n  <line x1=\"100\" y1=\"200\" x2=\"100\" y2=\"167.5\" stroke=\"#ec4899\" stroke-width=\"2\" stroke-dasharray=\"3,3\"/>\n  <circle cx=\"100\" cy=\"167.5\" r=\"4\" fill=\"#ec4899\"/>\n  <text x=\"100\" y=\"222\" fill=\"#ec4899\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">0.25 R_E</text>\n  <text x=\"50\" y=\"172\" fill=\"#ec4899\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">0.25 g₀</text>\n  <text x=\"250\" y=\"25\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Interior Linear Rise vs Exterior Inverse-Square Decay</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-006",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-STAGE1",
+        "year": "2023",
+        "question_number": "Q09",
+        "tier": "State Olympiad"
+      },
+      "stem": "At what altitude $h$ above the Earth's surface does the acceleration due to gravity decrease to $\\frac{1}{4}$ of its surface value $g_0$ (in terms of Earth's radius $R_E$)?",
+      "system_parameters": {
+        "system_boundary": "Earth exterior gravitational field",
+        "reference_frame": "Inertial geocentric frame",
+        "idealizations": [
+          "Spherical Earth",
+          "Non-rotating frame"
+        ]
+      },
+      "options": {
+        "A": "$h = R_E$",
+        "B": "$h = 2 R_E$",
+        "C": "$h = 0.5 R_E$",
+        "D": "$h = 0.375 R_E$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Using exact inverse-square variation g(h) = g_0 * (R_E / (R_E + h))^2 = 1/4 rather than linear approximation.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires algebraic quadratic solving and recognizing scope limits of approximations."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly solved (R_E / (R_E + h))^2 = 1/4 => R_E / (R_E + h) = 1/2 => R_E + h = 2 R_E => h = R_E."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Confused radial distance r = 2 R_E with altitude above surface h = r - R_E = R_E."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Took square root of 1/4 as 1/2 and set h/R_E = 1/2 => h = 0.5 R_E."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Erroneously used small-altitude approximation 1 - 2h/R_E = 0.25 => 2h/R_E = 0.75 => h = 0.375 R_E."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Exact Altitude Formula",
+          "text": "At height $h$, radial distance is $r = R_E + h$. The exact acceleration is $g(h) = \\frac{GM_E}{(R_E + h)^2} = g_0 \\left(\\frac{R_E}{R_E + h}\\right)^2$."
+        },
+        {
+          "tier": 2,
+          "title": "Avoid Small-Angle Approximations",
+          "text": "Because the change is large ($75\\%$ decrease), the binomial approximation $g \\approx g_0(1 - 2h/R)$ fails completely. Use the exact formula."
+        },
+        {
+          "tier": 3,
+          "title": "Take Square Root",
+          "text": "$\\left(\\frac{R_E}{R_E + h}\\right)^2 = \\frac{1}{4} \\implies \\frac{R_E}{R_E + h} = \\frac{1}{2} \\implies R_E + h = 2 R_E \\implies h = R_E$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Exact expression: $g(h) = g_0 \\frac{R_E^2}{(R_E + h)^2}$.",
+          "Equate to target value: $g_0 \\frac{R_E^2}{(R_E + h)^2} = \\frac{1}{4} g_0$.",
+          "Cancel $g_0$ and take square root: $\\frac{R_E}{R_E + h} = \\frac{1}{2}$.",
+          "Cross-multiply: $2 R_E = R_E + h \\implies h = R_E$."
+        ],
+        "final_expression": "h = R_E"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[h] = [L]",
+        "limiting_cases": [
+          {
+            "condition": "h = 0",
+            "expected_outcome": "g(0) = g_0"
+          },
+          {
+            "condition": "h -> infinity",
+            "expected_outcome": "g -> 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-007",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-STAGE1",
+        "year": "2023",
+        "question_number": "Q12",
+        "tier": "State Olympiad"
+      },
+      "stem": "A comet orbits the Sun in an eccentric elliptical orbit. Its closest distance to the Sun (perihelion) is $r_p = 0.50\\text{ AU}$ and its farthest distance (aphelion) is $r_a = 4.50\\text{ AU}$. If the comet's linear orbital speed at perihelion is $v_p = 54.0\\text{ km/s}$, what is its linear orbital speed $v_a$ at aphelion?",
+      "system_parameters": {
+        "system_boundary": "Two-body Sun-comet Keplerian system",
+        "reference_frame": "Heliocentric inertial frame",
+        "idealizations": [
+          "M_Sun >> m_comet",
+          "No outgassing non-gravitational rocket effects"
+        ]
+      },
+      "options": {
+        "A": "$6.0\\text{ km/s}$",
+        "B": "$54.0\\text{ km/s}$",
+        "C": "$486.0\\text{ km/s}$",
+        "D": "$18.0\\text{ km/s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D2",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Applying conservation of angular momentum under central force at apsides: m * r_p * v_p = m * r_a * v_a.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires setting up conservation equation and calculating reciprocal speed ratio."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "At apsides, velocity is perpendicular to radius vector. Conservation of angular momentum gives v_a = v_p (r_p / r_a) = 54.0 * (0.50 / 4.50) = 54.0 / 9 = 6.0 km/s."
+        },
+        "B": {
+          "type": "MIS-GRAV-KEPLER-SPEED-UNIFORM",
+          "diagnostic": "Assumed planetary speed is uniform along an elliptical orbit."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Inverted distance ratio: v_a = v_p * (r_a / r_p) = 54.0 * 9 = 486 km/s."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Divided by 3 instead of 9: 54 / 3 = 18.0 km/s."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Central Force Torque Invariant",
+          "text": "Because the gravitational force points toward the Sun, net torque about the Sun is zero: $\\vec{\\tau} = \\vec{r} \\times \\vec{F} = \\vec{0}$, so angular momentum $\\vec{L}$ is conserved."
+        },
+        {
+          "tier": 2,
+          "title": "Speed-Distance Reciprocity at Apsides",
+          "text": "At perihelion and aphelion, the velocity is strictly perpendicular to the position vector: $L = m r_p v_p = m r_a v_a$."
+        },
+        {
+          "tier": 3,
+          "title": "Compute Aphelion Speed",
+          "text": "$v_a = v_p \\frac{r_p}{r_a} = 54.0 \\times \\frac{0.50}{4.50} = \\frac{54.0}{9.0} = 6.0\\text{ km/s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Angular momentum definition: $\\vec{L} = \\vec{r} \\times (m\\vec{v})$.",
+          "Torque equation: $\\frac{d\\vec{L}}{dt} = \\vec{r} \\times \\vec{F}_g = \\vec{0} \\implies \\vec{L} = \\text{constant}$.",
+          "At perihelion and aphelion, $\\vec{r} \\perp \\vec{v}$, so $L_p = m r_p v_p$ and $L_a = m r_a v_a$.",
+          "Equate: $m r_p v_p = m r_a v_a \\implies v_a = v_p \\frac{r_p}{r_a}$.",
+          "Substitute values: $v_a = 54.0\\text{ km/s} \\times \\frac{0.50\\text{ AU}}{4.50\\text{ AU}} = 6.0\\text{ km/s}$."
+        ],
+        "final_expression": "v_a = 6.0\\text{ km/s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v] = [L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "r_a = r_p (circular orbit)",
+            "expected_outcome": "v_a = v_p (uniform circular orbital speed)"
+          },
+          {
+            "condition": "r_a -> infinity (parabolic escape)",
+            "expected_outcome": "v_a -> 0 (reaches infinity with zero speed)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure GRAV-03: Keplerian elliptical orbit showing perihelion, aphelion, and equal swept areas.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <ellipse cx=\"250\" cy=\"120\" rx=\"190\" ry=\"90\" fill=\"none\" stroke=\"#475569\" stroke-width=\"2\" stroke-dasharray=\"6,4\"/>\n  <circle cx=\"160\" cy=\"120\" r=\"14\" fill=\"#fbbf24\" stroke=\"#d97706\" stroke-width=\"2\"/>\n  <text x=\"160\" y=\"148\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Sun (Focus F₁)</text>\n  <circle cx=\"60\" cy=\"120\" r=\"8\" fill=\"#38bdf8\"/>\n  <text x=\"50\" y=\"105\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\">Perihelion (r_p)</text>\n  <line x1=\"60\" y1=\"120\" x2=\"60\" y2=\"60\" stroke=\"#38bdf8\" stroke-width=\"3\" marker-end=\"url(#arr-v1)\"/>\n  <text x=\"75\" y=\"75\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\">v_p = 54 km/s</text>\n  <circle cx=\"440\" cy=\"120\" r=\"8\" fill=\"#a855f7\"/>\n  <text x=\"440\" y=\"105\" fill=\"#a855f7\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Aphelion (r_a)</text>\n  <line x1=\"440\" y1=\"120\" x2=\"440\" y2=\"150\" stroke=\"#a855f7\" stroke-width=\"2\" marker-end=\"url(#arr-v2)\"/>\n  <text x=\"420\" y=\"170\" fill=\"#a855f7\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">v_a = 6 km/s</text>\n  <path d=\"M 160 120 L 60 120 A 190 90 0 0 1 75 90 Z\" fill=\"#38bdf8\" fill-opacity=\"0.25\"/>\n  <path d=\"M 160 120 L 440 120 A 190 90 0 0 0 435 140 Z\" fill=\"#a855f7\" fill-opacity=\"0.25\"/>\n  <text x=\"100\" y=\"105\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\">Area A₁</text>\n  <text x=\"390\" y=\"135\" fill=\"#a855f7\" font-size=\"14px\" font-family=\"sans-serif\">Area A₂</text>\n  <text x=\"250\" y=\"30\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Kepler's Second Law: dA/dt = L/(2m) = Constant</text>\n  <defs>\n    <marker id=\"arr-v1\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#38bdf8\"/></marker>\n    <marker id=\"arr-v2\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#a855f7\"/></marker>\n  </defs>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-008",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-STAGE1",
+        "year": "2023",
+        "question_number": "Q15",
+        "tier": "State Olympiad"
+      },
+      "stem": "Satellite $A$ moves in a circular orbit of radius $r_A = R$ around a planet with an orbital period of $T_A = 8.0\\text{ hours}$. Satellite $B$ orbits the same planet in a circular orbit of radius $r_B = 4.0 R$. What is the orbital period $T_B$ of Satellite $B$?",
+      "system_parameters": {
+        "system_boundary": "Two satellites orbiting central planet",
+        "reference_frame": "Planet-centered inertial frame",
+        "idealizations": [
+          "Circular orbits",
+          "M_planet >> m_satellite",
+          "Negligible mutual satellite perturbation"
+        ]
+      },
+      "options": {
+        "A": "$64.0\\text{ hours}$",
+        "B": "$32.0\\text{ hours}$",
+        "C": "$16.0\\text{ hours}$",
+        "D": "$128.0\\text{ hours}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Applying Kepler's third law ratio T_B / T_A = (r_B / r_A)^(3/2) = 4^(1.5) = 8.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires applying power 3/2 scaling, not bare recall of statement."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "By Kepler's Third Law, T^2 ∝ r^3 => T_B = T_A * (r_B / r_A)^(3/2) = 8.0 * 4^(3/2) = 8.0 * 8 = 64.0 hours."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed linear period scaling T ∝ r: T_B = 8.0 * 4 = 32.0 hours."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Took square root instead of 3/2 power: 8.0 * sqrt(4) = 16.0 hours."
+        },
+        "D": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Scaled by r^2 instead of r^(3/2): 8.0 * 4^2 = 128.0 hours."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Kepler's Third Law Formula",
+          "text": "For circular orbits under gravity, centripetal force equals gravitational force: $m \\frac{4\\pi^2 r}{T^2} = \\frac{GMm}{r^2} \\implies T^2 = \\frac{4\\pi^2}{GM} r^3$."
+        },
+        {
+          "tier": 2,
+          "title": "Set Up Ratio",
+          "text": "$\\left(\\frac{T_B}{T_A}\\right)^2 = \\left(\\frac{r_B}{r_A}\\right)^3 = 4^3 = 64$."
+        },
+        {
+          "tier": 3,
+          "title": "Solve for Period",
+          "text": "$\\frac{T_B}{T_A} = \\sqrt{64} = 8.0 \\implies T_B = 8.0 \\times 8.0\\text{ hours} = 64.0\\text{ hours}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Dynamic equilibrium: $\\frac{G M m}{r^2} = m \\omega^2 r = m \\left(\\frac{2\\pi}{T}\\right)^2 r$.",
+          "Kepler's Third Law: $T^2 = \\frac{4\\pi^2}{GM} r^3$.",
+          "Ratio between orbits: $\\frac{T_B}{T_A} = \\left(\\frac{r_B}{r_A}\\right)^{3/2}$.",
+          "Calculate: $(4.0)^{3/2} = (\\sqrt{4})^3 = 2^3 = 8$.",
+          "Final period: $T_B = 8 \\times 8.0\\text{ hours} = 64.0\\text{ hours}$."
+        ],
+        "final_expression": "T_B = 64.0\\text{ hours}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[T] = [T]",
+        "limiting_cases": [
+          {
+            "condition": "r_B = r_A",
+            "expected_outcome": "T_B = T_A = 8.0 hours"
+          },
+          {
+            "condition": "r_B -> infinity",
+            "expected_outcome": "T_B -> infinity"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-009",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-STAGE1",
+        "year": "2023",
+        "question_number": "Q18",
+        "tier": "State Olympiad"
+      },
+      "stem": "An astronaut of mass $m = 70.0\\text{ kg}$ is aboard a spacecraft in a circular orbit at altitude $h = 400\\text{ km}$ above Earth ($R_E = 6400\\text{ km}, g_0 = 9.80\\text{ m/s}^2$). What are the true gravitational force $F_g$ exerted by Earth on the astronaut and the apparent weight (normal force from scale $N$), respectively?",
+      "system_parameters": {
+        "system_boundary": "Astronaut in orbiting spacecraft cabin",
+        "reference_frame": "Non-inertial orbiting frame / Inertial geocentric frame",
+        "idealizations": [
+          "Spherical Earth",
+          "Frictionless vacuum orbit"
+        ]
+      },
+      "options": {
+        "A": "$F_g = 608\\text{ N},\\; N = 0\\text{ N}$",
+        "B": "$F_g = 0\\text{ N},\\; N = 0\\text{ N}$",
+        "C": "$F_g = 686\\text{ N},\\; N = 686\\text{ N}$",
+        "D": "$F_g = 608\\text{ N},\\; N = 608\\text{ N}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D2",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Differentiating true gravitational pull F_g = m * g(h) from apparent contact weight N = 0 in free fall.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires calculating altitude-adjusted field and applying dynamic contact force balance."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "At 400 km, r = 6800 km, g(h) = 9.8 * (6400/6800)^2 = 8.68 m/s^2. F_g = 70 * 8.68 = 608 N. Because the astronaut and scale are in common free-fall (a = g), normal contact force is N = 0 N."
+        },
+        "B": {
+          "type": "MIS-GRAV-ZERO-G-IN-SPACE",
+          "diagnostic": "Fell into the zero-g fallacy, believing gravity ceases to exist in outer space."
+        },
+        "C": {
+          "type": "MIS-GRAV-MASS-WEIGHT-CONFUSION",
+          "diagnostic": "Used sea-level gravity g = 9.8 m/s^2 and assumed full normal force: 70 * 9.8 = 686 N."
+        },
+        "D": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Computed true gravitational force correctly (608 N) but failed to recognize apparent weightlessness in orbit."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Gravitational Field at Altitude",
+          "text": "At altitude $h = 400\\text{ km}$, orbital radius is $r = 6400 + 400 = 6800\\text{ km}$. Gravity is $g(h) = g_0 \\left(\\frac{R_E}{r}\\right)^2 = 9.80 \\times \\left(\\frac{6400}{6800}\\right)^2 \\approx 8.68\\text{ m/s}^2$."
+        },
+        {
+          "tier": 2,
+          "title": "True Gravitational Force",
+          "text": "True gravitational force is $F_g = m g(h) = 70.0 \\times 8.68\\text{ N} \\approx 608\\text{ N}$. Earth's gravity is very strong in orbit!"
+        },
+        {
+          "tier": 3,
+          "title": "Apparent Weight (Normal Force)",
+          "text": "Both the astronaut and the spacecraft accelerate toward Earth with acceleration $a = g(h)$. In the astronaut's frame: $N - mg(h) = -ma = -mg(h) \\implies N = 0\\text{ N}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Orbital radius: $r = R_E + h = 6.40 \\times 10^6\\text{ m} + 0.40 \\times 10^6\\text{ m} = 6.80 \\times 10^6\\text{ m}$.",
+          "Local gravitational field: $g(h) = g_0 \\left(\\frac{6.40}{6.80}\\right)^2 = 9.80 \\times (0.9412)^2 = 8.682\\text{ m/s}^2$.",
+          "True gravitational pull: $F_g = m g(h) = (70.0\\text{ kg})(8.682\\text{ m/s}^2) = 607.7\\text{ N} \\approx 608\\text{ N}$.",
+          "Scale reading (apparent weight): $F_g - N = m a_c = m g(h) \\implies N = 0\\text{ N}$."
+        ],
+        "final_expression": "F_g = 608\\text{ N},\\; N = 0\\text{ N}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[F] = [M][L][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "h = 0 (standing on ground scale)",
+            "expected_outcome": "F_g = mg_0 = 686 N, N = 686 N"
+          },
+          {
+            "condition": "Free fall in elevator shaft",
+            "expected_outcome": "N = 0 N regardless of local field magnitude"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-010",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-STAGE1",
+        "year": "2023",
+        "question_number": "Q21",
+        "tier": "State Olympiad"
+      },
+      "stem": "A satellite of mass $m = 1000\\text{ kg}$ is in a circular orbit around Earth ($M_E = 6.00 \\times 10^{24}\\text{ kg}$) at orbital radius $r = 2 R_E = 1.28 \\times 10^7\\text{ m}$. Given $G = 6.67 \\times 10^{-11}\\text{ N}\\cdot\\text{m}^2/\\text{kg}^2$, what is the total mechanical energy $E$ of the orbiting satellite?",
+      "system_parameters": {
+        "system_boundary": "Earth-satellite bound system",
+        "reference_frame": "Geocentric inertial frame",
+        "idealizations": [
+          "Circular Keplerian orbit",
+          "Potential datum U(infinity) = 0"
+        ]
+      },
+      "options": {
+        "A": "$-1.56 \\times 10^{10}\\text{ J}$",
+        "B": "$+1.56 \\times 10^{10}\\text{ J}$",
+        "C": "$-3.13 \\times 10^{10}\\text{ J}$",
+        "D": "$+3.13 \\times 10^{10}\\text{ J}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D2",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Applying the Virial Theorem for bound circular orbit: E = -GMm / (2r) = -K = U/2.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires combining kinetic energy and potential energy with proper signs."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "By the Virial Theorem, E = -G M m / (2r) = - (6.67e-11 * 6.0e24 * 1000) / (2 * 1.28e7) = - 4.002e17 / 2.56e7 = -1.56e10 J."
+        },
+        "B": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Incorrect positive sign; positive total energy corresponds to an unbound hyperbolic trajectory."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Reported potential energy U = -GMm/r = -3.13e10 J instead of total mechanical energy E = U/2."
+        },
+        "D": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Reported positive potential energy magnitude: +3.13e10 J."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Virial Theorem for Circular Orbit",
+          "text": "For a circular orbit: centripetal balance gives $m \\frac{v^2}{r} = \\frac{GMm}{r^2} \\implies K = \\frac{1}{2} m v^2 = \\frac{GMm}{2r}$."
+        },
+        {
+          "tier": 2,
+          "title": "Potential Energy & Total Energy",
+          "text": "Potential energy is $U = -\\frac{GMm}{r}$. Therefore, total mechanical energy is $E = K + U = \\frac{GMm}{2r} - \\frac{GMm}{r} = -\\frac{GMm}{2r}$."
+        },
+        {
+          "tier": 3,
+          "title": "Substitute Values",
+          "text": "$E = -\\frac{(6.67 \\times 10^{-11})(6.00 \\times 10^{24})(1000)}{2(1.28 \\times 10^7)} = -\\frac{4.002 \\times 10^{17}}{2.56 \\times 10^7} \\approx -1.56 \\times 10^{10}\\text{ J}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Kinetic energy: $K = \\frac{1}{2} m v_{\\text{orb}}^2 = \\frac{1}{2} m \\left(\\frac{G M_E}{r}\\right) = \\frac{G M_E m}{2r}$.",
+          "Potential energy: $U = -\\frac{G M_E m}{r}$.",
+          "Total mechanical energy: $E = K + U = \\frac{G M_E m}{2r} - \\frac{G M_E m}{r} = -\\frac{G M_E m}{2r}$.",
+          "Numerical evaluation: $E = -\\frac{(6.67 \\times 10^{-11})(6.00 \\times 10^{24})(1000)}{2(1.28 \\times 10^7)} = -1.56 \\times 10^{10}\\text{ J}$."
+        ],
+        "final_expression": "E = -1.56 \\times 10^{10}\\text{ J}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[E] = [M][L^2][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "r -> infinity",
+            "expected_outcome": "E -> 0 (unbound state)"
+          },
+          {
+            "condition": "Bound orbit condition",
+            "expected_outcome": "E < 0 (negative energy verifies closed bound state)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure GRAV-04: Gravitational potential energy well U(r) = -GMm/r showing bound states (E < 0) and escape (E = 0).",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <line x1=\"50\" y1=\"50\" x2=\"450\" y2=\"50\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <line x1=\"50\" y1=\"220\" x2=\"50\" y2=\"20\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <text x=\"450\" y=\"42\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">r</text>\n  <text x=\"30\" y=\"30\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\">E, U</text>\n  <text x=\"50\" y=\"42\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">0</text>\n  <path d=\"M 70 210 Q 110 90 440 60\" fill=\"none\" stroke=\"#ef4444\" stroke-width=\"3\"/>\n  <text x=\"320\" y=\"80\" fill=\"#ef4444\" font-size=\"14px\" font-family=\"sans-serif\">U(r) = -GMm/r</text>\n  <line x1=\"120\" y1=\"85\" x2=\"440\" y2=\"85\" stroke=\"#38bdf8\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n  <text x=\"440\" y=\"102\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">E = -GMm/(2r) &lt; 0 (Bound Orbit)</text>\n  <line x1=\"50\" y1=\"50\" x2=\"440\" y2=\"50\" stroke=\"#10b981\" stroke-width=\"2\"/>\n  <text x=\"320\" y=\"38\" fill=\"#10b981\" font-size=\"14px\" font-family=\"sans-serif\">E = 0 (Escape Threshold)</text>\n  <circle cx=\"200\" cy=\"85\" r=\"5\" fill=\"#38bdf8\"/>\n  <text x=\"200\" y=\"112\" fill=\"#f8fafc\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">r = 2 R_E</text>\n  <text x=\"250\" y=\"230\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Gravitational Potential Well: Bound States Lie in E &lt; 0 Domain</text>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-011",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-STAGE1",
+        "year": "2023",
+        "question_number": "Q23",
+        "tier": "State Olympiad"
+      },
+      "stem": "An airless spherical moon has circular orbital speed $v_{\\text{orb}} = 1.60\\text{ km/s}$ for a low-altitude skimming orbit just above its surface. What minimum launch speed $v_{\\text{esc}}$ is required for an exploration probe to escape permanently to infinity from the surface of this moon?",
+      "system_parameters": {
+        "system_boundary": "Moon-probe system in deep space",
+        "reference_frame": "Moon-centered frame",
+        "idealizations": [
+          "No lunar atmosphere",
+          "Spherically symmetric moon"
+        ]
+      },
+      "options": {
+        "A": "$2.26\\text{ km/s}$",
+        "B": "$1.60\\text{ km/s}$",
+        "C": "$3.20\\text{ km/s}$",
+        "D": "$2.56\\text{ km/s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 1,
+          "constraint_latency": 1,
+          "domain_coupling": 2,
+          "math_friction": 1
+        },
+        "protected_work_W": "Applying the universal relation v_esc = sqrt(2) * v_orb = 1.414 * 1.60 km/s.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires applying the factor sqrt(2) and computing numerical product."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Correctly applied v_esc = sqrt(2) * v_orb = 1.4142 * 1.60 km/s = 2.26 km/s."
+        },
+        "B": {
+          "type": "MIS-GRAV-ESCAPE-VS-ORBIT",
+          "diagnostic": "Conflated circular orbital speed with escape speed, assuming orbital speed is sufficient to escape to infinity."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Multiplied by 2 instead of sqrt(2): 2 * 1.60 = 3.20 km/s."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Squared 1.60 km/s: 1.60^2 = 2.56 km/s."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Orbital vs Escape Velocity Formulas",
+          "text": "Surface orbital speed: $v_{\\text{orb}} = \\sqrt{\\frac{GM}{R}}$. Escape speed: $v_{\\text{esc}} = \\sqrt{\\frac{2GM}{R}}$."
+        },
+        {
+          "tier": 2,
+          "title": "Universal Ratio",
+          "text": "The ratio is identically $\\frac{v_{\\text{esc}}}{v_{\\text{orb}}} = \\sqrt{2} \\approx 1.414$."
+        },
+        {
+          "tier": 3,
+          "title": "Calculate Numerical Value",
+          "text": "$v_{\\text{esc}} = 1.4142 \\times 1.60\\text{ km/s} = 2.263\\text{ km/s} \\approx 2.26\\text{ km/s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Orbital velocity at surface: $v_{\\text{orb}} = \\sqrt{\\frac{GM}{R}}$.",
+          "Conservation of energy for escape to infinity ($E = 0$): $\\frac{1}{2} m v_{\\text{esc}}^2 - \\frac{GMm}{R} = 0 \\implies v_{\\text{esc}} = \\sqrt{\\frac{2GM}{R}}$.",
+          "Relate: $v_{\\text{esc}} = \\sqrt{2} v_{\\text{orb}}$.",
+          "Evaluate: $v_{\\text{esc}} = \\sqrt{2} \\times 1.60\\text{ km/s} \\approx 2.26\\text{ km/s}$."
+        ],
+        "final_expression": "v_{\\text{esc}} = 2.26\\text{ km/s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v] = [L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "Kinetic energy ratio",
+            "expected_outcome": "K_esc / K_orb = (v_esc / v_orb)^2 = 2 (exactly double kinetic energy to unbind)"
+          },
+          {
+            "condition": "M -> 0",
+            "expected_outcome": "v_esc = v_orb = 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-012",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "NSEP-STAGE1",
+        "year": "2023",
+        "question_number": "Q25",
+        "tier": "State Olympiad"
+      },
+      "stem": "For small displacements compared to Earth's radius ($h, d \\ll R_E$), at what altitude $h$ above Earth's surface is the fractional decrease in acceleration due to gravity equal to the fractional decrease in gravity at a depth $d = 10.0\\text{ km}$ below the surface?",
+      "system_parameters": {
+        "system_boundary": "Near-surface Earth gravitational field",
+        "reference_frame": "Geocentric surface frame",
+        "idealizations": [
+          "Uniform crust density",
+          "h, d << R_E"
+        ]
+      },
+      "options": {
+        "A": "$5.0\\text{ km}$",
+        "B": "$10.0\\text{ km}$",
+        "C": "$20.0\\text{ km}$",
+        "D": "$2.5\\text{ km}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D2",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D2",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 2,
+          "math_friction": 2
+        },
+        "protected_work_W": "Comparing first-order differentials dg/g = 2h/R_E (altitude) vs dg/g = d/R_E (depth), yielding h = d/2 = 5.0 km.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires equating linear approximations and solving for altitude."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "At altitude h, Delta g / g = 2h/R_E. At depth d, Delta g / g = d/R_E. Equating them gives 2h = d => h = d / 2 = 5.0 km."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed altitude and depth have identical rates of decrease: h = d = 10.0 km."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Inverted factor of 2: h = 2d = 20.0 km."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Divided by 4 instead of 2: h = 2.5 km."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Fractional Decrease with Altitude",
+          "text": "For $h \\ll R_E$, $g(h) \\approx g_0 \\left(1 - \\frac{2h}{R_E}\\right)$, so $\\frac{\\Delta g_h}{g_0} = \\frac{2h}{R_E}$."
+        },
+        {
+          "tier": 2,
+          "title": "Fractional Decrease with Depth",
+          "text": "For depth $d$, $g(d) = g_0 \\left(1 - \\frac{d}{R_E}\\right)$, so $\\frac{\\Delta g_d}{g_0} = \\frac{d}{R_E}$."
+        },
+        {
+          "tier": 3,
+          "title": "Equate and Solve",
+          "text": "$\\frac{2h}{R_E} = \\frac{d}{R_E} \\implies 2h = d \\implies h = \\frac{d}{2} = \\frac{10.0\\text{ km}}{2} = 5.0\\text{ km}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Altitude variation: $g(h) = g_0 (1 + h/R_E)^{-2} \\approx g_0 (1 - 2h/R_E) \\implies \\Delta g_h = g_0 \\frac{2h}{R_E}$.",
+          "Depth variation: $g(d) = g_0 (1 - d/R_E) \\implies \\Delta g_d = g_0 \\frac{d}{R_E}$.",
+          "Equating fractional changes: $\\frac{2h}{R_E} = \\frac{d}{R_E}$.",
+          "Solve for $h$: $h = \\frac{d}{2} = \\frac{10.0\\text{ km}}{2} = 5.0\\text{ km}$."
+        ],
+        "final_expression": "h = 5.0\\text{ km}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[h] = [L]",
+        "limiting_cases": [
+          {
+            "condition": "d -> 0",
+            "expected_outcome": "h -> 0 (consistent zero baseline)"
+          },
+          {
+            "condition": "Rate comparison",
+            "expected_outcome": "Gravity drops twice as fast going upward into space as it does going downward into uniform Earth"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-013",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "INPhO-PRE-FND",
+        "year": "2023",
+        "question_number": "Q05",
+        "tier": "National Olympiad"
+      },
+      "stem": "A narrow frictionless evacuated tunnel is drilled through the center of the Earth from one pole to the other. Assuming Earth is a uniform sphere of radius $R_E = 6.40 \\times 10^6\\text{ m}$ and surface gravity $g_0 = 9.80\\text{ m/s}^2$, a ball of mass $m$ is dropped from rest into the tunnel at the surface. What is the one-way transit time $t_{\\text{transit}}$ for the ball to reach the opposite side of the Earth?",
+      "system_parameters": {
+        "system_boundary": "Particle inside Earth diametrical tunnel",
+        "reference_frame": "Non-rotating geocentric inertial frame",
+        "idealizations": [
+          "Frictionless evacuated tunnel",
+          "Uniform density planet",
+          "Zero Coriolis force"
+        ]
+      },
+      "options": {
+        "A": "$42.3\\text{ minutes}$",
+        "B": "$84.6\\text{ minutes}$",
+        "C": "$21.1\\text{ minutes}$",
+        "D": "$59.8\\text{ minutes}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D3",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 3
+        },
+        "protected_work_W": "Modeling restoring force F(x) = -(mg_0/R_E)*x as SHM with period T = 2*pi*sqrt(R_E/g_0) and computing one-way transit time t = T/2.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires proving SHM equivalence from Gauss's law / shell theorem before evaluating transit time."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "SHM period T = 2*pi*sqrt(R_E/g_0) = 2*pi*sqrt(6.4e6/9.8) = 5077 s = 84.6 min. One-way transit is half an oscillation: t = T/2 = 42.3 min."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Reported the full round-trip oscillation period T = 84.6 min instead of the one-way transit time."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Reported time to fall to center (quarter period T/4 = 21.1 min) instead of traversing the entire planet."
+        },
+        "D": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Assumed constant acceleration under surface gravity g_0: t = sqrt(2 * 2R_E / g_0) = 59.8 min."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Restoring Force Inside Earth",
+          "text": "By the shell theorem, at distance $x$ from the center, $F(x) = -\\frac{G M(x) m}{x^2} = -\\frac{G M_E m}{R_E^3} x = -\\frac{m g_0}{R_E} x$. This is Hooke's Law $F = -k x$!"
+        },
+        {
+          "tier": 2,
+          "title": "Simple Harmonic Motion Frequency & Period",
+          "text": "The effective spring constant is $k = \\frac{m g_0}{R_E}$. Angular frequency is $\\omega = \\sqrt{\\frac{k}{m}} = \\sqrt{\\frac{g_0}{R_E}}$. The full period is $T = 2\\pi \\sqrt{\\frac{R_E}{g_0}}$."
+        },
+        {
+          "tier": 3,
+          "title": "Compute One-Way Transit Time",
+          "text": "The ball oscillates between $x = +R_E$ and $x = -R_E$. Going from surface to opposite surface is half a period: $t_{\\text{transit}} = \\frac{T}{2} = \\pi \\sqrt{\\frac{R_E}{g_0}} = \\pi \\sqrt{\\frac{6.40 \\times 10^6}{9.80}} = 2539\\text{ s} \\approx 42.3\\text{ minutes}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Restoring force at radial position $x$: $F(x) = -\\frac{G (M_E x^3 / R_E^3) m}{x^2} = -\\left(\\frac{m g_0}{R_E}\\right) x$.",
+          "Equation of motion: $m \\frac{d^2 x}{dt^2} = -\\left(\\frac{m g_0}{R_E}\\right) x \\implies \\frac{d^2 x}{dt^2} + \\left(\\frac{g_0}{R_E}\\right) x = 0$.",
+          "This is SHM with $\\omega = \\sqrt{\\frac{g_0}{R_E}}$.",
+          "Period of full oscillation: $T = \\frac{2\\pi}{\\omega} = 2\\pi \\sqrt{\\frac{R_E}{g_0}} \\approx 5077\\text{ s} \\approx 84.6\\text{ minutes}$.",
+          "One-way transit from $+R_E$ to $-R_E$ is half a period: $t = \\frac{T}{2} = \\pi \\sqrt{\\frac{R_E}{g_0}} \\approx 2539\\text{ s} \\approx 42.3\\text{ minutes}$."
+        ],
+        "final_expression": "t_{\\text{transit}} = 42.3\\text{ minutes}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[t] = [T]",
+        "limiting_cases": [
+          {
+            "condition": "Near-surface satellite orbit comparison",
+            "expected_outcome": "T_tunnel = T_orbit = 2*pi*sqrt(R_E/g_0) approx 84.6 min (identical harmonic timescale!)"
+          },
+          {
+            "condition": "R_E -> 0",
+            "expected_outcome": "t -> 0"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure GRAV-05: Simple harmonic oscillator inside an evacuated Earth tunnel.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <circle cx=\"250\" cy=\"120\" r=\"95\" fill=\"#1e293b\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <rect x=\"242\" y=\"25\" width=\"16\" height=\"190\" fill=\"#0f172a\" stroke=\"#64748b\" stroke-width=\"1.5\"/>\n  <line x1=\"250\" y1=\"25\" x2=\"250\" y2=\"215\" stroke=\"#94a3b8\" stroke-width=\"1\" stroke-dasharray=\"3,3\"/>\n  <circle cx=\"250\" cy=\"70\" r=\"7\" fill=\"#fbbf24\"/>\n  <line x1=\"250\" y1=\"70\" x2=\"250\" y2=\"105\" stroke=\"#ef4444\" stroke-width=\"3\" marker-end=\"url(#arr-f-tun)\"/>\n  <circle cx=\"250\" cy=\"120\" r=\"3\" fill=\"#f8fafc\"/>\n  <text x=\"235\" y=\"125\" fill=\"#f8fafc\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">Center (x = 0)</text>\n  <text x=\"260\" y=\"75\" fill=\"#fbbf24\" font-size=\"14px\" font-family=\"sans-serif\">Mass m at x</text>\n  <text x=\"260\" y=\"95\" fill=\"#ef4444\" font-size=\"14px\" font-family=\"sans-serif\">F = -(mg₀/R)x</text>\n  <text x=\"250\" y=\"20\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Surface (x = +R_E)</text>\n  <text x=\"250\" y=\"232\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Opposite Surface (x = -R_E)</text>\n  <defs>\n    <marker id=\"arr-f-tun\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#ef4444\"/></marker>\n  </defs>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-014",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "INPhO-PRE-FND",
+        "year": "2023",
+        "question_number": "Q09",
+        "tier": "National Olympiad"
+      },
+      "stem": "A straight frictionless tunnel is drilled through the Earth along an off-center chord that passes at a closest approach distance $y_0 = 0.50 R_E$ from the center of Earth. If a small capsule is released from rest at one surface opening, how does its oscillation period $T_{\\text{chord}}$ compare with the period $T_0 = 84.6\\text{ minutes}$ of a tunnel passing straight through the center?",
+      "system_parameters": {
+        "system_boundary": "Capsule inside off-center chord tunnel",
+        "reference_frame": "Geocentric inertial frame",
+        "idealizations": [
+          "Frictionless normal reaction",
+          "Uniform Earth density"
+        ]
+      },
+      "options": {
+        "A": "$T_{\\text{chord}} = T_0 = 84.6\\text{ minutes}$",
+        "B": "$T_{\\text{chord}} = \\frac{\\sqrt{3}}{2} T_0 \\approx 73.3\\text{ minutes}$",
+        "C": "$T_{\\text{chord}} = \\frac{1}{2} T_0 = 42.3\\text{ minutes}$",
+        "D": "$T_{\\text{chord}} = \\frac{2}{\\sqrt{3}} T_0 \\approx 97.7\\text{ minutes}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D3",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 3,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 3
+        },
+        "protected_work_W": "Resolving 2D gravitational force vector along chord and showing effective spring constant k_eff = mg_0/R_E is invariant.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires vector component projection and canceling distance dependencies along orthogonal constraint."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "At coordinate x along the chord, distance from center is r = sqrt(x^2 + y_0^2). Force component along tunnel is F_x = -F * (x/r) = -(mg_0/R_E * r) * (x/r) = -(mg_0/R_E) * x. Spring constant is identically k = mg_0/R_E, so T = 2*pi*sqrt(R_E/g_0) = 84.6 min regardless of chord distance!"
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Scaled period by chord length factor sqrt(1 - 0.5^2) = sqrt(3)/2."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Assumed period scales with closest approach ratio y_0 / R_E = 1/2."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Inverted the length factor: 2 / sqrt(3)."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Vector Gravitational Field",
+          "text": "Inside uniform Earth, the gravitational field is a linear vector: $\\vec{g}(\\vec{r}) = -\\frac{g_0}{R_E} \\vec{r} = -\\frac{g_0}{R_E} (x \\hat{i} + y_0 \\hat{j})$."
+        },
+        {
+          "tier": 2,
+          "title": "Constraint Force from Tunnel Wall",
+          "text": "The tunnel wall exerts a normal contact force that cancels the transverse component $F_y = -m \\frac{g_0}{R_E} y_0 \\hat{j}$. Only the longitudinal component $F_x$ can accelerate the capsule."
+        },
+        {
+          "tier": 3,
+          "title": "Equation of Motion Along Chord",
+          "text": "Along the tunnel axis, $m \\frac{d^2 x}{dt^2} = F_x = -m \\frac{g_0}{R_E} x$. The effective stiffness is identically $k = m \\frac{g_0}{R_E}$, which is independent of $y_0$! Thus $T_{\\text{chord}} = T_0 = 84.6\\text{ minutes}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Set Cartesian origin at Earth's center. Let the chord tunnel lie along the line $y = y_0 = 0.50 R_E$.",
+          "Position vector of capsule: $\\vec{r} = x\\hat{i} + y_0\\hat{j}$, with $r = \\sqrt{x^2 + y_0^2}$.",
+          "Gravitational force vector: $\\vec{F} = -\\frac{m g_0}{R_E} \\vec{r} = -\\frac{m g_0}{R_E} (x\\hat{i} + y_0\\hat{j})$.",
+          "Component along the frictionless tunnel ($x$-direction): $F_x = -\\left(\\frac{m g_0}{R_E}\\right) x$.",
+          "The equation of motion is $\\ddot{x} + \\frac{g_0}{R_E} x = 0$, giving period $T = 2\\pi \\sqrt{\\frac{R_E}{g_0}} = 84.6\\text{ minutes}$."
+        ],
+        "final_expression": "T_{\\text{chord}} = T_0 = 84.6\\text{ minutes}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[T] = [T]",
+        "limiting_cases": [
+          {
+            "condition": "y_0 -> 0 (diametrical tunnel)",
+            "expected_outcome": "T_chord = T_0 (exact match with central tunnel)"
+          },
+          {
+            "condition": "y_0 -> R_E (grazing surface chord)",
+            "expected_outcome": "T_chord = T_0 (period remains invariant even for an infinitesimal surface chord!)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-015",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "INPhO-PRE-FND",
+        "year": "2023",
+        "question_number": "Q14",
+        "tier": "National Olympiad"
+      },
+      "stem": "What is the minimum external work $W_{\\text{ext}}$ required to slowly raise a satellite of mass $m$ from Earth's surface ($r = R_E$) to an altitude equal to Earth's radius ($h = R_E$, so $r = 2 R_E$), in terms of surface weight $mg_0$ and radius $R_E$?",
+      "system_parameters": {
+        "system_boundary": "Payload in Earth external potential well",
+        "reference_frame": "Geocentric inertial frame",
+        "idealizations": [
+          "Quasi-static slow lifting",
+          "Neglect atmospheric drag"
+        ]
+      },
+      "options": {
+        "A": "$\\frac{1}{2} m g_0 R_E$",
+        "B": "$m g_0 R_E$",
+        "C": "$2 m g_0 R_E$",
+        "D": "$\\frac{1}{4} m g_0 R_E$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D3",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 3,
+          "math_friction": 2
+        },
+        "protected_work_W": "Integrating gravitational force or computing potential difference Delta U = GMm(1/R_E - 1/(2R_E)) = 0.5 * mg_0 * R_E rather than using flat-Earth mgh.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires formal integration of variable force across planetary distances."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Delta U = -GMm/(2R_E) - (-GMm/R_E) = GMm/(2R_E). Since g_0 = GM/R_E^2 => GMm/R_E = mg_0 R_E. Thus Delta U = 0.5 mg_0 R_E."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Erroneously used uniform surface gravity formula W = mgh = mg_0 R_E, failing to account for gravitational dilution."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Multiplied by 2 instead of dividing: 2 mg_0 R_E."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Used 1/4 factor from (1/2)^2."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Potential Energy in Inverse-Square Field",
+          "text": "For large heights, $g$ is not constant. Potential energy is $U(r) = -\\frac{GMm}{r}$."
+        },
+        {
+          "tier": 2,
+          "title": "Compute Change in Potential Energy",
+          "text": "$W_{\\text{ext}} = U(2R_E) - U(R_E) = -\\frac{GMm}{2R_E} - \\left(-\\frac{GMm}{R_E}\\right) = \\frac{GMm}{R_E}\\left(1 - \\frac{1}{2}\\right) = \\frac{1}{2} \\frac{GMm}{R_E}$."
+        },
+        {
+          "tier": 3,
+          "title": "Express in Terms of Surface Gravity",
+          "text": "Since $g_0 = \\frac{GM}{R_E^2}$, we have $\\frac{GMm}{R_E} = m g_0 R_E$. Therefore, $W_{\\text{ext}} = \\frac{1}{2} m g_0 R_E$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Definition of external work for quasi-static lift: $W_{\\text{ext}} = \\Delta U = U(r_2) - U(r_1)$.",
+          "Substitute limits $r_1 = R_E$ and $r_2 = R_E + h = 2 R_E$: $W_{\\text{ext}} = -\\frac{G M_E m}{2R_E} - \\left(-\\frac{G M_E m}{R_E}\\right) = \\frac{G M_E m}{R_E} \\left(1 - \\frac{1}{2}\\right) = \\frac{1}{2} \\frac{G M_E m}{R_E}$.",
+          "Relate $G M_E$ to surface acceleration: $g_0 = \\frac{G M_E}{R_E^2} \\implies G M_E = g_0 R_E^2$.",
+          "Substitute: $W_{\\text{ext}} = \\frac{1}{2} \\frac{(g_0 R_E^2) m}{R_E} = \\frac{1}{2} m g_0 R_E$."
+        ],
+        "final_expression": "W_{\\text{ext}} = \\frac{1}{2} m g_0 R_E"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[W] = [M][L^2][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "h << R_E (flat-Earth limit)",
+            "expected_outcome": "Delta U = (GMm/R_E) * [1 - (1 + h/R_E)^-1] approx (GMm/R_E) * (h/R_E) = mg_0 h"
+          },
+          {
+            "condition": "h -> infinity (escape work from surface)",
+            "expected_outcome": "W = mg_0 R_E"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-016",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "INPhO-PRE-FND",
+        "year": "2023",
+        "question_number": "Q17",
+        "tier": "National Olympiad"
+      },
+      "stem": "A satellite in a nearly circular low Earth orbit encounters faint atmospheric drag, which exerts a continuous retarding force $F_{\\text{drag}}$ opposing its velocity. Over time, the orbit slowly decays to a smaller radius ($r_2 < r_1$). According to the Virial Theorem, what happens to the satellite's orbital speed $v$, its total mechanical energy $E$, and its potential energy $U$?",
+      "system_parameters": {
+        "system_boundary": "Satellite in dissipative upper atmosphere",
+        "reference_frame": "Geocentric inertial frame",
+        "idealizations": [
+          "Quasi-circular spiral decay",
+          "Drag force F_d << gravitational force F_g"
+        ]
+      },
+      "options": {
+        "A": "Speed $v$ increases; $E$ decreases; $U$ decreases",
+        "B": "Speed $v$ decreases; $E$ decreases; $U$ decreases",
+        "C": "Speed $v$ decreases; $E$ decreases; $U$ increases",
+        "D": "Speed $v$ remains constant; $E$ decreases; $U$ decreases"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D3",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 2
+        },
+        "protected_work_W": "Resolving the Virial drag paradox: Delta E < 0 causes radius r to shrink, which increases kinetic energy Delta K = -Delta E > 0 and hence orbital speed increases.",
+        "rival_demands": [
+          {
+            "demand": "EXPLAIN",
+            "rejection_rationale": "Requires formal Virial energy partitioning between K, U, and dissipative drag work."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "By Virial theorem: E = -GMm/(2r), K = GMm/(2r), U = -GMm/r. Drag does negative work, so Delta E < 0 => r decreases. As r decreases, K increases (Delta K = -Delta E > 0), so orbital speed v = sqrt(GM/r) increases! Potential energy drops by twice the energy lost: Delta U = 2 Delta E."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Intuitively assumed that because drag opposes motion, speed must decrease."
+        },
+        "C": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Assumed potential energy increases when dropping into a deeper potential well."
+        },
+        "D": {
+          "type": "MIS-GRAV-KEPLER-SPEED-UNIFORM",
+          "diagnostic": "Assumed speed stays constant while orbit shrinks."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Virial Energy Partitioning",
+          "text": "For a circular orbit: kinetic energy is $K = \\frac{GMm}{2r}$, potential energy is $U = -\\frac{GMm}{r}$, and total energy is $E = -\\frac{GMm}{2r} = -K$."
+        },
+        {
+          "tier": 2,
+          "title": "Effect of Negative Work Done by Drag",
+          "text": "Atmospheric drag does negative work, decreasing the total energy ($E_2 < E_1$). Since $E = -\\frac{GMm}{2r}$, a more negative total energy requires a smaller radius $r$."
+        },
+        {
+          "tier": 3,
+          "title": "Consequence for Speed",
+          "text": "Because orbital speed is $v = \\sqrt{\\frac{GM}{r}}$, a smaller radius $r$ forces the satellite to travel faster! The loss in potential energy is twice the total energy lost; half is dissipated by drag, and the other half accelerates the satellite."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Total mechanical energy: $E(r) = -\\frac{G M_E m}{2r}$.",
+          "Kinetic energy: $K(r) = +\\frac{G M_E m}{2r}$.",
+          "Work done by non-conservative drag: $W_{\\text{drag}} = \\Delta E < 0$.",
+          "Since $\\frac{dE}{dr} = \\frac{G M_E m}{2r^2} > 0$, decreasing $E$ causes $r$ to decrease ($\\Delta r < 0$).",
+          "Differential kinetic energy: $\\Delta K = -\\Delta E > 0$, so speed $v = \\sqrt{\\frac{2K}{m}}$ increases."
+        ],
+        "final_expression": "v \\text{ increases},\\; E \\text{ decreases},\\; U \\text{ decreases}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v] = [L][T^-1], [E] = [M][L^2][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "F_drag -> 0",
+            "expected_outcome": "r = constant, v = constant (conservative Keplerian orbit)"
+          },
+          {
+            "condition": "Energy balance",
+            "expected_outcome": "Delta U = 2 Delta E = -2 Delta K (half PE loss goes to KE, half to heat)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure GRAV-06: The satellite drag paradox: dissipative orbital decay causing speed increase.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <circle cx=\"250\" cy=\"120\" r=\"45\" fill=\"#1e293b\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <text x=\"250\" y=\"125\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Earth</text>\n  <path d=\"M 250 25 A 95 95 0 1 1 249 25\" fill=\"none\" stroke=\"#475569\" stroke-width=\"1.5\" stroke-dasharray=\"4,4\"/>\n  <path d=\"M 250 25 C 320 25 365 75 365 120 C 365 175 310 205 250 205 C 185 205 150 165 150 120 C 150 85 175 55 210 45\" fill=\"none\" stroke=\"#fbbf24\" stroke-width=\"2.5\"/>\n  <circle cx=\"250\" cy=\"25\" r=\"7\" fill=\"#fbbf24\"/>\n  <line x1=\"250\" y1=\"25\" x2=\"310\" y2=\"25\" stroke=\"#38bdf8\" stroke-width=\"3\" marker-end=\"url(#arr-v-drag)\"/>\n  <line x1=\"250\" y1=\"25\" x2=\"210\" y2=\"25\" stroke=\"#ef4444\" stroke-width=\"3\" marker-end=\"url(#arr-f-drag)\"/>\n  <text x=\"315\" y=\"20\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\">Velocity v</text>\n  <text x=\"205\" y=\"20\" fill=\"#ef4444\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"end\">F_drag</text>\n  <text x=\"250\" y=\"230\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Virial Drag Paradox: Inward Spiral Increases Kinetic Speed</text>\n  <defs>\n    <marker id=\"arr-v-drag\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#38bdf8\"/></marker>\n    <marker id=\"arr-f-drag\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#ef4444\"/></marker>\n  </defs>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-017",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "INPhO-PRE-FND",
+        "year": "2023",
+        "question_number": "Q20",
+        "tier": "National Olympiad"
+      },
+      "stem": "A geostationary satellite must orbit in Earth's equatorial plane with an orbital period matching Earth's sidereal rotation period $T = 86400\\text{ s}$ ($24.0\\text{ h}$). Given $G M_E = 3.98 \\times 10^{14}\\text{ m}^3/\\text{s}^2$ and Earth radius $R_E = 6.37 \\times 10^6\\text{ m}$, what are the orbital radius $r_{\\text{geo}}$ and the height $h_{\\text{geo}}$ above Earth's surface?",
+      "system_parameters": {
+        "system_boundary": "Geostationary satellite in equatorial orbit",
+        "reference_frame": "Rotating Earth-fixed frame & Inertial frame",
+        "idealizations": [
+          "Circular equatorial orbit",
+          "Neglect lunar and solar tidal perturbations"
+        ]
+      },
+      "options": {
+        "A": "$r_{\\text{geo}} \\approx 42200\\text{ km},\\; h_{\\text{geo}} \\approx 35800\\text{ km}$",
+        "B": "$r_{\\text{geo}} \\approx 35800\\text{ km},\\; h_{\\text{geo}} \\approx 29400\\text{ km}$",
+        "C": "$r_{\\text{geo}} \\approx 42200\\text{ km},\\; h_{\\text{geo}} \\approx 42200\\text{ km}$",
+        "D": "$r_{\\text{geo}} \\approx 64000\\text{ km},\\; h_{\\text{geo}} \\approx 57600\\text{ km}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D3",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 3,
+          "math_friction": 3
+        },
+        "protected_work_W": "Calculating r_geo = (GM*T^2 / (4*pi^2))^(1/3) and distinguishing geocentric radius r from altitude h = r - R_E.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires coupling planetary rotation period with Kepler's harmonic law."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "r = (3.98e14 * 86400^2 / 39.48)^(1/3) = (7.525e22)^(1/3) = 4.22e7 m = 42,200 km. Altitude h = r - R_E = 42,200 - 6,370 = 35,830 km ≈ 35,800 km."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Confused orbital radius r with altitude h, setting r = 35,800 km."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Assumed altitude equals orbital radius, forgetting to subtract Earth's radius R_E."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Used 100,000 s instead of 86,400 s for day duration."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Kepler's Third Law for Synchronous Orbit",
+          "text": "For orbital period $T$, $T^2 = \\frac{4\\pi^2}{G M_E} r^3 \\implies r = \\left(\\frac{G M_E T^2}{4\\pi^2}\\right)^{1/3}$."
+        },
+        {
+          "tier": 2,
+          "title": "Evaluate Orbital Radius",
+          "text": "$r = \\left(\\frac{3.98 \\times 10^{14} \\times (86400)^2}{4\\pi^2}\\right)^{1/3} \\approx (7.525 \\times 10^{22})^{1/3} \\approx 4.222 \\times 10^7\\text{ m} = 42200\\text{ km}$."
+        },
+        {
+          "tier": 3,
+          "title": "Calculate Altitude",
+          "text": "Altitude above surface is $h = r - R_E = 42200 - 6370 = 35830\\text{ km} \\approx 35800\\text{ km}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Centripetal equilibrium: $\\frac{G M_E m}{r^2} = m \\left(\\frac{2\\pi}{T}\\right)^2 r$.",
+          "Solve for $r$: $r = \\left(\\frac{G M_E T^2}{4\\pi^2}\\right)^{1/3}$.",
+          "Substitute constants: $r = \\left(\\frac{(3.98 \\times 10^{14})(7.465 \\times 10^9)}{39.478}\\right)^{1/3} = (7.525 \\times 10^{22})^{1/3} = 4.222 \\times 10^7\\text{ m} = 42200\\text{ km}$.",
+          "Subtract Earth radius: $h = r - R_E = 42200\\text{ km} - 6370\\text{ km} = 35830\\text{ km} \\approx 35800\\text{ km}$."
+        ],
+        "final_expression": "r_{\\text{geo}} = 42200\\text{ km},\\; h_{\\text{geo}} = 35800\\text{ km}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[r] = [L]",
+        "limiting_cases": [
+          {
+            "condition": "Radius in Earth radii",
+            "expected_outcome": "r_geo / R_E approx 42200 / 6370 approx 6.6 R_E"
+          },
+          {
+            "condition": "T -> infinity",
+            "expected_outcome": "r -> infinity"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-018",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "INPhO-PRE-FND",
+        "year": "2023",
+        "question_number": "Q22",
+        "tier": "National Olympiad"
+      },
+      "stem": "A satellite moves in an elliptical orbit around Earth ($G M_E = 4.00 \\times 10^{14}\\text{ m}^3/\\text{s}^2$) with semi-major axis $a = 1.00 \\times 10^7\\text{ m}$. Using the Vis-Viva energy conservation equation $v^2 = G M_E \\left(\\frac{2}{r} - \\frac{1}{a}\\right)$, calculate the satellite's linear orbital speed $v$ when its distance from Earth's center is $r = 8.00 \\times 10^6\\text{ m}$.",
+      "system_parameters": {
+        "system_boundary": "Satellite in closed Keplerian elliptical orbit",
+        "reference_frame": "Geocentric inertial frame",
+        "idealizations": [
+          "Two-body Keplerian problem",
+          "E = -GMm/(2a) invariant"
+        ]
+      },
+      "options": {
+        "A": "$7.75\\text{ km/s}$",
+        "B": "$7.07\\text{ km/s}$",
+        "C": "$6.32\\text{ km/s}$",
+        "D": "$8.94\\text{ km/s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D3",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 3,
+          "math_friction": 3
+        },
+        "protected_work_W": "Evaluating the Vis-Viva equation v = sqrt(GM * (2/r - 1/a)) for an elliptical orbit.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires multi-step substitution and radical evaluation."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "2/r - 1/a = 2/8e6 - 1/1e7 = 2.5e-7 - 1.0e-7 = 1.5e-7 m^-1. v^2 = 4.0e14 * 1.5e-7 = 6.0e7 m^2/s^2 => v = sqrt(6.0e7) = 7746 m/s ≈ 7.75 km/s."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used circular orbit formula at radius r: v = sqrt(GM/r) = sqrt(4e14 / 8e6) = 7071 m/s = 7.07 km/s."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Used circular orbit formula at semi-major axis a: v = sqrt(GM/a) = sqrt(4e14 / 1e7) = 6325 m/s = 6.32 km/s."
+        },
+        "D": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Added terms instead of subtracting: 2/r + 1/a = 3.5e-7 => v = 8.94 km/s."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Vis-Viva Conservation Equation",
+          "text": "For any Keplerian orbit: total mechanical energy is $E = -\\frac{GMm}{2a}$. Thus $\\frac{1}{2} m v^2 - \\frac{GMm}{r} = -\\frac{GMm}{2a} \\implies v^2 = GM \\left(\\frac{2}{r} - \\frac{1}{a}\\right)$."
+        },
+        {
+          "tier": 2,
+          "title": "Compute Bracket Term",
+          "text": "$\\frac{2}{r} - \\frac{1}{a} = \\frac{2}{8.00 \\times 10^6} - \\frac{1}{1.00 \\times 10^7} = 2.50 \\times 10^{-7} - 1.00 \\times 10^{-7} = 1.50 \\times 10^{-7}\\text{ m}^{-1}$."
+        },
+        {
+          "tier": 3,
+          "title": "Calculate Speed",
+          "text": "$v^2 = 4.00 \\times 10^{14} \\times 1.50 \\times 10^{-7} = 6.00 \\times 10^7\\text{ m}^2/\\text{s}^2 \\implies v = \\sqrt{6.00 \\times 10^7} \\approx 7746\\text{ m/s} \\approx 7.75\\text{ km/s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Vis-Viva equation: $v^2 = G M_E \\left(\\frac{2}{r} - \\frac{1}{a}\\right)$.",
+          "Evaluate geometric term: $\\frac{2}{8.00 \\times 10^6\\text{ m}} - \\frac{1}{1.00 \\times 10^7\\text{ m}} = 2.50 \\times 10^{-7} - 1.00 \\times 10^{-7} = 1.50 \\times 10^{-7}\\text{ m}^{-1}$.",
+          "Multiply by $G M_E$: $v^2 = (4.00 \\times 10^{14}\\text{ m}^3/\\text{s}^2)(1.50 \\times 10^{-7}\\text{ m}^{-1}) = 6.00 \\times 10^7\\text{ m}^2/\\text{s}^2$.",
+          "Take square root: $v = \\sqrt{6.00 \\times 10^7} = 7746\\text{ m/s} = 7.75\\text{ km/s}$."
+        ],
+        "final_expression": "v = 7.75\\text{ km/s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v] = [L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "r = a (circular orbit)",
+            "expected_outcome": "v = sqrt(GM/a)"
+          },
+          {
+            "condition": "a -> infinity (parabolic escape trajectory)",
+            "expected_outcome": "v = sqrt(2GM/r) (exact escape velocity)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-019",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "INPhO-PRE-FND",
+        "year": "2023",
+        "question_number": "Q24",
+        "tier": "National Olympiad"
+      },
+      "stem": "The Moon has mass $M_M$ and Earth has mass $M_E = 81.0 M_M$. The distance between their centers is $D$. At what distance $x$ from the center of Earth along the straight line connecting the Earth and Moon does the net gravitational field vanish identically?",
+      "system_parameters": {
+        "system_boundary": "Collinear Earth-Moon gravitational field",
+        "reference_frame": "Inertial frame (static field equilibrium)",
+        "idealizations": [
+          "Point masses",
+          "Absence of orbital rotation / centrifugal forces"
+        ]
+      },
+      "options": {
+        "A": "$0.90 D$",
+        "B": "$0.50 D$",
+        "C": "$0.988 D$",
+        "D": "$0.81 D$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D3",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 3,
+          "math_friction": 2
+        },
+        "protected_work_W": "Balancing vector fields G*M_E/x^2 = G*M_M/(D-x)^2 => sqrt(81)/x = 1/(D-x) => 9/x = 1/(D-x) => x = 0.90 D.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires identifying vector null point and solving linear square-root equation."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "G M_E / x^2 = G M_M / (D - x)^2 => 81 / x^2 = 1 / (D - x)^2 => 9 / x = 1 / (D - x) => 9D - 9x = x => 10x = 9D => x = 0.90 D."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed the null point lies at the midpoint between the two bodies: x = 0.50 D."
+        },
+        "C": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Used linear mass ratio without square root: x = 81/82 D ≈ 0.988 D."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Set x/D equal to the square of 0.9 = 0.81 D."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Condition for Zero Gravitational Field",
+          "text": "The net gravitational field is zero where Earth's attraction equals Moon's attraction in opposite directions: $\\frac{G M_E}{x^2} = \\frac{G M_M}{(D - x)^2}$."
+        },
+        {
+          "tier": 2,
+          "title": "Substitute Mass Ratio and Take Square Root",
+          "text": "Since $M_E = 81.0 M_M$: $\\frac{81.0}{x^2} = \\frac{1}{(D - x)^2} \\implies \\frac{9.0}{x} = \\frac{1}{D - x}$."
+        },
+        {
+          "tier": 3,
+          "title": "Solve for Distance x",
+          "text": "$9.0(D - x) = x \\implies 9.0 D - 9.0 x = x \\implies 10.0 x = 9.0 D \\implies x = 0.90 D$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Gravitational field equality: $\\frac{G M_E}{x^2} = \\frac{G M_M}{(D - x)^2}$.",
+          "Cancel $G$ and substitute $M_E = 81 M_M$: $\\frac{81 M_M}{x^2} = \\frac{M_M}{(D - x)^2}$.",
+          "Take the positive square root on both sides: $\\frac{9}{x} = \\frac{1}{D - x}$.",
+          "Cross-multiply: $9(D - x) = x \\implies 9D - 9x = x \\implies 10x = 9D \\implies x = 0.90 D$."
+        ],
+        "final_expression": "x = 0.90 D"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[x] = [L]",
+        "limiting_cases": [
+          {
+            "condition": "M_E = M_M (equal masses)",
+            "expected_outcome": "x = D / 2 (exact midpoint by symmetry)"
+          },
+          {
+            "condition": "M_E >> M_M",
+            "expected_outcome": "x -> D (null point pushed right next to the lighter body)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-020",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "INPhO-PRE-FND",
+        "year": "2023",
+        "question_number": "Q25",
+        "tier": "National Olympiad"
+      },
+      "stem": "The Moon of mass $M_M$ is at distance $d$ from Earth's center ($d \\gg R_E$). The differential gravitational tidal acceleration across Earth of radius $R_E$ between the sub-lunar point (near side) and the center of Earth scales with which power of distance $d$, and why are there two tidal bulges per day?",
+      "system_parameters": {
+        "system_boundary": "Earth ocean envelope under lunar differential gravity",
+        "reference_frame": "Accelerating geocentric frame",
+        "idealizations": [
+          "Static equilibrium tide",
+          "d >> R_E"
+        ]
+      },
+      "options": {
+        "A": "$a_{\\text{tide}} \\propto \\frac{1}{d^3}$; near ocean is pulled toward Moon faster than solid Earth, while solid Earth is pulled faster than far ocean",
+        "B": "$a_{\\text{tide}} \\propto \\frac{1}{d^2}$; Moon attracts ocean water only on the near side of Earth",
+        "C": "$a_{\\text{tide}} \\propto \\frac{1}{d^4}$; centrifugal forces repel water on both hemispheres",
+        "D": "$a_{\\text{tide}} \\propto \\frac{1}{d}$; Coriolis force redirects ocean currents into two bulges"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D3",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D3",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 3,
+          "math_friction": 2
+        },
+        "protected_work_W": "Differentiating field dg/dd = 2GM/d^3 to obtain inverse-cube tidal acceleration and resolving the two-bulge differential frame.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires derivative calculus on inverse-square field and relative frame transformation."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "a_tide = g(near) - g(center) ≈ (dg/dd) * R_E = 2 G M_M R_E / d^3 ∝ 1/d^3. Subtracting the common acceleration of Earth center leaves outward differential forces on BOTH near side and far side."
+        },
+        "B": {
+          "type": "MIS-GRAV-TIDES-ONE-SIDED",
+          "diagnostic": "Assumed tides scale as 1/d^2 and pull only on the near side."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed inverse-fourth power scaling."
+        },
+        "D": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Assumed inverse-linear scaling and attributed tides primarily to Coriolis forces."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Tides as a Differential Force",
+          "text": "Tides are not caused by the absolute pull of the Moon, but by the DIFFERENCE in the Moon's pull across the diameter of Earth."
+        },
+        {
+          "tier": 2,
+          "title": "Derivative of Gravitational Field",
+          "text": "Gravitational field is $g(d) = \\frac{GM_M}{d^2}$. The gradient is $\\left|\\frac{dg}{dd}\\right| = \\frac{2GM_M}{d^3}$. Across radius $R_E$, $\\Delta g \\approx \\frac{2GM_M R_E}{d^3} \\propto \\frac{1}{d^3}$."
+        },
+        {
+          "tier": 3,
+          "title": "Why Two Bulges?",
+          "text": "In Earth's free-falling frame, subtract the acceleration of Earth's center: the near side accelerates toward the Moon relative to Earth (bulge 1), and Earth accelerates away from the far side, leaving the far water behind (bulge 2)!"
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Gravitational acceleration at Earth center: $g_0 = \\frac{G M_M}{d^2}$.",
+          "Gravitational acceleration at sub-lunar near point ($d - R_E$): $g_{\\text{near}} = \\frac{G M_M}{(d - R_E)^2} \\approx \\frac{G M_M}{d^2} \\left(1 + \\frac{2R_E}{d}\\right)$.",
+          "Differential tidal acceleration: $a_{\\text{tide}} = g_{\\text{near}} - g_0 \\approx \\frac{2 G M_M R_E}{d^3} \\propto \\frac{1}{d^3}$.",
+          "At the anti-lunar far point ($d + R_E$): $g_{\\text{far}} \\approx \\frac{G M_M}{d^2} \\left(1 - \\frac{2R_E}{d}\\right) \\implies g_{\\text{far}} - g_0 \\approx -\\frac{2 G M_M R_E}{d^3}$, directed away from Earth's center.",
+          "This produces two equal and opposite tidal bulges."
+        ],
+        "final_expression": "a_{\\text{tide}} \\propto \\frac{1}{d^3}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[a] = [L][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "R_E -> 0 (point Earth)",
+            "expected_outcome": "a_tide -> 0 (zero tidal deformation for a point particle)"
+          },
+          {
+            "condition": "Sun vs Moon comparison",
+            "expected_outcome": "Although Sun has 2.7e7 times Moon's mass, it is 390 times farther: (390)^3 approx 5.9e7, so Moon's tidal force is ~2.2 times stronger than Sun's!"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure GRAV-07: Differential tidal acceleration field creating two symmetric oceanic bulges.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <ellipse cx=\"200\" cy=\"120\" rx=\"90\" ry=\"60\" fill=\"#0284c7\" fill-opacity=\"0.3\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <circle cx=\"200\" cy=\"120\" r=\"55\" fill=\"#1e293b\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <text x=\"200\" y=\"125\" fill=\"#f8fafc\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Solid Earth</text>\n  <circle cx=\"450\" cy=\"120\" r=\"16\" fill=\"#cbd5e1\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <text x=\"450\" y=\"152\" fill=\"#cbd5e1\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Moon</text>\n  <line x1=\"290\" y1=\"120\" x2=\"350\" y2=\"120\" stroke=\"#38bdf8\" stroke-width=\"3\" marker-end=\"url(#arr-tid1)\"/>\n  <text x=\"320\" y=\"110\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Bulge 1</text>\n  <line x1=\"110\" y1=\"120\" x2=\"50\" y2=\"120\" stroke=\"#38bdf8\" stroke-width=\"3\" marker-end=\"url(#arr-tid2)\"/>\n  <text x=\"80\" y=\"110\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">Bulge 2</text>\n  <text x=\"250\" y=\"30\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Differential Tidal Field: a_tide ∝ 2 G M_M R_E / d³</text>\n  <defs>\n    <marker id=\"arr-tid1\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#38bdf8\"/></marker>\n    <marker id=\"arr-tid2\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#38bdf8\"/></marker>\n  </defs>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-021",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "IPhO-SEL-FND",
+        "year": "2024",
+        "question_number": "Q02",
+        "tier": "International Olympiad"
+      },
+      "stem": "Two stars of masses $m_1 = 2.0 M_\\odot$ and $m_2 = 1.0 M_\\odot$ orbit their common center of mass in circular orbits under their mutual gravitational attraction, maintaining a constant separation $d = 3.0\\text{ AU}$. What is the ratio of their orbital radii $\\frac{r_1}{r_2}$ relative to the center of mass, and what is their common orbital period $T$ in Earth years? (Recall that for Earth-Sun: $1.0 M_\\odot$ at $1.0\\text{ AU}$ has $T = 1.0\\text{ yr}$).",
+      "system_parameters": {
+        "system_boundary": "Isolated binary star system",
+        "reference_frame": "Barycentric inertial frame",
+        "idealizations": [
+          "Circular orbits",
+          "Point masses",
+          "No mass transfer"
+        ]
+      },
+      "options": {
+        "A": "$\\frac{r_1}{r_2} = 0.50,\\; T = 3.0\\text{ years}$",
+        "B": "$\\frac{r_1}{r_2} = 2.0,\\; T = 3.0\\text{ years}$",
+        "C": "$\\frac{r_1}{r_2} = 0.50,\\; T = 5.2\\text{ years}$",
+        "D": "$\\frac{r_1}{r_2} = 0.50,\\; T = 9.0\\text{ years}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 4,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 4,
+          "math_friction": 3
+        },
+        "protected_work_W": "Using barycentric constraint m1*r1 = m2*r2 to find radius ratio and reduced-mass Kepler's third law T = 2*pi*sqrt(d^3 / (G*(m1+m2))) to calculate scaled period.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires two-body reduced mass dynamics and non-trivial center-of-mass barycentric decomposition."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "By definition of center of mass: m1 * r1 = m2 * r2 => r1/r2 = m2/m1 = 1.0/2.0 = 0.50. For binary system, T^2 = (4*pi^2 / G(m1+m2)) * d^3. Scaling to solar units: T = sqrt(d^3 / M_tot) = sqrt(3^3 / 3) = sqrt(27 / 3) = sqrt(9) = 3.0 years."
+        },
+        "B": {
+          "type": "RECIPROCAL_ERROR",
+          "diagnostic": "Inverted the radius ratio: r1/r2 = m1/m2 = 2.0."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Used single star mass m2 = 1.0 in period formula: sqrt(27 / 1) = 5.2 years."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Forgot to take square root of 9^2 or 3^2, reporting 9.0 years."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Barycentric Center of Mass Constraint",
+          "text": "The center of mass satisfies $m_1 r_1 = m_2 r_2$, where $r_1 + r_2 = d$. Therefore, $\\frac{r_1}{r_2} = \\frac{m_2}{m_1} = \\frac{1.0}{2.0} = 0.50$."
+        },
+        {
+          "tier": 2,
+          "title": "Binary Kepler's Third Law",
+          "text": "Each star experiences gravitational force $F = \\frac{G m_1 m_2}{d^2}$. Equating to $m_1 \\omega^2 r_1$ gives $\\omega^2 = \\frac{G(m_1 + m_2)}{d^3}$, so $T = 2\\pi \\sqrt{\\frac{d^3}{G(m_1 + m_2)}}$."
+        },
+        {
+          "tier": 3,
+          "title": "Solar Units Proportionality",
+          "text": "In astronomical units: $T = \\sqrt{\\frac{d^3}{M_{\\text{tot}}}} = \\sqrt{\\frac{3.0^3}{2.0 + 1.0}} = \\sqrt{\\frac{27}{3}} = \\sqrt{9.0} = 3.0\\text{ years}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Center of mass position: $m_1 r_1 = m_2 r_2 \\implies \\frac{r_1}{r_2} = \\frac{m_2}{m_1} = \\frac{1.0 M_\\odot}{2.0 M_\\odot} = 0.50$.",
+          "Separation: $r_1 = \\frac{m_2}{m_1 + m_2} d = \\frac{1}{3} d$, and $r_2 = \\frac{2}{3} d$.",
+          "Equation of motion for star 1: $\\frac{G m_1 m_2}{d^2} = m_1 \\omega^2 r_1 = m_1 \\omega^2 \\left(\\frac{m_2}{m_1 + m_2} d\\right)$.",
+          "Cancel $m_1 m_2$: $\\omega^2 = \\frac{G(m_1 + m_2)}{d^3} \\implies T = 2\\pi \\sqrt{\\frac{d^3}{G(m_1 + m_2)}}$.",
+          "Evaluate in solar units: $T = \\sqrt{\\frac{(3.0)^3}{2.0 + 1.0}} = \\sqrt{\\frac{27}{3}} = \\sqrt{9} = 3.0\\text{ years}$."
+        ],
+        "final_expression": "\\frac{r_1}{r_2} = 0.50,\\; T = 3.0\\text{ years}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[r_1/r_2] = [1], [T] = [T]",
+        "limiting_cases": [
+          {
+            "condition": "m1 >> m2 (Sun-planet limit)",
+            "expected_outcome": "r1 -> 0, r2 -> d, T = 2*pi*sqrt(d^3 / (G m1)) (standard single-body Kepler)"
+          },
+          {
+            "condition": "m1 = m2 (equal binary)",
+            "expected_outcome": "r1 = r2 = d/2, T = 2*pi*sqrt(d^3 / (2Gm1))"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-022",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "IPhO-SEL-FND",
+        "year": "2024",
+        "question_number": "Q05",
+        "tier": "International Olympiad"
+      },
+      "stem": "A uniform solid planet has mass $M$ and radius $R$. Taking the universal gravitational potential datum as $V(\\infty) = 0$, what is the exact value of the gravitational potential $V_c$ at the center of the planet ($r = 0$)?",
+      "system_parameters": {
+        "system_boundary": "Uniform solid spherical mass distribution",
+        "reference_frame": "Planetary center frame",
+        "idealizations": [
+          "Uniform density rho",
+          "V(infinity) = 0"
+        ]
+      },
+      "options": {
+        "A": "$-\\frac{3}{2} \\frac{GM}{R}$",
+        "B": "$-\\frac{GM}{R}$",
+        "C": "$0$",
+        "D": "$-\\frac{1}{2} \\frac{GM}{R}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D4",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 3,
+          "domain_coupling": 4,
+          "math_friction": 4
+        },
+        "protected_work_W": "Integrating gravitational field from surface to center V_c - V(R) = -int_R^0 g(r) dr = GM/(2R) to find V_c = -1.5 * GM/R.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires piecewise line integral of electric/gravitational potential from infinity through interior."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "V(R) = -GM/R. Inside, g(r) = (GM/R^3)*r. V_c - V(R) = -int_R^0 (GM/R^3) r dr = (GM/R^3) [r^2 / 2]_0^R = GM / (2R). Thus V_c = -GM/R - GM/(2R) = -1.5 GM/R."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Assumed potential remains constant inside the sphere, equal to its surface value -GM/R."
+        },
+        "C": {
+          "type": "MIS-GRAV-INTERIOR-INVERSE-SQUARE",
+          "diagnostic": "Conflated gravitational field (which is zero at center: g = 0) with gravitational potential."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Subtracted GM/2R from zero instead of from surface potential -GM/R."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Potential at Surface",
+          "text": "From infinity to surface, the planet behaves as a point mass: $V(R) = -\\frac{GM}{R}$."
+        },
+        {
+          "tier": 2,
+          "title": "Field Inside Planet",
+          "text": "Inside the planet ($r \\le R$), the field points inward: $\\vec{g}(r) = -\\frac{GM}{R^3} r \\hat{r}$."
+        },
+        {
+          "tier": 3,
+          "title": "Line Integral to Center",
+          "text": "Potential difference: $V_c - V(R) = -\\int_R^0 \\left(-\\frac{GM}{R^3} r\\right) dr = \\frac{GM}{R^3} \\left[\\frac{r^2}{2}\\right]_0^R = -\\frac{GM}{2R}$. Thus $V_c = V(R) - \\frac{GM}{2R} = -\\frac{GM}{R} - \\frac{GM}{2R} = -\\frac{3}{2}\\frac{GM}{R}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Potential at surface: $V(R) = -\\int_\\infty^R \\vec{g} \\cdot d\\vec{r} = -\\frac{GM}{R}$.",
+          "Work done moving a unit mass from $R$ to $0$: $V(0) - V(R) = -\\int_R^0 g(r) dr$.",
+          "Since $g(r) = \\frac{GM}{R^3} r$: $\\int_R^0 \\frac{GM}{R^3} r dr = \\frac{GM}{R^3} \\left[\\frac{r^2}{2}\\right]_R^0 = -\\frac{GM}{2R}$.",
+          "Therefore: $V(0) - V(R) = -\\left(-\\frac{GM}{2R}\\right) = +\\frac{GM}{2R}$? Notice direction: $g$ points toward center (-r), so moving toward center is moving ALONG the field, dropping potential further!",
+          "Correct step: $V(0) = V(R) - \\int_0^R g(r) dr = -\\frac{GM}{R} - \\frac{GM}{2R} = -\\frac{3}{2} \\frac{GM}{R}$."
+        ],
+        "final_expression": "V_c = -\\frac{3}{2} \\frac{GM}{R}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[V] = [L^2][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "Poisson's equation check",
+            "expected_outcome": "del^2 V = 4*pi*G*rho (constant Laplacian matches uniform density)"
+          },
+          {
+            "condition": "Field derivative",
+            "expected_outcome": "g = -dV/dr = -d/dr [ -GM/(2R^3) * (3R^2 - r^2) ] = (GM/R^3)*r (recovers linear field)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-023",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "IPhO-SEL-FND",
+        "year": "2024",
+        "question_number": "Q08",
+        "tier": "International Olympiad"
+      },
+      "stem": "A spacecraft is in a circular parking orbit of radius $r_1 = R_0$ around a planet of mass $M$ with circular speed $v_1 = \\sqrt{\\frac{GM}{R_0}}$. It executes a Hohmann transfer burn to reach an outer circular orbit of radius $r_2 = 4.0 R_0$. The semi-major axis of the elliptical transfer orbit is $a_{\\text{trans}} = \\frac{r_1 + r_2}{2} = 2.5 R_0$. What is the required impulsive speed increase $\\Delta v_1$ at the periapsis burn, expressed in terms of $v_1$?",
+      "system_parameters": {
+        "system_boundary": "Spacecraft executing coplanar Hohmann transfer",
+        "reference_frame": "Planet-centered inertial frame",
+        "idealizations": [
+          "Impulsive delta-v burns",
+          "Coplanar circular boundary orbits"
+        ]
+      },
+      "options": {
+        "A": "$\\Delta v_1 = (\\sqrt{1.6} - 1) v_1 \\approx 0.265 v_1$",
+        "B": "$\\Delta v_1 = (1 - \\sqrt{0.5}) v_1 \\approx 0.293 v_1$",
+        "C": "$\\Delta v_1 = 0.500 v_1$",
+        "D": "$\\Delta v_1 = (\\sqrt{2} - 1) v_1 \\approx 0.414 v_1$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 3,
+          "domain_coupling": 4,
+          "math_friction": 4
+        },
+        "protected_work_W": "Using Vis-Viva equation to compute periapsis transfer velocity v_trans = sqrt(GM * (2/R_0 - 1/(2.5R_0))) = sqrt(1.6) * v1 and taking difference Delta v1 = (sqrt(1.6) - 1) * v1.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires multi-orbit orbital mechanics coupling and energy budget synthesis."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Vis-Viva at periapsis: v_t^2 = GM (2/R_0 - 1/(2.5R_0)) = (GM/R_0) * (2 - 0.4) = 1.6 v1^2 => v_t = sqrt(1.6) v1 ≈ 1.265 v1. Delta v1 = 1.265 v1 - 1.0 v1 = 0.265 v1."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Computed difference between initial speed and final circular speed at r_2 = 4R_0."
+        },
+        "C": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Used linear ratio 1.6 - 1 = 0.6 / 1.2 = 0.50 v1 without square root."
+        },
+        "D": {
+          "type": "MIS-GRAV-ESCAPE-VS-ORBIT",
+          "diagnostic": "Confused transfer orbit insertion with complete escape from the planet: (sqrt(2) - 1) v1."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Initial Orbital Speed",
+          "text": "In the circular parking orbit of radius $R_0$, $v_1 = \\sqrt{\\frac{GM}{R_0}}$."
+        },
+        {
+          "tier": 2,
+          "title": "Transfer Orbit Speed via Vis-Viva",
+          "text": "For the transfer ellipse, semi-major axis is $a = \\frac{R_0 + 4R_0}{2} = 2.5 R_0$. By the Vis-Viva equation: $v_{\\text{trans}}^2 = GM \\left(\\frac{2}{R_0} - \\frac{1}{2.5 R_0}\\right) = \\frac{GM}{R_0} (2 - 0.4) = 1.6 \\frac{GM}{R_0}$."
+        },
+        {
+          "tier": 3,
+          "title": "Calculate Delta v",
+          "text": "The spacecraft needs $v_{\\text{trans}} = \\sqrt{1.6} v_1 \\approx 1.2649 v_1$. The required boost is $\\Delta v_1 = v_{\\text{trans}} - v_1 = (\\sqrt{1.6} - 1) v_1 \\approx 0.265 v_1$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Initial parking circular speed: $v_1 = \\sqrt{\\frac{GM}{R_0}}$.",
+          "Transfer orbit ellipse semi-major axis: $a = \\frac{r_1 + r_2}{2} = \\frac{R_0 + 4R_0}{2} = 2.5 R_0$.",
+          "Speed at periapsis ($r = R_0$) in transfer ellipse: $v_{\\text{peri}}^2 = GM \\left(\\frac{2}{R_0} - \\frac{1}{2.5 R_0}\\right) = \\frac{GM}{R_0} \\left(2 - \\frac{2}{5}\\right) = 1.6 \\frac{GM}{R_0} = 1.6 v_1^2$.",
+          "Periapsis speed: $v_{\\text{peri}} = \\sqrt{1.6} v_1 \\approx 1.2649 v_1$.",
+          "Velocity increment required: $\\Delta v_1 = v_{\\text{peri}} - v_1 = (\\sqrt{1.6} - 1) v_1 \\approx 0.265 v_1$."
+        ],
+        "final_expression": "\\Delta v_1 = (\\sqrt{1.6} - 1) v_1 \\approx 0.265 v_1"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[Delta v] = [L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "r_2 -> R_0 (no transfer needed)",
+            "expected_outcome": "a = R_0 => v_peri = v_1 => Delta v_1 = 0"
+          },
+          {
+            "condition": "r_2 -> infinity (parabolic escape limit)",
+            "expected_outcome": "a -> infinity => v_peri^2 = 2 GM / R_0 => Delta v = (sqrt(2) - 1) v_1"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-024",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "IPhO-SEL-FND",
+        "year": "2024",
+        "question_number": "Q12",
+        "tier": "International Olympiad"
+      },
+      "stem": "A solid sphere of uniform mass density $\\rho$ and radius $R$ has an off-center spherical cavity of radius $R_c = R/3$ scooped out of it. The center of the cavity is displaced from the center of the large sphere by vector $\\vec{d}$. Using the principle of superposition, what is the gravitational field $\\vec{g}_{\\text{cav}}$ at ANY point inside the cavity?",
+      "system_parameters": {
+        "system_boundary": "Perforated solid sphere with off-center hollow cavity",
+        "reference_frame": "Origin at center of main sphere",
+        "idealizations": [
+          "Uniform density rho",
+          "Linear superposition of Newtonian fields"
+        ]
+      },
+      "options": {
+        "A": "$\\vec{g}_{\\text{cav}} = -\\frac{4}{3} \\pi G \\rho \\vec{d}$ (strictly uniform throughout cavity)",
+        "B": "$\\vec{g}_{\\text{cav}} = \\vec{0}$ (field vanishes identically by Shell Theorem)",
+        "C": "$\\vec{g}_{\\text{cav}} = -\\frac{4}{3} \\pi G \\rho \\vec{r}$ (varies linearly with distance from main center)",
+        "D": "$\\vec{g}_{\\text{cav}} = -\\frac{4}{3} \\pi G \\rho (\\vec{r} - \\vec{d})$ (varies linearly with distance from cavity center)"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D4",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 3,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 3
+        },
+        "protected_work_W": "Applying superposition g_cav = g_solid - g_cavity_mass and showing that position vector r cancels identically, leaving a uniform field proportional to displacement vector d.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires vector superposition proof demonstrating surprising uniformity of the cavity field."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "g_cav = g_full(r) - g_scoop(r - d) = -4/3 pi G rho r - (-4/3 pi G rho (r - d)) = -4/3 pi G rho d. The field is completely independent of r and strictly uniform everywhere inside the cavity!"
+        },
+        "B": {
+          "type": "MIS-GRAV-INTERIOR-INVERSE-SQUARE",
+          "diagnostic": "Misapplied shell theorem, incorrectly assuming cavity field must vanish like a concentric shell."
+        },
+        "C": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Neglected the negative mass subtraction of the scooped cavity."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Assumed field depends purely on displacement from cavity center."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Superposition Principle",
+          "text": "The cavity can be represented as a full solid sphere of positive density $+\\rho$ plus a smaller sphere of negative density $-\\rho$ located at the cavity position."
+        },
+        {
+          "tier": 2,
+          "title": "Vector Field Inside a Solid Sphere",
+          "text": "Inside a solid sphere centered at origin: $\\vec{g}_1(\\vec{r}) = -\\frac{4}{3} \\pi G \\rho \\vec{r}$. For a sphere centered at $\\vec{d}$, the field at $\\vec{r}$ is $\\vec{g}_2(\\vec{r}) = -\\frac{4}{3} \\pi G (-\\rho) (\\vec{r} - \\vec{d}) = +\\frac{4}{3} \\pi G \\rho (\\vec{r} - \\vec{d})$."
+        },
+        {
+          "tier": 3,
+          "title": "Add the Two Fields",
+          "text": "$\\vec{g}_{\\text{cav}} = \\vec{g}_1 + \\vec{g}_2 = -\\frac{4}{3} \\pi G \\rho \\vec{r} + \\frac{4}{3} \\pi G \\rho \\vec{r} - \\frac{4}{3} \\pi G \\rho \\vec{d} = -\\frac{4}{3} \\pi G \\rho \\vec{d}$. The position vector $\\vec{r}$ cancels completely!"
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Consider point $P$ inside the cavity with position vector $\\vec{r}$ relative to center $O_1$ of the large sphere.",
+          "Field due to complete solid sphere: $\\vec{g}_{\\text{full}} = -\\frac{G M(r)}{r^2} \\hat{r} = -\\frac{4}{3} \\pi G \\rho \\vec{r}$.",
+          "The scooped region has center at $\\vec{d}$. The position of $P$ relative to cavity center $O_2$ is $\\vec{r}' = \\vec{r} - \\vec{d}$.",
+          "Field exerted by the removed mass of density $\\rho$: $\\vec{g}_{\\text{rem}} = -\\frac{4}{3} \\pi G \\rho (\\vec{r} - \\vec{d})$.",
+          "By superposition: $\\vec{g}_{\\text{cav}} = \\vec{g}_{\\text{full}} - \\vec{g}_{\\text{rem}} = -\\frac{4}{3} \\pi G \\rho \\vec{r} - \\left[-\\frac{4}{3} \\pi G \\rho (\\vec{r} - \\vec{d})\\right] = -\\frac{4}{3} \\pi G \\rho \\vec{d}$.",
+          "This proves $\\vec{g}_{\\text{cav}}$ is constant in magnitude and direction everywhere in the cavity."
+        ],
+        "final_expression": "\\vec{g}_{\\text{cav}} = -\\frac{4}{3} \\pi G \\rho \\vec{d}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[g] = [L][T^-2]",
+        "limiting_cases": [
+          {
+            "condition": "d -> 0 (concentric cavity)",
+            "expected_outcome": "g_cav -> 0 (recovers Shell Theorem spherical shell interior null field)"
+          },
+          {
+            "condition": "Direction check",
+            "expected_outcome": "Field points opposite to displacement vector d (toward the heavier side where more mass remains)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": true,
+        "caption": "Figure GRAV-08: Spherical cavity in a solid sphere demonstrating perfectly uniform interior field.",
+        "svg_code": "<svg viewBox=\"0 0 500 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0f172a; border-radius:8px; width:100%; max-width:500px; height:auto;\">\n  <circle cx=\"210\" cy=\"120\" r=\"95\" fill=\"#1e293b\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <circle cx=\"270\" cy=\"120\" r=\"32\" fill=\"#0f172a\" stroke=\"#f59e0b\" stroke-width=\"2\"/>\n  <circle cx=\"210\" cy=\"120\" r=\"4\" fill=\"#38bdf8\"/>\n  <text x=\"200\" y=\"145\" fill=\"#38bdf8\" font-size=\"14px\" font-family=\"sans-serif\">O₁ (Sphere)</text>\n  <circle cx=\"270\" cy=\"120\" r=\"4\" fill=\"#f59e0b\"/>\n  <text x=\"270\" y=\"105\" fill=\"#f59e0b\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">O₂ (Cavity)</text>\n  <line x1=\"210\" y1=\"120\" x2=\"270\" y2=\"120\" stroke=\"#94a3b8\" stroke-width=\"2\" marker-end=\"url(#arr-d-cav)\"/>\n  <text x=\"240\" y=\"115\" fill=\"#94a3b8\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">d</text>\n  <line x1=\"260\" y1=\"130\" x2=\"245\" y2=\"130\" stroke=\"#ef4444\" stroke-width=\"2.5\" marker-end=\"url(#arr-g-cav)\"/>\n  <line x1=\"280\" y1=\"130\" x2=\"265\" y2=\"130\" stroke=\"#ef4444\" stroke-width=\"2.5\" marker-end=\"url(#arr-g-cav)\"/>\n  <line x1=\"270\" y1=\"140\" x2=\"255\" y2=\"140\" stroke=\"#ef4444\" stroke-width=\"2.5\" marker-end=\"url(#arr-g-cav)\"/>\n  <text x=\"270\" y=\"165\" fill=\"#ef4444\" font-size=\"14px\" font-family=\"sans-serif\" text-anchor=\"middle\">g_cav = -(4/3)πGρ d</text>\n  <text x=\"250\" y=\"25\" fill=\"#f8fafc\" font-size=\"15px\" font-family=\"sans-serif\" text-anchor=\"middle\" font-weight=\"bold\">Superposition Theorem: Uniform Gravitational Field in Cavity</text>\n  <defs>\n    <marker id=\"arr-d-cav\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#94a3b8\"/></marker>\n    <marker id=\"arr-g-cav\" viewBox=\"0 0 10 10\" refX=\"6\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 1 L 10 5 L 0 9 z\" fill=\"#ef4444\"/></marker>\n  </defs>\n</svg>"
+      }
+    },
+    {
+      "question_id": "PHYS-GRAV-025",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "provenance": {
+        "paper_code": "IPhO-SEL-FND",
+        "year": "2024",
+        "question_number": "Q15",
+        "tier": "International Olympiad"
+      },
+      "stem": "A space probe is launched vertically upward from the surface of Earth ($R_E = 6400\\text{ km}$, surface escape velocity $v_{\\text{esc}} = 11.2\\text{ km/s}$) with an initial launch speed $v_0 = 3.0 v_{\\text{esc}} = 33.6\\text{ km/s}$. Neglecting atmospheric drag and Earth's rotation, what is the probe's residual speed $v_\\infty$ as it escapes to an infinite distance from Earth?",
+      "system_parameters": {
+        "system_boundary": "Unbound probe in Earth's gravitational potential well",
+        "reference_frame": "Geocentric inertial frame",
+        "idealizations": [
+          "Conservation of total mechanical energy",
+          "No atmospheric friction",
+          "No solar/planetary perturbations"
+        ]
+      },
+      "options": {
+        "A": "$v_\\infty = 2\\sqrt{2} v_{\\text{esc}} \\approx 31.7\\text{ km/s}$",
+        "B": "$v_\\infty = 2.0 v_{\\text{esc}} = 22.4\\text{ km/s}$",
+        "C": "$v_\\infty = 3.0 v_{\\text{esc}} = 33.6\\text{ km/s}$",
+        "D": "$v_\\infty = \\sqrt{3} v_{\\text{esc}} \\approx 19.4\\text{ km/s}$"
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D4",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D4",
+        "difficulty_factors": {
+          "system_coupling": 2,
+          "vector_dimensionality": 1,
+          "constraint_latency": 2,
+          "domain_coupling": 4,
+          "math_friction": 3
+        },
+        "protected_work_W": "Applying conservation of mechanical energy: 0.5*m*v_0^2 - GMm/R = 0.5*m*v_inf^2 => v_inf = sqrt(v_0^2 - v_esc^2) = sqrt(9 - 1)*v_esc = sqrt(8)*v_esc = 2*sqrt(2)*v_esc.",
+        "rival_demands": [
+          {
+            "demand": "APPLY",
+            "rejection_rationale": "Requires hyperbolic trajectory energy analysis and non-linear kinetic difference derivation."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "By conservation of energy: E = 0.5 m v0^2 - GMm/R = 0.5 m v_inf^2. Since v_esc^2 = 2GM/R, v_inf^2 = v0^2 - v_esc^2 = (3 v_esc)^2 - v_esc^2 = 8 v_esc^2 => v_inf = sqrt(8) v_esc = 2.828 * 11.2 km/s = 31.68 km/s ≈ 31.7 km/s."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Subtracted speeds linearly: v_inf = v0 - v_esc = 3 v_esc - v_esc = 2 v_esc = 22.4 km/s, violating conservation of energy."
+        },
+        "C": {
+          "type": "MIS-GRAV-ZERO-G-IN-SPACE",
+          "diagnostic": "Assumed gravity does no net work on a high-speed body, so v_inf = v0 = 33.6 km/s."
+        },
+        "D": {
+          "type": "ALGEBRAIC_ARITHMETIC_ERROR",
+          "diagnostic": "Took square root of 3 instead of 8: sqrt(3) * 11.2 = 19.4 km/s."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "Conservation of Mechanical Energy",
+          "text": "Total energy at launch equals total energy at infinity: $E_{\\text{launch}} = \\frac{1}{2} m v_0^2 - \\frac{GMm}{R_E} = \\frac{1}{2} m v_\\infty^2 + 0$."
+        },
+        {
+          "tier": 2,
+          "title": "Substitute Escape Velocity",
+          "text": "Since $v_{\\text{esc}}^2 = \\frac{2GM}{R_E}$, the potential energy term is $\\frac{GMm}{R_E} = \\frac{1}{2} m v_{\\text{esc}}^2$. Thus $\\frac{1}{2} m v_0^2 - \\frac{1}{2} m v_{\\text{esc}}^2 = \\frac{1}{2} m v_\\infty^2$."
+        },
+        {
+          "tier": 3,
+          "title": "Solve for Asymptotic Speed",
+          "text": "$v_\\infty = \\sqrt{v_0^2 - v_{\\text{esc}}^2} = \\sqrt{(3 v_{\\text{esc}})^2 - v_{\\text{esc}}^2} = \\sqrt{9 v_{\\text{esc}}^2 - v_{\\text{esc}}^2} = \\sqrt{8} v_{\\text{esc}} = 2\\sqrt{2} v_{\\text{esc}} \\approx 2.828 \\times 11.2\\text{ km/s} \\approx 31.7\\text{ km/s}$."
+        }
+      ],
+      "model_proof": {
+        "derivation_steps": [
+          "Total initial mechanical energy at planetary surface: $E_0 = \\frac{1}{2} m v_0^2 - \\frac{G M_E m}{R_E}$.",
+          "Recall definition of escape speed: $\\frac{1}{2} m v_{\\text{esc}}^2 - \\frac{G M_E m}{R_E} = 0 \\implies \\frac{G M_E m}{R_E} = \\frac{1}{2} m v_{\\text{esc}}^2$.",
+          "Substitute into initial energy: $E_0 = \\frac{1}{2} m v_0^2 - \\frac{1}{2} m v_{\\text{esc}}^2 = \\frac{1}{2} m (v_0^2 - v_{\\text{esc}}^2)$.",
+          "At $r \\to \\infty$, gravitational potential energy vanishes ($U(\\infty) = 0$), so $E_\\infty = \\frac{1}{2} m v_\\infty^2$.",
+          "Equating energies: $\\frac{1}{2} m v_\\infty^2 = \\frac{1}{2} m (v_0^2 - v_{\\text{esc}}^2) \\implies v_\\infty = \\sqrt{v_0^2 - v_{\\text{esc}}^2}$.",
+          "Substitute $v_0 = 3 v_{\\text{esc}}$: $v_\\infty = \\sqrt{9 v_{\\text{esc}}^2 - v_{\\text{esc}}^2} = \\sqrt{8} v_{\\text{esc}} = 2\\sqrt{2} v_{\\text{esc}} \\approx 31.68\\text{ km/s} \\approx 31.7\\text{ km/s}$."
+        ],
+        "final_expression": "v_\\infty = 2\\sqrt{2} v_{\\text{esc}} \\approx 31.7\\text{ km/s}"
+      },
+      "independent_check": {
+        "method": "DIMENSIONAL_HOMOGENEITY_AND_LIMITS",
+        "dimensional_formula": "[v_inf] = [L][T^-1]",
+        "limiting_cases": [
+          {
+            "condition": "v_0 = v_esc",
+            "expected_outcome": "v_inf = sqrt(v_esc^2 - v_esc^2) = 0 (exact threshold of escape)"
+          },
+          {
+            "condition": "v_0 >> v_esc",
+            "expected_outcome": "v_inf approx v_0 * (1 - 0.5 * (v_esc/v_0)^2) -> v_0 (gravitational well becomes negligible)"
+          }
+        ]
+      },
+      "figure": {
+        "has_figure": false,
+        "caption": "",
+        "svg_code": ""
+      }
+    }
+  ]
+}
