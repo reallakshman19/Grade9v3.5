@@ -48,6 +48,15 @@ def compile_tri_modal_mechanics():
 
     css_link_match = re.search(r'<link id="offline-katex-css"[^>]+>', circles_html)
     offline_katex_css_tag = css_link_match.group(0) if css_link_match else ""
+    
+    import base64
+    b64_font_match = re.search(r'href="data:text/css;base64,([^"]+)"', circles_html)
+    decoded_katex_css = ""
+    if b64_font_match:
+        try:
+            decoded_katex_css = base64.b64decode(b64_font_match.group(1)).decode('utf-8', errors='ignore')
+        except Exception:
+            pass
 
     style_match = re.search(r'<style>([\s\S]*?)</style>', circles_html)
     base_css = style_match.group(1) if style_match else ""
@@ -785,6 +794,9 @@ def compile_tri_modal_mechanics():
   <title>Mechanics (NLM &amp; Friction) &bull; Tri-Modal Master Suite</title>
   <meta name="description" content="Tri-Modal Grade 9 Olympiad Physics Application: Core 1A Learner Textbook + Core 1B Recall & Reconstruction + Core 2 Olympiad Practice Suite.">
   {offline_katex_css_tag}
+  <style id="katex-offline-font-faces">
+    {decoded_katex_css}
+  </style>
   <style>
     {base_css}
     
@@ -798,63 +810,79 @@ def compile_tri_modal_mechanics():
       --c1b-accent: #a855f7;
       --c2-accent: #38bdf8;
     }}
+
+    * {{
+      box-sizing: border-box;
+    }}
     
     body {{
       background-color: var(--body-bg) !important;
       color: #f8fafc !important;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      font-size: 15px;
-    }}
-    
-    /* Header & Navigation */
-    .tri-header {{
-      background: #0f172a;
-      border-bottom: 1px solid var(--border);
-      padding: 20px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }}
-    .tri-header-inner {{
-      max-width: 1300px;
-      margin: 0 auto;
+      padding: 24px 16px;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      align-items: center;
+    }}
+
+    /* 12.7" Tablet Optimized Container */
+    .app-container {{
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }}
+    
+    /* Header & Navigation: Relative in document flow (Never occluding cards on 12.7" tablet) */
+    .app-header {{
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 28px;
+      position: relative !important;
+      top: auto !important;
+      z-index: 10;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      width: 100%;
     }}
     .header-top {{
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
+      margin-bottom: 18px;
     }}
     .header-title-box h1 {{
       margin: 0;
-      font-size: 22px;
+      font-size: 24px;
+      font-weight: 800;
       color: #fff;
+      letter-spacing: -0.01em;
     }}
     .header-title-box p {{
-      margin: 4px 0 0 0;
-      font-size: 14px;
+      margin: 6px 0 0 0;
+      font-size: 15px;
       color: #94a3b8;
     }}
     .tri-tabs-row {{
       display: flex;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
     }}
     .tri-tab-btn {{
       background: #1e293b;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       color: #94a3b8;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 12px 22px;
+      border-radius: 10px;
       cursor: pointer;
       min-height: 48px;
       display: inline-flex;
@@ -883,9 +911,7 @@ def compile_tri_modal_mechanics():
     }}
 
     .main-wrap {{
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 24px 20px;
+      width: 100%;
     }}
     .tab-section {{
       display: none;
@@ -1060,33 +1086,77 @@ def compile_tri_modal_mechanics():
     .hints-body, .solution-body {{
       padding: 16px;
       border-top: 1px solid var(--border);
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.6;
     }}
     .hint-tier {{
       background: #1e293b;
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 12px;
-      margin-bottom: 10px;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
     }}
     .hint-tier-header {{
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+    }}
+    .hint-tier-title {{
+      font-size: 15px;
+      font-weight: 700;
+      color: #38bdf8;
+      flex: 1 1 auto;
     }}
     .hint-unlock-btn {{
-      background: #0369a1;
-      border: 1px solid var(--primary);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 6px 12px;
-      border-radius: 6px;
+      background: #0284c7 !important;
+      border: 1px solid #38bdf8 !important;
+      color: #fff !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      padding: 8px 18px !important;
+      border-radius: 8px !important;
       cursor: pointer;
-      min-height: 48px;
-      display: inline-flex;
-      align-items: center;
+      min-height: 48px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px;
+      white-space: nowrap !important;
+      width: auto !important;
+      max-width: fit-content !important;
+      flex-shrink: 0 !important;
+      transition: all 0.2s ease;
+    }}
+    .hint-unlock-btn:hover {{
+      background: #0369a1 !important;
+      border-color: #7dd3fc !important;
+      color: #fff !important;
+    }}
+    .hint-prompt {{
+      font-size: 15.5px;
+      color: #e2e8f0;
+      line-height: 1.55;
+    }}
+    .hint-reveal {{
+      background: #0f172a;
+      border-left: 4px solid #22c55e;
+      padding: 14px 18px;
+      border-radius: 6px;
+      margin-top: 10px;
+      font-size: 15.5px;
+      color: #f1f5f9;
+      line-height: 1.6;
+    }}
+    .katex {{
+      font-size: 1.15em;
+      text-rendering: auto;
+    }}
+    .katex-display {{
+      margin: 0.8em 0 !important;
+      overflow-x: auto;
+      overflow-y: hidden;
     }}
 
     /* TAB 2: Core 1A Textbook Styles */
@@ -1440,9 +1510,8 @@ def compile_tri_modal_mechanics():
   </style>
 </head>
 <body>
-
-  <header class="tri-header">
-    <div class="tri-header-inner">
+  <div class="app-container">
+    <header class="app-header">
       <div class="header-top">
         <div class="header-title-box">
           <h1>⚡ Mechanics (NLM &amp; Friction) &bull; Tri-Modal Master Suite</h1>
@@ -1466,10 +1535,9 @@ def compile_tri_modal_mechanics():
           <span>🎯 Core 2: Practice Suite (25 Cards)</span>
         </button>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main class="main-wrap">
+    <main class="main-wrap">
     <!-- TAB 1: CORE 1A TEXTBOOK -->
     <section class="tab-section active" id="sec-c1a">
       <div style="margin-bottom: 20px;">
@@ -1514,6 +1582,7 @@ def compile_tri_modal_mechanics():
       {practice_cards_html}
     </section>
   </main>
+  </div>
 
   <script>
     function switchTab(tabId) {{
