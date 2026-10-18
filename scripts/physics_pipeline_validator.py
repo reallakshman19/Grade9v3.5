@@ -258,7 +258,7 @@ def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter
             figure_count += 1
             svg = fig.get("svg_code", "")
             if svg:
-                fonts = [int(m) for m in re.findall(r'font-size:\s*(\d+)px', svg)]
+                fonts = [int(m) for m in re.findall(r'font-size[=:]\s*[\"\']?(\d+)', svg)]
                 violating = [f for f in fonts if f < 14]
                 if violating:
                     errors.append(f"{qid}: SVG font-size violation (<14px): {violating}")
@@ -323,7 +323,7 @@ def validate_master_app(app_path: str, expected_q_count: int = 25):
     # Check SVG font floor >= 14px in entire document
     svg_blocks = re.findall(r'<svg[\s\S]*?</svg>', html, flags=re.DOTALL)
     for idx, svg in enumerate(svg_blocks, 1):
-        fonts = [int(m) for m in re.findall(r'font-size:\s*(\d+)px', svg)]
+        fonts = [int(m) for m in re.findall(r'font-size[=:]\s*[\"\']?(\d+)', svg)]
         bad = [f for f in fonts if f < 14]
         if bad:
             errors.append(f"SVG #{idx} has font-size below 14px floor: {bad}")
