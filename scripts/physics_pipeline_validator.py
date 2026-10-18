@@ -89,6 +89,79 @@ def resolve_adapter_for_question(q: dict, adapters: dict):
 
     return None, None
 
+
+# NLM-FIX1: The source-specific NLM pilot deliberately does not change gates for
+# other physics topics until they have migrated to factor-evidence contracts.
+NLM_FACTOR_KEYS = (
+    "system_coupling", "vector_dimensionality", "constraint_latency",
+    "domain_coupling", "math_friction",
+)
+NLM_LEGACY_TEMPLATES = {
+    (4, 3, 4, 4, 4), (3, 2, 3, 3, 3), (2, 1, 2, 2, 2),
+}
+NLM_DEMANDS = (
+    "RETRIEVE", "EXPLAIN", "APPLY", "MODEL", "REPRESENT",
+    "SYNTHESIZE", "JUSTIFY",
+)
+
+
+def derive_nlm_band(factors):
+    """Return (derived_band, exact_mean) or (None, None) on invalid scoring."""
+    if not isinstance(factors, dict) or set(factors) != set(NLM_FACTOR_KEYS):
+        return None, None
+    scores = [factors[key] for key in NLM_FACTOR_KEYS]
+    if any(type(n) is not int or not 1 <= n <= 4 for n in scores):
+        return None, None
+    total = sum(scores)
+    # Integer sums avoid floating-point edge ambiguities; all possible
+    # five-factor averages advance by exactly 0.2, so bands have no gaps.
+    if total <= 8:
+        band = "D1"
+    elif total <= 13:
+        band = "D2"
+    elif total <= 17:
+        band = "D3"
+    else:
+        band = "D4"
+    return band, total / 5
+
+
+def validate_nlm_factor_contract(q):
+    """Structural guard only: human reviewers must still judge evidence truth."""
+    qid = q.get("question_id", "UNKNOWN")
+    qrt = q.get("qrt_contract") or {}
+    factors = qrt.get("difficulty_factors")
+    evidence = qrt.get("factor_evidence")
+    errors = []
+    derived, mean = derive_nlm_band(factors)
+    if derived is None:
+        errors.append(f"{qid}: NLM factor vector must have five integer scores 1..4")
+        return errors
+    if qrt.get("difficulty_band") != derived:
+        errors.append(f"{qid}: band mismatch: factor mean={mean:.1f}, derived={derived}, tag={qrt.get('difficulty_band')}")
+    if qrt.get("cell_id") != f"PHYS-{qrt.get('primary_demand')}-{derived}":
+        errors.append(f"{qid}: QRT cell_id disagrees with derived factors and demand")
+    if not isinstance(evidence, dict) or set(evidence) != set(NLM_FACTOR_KEYS):
+        errors.append(f"{qid}: missing factor_evidence per f1..f5")
+    else:
+        for key in NLM_FACTOR_KEYS:
+            detail = evidence[key]
+            if not isinstance(detail, str) or len(detail.strip()) < 18:
+                errors.append(f"{qid}: factor_evidence[{key}] must name a concrete scored feature")
+    vector = tuple(factors[key] for key in NLM_FACTOR_KEYS)
+    if vector in NLM_LEGACY_TEMPLATES:
+        errors.append(f"{qid}: forbidden back-filled template factor vector {vector}")
+    return errors
+
+
+def nlm_coverage_report(questions):
+    coverage = {f"PHYS-{d}-{b}": 0 for d in NLM_DEMANDS for b in ("D1", "D2", "D3", "D4")}
+    for q in questions:
+        tile = (q.get("qrt_contract") or {}).get("cell_id")
+        if tile in coverage:
+            coverage[tile] += 1
+    return coverage
+
 def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter/TopicAdapters.v1.json", strict_golden: bool = False):
     print(f"\n{'='*80}")
     print(f"MULTI-ENGINE VALIDATION: {bank_path}")
@@ -116,6 +189,8 @@ def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter
     figure_count = 0
     prompt_reveal_count = 0
     reasoning_ladder_count = 0
+    nlm_vectors = {}
+    nlm_items = []
     
     universal_diag_codes = {
         "CORRECT", "KEY_CONCEPT", "SIGN_CONVENTION_ERROR", "ALGEBRAIC_ARITHMETIC_ERROR", 
@@ -174,6 +249,25 @@ def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter
             if not qrt.get("protected_work_W"):
                 errors.append(f"{qid}: Missing protected_work_W in qrt_contract")
             
+        # NLM-FIX1: derived score and evidence are required even in standard mode.
+        if qid.startswith("PHYS-NLM-"):
+            nlm_items.append(q)
+            errors.extend(validate_nlm_factor_contract(q))
+            factors = qrt.get("difficulty_factors", {})
+            if derive_nlm_band(factors)[0] is not None:
+                vector = tuple(factors[k] for k in NLM_FACTOR_KEYS)
+                nlm_vectors.setdefault((band, vector), []).append(q)
+            hints_for_nlm = q.get("progressive_hints", [])
+            expected_roles = ("decisive_physics", "representation", "first_equation_only")
+            for idx, expected_role in enumerate(expected_roles):
+                if idx >= len(hints_for_nlm) or hints_for_nlm[idx].get("guidance_role") != expected_role:
+                    errors.append(f"{qid}: H{idx+1} guidance_role must be {expected_role}")
+            if len(hints_for_nlm) == 3:
+                final = str((q.get("model_proof") or {}).get("final_answer_value") or "").strip()
+                h3 = str(hints_for_nlm[2].get("reveal_text") or "").strip()
+                if final and len(final) >= 12 and final.casefold() in h3.casefold():
+                    errors.append(f"{qid}: H3 reveals final answer; first equation/constraint only")
+
         # ----------------------------------------------------
         # GATE 3: Topic Adapter & Subtopic Competency Map
         # ----------------------------------------------------
@@ -319,6 +413,22 @@ def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter
                 violating = [f for f in fonts if f < 14]
                 if violating:
                     errors.append(f"{qid}: SVG font-size violation (<14px): {violating}")
+
+    if nlm_items:
+        coverage = nlm_coverage_report(nlm_items)
+        missing = [tile for tile, count in coverage.items() if not count]
+        print(f"  NLM 28-CELL COVERAGE: {len(coverage) - len(missing)}/28; empty={missing}")
+        if not any(q.get("qrt_contract", {}).get("primary_demand") == "REPRESENT" for q in nlm_items):
+            errors.append("NLM: topic bank has no REPRESENT item")
+        for (band, vector), members in nlm_vectors.items():
+            if len(members) > 1:
+                warnings.append(f"NLM: repeated vector {vector} in {band}: {[q['question_id'] for q in members]}")
+            if len(members) > 3 and not all(
+                isinstance(q.get("qrt_contract", {}).get("vector_reuse_justification"), str)
+                and len(q["qrt_contract"]["vector_reuse_justification"].strip()) >= 25
+                for q in members
+            ):
+                errors.append(f"NLM: un-justified template vector {vector} reused {len(members)} times in {band}")
 
     # Summary Report
     print(f"\n[SUMMARY METRICS]")
