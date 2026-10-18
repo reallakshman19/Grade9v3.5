@@ -2092,6 +2092,95 @@
           "remedy": "Dot product produces scalar work W = F . d; Cross product produces perpendicular pseudovector torque tau = r x F.",
           "trigger_pattern": "assigning direction to work or treating torque as scalar projection"
         }
+      ],
+      "blueprint_refs": {
+        "core1a_ontology": "TEST/physics-research/blueprints/core1a_physics_vectors_ontology.v1.json",
+        "core1b_reconstruction": "TEST/physics-research/blueprints/core1b_physics_vectors_reconstruction.v1.json"
+      },
+      "canonical_reasoning_moves": {
+        "stage_1_choose": "Declare reference frame, orthogonal coordinate axes (+x East, +y North), and origin.",
+        "stage_2_represent": "Construct directed vector arrows, component triangles, or head-to-tail polygon representations.",
+        "stage_3_connect": "Apply governing vector laws: component sum R_x = sum A_x, law of cosines, Galilean relative shift v_{AB} = v_A - v_B, or scalar work product W = F . s.",
+        "stage_4_execute_and_check": "Execute closed-form algebra; recover magnitude and compass direction; verify dimensional homogeneity and dual limiting boundary checks."
+      },
+      "first_move_atlas": [
+        {
+          "competency_id": "VEC-01",
+          "cue": "signed 1D motion, direction reversal, or sign-convention declaration",
+          "representation": "Declare + axis; mark signed displacement / velocity legs on 1D axis",
+          "first_executable_move": "State coordinate frame (+x East/Right); write Delta x = sum(signed legs); translate final sign back to physical direction",
+          "anti_pattern": "Treating negative sign as smaller physical magnitude rather than opposite direction"
+        },
+        {
+          "competency_id": "VEC-02",
+          "cue": "draw, compare, translate, or reverse free vectors",
+          "representation": "Directed arrows with origin, length proportional to magnitude, and terminating arrowhead",
+          "first_executable_move": "Verify equality: identical magnitude AND identical direction; translate free vector without rotating; reverse direction for opposite vector -A",
+          "anti_pattern": "Assuming parallel vectors with different lengths or collinear opposite vectors are equal"
+        },
+        {
+          "competency_id": "VEC-03",
+          "cue": "components, quadrants, and angle reference relative to axes",
+          "representation": "Cartesian coordinate axes (x, y) with vector arrow originating at origin and right projection triangle",
+          "first_executable_move": "Identify adjacent side for cosine (A_adj = |A| cos theta) and opposite side for sine (A_opp = |A| sin theta); assign quadrant signs manually",
+          "anti_pattern": "Blindly applying cos to horizontal and sin to vertical without checking the stated reference axis"
+        },
+        {
+          "competency_id": "VEC-04",
+          "cue": "two or more vectors added, resultant displacement, or polygon closure",
+          "representation": "Head-to-tail polygon / component triangle with closing diagonal resultant arrow",
+          "first_executable_move": "Place vectors head-to-tail; compute component sums R_x = sum(A_x) and R_y = sum(A_y); verify resultant |R| <= path length (triangle inequality)",
+          "anti_pattern": "Adding scalar magnitudes directly when vectors act along non-parallel directions"
+        },
+        {
+          "competency_id": "VEC-05",
+          "cue": "change vector Delta v, momentum change Delta p, or vector subtraction",
+          "representation": "Initial and final vectors drawn from common origin, with change vector pointing from tip of initial to tip of final",
+          "first_executable_move": "Apply vector subtraction Delta v = v_f - v_i = v_f + (-v_i); subtract corresponding Cartesian components (Delta v_x = v_fx - v_ix, Delta v_y = v_fy - v_iy)",
+          "anti_pattern": "Assuming Delta v = 0 when initial and final speeds are equal (|v_i| = |v_f|) despite a direction change"
+        },
+        {
+          "competency_id": "VEC-06",
+          "cue": "recover magnitude and compass direction from Cartesian components",
+          "representation": "Right-angled component triangle with legs R_x, R_y and hypotenuse R",
+          "first_executable_move": "Compute magnitude |R| = sqrt(R_x^2 + R_y^2); compute acute reference angle tan alpha = |R_y / R_x|; state compass direction from quadrant signs",
+          "anti_pattern": "Reporting magnitude alone without stating direction, or leaving angle without a reference axis"
+        },
+        {
+          "competency_id": "VEC-07",
+          "cue": "relative velocity of object A with respect to observer B (v_A/B)",
+          "representation": "Both velocity vectors plotted on common ground-frame axes; observer vector reversed",
+          "first_executable_move": "Identify object A and observer B; subtract observer velocity: v_{A/B} = v_A - v_B; apply -v_B to all entities",
+          "anti_pattern": "Reversing the subtraction order (computing v_B - v_A instead of v_A - v_B)"
+        },
+        {
+          "competency_id": "VEC-08",
+          "cue": "particle moving along circular path; tangential vs radial directions",
+          "representation": "Circular orbit with radius vector, perpendicular tangent velocity v, and inward radial acceleration a_c",
+          "first_executable_move": "Draw velocity tangent to curve in direction of motion; point centripetal acceleration radially inward toward center: a_c = v^2 / R",
+          "anti_pattern": "Believing tangential velocity and radial centripetal acceleration act in the same direction"
+        },
+        {
+          "competency_id": "VEC-09",
+          "cue": "Newton-III interaction pairs vs single-body net force",
+          "representation": "Two isolated free-body diagrams with body-on-body interaction labels (A on B vs B on A)",
+          "first_executable_move": "Identify interacting bodies; write F_{A on B} = -F_{B on A}; ensure action-reaction pairs NEVER appear on the same isolated body FBD",
+          "anti_pattern": "Cancelling action-reaction forces on a single object (e.g. normal force and gravity on a resting book)"
+        },
+        {
+          "competency_id": "VEC-10",
+          "cue": "angle between vectors, scalar dot product, or work sign determination",
+          "representation": "Force vector F and displacement vector s originating from common origin with enclosed angle theta",
+          "first_executable_move": "Measure true geometric tail-to-tail angle theta (0 <= theta <= 180 deg); compute W = F . s = |F||s| cos theta; sign follows cos theta",
+          "anti_pattern": "Using angle with arbitrary axis instead of the true geometric angle between the two physical vectors"
+        },
+        {
+          "competency_id": "VEC-11",
+          "cue": "2D vector state bridging to motion in a plane or vector torque/cross product",
+          "representation": "2D state vector v = v_x i + v_y j resolved into decoupled orthogonal evolution equations",
+          "first_executable_move": "Decompose 2D vector state into two independent 1D scalar equations linked only by shared clock time t; or compute vector product magnitude |r x F| = r F sin theta",
+          "anti_pattern": "Mixing orthogonal coordinates within a single 1D kinematic or dynamic equation"
+        }
       ]
     },
     "motion-in-a-plane": {

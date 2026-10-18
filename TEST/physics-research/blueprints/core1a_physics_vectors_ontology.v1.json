@@ -1,65 +1,449 @@
 {
-  "schema": "core1a-ontology-v1",
-  "version": "1.0.0",
+  "schema": "core1a-physics-ontology/v2",
+  "version": "2.0.0",
   "subject": "Physics",
-  "topic": "phy-vectors-and-components",
-  "title": "Grade 9 Olympiad Physics Core 1A Ontology: Vectors, Coordinate Frames & Geometric Invariants",
+  "topic": "Vectors & Coordinate Frames: Components, Resultants & Geometric Invariants",
+  "title": "Grade 9 Olympiad Physics Core 1A Ontology: Vectors & Coordinate Frames",
+  "source_authority": "Golden Benchmark Fixtures (Emailing physics-vectors-revised-core1.pdf & physics-vectors-revised-core2.pdf)",
+  "canonical_topic_id": "phy-vectors-and-components",
+  "canonical_strategy": {
+    "stage_1_choose": {
+      "name": "System Demarcation & Coordinate Frame Declaration",
+      "action": "Declare the physical entity or system boundary; establish reference frame (ground vs moving observer); define orthogonal axes (+x East/Right, +y North/Up) and clock zero t = 0.",
+      "invariant": "Physical vector magnitude, relative velocity, and geometric dot products are invariant under rigid coordinate translation and rotation."
+    },
+    "stage_2_represent": {
+      "name": "Free Vector & Geometric State Representation",
+      "action": "Translate physical story into an exact geometric diagram: directed arrows drawn to scale, common-origin tail alignment, head-to-tail polygons, or orthogonal component projection triangles.",
+      "invariant": "Typography floor: every diagram label, coordinate axis, and component notation must declare font-size >= 14px; free vectors may be translated parallel to themselves without alteration."
+    },
+    "stage_3_connect": {
+      "name": "Governing Vector Laws & Invariant Constraints",
+      "action": "Connect representation to fundamental vector algebra laws: component summation R_x = sum A_x, R_y = sum A_y; law of cosines R^2 = A^2 + B^2 + 2AB cos theta; Galilean relative shift v_{AB} = v_A - v_B; work dot product W = F . s.",
+      "invariant": "Components along mutually perpendicular axes decouple completely; triangle inequality |A - B| <= |R| <= A + B strictly bounds all vector sums."
+    },
+    "stage_4_execute_and_check": {
+      "name": "Algebraic Execution & Multi-Engine Verification",
+      "action": "Execute algebra step-by-step; recover magnitude |R| = sqrt(R_x^2 + R_y^2) and compass quadrant direction; verify dimensional homogeneity [L], [L T^-1], [M L T^-2]; test dual limiting angles (theta = 0 deg, 90 deg, 180 deg).",
+      "invariant": "Vector answers are incomplete without explicit direction and reference axis; signs must translate back to objective physical orientations."
+    }
+  },
   "structural_pillars": [
     {
-      "pillar_id": "P1",
+      "id": "P1",
       "name": "Geometric Invariance & Vector Identity",
-      "statement": "A physical vector represents an objective geometric entity possessing magnitude and spatial orientation, independent of the Cartesian frame chosen to measure it.",
-      "mathematical_invariant": "|A|^2 = A_x^2 + A_y^2 = A_{x'}^2 + A_{y'}^2 (Scalar norm is preserved under rigid spatial coordinate rotations)",
-      "scope_condition": "Euclidean 3D space with flat Riemannian metric.",
-      "competency_refs": [
-        "VEC-01",
-        "VEC-02"
-      ]
+      "principle": "A physical vector represents an objective geometric entity possessing magnitude and spatial orientation, invariant under rigid translations and rotations of Cartesian coordinates.",
+      "canonical_expression": "|A|^2 = A_x^2 + A_y^2 = A_{x'}^2 + A_{y'}^2"
     },
     {
-      "pillar_id": "P2",
+      "id": "P2",
       "name": "Orthogonal Basis Decomposition & Coordinate Projections",
-      "statement": "Any coplanar vector A can be resolved into a unique linear combination of mutually perpendicular unit vectors: A = A_x i_hat + A_y j_hat, where A_x = |A| cos theta and A_y = |A| sin theta.",
-      "mathematical_invariant": "i_hat . j_hat = 0, |i_hat| = |j_hat| = 1; Angle theta must strictly reference the declared adjacent axis",
-      "scope_condition": "Right-handed orthogonal Cartesian coordinate systems.",
-      "competency_refs": [
-        "VEC-03",
-        "VEC-06"
-      ]
+      "principle": "Any coplanar vector A resolves uniquely into mutually perpendicular basis projections: A = A_x i + A_y j, where adjacent component uses cosine and opposite uses sine.",
+      "canonical_expression": "A_x = |A| cos theta, A_y = |A| sin theta; i . j = 0, |i| = |j| = 1"
     },
     {
-      "pillar_id": "P3",
-      "name": "Vector Space Linear Superposition",
-      "statement": "Vectors combine according to geometric head-to-tail triangle law or equivalent parallelogram law; resultant vector magnitude is bounded by the triangle inequality |A - B| <= |R| <= A + B.",
-      "mathematical_invariant": "R^2 = A^2 + B^2 + 2 A B cos theta; tan beta = (B sin theta) / (A + B cos theta)",
-      "scope_condition": "Concurrent vectors acting on a single point particle or rigid body center of mass.",
-      "competency_refs": [
-        "VEC-04",
-        "VEC-05",
-        "VEC-09"
-      ]
+      "id": "P3",
+      "name": "Linear Superposition & Triangle Inequality",
+      "principle": "Vectors combine via geometric head-to-tail addition or component summation. Resultant magnitude is strictly bounded between antiparallel difference and parallel sum.",
+      "canonical_expression": "R^2 = A^2 + B^2 + 2 A B cos theta; |A - B| <= |R| <= A + B"
     },
     {
-      "pillar_id": "P4",
+      "id": "P4",
       "name": "Galilean Relative Kinematics & Observer Subtraction",
-      "statement": "The velocity of object A as perceived by observer B is obtained by subtracting the observer's velocity vector: v_{AB} = v_A - v_B. To transform to frame B, apply -v_B to all entities.",
-      "mathematical_invariant": "v_{AB} = - v_{BA}; v_{AC} = v_{AB} + v_{BC} (Transitive Galilean velocity chain rule)",
-      "scope_condition": "Inertial and accelerating reference frames at non-relativistic speeds (v << c).",
-      "competency_refs": [
-        "VEC-07",
-        "VEC-08"
-      ]
+      "principle": "Velocity of object A perceived by observer B is obtained by subtracting observer velocity vector: v_{AB} = v_A - v_B. Shared acceleration cancels identically in relative motion.",
+      "canonical_expression": "v_{AB} = v_A - v_B; v_{AB} = -v_{BA}; v_{AC} = v_{AB} + v_{BC}"
     },
     {
-      "pillar_id": "P5",
-      "name": "Metric Products: Scalar Projection & Vector Normal Generation",
-      "statement": "The scalar (dot) product evaluates parallel projection and physical work (W = F . d = |F||d| cos theta), while vector (cross) product generates a perpendicular pseudo-vector representing rotational moment or torque (tau = r x F = |r||F| sin theta n_hat).",
-      "mathematical_invariant": "A . B = B . A (Commutative); A x B = -(B x A) (Antisymmetric); A perp B <=> A . B = 0; A || B <=> A x B = 0",
-      "scope_condition": "Dot product maps V x V -> R; Cross product is uniquely defined in 3D Euclidean space.",
-      "competency_refs": [
-        "VEC-10",
-        "VEC-11"
+      "id": "P5",
+      "name": "Metric Products: Scalar Projection & Vector Antisymmetry",
+      "principle": "The scalar (dot) product evaluates parallel projection and work (W = F . s = |F||s| cos theta); the vector (cross) product evaluates perpendicular moment arm and rotational torque.",
+      "canonical_expression": "A . B = B . A; A x B = -(B x A); A perp B <=> A . B = 0; A || B <=> A x B = 0"
+    }
+  ],
+  "atomic_competencies": {
+    "VEC-01": {
+      "title": "Scalars, Vectors & Signed Axis Conventions",
+      "definition": "Distinction between scalar magnitudes and vector quantities possessing spatial orientation, encoded along 1D axes via positive and negative signs.",
+      "canonical_rules": [
+        "A scalar is complete with magnitude alone (distance, speed, mass, time).",
+        "A vector requires magnitude and spatial direction (displacement, velocity, acceleration, force).",
+        "In 1D, sign has physical meaning only after a positive axis convention is explicitly declared.",
+        "Reversing the positive axis flips algebraic signs but leaves physical reality invariant."
+      ],
+      "operational_heuristics": [
+        "Do not classify from units alone. Ask whether reversing spatial direction alters the physical state.",
+        "Declare +x East/Right or +y North/Up before writing any numeric signs.",
+        "Sum signed displacements algebraically: Delta x = sum(signed legs)."
+      ],
+      "boundary_conditions": [
+        "Pure forward motion: Delta x > 0, distance = displacement.",
+        "Complete round-trip: displacement = 0, distance = 2d > 0."
+      ],
+      "prerequisites": [
+        "P1"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-001",
+        "PHYS-VEC-002"
       ]
+    },
+    "VEC-02": {
+      "title": "Vector Equality, Opposite Vectors & Null Vector",
+      "definition": "Geometric representation of free vectors as directed line segments invariant under rigid spatial translation.",
+      "canonical_rules": [
+        "Length of arrow represents magnitude; arrowhead indicates direction.",
+        "Equal vectors must have both identical magnitude and identical spatial orientation.",
+        "Translating a free vector parallel to itself without rotation leaves the vector unchanged.",
+        "Opposite vector -A has identical magnitude |A| but points in the antiparallel direction (180 deg reversal)."
+      ],
+      "operational_heuristics": [
+        "Draw free vectors with clear origins and distinct arrowheads.",
+        "To form -A, invert the arrowhead while preserving line orientation and length."
+      ],
+      "boundary_conditions": [
+        "Collinear opposite: A + (-A) = 0.",
+        "Equal vectors: A - B = 0 <=> A = B."
+      ],
+      "prerequisites": [
+        "P1",
+        "VEC-01"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-003",
+        "PHYS-VEC-004"
+      ]
+    },
+    "VEC-03": {
+      "title": "Orthogonal Components, Quadrants & Angle References",
+      "definition": "Orthogonal Cartesian decomposition of coplanar vectors into signed projection coordinates.",
+      "canonical_rules": [
+        "Components are signed projections of a vector onto chosen perpendicular coordinate axes.",
+        "The side adjacent to stated angle theta receives cosine: A_adj = |A| cos theta.",
+        "The side opposite to stated angle theta receives sine: A_opp = |A| sin theta.",
+        "Cartesian quadrant determines algebraic signs: QI (+,+), QII (-,+), QIII (-,-), QIV (+,-)."
+      ],
+      "operational_heuristics": [
+        "Mark coordinate axes (+x, +y) before calculating components.",
+        "Trace right-angled projection triangle: adjacent side is cos, opposite side is sin.",
+        "Verify Pythagorean reconstruction: A_x^2 + A_y^2 = |A|^2."
+      ],
+      "boundary_conditions": [
+        "theta = 0 deg to x-axis: A_x = |A|, A_y = 0.",
+        "theta = 90 deg to x-axis: A_x = 0, A_y = |A|."
+      ],
+      "prerequisites": [
+        "P2",
+        "VEC-02"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-005",
+        "PHYS-VEC-006"
+      ]
+    },
+    "VEC-04": {
+      "title": "Vector Addition, Triangle & Parallelogram Laws, Resultant",
+      "definition": "Geometric and analytical superposition of concurrent vectors using head-to-tail polygon and component summation.",
+      "canonical_rules": [
+        "Head-to-tail rule: place tail of B at head of A; resultant R runs from tail of A to head of B.",
+        "Component route: R_x = sum(A_x) and R_y = sum(A_y).",
+        "Analytical magnitude: R^2 = A^2 + B^2 + 2 A B cos theta.",
+        "Triangle inequality bound: |A - B| <= |R| <= A + B."
+      ],
+      "operational_heuristics": [
+        "Resultant is the closing vector, not the arithmetic sum of path lengths.",
+        "For perpendicular vectors (theta = 90 deg): |R| = sqrt(A^2 + B^2).",
+        "For closed geometric loop returning to start: resultant is strictly zero."
+      ],
+      "boundary_conditions": [
+        "Parallel vectors (theta = 0 deg): R = A + B (maximum).",
+        "Antiparallel vectors (theta = 180 deg): R = |A - B| (minimum).",
+        "Orthogonal vectors (theta = 90 deg): R = sqrt(A^2 + B^2)."
+      ],
+      "prerequisites": [
+        "P3",
+        "VEC-03"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-007",
+        "PHYS-VEC-008",
+        "PHYS-VEC-021"
+      ]
+    },
+    "VEC-05": {
+      "title": "Vector Subtraction & Change Vectors",
+      "definition": "Constructing change vectors Delta v = v_f - v_i and Delta p = p_f - p_i through addition of the opposite vector.",
+      "canonical_rules": [
+        "Vector subtraction means adding the opposite: A - B = A + (-B).",
+        "Change vector Delta v = v_f - v_i connects the tip of v_i to the tip of v_f when drawn from a common origin.",
+        "Component subtraction: Delta v_x = v_fx - v_ix and Delta v_y = v_fy - v_iy.",
+        "Constant speed with changing direction yields a non-zero change vector: |Delta v| = 2v sin(theta/2) != 0."
+      ],
+      "operational_heuristics": [
+        "Draw initial and final vectors from a common origin to visualize the change vector pointing from initial tip to final tip.",
+        "Subtract x from x and y from y.",
+        "Impulse direction matches change in momentum vector: J = Delta p = m Delta v."
+      ],
+      "boundary_conditions": [
+        "No direction change, speed unchanged: Delta v = 0.",
+        "180 deg reversal at speed v: Delta v = -2v, |Delta v| = 2v.",
+        "90 deg turn at speed v: |Delta v| = v sqrt(2)."
+      ],
+      "prerequisites": [
+        "P3",
+        "VEC-04"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-009",
+        "PHYS-VEC-010",
+        "PHYS-VEC-022"
+      ]
+    },
+    "VEC-06": {
+      "title": "Magnitude & Direction Angle Recovery",
+      "definition": "Synthesis of net magnitude and compass orientation from Cartesian coordinate components.",
+      "canonical_rules": [
+        "Magnitude is hypotenuse of Cartesian component triangle: |R| = sqrt(R_x^2 + R_y^2).",
+        "Acute reference angle: tan alpha = |R_y / R_x|.",
+        "Physical orientation must declare reference axis and quadrant direction (e.g., 53.1 deg North of East).",
+        "Magnitude alone is an incomplete vector response."
+      ],
+      "operational_heuristics": [
+        "Sketch component rectangle to identify correct quadrant.",
+        "State direction clearly: angle measured from stated cardinal direction (East, West, North, South).",
+        "Check sanity: |R| must be greater than or equal to both |R_x| and |R_y| and strictly <= |R_x| + |R_y|."
+      ],
+      "boundary_conditions": [
+        "R_x = 0: vector is purely vertical along y-axis.",
+        "R_y = 0: vector is purely horizontal along x-axis.",
+        "|R_x| = |R_y|: alpha = 45 deg, |R| = |R_x| sqrt(2)."
+      ],
+      "prerequisites": [
+        "P2",
+        "VEC-03"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-011",
+        "PHYS-VEC-012"
+      ]
+    },
+    "VEC-07": {
+      "title": "Relative Velocity in 1D & 2D Frames",
+      "definition": "Kinematic transformation of velocities between reference frames via vector subtraction.",
+      "canonical_rules": [
+        "Relative velocity of object A with respect to observer B: v_{AB} = v_A - v_B.",
+        "The observer is the vector you subtract: to shift to observer B's rest frame, apply -v_B to all entities.",
+        "Antisymmetric reciprocity: v_{AB} = -v_{BA}.",
+        "Transitive velocity chain: v_{AC} = v_{AB} + v_{BC}."
+      ],
+      "operational_heuristics": [
+        "Name roles explicitly: object A, observer B.",
+        "Express both ground-frame velocities in the same coordinate frame before subtracting.",
+        "If A and B move with identical velocities (v_A = v_B), relative velocity vanishes: v_{AB} = 0."
+      ],
+      "boundary_conditions": [
+        "Collinear same direction: v_{rel} = |v_A - v_B|.",
+        "Collinear opposite direction: v_{rel} = v_A + v_B.",
+        "Perpendicular velocities: v_{rel} = sqrt(v_A^2 + v_B^2)."
+      ],
+      "prerequisites": [
+        "P4",
+        "VEC-05"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-013",
+        "PHYS-VEC-014",
+        "PHYS-VEC-023"
+      ]
+    },
+    "VEC-08": {
+      "title": "Radial & Tangential Decomposition in Curvilinear Paths",
+      "definition": "Decomposition of curvilinear kinematics into orthogonal instantaneous tangent and centripetal radial directions.",
+      "canonical_rules": [
+        "Instantaneous velocity is strictly tangent to the curved path at all times.",
+        "Centripetal acceleration points radially inward toward the instantaneous center of curvature.",
+        "Tangent and radial directions are mutually perpendicular: v . a_c = 0.",
+        "Cutting the radial constraint releases the particle tangentially along its instantaneous velocity vector."
+      ],
+      "operational_heuristics": [
+        "Draw position radius vector from center to particle.",
+        "Draw velocity tangent to circle perpendicular to radius.",
+        "Point centripetal acceleration inward: a_c = v^2 / R.",
+        "Never show centripetal acceleration pointing outward (centrifugal pseudo-force exists only in rotating frame)."
+      ],
+      "boundary_conditions": [
+        "Straight path (R -> infinity): a_c -> 0, motion is 1D.",
+        "String breaks: tension drops to zero instantly; particle flies along tangent with speed v."
+      ],
+      "prerequisites": [
+        "P2",
+        "VEC-05"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-015",
+        "PHYS-VEC-016"
+      ]
+    },
+    "VEC-09": {
+      "title": "Component Ownership & Inclined Plane Decomposition",
+      "definition": "Newton's third law vector symmetry and isolation of single-body free-body diagrams.",
+      "canonical_rules": [
+        "Newton-III pairs are equal in magnitude and opposite in direction: F_{A on B} = -F_{B on A}.",
+        "Action-reaction pairs act on different bodies and can NEVER appear on the same isolated body diagram.",
+        "Net force on body B includes ONLY forces acting on B: sum F_B = m a_B.",
+        "Forces acting on the same body that balance (e.g. N and mg on resting book) are NOT a third-law pair."
+      ],
+      "operational_heuristics": [
+        "Always label forces with dual-body notation: 'Agent on Target'.",
+        "To find Newton-III partner, swap agent and target: F_{table on book} <-> F_{book on table}.",
+        "Verify partners belong to different FBDs."
+      ],
+      "boundary_conditions": [
+        "Zero net acceleration: forces on chosen body balance (sum F = 0); action-reaction forces remain equal and opposite regardless of acceleration."
+      ],
+      "prerequisites": [
+        "P1",
+        "VEC-02"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-017",
+        "PHYS-VEC-018"
+      ]
+    },
+    "VEC-10": {
+      "title": "Scalar (Dot) Product, Projection & Work Mechanics",
+      "definition": "Scalar dot product evaluation and geometric dependence of mechanical work on vector orientation.",
+      "canonical_rules": [
+        "Mechanical work is the scalar product of force and displacement: W = F . s = |F||s| cos theta.",
+        "Angle theta is the geometric angle between the two arrows drawn from a common origin (0 <= theta <= 180 deg).",
+        "Sign of work depends strictly on cos theta: acute angle (theta < 90 deg) => W > 0; perpendicular (theta = 90 deg) => W = 0; obtuse angle (theta > 90 deg) => W < 0.",
+        "Braking or opposing forces act antiparallel (theta = 180 deg), doing negative work W = -F s."
+      ],
+      "operational_heuristics": [
+        "Draw force and displacement arrows tail-to-tail to identify true enclosed angle theta.",
+        "Check special angles: 0 deg (+Fs), 90 deg (0), 180 deg (-Fs).",
+        "Centripetal force is always perpendicular to tangent displacement, doing zero work: W_c = 0."
+      ],
+      "boundary_conditions": [
+        "theta = 0 deg: maximum positive work W = +F s.",
+        "theta = 90 deg: zero work W = 0 (e.g., circular orbit gravity).",
+        "theta = 180 deg: maximum negative work W = -F s (e.g., kinetic friction)."
+      ],
+      "prerequisites": [
+        "P5",
+        "VEC-03"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-019",
+        "PHYS-VEC-020",
+        "PHYS-VEC-024"
+      ]
+    },
+    "VEC-11": {
+      "title": "Vector (Cross) Product, Torque & Planar Orthogonal Invariants",
+      "definition": "Synthesis of vector states into decoupled component differential systems and introductory vector cross product.",
+      "canonical_rules": [
+        "A 2D vector state v = v_x i + v_y j splits into two independent component equations sharing clock time t.",
+        "Perpendicular motions evolve independently: a_x alters only v_x; a_y alters only v_y.",
+        "Vector cross product tau = r x F produces a perpendicular vector of magnitude |tau| = |r||F| sin theta.",
+        "Torque vanishes when force is collinear with lever arm (theta = 0 deg or 180 deg)."
+      ],
+      "operational_heuristics": [
+        "Separate 2D vector kinematics into independent x and y equations.",
+        "Never cross terms between orthogonal axes in uniform field.",
+        "For torque, use perpendicular lever arm r_perp = r sin theta: tau = r_perp F."
+      ],
+      "boundary_conditions": [
+        "r || F (theta = 0 or 180 deg): tau = 0 (no rotational turning effect).",
+        "r perp F (theta = 90 deg): tau = r F (maximum torque)."
+      ],
+      "prerequisites": [
+        "P2",
+        "P5",
+        "VEC-06",
+        "VEC-10"
+      ],
+      "transfer_targets": [
+        "PHYS-VEC-025"
+      ]
+    }
+  },
+  "first_move_atlas": [
+    {
+      "competency_id": "VEC-01",
+      "cue": "signed 1D motion, direction reversal, or sign-convention declaration",
+      "representation": "Declare + axis; mark signed displacement / velocity legs on 1D axis",
+      "first_executable_move": "State coordinate frame (+x East/Right); write Delta x = sum(signed legs); translate final sign back to physical direction",
+      "anti_pattern": "Treating negative sign as smaller physical magnitude rather than opposite direction"
+    },
+    {
+      "competency_id": "VEC-02",
+      "cue": "draw, compare, translate, or reverse free vectors",
+      "representation": "Directed arrows with origin, length proportional to magnitude, and terminating arrowhead",
+      "first_executable_move": "Verify equality: identical magnitude AND identical direction; translate free vector without rotating; reverse direction for opposite vector -A",
+      "anti_pattern": "Assuming parallel vectors with different lengths or collinear opposite vectors are equal"
+    },
+    {
+      "competency_id": "VEC-03",
+      "cue": "components, quadrants, and angle reference relative to axes",
+      "representation": "Cartesian coordinate axes (x, y) with vector arrow originating at origin and right projection triangle",
+      "first_executable_move": "Identify adjacent side for cosine (A_adj = |A| cos theta) and opposite side for sine (A_opp = |A| sin theta); assign quadrant signs manually",
+      "anti_pattern": "Blindly applying cos to horizontal and sin to vertical without checking the stated reference axis"
+    },
+    {
+      "competency_id": "VEC-04",
+      "cue": "two or more vectors added, resultant displacement, or polygon closure",
+      "representation": "Head-to-tail polygon / component triangle with closing diagonal resultant arrow",
+      "first_executable_move": "Place vectors head-to-tail; compute component sums R_x = sum(A_x) and R_y = sum(A_y); verify resultant |R| <= path length (triangle inequality)",
+      "anti_pattern": "Adding scalar magnitudes directly when vectors act along non-parallel directions"
+    },
+    {
+      "competency_id": "VEC-05",
+      "cue": "change vector Delta v, momentum change Delta p, or vector subtraction",
+      "representation": "Initial and final vectors drawn from common origin, with change vector pointing from tip of initial to tip of final",
+      "first_executable_move": "Apply vector subtraction Delta v = v_f - v_i = v_f + (-v_i); subtract corresponding Cartesian components (Delta v_x = v_fx - v_ix, Delta v_y = v_fy - v_iy)",
+      "anti_pattern": "Assuming Delta v = 0 when initial and final speeds are equal (|v_i| = |v_f|) despite a direction change"
+    },
+    {
+      "competency_id": "VEC-06",
+      "cue": "recover magnitude and compass direction from Cartesian components",
+      "representation": "Right-angled component triangle with legs R_x, R_y and hypotenuse R",
+      "first_executable_move": "Compute magnitude |R| = sqrt(R_x^2 + R_y^2); compute acute reference angle tan alpha = |R_y / R_x|; state compass direction from quadrant signs",
+      "anti_pattern": "Reporting magnitude alone without stating direction, or leaving angle without a reference axis"
+    },
+    {
+      "competency_id": "VEC-07",
+      "cue": "relative velocity of object A with respect to observer B (v_A/B)",
+      "representation": "Both velocity vectors plotted on common ground-frame axes; observer vector reversed",
+      "first_executable_move": "Identify object A and observer B; subtract observer velocity: v_{A/B} = v_A - v_B; apply -v_B to all entities",
+      "anti_pattern": "Reversing the subtraction order (computing v_B - v_A instead of v_A - v_B)"
+    },
+    {
+      "competency_id": "VEC-08",
+      "cue": "particle moving along circular path; tangential vs radial directions",
+      "representation": "Circular orbit with radius vector, perpendicular tangent velocity v, and inward radial acceleration a_c",
+      "first_executable_move": "Draw velocity tangent to curve in direction of motion; point centripetal acceleration radially inward toward center: a_c = v^2 / R",
+      "anti_pattern": "Believing tangential velocity and radial centripetal acceleration act in the same direction"
+    },
+    {
+      "competency_id": "VEC-09",
+      "cue": "Newton-III interaction pairs vs single-body net force",
+      "representation": "Two isolated free-body diagrams with body-on-body interaction labels (A on B vs B on A)",
+      "first_executable_move": "Identify interacting bodies; write F_{A on B} = -F_{B on A}; ensure action-reaction pairs NEVER appear on the same isolated body FBD",
+      "anti_pattern": "Cancelling action-reaction forces on a single object (e.g. normal force and gravity on a resting book)"
+    },
+    {
+      "competency_id": "VEC-10",
+      "cue": "angle between vectors, scalar dot product, or work sign determination",
+      "representation": "Force vector F and displacement vector s originating from common origin with enclosed angle theta",
+      "first_executable_move": "Measure true geometric tail-to-tail angle theta (0 <= theta <= 180 deg); compute W = F . s = |F||s| cos theta; sign follows cos theta",
+      "anti_pattern": "Using angle with arbitrary axis instead of the true geometric angle between the two physical vectors"
+    },
+    {
+      "competency_id": "VEC-11",
+      "cue": "2D vector state bridging to motion in a plane or vector torque/cross product",
+      "representation": "2D state vector v = v_x i + v_y j resolved into decoupled orthogonal evolution equations",
+      "first_executable_move": "Decompose 2D vector state into two independent 1D scalar equations linked only by shared clock time t; or compute vector product magnitude |r x F| = r F sin theta",
+      "anti_pattern": "Mixing orthogonal coordinates within a single 1D kinematic or dynamic equation"
     }
   ],
   "dependency_graph": {
@@ -179,7 +563,7 @@
       "id": "CCM-01",
       "concept": "Vector Addition vs Magnitude Summation",
       "intuitive_misconception": "If displacement A is 4 m and displacement B is 3 m, the resultant displacement must be 7 m.",
-      "newtonian_scientific_truth": "The resultant depends on the spatial angle theta: R = sqrt(4^2 + 3^2 + 2(4)(3) cos theta). It can range anywhere between 1 m (antiparallel) and 7 m (collinear). For orthogonal displacements, R = 5 m.",
+      "newtonian_scientific_truth": "The resultant depends strictly on the spatial angle theta: R = sqrt(4^2 + 3^2 + 2(4)(3) cos theta). It can range anywhere between 1 m (antiparallel) and 7 m (collinear). For orthogonal displacements, R = 5 m.",
       "decisive_experiment": "Walking 4 meters East then 3 meters North. Direct laser measurement to origin confirms 5 meters net displacement, not 7 meters."
     },
     {
@@ -205,11 +589,17 @@
     },
     {
       "id": "CCM-05",
-      "concept": "Relative Frame Transformation",
-      "intuitive_misconception": "When moving forward through rain, the rain hits you from behind because you run into the air.",
-      "newtonian_scientific_truth": "The apparent velocity of rain relative to you is v_{rain/man} = v_{rain} - v_{man}. Since v_{man} is forward (+x), -v_{man} is backward (-x), causing the rain to arrive slanted from the front, requiring you to tilt your umbrella forward.",
-      "decisive_experiment": "Walking in vertically falling rain: dry front of shirt gets soaked while back remains dry unless umbrella is tilted forward."
+      "concept": "Action-Reaction vs Balanced Forces on One Body",
+      "intuitive_misconception": "The normal force of a table pushing up on a book and the gravitational weight of the Earth pulling down on the book are an action-reaction pair because they are equal and opposite.",
+      "newtonian_scientific_truth": "Both normal force and gravity act on the SAME body (the book). Action-reaction pairs must act on DIFFERENT bodies. The reaction to table-on-book is book-on-table; the reaction to Earth-on-book is book-on-Earth.",
+      "decisive_experiment": "Placing the table in an accelerating elevator: normal force changes to m(g + a) while gravity remains mg; the forces no longer balance on the book, yet Newton-III partners remain exactly equal and opposite."
+    },
+    {
+      "id": "CCM-06",
+      "concept": "Sign of Work and Geometric Angle",
+      "intuitive_misconception": "Braking force does positive work because the braking force is strong, or work is always positive because energy is a scalar.",
+      "newtonian_scientific_truth": "Work is a signed scalar: W = F . s = |F||s| cos theta. When force opposes displacement (theta = 180 deg), cos(180) = -1, and work is strictly negative. Negative work removes kinetic energy from the object.",
+      "decisive_experiment": "Measuring vehicle kinetic energy before and after braking: delta K = W_brake < 0; vehicle kinetic energy decreases by exactly the work done by friction."
     }
-  ],
-  "canonical_topic_id": "phy-vectors-and-components"
+  ]
 }
