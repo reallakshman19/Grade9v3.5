@@ -1,0 +1,115 @@
+{
+  "schema": "core1b-reconstruction-v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "topic": "phy-vectors-and-components",
+  "title": "Grade 9 Olympiad Physics Core 1B Phenomenological Reconstruction: Vectors & Coordinate Invariants",
+  "reconstruction_cycles": [
+    {
+      "cycle_id": "RECON-01",
+      "phenomenon": "Parallelogram Superposition & Extreme Angle Resultant Bounds",
+      "standard_derivation": "R = sqrt(A^2 + B^2 + 2 A B cos theta). Substituting theta = 0 gives R_max = A + B; theta = 180 gives R_min = |A - B|; theta = 90 gives R = sqrt(A^2 + B^2).",
+      "phenomenological_reconstruction": "Imagine two students pulling a tethered central ring with calibrated dynamometers. When pulling in identical parallel direction, forces combine to maximum tension A + B. As one student circles around, the net pull smoothly diminishes. At right angles, the Pythagoras right triangle emerges. At opposite ends, ring tension drops to minimum |A - B|. If pulls are equal (A = B), tension drops to zero.",
+      "limiting_boundary_checks": [
+        {
+          "condition": "Collinear parallel forces (theta -> 0)",
+          "expected_outcome": "cos(0) = 1 => R = sqrt(A^2 + B^2 + 2AB) = A + B (Pure algebraic arithmetic sum)"
+        },
+        {
+          "condition": "Collinear antiparallel forces (theta -> 180 degrees)",
+          "expected_outcome": "cos(180) = -1 => R = sqrt(A^2 + B^2 - 2AB) = |A - B| (Direct algebraic cancellation)"
+        },
+        {
+          "condition": "Equal magnitude orthogonal forces (A = B, theta = 90 degrees)",
+          "expected_outcome": "cos(90) = 0 => R = A sqrt(2), bisecting the angle at exactly 45 degrees"
+        }
+      ]
+    },
+    {
+      "cycle_id": "RECON-02",
+      "phenomenon": "Velocity Change Vector Delta v for Constant-Speed Turning Particle",
+      "standard_derivation": "Delta v = v_f - v_i = v_f + (-v_i). For speed |v_i| = |v_f| = v turning through angle theta, |Delta v|^2 = v^2 + v^2 - 2 v^2 cos theta = 2 v^2 (1 - cos theta) = 4 v^2 sin^2(theta/2) => |Delta v| = 2 v sin(theta/2).",
+      "phenomenological_reconstruction": "A particle moves East at 10 m/s then turns North at 10 m/s. Novice intuition claims 'speed has not changed, so change in velocity is zero'. Reconstruct by vector subtraction: place initial vector v_i pointing East and final vector v_f pointing North. The change vector Delta v is the arrow that must be added to v_i to reach v_f (tip of v_i to tip of v_f). It points North-West with magnitude 10 sqrt(2) m/s. This change vector explains why an inward horizontal impulse is mandatory to turn.",
+      "limiting_boundary_checks": [
+        {
+          "condition": "Straight line motion without turning (theta -> 0)",
+          "expected_outcome": "sin(0) = 0 => |Delta v| = 0 (No change in vector velocity)"
+        },
+        {
+          "condition": "U-turn complete reversal of direction (theta -> 180 degrees)",
+          "expected_outcome": "sin(90) = 1 => |Delta v| = 2v (Full double magnitude reversal)"
+        },
+        {
+          "condition": "Right angle turn (theta = 90 degrees)",
+          "expected_outcome": "sin(45) = 1/sqrt(2) => |Delta v| = 2v (1/sqrt(2)) = v sqrt(2)"
+        }
+      ]
+    },
+    {
+      "cycle_id": "RECON-03",
+      "phenomenon": "The River-Boat Dilemma: Minimum Crossing Time vs Zero Drift",
+      "standard_derivation": "Width of river is d; water current is v_w along x; boat motor produces speed v_bw relative to water at angle theta to normal y. Total ground velocity v_b = (v_w - v_bw sin theta) i_hat + (v_bw cos theta) j_hat. Crossing time t = d / (v_bw cos theta). Minimum time t_min = d / v_bw occurs at theta = 0 (cos theta = 1). Zero drift requires net x-velocity zero: v_w - v_bw sin theta = 0 => sin theta = v_w / v_bw (requires v_bw > v_w); crossing time is t = d / sqrt(v_bw^2 - v_w^2) > t_min.",
+      "phenomenological_reconstruction": "Deconstruct into perpendicular components. The river flow operates entirely parallel to the banks (x-axis) and can never move the boat a single millimeter across the river (y-axis). The only mechanism carrying the boat across is the boat's own y-component. Aiming straight across puts 100% of motor capacity into crossing, achieving the fastest possible arrival regardless of how turbulent the current is downstream. If you instead angle upstream to fight the drift, you rob the y-axis of velocity, making the journey take longer.",
+      "limiting_boundary_checks": [
+        {
+          "condition": "Still water current (v_w -> 0)",
+          "expected_outcome": "Minimum time and zero-drift paths coincide: t = d / v_bw, theta = 0, drift = 0"
+        },
+        {
+          "condition": "Current speed equals boat engine speed (v_w -> v_bw)",
+          "expected_outcome": "Zero drift requires sin theta = 1 (theta = 90 deg); crossing time t -> infinity; boat expends all power hovering in place"
+        },
+        {
+          "condition": "Current speed exceeds boat engine speed (v_w > v_bw)",
+          "expected_outcome": "Zero drift becomes physically impossible (sin theta > 1); minimum drift occurs at sin theta = v_bw / v_w"
+        }
+      ]
+    },
+    {
+      "cycle_id": "RECON-04",
+      "phenomenon": "Moving Observer & Rain-Man Relative Frame Reconstruction",
+      "standard_derivation": "Rain falls vertically at v_r = -v_r j_hat. Person moves horizontally at v_m = v_m i_hat. Relative velocity of rain with respect to person is v_{rel} = v_r - v_m = -v_m i_hat - v_r j_hat. Relative angle from vertical is tan phi = |-v_m| / |-v_r| = v_m / v_r. Umbrella must be inclined forward at angle phi into the apparent oncoming rain.",
+      "phenomenological_reconstruction": "Why must you tilt your umbrella forward when running in vertical rain? From the ground frame, rain falls straight down. In time Delta t, raindrops descend by v_r Delta t while the runner advances by v_m Delta t into the column of raindrops in front of them. From the runner's rest frame, applying -v_m to the universe creates an apparent horizontal headwind blowing rain toward their face. To intercept the rain perpendicular to its relative approach vector, the umbrella must tilt forward by tan phi = v_m / v_r.",
+      "limiting_boundary_checks": [
+        {
+          "condition": "Person standing stationary (v_m -> 0)",
+          "expected_outcome": "tan phi = 0 => phi = 0; umbrella held perfectly upright (vertical)"
+        },
+        {
+          "condition": "Runner moving extremely fast (v_m >> v_r)",
+          "expected_outcome": "tan phi -> infinity => phi -> 90 degrees; rain appears nearly horizontal, requiring umbrella held horizontally in front"
+        },
+        {
+          "condition": "Reversing running direction (v_m -> -v_m)",
+          "expected_outcome": "v_{rel} tilts forward in the new direction of travel; umbrella orientation reverses symmetrically"
+        }
+      ]
+    }
+  ],
+  "cognitive_dissonance_probes": [
+    {
+      "probe_id": "CDP-01",
+      "scenario": "Two ropes pull a heavy crate on a frictionless floor with forces of 10 N and 10 N. The angle between the ropes is varied from 0 degrees to 180 degrees.",
+      "dissonance_question": "Can the resultant force on the crate ever be equal to exactly 10 N? If so, at what angle?",
+      "resolution": "Yes, exactly at theta = 120 degrees. R^2 = 10^2 + 10^2 + 2(10)(10) cos(120) = 100 + 100 + 200(-0.5) = 100 => R = 10 N. The two vectors and their resultant form an equilateral triangle in the vector diagram."
+    },
+    {
+      "probe_id": "CDP-02",
+      "scenario": "A race car speeds around a circular track of radius R at a perfectly constant speed of 30 m/s. An apprentice argues: 'Because acceleration is rate of change of speed and speed is constant (dv/dt = 0), the car has zero acceleration and tires require zero friction.'",
+      "dissonance_question": "What is the physical error in the apprentice's claim?",
+      "resolution": "Acceleration is the time derivative of the velocity vector (d vec{v} / dt), not scalar speed. The velocity vector rotates continuously, generating centripetal acceleration a_c = v^2 / R = 900 / R m/s^2 directed toward the center, which requires lateral static friction force f_s = m v^2 / R."
+    },
+    {
+      "probe_id": "CDP-03",
+      "scenario": "A swimmer can swim at 3 km/h in still water. A river flows downstream at 5 km/h.",
+      "dissonance_question": "Can the swimmer cross directly to the opposite point on the opposite bank (zero drift)?",
+      "resolution": "No. To cancel drift, the upstream component must equal river flow (v_swimmer sin theta = v_river => 3 sin theta = 5 => sin theta = 5/3 > 1, impossible). The swimmer will inevitably be swept downstream; they can cross, but zero drift is geometrically impossible."
+    },
+    {
+      "probe_id": "CDP-04",
+      "scenario": "Rain is falling vertically at 4 m/s. A cyclist rides East at 3 m/s.",
+      "dissonance_question": "What is the speed of the rain as felt by the cyclist, and in which direction should they point their umbrella?",
+      "resolution": "Relative velocity v_{rel} = sqrt(3^2 + 4^2) = 5 m/s. The rain strikes them with greater speed than when standing still. The umbrella must point 37 degrees East of vertical (tan theta = 3/4)."
+    }
+  ]
+}

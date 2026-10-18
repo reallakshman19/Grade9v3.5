@@ -44,7 +44,10 @@ def resolve_adapter_for_question(q: dict, adapters: dict):
     if "friction" in q_topic and "newton" not in q_topic and "nlm" not in qid:
         if "friction-thresholds" in adapters:
             return "friction-thresholds", adapters["friction-thresholds"]
-    if any(k in q_topic or k in qid for k in ["vector"]):
+    if "phys-plane" in qid or any(k in q_topic for k in ["motion-in-a-plane", "motion in a plane", "planar motion"]):
+        if "motion-in-a-plane" in adapters:
+            return "motion-in-a-plane", adapters["motion-in-a-plane"]
+    if "phys-vec" in qid or any(k in q_topic or k in qid for k in ["vector", "vectors"]):
         if "vectors-and-components" in adapters:
             return "vectors-and-components", adapters["vectors-and-components"]
     if any(k in q_topic or k in qid for k in ["mechanics", "newton", "second-law", "third-law"]):
@@ -141,6 +144,11 @@ def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter
             if adapter and "subtopic_competency_map" in adapter:
                 if subtopic_ref not in adapter["subtopic_competency_map"]:
                     errors.append(f"{qid}: subtopic_competency_ref '{subtopic_ref}' not found in adapter '{adapter_key}' competency map")
+                elif strict_golden:
+                    comp_obj = adapter["subtopic_competency_map"][subtopic_ref]
+                    targets = comp_obj.get("core2_transfer_target", [])
+                    if qid not in targets:
+                        errors.append(f"{qid}: Question ID not registered in adapter '{adapter_key}' transfer targets for competency '{subtopic_ref}'")
                     
         # ----------------------------------------------------
         # GATE 4: Distractor Diagnostics

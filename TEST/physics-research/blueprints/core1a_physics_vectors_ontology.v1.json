@@ -1,0 +1,169 @@
+{
+  "schema": "core1a-ontology-v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "topic": "phy-vectors-and-components",
+  "title": "Grade 9 Olympiad Physics Core 1A Ontology: Vectors, Coordinate Frames & Geometric Invariants",
+  "structural_pillars": [
+    {
+      "pillar_id": "P1",
+      "name": "Geometric Invariance & Vector Identity",
+      "statement": "A physical vector represents an objective geometric entity possessing magnitude and spatial orientation, independent of the Cartesian frame chosen to measure it.",
+      "mathematical_invariant": "|A|^2 = A_x^2 + A_y^2 = A_{x'}^2 + A_{y'}^2 (Scalar norm is preserved under rigid spatial coordinate rotations)",
+      "scope_condition": "Euclidean 3D space with flat Riemannian metric."
+    },
+    {
+      "pillar_id": "P2",
+      "name": "Orthogonal Basis Decomposition & Coordinate Projections",
+      "statement": "Any coplanar vector A can be resolved into a unique linear combination of mutually perpendicular unit vectors: A = A_x i_hat + A_y j_hat, where A_x = |A| cos theta and A_y = |A| sin theta.",
+      "mathematical_invariant": "i_hat . j_hat = 0, |i_hat| = |j_hat| = 1; Angle theta must strictly reference the declared adjacent axis",
+      "scope_condition": "Right-handed orthogonal Cartesian coordinate systems."
+    },
+    {
+      "pillar_id": "P3",
+      "name": "Vector Space Linear Superposition",
+      "statement": "Vectors combine according to geometric head-to-tail triangle law or equivalent parallelogram law; resultant vector magnitude is bounded by the triangle inequality |A - B| <= |R| <= A + B.",
+      "mathematical_invariant": "R^2 = A^2 + B^2 + 2 A B cos theta; tan beta = (B sin theta) / (A + B cos theta)",
+      "scope_condition": "Concurrent vectors acting on a single point particle or rigid body center of mass."
+    },
+    {
+      "pillar_id": "P4",
+      "name": "Galilean Relative Kinematics & Observer Subtraction",
+      "statement": "The velocity of object A as perceived by observer B is obtained by subtracting the observer's velocity vector: v_{AB} = v_A - v_B. To transform to frame B, apply -v_B to all entities.",
+      "mathematical_invariant": "v_{AB} = - v_{BA}; v_{AC} = v_{AB} + v_{BC} (Transitive Galilean velocity chain rule)",
+      "scope_condition": "Inertial and accelerating reference frames at non-relativistic speeds (v << c)."
+    },
+    {
+      "pillar_id": "P5",
+      "name": "Metric Products: Scalar Projection & Vector Normal Generation",
+      "statement": "The scalar (dot) product evaluates parallel projection and physical work (W = F . d = |F||d| cos theta), while vector (cross) product generates a perpendicular pseudo-vector representing rotational moment or torque (tau = r x F = |r||F| sin theta n_hat).",
+      "mathematical_invariant": "A . B = B . A (Commutative); A x B = -(B x A) (Antisymmetric); A perp B <=> A . B = 0; A || B <=> A x B = 0",
+      "scope_condition": "Dot product maps V x V -> R; Cross product is uniquely defined in 3D Euclidean space."
+    }
+  ],
+  "dependency_graph": {
+    "layers": [
+      {
+        "layer_index": 1,
+        "name": "Primitive Geometric Primitives",
+        "nodes": [
+          {
+            "id": "NODE-1.1",
+            "term": "Scalar Magnitude",
+            "description": "Non-negative real number representing quantity size with physical units."
+          },
+          {
+            "id": "NODE-1.2",
+            "term": "Spatial Directed Arrow",
+            "description": "Geometric object possessing origin, orientation ray, and terminating arrowhead."
+          },
+          {
+            "id": "NODE-1.3",
+            "term": "Coordinate Frame & Signed Axes",
+            "description": "Chosen origin and orthogonal basis vectors establishing positive orientation."
+          }
+        ]
+      },
+      {
+        "layer_index": 2,
+        "name": "Vector Decomposition & Algebra",
+        "nodes": [
+          {
+            "id": "NODE-2.1",
+            "term": "Orthogonal Projection & Trigonometric Components",
+            "depends_on": ["NODE-1.1", "NODE-1.2", "NODE-1.3"]
+          },
+          {
+            "id": "NODE-2.2",
+            "term": "Head-to-Tail Triangle Addition",
+            "depends_on": ["NODE-1.1", "NODE-1.2"]
+          },
+          {
+            "id": "NODE-2.3",
+            "term": "Vector Subtraction & Additive Inverse",
+            "depends_on": ["NODE-1.2", "NODE-2.2"]
+          }
+        ]
+      },
+      {
+        "layer_index": 3,
+        "name": "Kinematic & Dynamic Projections",
+        "nodes": [
+          {
+            "id": "NODE-3.1",
+            "term": "Change Vector Delta v and Acceleration Direction",
+            "depends_on": ["NODE-2.3"]
+          },
+          {
+            "id": "NODE-3.2",
+            "term": "Galilean Relative Motion Frames",
+            "depends_on": ["NODE-2.3"]
+          },
+          {
+            "id": "NODE-3.3",
+            "term": "Curvilinear Normal & Tangential Decomposition",
+            "depends_on": ["NODE-2.1", "NODE-3.1"]
+          }
+        ]
+      },
+      {
+        "layer_index": 4,
+        "name": "Advanced Invariants & Dual Metric Products",
+        "nodes": [
+          {
+            "id": "NODE-4.1",
+            "term": "Scalar Dot Product & Direction Cosines",
+            "depends_on": ["NODE-2.1"]
+          },
+          {
+            "id": "NODE-4.2",
+            "term": "Vector Cross Product & Moment Arm Antisymmetry",
+            "depends_on": ["NODE-2.1"]
+          },
+          {
+            "id": "NODE-4.3",
+            "term": "Planar 2D Decoupling (Bridge to Projectiles)",
+            "depends_on": ["NODE-2.1", "NODE-3.1"]
+          }
+        ]
+      }
+    ]
+  },
+  "cognitive_conflict_matrix": [
+    {
+      "id": "CCM-01",
+      "concept": "Vector Addition vs Magnitude Summation",
+      "intuitive_misconception": "If displacement A is 4 m and displacement B is 3 m, the resultant displacement must be 7 m.",
+      "newtonian_scientific_truth": "The resultant depends on the spatial angle theta: R = sqrt(4^2 + 3^2 + 2(4)(3) cos theta). It can range anywhere between 1 m (antiparallel) and 7 m (collinear). For orthogonal displacements, R = 5 m.",
+      "decisive_experiment": "Walking 4 meters East then 3 meters North. Direct laser measurement to origin confirms 5 meters net displacement, not 7 meters."
+    },
+    {
+      "id": "CCM-02",
+      "concept": "Negative Signs in Vector Components",
+      "intuitive_misconception": "A negative vector component (e.g., -10 m/s) represents a smaller physical magnitude or a 'defective' speed compared to +2 m/s.",
+      "newtonian_scientific_truth": "The sign designates direction relative to an arbitrary declared coordinate axis. An object moving at -10 m/s has five times the speed (kinetic energy) of one moving at +2 m/s; it simply travels in the opposite direction.",
+      "decisive_experiment": "Flipping coordinate convention (+x pointing West instead of East) instantly changes the sign of all velocity components without modifying the physical motion of vehicles."
+    },
+    {
+      "id": "CCM-03",
+      "concept": "Trigonometric Component Reference Fallacy",
+      "intuitive_misconception": "Horizontal component is always cos theta and vertical component is always sin theta.",
+      "newtonian_scientific_truth": "The trigonometric function is governed by the triangle geometry: the side adjacent to angle theta receives cos theta, while the side opposite receives sin theta. If theta is measured from the vertical, vertical component is A cos theta and horizontal is A sin theta.",
+      "decisive_experiment": "Resolving gravity weight along an inclined plane where incline angle theta is measured from horizontal: normal force perpendicular to incline is mg cos theta, not mg sin theta."
+    },
+    {
+      "id": "CCM-04",
+      "concept": "Velocity Change at Constant Speed",
+      "intuitive_misconception": "If an object travels along a circular path at a constant speed of 10 m/s, its change in velocity is zero because its speed does not change.",
+      "newtonian_scientific_truth": "Velocity is a vector. Changing direction changes the vector state even if magnitude is constant: Delta v = v_f - v_i. For a 90-degree turn at speed v, |Delta v| = v sqrt(2) != 0, requiring a continuous net centripetal force.",
+      "decisive_experiment": "Tracking accelerometer readings inside a vehicle rounding a curve at constant speedometer speed: accelerometer registers substantial lateral centripetal acceleration."
+    },
+    {
+      "id": "CCM-05",
+      "concept": "Relative Frame Transformation",
+      "intuitive_misconception": "When moving forward through rain, the rain hits you from behind because you run into the air.",
+      "newtonian_scientific_truth": "The apparent velocity of rain relative to you is v_{rain/man} = v_{rain} - v_{man}. Since v_{man} is forward (+x), -v_{man} is backward (-x), causing the rain to arrive slanted from the front, requiring you to tilt your umbrella forward.",
+      "decisive_experiment": "Walking in vertically falling rain: dry front of shirt gets soaked while back remains dry unless umbrella is tilted forward."
+    }
+  ]
+}
