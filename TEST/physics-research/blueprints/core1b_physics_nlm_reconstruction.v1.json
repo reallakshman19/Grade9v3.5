@@ -1,13 +1,19 @@
 {
-  "schema": "core1b-physics-reconstruction/v1",
-  "version": "1.0.0",
+  "schema": "core1b-physics-reconstruction/v2",
+  "version": "2.0.0",
   "subject": "Physics",
-  "topic": "Newton's Laws of Motion & Friction",
-  "title": "Core 1B Phenomenological Reconstruction Cycles & Cognitive Dissonance Dialog",
+  "topic": "Newton's Laws of Motion & Momentum Systems",
+  "title": "Core 1B Phenomenological Reconstruction Cycles, Cognitive Dissonance Dialog & First-Move Priming",
+  "canonical_topic_id": "phy-mechanics-nlm",
   "reconstruction_cycles": [
     {
       "cycle_id": "RECON-01",
       "phenomenon": "Coupled Multi-Body Acceleration in Atwood Machine",
+      "competency_ref": "NLM-04",
+      "transfer_target": [
+        "PHYS-NLM-019",
+        "PHYS-NLM-021"
+      ],
       "standard_derivation": "Separate FBDs: m1*g - T = m1*a and T - m2*g = m2*a. Adding equations eliminates tension T: (m1 - m2)*g = (m1 + m2)*a => a = (m1 - m2)*g / (m1 + m2).",
       "phenomenological_reconstruction": {
         "perspective": "Whole-System Center-of-Mass Invariant",
@@ -18,14 +24,27 @@
         "tension_reconstruction": "T = \\frac{2 m_1 m_2}{m_1 + m_2} g \\quad \\text{(Harmonic mean of gravitational weights)}"
       },
       "limiting_boundary_checks": [
-        {"limit": "m1 = m2", "physical_consequence": "a = 0, T = m1*g (System in neutral static equilibrium)"},
-        {"limit": "m1 >> m2", "physical_consequence": "a -> g, T -> 2*m2*g (m1 essentially in free fall, pulling negligible m2 upward)"},
-        {"limit": "m2 = 0", "physical_consequence": "a = g, T = 0 (Free fall of m1 with disconnected string)"}
+        {
+          "limit": "m1 = m2",
+          "physical_consequence": "a = 0, T = m1*g (System in neutral static equilibrium)"
+        },
+        {
+          "limit": "m1 >> m2",
+          "physical_consequence": "a -> g, T -> 2*m2*g (m1 in free fall, pulling negligible m2 upward)"
+        },
+        {
+          "limit": "m2 = 0",
+          "physical_consequence": "a = g, T = 0 (Free fall of m1 with disconnected string)"
+        }
       ]
     },
     {
       "cycle_id": "RECON-02",
       "phenomenon": "Inclined Plane Slip Threshold & Angle of Repose",
+      "competency_ref": "NLM-03",
+      "transfer_target": [
+        "PHYS-NLM-022"
+      ],
       "standard_derivation": "Project gravity: along plane F_parallel = mg*sin(theta), normal F_perp = mg*cos(theta). Normal force N = mg*cos(theta). Slip condition f_s <= mu_s * N => mg*sin(theta) <= mu_s * mg*cos(theta) => tan(theta) <= mu_s.",
       "phenomenological_reconstruction": {
         "perspective": "Contact Reaction Cone Invariant",
@@ -36,14 +55,27 @@
         "reconstructed_formula": "\\tan\\theta \\le \\mu_s \\iff \\theta \\le \\lambda = \\arctan(\\mu_s)"
       },
       "limiting_boundary_checks": [
-        {"limit": "mu_s -> 0 (perfectly smooth)", "physical_consequence": "theta_repose = 0 deg; block slides on any non-zero incline"},
-        {"limit": "mu_s -> infinity (glued/toothed)", "physical_consequence": "theta_repose = 90 deg; block never slides along surface"},
-        {"limit": "theta = 0 deg (flat plane)", "physical_consequence": "Driving force = 0, normal N = mg, friction f_s = 0"}
+        {
+          "limit": "mu_s -> 0 (perfectly smooth)",
+          "physical_consequence": "theta_repose = 0 deg; block slides on any non-zero incline"
+        },
+        {
+          "limit": "mu_s -> infinity (glued/toothed)",
+          "physical_consequence": "theta_repose = 90 deg; block never slides along surface"
+        },
+        {
+          "limit": "theta = 0 deg (flat plane)",
+          "physical_consequence": "Driving force = 0, normal N = mg, friction f_s = 0"
+        }
       ]
     },
     {
       "cycle_id": "RECON-03",
       "phenomenon": "Stacked Two-Block Slip Threshold on Frictionless Table",
+      "competency_ref": "NLM-04",
+      "transfer_target": [
+        "PHYS-NLM-023"
+      ],
       "standard_derivation": "Block A (mass m1) rests on Block B (mass m2). Horizontal force F pulls B. Max friction on A is f_max = mu*m1*g, giving A max acceleration a_max = f_max / m1 = mu*g. For no relative slip, whole system must accelerate at <= mu*g, so F_max = (m1 + m2)*a_max = mu*(m1 + m2)*g.",
       "phenomenological_reconstruction": {
         "perspective": "Non-Inertial Frame & D'Alembert Pseudo Force",
@@ -54,13 +86,23 @@
         "reconstructed_formula": "F_{\\max} = (m_1 + m_2) a_{\\max} = \\mu (m_1 + m_2) g"
       },
       "limiting_boundary_checks": [
-        {"limit": "mu -> 0", "physical_consequence": "F_max = 0; any non-zero pull causes B to slide out from under A instantly"},
-        {"limit": "m1 >> m2", "physical_consequence": "F_max -> mu*m1*g; inertia dominated entirely by top block"}
+        {
+          "limit": "mu -> 0",
+          "physical_consequence": "F_max = 0; any non-zero pull causes B to slide out instantly"
+        },
+        {
+          "limit": "m1 >> m2",
+          "physical_consequence": "F_max -> mu*m1*g; inertia dominated entirely by top block"
+        }
       ]
     },
     {
       "cycle_id": "RECON-04",
       "phenomenon": "Movable Pulley Kinematic Invariant & Mechanical Advantage",
+      "competency_ref": "NLM-04",
+      "transfer_target": [
+        "PHYS-NLM-024"
+      ],
       "standard_derivation": "String length L = 2*y_pulley + y_load. Differentiating twice: 2*a_pulley + a_load = 0 => a_load = -2*a_pulley. Balance of forces on massless pulley: 2*T - F = 0 => T = F/2.",
       "phenomenological_reconstruction": {
         "perspective": "Virtual Work & Energy Conservation Invariant",
@@ -70,8 +112,14 @@
         "reconstructed_formula": "W_{\\text{in}} = W_{\\text{out}} \\implies F \\cdot (2\\Delta y) = W_{\\text{load}} \\cdot \\Delta y \\implies F = \\frac{W_{\\text{load}}}{2}"
       },
       "limiting_boundary_checks": [
-        {"limit": "Inextensible string", "physical_consequence": "Work input = Work output (Efficiency = 100%)"},
-        {"limit": "Elastic / stretching string", "physical_consequence": "Mechanical advantage unchanged, but stored elastic potential energy reduces instantaneous output work"}
+        {
+          "limit": "Inextensible string",
+          "physical_consequence": "Work input = Work output (Efficiency = 100%)"
+        },
+        {
+          "limit": "Elastic / stretching string",
+          "physical_consequence": "Mechanical advantage unchanged, but stored elastic energy reduces instantaneous work output"
+        }
       ]
     }
   ],
@@ -80,25 +128,49 @@
       "probe_id": "CDP-01",
       "scenario": "A 100 kg person stands on a spring bathroom scale in a freely falling elevator (cable snapped, air resistance negligible).",
       "dissonance_question": "What does the scale read? 100 kg, 980 N, or 0 N?",
-      "resolution": "0 N (Apparent weightlessness). Both person and scale accelerate downward at g. No normal reaction force is required to prevent the person from falling through the scale."
+      "resolution": "0 N (Apparent weightlessness). Both person and scale accelerate downward at g. No normal contact force is required to prevent relative penetration.",
+      "competency_ref": "NLM-01",
+      "first_move_atlas_cue": "constant velocity / rest"
     },
     {
       "probe_id": "CDP-02",
       "scenario": "A horse pulls a wagon with force F_hw = 500 N. By Newton's 3rd Law, the wagon pulls back on the horse with F_wh = 500 N. How can the wagon possibly accelerate forward if the backward pull equals the forward pull?",
       "dissonance_question": "Why do these equal and opposite forces not produce static equilibrium?",
-      "resolution": "The forces act on DIFFERENT bodies. To determine wagon acceleration, inspect forces acting ON THE WAGON (500 N forward pull from horse minus friction on wagon wheels). The 500 N backward pull acts ON THE HORSE, which the horse overcomes by pushing backward against the ground with its hooves."
+      "resolution": "The forces act on DIFFERENT bodies. To determine wagon acceleration, inspect forces acting ON THE WAGON (forward pull from horse minus wheel friction). The backward pull acts ON THE HORSE, which the horse overcomes by pushing backward against the ground with its hooves.",
+      "competency_ref": "NLM-08",
+      "first_move_atlas_cue": "action-reaction"
     },
     {
       "probe_id": "CDP-03",
       "scenario": "You apply a horizontal force of 20 N to a heavy 50 kg crate on a rough floor with static friction coefficient mu_s = 0.5. The crate remains at rest.",
       "dissonance_question": "Is the static friction force acting on the crate 245 N (mu_s * m * g) or 20 N?",
-      "resolution": "Exactly 20 N. mu_s * N = 0.5 * 50 * 9.8 = 245 N is the MAXIMUM POSSIBLE static friction threshold. Static friction matches the driving force exactly up to that threshold to maintain Sigma F = 0."
+      "resolution": "Exactly 20 N. mu_s * N = 245 N is the MAXIMUM POSSIBLE static friction threshold. Static friction matches the applied driving force exactly up to that threshold to maintain Sigma F = 0.",
+      "competency_ref": "NLM-03",
+      "first_move_atlas_cue": "several forces"
     },
     {
       "probe_id": "CDP-04",
       "scenario": "A block sits at rest on the bed of an accelerating truck. As the truck speeds up forward, the block also speeds up forward without slipping relative to the truck.",
       "dissonance_question": "Which direction does friction on the block act? Forward or backward?",
-      "resolution": "FORWARD. The only horizontal force acting on the block is static friction from the truck bed. By Newton's 2nd Law, Sigma F = m*a_forward, so friction must point in the direction of acceleration (forward)."
+      "resolution": "FORWARD. The only horizontal force acting on the block is static friction from the truck bed. By Newton's 2nd Law, Sigma F = m*a_forward, so friction must point in the direction of acceleration (forward).",
+      "competency_ref": "NLM-02",
+      "first_move_atlas_cue": "force question"
+    },
+    {
+      "probe_id": "CDP-05",
+      "scenario": "A 0.20 kg ball strikes a wall at 8 m/s and rebounds at 6 m/s. A student computes Delta p = 0.20*(8 - 6) = 0.40 kg m/s.",
+      "dissonance_question": "What fatal error was committed, and what is the true momentum change?",
+      "resolution": "Momentum is a signed directional vector. With initial direction positive, p_i = +1.6 kg m/s and p_f = -1.2 kg m/s. Delta p = p_f - p_i = -1.2 - (+1.6) = -2.8 kg m/s. Rebound produces roughly double the momentum change.",
+      "competency_ref": "NLM-06",
+      "first_move_atlas_cue": "p-v or p-m graph"
+    },
+    {
+      "probe_id": "CDP-06",
+      "scenario": "A 0.020 kg bullet is fired from a 2.0 kg rifle. Both acquire equal momentum magnitudes |p|. Does the shooter receive as much kinetic energy as the target?",
+      "dissonance_question": "Why is the bullet deadly while the rifle recoil is merely uncomfortable?",
+      "resolution": "Kinetic energy K = p^2 / (2m). Because momentum magnitude |p| is identical, kinetic energy is inversely proportional to mass. The bullet (100 times lighter) absorbs 100 times more kinetic energy than the rifle.",
+      "competency_ref": "NLM-10",
+      "first_move_atlas_cue": "rocket / rifle"
     }
   ]
 }

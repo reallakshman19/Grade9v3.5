@@ -2,6 +2,7 @@ import re
 import json
 import argparse
 import sys
+import os
 from pathlib import Path
 
 def load_topic_adapters(adapters_path: str = "Physics/adapter/TopicAdapters.v1.json"):
@@ -337,6 +338,15 @@ def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter
         if len(warnings) > 8:
             print(f"  ... and {len(warnings) - 8} more warnings.")
 
+    # Upstream Blueprint -> Adapter reciprocal verification
+    for top_key in topic_matched_counts:
+        top_ad = adapters.get(top_key, {})
+        bp_refs = top_ad.get("blueprint_refs", {})
+        if bp_refs and strict_golden:
+            for bp_type, bp_path in bp_refs.items():
+                if not validate_blueprint_file(bp_path, adapters_path):
+                    errors.append(f"Upstream Blueprint validation failed for {bp_path}")
+
     if errors:
         print(f"\n[FAIL: {len(errors)} ERRORS DETECTED]")
         for err in errors[:15]:
@@ -346,6 +356,70 @@ def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter
         return False
         
     print("\n[PASS] Question Bank passed all verification gates!")
+    return True
+
+def validate_blueprint_file(blueprint_path: str, adapters_path: str = "Physics/adapter/TopicAdapters.v1.json"):
+    print(f"\n{'='*80}")
+    print(f"BLUEPRINT VALIDATION: {blueprint_path}")
+    print(f"{'='*80}")
+    if not os.path.exists(blueprint_path):
+        print(f"  FAIL: Blueprint file does not exist: {blueprint_path}")
+        return False
+        
+    with open(blueprint_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+        
+    adapters = load_topic_adapters(adapters_path)
+    errors = []
+    
+    schema = data.get("schema", "")
+    topic_id = data.get("canonical_topic_id", "")
+    
+    # Locate matching adapter
+    matched_adapter = None
+    matched_key = None
+    for k, a in adapters.items():
+        if a.get("topic_id") == topic_id or k in blueprint_path:
+            matched_adapter = a
+            matched_key = k
+            break
+            
+    if not matched_adapter:
+        errors.append(f"No matching Topic Adapter found for canonical_topic_id: '{topic_id}'")
+    else:
+        ad_comp_map = matched_adapter.get("subtopic_competency_map", {})
+        if "core1a" in schema:
+            comps = data.get("atomic_competencies", {})
+            if not comps:
+                errors.append("Core 1A Blueprint missing 'atomic_competencies' mapping.")
+            for cid, cdata in comps.items():
+                if cid not in ad_comp_map:
+                    errors.append(f"Competency {cid} in Blueprint not found in Topic Adapter.")
+                else:
+                    ac = ad_comp_map[cid]
+                    if cdata.get("title") != ac.get("title"):
+                        errors.append(f"Competency {cid} title mismatch: '{cdata.get('title')}' vs '{ac.get('title')}'")
+            # First-Move Atlas
+            bp_atlas = data.get("first_move_atlas", [])
+            ad_atlas = matched_adapter.get("first_move_atlas", [])
+            if bp_atlas and ad_atlas and len(bp_atlas) != len(ad_atlas):
+                errors.append(f"First-Move Atlas length mismatch: Blueprint ({len(bp_atlas)}) vs Adapter ({len(ad_atlas)})")
+        elif "core1b" in schema:
+            recons = data.get("reconstruction_cycles", [])
+            if not recons:
+                errors.append("Core 1B Blueprint missing 'reconstruction_cycles'.")
+            for r in recons:
+                cref = r.get("competency_ref")
+                if cref and cref not in ad_comp_map:
+                    errors.append(f"Reconstruction cycle {r.get('cycle_id')} references unknown competency {cref}")
+                    
+    if errors:
+        print(f"  FAIL: Found {len(errors)} Blueprint validation errors:")
+        for err in errors:
+            print(f"    - {err}")
+        return False
+        
+    print(f"  PASS: Blueprint '{blueprint_path}' is in 100% reciprocal alignment with Topic Adapter '{matched_key}'.")
     return True
 
 def validate_master_app(app_path: str, expected_q_count: int = 25):
@@ -409,11 +483,16 @@ def main():
     parser = argparse.ArgumentParser(description="Automated Multi-Engine Physics Pipeline Validator")
     parser.add_argument("--bank", type=str, help="Path to question bank JSON")
     parser.add_argument("--app", type=str, help="Path to master tablet app HTML")
+    parser.add_argument("--blueprint", type=str, help="Path to Core 1A or Core 1B Blueprint JSON")
     parser.add_argument("--adapters", type=str, default="Physics/adapter/TopicAdapters.v1.json", help="Path to topic adapters JSON")
     parser.add_argument("--strict-golden", action="store_true", help="Enforce strict Golden Benchmark standards (prompt-reveals, 5-step ladders, Cross-Core grounding)")
     args = parser.parse_args()
     
     success = True
+    if args.blueprint:
+        if not validate_blueprint_file(args.blueprint, args.adapters):
+            success = False
+
     if args.bank:
         if not validate_question_bank(args.bank, args.adapters, strict_golden=args.strict_golden):
             success = False
@@ -422,8 +501,8 @@ def main():
         if not validate_master_app(args.app):
             success = False
             
-    if not args.bank and not args.app:
-        print("Please provide --bank or --app to validate.")
+    if not args.bank and not args.app and not args.blueprint:
+        print("Please provide --bank, --app, or --blueprint to validate.")
         sys.exit(1)
         
     if not success:
@@ -435,3 +514,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
