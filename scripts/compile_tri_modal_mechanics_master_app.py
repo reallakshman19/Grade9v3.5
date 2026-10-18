@@ -198,18 +198,18 @@ def compile_tri_modal_mechanics():
     textbook_units = [
         {
             "id": "NLM-01",
-            "title": "Motion is Not Force",
+            "title": "Motion is not force",
             "subtitle": "Constant velocity can coexist with zero net force",
             "pillar": "P1",
             "story": "Newton I links change of velocity to net external force. Motion itself does not require a sustaining net force. A crate sliding at constant velocity on a frictionless surface has zero net force acting upon it.",
-            "key_idea": "If velocity is constant in an inertial frame, acceleration is zero ($a = 0$), and therefore the net external force is strictly zero ($\\Sigma \\vec{F} = 0$).",
+            "key_idea": "If velocity is constant in an inertial frame, acceleration is zero (a = 0) and therefore the net external force is zero (Sigma F_net = 0).",
             "how_it_works": [
                 "Choose the body and ask whether its velocity is changing.",
                 "Draw all external forces acting on that body.",
                 "Add them vectorially before discussing motion.",
-                "Check: zero net force means constant velocity (including rest)."
+                "Check: zero net force means constant velocity, including rest."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 140" width="100%" height="140">
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 140" width="100%" height="140">
   <defs><marker id="ar1" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/></marker></defs>
   <rect x="130" y="40" width="120" height="60" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
   <text x="190" y="75" font-size="16" font-family="sans-serif" text-anchor="middle" fill="#f8fafc" font-weight="bold">BODY (m)</text>
@@ -218,31 +218,31 @@ def compile_tri_modal_mechanics():
   <line x1="250" y1="70" x2="340" y2="70" stroke="#22c55e" stroke-width="3" marker-end="url(#ar1)"/>
   <text x="260" y="60" font-size="14" font-family="sans-serif" fill="#22c55e" font-weight="bold">40 N (Right)</text>
   <text x="190" y="125" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#94a3b8">ΣF = 40 - 40 = 0 ⟹ Constant Velocity v = 3 m/s</text>
-</svg>""",
-            "worked_example": "A crate moves right at $3\\text{ m/s}$ while $60\\text{ N}$ right and $60\\text{ N}$ left act on it. Since $F_{\\text{net}} = 60 - 60 = 0$, acceleration $a = 0$; it continues at constant velocity indefinitely.",
+</svg>''',
+            "worked_example": "A crate moves right at $3\\text{ m/s}$ while $60\\text{ N}$ right and $60\\text{ N}$ left act on it. $F_{\\text{net}} = 0$, so $a = 0$; it continues at constant velocity indefinitely.",
             "guided_try": {
-                "prompt": "A puck glides at constant velocity on an ideal frictionless surface. What horizontal net force is required to sustain this motion?",
-                "guide": "Name the body $\\to$ draw the representation $\\to$ state Newton I before calculating.",
-                "solution": "Answer: $0\\text{ N}$. By Newton I, zero net force is required to maintain constant velocity."
+                "prompt": "A puck glides at constant velocity on an ideal frictionless surface. What horizontal net force is required?",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: $0\\text{ N}$. Zero net force is required to sustain constant velocity."
             },
-            "faded_try": "Change the mass of the crate from $10\\text{ kg}$ to $50\\text{ kg}$ while keeping the balanced $60\\text{ N}$ forces. Does the required net force change? (No; zero net force maintains any constant speed regardless of mass).",
-            "watch_out": "A moving object does not automatically need a forward net force to keep moving.",
-            "practice_targets": ["PHYS-NLM-001", "PHYS-NLM-002", "PHYS-NLM-021"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "A moving object does not automatically need a forward net force.",
+            "practice_targets": ["PHYS-NLM-001", "PHYS-NLM-004", "PHYS-NLM-005", "PHYS-NLM-006", "PHYS-NLM-008"]
         },
         {
             "id": "NLM-02",
-            "title": "Choose the Body Before Drawing Forces",
+            "title": "Choose the body before drawing forces",
             "subtitle": "Interactions become forces only after the body is chosen",
             "pillar": "P1",
-            "story": "A free-body diagram is a diagram of strictly one chosen body. First identify what interacts with it (Earth, surface, rope, worker); then draw ONLY the forces exerted ON that body.",
-            "key_idea": "The phrase 'force on X by Y' prevents body confusion and third-law errors. Never put 'force on Y by X' on X's diagram.",
+            "story": "A free-body diagram is a diagram of one chosen body. First identify what interacts with it; then draw only the forces acting on that body.",
+            "key_idea": "The phrase 'force on X by Y' prevents body confusion and Newton-III mistakes.",
             "how_it_works": [
-                "Circle the specific body or system being analysed.",
-                "List all interacting bodies (Earth, table, cable, hand).",
-                "Convert each interaction into exactly one force arrow on the chosen body.",
-                "Do NOT include forces the chosen body exerts on external objects."
+                "Circle the body/system being analysed.",
+                "List interacting bodies: Earth, surface, rope, hand, etc.",
+                "Convert each interaction into one force arrow on the chosen body.",
+                "Do not include forces the chosen body exerts on something else."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 140" width="100%" height="140">
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 140" width="100%" height="140">
   <defs><marker id="ar2" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/></marker></defs>
   <circle cx="190" cy="70" r="45" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4"/>
   <rect x="155" y="45" width="70" height="50" rx="6" fill="#1e293b" stroke="#f8fafc" stroke-width="2"/>
@@ -251,93 +251,98 @@ def compile_tri_modal_mechanics():
   <text x="200" y="25" font-size="14" font-family="sans-serif" fill="#22c55e">N (by Table)</text>
   <line x1="190" y1="95" x2="190" y2="135" stroke="#ef4444" stroke-width="3" marker-end="url(#ar2)"/>
   <text x="200" y="125" font-size="14" font-family="sans-serif" fill="#ef4444">W (by Earth)</text>
-</svg>""",
-            "worked_example": "For a book on a table, the book's FBD contains Earth-on-book weight ($W$) and table-on-book normal ($N$). The book-on-table downward push belongs strictly on the table's FBD.",
+</svg>''',
+            "worked_example": "For a book on a table, the book FBD contains Earth-on-book weight and table-on-book normal. The book-on-table force belongs to the table FBD.",
             "guided_try": {
-                "prompt": "A crate is pushed across a floor by a worker. Name the three external interactions acting on the crate.",
-                "guide": "Identify every object physically in contact with or gravitationally acting upon the crate.",
-                "solution": "1. Worker-crate contact push. 2. Earth-crate gravitational pull. 3. Floor-crate normal contact and friction."
+                "prompt": "A crate is pushed by a worker while sliding on a floor. Name three possible external interactions on the crate.",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: Worker-crate contact push, Earth-crate gravity, floor-crate contact reaction and friction."
             },
-            "faded_try": "If the worker suddenly stops pushing while the crate continues to slide, which interaction disappears immediately? (The worker-crate interaction vanishes; Earth and floor interactions remain).",
-            "watch_out": "An action-reaction interaction pair is never two arrows on the same free-body diagram.",
-            "practice_targets": ["PHYS-NLM-003", "PHYS-NLM-004"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "An interaction pair is not automatically two arrows on one FBD.",
+            "practice_targets": ["PHYS-NLM-010"]
         },
         {
             "id": "NLM-03",
-            "title": "Net Force is a Vector Sum",
-            "subtitle": "Balanced forces and no forces are different physical statements",
+            "title": "Net force is a vector sum",
+            "subtitle": "Balanced forces and no forces are different statements",
             "pillar": "P2",
-            "story": "Newton II uses the net external vector sum $\\Sigma \\vec{F}$, not whichever force is easiest to notice. Balanced forces can be very large individually while producing zero acceleration.",
-            "key_idea": "Choose an explicit Cartesian coordinate system, assign signs to components, and sum algebraically: $\\Sigma F_x = m a_x$ and $\\Sigma F_y = m a_y$.",
+            "story": "Newton II uses the net external force, not whichever force is easiest to notice. Balanced forces can be nonzero individually while yielding zero acceleration.",
+            "key_idea": "Choose a positive axis, assign signs to force components, and sum them: $\\Sigma F_x = m a_x$ and $\\Sigma F_y = m a_y$.",
             "how_it_works": [
-                "Declare $+x$ and $+y$ coordinate axes.",
-                "Resolve diagonal forces into orthogonal components using trigonometry.",
-                "Compute $\\Sigma F_x$ and $\\Sigma F_y$ independently.",
-                "Only then deduce acceleration components via $a_x = \\Sigma F_x / m$."
+                "Choose +x and +y coordinate directions.",
+                "Resolve forces into components when needed.",
+                "Compute $\\Sigma F_x$ and $\\Sigma F_y$.",
+                "Only then infer acceleration components."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" width="100%" height="120">
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" width="100%" height="120">
   <defs><marker id="ar3" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/></marker></defs>
   <rect x="130" y="30" width="100" height="50" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-  <text x="180" y="60" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#f8fafc">Cart (5 kg)</text>
-  <line x1="230" y1="55" x2="330" y2="55" stroke="#22c55e" stroke-width="3" marker-end="url(#ar3)"/>
-  <text x="250" y="45" font-size="14" font-family="sans-serif" fill="#22c55e" font-weight="bold">+25 N</text>
+  <text x="180" y="60" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#fff">Cart</text>
   <line x1="130" y1="55" x2="50" y2="55" stroke="#ef4444" stroke-width="3" marker-end="url(#ar3)"/>
-  <text x="65" y="45" font-size="14" font-family="sans-serif" fill="#ef4444" font-weight="bold">-10 N</text>
-  <text x="180" y="105" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#38bdf8">F_net = +25 - 10 = +15 N (Right) ⟹ a = 3.0 m/s²</text>
-</svg>""",
-            "worked_example": "A cart has $25\\text{ N}$ pulling right and $10\\text{ N}$ pulling left. With right as positive, $F_{\\text{net},x} = 25 - 10 = +15\\text{ N}$. For $m = 5\\text{ kg}$, $a_x = 15/5 = 3.0\\text{ m/s}^2$ to the right.",
+  <text x="60" y="45" font-size="14" font-family="sans-serif" fill="#ef4444">10 N (Left)</text>
+  <line x1="230" y1="55" x2="330" y2="55" stroke="#22c55e" stroke-width="3" marker-end="url(#ar3)"/>
+  <text x="240" y="45" font-size="14" font-family="sans-serif" fill="#22c55e">25 N (Right)</text>
+  <text x="180" y="105" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#38bdf8">F_net = +25 - 10 = +15 N (Right)</text>
+</svg>''',
+            "worked_example": "A cart has $25\\text{ N}$ right and $10\\text{ N}$ left. With right positive, $F_{\\text{net},x} = 25 - 10 = 15\\text{ N}$ right.",
             "guided_try": {
-                "prompt": "A box experiences $30\\text{ N}$ to the right and $30\\text{ N}$ to the left. What is its horizontal acceleration?",
-                "guide": "Compute the algebraic sum with signs before invoking $a = F/m$.",
-                "solution": "Answer: $0\\text{ m/s}^2$, regardless of whether the box is currently stationary or already gliding at high speed."
+                "prompt": "A box has 30 N right and 30 N left. What is its horizontal acceleration?",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: $0\\text{ m/s}^2$, regardless of its current velocity."
             },
-            "faded_try": "If a third force of $15\\text{ N}$ is added directed to the left, what is the new net force and acceleration of the $5\\text{ kg}$ cart? ($F_{\\text{net}} = 25 - 10 - 15 = 0\\text{ N} \\implies a = 0$).",
-            "watch_out": "Do not confuse 'net force is zero' with 'there are no forces acting'.",
-            "practice_targets": ["PHYS-NLM-005", "PHYS-NLM-007"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "Do not confuse 'F_net = 0' with 'there are no forces.'",
+            "practice_targets": ["PHYS-NLM-012", "PHYS-NLM-022", "PHYS-NLM-025"]
         },
         {
             "id": "NLM-04",
-            "title": "Newton II and Dynamic Scaling",
+            "title": "Newton II and scaling",
             "subtitle": "Acceleration responds to net force and mass together",
-            "pillar": "P4",
-            "story": "For a body of constant mass, $\\vec{F}_{\\text{net}} = m\\vec{a}$. At fixed mass, acceleration scales directly with net force; at fixed net force, acceleration scales inversely with total mass.",
-            "key_idea": "For simultaneous variations in force and mass, form scaling ratios before substituting raw numbers: $\\frac{a_2}{a_1} = \\left(\\frac{F_2}{F_1}\\right)\\left(\\frac{m_1}{m_2}\\right)$.",
+            "pillar": "P2",
+            "story": "For a chosen body of constant mass, $F_{\\text{net}} = ma$. At fixed mass, $a$ scales with net force; at fixed force, $a$ scales inversely with mass.",
+            "key_idea": "For changes in both force and mass, compare ratios before substituting numbers: $\\frac{a_2}{a_1} = \\left(\\frac{F_2}{F_1}\\right)\\left(\\frac{m_1}{m_2}\\right)$.",
             "how_it_works": [
                 "Write $a_1 = F_1 / m_1$ and $a_2 = F_2 / m_2$.",
-                "Form the dimensionless ratio $a_2 / a_1 = (F_2/F_1)(m_1/m_2)$.",
-                "Preserve vector direction from the signed net force.",
-                "Check unit consistency: $1\\text{ N} = 1\\text{ kg}\\cdot\\text{m/s}^2$."
+                "Form the ratio $a_2 / a_1 = (F_2/F_1)(m_1/m_2)$.",
+                "Keep direction from the signed net force.",
+                "Check units: $1\\text{ N} = 1\\text{ kg}\\cdot\\text{m/s}^2$."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 130" width="100%" height="130">
-  <rect x="20" y="20" width="340" height="90" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
-  <text x="40" y="50" font-size="14" font-family="sans-serif" fill="#94a3b8">Case 1: F = 60 N, m = 5 kg ⟹ <tspan fill="#38bdf8" font-weight="bold">a = 12 m/s²</tspan></text>
-  <text x="40" y="75" font-size="14" font-family="sans-serif" fill="#94a3b8">Case 2: F = 60 N, m = 10 kg (2x mass) ⟹ <tspan fill="#eab308" font-weight="bold">a = 6 m/s² (1/2 a)</tspan></text>
-  <text x="40" y="100" font-size="14" font-family="sans-serif" fill="#94a3b8">Case 3: F = 30 N, m = 10 kg (1/2 F, 2x m) ⟹ <tspan fill="#ef4444" font-weight="bold">a = 3 m/s² (1/4 a)</tspan></text>
-</svg>""",
-            "worked_example": "If applied force halves ($F_2/F_1 = 1/2$) while mass doubles ($m_2/m_1 = 2$), acceleration becomes $(1/2) \\times (1/2) = 1/4$ of its original value.",
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
+  <rect x="20" y="20" width="100" height="70" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <text x="70" y="45" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#fff">F = 60 N</text>
+  <text x="70" y="70" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#38bdf8">m=5kg ⟹ a=12</text>
+  <rect x="140" y="20" width="100" height="70" rx="6" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+  <text x="190" y="45" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#fff">F = 60 N</text>
+  <text x="190" y="70" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#a855f7">m=10kg ⟹ a=6</text>
+  <rect x="260" y="20" width="100" height="70" rx="6" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="310" y="45" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#fff">F = 30 N</text>
+  <text x="310" y="70" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#22c55e">m=5kg ⟹ a=6</text>
+</svg>''',
+            "worked_example": "If force halves while mass doubles, $a$ becomes $(1/2)(1/2) = 1/4$ of its original value.",
             "guided_try": {
-                "prompt": "A $40\\text{ N}$ net force accelerates a $5\\text{ kg}$ object. What is its acceleration?",
-                "guide": "Apply $a = F_{\\text{net}} / m$ directly.",
-                "solution": "Answer: $a = 40 / 5 = 8.0\\text{ m/s}^2$."
+                "prompt": "A 40 N net force accelerates 5 kg. What is a?",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: $a = 40 / 5 = 8\\text{ m/s}^2$."
             },
-            "faded_try": "What net force is required to accelerate a $10\\text{ kg}$ object at the same $8.0\\text{ m/s}^2$? (Answer: $F = 10 \\times 8 = 80\\text{ N}$, double the force).",
-            "watch_out": "'Half the force produces half the acceleration' is true ONLY if the accelerated mass remains strictly unchanged.",
-            "practice_targets": ["PHYS-NLM-006", "PHYS-NLM-011", "PHYS-NLM-022"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "'Half the force means half the acceleration' is true only if mass is unchanged.",
+            "practice_targets": ["PHYS-NLM-009", "PHYS-NLM-015", "PHYS-NLM-019", "PHYS-NLM-021", "PHYS-NLM-023", "PHYS-NLM-024"]
         },
         {
             "id": "NLM-05",
-            "title": "Stopping Force Needs Two Models",
-            "subtitle": "Kinematics supplies acceleration; Newton II supplies retarding force",
+            "title": "Stopping force needs two models",
+            "subtitle": "Kinematics supplies acceleration; Newton II supplies force",
             "pillar": "P4",
-            "story": "Determining stopping force requires coupling kinematics with dynamics. Do not jump directly from stopping distance to force. First isolate acceleration using kinematic relations, then evaluate force via Newton II.",
-            "key_idea": "For uniform braking over distance $s$, evaluate $a = \\frac{v^2 - u^2}{2s} = -\\frac{u^2}{2s}$, then compute retarding force $F_{\\text{stop}} = m|a| = \\frac{m u^2}{2s}$.",
+            "story": "Stopping-over-distance problems often require a kinematics step before a force step. Do not jump directly from distance to force.",
+            "key_idea": "For constant stopping acceleration, find $a$ from $v^2 = u^2 + 2as$, then use $F_{\\text{net}} = ma$; find time separately if requested via $v = u + at$.",
             "how_it_works": [
-                "List kinematic state variables: $u, v=0, s$.",
-                "Apply $v^2 = u^2 + 2as$ to determine acceleration $a$.",
-                "Apply $F_{\\text{net}} = ma$ keeping signs explicit.",
-                "If stopping time is required, compute $t = \\frac{2s}{u}$."
+                "Write the motion state: $u, v=0, s$.",
+                "Use $v^2 = u^2 + 2as$ to find acceleration $a$.",
+                "Use $F = ma$ with proper sign and direction.",
+                "If time is needed, use $v = u + at$ after $a$ is known."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
   <defs><marker id="ar5" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/></marker></defs>
   <line x1="30" y1="80" x2="350" y2="80" stroke="#475569" stroke-width="2"/>
   <rect x="40" y="45" width="50" height="35" rx="4" fill="#38bdf8"/>
@@ -346,127 +351,93 @@ def compile_tri_modal_mechanics():
   <text x="315" y="67" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#fff" font-weight="bold">v=0</text>
   <line x1="90" y1="95" x2="290" y2="95" stroke="#38bdf8" stroke-width="2" marker-end="url(#ar5)"/>
   <text x="190" y="115" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#38bdf8">Stopping Distance s ⟹ F_stop = m u² / (2s)</text>
-</svg>""",
-            "worked_example": "A $0.020\\text{ kg}$ pellet moving at $100\\text{ m/s}$ penetrates a wooden barrier and stops in $0.10\\text{ m}$. $a = (0 - 100^2)/(2 \\times 0.10) = -50,000\\text{ m/s}^2$. Retarding force $F = (0.020)(-50,000) = -1000\\text{ N}$.",
+</svg>''',
+            "worked_example": "A $0.020\\text{ kg}$ pellet at $100\\text{ m/s}$ stops uniformly in $0.10\\text{ m}$. $a = (0 - 100^2)/(2 \times 0.10) = -50,000\\text{ m/s}^2$, so $F = 0.020(-50000) = -1000\\text{ N}$.",
             "guided_try": {
-                "prompt": "If the same pellet stops over twice the distance ($0.20\\text{ m}$), what happens to $|a|$ and stopping force $|F|$?",
-                "guide": "Inspect how $a$ and $F$ scale with $s$ in $F = mu^2 / (2s)$.",
-                "solution": "Answer: Both $|a|$ and $|F|$ halve ($|a| = 25,000\\text{ m/s}^2, |F| = 500\\text{ N}$)."
+                "prompt": "If the same pellet stops over twice the distance, what happens to |a| and |F|?",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: Both $|a|$ and $|F|$ halve."
             },
-            "faded_try": "If initial velocity doubles to $200\\text{ m/s}$ with stopping distance unchanged, how does stopping force scale? ($F \\propto u^2$, so stopping force quadruples to $4000\\text{ N}$).",
-            "watch_out": "Do not treat stopping distance and force as having a direct linear relation without quadratic velocity coupling.",
-            "practice_targets": ["PHYS-NLM-010"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "Do not mix the kinematic distance relation with Newton II as though they were one formula.",
+            "practice_targets": ["PHYS-NLM-018"]
         },
         {
             "id": "NLM-06",
-            "title": "Static vs Kinetic Friction Thresholds",
-            "subtitle": "Static friction is a self-adjusting constraint force; kinetic friction acts during sliding",
-            "pillar": "P5",
-            "story": "Friction opposes RELATIVE sliding between surfaces in contact, not absolute motion in the lab frame. Static friction self-adjusts ($0 \\le f_s \\le \\mu_s N$) to match the applied force. Once sliding occurs, friction drops to kinetic $f_k = \\mu_k N$.",
-            "key_idea": "The maximum static threshold is $f_{s,\\max} = \\mu_s N$. If applied force $F < f_{s,\\max}$, the block does NOT move and $f_s = F$, NOT $\\mu_s N$!",
-            "how_it_works": [
-                "Calculate contact normal force $N$ from equilibrium perpendicular to interface.",
-                "Evaluate threshold $f_{s,\\max} = \\mu_s N$.",
-                "Compare driving force $F_{\\text{drive}}$ against $f_{s,\\max}$.",
-                "If $F_{\\text{drive}} \\le f_{s,\\max}$, $f_s = F_{\\text{drive}}$ and $a=0$. If $F > f_{s,\\max}$, $f = \\mu_k N$ and $a = (F - \\mu_k N)/m$."
-            ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 140" width="100%" height="140">
-  <line x1="40" y1="110" x2="350" y2="110" stroke="#475569" stroke-width="2"/>
-  <line x1="50" y1="110" x2="50" y2="20" stroke="#475569" stroke-width="2"/>
-  <line x1="50" y1="110" x2="180" y2="30" stroke="#22c55e" stroke-width="3"/>
-  <line x1="180" y1="30" x2="180" y2="50" stroke="#eab308" stroke-width="2" stroke-dasharray="3"/>
-  <line x1="180" y1="50" x2="340" y2="50" stroke="#ef4444" stroke-width="3"/>
-  <circle cx="180" cy="30" r="4" fill="#22c55e"/>
-  <text x="185" y="25" font-size="14" font-family="sans-serif" fill="#22c55e" font-weight="bold">f_s,max = μ_s N</text>
-  <text x="260" y="42" font-size="14" font-family="sans-serif" fill="#ef4444" font-weight="bold">f_k = μ_k N</text>
-  <text x="90" y="85" font-size="14" font-family="sans-serif" fill="#22c55e">Static (f_s = F)</text>
-</svg>""",
-            "worked_example": "A $10\\text{ kg}$ crate rests on a floor with $\\mu_s = 0.40, \\mu_k = 0.30$. $N = 10 \\times 9.8 = 98\\text{ N} \\implies f_{s,\\max} = 0.40 \\times 98 = 39.2\\text{ N}$. If pulled with $25\\text{ N}$, static friction is exactly $25\\text{ N}$ (not $39.2\\text{ N}$) and the crate remains at rest.",
-            "guided_try": {
-                "prompt": "If the pull is increased to $50\\text{ N}$, what friction acts on the crate and what is its acceleration?",
-                "guide": "Check if $50\\text{ N} > f_{s,\\max}$. If yes, switch to $f_k = \\mu_k N$.",
-                "solution": "Since $50 > 39.2\\text{ N}$, the crate slides. Kinetic friction $f_k = 0.30 \\times 98 = 29.4\\text{ N}$. Net force $= 50 - 29.4 = 20.6\\text{ N} \\implies a = 20.6 / 10 = 2.06\\text{ m/s}^2$."
-            },
-            "faded_try": "If a person of mass $20\\text{ kg}$ sits on top of the crate, what is the new static friction threshold? ($N' = 30 \\times 9.8 = 294\\text{ N} \\implies f_{s,\\max}' = 0.40 \\times 294 = 117.6\\text{ N}$).",
-            "watch_out": "Never assume static friction equals $\\mu_s N$ when the applied force is smaller than the threshold.",
-            "practice_targets": ["PHYS-NLM-008", "PHYS-NLM-009", "PHYS-NLM-023"]
-        },
-        {
-            "id": "NLM-07",
-            "title": "Momentum is a Signed State",
+            "title": "Momentum is a signed state",
             "subtitle": "Momentum carries the direction of velocity",
             "pillar": "P3",
-            "story": "Linear momentum is $\\vec{p} = m\\vec{v}$. In one dimension, its sign carries the direction of velocity. When an object rebounds, the sign of velocity reverses, which makes the magnitude of momentum change $\\Delta p = p_f - p_i$ much larger than a simple speed difference.",
+            "story": "Momentum is $\\vec{p} = m\\vec{v}$. In one dimension its sign follows velocity. A change in direction can make $\\Delta p$ much larger than a simple speed difference.",
             "key_idea": "Always write signed initial and final momenta explicitly: $p_i = m v_i$, $p_f = m v_f$, then $\\Delta p = p_f - p_i$.",
             "how_it_works": [
-                "Choose an explicit positive direction.",
-                "Write signed velocities ($+v$ or $-v$).",
-                "Compute signed initial and final momenta.",
+                "Choose a positive direction.",
+                "Write signed velocities (+v or -v).",
+                "Convert to signed momenta.",
                 "Subtract final minus initial: $\\Delta p = p_f - p_i$."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
-  <defs><marker id="ar7" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/></marker></defs>
-  <line x1="30" y1="60" x2="160" y2="60" stroke="#22c55e" stroke-width="3" marker-end="url(#ar7)"/>
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
+  <defs><marker id="ar6" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/></marker></defs>
+  <line x1="30" y1="60" x2="160" y2="60" stroke="#22c55e" stroke-width="3" marker-end="url(#ar6)"/>
   <text x="60" y="45" font-size="14" font-family="sans-serif" fill="#22c55e" font-weight="bold">p_i = +mv_1 (Right)</text>
-  <line x1="350" y1="60" x2="220" y2="60" stroke="#ef4444" stroke-width="3" marker-end="url(#ar7)"/>
+  <line x1="350" y1="60" x2="220" y2="60" stroke="#ef4444" stroke-width="3" marker-end="url(#ar6)"/>
   <text x="230" y="45" font-size="14" font-family="sans-serif" fill="#ef4444" font-weight="bold">p_f = -mv_2 (Rebound)</text>
   <text x="190" y="105" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#38bdf8">|Δp| = m(v_1 + v_2) ⟹ Directions Add in Rebound!</text>
-</svg>""",
-            "worked_example": "A $0.20\\text{ kg}$ ball traveling at $+8.0\\text{ m/s}$ hits a wall and rebounds at $-6.0\\text{ m/s}$. $\\Delta p = 0.20(-6.0) - 0.20(+8.0) = -1.2 - 1.6 = -2.8\\text{ kg}\\cdot\\text{m/s}$ (magnitude $2.8\\text{ N}\\cdot\\text{s}$ directed away from wall).",
+</svg>''',
+            "worked_example": "A $0.20\\text{ kg}$ ball changes from $+8\\text{ m/s}$ to $-6\\text{ m/s}$. $\\Delta p = 0.20(-6) - 0.20(8) = -1.2 - 1.6 = -2.8\\text{ kg}\\cdot\\text{m/s}$.",
             "guided_try": {
-                "prompt": "At fixed mass, what is the shape and gradient of a momentum-velocity ($p-v$) graph?",
-                "guide": "Compare $p = mv$ with $y = mx$.",
-                "solution": "Answer: A straight line through the origin $(0, 0)$; slope equals the object's mass $m$."
+                "prompt": "At fixed mass, what is the shape of a p-v graph?",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: A straight line through the origin; slope = mass."
             },
-            "faded_try": "If the ball sticks to the wall ($v_f = 0$) instead of rebounding, what is $\\Delta p$? ($\\Delta p = 0 - 1.6 = -1.6\\text{ kg}\\cdot\\text{m/s}$, much smaller than the rebound case).",
-            "watch_out": "Never discard negative signs when an object rebounds; speed difference is $2\\text{ m/s}$, but velocity change is $14\\text{ m/s}$!",
-            "practice_targets": ["PHYS-NLM-012", "PHYS-NLM-013"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "Do not discard signs when a body rebounds.",
+            "practice_targets": ["PHYS-NLM-020"]
         },
         {
             "id": "NLM-07",
-            "title": "Impulse and Average Force",
+            "title": "Impulse and average force",
             "subtitle": "The same momentum change can be spread over more time",
             "pillar": "P3",
-            "story": "Average force measures how quickly momentum changes: $\\bar{F} = \\frac{\\Delta p}{\\Delta t}$. Increasing the duration of impact $\\Delta t$ drastically reduces the peak force experienced for the exact same momentum change.",
-            "key_idea": "This is the universal physics behind moving hands backward while catching a cricket ball, automotive crumple zones, and air bags.",
+            "story": "Average force measures how quickly momentum changes: $\\bar{F} = \\frac{\\Delta p}{\\Delta t}$. Increasing stopping time reduces force magnitude for the same $\\Delta p$.",
+            "key_idea": "This is the physics behind moving the hands backward while catching a ball, automotive crumple zones, and air bags.",
             "how_it_works": [
-                "Evaluate the signed momentum change $\\Delta p = m\\Delta v$.",
+                "Find the signed $\\Delta p = m\\Delta v$.",
                 "Identify the interaction duration $\\Delta t$.",
-                "Divide $\\Delta p$ by $\\Delta t$ to compute average force $\\bar{F}$.",
-                "Check force direction: it points in the direction of $\\Delta p$, not $v_i$."
+                "Divide $\\Delta p$ by $\\Delta t$.",
+                "Check force direction against $\\Delta p$, not against initial velocity alone."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 130" width="100%" height="130">
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 130" width="100%" height="130">
   <rect x="20" y="20" width="160" height="90" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
-  <text x="100" y="45" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#ef4444" font-weight="bold">Stiff Collision (Δt = 0.05s)</text>
-  <text x="100" y="75" font-size="16" font-family="sans-serif" text-anchor="middle" fill="#fff">F_avg = 120 N</text>
+  <text x="100" y="45" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#ef4444" font-weight="bold">Stiff Catch (Δt = 0.10s)</text>
+  <text x="100" y="75" font-size="16" font-family="sans-serif" text-anchor="middle" fill="#fff">F_avg = 60 N</text>
   <rect x="200" y="20" width="160" height="90" rx="6" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
   <text x="280" y="45" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#22c55e" font-weight="bold">Cushioned (Δt = 0.30s)</text>
-  <text x="280" y="75" font-size="16" font-family="sans-serif" text-anchor="middle" fill="#fff">F_avg = 20 N (6x less!)</text>
-</svg>""",
-            "worked_example": "A $0.50\\text{ kg}$ ball traveling at $+12\\text{ m/s}$ is caught and stopped in $0.30\\text{ s}$. $\\Delta p = -6.0\\text{ kg}\\cdot\\text{m/s} \\implies \\bar{F} = -6.0 / 0.30 = -20\\text{ N}$.",
+  <text x="280" y="75" font-size="16" font-family="sans-serif" text-anchor="middle" fill="#fff">F_avg = 20 N (3x less!)</text>
+</svg>''',
+            "worked_example": "A $0.50\\text{ kg}$ ball at $+12\\text{ m/s}$ stops in $0.30\\text{ s}$: $\\Delta p = -6\\text{ kg}\\cdot\\text{m/s}, F_{\\text{avg}} = -20\\text{ N}$.",
             "guided_try": {
-                "prompt": "If the ball is stopped stiffly in $0.05\\text{ s}$ instead of $0.30\\text{ s}$, what is the new average force?",
-                "guide": "Apply $\\bar{F} = \\Delta p / \\Delta t$.",
-                "solution": "Answer: $\\bar{F} = -6.0 / 0.05 = -120\\text{ N}$ (6 times larger force!)."
+                "prompt": "If the same ball is stopped in twice the time, what happens to average force magnitude?",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: It halves."
             },
-            "faded_try": "What represents impulse on a force-time ($F-t$) graph? (The area under the $F-t$ curve equals impulse $J = \\int F\\,dt = \\Delta p$).",
-            "watch_out": "Momentum ($[M L T^{-1}]$) and force ($[M L T^{-2}]$) are fundamentally different physical quantities.",
-            "practice_targets": ["PHYS-NLM-014", "PHYS-NLM-015"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "Momentum and force are not the same physical quantity.",
+            "practice_targets": ["PHYS-NLM-003"]
         },
         {
             "id": "NLM-08",
-            "title": "Newton III Interaction Pairs",
+            "title": "Newton III pairs",
             "subtitle": "Equal and opposite does not mean same body",
             "pillar": "P1",
-            "story": "A third-law interaction pair belongs to the same physical interaction, has equal magnitude and opposite direction, and acts on DIFFERENT bodies: $\\vec{F}_{AB} = -\\vec{F}_{BA}$.",
-            "key_idea": "Use complete naming: 'force on B by A' and 'force on A by B'. Because they act on different bodies, they never cancel on a single free-body diagram.",
+            "story": "A third-law pair belongs to the same interaction, has equal magnitude and opposite direction, and acts on different bodies: $\\vec{F}_{AB} = -\\vec{F}_{BA}$.",
+            "key_idea": "Use complete names: 'force on B by A' and 'force on A by B'. Because they act on different bodies, they never cancel on a single FBD.",
             "how_it_works": [
-                "Identify both interacting bodies A and B.",
-                "Write the two reciprocal force names.",
-                "Place each force on the respective body's FBD.",
-                "Apply Newton II separately to each body to find their individual accelerations."
+                "Name both interacting bodies.",
+                "Write the two force names.",
+                "Place each force on the correct body's FBD.",
+                "Use Newton II separately to compare accelerations."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
   <defs><marker id="ar8" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/></marker></defs>
   <rect x="50" y="35" width="80" height="50" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
   <text x="90" y="65" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#fff">Body A</text>
@@ -477,31 +448,31 @@ def compile_tri_modal_mechanics():
   <line x1="330" y1="60" x2="370" y2="60" stroke="#a855f7" stroke-width="3" marker-end="url(#ar8)"/>
   <text x="345" y="45" font-size="14" font-family="sans-serif" fill="#a855f7">F_BA</text>
   <text x="190" y="105" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#94a3b8">F_AB = - F_BA (Acts on DIFFERENT Bodies!)</text>
-</svg>""",
-            "worked_example": "Earth pulls an apple downward with gravity force $W$. The apple pulls Earth upward with an equal gravity force $W$. Their accelerations differ drastically ($a_{\\text{apple}} = 9.8\\text{ m/s}^2$ vs $a_{\\text{Earth}} \\approx 10^{-24}\\text{ m/s}^2$) because Earth's mass is massive.",
+</svg>''',
+            "worked_example": "Earth pulls an apple downward with the same force magnitude that the apple pulls Earth upward. Their accelerations differ because their masses differ.",
             "guided_try": {
-                "prompt": "What is the third-law reaction partner of the table-on-book normal force?",
-                "guide": "Swap the subject and agent in 'table on book'.",
-                "solution": "Answer: The book-on-table downward contact force. (NOT the book's weight!)."
+                "prompt": "What is the third-law partner of the table-on-book normal force?",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: The book-on-table contact force."
             },
-            "faded_try": "Why do the action and reaction forces between horse and wagon not produce static equilibrium? (They act on different bodies: pull on wagon accelerates wagon; pull on horse is countered by horse's hooves pushing ground).",
-            "watch_out": "Weight and normal force on a book resting on a table are balanced forces on ONE body, NOT a third-law pair.",
-            "practice_targets": ["PHYS-NLM-016", "PHYS-NLM-017"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "Weight and normal on a resting book are balanced forces on one body, not a Newton-III pair.",
+            "practice_targets": ["PHYS-NLM-002", "PHYS-NLM-017"]
         },
         {
             "id": "NLM-09",
-            "title": "Momentum Conservation in Systems",
-            "subtitle": "Choose the system boundary and check external impulse first",
+            "title": "Momentum conservation is a system statement",
+            "subtitle": "Choose the system and check external impulse first",
             "pillar": "P3",
-            "story": "Total momentum is conserved ONLY for a chosen system when the net external impulse over the interaction is negligible. Internal forces between system members always cancel in pairs.",
-            "key_idea": "The conservation equation $\\vec{P}_{\\text{before}} = \\vec{P}_{\\text{after}}$ is valid only after checking that $\\Sigma \\vec{F}_{\\text{ext}} = 0$.",
+            "story": "Total momentum is conserved only for a chosen system when the relevant external impulse over the interaction is negligible.",
+            "key_idea": "The equation $P_{\\text{before,total}} = P_{\\text{after,total}}$ comes after the system/interval check.",
             "how_it_works": [
-                "Draw an explicit system boundary enclosing interacting bodies.",
-                "Choose a coordinate positive direction.",
-                "List all system momenta before and after interaction.",
-                "Verify external forces are negligible during impact; then equate totals."
+                "Draw a system boundary.",
+                "Choose a positive direction.",
+                "List all system momenta before and after.",
+                "Check external impulse; then equate totals if valid."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
   <rect x="30" y="15" width="320" height="90" rx="12" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="6"/>
   <text x="190" y="35" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#22c55e" font-weight="bold">ISOLATED SYSTEM BOUNDARY (ΣF_ext = 0)</text>
   <circle cx="100" cy="70" r="22" fill="#38bdf8"/>
@@ -509,31 +480,31 @@ def compile_tri_modal_mechanics():
   <circle cx="280" cy="70" r="22" fill="#a855f7"/>
   <text x="280" y="75" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#0f172a" font-weight="bold">m₂</text>
   <text x="190" y="75" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#fff">m₁v₁ + m₂v₂ = const</text>
-</svg>""",
-            "worked_example": "Two ice skaters (masses $50\\text{ kg}$ and $75\\text{ kg}$) push apart from rest. Initial total $P = 0$. If the $50\\text{ kg}$ skater moves left at $3.0\\text{ m/s}$, the $75\\text{ kg}$ skater moves right at $v_2 = (50 \\times 3.0)/75 = 2.0\\text{ m/s}$.",
+</svg>''',
+            "worked_example": "Two skaters push apart from rest. For the two-skater system, initial total $p=0$, so their final momenta are equal in magnitude and opposite in direction.",
             "guided_try": {
-                "prompt": "A falling ball speeds up under gravity. Is the momentum of the ball-only system conserved?",
-                "guide": "Check if an external force acts on the ball.",
-                "solution": "Answer: No; gravity exerts an external downward impulse $\\Delta p = mg\\Delta t$."
+                "prompt": "A falling ball speeds up under gravity. Is the ball-only momentum conserved?",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: No; gravity gives the ball an external impulse."
             },
-            "faded_try": "If the system is defined as (Ball + Earth), is total momentum conserved? (Yes; gravity is then an internal force, and the ball-Earth system momentum is conserved).",
-            "watch_out": "Do not claim conservation from one object's perspective when external forces act on it.",
-            "practice_targets": ["PHYS-NLM-018", "PHYS-NLM-019"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "Do not claim conservation from one object's momentum alone when an external force acts on it.",
+            "practice_targets": ["PHYS-NLM-013", "PHYS-NLM-016"]
         },
         {
             "id": "NLM-10",
-            "title": "Recoil, Rockets and Exchanged Momentum",
-            "subtitle": "Equal momentum can produce drastically different speeds",
+            "title": "Recoil, rockets and exchanged momentum",
+            "subtitle": "Equal momentum can mean very different speeds",
             "pillar": "P3",
-            "story": "In explosions, gun recoil, and rocket propulsion, internal forces eject mass. The bullet and rifle acquire equal and opposite momentum: $m_{\\text{bullet}} v_{\\text{bullet}} = m_{\\text{rifle}} v_{\\text{recoil}}$.",
-            "key_idea": "Because momentum is equal ($p = mv$), kinetic energy and speed scale inversely with mass: $v \\propto 1/m$ and $K = p^2/(2m) \\propto 1/m$. The lighter projectile carries almost all kinetic energy!",
+            "story": "In recoil/explosion problems with negligible external impulse, momentum exchanged internally appears with opposite signs.",
+            "key_idea": "For equal momentum magnitude, speed is inversely proportional to mass ($v \\propto 1/m$). Kinetic energy also scales inversely with mass ($K \\propto 1/m$).",
             "how_it_works": [
-                "Write system momentum conservation: $m_1 v_1 + m_2 v_2 = 0$.",
-                "Solve for recoil velocity: $v_2 = -\\frac{m_1}{m_2} v_1$.",
-                "Evaluate kinetic energy ratio: $K_1 / K_2 = m_2 / m_1$.",
-                "For continuous mass ejection (rockets): apply Tsiolkovsky thrust $F = v_{\\text{rel}}\\frac{dm}{dt}$."
+                "Choose launcher+projectile (or rocket+exhaust) as the system.",
+                "Set initial total momentum.",
+                "Assign opposite signs after separation.",
+                "Solve one object's speed from total momentum conservation."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="100%" height="120">
   <defs><marker id="ar10" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/></marker></defs>
   <rect x="130" y="40" width="120" height="40" rx="6" fill="#475569"/>
   <text x="190" y="65" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#fff">Rifle (M = 4 kg)</text>
@@ -542,49 +513,49 @@ def compile_tri_modal_mechanics():
   <text x="300" y="45" font-size="14" font-family="sans-serif" fill="#eab308">v_b = 400 m/s</text>
   <line x1="130" y1="60" x2="60" y2="60" stroke="#ef4444" stroke-width="3" marker-end="url(#ar10)"/>
   <text x="65" y="45" font-size="14" font-family="sans-serif" fill="#ef4444">v_r = 1.0 m/s</text>
-</svg>""",
-            "worked_example": "A $4.0\\text{ kg}$ rifle fires a $0.010\\text{ kg}$ bullet at $400\\text{ m/s}$. Recoil velocity $v_{\\text{recoil}} = -(0.010 \\times 400)/4.0 = -1.0\\text{ m/s}$. Bullet kinetic energy is $800\\text{ J}$; rifle recoil kinetic energy is only $2\\text{ J}$!",
+</svg>''',
+            "worked_example": "A $0.020\\text{ kg}$ bullet leaves a $2.0\\text{ kg}$ pistol at $+150\\text{ m/s}$ from rest. $0 = (0.020)(150) + 2.0v$, so $v = -1.5\\text{ m/s}$.",
             "guided_try": {
-                "prompt": "Why does the bullet inflict lethal damage while the rifle recoil is safely absorbed by the shooter's shoulder?",
-                "guide": "Compare the kinetic energies using $K = p^2 / (2m)$.",
-                "solution": "Answer: With equal momentum $p$, kinetic energy $K = p^2/(2m)$ is 400 times greater in the bullet ($800\\text{ J}$ vs $2\\text{ J}$)."
+                "prompt": "Two rifles fire identical bullets with the same bullet momentum. Which rifle has larger recoil speed?",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: The lighter rifle."
             },
-            "faded_try": "If rifle mass is doubled to $8\\text{ kg}$, what happens to recoil velocity and recoil energy? (Recoil velocity halves to $0.5\\text{ m/s}$; recoil energy halves to $1\\text{ J}$).",
-            "watch_out": "Equal momentum does NOT mean equal speed or equal kinetic energy.",
-            "practice_targets": ["PHYS-NLM-018", "PHYS-NLM-019"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "A lighter rifle recoils faster for the same bullet momentum, not with a larger recoil momentum.",
+            "practice_targets": ["PHYS-NLM-007", "PHYS-NLM-011"]
         },
         {
             "id": "NLM-11",
-            "title": "Read Force from a Motion Graph",
-            "subtitle": "Velocity-time slope gives acceleration, which gives net force",
+            "title": "Read force from a motion graph",
+            "subtitle": "v-t slope -> acceleration -> force",
             "pillar": "P4",
-            "story": "Motion graphs provide instantaneous dynamic data. The gradient of a velocity-time graph is acceleration: $a = \\frac{dv}{dt}$. Net force is obtained by multiplying slope by mass: $F_{\\text{net}} = m \\times \\text{slope}$.",
-            "key_idea": "Horizontal segment ($a = 0$) $\\implies F_{\\text{net}} = 0$. Constant slope $\\implies$ constant net force. Change in direction of slope $\\implies$ reversal of net force.",
+            "story": "A velocity-time graph gives acceleration from its slope. If friction is the only horizontal force, then $F_{\\text{friction}} = ma$.",
+            "key_idea": "The graph height is velocity; the slope is acceleration.",
             "how_it_works": [
-                "Divide the $v-t$ graph into piecewise linear segments.",
-                "Compute acceleration from slope: $a = \\frac{v_2 - v_1}{t_2 - t_1}$.",
-                "Multiply by mass: $F_{\\text{net}} = m a$.",
-                "The area under a force-time graph gives total momentum change $\\Delta p$."
+                "Read two points on the straight segment.",
+                "Compute $a = \\Delta v / \\Delta t$.",
+                "Convert mass to kilograms.",
+                "Apply $F = ma$ and interpret the sign."
             ],
-            "svg_diagram": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 130" width="100%" height="130">
+            "svg_diagram": '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 130" width="100%" height="130">
   <line x1="40" y1="100" x2="350" y2="100" stroke="#475569" stroke-width="2"/>
   <line x1="40" y1="100" x2="40" y2="20" stroke="#475569" stroke-width="2"/>
-  <path d="M 40 100 L 120 40 L 220 40 L 300 100" fill="none" stroke="#38bdf8" stroke-width="3"/>
-  <text x="80" y="55" font-size="14" font-family="sans-serif" fill="#22c55e">F > 0</text>
-  <text x="170" y="30" font-size="14" font-family="sans-serif" fill="#eab308">F = 0</text>
-  <text x="270" y="55" font-size="14" font-family="sans-serif" fill="#ef4444">F &lt; 0</text>
+  <line x1="40" y1="30" x2="280" y2="100" stroke="#38bdf8" stroke-width="3"/>
+  <text x="30" y="30" font-size="14" font-family="sans-serif" fill="#38bdf8">80</text>
+  <text x="280" y="115" font-size="14" font-family="sans-serif" fill="#38bdf8">8 s</text>
+  <text x="160" y="60" font-size="14" font-family="sans-serif" fill="#22c55e">slope = a = -10 m/s²</text>
   <text x="350" y="115" font-size="14" font-family="sans-serif" fill="#94a3b8">t</text>
   <text x="25" y="25" font-size="14" font-family="sans-serif" fill="#94a3b8">v</text>
-</svg>""",
-            "worked_example": "A $2.0\\text{ kg}$ object's velocity rises from $0$ to $10\\text{ m/s}$ in $2\\text{ s}$, stays flat for $3\\text{ s}$, then drops to $0$ in $1\\text{ s}$. Forces: Phase 1: $F = 2 \\times (10/2) = +10\\text{ N}$. Phase 2: $F = 2 \\times 0 = 0\\text{ N}$. Phase 3: $F = 2 \\times (-10/1) = -20\\text{ N}$.",
+</svg>''',
+            "worked_example": "A $50\\text{ g}$ object slows from $80\\text{ m/s}$ to $0$ in $8\\text{ s}$. $a = -10\\text{ m/s}^2$; $F = 0.050(-10) = -0.50\\text{ N}$.",
             "guided_try": {
-                "prompt": "What does a horizontal line on a velocity-time graph indicate about the net force acting on the object?",
-                "guide": "Evaluate the slope $\\Delta v / \\Delta t$.",
-                "solution": "Answer: Zero net force ($F_{\\text{net}} = 0$). Zero slope implies zero acceleration, so forces are balanced."
+                "prompt": "If the same velocity change takes twice as long, what happens to |a| and |F|?",
+                "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+                "solution": "Answer: Both halve."
             },
-            "faded_try": "What does the area under a force-time graph represent physically? (Impulse $J = \\Delta p$, the net momentum change).",
-            "watch_out": "Never judge force magnitude by the height of the velocity curve; force is governed strictly by the SLOPE.",
-            "practice_targets": ["PHYS-NLM-020", "PHYS-NLM-024", "PHYS-NLM-025"]
+            "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+            "watch_out": "Do not use the area under a v-t graph when the question asks for acceleration or force.",
+            "practice_targets": ["PHYS-NLM-014"]
         }
     ]
 
@@ -738,7 +709,73 @@ def compile_tri_modal_mechanics():
 
     # Assemble All Tabs
     practice_cards_html = "".join(render_practice_card(q, idx) for idx, q in enumerate(bank_data["questions"]))
-    textbook_cards_html = "".join(render_textbook_unit(u) for u in textbook_units)
+    
+    # Canonical 4-Step Strategy Hero
+    strategy_hero = '''
+    <div class="strategy-hero-box">
+        <div class="hero-tag">CORE 1 CANONICAL REASONING SYSTEM</div>
+        <h2 class="hero-title">Build the Force-and-Momentum Reasoning System Before Transfer</h2>
+        <p class="hero-desc">Never start with a formula name. Start by choosing the body or system, identify interactions and state, build the representation, then select the governing physical invariant law.</p>
+        <div class="strategy-grid">
+            <div class="strat-step">
+                <div class="strat-num">1</div>
+                <div class="strat-title">CHOOSE</div>
+                <div class="strat-desc">Which body or system is tracked? Define the closed boundary.</div>
+            </div>
+            <div class="strat-step">
+                <div class="strat-num">2</div>
+                <div class="strat-title">REPRESENT</div>
+                <div class="strat-desc">FBD, interaction map, momentum state, motion graph, or system boundary.</div>
+            </div>
+            <div class="strat-step">
+                <div class="strat-num">3</div>
+                <div class="strat-title">CONNECT</div>
+                <div class="strat-desc">Newton I / ΣF=ma / Δp/Δt / Newton III / momentum conservation.</div>
+            </div>
+            <div class="strat-step">
+                <div class="strat-num">4</div>
+                <div class="strat-title">EXECUTE + CHECK</div>
+                <div class="strat-desc">Keep signs, units, bodies, and system membership explicit. Test limiting cases.</div>
+            </div>
+        </div>
+    </div>
+    '''
+
+    # First-Move Atlas
+    atlas_html = '''
+    <div class="first-move-atlas-box" id="atlas-first-move">
+        <div class="atlas-header">
+            <span class="atlas-badge">FIRST-MOVE ATLAS</span>
+            <h3 class="atlas-title">Operational First Moves &bull; Use After Learning (Not a Formula Sheet)</h3>
+        </div>
+        <div class="table-wrap">
+            <table class="dag-table">
+                <thead>
+                    <tr>
+                        <th>When You See...</th>
+                        <th>First Representation</th>
+                        <th>First Physics Move</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>constant velocity / rest</strong></td><td>one-body FBD</td><td>test whether &Sigma;F = 0</td></tr>
+                    <tr><td><strong>force question</strong></td><td>choose body + interactions</td><td>draw only forces on that body</td></tr>
+                    <tr><td><strong>several forces</strong></td><td>signed component sum</td><td>find F_net before ma</td></tr>
+                    <tr><td><strong>force / mass change</strong></td><td>old / new state ratio</td><td>compare F / m</td></tr>
+                    <tr><td><strong>stopping over distance</strong></td><td>kinematic state</td><td>find a first, then F = ma</td></tr>
+                    <tr><td><strong>catch / collision time</strong></td><td>signed p states</td><td>&Delta;p then &Delta;p / &Delta;t</td></tr>
+                    <tr><td><strong>action-reaction</strong></td><td>two-body interaction pair</td><td>force on B by A &harr; force on A by B</td></tr>
+                    <tr><td><strong>collision / recoil</strong></td><td>system boundary</td><td>check external impulse, then conserve total p</td></tr>
+                    <tr><td><strong>rocket / rifle</strong></td><td>opposite signed momenta</td><td>lighter mass &rarr; larger speed for same |p|</td></tr>
+                    <tr><td><strong>v-t friction graph</strong></td><td>graph slope</td><td>a = &Delta;v / &Delta;t then F = ma</td></tr>
+                    <tr><td><strong>p-v or p-m graph</strong></td><td>read axes + slope</td><td>slope gives m or v</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    '''
+
+    textbook_cards_html = strategy_hero + "".join(render_textbook_unit(u) for u in textbook_units) + atlas_html
 
     full_html = f"""<!doctype html>
 <html lang="en" data-theme="dark">
@@ -1307,6 +1344,90 @@ def compile_tri_modal_mechanics():
     .dag-table th {{
       background: #0f172a;
       color: #c084fc;
+    }}
+
+    .strategy-hero-box {{
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(15, 23, 42, 0.9));
+      border: 2px solid #10b981;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 28px;
+    }}
+    .hero-tag {{
+      font-size: 13px;
+      font-weight: 800;
+      color: #10b981;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }}
+    .hero-title {{
+      font-size: 20px;
+      margin: 0 0 10px 0;
+      color: #fff;
+    }}
+    .hero-desc {{
+      font-size: 15px;
+      color: #cbd5e1;
+      margin: 0 0 18px 0;
+      line-height: 1.5;
+    }}
+    .strategy-grid {{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }}
+    .strat-step {{
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }}
+    .strat-num {{
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #10b981;
+      color: #0f172a;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }}
+    .strat-title {{
+      font-weight: 800;
+      color: #fff;
+      font-size: 15px;
+    }}
+    .strat-desc {{
+      font-size: 13.5px;
+      color: #94a3b8;
+      line-height: 1.4;
+    }}
+    .first-move-atlas-box {{
+      background: #1e293b;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 32px;
+    }}
+    .atlas-badge {{
+      background: #0284c7;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }}
+    .atlas-title {{
+      font-size: 18px;
+      color: #fff;
+      margin: 10px 0 14px 0;
     }}
 
     .hidden {{ display: none !important; }}
