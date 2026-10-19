@@ -171,11 +171,12 @@ def compile_physics_master_suite(output_path: str = "standalone/physics-olympiad
             
         fig = q.get("figure", {})
         has_fig = fig.get("has_figure", False)
+        svg_markup = fig.get("svg_code") or fig.get("svg")
         fig_html = ""
-        if has_fig and fig.get("svg_code"):
+        if has_fig and svg_markup:
             fig_html = f"""
             <div class="card-figure-container">
-                {fig["svg_code"]}
+                {svg_markup}
                 <div class="card-figure-caption">{fig.get("caption", "")}</div>
             </div>
             """
