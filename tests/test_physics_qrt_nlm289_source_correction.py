@@ -1,0 +1,186 @@
+"""Source-first qualification for one *draft* NLM correction (Issue #289).
+
+This test does NOT approve the academic novelty claim, confer QRT classification,
+measure learner mastery, or grant release. It proves bounded source identity and
+basic numerical/physical consistency against an immutable original Git revision.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+import subprocess
+import sys
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+SOURCE = "Physics/library/phy-nlm-first-law.v1.json"
+BASE = "73c66b64158ee2ff57b099f990e1c2081d5c571f"
+ORIGINAL_BLOB = "62b8df106e83db03ac80fbb4002a611ac3d6e49a"
+CORRECTED_BLOB = "fc80cc53261b3c4932836795333e7cffe35a5133"
+QUESTION_ID = "Q-PHY-NLM-2B-FRICTION-STATE-01"
+CANDIDATE_DIGEST = "310f32e0b09d1628b53e98164c46db477b84ab45ee20701ee43a01bc88c5d616"
+FIELDS = {"stem", "conditions", "hints", "hint_ladder", "answer"}
+ANSWER_FIELDS = {"summary", "reasoning", "check", "acceptable_alternatives", "rubric", "reasoning_route"}
+
+
+def canonical_sha(value: dict) -> str:
+    return hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=False,
+                                     separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def blob_sha(data: bytes) -> str:
+    return hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
+
+
+class PhysicsNlm289SourceCorrection(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # The focused qualification job checks out full Git history, while
+        # broad guardrails use a shallow checkout without the pinned BASE.
+        # Lack of history must skip ONLY history-dependent diff assertions;
+        # source identity, physics, and answer-withholding still run normally.
+        result = subprocess.run(
+            ["git", "-C", str(ROOT), "show", f"{BASE}:{SOURCE}"],
+            check=False, capture_output=True,
+        )
+        cls.source_bytes = (ROOT / SOURCE).read_bytes()
+        cls.changed = json.loads(cls.source_bytes)
+        cls.base_available = result.returncode == 0
+        cls.base_bytes = result.stdout if cls.base_available else None
+        cls.base = json.loads(result.stdout) if cls.base_available else None
+        cls.before = (next(q for q in cls.base["questions"] if q["id"] == QUESTION_ID)
+                      if cls.base_available else None)
+        cls.after = next(q for q in cls.changed["questions"] if q["id"] == QUESTION_ID)
+
+    def require_pinned_history(self):
+        if not self.base_available:
+            self.skipTest("PINNED_BASE_UNAVAILABLE_IN_SHALLOW_CHECKOUT; full-history CI verifies historical diff")
+
+    def test_original_and_candidate_pinned(self):
+        # Candidate material check never needs historical Git access.
+        self.assertEqual(blob_sha(self.source_bytes), CORRECTED_BLOB)
+        self.assertEqual(canonical_sha(self.after), CANDIDATE_DIGEST)
+        if self.base_available:
+            self.assertEqual(blob_sha(self.base_bytes), ORIGINAL_BLOB)
+
+    def test_no_unrelated_package_records_changed(self):
+        self.require_pinned_history()
+        original = dict(self.base)
+        candidate = dict(self.changed)
+        original["questions"] = [q for q in original["questions"] if q["id"] != QUESTION_ID]
+        candidate["questions"] = [q for q in candidate["questions"] if q["id"] != QUESTION_ID]
+        self.assertEqual(original, candidate)
+        self.assertEqual(len(original["questions"]), 51)
+
+    def test_only_approved_one_question_fields_changed(self):
+        self.require_pinned_history()
+        before = self.before
+        after = self.after
+        changed_keys = {k for k in before if before[k] != after[k]}
+        self.assertEqual(changed_keys, FIELDS)
+        self.assertEqual({k for k in before["answer"]
+                          if before["answer"][k] != after["answer"][k]}, ANSWER_FIELDS)
+        self.assertEqual(after["transfer"], before["transfer"])
+        self.assertEqual(after["representation_roles"], before["representation_roles"])
+        self.assertNotIn("grade9v3:cognitive_demand", after["extensions"])
+
+    def test_holds_remain_explicit_in_source_data(self):
+        self.assertEqual(self.after["status"], "CANDIDATE")
+        self.assertEqual(self.after["exposure"][0]["role"], "NEW_TRANSFER")
+        # This is a source declaration, not a reviewer-approved new transfer.
+        self.assertEqual(self.after["transfer"]["dimension"], "model_choice")
+        self.assertFalse(self.after["evidence_refs"])
+
+    def test_first_attempt_does_not_prewrite_governing_equation(self):
+        visible = self.after["stem"] + " " + " ".join(self.after["conditions"])
+        orient = self.after["hints"][0]["text"]
+        for phrase in ("Resolve each pull", "do not take N = mg", "N = mg - P",
+                       "N=100", "P cosθ =", "60 N", "62.5 N"):
+            self.assertNotIn(phrase, visible + " " + orient)
+
+    def test_physical_assumptions_and_boundary_accurate(self):
+        conditions = " ".join(self.after["conditions"])
+        self.assertIn("non-tipping", conditions)
+        self.assertIn("non-rotating", conditions)
+        self.assertIn("fixed", conditions)
+        self.assertIn("floor contact", conditions)
+        self.assertIn("not proof", conditions)
+        self.assertIn("limiting static equilibrium", self.after["answer"]["summary"])
+
+    def test_three_thresholds_and_contact(self):
+        mu, mg = .75, 100
+        angles = [(1, 0, 75), (.8, .6, 60), (.6, .8, 62.5)]
+        for c, s, expected in angles:
+            critical = mu * mg / (c + mu * s)
+            self.assertTrue(math.isclose(critical, expected, abs_tol=1e-10))
+            self.assertGreater(mg - critical * s, 0)
+            self.assertAlmostEqual(critical*c, mu*(mg-critical*s))
+
+    def test_worker_61_newton_rest_falsifiers(self):
+        mu, mg, worker = .75, 100, 61
+        directions = [(1, 0), (.8, .6), (.6, .8)]
+        can_rule_out_rest = [worker*c > mu*(mg-worker*s) for c, s in directions]
+        self.assertEqual(can_rule_out_rest, [False, True, False])
+        # Equality is a possible impending slip, not proof of actual motion.
+        self.assertAlmostEqual(60*.8, mu*(mg-60*.6))
+        self.assertGreater(61*.8, mu*(mg-61*.6))
+        self.assertIn("strictly", self.after["answer"]["summary"])
+
+    def test_alternative_reasoning_is_present(self):
+        self.assertGreaterEqual(len(self.after["answer"]["acceptable_alternatives"]), 4)
+        content = " ".join(self.after["answer"]["acceptable_alternatives"])
+        self.assertIn("mg/(sinθ+cosθ/μ_s)", content)
+        self.assertIn("axis convention", content)
+        self.assertIn("rounding", content)
+        self.assertGreaterEqual(len(self.after["answer"]["rubric"]), 4)
+
+    def test_protected_reasoning_does_not_turn_equality_into_motion(self):
+        route = self.after["answer"]["reasoning_route"]
+        original_ids = [
+            "R-NLM-2B-STATE-NORMAL", "R-NLM-2B-STATE-DEMAND",
+            "R-NLM-2B-STATE-DECIDE", "R-NLM-2B-STATE-CHECK",
+        ]
+        self.assertEqual([r["id"] for r in route], original_ids)
+        if self.base_available:
+            self.assertEqual([r["id"] for r in route],
+                             [r["id"] for r in self.before["answer"]["reasoning_route"]])
+        protected = self.after["transfer"]["protected_move_ref"]
+        self.assertEqual(next(r for r in route if r["id"] == protected)["kind"], "DECIDE")
+        self.assertIn("strictly exceeds", route[2]["output"])
+        self.assertIn("ruling out static rest", route[2]["output"])
+        self.assertIn("does not itself prove motion", route[1]["why_valid"])
+        self.assertIn("limiting static", route[3]["why_valid"])
+        self.assertNotIn("starting pull", route[1]["action"])
+        self.assertNotIn("can start the crate", route[2]["output"])
+
+    def test_blind_pass_a_packet_is_source_bound_and_answer_withheld(self):
+        from tools.physics_qrt_program.nlm289_blind_intake import (
+            build_blind_packet, validate_blind_packet,
+        )
+        packet = build_blind_packet(root=ROOT)
+        validate_blind_packet(packet)
+        self.assertEqual(packet["question_sha256"], CANDIDATE_DIGEST)
+        self.assertEqual(packet["question_stem"], self.after["stem"])
+        self.assertEqual(packet["question_conditions"], self.after["conditions"])
+        self.assertEqual(packet["phase"], "PASS_A_ANSWER_WITHHELD")
+        for secret in ("answer", "hints", "rubric", "transfer", "reasoning_route"):
+            self.assertNotIn(secret, packet)
+        self.assertEqual(packet["reviewer_qualification"], "INDEPENDENT_HUMAN_NOT_ASSIGNED")
+        self.assertEqual(packet["academic_verdict"], "NOT_REVIEWED")
+        tampered = dict(packet)
+        tampered["answer"] = self.after["answer"]
+        with self.assertRaises(ValueError):
+            validate_blind_packet(tampered)
+
+    def test_authored_hints_do_not_prove_h2_h3_ui(self):
+        self.assertEqual(len(self.after["hint_ladder"]), 3)
+        self.assertEqual(self.after["hint_ladder"][0]["purpose"], "ORIENT")
+        self.assertEqual(self.after["hint_ladder"][1]["purpose"], "REPRESENT")
+        self.assertEqual(self.after["hint_ladder"][2]["purpose"], "FIRST_RELATION")
+
+
+if __name__ == "__main__":
+    unittest.main()
