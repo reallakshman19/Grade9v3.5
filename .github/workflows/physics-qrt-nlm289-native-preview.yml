@@ -1,0 +1,82 @@
+name: Physics NLM289 proposed native browser qualification (HOLD)
+on:
+  pull_request:
+    paths:
+      - 'tools/physics_qrt_program/nlm289_native_preview.py'
+      - 'tests/physics_qrt_nlm289_native_preview.mjs'
+      - '.github/workflows/physics-qrt-nlm289-native-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-proposed-core2b:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify exact current main and retrieve pinned proposal from PR295
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/physics-qrt289-native-preview
+          PIN=0a557b4929bd2d82920c6a8d2ae96fcb4d957f70
+          git fetch --no-tags origin refs/pull/295/head:refs/remotes/origin/phy295
+          ACTUAL=$(git rev-parse refs/remotes/origin/phy295)
+          if [[ "$ACTUAL" != "$PIN" ]]; then
+            echo "::error::PR295 candidate moved; repin and independently review before executing"; exit 1
+          fi
+          git show "$PIN:tools/physics_qrt_program/proposals/nlm289_candidate.v1.json" > build/physics-qrt289-native-preview/proposal.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          proposal=json.loads(Path("build/physics-qrt289-native-preview/proposal.json").read_text())
+          assert proposal["source"]["original_main"] == "73c66b64158ee2ff57b099f990e1c2081d5c571f"
+          assert proposal["source"]["git_blob_sha"] == "62b8df106e83db03ac80fbb4002a611ac3d6e49a"
+          print("PINNED_PR295_PROPOSAL=TRUE; CANONICAL_SOURCE_WRITE=FALSE")
+          PY
+      - name: Install real native renderer schema dependency
+        run: python3 -m pip install jsonschema
+      - name: Render original and proposed one-question core2b pages in memory
+        shell: bash
+        run: |
+          python3 -m tools.physics_qrt_program.nlm289_native_preview \
+            --proposal build/physics-qrt289-native-preview/proposal.json \
+            --out build/physics-qrt289-native-preview
+      - name: Install pinned Playwright Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Run proposed-source Chromium checks including negative controls
+        run: |
+          node tests/physics_qrt_nlm289_native_preview.mjs \
+            --render-dir build/physics-qrt289-native-preview
+      - name: Confirm canonical source and renderer unchanged
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --exit-code -- Physics/library/phy-nlm-first-law.v1.json Shared/tools/render_core.py
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib
+          source=Path("Physics/library/phy-nlm-first-law.v1.json").read_bytes()
+          sha=hashlib.sha1(b"blob "+str(len(source)).encode()+b"\0"+source).hexdigest()
+          assert sha=="62b8df106e83db03ac80fbb4002a611ac3d6e49a",sha
+          print("REAL_SOURCE_ORIGINAL_BLOB_PRESERVED="+sha)
+          PY
+      - name: Upload NON-BLIND candidate browser evidence (never independent Pass A)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: physics-qrt-nlm289-native-preview-NONBLIND-HOLD
+          path: |
+            build/physics-qrt289-native-preview/preview-report.json
+            build/physics-qrt289-native-preview/chromium-report.json
+            build/physics-qrt289-native-preview/original/core2b.html
+            build/physics-qrt289-native-preview/candidate/core2b.html
+          retention-days: 7
+          if-no-files-found: warn
