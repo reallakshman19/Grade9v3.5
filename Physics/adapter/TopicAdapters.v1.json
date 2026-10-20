@@ -177,7 +177,8 @@
             "PHYS-NLM-026",
             "PHYS-NLM-028",
             "PHYS-NLM-029",
-            "PHYS-NLM-033"
+            "PHYS-NLM-033",
+            "PHYS-NLM-044"
           ],
           "pillar_ref": "P2"
         },
@@ -229,7 +230,9 @@
             "PHYS-NLM-024",
             "PHYS-NLM-030",
             "PHYS-NLM-035",
-            "PHYS-NLM-038"
+            "PHYS-NLM-038",
+            "PHYS-NLM-040",
+            "PHYS-NLM-043"
           ],
           "pillar_ref": "P4"
         },
@@ -288,7 +291,8 @@
           ],
           "easy_mistake_to_make": "Confusing impulse (change in momentum in N*s) with work done (energy transferred in Joules).",
           "core2_transfer_target": [
-            "PHYS-NLM-003"
+            "PHYS-NLM-003",
+            "PHYS-NLM-041"
           ],
           "pillar_ref": "P5"
         },
@@ -333,7 +337,8 @@
           "core2_transfer_target": [
             "PHYS-NLM-013",
             "PHYS-NLM-016",
-            "PHYS-NLM-036"
+            "PHYS-NLM-036",
+            "PHYS-NLM-042"
           ],
           "pillar_ref": "P2"
         },
@@ -718,22 +723,26 @@
         {
           "id": "friction-threshold-plus-constraints",
           "requirements": "Couple at least two independently constrained bodies, a 2D force resolution, a static inequality and post-slip regime; solve a genuine parametric threshold before evaluating one regime.",
-          "non_example": "One movable pulley with 2T=W"
+          "non_example": "One movable pulley with 2T=W",
+          "required_evidence": "Document the specific physical steps, all relevant bodies, threshold or regime changes; score must be >=3.8 and name a genuinely new scenario distinct from Core2."
         },
         {
           "id": "coupled-2d-response",
           "requirements": "Use forces on multiple bodies with coupled 2D components and verify which sign of friction is consistent; make the regime conditional on a parameter.",
-          "non_example": "One block on one ramp with tan(theta)=mu"
+          "non_example": "One block on one ramp with tan(theta)=mu",
+          "required_evidence": "Document the specific physical steps, all relevant bodies, threshold or regime changes; score must be >=3.8 and name a genuinely new scenario distinct from Core2."
         },
         {
           "id": "system-boundary-switch",
           "requirements": "Explain why one-body Newton II and a multi-body momentum/force balance have different external terms, with a threshold that changes permitted system treatment.",
-          "non_example": "One mass recoiling by a known momentum"
+          "non_example": "One mass recoiling by a known momentum",
+          "required_evidence": "Document the specific physical steps, all relevant bodies, threshold or regime changes; score must be >=3.8 and name a genuinely new scenario distinct from Core2."
         },
         {
           "id": "impulse-plus-kinematics",
           "requirements": "Use a signed impulse balance and stopping-motion constraint for multiple coupled masses or stages, and identify parameter domain where a proposed solution is physical.",
-          "non_example": "Single bullet stopping via F=ma and v^2=u^2+2as"
+          "non_example": "Single bullet stopping via F=ma and v^2=u^2+2as",
+          "required_evidence": "Document the specific physical steps, all relevant bodies, threshold or regime changes; score must be >=3.8 and name a genuinely new scenario distinct from Core2."
         }
       ],
       "represent_task_types": [
@@ -757,7 +766,17 @@
           "task": "Interpret a v-t or p-t slope graph as acceleration/force, including negative slopes and axes",
           "demand": "REPRESENT"
         }
-      ]
+      ],
+      "not_applicable_cells": {
+        "PHYS-EXPLAIN-D4": "NLM Grade-9 causal explanation can describe a complex regime, but D4 here requires a quantified coupled-constraint optimization; such a task is MODEL or SYNTHESIZE, not EXPLAIN.",
+        "PHYS-RETRIEVE-D3": "Direct retrieval of an already learned Newtonian fact has no coupled system or unresolved threshold; raising it to D3 changes the demand from RETRIEVE to applying or modeling.",
+        "PHYS-RETRIEVE-D4": "A Grade-9 NLM fact recalled without solving cannot satisfy four high-complexity physical factors; the required multi-regime discrimination would be MODEL or JUSTIFY instead.",
+        "PHYS-SYNTHESIZE-D1": "Genuine NLM synthesis joins two independently justified models or regimes and cannot stay at the foundational single-step D1 factor score; label that work APPLY or EXPLAIN at D1."
+      },
+      "d4_coverage_policy": {
+        "criterion": "Real item S>=3.8; category score must name observable constraints. Otherwise record not_applicable_cells instead of manufacturing an item.",
+        "reference": "NLM-FIX2 independent transfer pilot; grade 9 scope"
+      }
     },
     "kinematics-1d-2d": {
       "topic_id": "phy-kinematics-1d-2d",

@@ -91,7 +91,23 @@ For each NLM item, perform these **separate** operations before asserting a tile
 
 **Scope of automatic checks:** NLM score arithmetic, presence of five evidence fields, forbidden vectors, hint-role structure, REPRESENT non-emptiness and missing tile reporting are machine-enforced. Truth of the factor justifications, scenario novelty and equivalence to the unseen PDFs require independent human/Antigravity judgment; a green checker is not that judgment.
 
-**Permission exception:** the Owner-authorized, unmerged NLM-FIX1 stacked PR may be pushed for OTM review despite the general local-only policy above. No app or unrelated-topic regeneration, axis edits or merge is authorized.
+**Permission exception:** the Owner-authorized, unmerged NLM-FIX1 / NLM-FIX2 stacked PR may be pushed for OTM review despite the general local-only policy above. No app or unrelated-topic regeneration, axis edits or merge is authorized.
+
+### E. NLM-FIX2 depth, evidence independence and cell honesty (2026-10-19)
+
+**Precedence:** scientific validity and the specified cognitive demand take priority over populating all 28 cells. An empty NLM cell can count as *accounted for* only when `mechanics-nlm.not_applicable_cells` has a concrete physics explanation. This does **not** claim that the question is present or that an independent validator marked the tile FINE. Never silently change the shared QRT axes or declare the benchmark wrong.
+
+1. **Score margin:** every NLM D4 item's measured mean must be **S >= 3.8**, not merely >=3.6. If its actual physics is only D3, retag its band and cell honestly. Independently justify all five factor scores; a made-up extra body, diagram axis, or unsupported regime does not earn a point. Intrinsic radial and tangential acceleration genuinely merits f2=4, whereas routine straight-line and incline axes do not. A unilateral contact bound (`N >= 0`) can be f3=4 when it actually decides a transition; a decorative inequality cannot.
+2. **Evidence uniqueness:** use item-specific reasons that describe the body, axes, constraints, coupled physical laws and actual symbolic work. The validator checks the displayed score in each rationale, tests complete-factor evidence similarity and rejects near-identical rationales across any two questions. Merely replacing a prop or number in five recycled lines is invalid, even if the factor vector happens to differ.
+3. **D4 discriminator variety:** assign `qrt_contract.d4_discriminator_type` using an ID declared by the NLM adapter. At least three different types must be present. The validator reports counts and warns if one type dominates over 60 percent. Required examples are coupled curved/2D dynamics, impulse followed by kinematics and a system-boundary change that changes the external-force law.
+4. **Generation method:** select demand first, then construct an independent new physical event. For 10 or more Core2-mapped corrections, change the *route to the decision*, not just prose, setting, characters, quantities or drawing style. Verify each new option, reasoning step, sign and limiting check against the revised situation. A new `provenance.scenario_distance` annotation is a trace for independent review, not evidence that novelty has been proved.
+5. **Human gate:** a validator pass certifies schema, reported evidence and scoring consistency, but cannot prove that any newly written score is pedagogically honest or that scenario distance equals the unseen benchmark's demand. Independent Antigravity P4 must judge source-independent novelty, Grade-9 suitability and scientific correctness. Mark the exact benchmark PDF wording **UNKNOWN** without local PDF custody.
+
+**Pilot mapping:** `EXPLAIN-D4`, `RETRIEVE-D3`, `RETRIEVE-D4` and `SYNTHESIZE-D1` are presently marked *not applicable* in mechanics-nlm, because their demand definitions conflict with the cognitive-factor depth; these are explicit, reviewable exceptions, not synthetic filler items. A future genuine task can replace an exception after a factor-based demonstration.
+
+**Authorized PR exception:** Owner and OTM authorize a bounded, unmerged NLM-FIX2 stacked PR to the current Physics candidate branch. The local-only statement above remains a default for other work.
+
+---
 
 ## 4. Stage 3: Core 1A & Core 1B Physical Architectures
 

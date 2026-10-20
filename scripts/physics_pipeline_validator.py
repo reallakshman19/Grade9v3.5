@@ -1,5 +1,7 @@
 import re
 import json
+import difflib
+from collections import Counter
 import argparse
 import sys
 import os
@@ -146,8 +148,10 @@ def validate_nlm_factor_contract(q):
     else:
         for key in NLM_FACTOR_KEYS:
             detail = evidence[key]
-            if not isinstance(detail, str) or len(detail.strip()) < 18:
-                errors.append(f"{qid}: factor_evidence[{key}] must name a concrete scored feature")
+            score = factors[key]
+            if (not isinstance(detail, str) or len(detail.strip()) < 30
+                    or not re.match(r"^Score\s+" + str(score) + r"\s*:", detail)):
+                errors.append(f"{qid}: factor_evidence[{key}] must cite score {score} and a concrete feature (>=30 chars)")
     vector = tuple(factors[key] for key in NLM_FACTOR_KEYS)
     if vector in NLM_LEGACY_TEMPLATES:
         errors.append(f"{qid}: forbidden back-filled template factor vector {vector}")
@@ -161,6 +165,76 @@ def nlm_coverage_report(questions):
         if tile in coverage:
             coverage[tile] += 1
     return coverage
+
+
+def nlm_evidence_similarity(left, right):
+    """Compare complete five-factor rationales, preserving factor order."""
+    def normalized(q):
+        evidence = (q.get("qrt_contract") or {}).get("factor_evidence") or {}
+        if not isinstance(evidence, dict):
+            return ""
+        return " ".join(re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]+", " ",
+                      str(evidence.get(k, "")).lower())).strip() for k in NLM_FACTOR_KEYS)
+    a, b = normalized(left), normalized(right)
+    return difflib.SequenceMatcher(None, a.split(), b.split(), autojunk=False).ratio() if a and b else 0.0
+
+
+def nlm_validate_evidence_uniqueness(items, threshold=0.87):
+    errors = []
+    for i, left in enumerate(items):
+        for right in items[i + 1:]:
+            ratio = nlm_evidence_similarity(left, right)
+            if ratio >= threshold:
+                errors.append(f"NLM: identical or near-identical factor_evidence "
+                              f"{left['question_id']} vs {right['question_id']} (similarity={ratio:.2f})")
+    return errors
+
+
+def nlm_d4_discriminator_report(items, adapter):
+    allowed = {d["id"] for d in adapter.get("d4_discriminators", [])
+               if isinstance(d, dict) and d.get("id")}
+    counts = Counter()
+    errors, warnings = [], []
+    for item in items:
+        qrt = item.get("qrt_contract", {})
+        if qrt.get("difficulty_band") != "D4":
+            continue
+        kind = qrt.get("d4_discriminator_type")
+        if kind not in allowed:
+            errors.append(f"{item['question_id']}: missing or unrecognized D4 discriminator {kind!r}")
+        else:
+            counts[kind] += 1
+        derived, score = derive_nlm_band(qrt.get("difficulty_factors"))
+        if derived != "D4" or score is None or score < 3.8:
+            errors.append(f"{item['question_id']}: D4 margin too low (S={score}); require S >= 3.8")
+    if len(counts) < 3:
+        errors.append(f"NLM: D4 discriminator diversity has {len(counts)} types; require >= 3")
+    total = sum(counts.values())
+    if total:
+        for kind, n in sorted(counts.items()):
+            if n / total > 0.60:
+                warnings.append(f"NLM: D4 discriminator concentration {kind}: {n}/{total} > 60%")
+    return dict(counts), errors, warnings
+
+
+def nlm_validate_accounted_cells(items, adapter):
+    coverage = nlm_coverage_report(items)
+    na = adapter.get("not_applicable_cells", {})
+    errors = []
+    if not isinstance(na, dict):
+        return coverage, ["NLM: not_applicable_cells must be a tile-to-reason mapping"]
+    for tile, reason in na.items():
+        if tile not in coverage:
+            errors.append(f"NLM: invalid not_applicable_cells tile {tile}")
+        elif coverage[tile]:
+            errors.append(f"NLM: {tile} has items but is also marked not applicable")
+        if not isinstance(reason, str) or len(reason.strip()) < 35:
+            errors.append(f"NLM: {tile} missing specific physics not-applicable reason")
+    for tile, count in coverage.items():
+        if count == 0 and tile not in na:
+            errors.append(f"NLM: uncovered cell {tile} has no item or not-applicable justification")
+    return coverage, errors
+
 
 def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter/TopicAdapters.v1.json", strict_golden: bool = False):
     print(f"\n{'='*80}")
@@ -415,9 +489,16 @@ def validate_question_bank(bank_path: str, adapters_path: str = "Physics/adapter
                     errors.append(f"{qid}: SVG font-size violation (<14px): {violating}")
 
     if nlm_items:
-        coverage = nlm_coverage_report(nlm_items)
+        nlm_adapter = adapters.get("mechanics-nlm", {})
+        coverage, coverage_errors = nlm_validate_accounted_cells(nlm_items, nlm_adapter)
+        errors.extend(coverage_errors)
         missing = [tile for tile, count in coverage.items() if not count]
-        print(f"  NLM 28-CELL COVERAGE: {len(coverage) - len(missing)}/28; empty={missing}")
+        print(f"  NLM 28-CELL COVERAGE: {len(coverage) - len(missing)}/28; empty={missing}; not-applicable={list(nlm_adapter.get('not_applicable_cells', {}))}")
+        errors.extend(nlm_validate_evidence_uniqueness(nlm_items))
+        discriminator_counts, discriminator_errors, discriminator_warnings = nlm_d4_discriminator_report(nlm_items, nlm_adapter)
+        errors.extend(discriminator_errors)
+        warnings.extend(discriminator_warnings)
+        print(f"  NLM D4 DISCRIMINATORS: {discriminator_counts}")
         if not any(q.get("qrt_contract", {}).get("primary_demand") == "REPRESENT" for q in nlm_items):
             errors.append("NLM: topic bank has no REPRESENT item")
         for (band, vector), members in nlm_vectors.items():

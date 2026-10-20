@@ -6,21 +6,21 @@
   "topic": "Newton's Laws of Motion & Friction",
   "meta": {
     "title": "Grade 9 Physics Newton's Laws — independently authored NLM demand-calibrated bank (pilot, benchmark PDF wording UNKNOWN)",
-    "item_count": 39,
+    "item_count": 44,
     "difficulty_distribution": {
       "D1": 9,
       "D2": 18,
-      "D4": 6,
-      "D3": 6
+      "D3": 12,
+      "D4": 5
     },
     "demand_distribution": {
-      "APPLY": 9,
+      "APPLY": 10,
       "EXPLAIN": 4,
-      "MODEL": 5,
+      "MODEL": 6,
       "RETRIEVE": 3,
-      "JUSTIFY": 7,
-      "SYNTHESIZE": 7,
-      "REPRESENT": 4
+      "JUSTIFY": 8,
+      "SYNTHESIZE": 8,
+      "REPRESENT": 5
     }
   },
   "questions": [
@@ -31,11 +31,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-01",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q01",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "A service lift is descending but its downward speed is decreasing. Taking upward as positive, what direction must its net force point?",
+      "stem": "An elevator test payload has momentum p=-8 kg m/s at t=0 and p=-4 kg m/s at t=2 s (upward is positive). Without assuming its direction of travel equals the force direction, what is the direction of the net force on the payload?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -43,10 +44,10 @@
         "caption": ""
       },
       "options": {
-        "A": "Upward, since its acceleration opposes its downward velocity.",
-        "B": "Downward, because it is moving downward.",
-        "C": "Zero, because the slowing is steady.",
-        "D": "The direction cannot be inferred without its mass."
+        "A": "Upward, because its signed momentum is becoming less negative.",
+        "B": "Downward, because it is still moving downward.",
+        "C": "Zero, because momentum remains negative.",
+        "D": "The sign of the force cannot be known without its distance travelled."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -76,79 +77,79 @@
           "EXPLAIN"
         ],
         "factor_evidence": {
-          "system_coupling": "Score 1: Only the lift cabin's motion is evaluated.",
-          "vector_dimensionality": "Score 2: Up is chosen positive although velocity is downward.",
-          "constraint_latency": "Score 1: Mass and slowing trend are supplied directly.",
-          "domain_coupling": "Score 2: Translate change of velocity into acceleration then use Newton II.",
-          "math_friction": "Score 1: Only a sign inference, no equation system."
+          "system_coupling": "Score 1: Track one elevator payload.",
+          "vector_dimensionality": "Score 2: Downward signed momentum increases toward zero on an upward-positive axis.",
+          "constraint_latency": "Score 1: Both momentum observations and time interval are explicit.",
+          "domain_coupling": "Score 2: Relate a two-point momentum slope to net force direction.",
+          "math_friction": "Score 1: Only the sign of a single linear difference is needed."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Since the downward velocity becomes less negative, a_y is positive and so is ΣF_y."
+          "diagnostic": "Momentum slope Δp/Δt=(−4−(−8))/2=+2 N; net force points upward although the payload can still descend."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect: Velocity direction and acceleration direction need not agree."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Confuses the named system or the governing invariant; Deceleration while descending is upward acceleration, not upward velocity."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; At constant downward velocity a_y becomes zero."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "What changes physically, and which body or system owns that change?",
-          "reveal_text": "Deceleration while descending is upward acceleration, not upward velocity."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "The decisive state is change of momentum, not the sign of velocity."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
-          "reveal_text": "Use a vertical signed axis and mark velocity down, acceleration up."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Plot the two signed p-t states on an upward-positive axis."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · opening constraint",
-          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
-          "reveal_text": "The first constraint is ΣF_y = m a_y, with upward chosen positive."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Start with F_net=Δp/Δt, retaining the minus signs."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Deceleration while descending is upward acceleration, not upward velocity.",
-          "represent": "Use a vertical signed axis and mark velocity down, acceleration up.",
-          "connect": "The first constraint is ΣF_y = m a_y, with upward chosen positive.",
-          "calculate": "Since the downward velocity becomes less negative, a_y is positive and so is ΣF_y.",
-          "interpret": "Upward, since its acceleration opposes its downward velocity."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Plot the two signed p-t states on an upward-positive axis.",
+          "connect": "Start with F_net=Δp/Δt, retaining the minus signs.",
+          "calculate": "Momentum slope Δp/Δt=(−4−(−8))/2=+2 N; net force points upward although the payload can still descend.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "Upward, since its acceleration opposes its downward velocity.",
-        "final_answer_value": "Upward, since its acceleration opposes its downward velocity."
+        "final_expression": "Upward, because its signed momentum is becoming less negative.",
+        "final_answer_value": "Upward, because its signed momentum is becoming less negative."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
-        "quick_check": "At constant downward velocity a_y becomes zero.",
-        "check_it_another_way": "Deceleration while descending is upward acceleration, not upward velocity.",
-        "watch_out": "Velocity direction and acceleration direction need not agree.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "Momentum slope Δp/Δt=(−4−(−8))/2=+2 N; net force points upward although the payload can still descend.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-01",
         "limiting_cases": [
           {
-            "condition": "Ideal or zero-change limit",
-            "expected": "At constant downward velocity a_y becomes zero."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Reverse sign or increase the relevant parameter",
-            "expected": "Velocity direction and acceleration direction need not agree."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -160,11 +161,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-08",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q02",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "Two small robots pull against the ends of the same taut strap. Robot A pulls the strap left with 40 N. Which two forces make a Newton-third-law pair at A's connection to the strap?",
+      "stem": "An underwater robot pushes water backward using a flexible paddle. Which force pair is a genuine Newton-third-law pair at the paddle-water interface?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -172,10 +174,10 @@
         "caption": ""
       },
       "options": {
-        "A": "A's leftward pull on the strap and the strap's 40 N rightward pull on A.",
-        "B": "A's pull on the strap and B's pull on the strap.",
-        "C": "A's pull on the strap and A's weight.",
-        "D": "The strap's force on A and the floor's force on A."
+        "A": "The paddle pushes water backward; the water pushes the same paddle forward.",
+        "B": "The paddle pushes water backward; Earth's gravity pulls the robot down.",
+        "C": "The water pushes the paddle forward; the paddle's forward acceleration pushes the robot forward.",
+        "D": "The robot's forward force and drag both act on the robot and cancel by Newton III."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -204,79 +206,79 @@
           "RETRIEVE"
         ],
         "factor_evidence": {
-          "system_coupling": "Score 3: Two tugging robots form one force-interaction pair.",
-          "vector_dimensionality": "Score 2: Opposite horizontal arrows need owner labels.",
-          "constraint_latency": "Score 1: The interaction is explicitly specified.",
-          "domain_coupling": "Score 1: One third-law principle is sufficient.",
-          "math_friction": "Score 1: No algebra beyond equality of magnitudes."
+          "system_coupling": "Score 3: A paddle and expelled water are different coupled interacting bodies.",
+          "vector_dimensionality": "Score 2: Forces use opposite directions on one horizontal axis.",
+          "constraint_latency": "Score 1: The contact interaction is given explicitly.",
+          "domain_coupling": "Score 1: Apply only Newton III to identify force ownership.",
+          "math_friction": "Score 1: Recognize the paired arrows without any calculation."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "A exerts 40 N on the strap to the left; that same connection exerts 40 N on A to the right."
+          "diagnostic": "Paddle-on-water backward and water-on-paddle forward are simultaneous forces on different bodies; equal magnitudes are not equal accelerations."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect: A pair cannot be two forces drawn on one single-body FBD."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Confuses the named system or the governing invariant; Newton-third-law partners act on different owners at the same interaction."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; The two forces have identical magnitude even if robot A accelerates."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "What changes physically, and which body or system owns that change?",
-          "reveal_text": "Newton-third-law partners act on different owners at the same interaction."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "Name the interacting pair at the same paddle-water contact."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
-          "reveal_text": "Draw one arrow on A and the opposite arrow on the strap, explicitly naming each owner."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Draw separate force arrows on the paddle and on the water."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · opening constraint",
-          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
-          "reveal_text": "First write F_(A on strap) = -F_(strap on A)."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Begin with F_water-on-paddle=−F_paddle-on-water."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Newton-third-law partners act on different owners at the same interaction.",
-          "represent": "Draw one arrow on A and the opposite arrow on the strap, explicitly naming each owner.",
-          "connect": "First write F_(A on strap) = -F_(strap on A).",
-          "calculate": "A exerts 40 N on the strap to the left; that same connection exerts 40 N on A to the right.",
-          "interpret": "A's leftward pull on the strap and the strap's 40 N rightward pull on A."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Draw separate force arrows on the paddle and on the water.",
+          "connect": "Begin with F_water-on-paddle=−F_paddle-on-water.",
+          "calculate": "Paddle-on-water backward and water-on-paddle forward are simultaneous forces on different bodies; equal magnitudes are not equal accelerations.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "A's leftward pull on the strap and the strap's 40 N rightward pull on A.",
-        "final_answer_value": "A's leftward pull on the strap and the strap's 40 N rightward pull on A."
+        "final_expression": "The paddle pushes water backward; the water pushes the same paddle forward.",
+        "final_answer_value": "The paddle pushes water backward; the water pushes the same paddle forward."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
-        "quick_check": "The two forces have identical magnitude even if robot A accelerates.",
-        "check_it_another_way": "Newton-third-law partners act on different owners at the same interaction.",
-        "watch_out": "A pair cannot be two forces drawn on one single-body FBD.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "Paddle-on-water backward and water-on-paddle forward are simultaneous forces on different bodies; equal magnitudes are not equal accelerations.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-08",
         "limiting_cases": [
           {
-            "condition": "Ideal or zero-change limit",
-            "expected": "The two forces have identical magnitude even if robot A accelerates."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Reverse sign or increase the relevant parameter",
-            "expected": "A pair cannot be two forces drawn on one single-body FBD."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -288,11 +290,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-07",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q03",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "A 0.50 kg test parcel moving at 8 m/s is brought to rest by two alternative landing pads. One stops it in 0.20 s, the other in 0.50 s. What are the average resisting-force magnitudes?",
+      "stem": "A 0.5 kg gliding disc initially moves WEST at 4 m/s. A short EASTWARD magnetic pulse reverses it, leaving it moving east at 2 m/s. Compare the average eastward force for a 0.5 s pulse and a 1.5 s pulse.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -300,10 +303,10 @@
         "caption": ""
       },
       "options": {
-        "A": "20 N and 8 N, respectively.",
-        "B": "8 N and 20 N, respectively.",
-        "C": "4 N and 4 N, respectively.",
-        "D": "40 N and 16 N, respectively."
+        "A": "6 N for 0.5 s and 2 N for 1.5 s.",
+        "B": "2 N for 0.5 s and 6 N for 1.5 s.",
+        "C": "2 N for both pulses because final speed is 2 m/s.",
+        "D": "0 N for both because the disc changes direction."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -333,79 +336,79 @@
           "EXPLAIN"
         ],
         "factor_evidence": {
-          "system_coupling": "Score 2: The foam parcel is a finite body being brought to rest.",
-          "vector_dimensionality": "Score 2: Incoming velocity and average force are signed along one axis.",
-          "constraint_latency": "Score 1: Mass, speed and both stopping times are explicit.",
-          "domain_coupling": "Score 2: Momentum change is combined with two stopping durations.",
-          "math_friction": "Score 2: Compute two linear force/time ratios."
+          "system_coupling": "Score 2: One extended disc experiences a pulse and reverses direction.",
+          "vector_dimensionality": "Score 2: Initial westward and final eastward momentum have opposite signs.",
+          "constraint_latency": "Score 1: Mass, endpoints and pulse durations are given.",
+          "domain_coupling": "Score 2: Signed impulse connects momentum states and average force.",
+          "math_friction": "Score 2: Compute one momentum difference and two time ratios."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "The momentum change magnitude is 0.50×8=4 kg m/s; 4/0.20=20 N and 4/0.50=8 N."
+          "diagnostic": "Taking east positive, Δp=0.5[2−(−4)]=3 kg m/s; average forces are 3/0.5=6 N and 3/1.5=2 N."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect: Do not confuse impulse (N s) with average force (N)."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Confuses the named system or the governing invariant; The parcel undergoes the same impulse for both stopping pads."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; A longer stopping time lowers average force for the same momentum change."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "What changes physically, and which body or system owns that change?",
-          "reveal_text": "The parcel undergoes the same impulse for both stopping pads."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "A reversal means subtracting a negative initial velocity; speed alone is insufficient."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
-          "reveal_text": "Sketch signed momentum before (+4 kg m/s) and after (zero), with force opposite motion."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Place initial and final momenta on a signed east-west axis."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · opening constraint",
-          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
-          "reveal_text": "Begin with F_avg Δt = p_after − p_before."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Begin with J=m(v_f−v_i)=F_avg Δt, without evaluating yet."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The parcel undergoes the same impulse for both stopping pads.",
-          "represent": "Sketch signed momentum before (+4 kg m/s) and after (zero), with force opposite motion.",
-          "connect": "Begin with F_avg Δt = p_after − p_before.",
-          "calculate": "The momentum change magnitude is 0.50×8=4 kg m/s; 4/0.20=20 N and 4/0.50=8 N.",
-          "interpret": "20 N and 8 N, respectively."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Place initial and final momenta on a signed east-west axis.",
+          "connect": "Begin with J=m(v_f−v_i)=F_avg Δt, without evaluating yet.",
+          "calculate": "Taking east positive, Δp=0.5[2−(−4)]=3 kg m/s; average forces are 3/0.5=6 N and 3/1.5=2 N.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "20 N and 8 N, respectively.",
-        "final_answer_value": "20 N and 8 N, respectively."
+        "final_expression": "6 N for 0.5 s and 2 N for 1.5 s.",
+        "final_answer_value": "6 N for 0.5 s and 2 N for 1.5 s."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] or [L T^-1]",
-        "quick_check": "A longer stopping time lowers average force for the same momentum change.",
-        "check_it_another_way": "The parcel undergoes the same impulse for both stopping pads.",
-        "watch_out": "Do not confuse impulse (N s) with average force (N).",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "Taking east positive, Δp=0.5[2−(−4)]=3 kg m/s; average forces are 3/0.5=6 N and 3/1.5=2 N.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-07",
         "limiting_cases": [
           {
-            "condition": "Ideal or zero-change limit",
-            "expected": "A longer stopping time lowers average force for the same momentum change."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Reverse sign or increase the relevant parameter",
-            "expected": "Do not confuse impulse (N s) with average force (N)."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -417,11 +420,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-01",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q04",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "A coin rests on a fast airport conveyor. When the conveyor abruptly halts, the coin initially slides onward relative to the belt. Why?",
+      "stem": "A small toy rests without being secured on a skateboard. The board suddenly accelerates forward from rest; relative to the board, the toy initially appears to slide toward its REAR. What explains this without inventing a real rearward force on the toy?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -429,10 +433,10 @@
         "caption": ""
       },
       "options": {
-        "A": "Its previous forward motion persists until a horizontal contact force changes it.",
-        "B": "The stopped conveyor gives the coin an extra forward force.",
-        "C": "Gravity is pulling the coin horizontally.",
-        "D": "The coin becomes heavier at the instant of braking."
+        "A": "The board moves ahead while the toy initially retains its prior horizontal velocity unless friction accelerates it.",
+        "B": "An inertia force pushes the toy backward in the ground frame.",
+        "C": "The toy was already moving backward before the board started.",
+        "D": "Newton III requires Earth's gravity to pull it backward."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -461,79 +465,79 @@
           "RETRIEVE"
         ],
         "factor_evidence": {
-          "system_coupling": "Score 1: Track one loose coin as an object.",
-          "vector_dimensionality": "Score 2: The belt motion is along one signed horizontal direction.",
-          "constraint_latency": "Score 1: The belt stopping event is explicit.",
-          "domain_coupling": "Score 1: Only Newton's first law is needed.",
-          "math_friction": "Score 1: No calculation is requested."
+          "system_coupling": "Score 1: The toy's own horizontal response is the requested body.",
+          "vector_dimensionality": "Score 2: Forward board motion and rearward relative displacement require a signed axis.",
+          "constraint_latency": "Score 1: Initial rest and sudden acceleration are explicit.",
+          "domain_coupling": "Score 1: Newton I explains the immediate inertial lag.",
+          "math_friction": "Score 1: No solved numerical equation is required."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Inertia means the coin initially maintains its velocity; friction then slows its motion."
+          "diagnostic": "The accelerating support gains forward speed before friction can give the toy the same motion; inertia is the persistence of its prior ground-frame state, not a separate rearward force."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect: Inertia is not a separate forward force."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Confuses the named system or the governing invariant; The conveyor decelerates before the coin's horizontal velocity fully changes."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; With no friction, it would continue at its old velocity relative to the ground."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "What changes physically, and which body or system owns that change?",
-          "reveal_text": "The conveyor decelerates before the coin's horizontal velocity fully changes."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "Compare the initial ground-frame velocities before and after the board starts."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
-          "reveal_text": "Mark the coin as the chosen body and place its pre-stop velocity arrow forward."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Represent toy and skateboard velocities separately, with the ground as the inertial frame."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · opening constraint",
-          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
-          "reveal_text": "Start with ΣF_x = m a_x for the coin, not the stopped conveyor."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Begin with ΣF_x(toy)=ma_toy, identifying whether friction acts."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The conveyor decelerates before the coin's horizontal velocity fully changes.",
-          "represent": "Mark the coin as the chosen body and place its pre-stop velocity arrow forward.",
-          "connect": "Start with ΣF_x = m a_x for the coin, not the stopped conveyor.",
-          "calculate": "Inertia means the coin initially maintains its velocity; friction then slows its motion.",
-          "interpret": "Its previous forward motion persists until a horizontal contact force changes it."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Represent toy and skateboard velocities separately, with the ground as the inertial frame.",
+          "connect": "Begin with ΣF_x(toy)=ma_toy, identifying whether friction acts.",
+          "calculate": "The accelerating support gains forward speed before friction can give the toy the same motion; inertia is the persistence of its prior ground-frame state, not a separate rearward force.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "Its previous forward motion persists until a horizontal contact force changes it.",
-        "final_answer_value": "Its previous forward motion persists until a horizontal contact force changes it."
+        "final_expression": "The board moves ahead while the toy initially retains its prior horizontal velocity unless friction accelerates it.",
+        "final_answer_value": "The board moves ahead while the toy initially retains its prior horizontal velocity unless friction accelerates it."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
-        "quick_check": "With no friction, it would continue at its old velocity relative to the ground.",
-        "check_it_another_way": "The conveyor decelerates before the coin's horizontal velocity fully changes.",
-        "watch_out": "Inertia is not a separate forward force.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "The accelerating support gains forward speed before friction can give the toy the same motion; inertia is the persistence of its prior ground-frame state, not a separate rearward force.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-01",
         "limiting_cases": [
           {
-            "condition": "Ideal or zero-change limit",
-            "expected": "With no friction, it would continue at its old velocity relative to the ground."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Reverse sign or increase the relevant parameter",
-            "expected": "Inertia is not a separate forward force."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -545,11 +549,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-01",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q05",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "An inspection cart accelerates east at a constant rate a on level ground. A vertical launcher fixed on the cart fires a bead straight upward. Ignoring air drag, where does the bead land relative to the moving launcher?",
+      "stem": "A research drone flies east with horizontal speed v0 and accelerates east at a constant a. It releases a bead from height h without throwing it. Ignoring air resistance, where does the bead land relative to the drone's position at impact? State the horizontal separation in terms of a,h,g.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -557,10 +562,10 @@
         "caption": ""
       },
       "options": {
-        "A": "West of the launcher because the cart moves farther east during flight.",
-        "B": "Directly back in the launcher because both started together.",
-        "C": "East of the launcher because the bead carries additional eastward acceleration.",
-        "D": "It depends only on the bead's mass."
+        "A": "Behind the drone by a h/g.",
+        "B": "Directly beneath the drone because both started with speed v0.",
+        "C": "Ahead of the drone by a h/g.",
+        "D": "Behind by v0 sqrt(2h/g), regardless of acceleration."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -590,79 +595,79 @@
           "APPLY"
         ],
         "factor_evidence": {
-          "system_coupling": "Score 2: The cart and launched bead are compared as distinct bodies.",
-          "vector_dimensionality": "Score 3: Vertical flight and horizontal acceleration use two axes.",
-          "constraint_latency": "Score 1: Uniform cart acceleration and bead release are given.",
-          "domain_coupling": "Score 2: Combine horizontal inertial motion with the cart frame.",
-          "math_friction": "Score 2: One quadratic flight time and a displacement difference."
+          "system_coupling": "Score 2: Drone and released bead are separate trajectories.",
+          "vector_dimensionality": "Score 3: Vertical gravity flight and horizontal relative acceleration need two axes.",
+          "constraint_latency": "Score 1: Height and constant acceleration are explicitly supplied.",
+          "domain_coupling": "Score 2: Compare inertial horizontal motion with accelerated drone position.",
+          "math_friction": "Score 2: One free-fall time and horizontal displacement difference."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "For positive flight time the cart gains (1/2)at² east on the bead, so the bead is west of the launcher."
+          "diagnostic": "Flight time t=sqrt(2h/g). Bead and drone start with the same horizontal v0, but only the drone gains extra displacement 1/2 a t². Thus the bead lands a h/g behind."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect: A vertical launch does not confer the cart's later horizontal acceleration."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Confuses the named system or the governing invariant; The free bead retains the cart's release velocity but not its continuing horizontal acceleration."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; If a=0 both return to the same horizontal position."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "What changes physically, and which body or system owns that change?",
-          "reveal_text": "The free bead retains the cart's release velocity but not its continuing horizontal acceleration."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "Release transfers horizontal velocity but not the drone's ongoing acceleration."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
-          "reveal_text": "Represent separate horizontal x(t) paths for free bead and accelerating launcher."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Draw ground-frame horizontal trajectories and a vertical free-fall time diagram."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · opening constraint",
-          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
-          "reveal_text": "First compare x_bead=x0+v0t and x_cart=x0+v0t+(1/2)at²."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Begin with h=(1/2)gt² and Δx=(1/2)at²."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The free bead retains the cart's release velocity but not its continuing horizontal acceleration.",
-          "represent": "Represent separate horizontal x(t) paths for free bead and accelerating launcher.",
-          "connect": "First compare x_bead=x0+v0t and x_cart=x0+v0t+(1/2)at².",
-          "calculate": "For positive flight time the cart gains (1/2)at² east on the bead, so the bead is west of the launcher.",
-          "interpret": "West of the launcher because the cart moves farther east during flight."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Draw ground-frame horizontal trajectories and a vertical free-fall time diagram.",
+          "connect": "Begin with h=(1/2)gt² and Δx=(1/2)at².",
+          "calculate": "Flight time t=sqrt(2h/g). Bead and drone start with the same horizontal v0, but only the drone gains extra displacement 1/2 a t². Thus the bead lands a h/g behind.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "West of the launcher because the cart moves farther east during flight.",
-        "final_answer_value": "West of the launcher because the cart moves farther east during flight."
+        "final_expression": "Behind the drone by a h/g.",
+        "final_answer_value": "Behind the drone by a h/g."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
-        "quick_check": "If a=0 both return to the same horizontal position.",
-        "check_it_another_way": "The free bead retains the cart's release velocity but not its continuing horizontal acceleration.",
-        "watch_out": "A vertical launch does not confer the cart's later horizontal acceleration.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "Flight time t=sqrt(2h/g). Bead and drone start with the same horizontal v0, but only the drone gains extra displacement 1/2 a t². Thus the bead lands a h/g behind.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-01",
         "limiting_cases": [
           {
-            "condition": "Ideal or zero-change limit",
-            "expected": "If a=0 both return to the same horizontal position."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Reverse sign or increase the relevant parameter",
-            "expected": "A vertical launch does not confer the cart's later horizontal acceleration."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -674,11 +679,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-01",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q06",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "Far from other objects, a space probe coasts at a fixed speed in a straight line with its thrusters off. What net force is needed to maintain that motion?",
+      "stem": "A delivery elevator rises at a perfectly constant speed. Its lifting cable pulls upward while Earth's gravity pulls downward. What NET force is needed to MAINTAIN this uniform upward velocity?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -686,10 +692,10 @@
         "caption": ""
       },
       "options": {
-        "A": "Zero net force.",
-        "B": "A forward force proportional to its speed.",
-        "C": "A force opposite the direction of travel.",
-        "D": "A force equal in magnitude to its momentum."
+        "A": "Zero; the nonzero upward and downward forces balance.",
+        "B": "An upward force equal to twice its weight.",
+        "C": "An upward force that grows with its speed.",
+        "D": "A downward force because gravity never stops acting."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -716,79 +722,79 @@
         ],
         "supporting_demands": [],
         "factor_evidence": {
-          "system_coupling": "Score 1: One coasting space probe is isolated.",
-          "vector_dimensionality": "Score 1: Only one translational direction is relevant.",
-          "constraint_latency": "Score 1: Vacuum and no-thruster assumptions are given.",
-          "domain_coupling": "Score 1: Newton's first law is directly recalled.",
-          "math_friction": "Score 1: No computation is necessary."
+          "system_coupling": "Score 1: Only one ascending elevator is isolated.",
+          "vector_dimensionality": "Score 1: All forces and motion are vertical.",
+          "constraint_latency": "Score 1: The constant velocity condition is given.",
+          "domain_coupling": "Score 1: Direct recognition of Newton I is enough.",
+          "math_friction": "Score 1: No numerical calculation or unknown is required."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "No acceleration occurs, so Newton II gives zero net force."
+          "diagnostic": "Constant vector velocity implies zero acceleration, so by Newton I or II the net force is zero even though tension and weight are individually nonzero."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect: Force changes velocity; it does not maintain it."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Confuses the named system or the governing invariant; Uniform straight-line velocity needs no unbalanced force."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; The answer is unchanged if the probe is faster but still constant in velocity."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "What changes physically, and which body or system owns that change?",
-          "reveal_text": "Uniform straight-line velocity needs no unbalanced force."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "Separate individual forces from the resultant needed for steady motion."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
-          "reveal_text": "Show a constant velocity arrow and no resultant force arrow."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Draw a vertical tension and weight FBD, with speed arrow distinct from force arrows."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · opening constraint",
-          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
-          "reveal_text": "Use ΣF = 0 whenever velocity is constant in an inertial frame."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Start with ΣF_y=ma_y and a_y=0."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Uniform straight-line velocity needs no unbalanced force.",
-          "represent": "Show a constant velocity arrow and no resultant force arrow.",
-          "connect": "Use ΣF = 0 whenever velocity is constant in an inertial frame.",
-          "calculate": "No acceleration occurs, so Newton II gives zero net force.",
-          "interpret": "Zero net force."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Draw a vertical tension and weight FBD, with speed arrow distinct from force arrows.",
+          "connect": "Start with ΣF_y=ma_y and a_y=0.",
+          "calculate": "Constant vector velocity implies zero acceleration, so by Newton I or II the net force is zero even though tension and weight are individually nonzero.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "Zero net force.",
-        "final_answer_value": "Zero net force."
+        "final_expression": "Zero; the nonzero upward and downward forces balance.",
+        "final_answer_value": "Zero; the nonzero upward and downward forces balance."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
-        "quick_check": "The answer is unchanged if the probe is faster but still constant in velocity.",
-        "check_it_another_way": "Uniform straight-line velocity needs no unbalanced force.",
-        "watch_out": "Force changes velocity; it does not maintain it.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "Constant vector velocity implies zero acceleration, so by Newton I or II the net force is zero even though tension and weight are individually nonzero.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-01",
         "limiting_cases": [
           {
-            "condition": "Ideal or zero-change limit",
-            "expected": "The answer is unchanged if the probe is faster but still constant in velocity."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Reverse sign or increase the relevant parameter",
-            "expected": "Force changes velocity; it does not maintain it."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -800,11 +806,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-10",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q07",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "In empty space an astronaut at rest uses a gas maneuvering pack. The 90 kg astronaut-plus-pack ejects 1 kg of gas at 9 m/s backward, measured in the initial inertial frame. Immediately after, what forward velocity does the remaining 89 kg have?",
+      "stem": "Two miniature satellites initially drift together at rest in deep space. A compressed spring between them is released; the 2 kg satellite moves EAST at 3 m/s. Predict the signed velocity of its 3 kg companion, neglecting outside impulses.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -812,10 +819,10 @@
         "caption": ""
       },
       "options": {
-        "A": "About 0.101 m/s forward.",
-        "B": "9 m/s forward.",
-        "C": "About 0.101 m/s backward.",
-        "D": "Zero, because the astronaut and gas exert equal forces."
+        "A": "2 m/s west.",
+        "B": "2 m/s east.",
+        "C": "3 m/s west.",
+        "D": "0 m/s because spring impulses cancel on each satellite."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -845,79 +852,79 @@
           "APPLY"
         ],
         "factor_evidence": {
-          "system_coupling": "Score 3: A gas tank and drifting astronaut exchange momentum.",
-          "vector_dimensionality": "Score 2: Select a signed one-dimensional exhaust direction.",
-          "constraint_latency": "Score 1: The expelled mass and speed are specified.",
-          "domain_coupling": "Score 3: Combine system conservation with expelled-gas recoil.",
-          "math_friction": "Score 2: One linear momentum-balance unknown."
+          "system_coupling": "Score 3: Two spring-coupled satellites exchange an internal impulse.",
+          "vector_dimensionality": "Score 2: Opposite post-release velocities must carry opposite signs.",
+          "constraint_latency": "Score 1: Masses and one measured final speed are explicit.",
+          "domain_coupling": "Score 3: Contrast internal spring impulse and conserved whole-system momentum.",
+          "math_friction": "Score 2: Solve one signed linear momentum balance."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Momentum balance gives v=9/89 ≈0.101 m/s forward."
+          "diagnostic": "For the isolated pair 0=2(3)+3v_B, giving v_B=−2 m/s. Spring forces are internal and cancel in total momentum but affect individual velocities."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect: Third-law equal forces do not imply equal speeds."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Confuses the named system or the governing invariant; Choose gas plus remaining astronaut as one isolated system before ejection."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; A heavier astronaut recoils more slowly for the same emitted gas momentum."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "What changes physically, and which body or system owns that change?",
-          "reveal_text": "Choose gas plus remaining astronaut as one isolated system before ejection."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "Conservation belongs to the whole isolated two-satellite system."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
-          "reveal_text": "Mark expelled gas momentum negative and remaining astronaut momentum positive."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Draw pre-release total momentum zero and two oppositely directed final arrows."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · opening constraint",
-          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
-          "reveal_text": "Begin with 0 = (89 kg)v + (1 kg)(−9 m/s)."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Begin with m_A v_A+m_B v_B=0."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Choose gas plus remaining astronaut as one isolated system before ejection.",
-          "represent": "Mark expelled gas momentum negative and remaining astronaut momentum positive.",
-          "connect": "Begin with 0 = (89 kg)v + (1 kg)(−9 m/s).",
-          "calculate": "Momentum balance gives v=9/89 ≈0.101 m/s forward.",
-          "interpret": "About 0.101 m/s forward."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Draw pre-release total momentum zero and two oppositely directed final arrows.",
+          "connect": "Begin with m_A v_A+m_B v_B=0.",
+          "calculate": "For the isolated pair 0=2(3)+3v_B, giving v_B=−2 m/s. Spring forces are internal and cancel in total momentum but affect individual velocities.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "About 0.101 m/s forward.",
-        "final_answer_value": "About 0.101 m/s forward."
+        "final_expression": "2 m/s west.",
+        "final_answer_value": "2 m/s west."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] or [L T^-1]",
-        "quick_check": "A heavier astronaut recoils more slowly for the same emitted gas momentum.",
-        "check_it_another_way": "Choose gas plus remaining astronaut as one isolated system before ejection.",
-        "watch_out": "Third-law equal forces do not imply equal speeds.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "For the isolated pair 0=2(3)+3v_B, giving v_B=−2 m/s. Spring forces are internal and cancel in total momentum but affect individual velocities.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-10",
         "limiting_cases": [
           {
-            "condition": "Ideal or zero-change limit",
-            "expected": "A heavier astronaut recoils more slowly for the same emitted gas momentum."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Reverse sign or increase the relevant parameter",
-            "expected": "Third-law equal forces do not imply equal speeds."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -929,11 +936,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-01",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q08",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "A fragile sculpture is loosely placed on a motorized display platform moving east. The platform brakes abruptly; the sculpture slides toward its east edge. Which justification is physically correct?",
+      "stem": "A tray full of water is resting on a motorized cart. The cart suddenly starts accelerating EAST from rest. Relative to the cart, which way does the free water surface initially become higher, and why?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -941,10 +949,10 @@
         "caption": ""
       },
       "options": {
-        "A": "The sculpture retains its earlier eastward velocity while the platform slows beneath it.",
-        "B": "A new eastward inertia force acts on the sculpture.",
-        "C": "Its mass increases briefly when the motor brakes.",
-        "D": "The sculpture must have a net eastward force throughout the slide."
+        "A": "Higher at the WEST/rear as fluid resists the cart's eastward acceleration.",
+        "B": "Higher at the east/front because water has more inertia than the cart.",
+        "C": "Uniformly level because water has no horizontal forces.",
+        "D": "Higher at both ends because pressure is independent of acceleration."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -974,79 +982,79 @@
           "APPLY"
         ],
         "factor_evidence": {
-          "system_coupling": "Score 3: Package and moving belt have different deceleration histories.",
-          "vector_dimensionality": "Score 2: Forward direction is marked along the conveyor.",
-          "constraint_latency": "Score 1: The belt's braking event is explicit.",
-          "domain_coupling": "Score 2: Compare belt kinematics with package's inertial continuation.",
-          "math_friction": "Score 1: Only a sign comparison, no algebraic solving."
+          "system_coupling": "Score 3: Water and accelerating tray must be analysed as different material systems.",
+          "vector_dimensionality": "Score 2: One east/west sign distinguishes relative inertia.",
+          "constraint_latency": "Score 1: Acceleration direction and initial rest are given.",
+          "domain_coupling": "Score 2: Relate frame acceleration to surface response.",
+          "math_friction": "Score 1: Qualitative slope direction, no numeric fluid equation."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "The platform loses speed more rapidly; relative to it the sculpture advances east."
+          "diagnostic": "In the cart frame the effective acceleration is westward. Hydrostatic balance makes the free surface rise to the west/rear; this is the opposite inertial response from a cart that brakes while moving east."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect: Relative forward motion need not mean a net forward force."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Confuses the named system or the governing invariant; The sculpture and platform do not instantly acquire the same new horizontal velocity."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; If firmly fastened, the sculpture would decelerate with the platform."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "What changes physically, and which body or system owns that change?",
-          "reveal_text": "The sculpture and platform do not instantly acquire the same new horizontal velocity."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "An accelerating support and initially stationary fluid can have different horizontal velocities."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
-          "reveal_text": "Compare two eastward velocity arrows just after braking, one on each owner."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Represent the cart's eastward acceleration and water's relative westward lag."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · opening constraint",
-          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
-          "reveal_text": "Represent a_sculpture and a_platform separately under ΣF_x=m a_x."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Start with a relative acceleration a_water/cart=a_water/ground−a_cart/ground."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "The sculpture and platform do not instantly acquire the same new horizontal velocity.",
-          "represent": "Compare two eastward velocity arrows just after braking, one on each owner.",
-          "connect": "Represent a_sculpture and a_platform separately under ΣF_x=m a_x.",
-          "calculate": "The platform loses speed more rapidly; relative to it the sculpture advances east.",
-          "interpret": "The sculpture retains its earlier eastward velocity while the platform slows beneath it."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Represent the cart's eastward acceleration and water's relative westward lag.",
+          "connect": "Start with a relative acceleration a_water/cart=a_water/ground−a_cart/ground.",
+          "calculate": "In the cart frame the effective acceleration is westward. Hydrostatic balance makes the free surface rise to the west/rear; this is the opposite inertial response from a cart that brakes while moving east.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "The sculpture retains its earlier eastward velocity while the platform slows beneath it.",
-        "final_answer_value": "The sculpture retains its earlier eastward velocity while the platform slows beneath it."
+        "final_expression": "Higher at the WEST/rear as fluid resists the cart's eastward acceleration.",
+        "final_answer_value": "Higher at the WEST/rear as fluid resists the cart's eastward acceleration."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
-        "quick_check": "If firmly fastened, the sculpture would decelerate with the platform.",
-        "check_it_another_way": "The sculpture and platform do not instantly acquire the same new horizontal velocity.",
-        "watch_out": "Relative forward motion need not mean a net forward force.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "In the cart frame the effective acceleration is westward. Hydrostatic balance makes the free surface rise to the west/rear; this is the opposite inertial response from a cart that brakes while moving east.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-01",
         "limiting_cases": [
           {
-            "condition": "Ideal or zero-change limit",
-            "expected": "If firmly fastened, the sculpture would decelerate with the platform."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Reverse sign or increase the relevant parameter",
-            "expected": "Relative forward motion need not mean a net forward force."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -1058,11 +1066,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-04",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q09",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "Three calibration satellites have equal external dimensions but masses 2 kg, 6 kg and 3 kg. Rank them from least to greatest resistance to a given change in velocity.",
+      "stem": "Three laboratory gliders receive identical short horizontal impulses while initially at rest. Glider X changes speed by 3 m/s, Y by 1 m/s and Z by 2 m/s. Which glider has the greatest INERTIAL mass?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1070,10 +1079,10 @@
         "caption": ""
       },
       "options": {
-        "A": "2 kg, 3 kg, 6 kg.",
-        "B": "6 kg, 3 kg, 2 kg.",
-        "C": "They have equal inertia because they look identical.",
-        "D": "3 kg, 2 kg, 6 kg."
+        "A": "Y, because the same impulse causes its smallest speed change.",
+        "B": "X, because its speed change is largest.",
+        "C": "Z, because it lies between the other two.",
+        "D": "They all have identical inertia because their impulses match."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -1100,79 +1109,79 @@
         ],
         "supporting_demands": [],
         "factor_evidence": {
-          "system_coupling": "Score 1: Each calibration satellite is ranked by its own mass.",
-          "vector_dimensionality": "Score 1: Direction plays no part in inertia ranking.",
-          "constraint_latency": "Score 1: Three masses are given without hidden constraints.",
-          "domain_coupling": "Score 1: Directly recognize inertial mass.",
-          "math_friction": "Score 2: Order the three mass numbers."
+          "system_coupling": "Score 1: Each glider is ranked by its own inertia under the same test impulse.",
+          "vector_dimensionality": "Score 1: Direction is common and need not be resolved.",
+          "constraint_latency": "Score 1: The equal impulse and three speed changes are given.",
+          "domain_coupling": "Score 1: Recognize that mass is the measure of inertia.",
+          "math_friction": "Score 2: Compare three inverse proportionality ratios."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "The 2 kg satellite has the least inertia, then 3 kg, then 6 kg."
+          "diagnostic": "From J=mΔv for equal nonzero impulse, inertial mass is inversely proportional to the resulting speed change; Y has the smallest Δv."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect: Appearance and volume alone do not measure inertial mass."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Confuses the named system or the governing invariant; Translational inertia is measured by mass, not silhouette."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; Doubling mass halves acceleration under identical net force."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "What changes physically, and which body or system owns that change?",
-          "reveal_text": "Translational inertia is measured by mass, not silhouette."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "The controlled quantity is identical impulse, not identical acceleration."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
-          "reveal_text": "Construct a smallest-to-largest ordered list of the three masses."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Represent the three before/after momentum changes under common J."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · opening constraint",
-          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
-          "reveal_text": "Recall a=F_net/m for the same applied force."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Begin with m=J/Δv without inserting a numerical J."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Translational inertia is measured by mass, not silhouette.",
-          "represent": "Construct a smallest-to-largest ordered list of the three masses.",
-          "connect": "Recall a=F_net/m for the same applied force.",
-          "calculate": "The 2 kg satellite has the least inertia, then 3 kg, then 6 kg.",
-          "interpret": "2 kg, 3 kg, 6 kg."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Represent the three before/after momentum changes under common J.",
+          "connect": "Begin with m=J/Δv without inserting a numerical J.",
+          "calculate": "From J=mΔv for equal nonzero impulse, inertial mass is inversely proportional to the resulting speed change; Y has the smallest Δv.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "2 kg, 3 kg, 6 kg.",
-        "final_answer_value": "2 kg, 3 kg, 6 kg."
+        "final_expression": "Y, because the same impulse causes its smallest speed change.",
+        "final_answer_value": "Y, because the same impulse causes its smallest speed change."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
-        "quick_check": "Doubling mass halves acceleration under identical net force.",
-        "check_it_another_way": "Translational inertia is measured by mass, not silhouette.",
-        "watch_out": "Appearance and volume alone do not measure inertial mass.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "From J=mΔv for equal nonzero impulse, inertial mass is inversely proportional to the resulting speed change; Y has the smallest Δv.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-04",
         "limiting_cases": [
           {
-            "condition": "Ideal or zero-change limit",
-            "expected": "Doubling mass halves acceleration under identical net force."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Reverse sign or increase the relevant parameter",
-            "expected": "Appearance and volume alone do not measure inertial mass."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -1184,11 +1193,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-02",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q10",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "A solid sphere is placed on a perfectly frictionless laboratory table with horizontal translational speed but initially no spin. Must it begin to roll without slipping?",
+      "stem": "On a perfectly frictionless horizontal air table, one sphere is launched translating to the right WITHOUT SPIN; an identical second sphere is set SPINNING in place but with zero translational velocity. No later horizontal contact acts. Which description of their subsequent translation and rotation is correct?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1196,10 +1206,10 @@
         "caption": ""
       },
       "options": {
-        "A": "No; without tangential contact force it has no frictional torque to start spinning.",
-        "B": "Yes; every moving sphere automatically rotates.",
-        "C": "Yes; the table's normal force supplies a horizontal torque.",
-        "D": "No; it must immediately stop translating."
+        "A": "The first continues translating without gaining spin; the second keeps spinning without gaining horizontal translation.",
+        "B": "The first must start rolling because any translation causes angular rotation.",
+        "C": "The second must move right because spin itself creates net horizontal force.",
+        "D": "Both must slow down because gravity provides horizontal friction."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -1229,79 +1239,79 @@
           "APPLY"
         ],
         "factor_evidence": {
-          "system_coupling": "Score 2: A rigid sphere can translate and rotate.",
-          "vector_dimensionality": "Score 3: Normal and gravity are vertical while translation is horizontal.",
-          "constraint_latency": "Score 1: The perfectly frictionless surface is explicit.",
-          "domain_coupling": "Score 2: Relate no frictional torque to translational motion.",
-          "math_friction": "Score 2: Use zero-torque angular acceleration reasoning."
+          "system_coupling": "Score 2: The rigid spheres each have translation and rotation degrees of freedom.",
+          "vector_dimensionality": "Score 3: Vertical contact forces and horizontal motion coexist with spin about a vertical axis.",
+          "constraint_latency": "Score 1: Frictionlessness and initial states are explicitly specified.",
+          "domain_coupling": "Score 2: Distinguish Newton's force law from rotational torque balance.",
+          "math_friction": "Score 2: Use two zero-result relations without numeric evaluation."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "Gravity and normal give no torque about the center, so α=0 and the sphere keeps translating without gaining spin."
+          "diagnostic": "Without horizontal force neither centre of mass accelerates, and without horizontal torque neither sphere changes spin; frictionless translation and rotation are independent, not automatically rolling without slip."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect: A rolling constraint requires a physical coupling such as static friction."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Confuses the named system or the governing invariant; Check the body's applied torque instead of inferring rolling from shape."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; If it initially spun, the spin would persist independently in the idealization."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "What changes physically, and which body or system owns that change?",
-          "reveal_text": "Check the body's applied torque instead of inferring rolling from shape."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "Do not assume translational motion and rotation are automatically linked."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
-          "reveal_text": "Draw the sphere FBD: gravity down and normal up, no horizontal friction arrow."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Draw separate translational force sums and torques for the two spheres."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · opening constraint",
-          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
-          "reveal_text": "Start with Στ_about_CM=Iα and identify any nonzero contact torque."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Start with ΣF_x=m a_x and Στ_z=I α_z."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "Check the body's applied torque instead of inferring rolling from shape.",
-          "represent": "Draw the sphere FBD: gravity down and normal up, no horizontal friction arrow.",
-          "connect": "Start with Στ_about_CM=Iα and identify any nonzero contact torque.",
-          "calculate": "Gravity and normal give no torque about the center, so α=0 and the sphere keeps translating without gaining spin.",
-          "interpret": "No; without tangential contact force it has no frictional torque to start spinning."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Draw separate translational force sums and torques for the two spheres.",
+          "connect": "Start with ΣF_x=m a_x and Στ_z=I α_z.",
+          "calculate": "Without horizontal force neither centre of mass accelerates, and without horizontal torque neither sphere changes spin; frictionless translation and rotation are independent, not automatically rolling without slip.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "No; without tangential contact force it has no frictional torque to start spinning.",
-        "final_answer_value": "No; without tangential contact force it has no frictional torque to start spinning."
+        "final_expression": "The first continues translating without gaining spin; the second keeps spinning without gaining horizontal translation.",
+        "final_answer_value": "The first continues translating without gaining spin; the second keeps spinning without gaining horizontal translation."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
-        "quick_check": "If it initially spun, the spin would persist independently in the idealization.",
-        "check_it_another_way": "Check the body's applied torque instead of inferring rolling from shape.",
-        "watch_out": "A rolling constraint requires a physical coupling such as static friction.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "Without horizontal force neither centre of mass accelerates, and without horizontal torque neither sphere changes spin; frictionless translation and rotation are independent, not automatically rolling without slip.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-02",
         "limiting_cases": [
           {
-            "condition": "Ideal or zero-change limit",
-            "expected": "If it initially spun, the spin would persist independently in the idealization."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Reverse sign or increase the relevant parameter",
-            "expected": "A rolling constraint requires a physical coupling such as static friction."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -1313,11 +1323,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-10",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q11",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "Two wheeled laboratory launchers of masses 4 kg and 8 kg each expel a test pellet carrying 16 kg m/s of eastward momentum. Compare the two launchers' westward recoil momenta and speeds.",
+      "stem": "Two test launchers float freely in orbit. Launcher P has mass 4 kg and emits a 1 kg pellet at 8 m/s relative to the initial rest frame; launcher Q has mass 8 kg and emits a 2 kg pellet at 6 m/s. Neglecting external impulse and pellet mass change after release, compare the launcher recoil speed magnitudes.",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1325,10 +1336,10 @@
         "caption": ""
       },
       "options": {
-        "A": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west.",
-        "B": "The heavy launcher has twice the recoil momentum.",
-        "C": "Their recoil speeds are equal because impulses match.",
-        "D": "The light launcher recoils east while the heavy one goes west."
+        "A": "P recoils at 2 m/s; Q recoils at 1.5 m/s.",
+        "B": "Both recoil at 2 m/s because the pellets are ejected.",
+        "C": "P recoils at 8 m/s and Q at 6 m/s.",
+        "D": "Both have the same recoil speed because Newton III forces are equal."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -1358,79 +1369,79 @@
           "EXPLAIN"
         ],
         "factor_evidence": {
-          "system_coupling": "Score 3: Compare two interacting launchers and their ejected payloads.",
-          "vector_dimensionality": "Score 2: Recoil is recorded on a signed forward/backward axis.",
-          "constraint_latency": "Score 1: Muzzle impulse and both chassis masses are given.",
-          "domain_coupling": "Score 2: Use shared ejection momentum then each launcher's speed.",
-          "math_friction": "Score 2: Two simple linear recoil divisions."
+          "system_coupling": "Score 3: Each of two launcher-pellet systems exchanges momentum internally.",
+          "vector_dimensionality": "Score 2: Emissions are forward and recoils oppositely signed.",
+          "constraint_latency": "Score 1: Masses and pellet velocities are given explicitly.",
+          "domain_coupling": "Score 2: First compute emitted momentum then the opposite recoil.",
+          "math_friction": "Score 2: Two independent linear products and divisions."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "The launcher momentum is −16 kg m/s in both cases. Divide by 4 and 8 kg to get −4 and −2 m/s."
+          "diagnostic": "Conservation from rest: P recoil momentum magnitude 1×8=8 kg m/s, recoil speed 8/4=2; Q momentum 2×6=12 kg m/s, recoil speed 12/8=1.5."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect. Equal momentum does not imply equal kinetic energy or speed."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Incorrect physical model. An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Inconsistent with the signed equations. Doubling chassis mass halves recoil speed under the same impulse."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "Which interaction, state change, or system must you decide first?",
-          "reveal_text": "An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "The two emissions create different pellet momenta; do not assume equal impulses."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
-          "reveal_text": "Mark east positive and write separate signed momentum balances for both launchers."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Represent each launcher-plus-pellet before and after with separate signed momenta."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · first constraint",
-          "prompt_question": "Write the first law before computing any final quantity.",
-          "reveal_text": "First use 0=p_pellet+p_launcher for either initially stationary launch event."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Begin with 0=M_launch v_recoil+m_pellet v_pellet for each isolated launch."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed.",
-          "represent": "Mark east positive and write separate signed momentum balances for both launchers.",
-          "connect": "First use 0=p_pellet+p_launcher for either initially stationary launch event.",
-          "calculate": "The launcher momentum is −16 kg m/s in both cases. Divide by 4 and 8 kg to get −4 and −2 m/s.",
-          "interpret": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Represent each launcher-plus-pellet before and after with separate signed momenta.",
+          "connect": "Begin with 0=M_launch v_recoil+m_pellet v_pellet for each isolated launch.",
+          "calculate": "Conservation from rest: P recoil momentum magnitude 1×8=8 kg m/s, recoil speed 8/4=2; Q momentum 2×6=12 kg m/s, recoil speed 12/8=1.5.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west.",
-        "final_answer_value": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west."
+        "final_expression": "P recoils at 2 m/s; Q recoils at 1.5 m/s.",
+        "final_answer_value": "P recoils at 2 m/s; Q recoils at 1.5 m/s."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
-        "quick_check": "Doubling chassis mass halves recoil speed under the same impulse.",
-        "check_it_another_way": "An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed.",
-        "watch_out": "Equal momentum does not imply equal kinetic energy or speed.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "Conservation from rest: P recoil momentum magnitude 1×8=8 kg m/s, recoil speed 8/4=2; Q momentum 2×6=12 kg m/s, recoil speed 12/8=1.5.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-10",
         "limiting_cases": [
           {
-            "condition": "Zero net-change limit",
-            "expected": "Doubling chassis mass halves recoil speed under the same impulse."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Change driving input or reverse direction",
-            "expected": "Equal momentum does not imply equal kinetic energy or speed."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -1442,11 +1453,12 @@
       "topic": "Newton's Laws of Motion & Friction",
       "subtopic_competency_ref": "NLM-03",
       "provenance": {
-        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
-        "benchmark_demand_anchor": "Core2 Q12",
-        "author": "NLM-FIX1 demand calibration"
+        "source": "FIX2 independent transfer; Core2 demand anchor only (scenario deliberately changed)",
+        "author": "Physics NLM calibration pilot",
+        "benchmark_wording": "UNKNOWN",
+        "scenario_distance": "Changed governing physical event, system or representation relative to benchmark digest"
       },
-      "stem": "A powered cable pulls a service platform east with 300 N while the platform travels at constant velocity on level rails. What total horizontal resistance acts on it?",
+      "stem": "A camera drone climbs VERTICALLY at constant speed. Upward propeller thrust balances its 200 N weight and an additional 30 N downward air resistance. What thrust is required in the ground frame?",
       "system_parameters": {},
       "figure": {
         "has_figure": false,
@@ -1454,10 +1466,10 @@
         "caption": ""
       },
       "options": {
-        "A": "300 N west.",
-        "B": "300 N east.",
-        "C": "Zero, because there is no acceleration.",
-        "D": "More than 300 N west."
+        "A": "230 N upward.",
+        "B": "200 N upward because constant speed eliminates drag.",
+        "C": "170 N upward because drag helps lift.",
+        "D": "30 N upward because weight is internal."
       },
       "correct_answer": "A",
       "qrt_contract": {
@@ -1487,79 +1499,79 @@
           "EXPLAIN"
         ],
         "factor_evidence": {
-          "system_coupling": "Score 1: Isolate one cable-towed service platform.",
-          "vector_dimensionality": "Score 2: The tow and resistance are opposite on one axis.",
-          "constraint_latency": "Score 1: The given constant speed implies a_x=0.",
-          "domain_coupling": "Score 1: Only horizontal force balance is needed.",
-          "math_friction": "Score 2: One direct equality of two forces."
+          "system_coupling": "Score 1: A single drone is the isolated system.",
+          "vector_dimensionality": "Score 2: Three vertical forces require correct signed directions.",
+          "constraint_latency": "Score 1: Constant speed and two downward forces are explicit.",
+          "domain_coupling": "Score 1: One vertical equilibrium law decides the result.",
+          "math_friction": "Score 2: Solve one linear sum for thrust."
         }
       },
       "distractor_diagnostics": {
         "A": {
           "type": "CORRECT",
-          "diagnostic": "R must equal 300 N west to balance the eastward cable force."
+          "diagnostic": "At constant velocity, net vertical force is zero: T−200−30=0 so T=230 N upward. Motion need not be force-free, only acceleration-free."
         },
         "B": {
           "type": "FORMULA_MISAPPLICATION",
-          "diagnostic": "Incorrect. Zero net force does not mean zero individual forces."
+          "diagnostic": "Applies a rule without the required signed state or actual force ownership."
         },
         "C": {
-          "type": "KEY_CONCEPT_MISCONCEPTION",
-          "diagnostic": "Incorrect physical model. A constant velocity means horizontal acceleration and resultant force both vanish."
+          "type": "VECTOR_SCALAR_CONFUSION",
+          "diagnostic": "Confuses a vector state, direction or external physical quantity."
         },
         "D": {
-          "type": "SIGN_CONVENTION_ERROR",
-          "diagnostic": "Inconsistent with the signed equations. If resistance exceeded cable pull, the platform would slow."
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Omits the physical boundary or balance that controls the result."
         }
       },
       "progressive_hints": [
         {
           "tier": 1,
+          "title": "H1 · Decisive physical state",
           "guidance_role": "decisive_physics",
-          "title": "H1 · decisive physics",
-          "prompt_question": "Which interaction, state change, or system must you decide first?",
-          "reveal_text": "A constant velocity means horizontal acceleration and resultant force both vanish."
+          "prompt_question": "Which event and force/momentum state decides the result?",
+          "reveal_text": "Constant speed means zero acceleration even with several individual forces."
         },
         {
           "tier": 2,
+          "title": "H2 · Representation",
           "guidance_role": "representation",
-          "title": "H2 · representation",
-          "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
-          "reveal_text": "Choose the platform; sketch eastward cable tension and westward resistance."
+          "prompt_question": "Which body-bound or signed sketch is needed?",
+          "reveal_text": "Choose the drone FBD with thrust up, weight and drag down."
         },
         {
           "tier": 3,
+          "title": "H3 · First equation",
           "guidance_role": "first_equation_only",
-          "title": "H3 · first constraint",
-          "prompt_question": "Write the first law before computing any final quantity.",
-          "reveal_text": "Begin with ΣF_x=T−R=ma_x=0."
+          "prompt_question": "Write only the opening relation, not the answer.",
+          "reveal_text": "Begin with ΣF_y=T−W−D=0."
         }
       ],
       "model_proof": {
         "reasoning_ladder": {
-          "understand": "A constant velocity means horizontal acceleration and resultant force both vanish.",
-          "represent": "Choose the platform; sketch eastward cable tension and westward resistance.",
-          "connect": "Begin with ΣF_x=T−R=ma_x=0.",
-          "calculate": "R must equal 300 N west to balance the eastward cable force.",
-          "interpret": "300 N west."
+          "understand": "Choose the physical body, direction and relevant idealizations in the new scenario.",
+          "represent": "Choose the drone FBD with thrust up, weight and drag down.",
+          "connect": "Begin with ΣF_y=T−W−D=0.",
+          "calculate": "At constant velocity, net vertical force is zero: T−200−30=0 so T=230 N upward. Motion need not be force-free, only acceleration-free.",
+          "interpret": "Use conservation or net force only for the correctly chosen system."
         },
-        "final_expression": "300 N west.",
-        "final_answer_value": "300 N west."
+        "final_expression": "230 N upward.",
+        "final_answer_value": "230 N upward."
       },
       "independent_check": {
-        "dimensional_formula": "[M L T^-2] / [M L T^-1] / signed-state consistency",
-        "quick_check": "If resistance exceeded cable pull, the platform would slow.",
-        "check_it_another_way": "A constant velocity means horizontal acceleration and resultant force both vanish.",
-        "watch_out": "Zero net force does not mean zero individual forces.",
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] or dimensionless as requested",
+        "quick_check": "Check that a zero acceleration or zero impulse limit agrees with Newton's laws.",
+        "check_it_another_way": "At constant velocity, net vertical force is zero: T−200−30=0 so T=230 N upward. Motion need not be force-free, only acceleration-free.",
+        "watch_out": "Do not copy source-scenario words or confuse force direction with velocity direction.",
         "review_this_idea": "Core 1: NLM-03",
         "limiting_cases": [
           {
-            "condition": "Zero net-change limit",
-            "expected": "If resistance exceeded cable pull, the platform would slow."
+            "condition": "No acceleration or net interaction",
+            "expected": "Use Newton I and retain unchanged signed state, unless an explicit impulse acts."
           },
           {
-            "condition": "Change driving input or reverse direction",
-            "expected": "Zero net force does not mean zero individual forces."
+            "condition": "Reverse the specified direction or interaction",
+            "expected": "All signed vector force and momentum terms must reverse consistently."
           }
         ]
       }
@@ -2621,16 +2633,16 @@
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "cell_id": "PHYS-SYNTHESIZE-D3",
         "primary_demand": "SYNTHESIZE",
-        "difficulty_band": "D4",
+        "difficulty_band": "D3",
         "subtopic_competency_ref": "NLM-04",
         "difficulty_factors": {
           "system_coupling": 3,
           "vector_dimensionality": 3,
           "constraint_latency": 4,
           "domain_coupling": 4,
-          "math_friction": 4
+          "math_friction": 3
         },
         "protected_work_W": "Static holding requires the hanging tendency to be resisted by downslope weight and limited upslope/down-slope friction; test the inequality before switching to kinetic friction.",
         "rival_demands": [
@@ -2651,7 +2663,7 @@
           "vector_dimensionality": "Score 3: Resolve gravity and normal on the 30-degree slope.",
           "constraint_latency": "Score 4: Unknown static friction direction and static-limit inequality determine motion.",
           "domain_coupling": "Score 4: The solution branches between static holding and kinetic sliding.",
-          "math_friction": "Score 4: Find limiting suspended mass parametrically before calculating sliding acceleration."
+          "math_friction": "Score 3: A single parameter threshold and two linear Newton equations do not constitute multi-parameter symbolic optimization."
         }
       },
       "distractor_diagnostics": {
@@ -2879,16 +2891,16 @@
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "cell_id": "PHYS-SYNTHESIZE-D3",
         "primary_demand": "SYNTHESIZE",
-        "difficulty_band": "D4",
+        "difficulty_band": "D3",
         "subtopic_competency_ref": "NLM-04",
         "difficulty_factors": {
           "system_coupling": 4,
           "vector_dimensionality": 2,
           "constraint_latency": 4,
           "domain_coupling": 4,
-          "math_friction": 4
+          "math_friction": 3
         },
         "protected_work_W": "In the no-slip regime A needs friction m_A F/(m_A+m_B+m_C); once beyond μ_s m_Ag, kinetic friction gives A a different acceleration.",
         "rival_demands": [
@@ -2909,7 +2921,7 @@
           "vector_dimensionality": "Score 2: Motion and the contact friction are signed along the track.",
           "constraint_latency": "Score 4: Static friction on A must be checked before a kinetic branch can apply.",
           "domain_coupling": "Score 4: Solve a common-acceleration regime and a separated-acceleration regime.",
-          "math_friction": "Score 4: Find the maximal allowed external pull as a parameter, then coupled accelerations and tension."
+          "math_friction": "Score 3: One maximum horizontal pull and two simultaneous linear equations, rather than general symbolic optimization."
         }
       },
       "distractor_diagnostics": {
@@ -3137,15 +3149,15 @@
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-JUSTIFY-D4",
+        "cell_id": "PHYS-JUSTIFY-D3",
         "primary_demand": "JUSTIFY",
-        "difficulty_band": "D4",
+        "difficulty_band": "D3",
         "subtopic_competency_ref": "NLM-03",
         "difficulty_factors": {
           "system_coupling": 4,
           "vector_dimensionality": 3,
           "constraint_latency": 4,
-          "domain_coupling": 4,
+          "domain_coupling": 3,
           "math_friction": 3
         },
         "protected_work_W": "Treat the three linked bodies as a system for net drive but inspect contact friction limits before asserting motion.",
@@ -3166,7 +3178,7 @@
           "system_coupling": "Score 4: Two ramp boxes A and B tether to a third hanging load C.",
           "vector_dimensionality": "Score 3: Two ramp weight resolutions and one vertical hanging axis require 2D force components.",
           "constraint_latency": "Score 4: Both ramp contacts have static slip limits before a kinetic branch.",
-          "domain_coupling": "Score 4: Compare a three-body static boundary with post-slip coupled dynamics.",
+          "domain_coupling": "Score 3: With the hanger fixed at 4 kg, the problem evaluates one slipping branch, not a full symbolic regime synthesis.",
           "math_friction": "Score 3: Use three linked force equations with two string tensions after testing inequality."
         }
       },
@@ -3677,23 +3689,23 @@
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-REPRESENT-D4",
+        "cell_id": "PHYS-REPRESENT-D3",
         "primary_demand": "REPRESENT",
-        "difficulty_band": "D4",
+        "difficulty_band": "D3",
         "subtopic_competency_ref": "NLM-02",
         "difficulty_factors": {
           "system_coupling": 4,
           "vector_dimensionality": 3,
           "constraint_latency": 4,
           "domain_coupling": 4,
-          "math_friction": 3
+          "math_friction": 2
         },
         "factor_evidence": {
           "system_coupling": "Score 4: Two separate ramp sliders A and B and shared hanging mass C are constrained by two cords.",
           "vector_dimensionality": "Score 3: Slope-aligned and vertical axes require distinct gravity resolutions.",
           "constraint_latency": "Score 4: Both friction contacts have separate threshold inequalities.",
           "domain_coupling": "Score 4: The model must represent rest and both alternative sliding directions.",
-          "math_friction": "Score 3: Three coupled force equations and two independent static limits must remain coherent."
+          "math_friction": "Score 2: Selection of the correct force diagram requires no optimization or simultaneous symbolic solving."
         },
         "protected_work_W": "The two cords constrain three different bodies; their separate tensions and separate friction thresholds cannot be collapsed into one contact.",
         "rival_demands": [
@@ -4487,23 +4499,23 @@
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-MODEL-D4",
+        "cell_id": "PHYS-MODEL-D3",
         "primary_demand": "MODEL",
-        "difficulty_band": "D4",
+        "difficulty_band": "D3",
         "subtopic_competency_ref": "NLM-04",
         "difficulty_factors": {
           "system_coupling": 4,
           "vector_dimensionality": 3,
           "constraint_latency": 4,
           "domain_coupling": 4,
-          "math_friction": 3
+          "math_friction": 2
         },
         "factor_evidence": {
           "system_coupling": "Score 4: Two stacked crates and a hanging third mass interact through one pulley.",
           "vector_dimensionality": "Score 3: Normal contacts and vertical hanging load must be resolved on separate axes.",
           "constraint_latency": "Score 4: Two distinct static contacts impose independent inequalities.",
           "domain_coupling": "Score 4: The possible outcome branches among both sticking, one slipping, or both slipping.",
-          "math_friction": "Score 3: The chosen free-body system needs multiple simultaneous force equations."
+          "math_friction": "Score 2: The answer selects a system model but computes no simultaneous unknown accelerations or optimized thresholds."
         },
         "protected_work_W": "Two contacts can fail independently; their regime variables cannot be replaced by one global friction coefficient.",
         "rival_demands": [
@@ -4892,23 +4904,23 @@
       },
       "correct_answer": "A",
       "qrt_contract": {
-        "cell_id": "PHYS-APPLY-D4",
+        "cell_id": "PHYS-APPLY-D3",
         "primary_demand": "APPLY",
-        "difficulty_band": "D4",
+        "difficulty_band": "D3",
         "subtopic_competency_ref": "NLM-04",
         "difficulty_factors": {
           "system_coupling": 4,
           "vector_dimensionality": 2,
           "constraint_latency": 4,
           "domain_coupling": 4,
-          "math_friction": 4
+          "math_friction": 3
         },
         "factor_evidence": {
           "system_coupling": "Score 4: A central table block and two oppositely hanging masses form three linked bodies.",
           "vector_dimensionality": "Score 2: Horizontal and vertical axes are separately signed and related through ropes.",
           "constraint_latency": "Score 4: Static friction on the central block determines an allowed mass interval.",
           "domain_coupling": "Score 4: For a hanging mass beyond the interval the system switches to kinetic friction.",
-          "math_friction": "Score 4: Determine both symbolic lower/upper mass bounds before solving a moving state."
+          "math_friction": "Score 3: A simple one-parameter mass interval and one linear acceleration solve, without multi-parameter optimization."
         },
         "protected_work_W": "The two hanging weights compete; static friction has a bounded adjustable direction, while the moving state uses kinetic friction.",
         "rival_demands": [
@@ -5126,6 +5138,656 @@
           {
             "condition": "F_external=0",
             "expected": "Common acceleration is zero for a free system."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-040",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-04",
+      "provenance": {
+        "source": "Independently authored FIX2 NLM transfer challenge; benchmark words unseen",
+        "author": "Physics adapter NLM-FIX2 pilot",
+        "benchmark_status": "UNKNOWN"
+      },
+      "stem": "Two 1 kg pucks ride a horizontal rough turntable at radii 1 m and 2 m, joined by a taut radial cord; each has maximum static friction 5 N. Cord tension T pulls the outer puck inward but inner puck outward. Find the greatest angular speed omega at which BOTH pucks co-rotate without slipping, and the corresponding tension.",
+      "system_parameters": {},
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "omega=sqrt(10/3) rad/s, tension=5/3 N.",
+        "B": "omega=sqrt(5) rad/s, tension zero.",
+        "C": "omega=sqrt(5/2) rad/s, tension=5 N.",
+        "D": "omega=sqrt(10) rad/s, tension=10 N."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D4",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "NLM-04",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 4,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 4
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: Two cord-linked moving pucks require two Newton-II balances.",
+          "vector_dimensionality": "Score 4: Curvilinear inward centripetal accelerations differ at two radii.",
+          "constraint_latency": "Score 4: Two independent static-friction inequalities constrain the internal tension.",
+          "domain_coupling": "Score 4: The regime changes from grip to slip when simultaneous bounds become infeasible.",
+          "math_friction": "Score 4: Maximize a free angular speed over the admissible internal cord tension."
+        },
+        "d4_discriminator_type": "coupled-2d-response",
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "protected_work_W": "Choose the owned physical system and conditional governing model without hint exposure.",
+        "supporting_demands": [
+          "MODEL",
+          "JUSTIFY"
+        ],
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires coupled physical analysis rather than recall."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Each puck needs centripetal force: inner friction f_A=omega^2+T and outer friction f_B=2omega^2-T. Both must be at most 5 N, requiring 2omega^2-5<=T<=5-omega^2. Thus omega^2<=10/3 and T=5/3 N at the upper limit."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignores a required external contribution or limiting condition."
+        },
+        "C": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Neglects a relevant force, momentum stage or coupled body."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Confuses system boundary, direction or physical feasibility."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "H1 · Decisive physics",
+          "guidance_role": "decisive_physics",
+          "prompt_question": "What condition decides the valid physics branch?",
+          "reveal_text": "Identify the physical system and its separately constrained interaction or event; preserve the distinction among phases."
+        },
+        {
+          "tier": 2,
+          "title": "H2 · Representation",
+          "guidance_role": "representation",
+          "prompt_question": "What physical diagram should you prepare?",
+          "reveal_text": "S"
+        },
+        {
+          "tier": 3,
+          "title": "H3 · First equation only",
+          "guidance_role": "first_equation_only",
+          "prompt_question": "What relation must you write first?",
+          "reveal_text": "e"
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "State interacting bodies and all idealizations explicitly.",
+          "represent": "S",
+          "connect": "e",
+          "calculate": "Each puck needs centripetal force: inner friction f_A=omega^2+T and outer friction f_B=2omega^2-T. Both must be at most 5 N, requiring 2omega^2-5<=T<=5-omega^2. Thus omega^2<=10/3 and T=5/3 N at the upper limit.",
+          "interpret": "Check the proposed result against all contact and momentum boundary conditions."
+        },
+        "final_expression": "omega=sqrt(10/3) rad/s, tension=5/3 N.",
+        "final_answer_value": "omega=sqrt(10/3) rad/s, tension=5/3 N."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] and [T^-1] as appropriate",
+        "quick_check": "At zero speed no centripetal acceleration is needed unless a contact already accelerates tangentially.",
+        "check_it_another_way": "Each puck needs centripetal force: inner friction f_A=omega^2+T and outer friction f_B=2omega^2-T. Both must be at most 5 N, requiring 2omega^2-5<=T<=5-omega^2. Thus omega^2<=10/3 and T=5/3 N at the upper limit.",
+        "watch_out": "Internal interaction forces cancel only in the appropriate combined system, not in each FBD.",
+        "review_this_idea": "Core 1: NLM-04",
+        "limiting_cases": [
+          {
+            "condition": "Motion/constraint at its admissible threshold",
+            "expected": "The limiting contact reaction or friction equals its physical bound."
+          },
+          {
+            "condition": "Constraint becomes inadmissible",
+            "expected": "Switch to a different physical regime; do not retain the original force model."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-041",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-07",
+      "provenance": {
+        "source": "Independently authored FIX2 NLM transfer challenge; benchmark words unseen",
+        "author": "Physics adapter NLM-FIX2 pilot",
+        "benchmark_status": "UNKNOWN"
+      },
+      "stem": "A 1 kg cart strikes a stationary 2 kg cart on level rails and sticks. They enter the bottom of a frictionless VERTICAL circular loop of radius 2 m immediately after collision. What minimum incoming speed must the 1 kg cart have to maintain top contact, and what impulse does it give the 2 kg cart? Use g=10 m/s^2.",
+      "system_parameters": {},
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "Minimum incoming speed 30 m/s; collision impulse 20 N s.",
+        "B": "Minimum incoming speed 10 m/s; impulse 20 N s.",
+        "C": "Minimum incoming speed 30 m/s; impulse 30 N s.",
+        "D": "Minimum incoming speed sqrt(40) m/s; impulse 0 N s."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-SYNTHESIZE-D4",
+        "primary_demand": "SYNTHESIZE",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "NLM-07",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 4,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 4
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 3: Two carts stick at impact and subsequently move as one unit.",
+          "vector_dimensionality": "Score 4: Vertical-loop radial v^2/R and tangential gravity must be distinguished.",
+          "constraint_latency": "Score 4: The unilateral top contact threshold is N>=0.",
+          "domain_coupling": "Score 4: Collision momentum, post-impact energy and loop-contact dynamics are different regimes.",
+          "math_friction": "Score 4: Optimize the incoming speed under collision, energy and contact constraints."
+        },
+        "d4_discriminator_type": "impulse-plus-kinematics",
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "protected_work_W": "Choose the owned physical system and conditional governing model without hint exposure.",
+        "supporting_demands": [
+          "MODEL",
+          "JUSTIFY"
+        ],
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires coupled physical analysis rather than recall."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Momentum in the short horizontal collision gives combined bottom speed v=u/3. At loop top N>=0 requires v_top^2>=gR; energy gives v_bottom^2>=5gR=100. Hence v_bottom=10, incoming u=30, impulse on the 2 kg cart =2v=20 N s."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignores a required external contribution or limiting condition."
+        },
+        "C": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Neglects a relevant force, momentum stage or coupled body."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Confuses system boundary, direction or physical feasibility."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "H1 · Decisive physics",
+          "guidance_role": "decisive_physics",
+          "prompt_question": "What condition decides the valid physics branch?",
+          "reveal_text": "Identify the physical system and its separately constrained interaction or event; preserve the distinction among phases."
+        },
+        {
+          "tier": 2,
+          "title": "H2 · Representation",
+          "guidance_role": "representation",
+          "prompt_question": "What physical diagram should you prepare?",
+          "reveal_text": "R"
+        },
+        {
+          "tier": 3,
+          "title": "H3 · First equation only",
+          "guidance_role": "first_equation_only",
+          "prompt_question": "What relation must you write first?",
+          "reveal_text": "e"
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "State interacting bodies and all idealizations explicitly.",
+          "represent": "R",
+          "connect": "e",
+          "calculate": "Momentum in the short horizontal collision gives combined bottom speed v=u/3. At loop top N>=0 requires v_top^2>=gR; energy gives v_bottom^2>=5gR=100. Hence v_bottom=10, incoming u=30, impulse on the 2 kg cart =2v=20 N s.",
+          "interpret": "Check the proposed result against all contact and momentum boundary conditions."
+        },
+        "final_expression": "Minimum incoming speed 30 m/s; collision impulse 20 N s.",
+        "final_answer_value": "Minimum incoming speed 30 m/s; collision impulse 20 N s."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] and [T^-1] as appropriate",
+        "quick_check": "At zero speed no centripetal acceleration is needed unless a contact already accelerates tangentially.",
+        "check_it_another_way": "Momentum in the short horizontal collision gives combined bottom speed v=u/3. At loop top N>=0 requires v_top^2>=gR; energy gives v_bottom^2>=5gR=100. Hence v_bottom=10, incoming u=30, impulse on the 2 kg cart =2v=20 N s.",
+        "watch_out": "Internal interaction forces cancel only in the appropriate combined system, not in each FBD.",
+        "review_this_idea": "Core 1: NLM-07",
+        "limiting_cases": [
+          {
+            "condition": "Motion/constraint at its admissible threshold",
+            "expected": "The limiting contact reaction or friction equals its physical bound."
+          },
+          {
+            "condition": "Constraint becomes inadmissible",
+            "expected": "Switch to a different physical regime; do not retain the original force model."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-042",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-09",
+      "provenance": {
+        "source": "Independently authored FIX2 NLM transfer challenge; benchmark words unseen",
+        "author": "Physics adapter NLM-FIX2 pilot",
+        "benchmark_status": "UNKNOWN"
+      },
+      "stem": "Two spring-linked carts are guided along a frictionless ONE-SIDED circular rail while moving. A compressed spring between the carts is suddenly released. A student argues that because the spring forces cancel internally, the total LINEAR momentum vector of the two carts is conserved throughout release. What is the correct system-boundary and guide-contact analysis?",
+      "system_parameters": {},
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "The rail exerts external radial impulses on the two carts, so their linear momentum vector need not remain constant; test N>=0 and use moment about the centre when radial guide forces have zero torque.",
+        "B": "The spring is internal so the two carts have conserved linear momentum even as their velocities turn.",
+        "C": "The radial rail force does zero work so each cart momentum vector must be constant.",
+        "D": "The radial contact belongs inside a carts-only system and can supply negative unilateral normal."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-JUSTIFY-D4",
+        "primary_demand": "JUSTIFY",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "NLM-09",
+        "difficulty_factors": {
+          "system_coupling": 4,
+          "vector_dimensionality": 4,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 3
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 4: Two carts, spring and circular rail require distinct boundary choices.",
+          "vector_dimensionality": "Score 4: Curved radial normals turn Cartesian momentum vectors.",
+          "constraint_latency": "Score 4: A one-sided rail permits contact only with nonnegative normal reaction.",
+          "domain_coupling": "Score 4: Compare force-impulse law, torque law and detachment regimes.",
+          "math_friction": "Score 3: Resolve coupled radial normals and impulses without symbolic optimization."
+        },
+        "d4_discriminator_type": "system-boundary-switch",
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "protected_work_W": "Choose the owned physical system and conditional governing model without hint exposure.",
+        "supporting_demands": [
+          "MODEL",
+          "JUSTIFY"
+        ],
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires coupled physical analysis rather than recall."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Spring impulses cancel in the two-cart sum but circular-rail reactions are external and redirect momenta. Radial reactions exert no torque about the centre, unlike an external linear impulse. A one-sided rail is physically valid only with N>=0; detachment changes the applicable model."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignores a required external contribution or limiting condition."
+        },
+        "C": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Neglects a relevant force, momentum stage or coupled body."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Confuses system boundary, direction or physical feasibility."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "H1 · Decisive physics",
+          "guidance_role": "decisive_physics",
+          "prompt_question": "What condition decides the valid physics branch?",
+          "reveal_text": "Identify the physical system and its separately constrained interaction or event; preserve the distinction among phases."
+        },
+        {
+          "tier": 2,
+          "title": "H2 · Representation",
+          "guidance_role": "representation",
+          "prompt_question": "What physical diagram should you prepare?",
+          "reveal_text": "S"
+        },
+        {
+          "tier": 3,
+          "title": "H3 · First equation only",
+          "guidance_role": "first_equation_only",
+          "prompt_question": "What relation must you write first?",
+          "reveal_text": "k"
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "State interacting bodies and all idealizations explicitly.",
+          "represent": "S",
+          "connect": "k",
+          "calculate": "Spring impulses cancel in the two-cart sum but circular-rail reactions are external and redirect momenta. Radial reactions exert no torque about the centre, unlike an external linear impulse. A one-sided rail is physically valid only with N>=0; detachment changes the applicable model.",
+          "interpret": "Check the proposed result against all contact and momentum boundary conditions."
+        },
+        "final_expression": "The rail exerts external radial impulses on the two carts, so their linear momentum vector need not remain constant; test N>=0 and use moment about the centre when radial guide forces have zero torque.",
+        "final_answer_value": "The rail exerts external radial impulses on the two carts, so their linear momentum vector need not remain constant; test N>=0 and use moment about the centre when radial guide forces have zero torque."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] and [T^-1] as appropriate",
+        "quick_check": "At zero speed no centripetal acceleration is needed unless a contact already accelerates tangentially.",
+        "check_it_another_way": "Spring impulses cancel in the two-cart sum but circular-rail reactions are external and redirect momenta. Radial reactions exert no torque about the centre, unlike an external linear impulse. A one-sided rail is physically valid only with N>=0; detachment changes the applicable model.",
+        "watch_out": "Internal interaction forces cancel only in the appropriate combined system, not in each FBD.",
+        "review_this_idea": "Core 1: NLM-09",
+        "limiting_cases": [
+          {
+            "condition": "Motion/constraint at its admissible threshold",
+            "expected": "The limiting contact reaction or friction equals its physical bound."
+          },
+          {
+            "condition": "Constraint becomes inadmissible",
+            "expected": "Switch to a different physical regime; do not retain the original force model."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-043",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-04",
+      "provenance": {
+        "source": "Independently authored FIX2 NLM transfer challenge; benchmark words unseen",
+        "author": "Physics adapter NLM-FIX2 pilot",
+        "benchmark_status": "UNKNOWN"
+      },
+      "stem": "Three boxes ride a rotating horizontal platform. Radius r and static-friction coefficient mu are: A=(0.5 m,0.20), B=(1.0 m,0.40), C=(1.5 m,0.30). Angular acceleration is 1 rad/s^2 and g=10 m/s^2. Which box FIRST loses its grip as angular speed omega increases, and at what bound? Each contact must provide radial AND tangential acceleration.",
+      "system_parameters": {},
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "C is first; omega<=3^(1/4) rad/s, about 1.32 rad/s.",
+        "B": "A is first; omega<=2 rad/s.",
+        "C": "B is first; omega<=4 rad/s.",
+        "D": "None will slip because friction always adjusts to acceleration."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-MODEL-D4",
+        "primary_demand": "MODEL",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "NLM-04",
+        "difficulty_factors": {
+          "system_coupling": 4,
+          "vector_dimensionality": 4,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 3
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 4: Three bodies share prescribed platform motion but have separate static contacts.",
+          "vector_dimensionality": "Score 4: Intrinsic radial omega^2*r and tangential alpha*r accelerations must be combined.",
+          "constraint_latency": "Score 4: Three independent vector-friction thresholds determine the first contact to fail.",
+          "domain_coupling": "Score 4: Solve grip versus slip alternatives as increasing angular speed passes a limit.",
+          "math_friction": "Score 3: Evaluate the three symbolic friction bounds and select the minimum."
+        },
+        "d4_discriminator_type": "coupled-2d-response",
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "protected_work_W": "Choose the owned physical system and conditional governing model without hint exposure.",
+        "supporting_demands": [
+          "MODEL",
+          "JUSTIFY"
+        ],
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires coupled physical analysis rather than recall."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Required contact force is m*r*sqrt(omega^4+alpha^2), so r*sqrt(omega^4+1)<=mu*g. Limits mu*g/r are A=4, B=4, C=2; C fails first when sqrt(omega^4+1)=2 and omega^4=3."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignores a required external contribution or limiting condition."
+        },
+        "C": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Neglects a relevant force, momentum stage or coupled body."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Confuses system boundary, direction or physical feasibility."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "H1 · Decisive physics",
+          "guidance_role": "decisive_physics",
+          "prompt_question": "What condition decides the valid physics branch?",
+          "reveal_text": "Identify the physical system and its separately constrained interaction or event; preserve the distinction among phases."
+        },
+        {
+          "tier": 2,
+          "title": "H2 · Representation",
+          "guidance_role": "representation",
+          "prompt_question": "What physical diagram should you prepare?",
+          "reveal_text": "D"
+        },
+        {
+          "tier": 3,
+          "title": "H3 · First equation only",
+          "guidance_role": "first_equation_only",
+          "prompt_question": "What relation must you write first?",
+          "reveal_text": "r"
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "State interacting bodies and all idealizations explicitly.",
+          "represent": "D",
+          "connect": "r",
+          "calculate": "Required contact force is m*r*sqrt(omega^4+alpha^2), so r*sqrt(omega^4+1)<=mu*g. Limits mu*g/r are A=4, B=4, C=2; C fails first when sqrt(omega^4+1)=2 and omega^4=3.",
+          "interpret": "Check the proposed result against all contact and momentum boundary conditions."
+        },
+        "final_expression": "C is first; omega<=3^(1/4) rad/s, about 1.32 rad/s.",
+        "final_answer_value": "C is first; omega<=3^(1/4) rad/s, about 1.32 rad/s."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] and [T^-1] as appropriate",
+        "quick_check": "At zero speed no centripetal acceleration is needed unless a contact already accelerates tangentially.",
+        "check_it_another_way": "Required contact force is m*r*sqrt(omega^4+alpha^2), so r*sqrt(omega^4+1)<=mu*g. Limits mu*g/r are A=4, B=4, C=2; C fails first when sqrt(omega^4+1)=2 and omega^4=3.",
+        "watch_out": "Internal interaction forces cancel only in the appropriate combined system, not in each FBD.",
+        "review_this_idea": "Core 1: NLM-04",
+        "limiting_cases": [
+          {
+            "condition": "Motion/constraint at its admissible threshold",
+            "expected": "The limiting contact reaction or friction equals its physical bound."
+          },
+          {
+            "condition": "Constraint becomes inadmissible",
+            "expected": "Switch to a different physical regime; do not retain the original force model."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-044",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-02",
+      "provenance": {
+        "source": "Independently authored FIX2 NLM transfer challenge; benchmark words unseen",
+        "author": "Physics adapter NLM-FIX2 pilot",
+        "benchmark_status": "UNKNOWN"
+      },
+      "stem": "Three beads A, B and C sit at different radii on a speeding-up horizontal turntable. Two taut radial strings connect A-B and B-C. Each bead can lose static grip independently. Which collection of three free-body diagrams and constraints is physically complete BEFORE you calculate tensions or angular speed?",
+      "system_parameters": {},
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "Each bead has weight down, normal up, a friction vector with inward radial and forward tangential components, and string tensions with bead-specific directions; record a_r=omega^2*r, a_t=alpha*r and |f_i|<=mu_i*N_i.",
+        "B": "Every bead has only outward friction; tangential acceleration is irrelevant.",
+        "C": "Both tensions point inward on B and therefore cancel before any FBD.",
+        "D": "The disk-bead assembly is force free so no contact inequalities are needed."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-REPRESENT-D4",
+        "primary_demand": "REPRESENT",
+        "difficulty_band": "D4",
+        "subtopic_competency_ref": "NLM-02",
+        "difficulty_factors": {
+          "system_coupling": 4,
+          "vector_dimensionality": 4,
+          "constraint_latency": 4,
+          "domain_coupling": 4,
+          "math_friction": 3
+        },
+        "factor_evidence": {
+          "system_coupling": "Score 4: Three linked beads and turntable contacts demand independent force ownership.",
+          "vector_dimensionality": "Score 4: Speeding rotation has both curvilinear radial and tangential acceleration.",
+          "constraint_latency": "Score 4: Three friction-resultant limits can independently trigger changed contact branches.",
+          "domain_coupling": "Score 4: Represent the sticking model and identify its slip or slack-string alternatives.",
+          "math_friction": "Score 3: Set up coupled body-by-body component equations with two tensions."
+        },
+        "d4_discriminator_type": "system-boundary-switch",
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "protected_work_W": "Choose the owned physical system and conditional governing model without hint exposure.",
+        "supporting_demands": [
+          "MODEL",
+          "JUSTIFY"
+        ],
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires coupled physical analysis rather than recall."
+          }
+        ]
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "One must isolate each bead: vertical balance N=mg, in-plane radial/tangential acceleration components and string forces owned by specific bead; two taut strings have opposing directions on adjacent bodies. Contact models are valid only while each required friction-resultant does not exceed its static limit."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Ignores a required external contribution or limiting condition."
+        },
+        "C": {
+          "type": "SINGLE_FORCE_NEGLECT",
+          "diagnostic": "Neglects a relevant force, momentum stage or coupled body."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Confuses system boundary, direction or physical feasibility."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "title": "H1 · Decisive physics",
+          "guidance_role": "decisive_physics",
+          "prompt_question": "What condition decides the valid physics branch?",
+          "reveal_text": "Identify the physical system and its separately constrained interaction or event; preserve the distinction among phases."
+        },
+        {
+          "tier": 2,
+          "title": "H2 · Representation",
+          "guidance_role": "representation",
+          "prompt_question": "What physical diagram should you prepare?",
+          "reveal_text": "D"
+        },
+        {
+          "tier": 3,
+          "title": "H3 · First equation only",
+          "guidance_role": "first_equation_only",
+          "prompt_question": "What relation must you write first?",
+          "reveal_text": "r"
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "State interacting bodies and all idealizations explicitly.",
+          "represent": "D",
+          "connect": "r",
+          "calculate": "One must isolate each bead: vertical balance N=mg, in-plane radial/tangential acceleration components and string forces owned by specific bead; two taut strings have opposing directions on adjacent bodies. Contact models are valid only while each required friction-resultant does not exceed its static limit.",
+          "interpret": "Check the proposed result against all contact and momentum boundary conditions."
+        },
+        "final_expression": "Each bead has weight down, normal up, a friction vector with inward radial and forward tangential components, and string tensions with bead-specific directions; record a_r=omega^2*r, a_t=alpha*r and |f_i|<=mu_i*N_i.",
+        "final_answer_value": "Each bead has weight down, normal up, a friction vector with inward radial and forward tangential components, and string tensions with bead-specific directions; record a_r=omega^2*r, a_t=alpha*r and |f_i|<=mu_i*N_i."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] or [M L T^-1] and [T^-1] as appropriate",
+        "quick_check": "At zero speed no centripetal acceleration is needed unless a contact already accelerates tangentially.",
+        "check_it_another_way": "One must isolate each bead: vertical balance N=mg, in-plane radial/tangential acceleration components and string forces owned by specific bead; two taut strings have opposing directions on adjacent bodies. Contact models are valid only while each required friction-resultant does not exceed its static limit.",
+        "watch_out": "Internal interaction forces cancel only in the appropriate combined system, not in each FBD.",
+        "review_this_idea": "Core 1: NLM-02",
+        "limiting_cases": [
+          {
+            "condition": "Motion/constraint at its admissible threshold",
+            "expected": "The limiting contact reaction or friction equals its physical bound."
+          },
+          {
+            "condition": "Constraint becomes inadmissible",
+            "expected": "Switch to a different physical regime; do not retain the original force model."
           }
         ]
       }
