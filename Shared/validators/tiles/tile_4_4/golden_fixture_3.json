@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_4",
+  "qrt_cell": "QRT-MODEL-D4",
+  "source_question": {
+    "id": "GOLDEN-MOD-D4-003",
+    "custody_hash": "f3a4b5c6d7e8091a2b3c4d5e6f7a80123456789abcdef0123456789abcdef0",
+    "stem": "A telecommunications network connects three junction hubs located at $A(0, 4)$, $B(0, 0)$, and $C(3, 0)$ in the Euclidean plane. An engineer must position a central switching station $P$ to minimize the total fiber-optic cable length $L(P) = PA + PB + PC$. What is the exact minimum total cable length required?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$\\sqrt{25 + 12\\sqrt{3}}$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$7$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$\\sqrt{41}$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$3 + 2\\sqrt{3}$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "\\sqrt{25 + 12\\sqrt{3}}",
+      "crux_move_ref": "CRUX-OPT-MODEL-FERMAT-TORRICELLI-60DEG-ROTATION"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "MODEL",
+      "difficulty_band": "D4",
+      "difficulty_score": 10,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 2
+      },
+      "crux_move": "CRUX-OPT-MODEL-FERMAT-TORRICELLI-60DEG-ROTATION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Model the network minimization problem by identifying the Fermat-Torricelli point $P$ of $\\triangle ABC$. Check whether all interior angles are strictly less than $120^\\circ$.",
+      "hint2_tactical_step": "Construct an equilateral triangle $\\triangle ACC'$ externally on the hypotenuse $AC$ with side length $5$. By rotating the plane $60^\\circ$ around $A$, the minimal path $PA + PB + PC$ equals the distance $BC'$. Use the Law of Cosines on $\\triangle ABC'$ with angle $\\angle BAC + 60^\\circ$."
+    },
+    "distractor_rationales": {
+      "opt-B": "Direct connection along coordinate axes $BA + BC = 4 + 3 = 7$, ignoring the optimization benefit of a central Fermat junction point.",
+      "opt-C": "Evaluates $AB^2 + AC'^2$ without the negative cross term coming from the cosine of $\\angle BAC + 60^\\circ$.",
+      "opt-D": "Heuristic approximation placing the junction at the triangle centroid or incenter."
+    },
+    "core_links": {
+      "core1a_unit_id": "OPT-MOD-FERMAT-TORRICELLI-STEINER-04",
+      "core1b_activity_id": "ACT-RECON-FERMAT-TORRICELLI-STEINER-04",
+      "core2a_practice_id": "PRAC-FERMAT-TORRICELLI-STEINER-04",
+      "core2b_transfer_id": "TRANS-FERMAT-TORRICELLI-STEINER-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "OPT-MOD-FERMAT-TORRICELLI-STEINER-04",
+      "title": "Network Optimization: The Fermat-Torricelli Problem",
+      "concept": "In network design, the Fermat-Torricelli problem seeks a point that minimizes the sum of Euclidean distances to given terminals. In triangles with no angle exceeding $120^\\circ$, this point sees every side under an angle of $120^\\circ$. The Hofmann-Gallai rotation method maps the sum of three distances onto a single straight-line segment by attaching an equilateral triangle externally to one of the sides.",
+      "boundary_conditions": "If any angle of the triangle is $\\ge 120^\\circ$, the Fermat point collapses to that obtuse vertex, and the external rotation identity does not yield an interior point."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-FERMAT-TORRICELLI-STEINER-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "In a triangle where all angles are less than $120^\\circ$, what is the angle subtended by each side at the interior Fermat point?",
+      "scaffold_steps": [
+        "Recall the equiangular sight property of the Fermat point",
+        "Observe 360 degrees divided by 3 edges equals 120 degrees",
+        "Conclude that each side subtends an angle of exactly 120 degrees"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-MOD-D4-003\"><div class=\"qb-stem\"><p>A telecommunications network connects three junction hubs located at $A(0, 4)$, $B(0, 0)$, and $C(3, 0)$ in the Euclidean plane. An engineer must position a central switching station $P$ to minimize the total fiber-optic cable length $L(P) = PA + PB + PC$. What is the exact minimum total cable length required?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $\\sqrt{25 + 12\\sqrt{3}}$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $7$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $\\sqrt{41}$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $3 + 2\\sqrt{3}$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-MOD-D4-003\"><p>Model the network minimization problem by identifying the Fermat-Torricelli point $P$ of $\\triangle ABC$. Check whether all interior angles are strictly less than $120^\\circ$.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-MOD-D4-003\"><p>Construct an equilateral triangle $\\triangle ACC'$ externally on the hypotenuse $AC$ with side length $5$. By rotating the plane $60^\\circ$ around $A$, the minimal path $PA + PB + PC$ equals the distance $BC'$. Use the Law of Cosines on $\\triangle ABC'$ with angle $\\angle BAC + 60^\\circ$.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"OPT-MOD-FERMAT-TORRICELLI-STEINER-04\">Review Fermat Torricelli Model</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Geometric model setup:</p><p>The three points $A(0, 4), B(0, 0), C(3, 0)$ form a right-angled triangle with side lengths $AB = 4$, $BC = 3$, and $AC = 5$.</p><p>Because $\\angle B = 90^\\circ < 120^\\circ$ and both acute angles are strictly under $60^\\circ$, all angles are strictly less than $120^\\circ$.</p><p>Thus, the point $P$ minimizing $PA + PB + PC$ is the interior Fermat-Torricelli point where $\\angle APB = \\angle BPC = \\angle CPA = 120^\\circ$.</p><p>2. Hofmann-Gallai 60-degree rotation:</p><p>Rotate the plane counterclockwise about $A$ by $60^\\circ$. Let point $P$ map to $P'$ and $C$ map to $C'$.</p><p>Then $\\triangle APP'$ and $\\triangle ACC'$ are equilateral triangles with $AP = PP'$ and $PC = P'C'$.</p><p>Therefore, the total distance is:</p><p>$L(P) = PA + PB + PC = BP + PP' + P'C'$.</p><p>By the triangle inequality, the minimum length of this polygonal path from $B$ to $C'$ is the straight-line segment length $BC'$.</p><p>3. Geometry of $\\triangle ABC'$:</p><p>In $\\triangle ABC'$, side $AB = 4$.</p><p>Since $\\triangle ACC'$ is equilateral on side $AC = 5$, we have $AC' = 5$.</p><p>The angle $\\angle BAC'$ is given by $\\angle BAC + 60^\\circ$.</p><p>4. Evaluating $\\cos(\\angle BAC + 60^\\circ)$:</p><p>In right triangle $\\triangle ABC$, $\\cos \\angle BAC = \\frac{4}{5}$ and $\\sin \\angle BAC = \\frac{3}{5}$.</p><p>Using the cosine addition formula:</p><p>$\\cos(\\angle BAC + 60^\\circ) = \\cos \\angle BAC \\cos 60^\\circ - \\sin \\angle BAC \\sin 60^\\circ = \\left(\\frac{4}{5} \\cdot \\frac{1}{2}\\right) - \\left(\\frac{3}{5} \\cdot \\frac{\\sqrt{3}}{2}\\right) = \\frac{4 - 3\\sqrt{3}}{10}$.</p><p>5. Applying the Law of Cosines to find $BC'$:</p><p>$BC'^2 = AB^2 + AC'^2 - 2(AB)(AC') \\cos(\\angle BAC + 60^\\circ)$.</p><p>$BC'^2 = 4^2 + 5^2 - 2(4)(5) \\left(\\frac{4 - 3\\sqrt{3}}{10}\\right) = 16 + 25 - 40 \\left(\\frac{4 - 3\\sqrt{3}}{10}\\right)$.</p><p>$BC'^2 = 41 - 4(4 - 3\\sqrt{3}) = 41 - 16 + 12\\sqrt{3} = 25 + 12\\sqrt{3}$.</p><p>6. Conclusion:</p><p>The minimum total cable length is $BC' = \\sqrt{25 + 12\\sqrt{3}}$.</p></div></details></div>"
+}

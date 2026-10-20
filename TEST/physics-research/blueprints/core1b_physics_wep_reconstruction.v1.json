@@ -1,0 +1,98 @@
+{
+  "schema": "core1b-physics-reconstruction/v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "topic": "Work, Energy & Power: Conservative Fields & Potential Wells",
+  "title": "Core 1B Phenomenological Reconstruction Cycles & Cognitive Dissonance Dialog: Work, Energy & Power",
+  "reconstruction_cycles": [
+    {
+      "cycle_id": "RECON-01",
+      "phenomenon": "The Work-Energy Theorem as Spatial Integration of Newton's Second Law",
+      "standard_derivation": "From F = m * dv/dt, multiply both sides by dx = v*dt: F*dx = m*(dv/dt)*(v*dt) = m*v*dv. Integrating from initial to final state: int F dx = int_v_i^v_f m*v dv = 0.5 * m * v_f^2 - 0.5 * m * v_i^2 = Delta K.",
+      "phenomenological_reconstruction": {
+        "perspective": "Spatial Accumulation of Force Invariant",
+        "conceptual_pivot": "Newton's second law has two natural integrals: over time and over space. Time integration yields momentum change (Delta p = int F dt, Impulse); space integration yields kinetic energy change (Delta K = int F dx, Work).",
+        "energy_ledger": "Kinetic energy (0.5 m v^2) is not an arbitrary formula; it is the unique scalar accumulator that records every unit of force exerted over distance.",
+        "universality": "Because this derivation relies purely on calculus and F = ma, the Work-Energy Theorem holds universally for all forces, conservative or non-conservative."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "v_f = v_i", "physical_consequence": "Net work is zero (W_net = 0)"},
+        {"limit": "Force perpendicular to displacement (F perp v)", "physical_consequence": "F . dx = 0 => Delta K = 0 (Speed is strictly constant)"},
+        {"limit": "Mass m -> infinity with finite force", "physical_consequence": "Delta K -> 0 (Zero acceleration, zero velocity acquired)"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-02",
+      "phenomenon": "Spring Elastic Potential Energy and Average Force Equivalence",
+      "standard_derivation": "Hooke's Law: F_spring = -k*x. Work done by an external agent to compress the spring from 0 to x is W_ext = int_0^x (k*x') dx' = 0.5 * k * x^2. By definition of potential energy, U_s = 0.5 * k * x^2.",
+      "phenomenological_reconstruction": {
+        "perspective": "Linear Resistance Average Force Invariant",
+        "conceptual_pivot": "The spring does not resist with constant force kx; at the start (x = 0), resistance is zero. At maximum compression x, resistance is kx.",
+        "average_force_concept": "Because Hooke's Law is strictly linear, the effective average force resisting compression is the arithmetic mean: F_avg = (0 + kx) / 2 = 0.5 * kx.",
+        "geometric_area": "Work done is simply average force times distance: W = F_avg * x = (0.5 * kx) * x = 0.5 * k * x^2. This corresponds exactly to the triangular area under the force-extension line."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "k -> 0 (Flaccid thread limit)", "physical_consequence": "U_s -> 0 (No energy stored regardless of displacement)"},
+        {"limit": "x -> 0", "physical_consequence": "U_s -> 0 (Relaxed equilibrium state has zero stored energy)"},
+        {"limit": "Doubling displacement (x -> 2x)", "physical_consequence": "U_s -> 4 * U_s (Quadratic quadrupling of stored energy)"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-03",
+      "phenomenon": "Positive Kinetic Friction Work on Moving Conveyor Belt",
+      "standard_derivation": "A box of mass m is placed gently from rest onto a conveyor belt moving horizontally at speed v. Kinetic friction f_k = mu_k * m * g accelerates the box forward with a = mu_k * g until it matches belt speed v. Distance box slides along ground is s_box = v^2 / (2a) = v^2 / (2 * mu_k * g). Work done by friction on box is W_friction = f_k * s_box = (mu_k * m * g) * [v^2 / (2 * mu_k * g)] = +0.5 * m * v^2.",
+      "phenomenological_reconstruction": {
+        "perspective": "Dual Ground vs Interface Relative Energy Ledger",
+        "conceptual_pivot": "Kinetic friction does not always dissipate energy on every object; it accelerates the box from rest, doing strictly POSITIVE work (+0.5 m v^2) in the ground frame.",
+        "motor_work": "During the slip time t = v / a, the belt travels twice as far: s_belt = v * t = v^2 / (mu_k * g) = 2 * s_box. The belt motor does work W_motor = f_k * s_belt = +m v^2.",
+        "thermal_dissipation": "The net energy dissipated as thermal heat at the sliding contact interface is exactly W_motor - Delta K_box = m v^2 - 0.5 m v^2 = 0.5 m v^2. Exactly 50% of the motor work accelerates the box, and 50% is lost to thermal friction."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "mu_k -> 0 (Frictionless belt)", "physical_consequence": "Box slips indefinitely without accelerating; zero work done on box"},
+        {"limit": "Belt speed v -> 0", "physical_consequence": "Zero work, zero acceleration, zero dissipation"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-04",
+      "phenomenon": "Cubic Aerodynamic Drag Scaling and Wake Kinetic Energy",
+      "standard_derivation": "A vehicle cruises at steady speed v against air resistance F_drag = k * v^2. Since speed is constant, engine propulsion force matches drag: F_engine = k * v^2. Instantaneous engine power output is P = F_engine * v = (k * v^2) * v = k * v^3.",
+      "phenomenological_reconstruction": {
+        "perspective": "Air Mass Wake Momentum and Energy Invariant",
+        "conceptual_pivot": "Why does drag power scale cubically (v^3) rather than quadratically? Consider the air displaced by the vehicle.",
+        "mass_flow_rate": "In time dt, the vehicle sweeps through a volume of air of length v*dt, engaging an air mass dm = rho * A * v * dt. The mass flow rate scales linearly with velocity: dm/dt = rho * A * v.",
+        "wake_kinetic_energy": "To push this air aside, the vehicle accelerates each packet of air to velocity v. The kinetic energy imparted to the air wake per second is dK_wake / dt = 0.5 * (dm/dt) * v^2 = 0.5 * (rho * A * v) * v^2 = 0.5 * rho * A * v^3.",
+        "power_origin": "The engine power must continuously supply this cubic kinetic energy stream into the turbulent wake. Doubling cruise speed requires 8 times the horsepower!"
+      },
+      "limiting_boundary_checks": [
+        {"limit": "v -> 0", "physical_consequence": "P -> 0 (Zero cruise power required at standstill)"},
+        {"limit": "Doubling cruise speed (v -> 2v)", "physical_consequence": "P -> 8P (Eight-fold power demand increase; explains severe high-speed fuel penalty)"}
+      ]
+    }
+  ],
+  "cognitive_dissonance_probes": [
+    {
+      "probe_id": "CDP-01",
+      "student_trap": "A boy whirling a stone in a circle with a string is exerting a continuous strong pull, so the tension must be doing positive work on the stone.",
+      "socratic_challenge": "What is the angle between the tension force vector (pointing toward the center) and the stone's velocity vector (pointing tangentially)? What is cos(90 degrees)? Is the stone speeding up or gaining kinetic energy?",
+      "resolution": "Because the force is strictly perpendicular to displacement (cos 90 deg = 0), tension does zero work. Force without displacement along the force direction transfers zero energy."
+    },
+    {
+      "probe_id": "CDP-02",
+      "student_trap": "A high-performance sports car with a 500 horsepower engine does more work than a small 50 horsepower tractor.",
+      "socratic_challenge": "If the 500 hp car runs for 10 seconds, and the 50 hp tractor runs all day for 8 hours, which machine has transferred more total Joules of energy?",
+      "resolution": "The tractor! Work is Power * Time: 50 hp * 8 h = 400 hp-hours, whereas the sports car only did 500 hp * (10/3600 h) = 1.39 hp-hours. Power is speed of transfer, not total energy transferred."
+    },
+    {
+      "probe_id": "CDP-03",
+      "student_trap": "Friction always slows things down and always does negative work.",
+      "socratic_challenge": "When you put a box on a moving airport luggage belt, the box starts from rest and speeds up. Which force accelerated it forward? Did that force increase or decrease the box's kinetic energy?",
+      "resolution": "Kinetic friction pushed the box forward in the direction of motion, doing POSITIVE work (+0.5 m v^2) on the box! Friction opposes relative sliding between surfaces, not absolute motion in the ground frame."
+    },
+    {
+      "probe_id": "CDP-04",
+      "student_trap": "Since momentum p = mv and kinetic energy K = 0.5 m v^2, two bodies with equal momentum must have equal kinetic energy.",
+      "socratic_challenge": "A 10-gram bullet and a 5-kilogram rifle recoil with equal and opposite momentum. Would you rather catch the recoiling rifle or the flying bullet? Why?",
+      "resolution": "K = p^2 / (2m). Since the bullet's mass is 500 times smaller, its kinetic energy is 500 times greater! Momentum is linear in velocity, but kinetic energy is quadratic."
+    }
+  ]
+}

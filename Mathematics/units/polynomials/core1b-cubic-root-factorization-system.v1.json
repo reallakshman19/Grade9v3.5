@@ -1,0 +1,68 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-POLYNOMIALS-CUBIC-ROOT-FACTORIZATION-SYSTEM",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Polynomials",
+  "subtopic": "POLY-CUBIC-FACTORIZATION-SYSTEM",
+  "target_demand": "JUSTIFY",
+  "target_band": "D4",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before computing: A cubic polynomial P(x) = x^3 - 6x^2 + 11x - 6 has integer roots. From the constant term (-6), what are the only possible integer candidates that could be roots of this polynomial?",
+      "options": [
+        "A. Any integer from 1 to 100.",
+        "B. Only the divisors of the constant term: ±1, ±2, ±3, ±6.",
+        "C. Only prime numbers.",
+        "D. Only multiples of 6."
+      ],
+      "predict_rationale": "Enforces the Rational Root Theorem restriction that integer roots of monic integer polynomials must divide the constant term."
+    },
+    "stage_2_attempt": {
+      "task": "For P(x) = x^3 - 6x^2 + 11x - 6: (1) Find one root using trial substitution from divisors, (2) Factor P(x) completely into three linear factors, and (3) Compute the remainder when P(x) is divided by (x - 4).",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Test x = 1: P(1) = 1 - 6 + 11 - 6 = 0. Therefore (x - 1) is a linear factor.",
+        "step_2": "Divide P(x) by (x - 1) to obtain quotient Q(x) = x^2 - 5x + 6.",
+        "step_3": "Factor quadratic: x^2 - 5x + 6 = (x - 2)(x - 3). Complete factorization is (x - 1)(x - 2)(x - 3).",
+        "conclusion": "Remainder when divided by (x - 4) is P(4) = (4 - 1)(4 - 2)(4 - 3) = (3)(2)(1) = 6."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "VIETAS_RELATIONS_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "If a monic cubic has roots alpha, beta, gamma, what are the coefficients of x^2, x, and the constant term in terms of these roots?",
+          "expected_insight": "Coefficient of x^2 is -(alpha + beta + gamma); coefficient of x is (alpha*beta + beta*gamma + gamma*alpha); constant term is -(alpha*beta*gamma)."
+        },
+        {
+          "inquiry": "For roots 1, 2, 3: sum = 6, sum of pairs = 2 + 6 + 3 = 11, product = 6. How does this immediately reconstruct the expanded polynomial?",
+          "expected_insight": "x^3 - (6)x^2 + (11)x - (6) = x^3 - 6x^2 + 11x - 6! Vieta's formulas confirm the expansion without term-by-term foil multiplication."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: If a cubic polynomial P(x) is divided by (x - 2), the remainder is 0. If it is divided by (x + 3), the remainder is 0. What must be true about P(x)?",
+      "options": [
+        "A. P(x) has no real roots.",
+        "B. P(x) is divisible by the quadratic product (x - 2)(x + 3) = x^2 + x - 6.",
+        "C. The degree of P(x) must be at least 4.",
+        "D. P(0) must equal 0."
+      ],
+      "correct_option": "B",
+      "explanation": "Because (x - 2) and (x + 3) are coprime linear factors of P(x), their product (x - 2)(x + 3) must divide P(x)."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "By the Remainder Theorem, the remainder upon division by (x - a) is simply P(a). If P(a) = 0, then (x - a) is a factor."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Check P(1). If P(1) = 0, divide by (x - 1) to get a quadratic equation, which you can easily factor by splitting the middle term."
+    }
+  }
+}

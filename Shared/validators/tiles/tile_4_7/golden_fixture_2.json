@@ -1,0 +1,91 @@
+{
+  "source_question": {
+    "id": "GOLDEN-JUS-D4-002",
+    "prompt": "<p>Let \\(a, b, c > 0\\) satisfy \\(a + b + c = 3\\). Which argument rigorously justifies why: \\[ \\frac{a}{1 + b^2} + \\frac{b}{1 + c^2} + \\frac{c}{1 + a^2} \\ge \\frac{3}{2} \\] and identifies the exact condition under which equality is achieved?</p>",
+    "options": [
+      {
+        "id": "A",
+        "text": "Applying the AM-GM inequality directly to the denominator gives \\(\\frac{a}{1+b^2} \\le \\frac{a}{2b}\\), which by cyclical summation yields \\(\\frac{3}{2}\\) with equality whenever \\(a = b = c\\)."
+      },
+      {
+        "id": "B",
+        "text": "Rewriting each term as a - ab^2/(1+b^2) >= a - ab/2 via AM-GM on the denominator and bounding ab + bc + ca <= (a+b+c)^2 / 3 = 3 establishes the lower bound 3/2, with equality if and only if a = b = c = 1."
+      },
+      {
+        "id": "C",
+        "text": "Applying Cauchy-Schwarz in Engel form produces \\(\\sum \\frac{a}{1+b^2} \\ge \\frac{(a+b+c)^2}{3 + a^2+b^2+c^2}\\), which achieves \\(\\frac{3}{2}\\) for all triples satisfying \\(a^2+b^2+c^2=3\\)."
+      },
+      {
+        "id": "D",
+        "text": "Replacing \\(1+b^2\\) with \\((1+b)^2 / 2\\) creates a harmonic sum whose minimal value is \\(\\frac{3}{2}\\), with equality whenever \\(ab+bc+ca = 3\\)."
+      }
+    ],
+    "answer": {
+      "choice": "B",
+      "value": "Rewriting each term as a - ab^2/(1+b^2) >= a - ab/2 via AM-GM on the denominator and bounding ab + bc + ca <= (a+b+c)^2 / 3 = 3 establishes the lower bound 3/2, with equality if and only if a = b = c = 1.",
+      "crux_move_ref": "CAUCHY_REVERSE_TECHNIQUE_SHARPNESS_JUSTIFICATION"
+    },
+    "cognitive_classification": {
+      "difficulty_band": "D4",
+      "difficulty_score": 10,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 2
+      },
+      "demand": "JUSTIFY",
+      "crux_move": "CAUCHY_REVERSE_TECHNIQUE_SHARPNESS_JUSTIFICATION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Direct AM-GM on the denominator places the term on the wrong side of the inequality. Consider subtracting a fraction from a whole variable to reverse the inequality direction.",
+      "hint2_tactical_step": "Notice that \\(\\frac{a}{1+b^2} = a - \\frac{ab^2}{1+b^2}\\). Apply AM-GM to the denominator of the subtracted term, and sum cyclically using the bound on \\(ab + bc + ca\\)."
+    },
+    "distractor_analysis": [
+      {
+        "choice": "A",
+        "description": "Direction fallacy: applying AM-GM to the denominator directly yields an upper bound rather than the required lower bound."
+      },
+      {
+        "choice": "B",
+        "description": "Correct rigorous justification: Cauchy Reverse Technique isolates the subtraction term, AM-GM gives the sharp lower bound 3/2, and simultaneous equality conditions force a = b = c = 1."
+      },
+      {
+        "choice": "C",
+        "description": "Incomplete Engel form: the resulting quotient (a+b+c)^2 / (3 + a^2+b^2+c^2) does not equal 3/2 unless a^2+b^2+c^2 is independently minimized."
+      },
+      {
+        "choice": "D",
+        "description": "Spurious inequality substitution: (1+b)^2 / 2 <= 1 + b^2, but dividing by it reverses the inequality direction."
+      }
+    ],
+    "core_links": {
+      "core1a_unit_id": "ALG-INEQ-CAUCHY-REVERSE-TECHNIQUE-02",
+      "core1b_unit_id": "RECON-JUS-D4-002"
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-JUS-D4-002\" data-core-unit-id=\"ALG-INEQ-CAUCHY-REVERSE-TECHNIQUE-02\">\n  <div class=\"qb-stem\">\n    <p>Let \\(a, b, c > 0\\) satisfy \\(a + b + c = 3\\). Which argument rigorously justifies why: \\[ \\frac{a}{1 + b^2} + \\frac{b}{1 + c^2} + \\frac{c}{1 + a^2} \\ge \\frac{3}{2} \\] and identifies the exact condition under which equality is achieved?</p>\n  </div>\n  <div class=\"qb-options-grid\">\n    <button class=\"qb-option-btn\" id=\"opt-A\">Applying the AM-GM inequality directly to the denominator gives \\(\\frac{a}{1+b^2} \\le \\frac{a}{2b}\\), which by cyclical summation yields \\(\\frac{3}{2}\\) with equality whenever \\(a = b = c\\).</button>\n    <button class=\"qb-option-btn\" id=\"opt-B\">Rewriting each term as a - ab^2/(1+b^2) >= a - ab/2 via AM-GM on the denominator and bounding ab + bc + ca <= (a+b+c)^2 / 3 = 3 establishes the lower bound 3/2, with equality if and only if a = b = c = 1.</button>\n    <button class=\"qb-option-btn\" id=\"opt-C\">Applying Cauchy-Schwarz in Engel form produces \\(\\sum \\frac{a}{1+b^2} \\ge \\frac{(a+b+c)^2}{3 + a^2+b^2+c^2}\\), which achieves \\(\\frac{3}{2}\\) for all triples satisfying \\(a^2+b^2+c^2=3\\).</button>\n    <button class=\"qb-option-btn\" id=\"opt-D\">Replacing \\(1+b^2\\) with \\((1+b)^2 / 2\\) creates a harmonic sum whose minimal value is \\(\\frac{3}{2}\\), with equality whenever \\(ab+bc+ca = 3\\).</button>\n  </div>\n  <div class=\"qb-support-container\">\n    <div class=\"qb-hint\" id=\"hint1-GOLDEN-JUS-D4-002\">\n      <p><strong>Hint 1 (Conceptual):</strong> Direct AM-GM on the denominator places the term on the wrong side of the inequality. Consider subtracting a fraction from a whole variable to reverse the inequality direction.</p>\n    </div>\n    <div class=\"qb-hint\" id=\"hint2-GOLDEN-JUS-D4-002\">\n      <p><strong>Hint 2 (Tactical):</strong> Notice that \\(\\frac{a}{1+b^2} = a - \\frac{ab^2}{1+b^2}\\). Apply AM-GM to the denominator of the subtracted term, and sum cyclically using the bound on \\(ab + bc + ca\\).</p>\n    </div>\n  </div>\n  <details class=\"qb-solution\" inert hidden data-locked=\"true\">\n    <summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary>\n    <div class=\"qb-solution-content\">\n      <p><strong>Theorem:</strong> For \\(a, b, c > 0\\) with \\(a + b + c = 3\\), \\(\\sum_{cyc} \\frac{a}{1+b^2} \\ge \\frac{3}{2}\\), with equality if and only if \\(a = b = c = 1\\).</p>\n      <p><strong>Rigorous Proof via Cauchy Reverse Technique:</strong></p>\n      <ol>\n        <li>Decompose each fraction by algebraic division: \\[ \\frac{a}{1+b^2} = \\frac{a(1+b^2) - ab^2}{1+b^2} = a - \\frac{ab^2}{1+b^2} \\]</li>\n        <li>By the AM-GM inequality, \\(1 + b^2 \\ge 2b\\). Since \\(ab^2 > 0\\), taking the reciprocal gives: \\[ \\frac{1}{1+b^2} \\le \\frac{1}{2b} \\implies -\\frac{ab^2}{1+b^2} \\ge -\\frac{ab^2}{2b} = -\\frac{ab}{2} \\]</li>\n        <li>Therefore: \\[ \\frac{a}{1+b^2} \\ge a - \\frac{ab}{2} \\]</li>\n        <li>Summing cyclically over \\(a, b, c\\): \\[ \\sum_{cyc} \\frac{a}{1+b^2} \\ge (a+b+c) - \\frac{1}{2}(ab + bc + ca) = 3 - \\frac{1}{2}(ab + bc + ca) \\]</li>\n        <li>By the well-known inequality \\((a+b+c)^2 \\ge 3(ab + bc + ca)\\): \\[ ab + bc + ca \\le \\frac{(a+b+c)^2}{3} = \\frac{3^2}{3} = 3 \\]</li>\n        <li>Substituting this bound: \\[ \\sum_{cyc} \\frac{a}{1+b^2} \\ge 3 - \\frac{1}{2}(3) = \\frac{3}{2} \\]</li>\n        <li><strong>Equality Analysis:</strong> Equality requires: (i) \\(1 + b^2 = 2b \\implies (b-1)^2 = 0 \\implies b = 1\\), and similarly \\(a = c = 1\\); (ii) \\((a+b+c)^2 = 3(ab+bc+ca) \\implies a = b = c\\). Both conditions hold simultaneously if and only if \\(a = b = c = 1\\).</li>\n      </ol>\n    </div>\n  </details>\n</div>",
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-INEQ-CAUCHY-REVERSE-TECHNIQUE-02",
+      "entry_assumptions": "Foundations of algebraic inequalities, the AM-GM inequality, and cyclic symmetric sums.",
+      "inferential_jump": "Using algebraic subtraction to reverse the direction of an inequality when applying lower bounds to denominator terms.",
+      "why_valid_derivation": "If A / (1 + B) is rewritten as A - A*B / (1 + B), applying AM-GM to the denominator of the subtracted term reverses the negative sign back to a positive lower bound.",
+      "three_way_bridge": "Algebraic restructuring bridges non-convex rational quotients to tractable polynomial symmetric forms.",
+      "representation_anchor": "Graph showing the convex envelope of x / (1 + y^2) bounded from below by tangent hyperplanes.",
+      "boundary_conditions": "Requires all variables to be strictly positive to ensure AM-GM validity.",
+      "worked_check": "Nesbitt's Inequality: For x, y, z > 0, sum x/(y+z) >= 3/2. Adding 1 to each term gives sum (x+y+z)/(y+z) >= 9/2 by Cauchy-Schwarz Engel form: (x+y+z) sum 1/(y+z) >= (x+y+z) * 9 / (2(x+y+z)) = 9/2. Subtracting 3 yields 3/2. Verified."
+    },
+    "core1b": {
+      "unit_id": "RECON-JUS-D4-002",
+      "target_concept": "Cauchy Reverse Technique and Sharp Equality Conditions",
+      "answer_before_attempt": "FORBIDDEN",
+      "scaffold_prompts": [
+        "Express the rational term as a difference between the numerator and a higher-order term.",
+        "Apply AM-GM to the denominator of the subtracted term and explain the sign reversal.",
+        "State the exact conditions required for equality to hold in all applied inequalities."
+      ]
+    }
+  }
+}

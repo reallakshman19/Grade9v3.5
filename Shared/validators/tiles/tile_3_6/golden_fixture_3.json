@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_6",
+  "qrt_cell": "QRT-SYNTHESIZE-D3",
+  "source_question": {
+    "id": "GOLDEN-SYN-D3-003",
+    "custody_hash": "f30415263748596a7b8c9d0e1f2031425364758697a8b9c0d1e2f30415263748",
+    "stem": "How many positive integers $n \\le 1000$ are coprime to $70$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$343$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$336$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$357$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$329$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "343",
+      "crux_move_ref": "CRUX-COMB-NT-SYNTHESIZE-PIE-MODULAR-BLOCKS"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "SYNTHESIZE",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-COMB-NT-SYNTHESIZE-PIE-MODULAR-BLOCKS"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Use the Principle of Inclusion-Exclusion on the prime factors 2, 5, 7, subtracting multiples of single primes, adding multiples of pairwise products, and subtracting the triple product.",
+      "hint2_tactical_step": "The floor divisions yield single multiples sum 500 + 200 + 142 = 842, pairwise products sum 100 + 71 + 28 = 199, and triple product floor(1000/70) = 14. Evaluate 1000 - 842 + 199 - 14."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student calculates the coprime count only within the 14 full blocks of 70 (14 * 24 = 336), omitting the remaining 20 integers.",
+      "opt-C": "Student makes an alternating sign error in the inclusion-exclusion formula, omitting the subtraction of the triple intersection.",
+      "opt-D": "Student inadvertently subtracts the triple intersection of 14 twice."
+    },
+    "core_links": {
+      "core1a_unit_id": "COMB-SYNTH-PIE-MODULAR-03",
+      "core1b_activity_id": "ACT-RECON-PIE-MODULAR-03",
+      "core2a_practice_id": "PRAC-PIE-MODULAR-03",
+      "core2b_transfer_id": "TRANS-PIE-MODULAR-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COMB-SYNTH-PIE-MODULAR-03",
+      "title": "Synthesis of Inclusion-Exclusion and Prime Residue Classes",
+      "concept": "To count integers up to M coprime to a composite integer K with prime factorization p1 * p2 * ... * pr, apply the Principle of Inclusion-Exclusion across the sets of multiples of each prime factor: N = M - sum(floor(M / p_i)) + sum(floor(M / (p_i * p_j))) - ... For example, to count integers up to 100 coprime to 30 = 2 * 3 * 5: single multiples sum floor(100/2) + floor(100/3) + floor(100/5) = 50 + 33 + 20 = 103; pairwise products sum floor(100/6) + floor(100/10) + floor(100/15) = 16 + 10 + 6 = 32; triple product is floor(100/30) = 3. Thus N = 100 - 103 + 32 - 3 = 26.",
+      "boundary_conditions": "For limits M that are exact multiples of K, N = (M / K) * phi(K). For non-multiples, the residual block must be accounted for explicitly."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-PIE-MODULAR-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the prime factorization of 70?",
+      "scaffold_steps": [
+        "Divide 70 by the smallest prime 2 yielding 35",
+        "Factor 35 as 5 * 7",
+        "Conclude prime factors are 2, 5, 7"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-SYN-D3-003\"><div class=\"qb-stem\"><p>How many positive integers $n \\le 1000$ are coprime to $70$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $343$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $336$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $357$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $329$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-SYN-D3-003\"><p>Use the Principle of Inclusion-Exclusion on the prime factors 2, 5, 7, subtracting multiples of single primes, adding multiples of pairwise products, and subtracting the triple product.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-SYN-D3-003\"><p>The floor divisions yield single multiples sum 500 + 200 + 142 = 842, pairwise products sum 100 + 71 + 28 = 199, and triple product floor(1000/70) = 14. Evaluate 1000 - 842 + 199 - 14.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COMB-SYNTH-PIE-MODULAR-03\">Review Inclusion-Exclusion Synthesis</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Prime factorization of the modulus:</p><p>$70 = 2 \\times 5 \\times 7$. An integer $n$ is coprime to $70$ if and only if $n$ is not divisible by $2$, $5$, or $7$.</p><p>2. Count multiples using integer floor division up to $1000$:</p><p>Single prime multiples:</p><p>$|A_2| = \\lfloor 1000/2 \\rfloor = 500$</p><p>$|A_5| = \\lfloor 1000/5 \\rfloor = 200$</p><p>$|A_7| = \\lfloor 1000/7 \\rfloor = 142$</p><p>Sum of singles $= 500 + 200 + 142 = 842$.</p><p>Pairwise intersection multiples:</p><p>$|A_2 \\cap A_5| = \\lfloor 1000/10 \\rfloor = 100$</p><p>$|A_2 \\cap A_7| = \\lfloor 1000/14 \\rfloor = 71$</p><p>$|A_5 \\cap A_7| = \\lfloor 1000/35 \\rfloor = 28$</p><p>Sum of pairs $= 100 + 71 + 28 = 199$.</p><p>Triple intersection multiples:</p><p>$|A_2 \\cap A_5 \\cap A_7| = \\lfloor 1000/70 \\rfloor = 14$.</p><p>3. Apply the Principle of Inclusion-Exclusion:</p><p>$N = 1000 - (500 + 200 + 142) + (100 + 71 + 28) - 14$</p><p>$N = 1000 - 842 + 199 - 14 = 1000 - 657 = 343$.</p><p>4. Independent verification via modular block residue partitioning:</p><p>Euler's totient function gives the number of coprimes per full period of $70$:</p><p>$\\phi(70) = 70 \\times \\left(1 - \\frac{1}{2}\\right)\\left(1 - \\frac{1}{5}\\right)\\left(1 - \\frac{1}{7}\\right) = 70 \\times \\frac{1}{2} \\times \\frac{4}{5} \\times \\frac{6}{7} = 24$.</p><p>Divide $1000$ by $70$: $1000 = 14 \\times 70 + 20$.</p><p>The $14$ complete blocks contribute $14 \\times 24 = 336$ coprime integers.</p><p>Among the remaining integers $1, 2, \\dots, 20$, the integers coprime to $70$ (odd and not divisible by $5$ or $7$) are:</p><p>$\\{1, 3, 9, 11, 13, 17, 19\\}$, which contains exactly $7$ integers.</p><p>Total coprime integers $= 336 + 7 = 343$. Both synthesis derivations agree perfectly.</p></div></details></div>"
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_2",
+  "qrt_cell": "QRT-EXPLAIN-D4",
+  "source_question": {
+    "id": "GOLDEN-EXP-D4-003",
+    "custody_hash": "a3b4c5d6e7f8091a2b3c4d5e6f7a80123456789abcdef0123456789abcdef0",
+    "stem": "In combinatorial graph theory, Hall's Marriage Theorem states that a finite bipartite graph $G = (X, Y, E)$ has a complete matching saturating $X$ if and only if $|N(S)| \\ge |S|$ for all $S \\subseteq X$, where $N(S)$ denotes the neighborhood of $S$ in $Y$. Which of the following statements rigorously explains the structural obstruction mechanism that causes a matching saturating $X$ to fail when Hall's condition is violated?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "If Hall's condition fails, there exists a certifying witness subset $S^* \\subseteq X$ with $|N(S^*)| < |S^*|$; because all edges incident to $S^*$ must terminate in $N(S^*)$, the Pigeonhole Principle dictates that any matching can cover at most $|N(S^*)|$ vertices of $S^*$, leaving at least $|S^*| - |N(S^*)| \\ge 1$ vertices in $S^*$ unmatched."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "If Hall's condition fails, the graph contains an odd-length cycle, which by König's theorem prevents the existence of any independent edge set."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "When $|N(S)| < |S|$, the degree sum of vertices in $S$ exceeds the degree sum of vertices in $N(S)$, violating the Handshaking Lemma."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "The failure of Hall's condition implies that the chromatic number of $G$ must be strictly greater than $2$, so no bipartition can support independent edges."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "If Hall's condition fails, there exists a certifying witness subset S* with |N(S*)| < |S*|; all edges from S* terminate in N(S*), so by the Pigeonhole Principle at most |N(S*)| vertices of S* can be matched",
+      "crux_move_ref": "CRUX-COMB-EXPLAIN-HALS-MARRIAGE-OBSTRUCTION"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "EXPLAIN",
+      "difficulty_band": "D4",
+      "difficulty_score": 9,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 2
+      },
+      "crux_move": "CRUX-COMB-EXPLAIN-HALS-MARRIAGE-OBSTRUCTION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall that in any matching $M$, distinct vertices in $X$ must be matched to distinct vertices in $Y$. If we restrict our attention to a subset $S \\subseteq X$, where must their matched partners in $Y$ lie?",
+      "hint2_tactical_step": "Because the matched targets of any choice $S$ are restricted to its adjacent set $N(S)$, what is the upper capacity bound on how many independent edges can connect $S$ to $Y$ when $|N(S)| < |S|$?"
+    },
+    "distractor_rationales": {
+      "opt-B": "Bipartite graphs by definition contain no odd cycles; Hall's condition applies specifically to bipartite graphs.",
+      "opt-C": "Sum of degrees in a subset does not equal the vertex count; $|N(S)| < |S|$ does not contradict the Handshaking Lemma.",
+      "opt-D": "All bipartite graphs are 2-colorable; the chromatic number remains 2 regardless of matching existence."
+    },
+    "core_links": {
+      "core1a_unit_id": "COMB-EXP-HALL-MARRIAGE-04",
+      "core1b_activity_id": "ACT-RECON-HALL-MARRIAGE-04",
+      "core2a_practice_id": "PRAC-HALL-MARRIAGE-04",
+      "core2b_transfer_id": "TRANS-HALL-MARRIAGE-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COMB-EXP-HALL-MARRIAGE-04",
+      "title": "Structural Barriers and Invariants in Bipartite Matchings",
+      "concept": "In a bipartite graph $G = (X, Y, E)$, a matching is an independent set of edges. Hall's condition requires that every subset of $X$ has at least as many neighbors in $Y$ as its cardinality. The necessity of this condition arises from capacity constraints on the neighborhood sets.",
+      "boundary_conditions": "If $X = \\emptyset$, the condition holds vacuously. If $|X| > |Y|$, taking $S = X$ immediately gives $|N(X)| \\le |Y| < |X|$."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-HALL-MARRIAGE-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "In a bipartite graph $G = (X, Y, E)$, if $S \\subseteq X$, can any vertex in $S$ have an edge to a vertex outside $N(S)$?",
+      "scaffold_steps": [
+        "Recall definition of neighborhood N(S)",
+        "Observe all edges incident to S have endpoints in N(S)",
+        "Conclude matched edges from S are bounded by |N(S)|"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-EXP-D4-003\"><div class=\"qb-stem\"><p>In combinatorial graph theory, Hall's Marriage Theorem states that a finite bipartite graph $G = (X, Y, E)$ has a complete matching saturating $X$ if and only if $|N(S)| \\ge |S|$ for all $S \\subseteq X$, where $N(S)$ denotes the neighborhood of $S$ in $Y$. Which of the following statements rigorously explains the structural obstruction mechanism that causes a matching saturating $X$ to fail when Hall's condition is violated?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> If Hall's condition fails, there exists a certifying witness subset $S^* \\subseteq X$ with $|N(S^*)| < |S^*|$; because all edges incident to $S^*$ must terminate in $N(S^*)$, the Pigeonhole Principle dictates that any matching can cover at most $|N(S^*)|$ vertices of $S^*$, leaving at least $|S^*| - |N(S^*)| \\ge 1$ vertices in $S^*$ unmatched.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> If Hall's condition fails, the graph contains an odd-length cycle, which by König's theorem prevents the existence of any independent edge set.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> When $|N(S)| < |S|$, the degree sum of vertices in $S$ exceeds the degree sum of vertices in $N(S)$, violating the Handshaking Lemma.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> The failure of Hall's condition implies that the chromatic number of $G$ must be strictly greater than $2$, so no bipartition can support independent edges.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-EXP-D4-003\"><p>Recall that in any matching $M$, distinct vertices in $X$ must be matched to distinct vertices in $Y$. If we restrict our attention to a subset $S \\subseteq X$, where must their matched partners in $Y$ lie?</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-EXP-D4-003\"><p>Because the matched targets of any choice $S$ are restricted to its adjacent set $N(S)$, what is the upper capacity bound on how many independent edges can connect $S$ to $Y$ when $|N(S)| < |S|$?</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COMB-EXP-HALL-MARRIAGE-04\">Review Hall Marriage Obstruction</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Formal definition of complete matching:</p><p>A matching saturating $X$ is a subset of edges $M \\subseteq E$ such that every vertex $x \\in X$ is incident to exactly one edge in $M$, and no two edges in $M$ share a common vertex.</p><p>2. Restriction of matching edges to a subset $S$:</p><p>Let $S \\subseteq X$ be an arbitrary non-empty subset. For any matching $M$, let $M_S = \\{e \\in M : e \\text{ is incident to a vertex in } S\\}$.</p><p>By the bipartite definition, every edge incident to $S$ has its other endpoint in $Y$. Specifically, the other endpoint must belong to the open neighborhood $N(S) = \\{y \\in Y : \\exists s \\in S, (s, y) \\in E\\}$.</p><p>3. Upper bound via Pigeonhole Principle:</p><p>Because edges in $M$ are mutually disjoint, each edge in $M_S$ must terminate at a distinct vertex of $N(S)$.</p><p>Therefore, the total number of matched edges incident to $S$ cannot exceed the cardinality of available targets in $Y$:</p><p>$|M_S| \\le |N(S)|$.</p><p>4. Structural obstruction when Hall's condition is violated:</p><p>If Hall's condition fails, there exists a certifying witness subset $S^* \\subseteq X$ such that:</p><p>$|N(S^*)| < |S^*|$.</p><p>Substituting this strict inequality into the capacity bound yields:</p><p>$|M_{S^*}| \\le |N(S^*)| < |S^*|$.</p><p>Because each edge in $M_{S^*}$ covers exactly one vertex in $S^*$, the total number of vertices in $S^*$ covered by the matching $M$ is $|M_{S^*}| < |S^*|$.</p><p>5. Inescapable deficit:</p><p>This guarantees that at least $|S^*| - |N(S^*)| \\ge 1$ vertices in $S^*$ must remain unmatched in any matching $M$.</p><p>No augmenting path can ever resolve this defect, because any augmenting path must alternate through $N(S^*)$, which cannot accommodate more than $|N(S^*)|$ disjoint connections.</p></div></details></div>"
+}

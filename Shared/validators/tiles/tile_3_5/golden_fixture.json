@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_5",
+  "qrt_cell": "QRT-REPRESENT-D3",
+  "source_question": {
+    "id": "GOLDEN-REP-D3-001",
+    "custody_hash": "a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0",
+    "stem": "What is the radius $R$ of the circular locus represented by all complex numbers $z \\in \\mathbb{C}$ satisfying the condition $\\text{Re}\\left(\\frac{z - 3}{z + 4i}\\right) = 0$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$\\frac{5}{2}$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$5$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$\\frac{\\sqrt{7}}{2}$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$\\frac{7}{2}$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "\\frac{5}{2}",
+      "crux_move_ref": "CRUX-COMP-REPRESENT-THALES-CIRCULAR-LOCUS"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "REPRESENT",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-COMP-REPRESENT-THALES-CIRCULAR-LOCUS"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Interpret the complex condition geometrically: a complex fraction (z - z1)/(z - z2) has zero real part if and only if its argument is +/- pi/2, meaning the vectors from z1 and z2 to z are perpendicular.",
+      "hint2_tactical_step": "By Thales' Theorem, the locus of points subtending a right angle between (3, 0) and (0, -4) is a circle with diameter segment connecting these two points. Compute the distance between (3, 0) and (0, -4) and divide by 2."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student calculates the diameter d = 5 correctly but forgets to divide by 2 to obtain the radius.",
+      "opt-C": "Student makes a sign error when completing the square, subtracting 4 instead of adding 4.",
+      "opt-D": "Student computes the arithmetic sum (3 + 4)/2 = 7/2 instead of the Euclidean distance."
+    },
+    "core_links": {
+      "core1a_unit_id": "COMP-REP-THALES-CIRCLE-03",
+      "core1b_activity_id": "ACT-RECON-THALES-CIRCLE-03",
+      "core2a_practice_id": "PRAC-THALES-CIRCLE-03",
+      "core2b_transfer_id": "TRANS-THALES-CIRCLE-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COMP-REP-THALES-CIRCLE-03",
+      "title": "Geometric Representation of Complex Orthogonal Loci",
+      "concept": "For two distinct complex points z1 and z2, the quotient (z - z1)/(z - z2) is purely imaginary if and only if the vector from z1 to z is perpendicular to the vector from z2 to z. By Thales' Theorem, the set of all such points z forms a circle having the line segment [z1, z2] as a diameter. For example, Re((z - 1)/(z + 1)) = 0 gives a circle with diameter endpoints (1, 0) and (-1, 0). The diameter is 2, so the radius is 1, centered at the origin.",
+      "boundary_conditions": "The point z cannot equal z2 where the denominator vanishes. The diameter endpoints are excluded if strict non-zero quotients are required."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-THALES-CIRCLE-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What geometric angle is formed between vectors z - 3 and z - (-4i)?",
+      "scaffold_steps": [
+        "Recall Re(w) = 0 means w is purely imaginary",
+        "Observe purely imaginary numbers have argument +/- pi/2",
+        "Conclude angle is a right angle (90 degrees)"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-REP-D3-001\"><div class=\"qb-stem\"><p>What is the radius $R$ of the circular locus represented by all complex numbers $z \\in \\mathbb{C}$ satisfying the condition $\\text{Re}\\left(\\frac{z - 3}{z + 4i}\\right) = 0$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $\\frac{5}{2}$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $5$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $\\frac{\\sqrt{7}}{2}$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $\\frac{7}{2}$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-REP-D3-001\"><p>Interpret the complex condition geometrically: a complex fraction (z - z1)/(z - z2) has zero real part if and only if its argument is +/- pi/2, meaning the vectors from z1 and z2 to z are perpendicular.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-REP-D3-001\"><p>By Thales' Theorem, the locus of points subtending a right angle between (3, 0) and (0, -4) is a circle with diameter segment connecting these two points. Compute the distance between (3, 0) and (0, -4) and divide by 2.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COMP-REP-THALES-CIRCLE-03\">Review Thales Circular Locus</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Geometric interpretation of the complex condition:</p><p>For $w = \\frac{z - 3}{z - (-4i)}$, $\\text{Re}(w) = 0$ implies that $w$ is purely imaginary, so $\\arg(w) = \\pm \\frac{\\pi}{2}$.</p><p>Thus the vector from $3 = (3, 0)$ to $z$ and the vector from $-4i = (0, -4)$ to $z$ meet at a right angle.</p><p>2. Apply Thales' Theorem:</p><p>The locus of all points $z$ subtending a right angle with endpoints $A(3, 0)$ and $B(0, -4)$ is the circle having segment $AB$ as a diameter.</p><p>3. Calculate the diameter length $d$:</p><p>$d = \\sqrt{(3 - 0)^2 + (0 - (-4))^2} = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$.</p><p>4. Determine the radius $R$:</p><p>$R = \\frac{d}{2} = \\frac{5}{2}$.</p><p>5. Algebraic verification in Cartesian coordinates:</p><p>Let $z = x + iy$. The quotient is $\\frac{(x - 3) + iy}{x + i(y + 4)}$.</p><p>Multiplying by the conjugate of the denominator, the real part is:</p><p>$\\text{Re} = \\frac{(x - 3)x + y(y + 4)}{x^2 + (y + 4)^2} = \\frac{x^2 - 3x + y^2 + 4y}{x^2 + (y + 4)^2} = 0$.</p><p>Setting the numerator to zero: $x^2 - 3x + y^2 + 4y = 0$.</p><p>Complete the squares: $\\left(x - \\frac{3}{2}\\right)^2 + (y + 2)^2 = \\left(\\frac{3}{2}\\right)^2 + 2^2 = \\frac{9}{4} + 4 = \\frac{25}{4} = \\left(\\frac{5}{2}\\right)^2$.</p><p>This represents a circle with center $\\left(\\frac{3}{2}, -2\\right)$ and radius $R = \\frac{5}{2}$. Verified.</p></div></details></div>"
+}

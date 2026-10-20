@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_3",
+  "qrt_cell": "QRT-APPLY-D2",
+  "source_question": {
+    "id": "GOLDEN-APP-D2-003",
+    "custody_hash": "e6f708192a3b4c5d6e7f80123456789abcdef0123456789abcdef0123456789",
+    "stem": "Simplify the radical expression $\\frac{1}{\\sqrt{5} + \\sqrt{3}} + \\frac{1}{\\sqrt{5} - \\sqrt{3}}$ to its simplest exact rational or surd form.",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$\\sqrt{5}$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$2\\sqrt{5}$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$\\sqrt{3}$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$\\frac{\\sqrt{5}}{2}$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "\\sqrt{5}",
+      "crux_move_ref": "CRUX-NUM-RADICAL-CONJUGATE-RATIONALIZATION-EXECUTION"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "APPLY",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 0,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-NUM-RADICAL-CONJUGATE-RATIONALIZATION-EXECUTION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Combine the fractions over a common denominator: notice that the product of the conjugate denominators represents a difference of squares $(a+b)(a-b) = a^2 - b^2$.",
+      "hint2_tactical_step": "Cross-multiply the numerators over the common difference of squares denominator $(5 - 3)$ before simplifying."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student calculates numerator 2*sqrt(5) correctly but forgets to divide by denominator (5 - 3 = 2).",
+      "opt-C": "Student subtracts numerator terms incorrectly, preserving sqrt(3) instead of sqrt(5).",
+      "opt-D": "Student divides numerator sqrt(5) by 2 unnecessarily."
+    },
+    "core_links": {
+      "core1a_unit_id": "NUM-RAD-CONJ-02",
+      "core1b_activity_id": "ACT-RECON-CONJ-02",
+      "core2a_practice_id": "PRAC-CONJ-02",
+      "core2b_transfer_id": "TRANS-CONJ-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "NUM-RAD-CONJ-02",
+      "title": "Conjugate Surd Rationalization",
+      "concept": "To rationalize denominators with binomial quadratic surds sqrt(a) + sqrt(b), multiply by conjugate sqrt(a) - sqrt(b). The product (sqrt(a) + sqrt(b))(sqrt(a) - sqrt(b)) = a - b is strictly rational.",
+      "boundary_conditions": "Radicands a and b must be non-negative real numbers with a != b to prevent zero in denominator."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-CONJ-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the product of (sqrt(7) + sqrt(2)) and (sqrt(7) - sqrt(2))?",
+      "scaffold_steps": [
+        "Apply difference of squares formula",
+        "Evaluate (sqrt(7))^2 - (sqrt(2))^2",
+        "Compute integer result 5"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-APP-D2-003\"><div class=\"qb-stem\"><p>Simplify the radical expression $\\frac{1}{\\sqrt{5} + \\sqrt{3}} + \\frac{1}{\\sqrt{5} - \\sqrt{3}}$ to its simplest exact rational or surd form.</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $\\sqrt{5}$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $2\\sqrt{5}$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $\\sqrt{3}$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $\\frac{\\sqrt{5}}{2}$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-APP-D2-003\"><p>Combine the fractions over a common denominator: notice that the product of the conjugate denominators represents a difference of squares $(a+b)(a-b) = a^2 - b^2$.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-APP-D2-003\"><p>Cross-multiply the numerators over the common difference of squares denominator $(5 - 3)$ before simplifying.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"NUM-RAD-CONJ-02\">Review Conjugate Rationalization</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Solution</summary><div class=\"qb-solution-body\"><p>Combine fractions over common denominator:</p><p>$\\frac{(\\sqrt{5} - \\sqrt{3}) + (\\sqrt{5} + \\sqrt{3})}{(\\sqrt{5} + \\sqrt{3})(\\sqrt{5} - \\sqrt{3})} = \\frac{2\\sqrt{5}}{(\\sqrt{5})^2 - (\\sqrt{3})^2} = \\frac{2\\sqrt{5}}{5 - 3} = \\frac{2\\sqrt{5}}{2} = \\sqrt{5}$.</p></div></details></div>"
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_1",
+  "qrt_cell": "QRT-RETRIEVE-D3",
+  "source_question": {
+    "id": "GOLDEN-RET-D3-002",
+    "custody_hash": "f23456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef01",
+    "stem": "What is the remainder when the integer power $7^{82}$ is divided by $100$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$49$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$7$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$43$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$1$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "49",
+      "crux_move_ref": "CRUX-NT-RETRIEVE-EULERS-TOTIENT-MODULAR-EXPONENTIATION"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "RETRIEVE",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-NT-RETRIEVE-EULERS-TOTIENT-MODULAR-EXPONENTIATION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall Euler's Totient Theorem: if gcd(a, m) = 1, then a raised to the power phi(m) is congruent to 1 modulo m.",
+      "hint2_tactical_step": "Compute phi(100) = 40. Write the exponent as 82 = 2 * 40 + 2, reducing the problem to evaluating 7^2 modulo 100."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student mistakenly divides the reduced exponent by 2.",
+      "opt-C": "Student takes the 100-complement (100 - 49 = 51 or sign error).",
+      "opt-D": "Student forgets to evaluate the leftover exponent 2 and assumes the answer is 1."
+    },
+    "core_links": {
+      "core1a_unit_id": "NT-RETRIEVE-EULER-TOTIENT-03",
+      "core1b_activity_id": "ACT-RECON-EULER-TOTIENT-03",
+      "core2a_practice_id": "PRAC-EULER-TOTIENT-03",
+      "core2b_transfer_id": "TRANS-EULER-TOTIENT-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "NT-RETRIEVE-EULER-TOTIENT-03",
+      "title": "Euler's Totient Theorem in Modular Arithmetic",
+      "concept": "For positive integers a and m with gcd(a, m) = 1, Euler's totient theorem states that a^phi(m) = 1 (mod m). The totient function is computed as phi(m) = m * prod_{p | m} (1 - 1/p). For example, with m = 50, phi(50) = 50 * (1/2) * (4/5) = 20. Thus 3^42 = (3^20)^2 * 3^2 = 1 * 9 = 9 (mod 50).",
+      "boundary_conditions": "Euler's Totient Theorem holds strictly when the base and modulus are coprime: gcd(a, m) = 1. If gcd(a, m) > 1, the Chinese Remainder Theorem must be used instead."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-EULER-TOTIENT-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the value of Euler's totient function phi(100)?",
+      "scaffold_steps": [
+        "Identify prime factors of 100: 2 and 5",
+        "Compute 100 * (1 - 1/2) * (1 - 1/5)",
+        "Evaluate 100 * (1/2) * (4/5) = 40"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-RET-D3-002\"><div class=\"qb-stem\"><p>What is the remainder when the integer power $7^{82}$ is divided by $100$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $49$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $7$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $43$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $1$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-RET-D3-002\"><p>Recall Euler's Totient Theorem: if gcd(a, m) = 1, then a raised to the power phi(m) is congruent to 1 modulo m.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-RET-D3-002\"><p>Compute phi(100) = 40. Write the exponent as 82 = 2 * 40 + 2, reducing the problem to evaluating 7^2 modulo 100.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"NT-RETRIEVE-EULER-TOTIENT-03\">Review Euler's Totient Theorem</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Since $\\gcd(7, 100) = 1$, we apply Euler's Totient Theorem.</p><p>2. Calculate $\\phi(100) = 100 \\times \\left(1 - \\frac{1}{2}\\right) \\times \\left(1 - \\frac{1}{5}\\right) = 100 \\times \\frac{1}{2} \\times \\frac{4}{5} = 40$.</p><p>3. By Euler's Totient Theorem, $7^{40} \\equiv 1 \\pmod{100}$.</p><p>4. Decompose the exponent: $82 = 40 \\times 2 + 2$.</p><p>5. Thus $7^{82} = (7^{40})^2 \\times 7^2 \\equiv (1)^2 \\times 49 \\equiv 49 \\pmod{100}$.</p></div></details></div>"
+}

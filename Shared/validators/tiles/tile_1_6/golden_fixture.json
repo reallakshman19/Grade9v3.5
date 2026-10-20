@@ -1,0 +1,63 @@
+{
+  "schema": "imo-qrt-golden-fixture/v1",
+  "tile_id": "tile_1_6",
+  "qrt_cell": "QRT-SYNTHESIZE-D1",
+  "source_question": {
+    "id": "GOLDEN-SYN-D1-001",
+    "topic": {
+      "code": "LINES_AND_ANGLES",
+      "topic_label": "Lines and Angles",
+      "subtopic": "LA-COMPLEMENT-SUPPLEMENT"
+    },
+    "cognitive_classification": {
+      "primary_demand": "SYNTHESIZE",
+      "crux_move": "Synthesize two-step linear angle dependency: complementary angle $(90^\\circ - x)$ bridges to supplementary relation $(180^\\circ - (90^\\circ - x) = 90^\\circ + x)$",
+      "secondary_demands": ["APPLY"],
+      "difficulty_band": "D1",
+      "difficulty_score": 2,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 0,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_cell": "QRT-SYNTHESIZE-D1"
+    },
+    "stem": "An angle measures 35°. Find the supplement of its complement.",
+    "options": {
+      "A": "125°",
+      "B": "55°",
+      "C": "145°",
+      "D": "90°"
+    },
+    "answer": {
+      "choice": "A",
+      "value": "125°",
+      "crux_move_ref": "Synthesize two-step linear angle dependency: complementary angle $(90^\\circ - x)$ bridges to supplementary relation $(180^\\circ - (90^\\circ - x) = 90^\\circ + x)$"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Break the task into two dependent steps: first determine the complement of 35° (two angles summing to 90°), and then find the supplement of that intermediate result (two angles summing to 180°).",
+      "hint2_tactical_step": "The complement of 35° is 90° - 35° = 55°. Now compute the supplement of 55°."
+    },
+    "solution": {
+      "derivation": "1. Step 1 (Complement): The complement of 35° = 90° - 35° = 55°.\n2. Step 2 (Supplement): The supplement of 55° = 180° - 55° = 125°.\n3. Therefore, the supplement of the complement of 35° is 125° (Option A).",
+      "independent_check": {
+        "check_type": "SPECIAL_CASE",
+        "verification": "Algebraic invariant check: Supplement of complement of x is 180° - (90° - x) = 90° + x. For x = 35°, 90° + 35° = 125°. Matches Option A uniquely."
+      }
+    },
+    "distractor_analysis": {
+      "B": "Stopped after step 1: computed only the complement (55°).",
+      "C": "Computed only the supplement of 35° (180° - 35° = 145°), ignoring the complement step.",
+      "D": "Confused the right-angle reference (90°) with the final angle."
+    },
+    "core_links": {
+      "core1a_unit_id": "u-la-complement-supplement",
+      "core1b_unit_id": "u-la-complement-tutor",
+      "core2a_id": "GOLDEN-SYN-D1-001-PRACTICE",
+      "core2b_id": "GOLDEN-SYN-D1-001-TRANSFER"
+    }
+  },
+  "html_representation": "<article class=\"qb-question\" id=\"q-GOLDEN-SYN-D1-001\" data-band=\"D1\" data-demand=\"SYNTHESIZE\" data-score=\"2\" data-core-unit-id=\"u-la-complement-supplement\">\n  <header class=\"qb-header\">\n    <span class=\"qb-badge\">D1</span>\n    <span class=\"qb-badge\">SYNTHESIZE</span>\n    <span class=\"qb-badge\" data-core-unit-id=\"u-la-complement-supplement\">Unit: Complementary & Supplementary Angles</span>\n  </header>\n  <div class=\"qb-stem\">\n    <p>An angle measures 35°. Find the supplement of its complement.</p>\n  </div>\n  <div class=\"qb-options\" data-g9-options=\"true\">\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-SYN-D1-001-A\" data-choice=\"A\">(A) 125°</button>\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-SYN-D1-001-B\" data-choice=\"B\">(B) 55°</button>\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-SYN-D1-001-C\" data-choice=\"C\">(C) 145°</button>\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-SYN-D1-001-D\" data-choice=\"D\">(D) 90°</button>\n  </div>\n  <div class=\"qb-support-container\">\n    <div class=\"qb-hint\" id=\"hint1-GOLDEN-SYN-D1-001\">\n      <p>Break the task into two dependent steps: first determine the complement of 35° (two angles summing to 90°), and then find the supplement of that intermediate result (two angles summing to 180°).</p>\n    </div>\n    <div class=\"qb-hint\" id=\"hint2-GOLDEN-SYN-D1-001\">\n      <p>The complement of 35° is 90° - 35° = 55°. Now compute the supplement of 55°.</p>\n    </div>\n  </div>\n  <div class=\"qb-solution-container\">\n    <details class=\"qb-solution\" id=\"sol-GOLDEN-SYN-D1-001\" inert hidden data-locked=\"true\">\n      <summary class=\"qb-solution-summary\">Show Complete Solution</summary>\n      <div class=\"qb-solution-body\">\n        <p>1. Step 1 (Complement): The complement of 35° = 90° - 35° = 55°.</p>\n        <p>2. Step 2 (Supplement): The supplement of 55° = 180° - 55° = 125°.</p>\n        <p>3. Therefore, the supplement of the complement of 35° is 125° (Option A).</p>\n      </div>\n    </details>\n  </div>\n</article>"
+}

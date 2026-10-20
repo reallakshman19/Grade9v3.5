@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 440" role="img" aria-label="Ptolemy Cyclic Quadrilateral" font-family="system-ui, -apple-system, sans-serif">
+  <title>Ptolemy's Theorem Diagram</title>
+  <desc>Cyclic quadrilateral ABCD with diagonals AC and BD. AC * BD = AB * CD + BC * DA.</desc>
+  <style>
+    .circ { fill: rgba(56, 189, 248, 0.05); stroke: #38bdf8; stroke-width: 2.2; }
+    .quad { stroke: #f8fafc; stroke-width: 2.8; fill: rgba(129, 140, 248, 0.08); }
+    .diag { stroke: #fbbf24; stroke-width: 2.2; stroke-dasharray: 6,4; }
+    .pt { fill: #f8fafc; }
+    .lbl { font-size: 16px; font-weight: 700; fill: #f8fafc; }
+    .lbl-val { font-size: 14px; font-weight: 700; fill: #38bdf8; }
+  </style>
+  <circle cx="260" cy="220" r="175" class="circ"/>
+
+  <!-- Vertices A(160, 85), B(380, 120), C(370, 340), D(130, 310) -->
+  <polygon points="160,85 380,120 370,340 130,310" class="quad"/>
+  <circle cx="160" cy="85" r="4.5" class="pt"/><text x="145" y="75" class="lbl">A</text>
+  <circle cx="380" cy="120" r="4.5" class="pt"/><text x="395" y="120" class="lbl">B</text>
+  <circle cx="370" cy="340" r="4.5" class="pt"/><text x="385" y="355" class="lbl">C</text>
+  <circle cx="130" cy="310" r="4.5" class="pt"/><text x="110" y="325" class="lbl">D</text>
+
+  <!-- Diagonals AC and BD -->
+  <line x1="160" y1="85" x2="370" y2="340" class="diag"/>
+  <line x1="380" y1="120" x2="130" y2="310" class="diag"/>
+
+  <!-- Side Length Labels -->
+  <text x="270" y="95" class="lbl-val">AB = 3</text>
+  <text x="390" y="235" class="lbl-val">BC = 4</text>
+  <text x="245" y="340" class="lbl-val">CD = 5</text>
+  <text x="120" y="195" class="lbl-val">DA = 6</text>
+  <text x="275" y="235" class="lbl" fill="#fbbf24">d₁ · d₂ = ?</text>
+</svg>

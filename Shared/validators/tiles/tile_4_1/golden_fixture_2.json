@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_1",
+  "qrt_cell": "QRT-RETRIEVE-D4",
+  "source_question": {
+    "id": "GOLDEN-RET-D4-002",
+    "custody_hash": "f2a3b4c5d6e70819203b4c5d6e7f80123456789abcdef0123456789abcdef01",
+    "stem": "For a prime $p$ and non-negative integers $0 \\le k \\le n$, which foundational theorem establishes that the exact $p$-adic valuation $v_p\\left(\\binom{n}{k}\\right)$ is equal to the number of carries that occur when adding $k$ and $n - k$ in base $p$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "Kummer's Theorem"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "Lucas' Theorem"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "Legendre's Formula"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Wilson's Theorem"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "Kummer's Theorem",
+      "crux_move_ref": "CRUX-NT-RETRIEVE-KUMMERS-CARRY-THEOREM"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "RETRIEVE",
+      "difficulty_band": "D4",
+      "difficulty_score": 9,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 2
+      },
+      "crux_move": "CRUX-NT-RETRIEVE-KUMMERS-CARRY-THEOREM"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall the classical theorem connecting Legendre's factorial formula with digit sums of numbers written in base p.",
+      "hint2_tactical_step": "The formula v_p(binom(n, k)) = (S_p(k) + S_p(n - k) - S_p(n))/(p - 1) counts how many times digits exceed p - 1 during column addition in base p. Identify this theorem."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student confuses Kummer's valuation theorem with Lucas' congruence theorem expressing binom(n, k) mod p.",
+      "opt-C": "Student confuses the binomial valuation carry result with Legendre's formula for the p-adic valuation of a single factorial.",
+      "opt-D": "Student confuses Kummer's theorem with Wilson's factorial congruence modulo p."
+    },
+    "core_links": {
+      "core1a_unit_id": "NT-RET-KUMMER-THEOREM-04",
+      "core1b_activity_id": "ACT-RECON-KUMMER-THEOREM-04",
+      "core2a_practice_id": "PRAC-KUMMER-THEOREM-04",
+      "core2b_transfer_id": "TRANS-KUMMER-THEOREM-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "NT-RET-KUMMER-THEOREM-04",
+      "title": "Prime Valuations of Factorials and Digit Sum Invariants",
+      "concept": "Legendre's formula states that for any prime p, the p-adic valuation of n! is given by v_p(n!) = (n - S_p(n))/(p - 1), where S_p(n) denotes the sum of the digits of n when expanded in base p. Applying this to binomial coefficients binom(n, k) = n! / (k! * (n - k)!) relates prime divisibility directly to differences in base-p digit sums.",
+      "boundary_conditions": "Base p must be prime; composite bases do not yield clean additive valuations."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-KUMMER-THEOREM-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What quantity does S_p(n) represent in Legendre's formula?",
+      "scaffold_steps": [
+        "Recall standard integer expansions in positional notation",
+        "Identify the summation of the coefficients a_i in n = sum a_i * p^i",
+        "Conclude S_p(n) is the sum of the base-p digits of n"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-RET-D4-002\"><div class=\"qb-stem\"><p>For a prime $p$ and non-negative integers $0 \\le k \\le n$, which foundational theorem establishes that the exact $p$-adic valuation $v_p\\left(\\binom{n}{k}\\right)$ is equal to the number of carries that occur when adding $k$ and $n - k$ in base $p$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> Kummer's Theorem</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> Lucas' Theorem</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> Legendre's Formula</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Wilson's Theorem</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-RET-D4-002\"><p>Recall the classical theorem connecting Legendre's factorial formula with digit sums of numbers written in base p.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-RET-D4-002\"><p>The formula v_p(binom(n, k)) = (S_p(k) + S_p(n - k) - S_p(n))/(p - 1) counts how many times digits exceed p - 1 during column addition in base p. Identify this theorem.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"NT-RET-KUMMER-THEOREM-04\">Review Kummer Carry Theorem</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. State Legendre's formula for the $p$-adic valuation of factorials:</p><p>$v_p(m!) = \\frac{m - S_p(m)}{p - 1}$, where $S_p(m)$ is the sum of the digits of $m$ in base $p$.</p><p>2. Express the valuation of the binomial coefficient $\\binom{n}{k} = \\frac{n!}{k!(n - k)!}$:</p><p>$v_p\\left(\\binom{n}{k}\\right) = v_p(n!) - v_p(k!) - v_p((n - k)!)$.</p><p>$v_p\\left(\\binom{n}{k}\\right) = \\frac{n - S_p(n) - [k - S_p(k)] - [(n - k) - S_p(n - k)]}{p - 1}$.</p><p>Since $n - k - (n - k) = 0$, the formula simplifies to:</p><p>$v_p\\left(\\binom{n}{k}\\right) = \\frac{S_p(k) + S_p(n - k) - S_p(n)}{p - 1}$.</p><p>3. Interpret base-$p$ addition mechanics:</p><p>Let $m = n - k$. When adding $k$ and $m$ in base $p$, each carry reduces the digit sum by $p - 1$.</p><p>Therefore, if $c$ carries occur, $S_p(k) + S_p(m) = S_p(k + m) + c(p - 1) = S_p(n) + c(p - 1)$.</p><p>Rearranging yields $c = \\frac{S_p(k) + S_p(n - k) - S_p(n)}{p - 1}$.</p><p>4. Conclusion:</p><p>This foundational result is **Kummer's Theorem**, published by Ernst Kummer in 1852.</p></div></details></div>"
+}

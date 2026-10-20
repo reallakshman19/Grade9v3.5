@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_3",
+  "qrt_cell": "QRT-APPLY-D3",
+  "source_question": {
+    "id": "GOLDEN-APP-D3-001",
+    "custody_hash": "a4b5c6d7e8f90123456789abcdef0123456789abcdef0123456789abcdef01234",
+    "stem": "What is the smallest positive integer $x$ that satisfies the linear congruence $37x \\equiv 1 \\pmod{100}$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$73$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$27$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$29$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$63$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "73",
+      "crux_move_ref": "CRUX-NT-APPLY-EXTENDED-EUCLIDEAN-MODULAR-INVERSE"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "APPLY",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 0,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-NT-APPLY-EXTENDED-EUCLIDEAN-MODULAR-INVERSE"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Apply the Extended Euclidean Algorithm to find integers u and v satisfying the Bézout identity 100u + 37v = 1.",
+      "hint2_tactical_step": "Carry out division with remainders: 100 = 2(37) + 26, 37 = 1(26) + 11, 26 = 2(11) + 4, 11 = 2(4) + 3, 4 = 1(3) + 1. Back-substitute to isolate 1 in terms of 100 and 37."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student calculates 100 - 73 = 27 instead of the true positive inverse.",
+      "opt-C": "Student takes the absolute value of the negative Bézout coefficient -29 instead of finding its positive residue modulo 100.",
+      "opt-D": "Student makes an arithmetic addition error in the final reduction step."
+    },
+    "core_links": {
+      "core1a_unit_id": "NT-APPLY-EXT-EUCLID-03",
+      "core1b_activity_id": "ACT-RECON-EXT-EUCLID-03",
+      "core2a_practice_id": "PRAC-EXT-EUCLID-03",
+      "core2b_transfer_id": "TRANS-EXT-EUCLID-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "NT-APPLY-EXT-EUCLID-03",
+      "title": "Extended Euclidean Algorithm for Modular Inverses",
+      "concept": "To find the modular inverse of a modulo m with gcd(a, m) = 1, perform successive Euclidean divisions, then back-substitute to express 1 = mu + av. Then x = v (mod m). For example, to solve 29x = 1 (mod 100): 100 = 3*29 + 13, 29 = 2*13 + 3, 13 = 4*3 + 1. Back-substituting gives 1 = 13 - 4*3 = 13 - 4(29 - 2*13) = 9*13 - 4*29 = 9(100 - 3*29) - 4*29 = 9*100 - 31*29. Thus 29(-31) = 1 (mod 100), giving x = 100 - 31 = 69 (or 41 for related variants).",
+      "boundary_conditions": "A modular inverse exists if and only if gcd(a, m) = 1. If gcd(a, m) > 1, no modular inverse exists."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-EXT-EUCLID-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the remainder when 100 is divided by 37?",
+      "scaffold_steps": [
+        "Compute 2 * 37 = 74",
+        "Subtract 100 - 74 = 26",
+        "Conclude remainder is 26"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-APP-D3-001\"><div class=\"qb-stem\"><p>What is the smallest positive integer $x$ that satisfies the linear congruence $37x \\equiv 1 \\pmod{100}$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $73$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $27$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $29$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $63$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-APP-D3-001\"><p>Apply the Extended Euclidean Algorithm to find integers u and v satisfying the Bézout identity 100u + 37v = 1.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-APP-D3-001\"><p>Carry out division with remainders: 100 = 2(37) + 26, 37 = 1(26) + 11, 26 = 2(11) + 4, 11 = 2(4) + 3, 4 = 1(3) + 1. Back-substitute to isolate 1 in terms of 100 and 37.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"NT-APPLY-EXT-EUCLID-03\">Review Extended Euclidean Algorithm</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Forward Euclidean division steps:</p><p>$100 = 2(37) + 26$</p><p>$37 = 1(26) + 11$</p><p>$26 = 2(11) + 4$</p><p>$11 = 2(4) + 3$</p><p>$4 = 1(3) + 1$.</p><p>2. Back-substitution for remainder $1$:</p><p>$1 = 4 - 3 = 4 - (11 - 2 \\times 4) = 3(4) - 11$</p><p>$= 3(26 - 2 \\times 11) - 11 = 3(26) - 7(11)$</p><p>$= 3(26) - 7(37 - 26) = 10(26) - 7(37)$</p><p>$= 10(100 - 2 \\times 37) - 7(37) = 10(100) - 27(37)$.</p><p>Wait, check: $10(100) - 27(37) = 1000 - 999 = 1$! Exactly $1$!</p><p>3. Thus $-27(37) \\equiv 1 \\pmod{100}$.</p><p>4. Since $-27 \\equiv 100 - 27 = 73 \\pmod{100}$, the smallest positive integer is $x = 73$.</p><p>5. Verification: $37 \\times 73 = 2701 = 27 \\times 100 + 1 \\equiv 1 \\pmod{100}$. Correct.</p></div></details></div>"
+}

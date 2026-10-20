@@ -1,0 +1,63 @@
+{
+  "schema": "imo-qrt-golden-fixture/v1",
+  "tile_id": "tile_1_3",
+  "qrt_cell": "QRT-APPLY-D1",
+  "source_question": {
+    "id": "GOLDEN-APP-D1-001",
+    "topic": {
+      "code": "LOGIC",
+      "topic_label": "Verbal and Non-Verbal Reasoning",
+      "subtopic": "LOGIC-DIRECTION-SENSE"
+    },
+    "cognitive_classification": {
+      "primary_demand": "APPLY",
+      "crux_move": "Compute net rotation angle θ = +45° + 180° - 270° = -45° from initial West bearing to determine South-West",
+      "secondary_demands": ["RETRIEVE"],
+      "difficulty_band": "D1",
+      "difficulty_score": 2,
+      "difficulty_components": {
+        "concept_model_selection": 0,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_cell": "QRT-APPLY-D1"
+    },
+    "stem": "A person is facing West. They turn 45° clockwise, then 180° clockwise, and finally 270° anti-clockwise. Which direction are they facing now?",
+    "options": {
+      "A": "South",
+      "B": "North-West",
+      "C": "West",
+      "D": "South-West"
+    },
+    "answer": {
+      "choice": "D",
+      "value": "South-West",
+      "crux_move_ref": "Compute net rotation angle θ = +45° + 180° - 270° = -45° from initial West bearing to determine South-West"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Set up a signed algebraic sum where clockwise turns are positive (+45°, +180°) and anti-clockwise turns are negative (-270°).",
+      "hint2_tactical_step": "Calculate the net angle from the signed sum: 45° + 180° - 270° = -45°. Then determine which direction is 45° anti-clockwise from West."
+    },
+    "solution": {
+      "derivation": "1. Net rotation = (+45°) + (+180°) + (-270°) = +225° - 270° = -45°.\n2. A negative rotation corresponds to an anti-clockwise turn of 45°.\n3. Turning 45° anti-clockwise from West points directly between South and West, which is South-West (Option D).",
+      "independent_check": {
+        "check_type": "SUBSTITUTION_BACK_CHECK",
+        "verification": "Trace step by step: West (180°) + 45° CW = 225° (NW). 225° + 180° CW = 405° = 45° (NE). 45° - 270° CCW = -225° = +135° (South-West). Matches Option D uniquely."
+      }
+    },
+    "distractor_analysis": {
+      "A": "Omitted the initial 45° clockwise turn, rotating 180° - 270° = -90° from West to South.",
+      "B": "Rotated 45° clockwise from West to North-West instead of net anti-clockwise.",
+      "C": "Assumed complete cancellation to original direction."
+    },
+    "core_links": {
+      "core1a_unit_id": "u-logic-direction-sense",
+      "core1b_unit_id": "u-logic-direction-tutor",
+      "core2a_id": "GOLDEN-APP-D1-001-PRACTICE",
+      "core2b_id": "GOLDEN-APP-D1-001-TRANSFER"
+    }
+  },
+  "html_representation": "<article class=\"qb-question\" id=\"q-GOLDEN-APP-D1-001\" data-band=\"D1\" data-demand=\"APPLY\" data-score=\"2\" data-core-unit-id=\"u-logic-direction-sense\">\n  <header class=\"qb-header\">\n    <span class=\"qb-badge\">D1</span>\n    <span class=\"qb-badge\">APPLY</span>\n    <span class=\"qb-badge\" data-core-unit-id=\"u-logic-direction-sense\">Unit: Direction Sense</span>\n  </header>\n  <div class=\"qb-stem\">\n    <p>A person is facing West. They turn 45° clockwise, then 180° clockwise, and finally 270° anti-clockwise. Which direction are they facing now?</p>\n  </div>\n  <div class=\"qb-options\" data-g9-options=\"true\">\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-APP-D1-001-A\" data-choice=\"A\">(A) South</button>\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-APP-D1-001-B\" data-choice=\"B\">(B) North-West</button>\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-APP-D1-001-C\" data-choice=\"C\">(C) West</button>\n    <button class=\"qb-option-btn\" id=\"opt-GOLDEN-APP-D1-001-D\" data-choice=\"D\">(D) South-West</button>\n  </div>\n  <div class=\"qb-support-container\">\n    <div class=\"qb-hint\" id=\"hint1-GOLDEN-APP-D1-001\">\n      <p>Set up a signed algebraic sum where clockwise turns are positive (+45°, +180°) and anti-clockwise turns are negative (-270°).</p>\n    </div>\n    <div class=\"qb-hint\" id=\"hint2-GOLDEN-APP-D1-001\">\n      <p>Calculate the net angle from the signed sum: 45° + 180° - 270° = -45°. Then determine which direction is 45° anti-clockwise from West.</p>\n    </div>\n  </div>\n  <div class=\"qb-solution-container\">\n    <details class=\"qb-solution\" id=\"sol-GOLDEN-APP-D1-001\" inert hidden data-locked=\"true\">\n      <summary class=\"qb-solution-summary\">Show Complete Solution</summary>\n      <div class=\"qb-solution-body\">\n        <p>1. Net rotation = (+45°) + (+180°) + (-270°) = +225° - 270° = -45°.</p>\n        <p>2. A negative rotation corresponds to an anti-clockwise turn of 45°.</p>\n        <p>3. Turning 45° anti-clockwise from West points directly between South and West, which is South-West (Option D).</p>\n      </div>\n    </details>\n  </div>\n</article>"
+}

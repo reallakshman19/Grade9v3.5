@@ -1,0 +1,99 @@
+{
+  "schema": "core1b-physics-reconstruction/v1",
+  "version": "1.0.0",
+  "subject": "Physics",
+  "topic": "Fluids: Hydrostatics, Pascal's Principle & Archimedes' Law",
+  "title": "Core 1B Phenomenological Reconstruction Cycles & Socratic Dialog: Fluids & Hydrostatics",
+  "reconstruction_cycles": [
+    {
+      "cycle_id": "RECON-01",
+      "phenomenon": "Resolution of the Hydrostatic Paradox via Slanted Wall Reaction Vectors",
+      "standard_derivation": "Liquid pressure at depth h is P = rho * g * h. For a vessel with flat horizontal base of area A, the total downward thrust on the base is F_base = P * A = rho * g * h * A. In an expanding flared vase, total liquid weight W_liquid is strictly greater than F_base. In a converging neck flask, W_liquid is strictly less than F_base.",
+      "phenomenological_reconstruction": {
+        "perspective": "Container Wall Reaction Force Vector Equilibrium",
+        "conceptual_pivot": "How can the force on the bottom of a container differ from the weight of the liquid it contains? The secret lies in the normal reaction forces exerted by the tilted side walls.",
+        "expanding_vessel_resolution": "In a vase with outward-slanted walls, the liquid pushes outward and downward against the walls. By Newton's third law, the walls push inward and UPWARD on the liquid with vertical component N_y > 0. The global vertical equilibrium of the liquid is: F_base + N_y = W_liquid. The slanted walls carry the excess weight!",
+        "contracting_vessel_resolution": "In an inward-slanted flask, the liquid pushes upward against the overhanging walls. The walls push DOWNWARD on the liquid (N_y < 0). Therefore, F_base = W_liquid + |N_y|: the base supports both the liquid's weight AND the downward reaction from the overhanging roof."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "Vertical cylindrical walls (theta = 0)", "physical_consequence": "N_y = 0 => F_base = W_liquid identically"},
+        {"limit": "h -> 0", "physical_consequence": "P -> P_0, F_base -> P_0 * A"},
+        {"limit": "Horizontal liquid free surface", "physical_consequence": "Equipotential isobaric surface orthogonal to net gravity"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-02",
+      "phenomenon": "Archimedes' Buoyant Force as the Vector Boundary Integral of Hydrostatic Pressure",
+      "standard_derivation": "Consider a submerged vertical cylinder of height H and cross-sectional area A. Downward force on top face: F_top = P_top * A = rho * g * h1 * A. Upward force on bottom face: F_bottom = P_bottom * A = rho * g * (h1 + H) * A. Lateral forces cancel symmetrically by isotropy. Net upward force: F_B = F_bottom - F_top = rho * g * H * A = rho * g * V_cylinder.",
+      "phenomenological_reconstruction": {
+        "perspective": "Divergence Theorem on Fluid Stress Tensor",
+        "conceptual_pivot": "Buoyancy is not an independent fundamental interaction; it is the inevitable macroscopic vector sum of trillions of liquid molecule collisions hitting the deeper bottom surface with greater momentum than the shallower top surface.",
+        "general_body_shape": "By Gauss's Divergence Theorem, for ANY arbitrary geometric shape S enclosing volume V: F_B = -oint_S P dA = -int_V (grad P) dV. Since grad P = -rho * g * j, the volume integral gives: F_B = int_V (rho * g * j) dV = rho * g * V * j (strictly upward).",
+        "bottom_suction_pathology": "If a smooth rectangular block rests on the bottom of a pool with zero liquid film beneath it, P_bottom = 0! Water pushes ONLY on the top and sides. The block does not float—it experiences an enormous downward pressing force: F_down = P_top * A + W_block."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "g -> 0 (Zero-g orbit)", "physical_consequence": "grad P = 0 => F_B = 0 (No buoyancy in free fall; gas bubbles do not rise in boiling water)"},
+        {"limit": "Zero fluid film beneath block", "physical_consequence": "F_B becomes negative (hydraulic suction against tank floor)"},
+        {"limit": "Incompressible fluid depth h -> infinity", "physical_consequence": "F_B remains strictly constant (pressure difference P_bot - P_top is invariant with depth)"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-03",
+      "phenomenon": "The Submerged Mass Scale Reaction Balance and Newton's Third Law",
+      "standard_derivation": "A solid body of mass m and volume V is suspended by an external thread and lowered into a beaker of water (mass M_w) resting on a digital weighing scale. For the suspended body: T + F_B = m * g => T = m * g - F_B (apparent weight). For the water + beaker system: N_scale = W_beaker + W_water + F_reaction. By Newton's third law, F_reaction = F_B. Thus, N_scale = (M_beaker + M_w) * g + rho_water * V * g.",
+      "phenomenological_reconstruction": {
+        "perspective": "Composite System Mass-Force Invariant",
+        "conceptual_pivot": "Why does the scale reading increase when the submerged object is supported from the ceiling? Consider the water column.",
+        "water_level_rise": "When the object enters the water, it raises the water level by Delta h = V / A_beaker. This increases the hydrostatic pressure at the bottom of the beaker by Delta P = rho * g * Delta h = rho * g * (V / A_beaker).",
+        "bottom_force_increment": "The extra downward thrust on the beaker floor is Delta F = Delta P * A_beaker = rho * g * V = F_B! The scale reading increases by the exact weight of the displaced liquid, completely independent of whether the body is suspended, sinking, or stationary."
+      },
+      "limiting_boundary_checks": [
+        {"limit": "V -> 0 (Object outside water)", "physical_consequence": "N_scale = (M_beaker + M_w) * g"},
+        {"limit": "Thread cut (Object rests on beaker floor)", "physical_consequence": "N_scale = (M_beaker + M_w + m) * g"},
+        {"limit": "Body floating freely (T = 0)", "physical_consequence": "F_B = mg => N_scale increases by exact body weight mg"}
+      ]
+    },
+    {
+      "cycle_id": "RECON-04",
+      "phenomenon": "Conservation of Displaced Volume in Phase Changes & Inclusions",
+      "standard_derivation": "A piece of pure ice of mass m_ice floats in water: F_B = W_ice => rho_w * V_disp * g = m_ice * g => V_disp = m_ice / rho_w. When melted, mass is conserved: m_melt = m_ice. The volume of liquid water produced is V_melt = m_melt / rho_w = m_ice / rho_w. Since V_melt == V_disp, the melted water fills the displaced cavity exactly, leaving the water level unchanged.",
+      "phenomenological_reconstruction": {
+        "perspective": "Mass-to-Volume Cavity Mapping",
+        "conceptual_pivot": "What happens when floating ice contains an embedded foreign inclusion?",
+        "dense_inclusion_case": "If an ice cube contains an embedded lead pebble of mass m_p and volume V_p: While floating, the ice+pebble system displaces water equal to the TOTAL weight: V_disp = (m_ice + m_p) / rho_w = (m_ice / rho_w) + (m_p / rho_w). When the ice melts, the pebble sinks to the bottom, displacing only its solid volume V_p = m_p / rho_lead. Because rho_lead > rho_w, V_p < m_p / rho_w. The total volume of water displaced decreases: Delta V = V_p - (m_p / rho_w) < 0. The water level DROPS!",
+        "light_inclusion_case": "If the ice contains a piece of cork (rho_cork < rho_w): when melted, the cork continues to float, displacing m_cork / rho_w of water. The water level remains strictly unchanged!"
+      },
+      "limiting_boundary_checks": [
+        {"limit": "Pure ice cube", "physical_consequence": "Water level remains exactly constant"},
+        {"limit": "Ice with air bubble (m_air approx 0)", "physical_consequence": "Water level remains exactly constant"},
+        {"limit": "Ice floating in dense salt brine (rho_brine > rho_water)", "physical_consequence": "V_disp = m_ice / rho_brine < m_ice / rho_water => Water level RISES upon melting!"}
+      ]
+    }
+  ],
+  "socratic_repair_probes": [
+    {
+      "probe_id": "SRP-FLUID-01",
+      "target_misconception": "MIS-FLUID-HYDROSTATIC-PARADOX",
+      "pivotal_question": "Two vases have identical bottom areas and are filled to the exact same 30 cm height of water. One is a wide bowl holding 10 liters; the other is a slender cylinder holding 1 liter. If you place a pressure sensor at the bottom of each, which reads higher pressure?",
+      "guided_realization": "They read the EXACT same pressure! P = rho * g * h depends only on vertical liquid column height, not the volume in the room around it. The extra 9 liters of water in the bowl rest on the slanted glass walls, which push upward to support them."
+    },
+    {
+      "probe_id": "SRP-FLUID-02",
+      "target_misconception": "MIS-FLUID-BUOYANCY-DEPTH-DEPENDENCE",
+      "pivotal_question": "Does a sunken submarine at 200 m depth experience a greater upward buoyant force than when it was at 20 m depth?",
+      "guided_realization": "No! Buoyant force is F_B = rho * g * V. Water is virtually incompressible, so rho is constant, and the submarine's steel hull volume V is constant. The pressure on top and bottom both increase by the same amount, so the difference (P_bot - P_top) stays identical!"
+    },
+    {
+      "probe_id": "SRP-FLUID-03",
+      "target_misconception": "MIS-FLUID-SCALE-SUBMERGED-CONFUSION",
+      "pivotal_question": "You lower a 1 kg block of brass on a string into a beaker of water sitting on a kitchen scale without touching the bottom. You are holding the string. Does the scale reading change?",
+      "guided_realization": "Yes, it increases! You feel the string pull with less force because water pushes up on the brass (buoyancy). By Newton's 3rd law, the brass pushes DOWN on the water with the exact same force. That downward force pushes on the beaker, increasing the scale reading by the weight of the water displaced."
+    },
+    {
+      "probe_id": "SRP-FLUID-04",
+      "target_misconception": "MIS-FLUID-FLOATING-FRACTION-INVERT",
+      "pivotal_question": "Ice has a density of 0.9 g/cm^3 and water has a density of 1.0 g/cm^3. What percentage of an iceberg is underwater?",
+      "guided_realization": "By the law of flotation, V_sub / V_total = rho_ice / rho_water = 0.9 / 1.0 = 90%. Therefore, 90% of the iceberg is submerged underwater, and only the iconic 10% 'tip of the iceberg' protrudes into the air!"
+    }
+  ]
+}

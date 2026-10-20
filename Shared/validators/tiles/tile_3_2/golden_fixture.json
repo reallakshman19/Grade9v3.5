@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_2",
+  "qrt_cell": "QRT-EXPLAIN-D3",
+  "source_question": {
+    "id": "GOLDEN-EXP-D3-001",
+    "custody_hash": "f3456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef012",
+    "stem": "Two secants from an external point $P$ intersect a circle at points $A, B$ and $C, D$ in order $P-A-B$ and $P-C-D$. Which of the following statements provides the rigorous geometric explanation for why $PA \\cdot PB = PC \\cdot PD$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "Triangles $\\triangle PAC$ and $\\triangle PDB$ are similar because they share $\\angle P$ and have equal inscribed angles $\\angle PAC = \\angle PDB$."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "Triangles $\\triangle PAB$ and $\\triangle PCD$ are congruent by side-angle-side with the center of the circle."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "The segments $PA$ and $PC$ form perpendicular bisectors with the chords $AB$ and $CD$."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Chords $AB$ and $CD$ are equidistant from the center and therefore have identical lengths."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "Triangles PAC and PDB are similar because they share angle P and have equal inscribed angles PAC = PDB.",
+      "crux_move_ref": "CRUX-GEOM-EXPLAIN-POWER-POINT-SIMILAR-TRIANGLES"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "EXPLAIN",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-GEOM-EXPLAIN-POWER-POINT-SIMILAR-TRIANGLES"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider drawing chords AC and BD to form triangles involving external point P and the four intersection points.",
+      "hint2_tactical_step": "Quadrilateral ABDC is inscribed in the circle. Recall that an exterior angle of a cyclic quadrilateral equals the opposite interior angle, giving an angle equality for the triangles."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student mistakenly considers points P, A, B and P, C, D which are collinear rays, not non-degenerate triangles.",
+      "opt-C": "Student falsely assumes secants are perpendicular bisectors.",
+      "opt-D": "Student assumes chords must be equal in length, which holds only in symmetric special cases."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEOM-EXPLAIN-POWER-POINT-03",
+      "core1b_activity_id": "ACT-RECON-POWER-POINT-03",
+      "core2a_practice_id": "PRAC-POWER-POINT-03",
+      "core2b_transfer_id": "TRANS-POWER-POINT-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEOM-EXPLAIN-POWER-POINT-03",
+      "title": "Power of a Point Theorem Mechanism via Similar Triangles",
+      "concept": "The Power of a Point theorem states that for lines through a point intersecting a circle, product of segment lengths is invariant. For intersecting chords AB and CD inside a circle at point M, triangles MAC and MDB are similar: angle AMC = angle DMB (vertically opposite) and angle MCA = angle MBD (inscribed angles subtending arc AD). Therefore MA/MD = MC/MB, so MA * MB = MC * MD.",
+      "boundary_conditions": "The theorem holds uniformly whether the point lies inside, on, or outside the circle, with sign conventions reflecting directed distances in oriented geometry."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-POWER-POINT-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If point P is at distance d from circle center O with radius r, what algebraic formula in terms of d and r gives the power of point P?",
+      "scaffold_steps": [
+        "Draw secant through center O",
+        "Express segment lengths as d - r and d + r",
+        "Multiply (d - r)(d + r) to obtain d^2 - r^2"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-EXP-D3-001\"><div class=\"qb-stem\"><p>Two secants from an external point $P$ intersect a circle at points $A, B$ and $C, D$ in order $P-A-B$ and $P-C-D$. Which of the following statements provides the rigorous geometric explanation for why $PA \\cdot PB = PC \\cdot PD$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> Triangles $\\triangle PAC$ and $\\triangle PDB$ are similar because they share $\\angle P$ and have equal inscribed angles $\\angle PAC = \\angle PDB$.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> Triangles $\\triangle PAB$ and $\\triangle PCD$ are congruent by side-angle-side with the center of the circle.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> The segments $PA$ and $PC$ form perpendicular bisectors with the chords $AB$ and $CD$.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Chords $AB$ and $CD$ are equidistant from the center and therefore have identical lengths.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-EXP-D3-001\"><p>Consider drawing chords AC and BD to form triangles involving external point P and the four intersection points.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-EXP-D3-001\"><p>Quadrilateral ABDC is inscribed in the circle. Recall that an exterior angle of a cyclic quadrilateral equals the opposite interior angle, giving an angle equality for the triangles.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEOM-EXPLAIN-POWER-POINT-03\">Review Power of a Point Mechanism</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Draw chords $AC$ and $BD$ to form triangles $\\triangle PAC$ and $\\triangle PDB$.</p><p>2. In the cyclic quadrilateral $ABDC$, the opposite angles are supplementary: $\\angle BAC + \\angle BDC = 180^\\circ$.</p><p>3. Since $P-A-B$ is a line, $\\angle PAC = 180^\\circ - \\angle BAC = \\angle BDC = \\angle PDB$.</p><p>4. Both triangles share the angle at $P$: $\\angle APC = \\angle DPF$.</p><p>5. By Angle-Angle (AA) similarity, $\\triangle PAC \\sim \\triangle PDB$.</p><p>6. Corresponding sides are in proportion: $\\frac{PA}{PD} = \\frac{PC}{PB} \\implies PA \\cdot PB = PC \\cdot PD$.</p></div></details></div>"
+}

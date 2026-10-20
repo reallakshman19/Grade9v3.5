@@ -1,0 +1,71 @@
+{
+  "schema": "imo-qrt-tile-blueprint/v1",
+  "version": "1.0.0",
+  "tile_id": "tile_3_5",
+  "qrt_cell": "QRT-REPRESENT-D3",
+  "coordinates": {
+    "band_index": 3,
+    "demand_index": 5,
+    "band": "D3",
+    "demand": "REPRESENT"
+  },
+  "cognitive_contract": {
+    "label": "Represent / isomorphic translation (Advanced Olympiad)",
+    "decisive_act": "Translate mathematical objects across distinct representations (complex quotients, polynomial factorizations on unit circles, or rational functions to trigonometric identities) to evaluate protected value W.",
+    "band_protected_work": "Require learner to establish the domain isomorphism without direct representation prompts or intermediate coordinate reductions.",
+    "support_posture": "Activate the underlying geometric orthogonality, roots-of-unity, or trigonometric substitution representation without deriving the transformed equation.",
+    "slots": {
+      "X": "the translation of a complex quotient with vanishing real part into an orthogonal vector circular locus",
+      "Y": "condition Re((z - 3)/(z + 4i)) = 0 for z in C \\ {-4i}",
+      "Z": "orthogonality invariant: (z - 3) perp (z - (-4i)) forces Thales' circle with diameter segment between (3, 0) and (0, -4); diameter d = 5 -> radius R = 5/2",
+      "W": "\\frac{5}{2}",
+      "wrong_idea": "confusing diameter length 5 with radius R, reporting R = 5",
+      "replacement_rule": "the segment connecting (3, 0) and (0, -4) is the circle diameter of length 5; the radius is half the diameter: R = 5/2",
+      "visual_job": "render Argand plane diagram showing diameter endpoints (3, 0) and (0, -4) subtending right angle to z; avoid unmounted SVGs",
+      "check_job": "independent check: let z = x + iy; expanding real part yields x^2 - 3x + y^2 + 4y = 0; completing squares gives (x - 3/2)^2 + (y + 2)^2 = (5/2)^2. Radius R = 5/2 confirmed."
+    }
+  },
+  "scoring_bounds": {
+    "min_score": 6,
+    "max_score": 8,
+    "band": "D3",
+    "allowed_component_max": 2,
+    "component_keys": [
+      "concept_model_selection",
+      "representation_translation",
+      "reasoning_chain_length",
+      "algebra_computational_load",
+      "trap_exception_sensitivity"
+    ]
+  },
+  "five_core_obligations": {
+    "core2_custody": {
+      "stem_requirement": "Formulation requiring translation across distinct mathematical representations",
+      "hint_ladder_requirement": "H1 activates representational isomorphism; H2 provides intermediate structural formulation; preserves W",
+      "solution_requirement": "Locked pre-commit; complete translation derivation with algebraic/geometric verification",
+      "distractor_requirement": "Every distractor explained with specific student representational or metric confusion"
+    },
+    "core1a_declarative": {
+      "blocks": [
+        "entry_assumptions",
+        "inferential_jump",
+        "why_valid_derivation",
+        "three_way_bridge",
+        "representation_anchor",
+        "boundary_conditions",
+        "worked_check"
+      ],
+      "anti_leak_rule": "Strict prohibition on leaking Core 2 exact parameters or numerical answers in Core 1A text"
+    },
+    "core1b_reconstruction": {
+      "predictive_gate": "Answer before attempt FORBIDDEN",
+      "model_alternation": "Reconstruction must use an alternative verification pathway (e.g. algebraic Cartesian expansion instead of pure vector orthogonality)"
+    },
+    "core2a_supported_practice": {
+      "transfer_obligation": "Near-transfer item with identical representational translation under modified endpoints"
+    },
+    "core2b_transfer_assessment": {
+      "transfer_obligation": "Far-transfer item extending to Apollonius circles or non-unit norm ratios"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-STATISTICS-GRAPHICAL-REPRESENTATIONS",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Statistics",
+  "subtopic": "STATISTICS-GRAPHICAL-REPRESENTATIONS",
+  "target_demand": "REPRESENT",
+  "target_band": "D2",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before computing individual subject marks: If a circular pie chart represents an examination total of 720 marks across 360 degrees, how many marks does each 1 degree of central angle represent?",
+      "options": [
+        "A. 0.5 marks per degree",
+        "B. 1.0 mark per degree",
+        "C. 2.0 marks per degree",
+        "D. 7.2 marks per degree"
+      ],
+      "predict_rationale": "Requires the student to calculate the fundamental visual-to-numerical conversion ratio (720 / 360 = 2) before attempting multi-subject calculations."
+    },
+    "stage_2_attempt": {
+      "task": "Using the 2 marks/degree scaling factor, find which two subjects among Social Science (65 deg), Math (90 deg), English (55 deg), Hindi (70 deg), Science (80 deg) total exactly 250 marks.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Calculate the target combined angle: theta_target = 250 marks / (2 marks/deg) = 125 deg.",
+        "step_2": "Test combinations of given sector angles: 55 deg (English) + 70 deg (Hindi) = 125 deg.",
+        "step_3": "Confirm individual marks: English = 55 * 2 = 110 marks; Hindi = 70 * 2 = 140 marks.",
+        "conclusion": "Total marks = 110 + 140 = 250 marks. The subjects are English and Hindi."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "FRACTIONAL_PERCENTAGE_RECONSTRUCTION",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose instead of working in degrees, we compute the target fraction of the total exam: 250 / 720. What is this fraction in simplest form?",
+          "expected_insight": "250 / 720 = 25 / 72."
+        },
+        {
+          "inquiry": "What fraction of the circle's 360 degrees does 25 / 72 represent?",
+          "expected_insight": "(25 / 72) * 360 = 25 * 5 = 125 degrees. The fractional route yields identical degree requirements without assuming unit scaling first!"
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: Suppose the examination scoring scale is uniformly doubled so that the total marks become 1440 instead of 720, but each student's relative score in every subject remains unchanged. What happens to the central angles of the pie chart sectors?",
+      "options": [
+        "A. Every sector angle doubles, making the total 720 degrees.",
+        "B. Every sector angle remains strictly unchanged (invariant), because central angles represent relative fractions of the whole.",
+        "C. Every sector angle is halved.",
+        "D. The pie chart becomes an ellipse."
+      ],
+      "correct_option": "B",
+      "explanation": "Sector central angle is defined by theta_i = (Value_i / Total) * 360 deg. When values and total are both scaled by factor k, the scaling factors cancel: (k * Value_i) / (k * Total) = Value_i / Total. Central angles are scale-invariant representations of relative proportions."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Remember that the entire circle of 360 degrees equals 720 marks. Divide 720 by 360 to find how many marks 1 degree represents."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Since 1 deg = 2 marks, 250 marks requires an angle of 250 / 2 = 125 deg. Look for two subject angles that sum to 125."
+    }
+  }
+}

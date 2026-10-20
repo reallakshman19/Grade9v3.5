@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_2",
+  "qrt_cell": "QRT-EXPLAIN-D2",
+  "source_question": {
+    "id": "GOLDEN-EXP-D2-003",
+    "custody_hash": "d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef012345",
+    "stem": "When a polynomial $P(x)$ is divided by a linear divisor $(x - a)$, the division algorithm states $P(x) = (x - a)Q(x) + R$. Which statement explains why the remainder $R$ must be identically equal to the constant value $P(a)$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "Because the quotient $Q(x)$ must be equal to zero for all real values of $x$."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "Because the linear divisor $(x - a)$ must always be equal to $1$."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "Because $P(x)$ can only have positive integer coefficients."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Because the degree of $R$ must be strictly less than the degree of $(x - a)$, forcing $R$ to be a constant, and evaluating at $x = a$ annihilates the term $(a - a)Q(a) = 0$."
+      }
+    ],
+    "answer": {
+      "choice": "D",
+      "value": "Because the degree of R must be strictly less than the degree of (x - a), forcing R to be a constant, and evaluating at x = a annihilates the term (a - a)Q(a) = 0",
+      "crux_move_ref": "CRUX-POLY-REMAINDER-THEOREM-DIVISION-ALGORITHM-INVARIANCE"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "EXPLAIN",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 0,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-POLY-REMAINDER-THEOREM-DIVISION-ALGORITHM-INVARIANCE"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider the degree condition imposed on the remainder $R$ by the division algorithm when dividing by a degree-1 polynomial.",
+      "hint2_tactical_step": "Substitute $x = a$ into the identity $P(x) = (x - a)Q(x) + R$ and observe what happens to the product $(x - a)Q(x)$."
+    },
+    "distractor_rationales": {
+      "opt-A": "Student confuses the quotient polynomial with the remainder.",
+      "opt-B": "Student confuses divisor expression with unity.",
+      "opt-C": "Student confuses domain restriction with algorithmic division constraints."
+    },
+    "core_links": {
+      "core1a_unit_id": "ALG-POLY-REMAINDER-02",
+      "core1b_activity_id": "ACT-RECON-REMAINDER-02",
+      "core2a_practice_id": "PRAC-REMAINDER-02",
+      "core2b_transfer_id": "TRANS-REMAINDER-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-POLY-REMAINDER-02",
+      "title": "Polynomial Division and Remainder Invariance",
+      "concept": "For any polynomial division P(x) = D(x)Q(x) + R(x), deg(R) < deg(D). When deg(D) = 1, deg(R) = 0, so R is a constant. Evaluating at the root of D(x) = 0 annihilates the quotient term, leaving P(a) = R.",
+      "boundary_conditions": "If divisor is quadratic or higher, remainder is generally a polynomial of degree >= 1, so P(a) alone does not yield the complete remainder."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-REMAINDER-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the degree of the remainder when a polynomial is divided by a linear polynomial of degree 1?",
+      "scaffold_steps": [
+        "Recall the division algorithm degree inequality",
+        "Deduce remainder is a constant of degree 0",
+        "Substitute root into division identity"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-EXP-D2-003\"><div class=\"qb-stem\"><p>When a polynomial $P(x)$ is divided by a linear divisor $(x - a)$, the division algorithm states $P(x) = (x - a)Q(x) + R$. Which statement explains why the remainder $R$ must be identically equal to the constant value $P(a)$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> Because the quotient $Q(x)$ must be equal to zero for all real values of $x$.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> Because the linear divisor $(x - a)$ must always be equal to $1$.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> Because $P(x)$ can only have positive integer coefficients.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Because the degree of $R$ must be strictly less than the degree of $(x - a)$, forcing $R$ to be a constant, and evaluating at $x = a$ annihilates the term $(a - a)Q(a) = 0$.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-EXP-D2-003\"><p>Consider the degree condition imposed on the remainder $R$ by the division algorithm when dividing by a degree-1 polynomial.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-EXP-D2-003\"><p>Substitute $x = a$ into the identity $P(x) = (x - a)Q(x) + R$ and observe what happens to the product $(x - a)Q(x)$.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"ALG-POLY-REMAINDER-02\">Review Remainder Theorem</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Solution</summary><div class=\"qb-solution-body\"><p>In polynomial division, $\\text{deg}(R) < \\text{deg}(x - a) = 1$, which forces $\\text{deg}(R) = 0$ (a constant $R$).</p><p>Evaluating both sides at $x = a$: $P(a) = (a - a)Q(a) + R = 0 \\cdot Q(a) + R = R$. Hence $R = P(a)$.</p></div></details></div>"
+}

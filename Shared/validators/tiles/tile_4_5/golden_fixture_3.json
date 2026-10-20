@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_5",
+  "qrt_cell": "QRT-REPRESENT-D4",
+  "source_question": {
+    "id": "GOLDEN-REP-D4-003",
+    "custody_hash": "b2c3d4e5f6a708192a3b4c5d6e7f80123456789abcdef0123456789abcdef0",
+    "stem": "In the Cartesian coordinate plane, two fixed points are positioned at $A(-3, 0)$ and $B(5, 0)$. Two geometric loci $\\Omega_1$ and $\\Omega_2$ are defined by ratio conditions:\n- $\\Omega_1$ is the locus of points $P(x, y)$ such that $\\frac{PA}{PB} = \\frac{1}{3}$.\n- $\\Omega_2$ is the locus of points $Q(x, y)$ such that $\\frac{QA}{QB} = 3$.\nBy representing both loci as algebraic circles in the plane, what is the exact distance between the centers of $\\Omega_1$ and $\\Omega_2$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$10$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$8$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$6$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$12$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "10",
+      "crux_move_ref": "CRUX-GEO-REPRESENT-APOLLONIAN-CIRCLES-HARMONIC-CENTERS"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "REPRESENT",
+      "difficulty_band": "D4",
+      "difficulty_score": 9,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-GEO-REPRESENT-APOLLONIAN-CIRCLES-HARMONIC-CENTERS"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Square the distance ratios: $\\Omega_1$ satisfies $9[(x+3)^2 + y^2] = (x-5)^2 + y^2$, and $\\Omega_2$ satisfies $(x+3)^2 + y^2 = 9[(x-5)^2 + y^2]$.",
+      "hint2_tactical_step": "Expand and complete the squares to obtain the standard circle forms $(x - h_1)^2 + y^2 = R_1^2$ and $(x - h_2)^2 + y^2 = R_2^2$. Find the centers $(h_1, 0)$ and $(h_2, 0)$ and determine $|h_1 - h_2|$."
+    },
+    "distractor_rationales": {
+      "opt-B": "Evaluates the distance between the two original reference points $AB = 5 - (-3) = 8$ instead of the distance between circle centers.",
+      "opt-C": "Evaluates the sum of the radii $R_1 + R_2 = 3 + 3 = 6$ rather than the distance between centers.",
+      "opt-D": "Sign error during algebraic expansion of the binomials $(x+3)^2$ and $(x-5)^2$."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEO-REP-APOLLONIAN-CIRCLES-04",
+      "core1b_activity_id": "ACT-RECON-APOLLONIAN-CIRCLES-04",
+      "core2a_practice_id": "PRAC-APPOLLONIAN-CIRCLES-04",
+      "core2b_transfer_id": "TRANS-APPOLLONIAN-CIRCLES-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEO-REP-APOLLONIAN-CIRCLES-04",
+      "title": "Apollonian Circles and Harmonic Ratio Representations",
+      "concept": "For two distinct points in the plane and a positive constant $k \\ne 1$, the locus of points whose distances to the given points have ratio $k$ is an Apollonian circle. Completing the square on the expanded coordinate quadratic yields the center and radius, connecting metric ratios to Euclidean coordinate geometries.",
+      "boundary_conditions": "If $k = 1$, the locus degenerates to the perpendicular bisector line rather than a circle."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-APOLLONIAN-CIRCLES-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "When the distance ratio $k$ equals 1, what geometric object does the locus of points form?",
+      "scaffold_steps": [
+        "Set PA = PB",
+        "Observe all points equidistant from two points lie on a line",
+        "Identify the line as the perpendicular bisector of segment AB"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-REP-D4-003\"><div class=\"qb-stem\"><p>In the Cartesian coordinate plane, two fixed points are positioned at $A(-3, 0)$ and $B(5, 0)$. Two geometric loci $\\Omega_1$ and $\\Omega_2$ are defined by ratio conditions:</p><p>- $\\Omega_1$ is the locus of points $P(x, y)$ such that $\\frac{PA}{PB} = \\frac{1}{3}$.</p><p>- $\\Omega_2$ is the locus of points $Q(x, y)$ such that $\\frac{QA}{QB} = 3$.</p><p>By representing both loci as algebraic circles in the plane, what is the exact distance between the centers of $\\Omega_1$ and $\\Omega_2$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $10$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $8$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $6$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $12$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-REP-D4-003\"><p>Square the distance ratios: $\\Omega_1$ satisfies $9[(x+3)^2 + y^2] = (x-5)^2 + y^2$, and $\\Omega_2$ satisfies $(x+3)^2 + y^2 = 9[(x-5)^2 + y^2]$.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-REP-D4-003\"><p>Expand and complete the squares to obtain the standard circle forms $(x - h_1)^2 + y^2 = R_1^2$ and $(x - h_2)^2 + y^2 = R_2^2$. Find the centers $(h_1, 0)$ and $(h_2, 0)$ and determine $|h_1 - h_2|$.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEO-REP-APOLLONIAN-CIRCLES-04\">Review Apollonian Circles</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Representing $\\Omega_1$ as a Cartesian circle:</p><p>The condition $\\frac{PA}{PB} = \\frac{1}{3}$ is equivalent to $9 PA^2 = PB^2$:</p><p>$9\\left[(x + 3)^2 + y^2\\right] = (x - 5)^2 + y^2$.</p><p>Expanding both sides:</p><p>$9(x^2 + 6x + 9) + 9y^2 = x^2 - 10x + 25 + y^2$.</p><p>$9x^2 + 54x + 81 + 9y^2 = x^2 - 10x + 25 + y^2$.</p><p>Rearranging all terms to one side:</p><p>$8x^2 + 64x + 8y^2 + 56 = 0$.</p><p>Dividing by $8$:</p><p>$x^2 + 8x + y^2 + 7 = 0$.</p><p>Completing the square in $x$:</p><p>$(x + 4)^2 - 16 + y^2 + 7 = 0 \\implies (x + 4)^2 + y^2 = 9 = 3^2$.</p><p>Thus, $\\Omega_1$ is a circle centered at $C_1(-4, 0)$ with radius $R_1 = 3$.</p><p>2. Representing $\\Omega_2$ as a Cartesian circle:</p><p>The condition $\\frac{QA}{QB} = 3$ is equivalent to $QA^2 = 9 QB^2$:</p><p>$(x + 3)^2 + y^2 = 9\\left[(x - 5)^2 + y^2\\right]$.</p><p>Expanding both sides:</p><p>$x^2 + 6x + 9 + y^2 = 9(x^2 - 10x + 25) + 9y^2$.</p><p>$x^2 + 6x + 9 + y^2 = 9x^2 - 90x + 225 + 9y^2$.</p><p>Rearranging:</p><p>$8x^2 - 96x + 8y^2 + 216 = 0$.</p><p>Dividing by $8$:</p><p>$x^2 - 12x + y^2 + 27 = 0$.</p><p>Completing the square in $x$:</p><p>$(x - 6)^2 - 36 + y^2 + 27 = 0 \\implies (x - 6)^2 + y^2 = 9 = 3^2$.</p><p>Thus, $\\Omega_2$ is a circle centered at $C_2(6, 0)$ with radius $R_2 = 3$.</p><p>3. Distance between the two centers:</p><p>The centers are $C_1(-4, 0)$ and $C_2(6, 0)$.</p><p>The Euclidean distance between them is:</p><p>$d = |6 - (-4)| = |6 + 4| = 10$.</p></div></details></div>"
+}

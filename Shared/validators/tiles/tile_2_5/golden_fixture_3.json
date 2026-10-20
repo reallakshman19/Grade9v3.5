@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_5",
+  "qrt_cell": "QRT-REPRESENT-D2",
+  "source_question": {
+    "id": "GOLDEN-REP-D2-003",
+    "custody_hash": "c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef012",
+    "stem": "A data set is represented by a histogram with unequal class intervals. For the interval $[20, 35]$, the class width is $15$ units and the bar height (frequency density) is $4.0$. What is the total frequency of observations in this interval?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$60$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$4$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$15$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$35$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "60",
+      "crux_move_ref": "CRUX-STAT-HISTOGRAM-FREQUENCY-DENSITY-AREA-REPRESENTATION"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "REPRESENT",
+      "difficulty_band": "D2",
+      "difficulty_score": 3,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-STAT-HISTOGRAM-FREQUENCY-DENSITY-AREA-REPRESENTATION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall the fundamental geometric representation principle of histograms: the frequency of each class is proportional to the area of the rectangular bar, not its vertical height.",
+      "hint2_tactical_step": "Identify the formula relating the quantities: Frequency = Class Width times Frequency Density. Here the interval span is 15 and the density is 4.0."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student mistakenly takes the bar height (frequency density) directly as the raw frequency count.",
+      "opt-C": "Student confuses the class width of 15 with the frequency count.",
+      "opt-D": "Student takes the upper bound of the class interval as the frequency."
+    },
+    "core_links": {
+      "core1a_unit_id": "STAT-REPRESENT-HIST-02",
+      "core1b_activity_id": "ACT-RECON-HISTOGRAM-02",
+      "core2a_practice_id": "PRAC-HISTOGRAM-02",
+      "core2b_transfer_id": "TRANS-HISTOGRAM-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "STAT-REPRESENT-HIST-02",
+      "title": "Histogram Frequency Density Representations",
+      "concept": "In a histogram with unequal intervals, frequency is represented by area: Frequency = Class Width * Frequency Density. For example, an interval [0, 10] of width 10 with density 2.5 contains frequency 10 * 2.5 = 25.",
+      "boundary_conditions": "For unit class widths of 1, frequency density equals frequency identically."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-HISTOGRAM-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If a histogram bar has width 8 and frequency density 5, what is the frequency represented by the bar area?",
+      "scaffold_steps": [
+        "Recall Area = Width * Frequency Density",
+        "Multiply 8 * 5",
+        "Conclude frequency is 40"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-REP-D2-003\"><div class=\"qb-stem\"><p>A data set is represented by a histogram with unequal class intervals. For the interval $[20, 35]$, the class width is $15$ units and the bar height (frequency density) is $4.0$. What is the total frequency of observations in this interval?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $60$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $4$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $15$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $35$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-REP-D2-003\"><p>Recall the fundamental geometric representation principle of histograms: the frequency of each class is proportional to the area of the rectangular bar, not its vertical height.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-REP-D2-003\"><p>Identify the formula relating the quantities: Frequency = Class Width times Frequency Density. Here the interval span is 15 and the density is 4.0.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"STAT-REPRESENT-HIST-02\">Review Histogram Frequency Density</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. In histograms with unequal class widths, area represents frequency:</p><p>$\\text{Frequency} = \\text{Class Width} \\times \\text{Frequency Density}$.</p><p>2. Here $\\text{Class Width} = 35 - 20 = 15$ and $\\text{Frequency Density} = 4.0$.</p><p>3. Therefore, $\\text{Frequency} = 15 \\times 4.0 = 60$.</p></div></details></div>"
+}

@@ -1,0 +1,2503 @@
+{
+  "schema": "topic-adapter/v2",
+  "version": "2.0.0",
+  "subject": "Physics",
+  "meta": {
+    "title": "Grade 9 Olympiad & Foundation Physics Universal Topic Adapter & Subtopic Competency Framework",
+    "benchmark_authority": "Golden Benchmark Fixtures (C:\\Users\\reall\\Downloads\\Grade9\\Golden fixtures)",
+    "description": "Unified curriculum contract binding Core 1A Conceptual Ontologies, Core 1B Phenomenological Reconstructions, Core 2 QRT Question Banks, and Multi-Engine Automated Validation Gates."
+  },
+  "common_framework": {
+    "description": "Universal physical invariants, pedagogical contracts, and verification gates shared across all physics topics.",
+    "universal_operational_pipeline": {
+      "stage_1_choose": {
+        "name": "System Demarcation & Frame Selection",
+        "invariants": [
+          "Explicitly identify the physical body or closed multi-body system boundary.",
+          "Select reference frame (inertial ground frame vs accelerated non-inertial frame with explicit D'Alembert pseudo-forces).",
+          "Declare coordinate origin, positive axis orientation, and shared clock baseline (t = 0).",
+          "Register explicit model assumptions and idealizations before applying formulas."
+        ]
+      },
+      "stage_2_represent": {
+        "name": "Representation Construction",
+        "invariants": [
+          "Translate physical story into an exact scientific representation before algebraic computation.",
+          "Allowed representation forms: Free-Body Diagram (FBD), Interaction Map, Coordinate/Trajectory Graph, Potential Well Curve, State Table, or Momentum Vector Triangle.",
+          "Typography floor: Every SVG diagram must declare text font-size >= 14px on all labels, coordinates, and annotations.",
+          "Visual integrity: Force vectors must originate at point of application/COM; action-reaction pairs must NEVER appear on the same isolated body."
+        ]
+      },
+      "stage_3_connect": {
+        "name": "Law Connection & Governing Constraints",
+        "invariants": [
+          "Connect representation to the fundamental physical invariant law, never by guessing a formula name.",
+          "State explicit scope conditions: identify where the model holds and where it breaks (e.g. h << R_E, v << c, static slip threshold f_s <= mu_s * N, incompressible fluid).",
+          "Identify kinematic constraints: string inextensibility, rigid contact, shared time across orthogonal components."
+        ]
+      },
+      "stage_4_execute_and_check": {
+        "name": "Execution & Multi-Engine Physical Verification",
+        "invariants": [
+          "Execute algebra step-by-step without skipping intermediate learner operations.",
+          "Sanity Check: Direction and sign must match physical reality.",
+          "Dimensional Homogeneity: Verify base SI dimensional powers [M]^a [L]^b [T]^c [Theta]^d.",
+          "Dual Limiting Extremals: Stress-test at least 2 independent boundary conditions (e.g. zero mass, infinite distance, right angle, zero friction).",
+          "Cross-Core Recovery Anchor: Every distractor trap and reasoning step must link to an explicit numbered Core 1 atomic competency."
+        ]
+      }
+    },
+    "universal_pedagogical_contract": {
+      "attempt_protection": "Questions must protect answers, reveals, and derivations until a learner attempt is committed.",
+      "hint_ladder_protocol": {
+        "tier_1": "H1 - What is the key physics? Open prompt question probing the decisive event, state, or invariant, followed by an expandable reveal.",
+        "tier_2": "H2 - How would you represent it? Open prompt question probing coordinate axes, FBD, or state diagram, followed by an expandable reveal.",
+        "tier_3": "H3 - What would you write first? Open prompt question probing the first executable constraint equation, followed by an expandable reveal."
+      },
+      "reasoning_ladder_protocol": {
+        "step_1_understand": "Identify body, physical event, and given states.",
+        "step_2_represent": "Establish coordinate axes, FBD, or boundary sketch.",
+        "step_3_connect": "Select governing physical invariant law.",
+        "step_4_calculate": "Execute algebraic manipulation without unstated jumps.",
+        "step_5_interpret": "State final physical invariant conclusion."
+      },
+      "tripartite_verification_protocol": {
+        "quick_check": "Immediate physical sanity check.",
+        "check_it_another_way": "Independent boundary limit or alternative model verification.",
+        "watch_out": "Explicit warning against the authentic misconception trap.",
+        "review_this_idea": "Direct Cross-Core 1-to-1 link citing exact competency ID."
+      }
+    },
+    "universal_verification_gates": [
+      "Gate 1: Math & Typography (0 unrendered raw TeX blocks outside scripts; valid KaTeX syntax)",
+      "Gate 2: Vector & Diagram Typography Floor (All SVG text font-size >= 14px)",
+      "Gate 3: Dimensional Homogeneity (Base SI dimensions verified)",
+      "Gate 4: Dual Limiting Extremals (>= 2 falsifiable boundary limits declared)",
+      "Gate 5: Distractor Disjointness & Authentic Trap Binding (4 pairwise disjoint options with genuine diagnostic types)",
+      "Gate 6: Subtopic Competency 1-to-1 Coverage (Every question bound to an explicit subtopic competency code)",
+      "Gate 7: Static DOM Pre-Rendered KaTeX & 48px Touch Target Floor (Full static HTML DOM with min-height: 48px touch targets)"
+    ]
+  },
+  "topic_adapters": {
+    "mechanics-nlm": {
+      "topic_id": "phy-mechanics-nlm",
+      "display_name": "Newton's Laws of Motion & Momentum Systems",
+      "subtopic_family_count": 11,
+      "blueprint_refs": {
+        "core1a_ontology": "TEST/physics-research/blueprints/core1a_physics_nlm_ontology.v1.json",
+        "core1b_reconstruction": "TEST/physics-research/blueprints/core1b_physics_nlm_reconstruction.v1.json"
+      },
+      "coordinate_conventions": {
+        "system": "1D/2D Cartesian with origin at chosen body center of mass",
+        "axes": "x-axis along line of motion or inclined surface, y-axis perpendicular to surface",
+        "sign_convention": "Direction of anticipated acceleration chosen as positive axis (+x) to eliminate extraneous negative signs",
+        "units": "SI (Mass in kg, Force in N = kg m s^-2, Acceleration in m s^-2, Momentum in kg m s^-1, Time in s)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": true,
+        "diagram_types": [
+          "FREE_BODY_DIAGRAM",
+          "INTERACTION_PAIR_MAP",
+          "ACCELERATION_SCALING_GRAPH",
+          "ATWOOD_MACHINE_SCHEMATIC"
+        ],
+        "svg_specifications": [
+          "Body isolated from environment with center-of-mass origin",
+          "Force arrows begin at point of contact or COM and point along direction of push/pull",
+          "Newton III action-reaction pairs must NEVER appear on the same isolated body",
+          "Friction vector strictly tangential to contact plane; normal force strictly perpendicular",
+          "Minimum SVG text font floor >= 14px on all force labels, masses, and angles"
+        ]
+      },
+      "dimensional_signatures": {
+        "mass": "[M]",
+        "force": "[M L T^-2]",
+        "acceleration": "[L T^-2]",
+        "momentum": "[M L T^-1]",
+        "impulse": "[M L T^-1]",
+        "coefficient_of_friction": "[1]",
+        "dimensionless": [
+          "mass_ratio",
+          "angle",
+          "trigonometric_ratio"
+        ]
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_ZERO_MASS",
+        "LIMITING_CASE_INFINITE_MASS",
+        "LIMITING_CASE_SMOOTH_SURFACE_MU_ZERO",
+        "LIMITING_CASE_ROUGH_SURFACE_MU_INF",
+        "NEWTON_THIRD_LAW_INTERNAL_CANCELLATION",
+        "FRAME_INVARIANCE_CHECK"
+      ],
+      "subtopic_competency_map": {
+        "NLM-01": {
+          "title": "Motion is not Force",
+          "subtitle": "Constant velocity can coexist with zero net force",
+          "canonical_rule": "Constant velocity can coexist with zero net force; net force determines acceleration (rate of change of velocity), not velocity itself.",
+          "scope_condition": "Inertial reference frames; non-accelerating observers.",
+          "model_check": "Distinguish between zero net force (Sigma F = 0) and absence of individual physical interactions.",
+          "subtopics": [
+            "Zero net force coexisting with constant velocity",
+            "Distinction between zero net force and absence of forces",
+            "Inertial reference frames and the principle of inertia",
+            "Inertia during sudden braking (passenger lurch without fictitious forward force)",
+            "Coin tossed vertically in an accelerating train (horizontal velocity retention)",
+            "Fluid inertia in decelerating tankers (liquid surge toward front)",
+            "Motion on ideal frictionless surfaces requiring zero sustaining force"
+          ],
+          "easy_mistake_to_make": "Assuming an object moving forward must have a net forward force pushing it.",
+          "core2_transfer_target": [
+            "PHYS-NLM-001",
+            "PHYS-NLM-004",
+            "PHYS-NLM-005",
+            "PHYS-NLM-006",
+            "PHYS-NLM-008"
+          ],
+          "pillar_ref": "P1"
+        },
+        "NLM-02": {
+          "title": "Choose the Body Before Drawing Forces",
+          "subtitle": "Interactions become forces only after the body is chosen",
+          "canonical_rule": "Interactions become forces only after the target body is chosen; only external forces acting ON the chosen body enter Sigma F = ma.",
+          "scope_condition": "Closed system boundary demarcating internal from external interactions.",
+          "model_check": "Never include forces that the chosen body exerts ON other objects.",
+          "subtopics": [
+            "Closed system boundary demarcation",
+            "Interaction mapping: identifying contact vs non-contact external agents",
+            "Naming convention: 'force on X by Y'",
+            "Eliminating body confusion (never placing forces exerted BY the body on its own FBD)",
+            "FBD construction for isolated bodies",
+            "Ideal frictionless surfaces: normal contact force only, zero shear and zero rolling torque"
+          ],
+          "easy_mistake_to_make": "Drawing forces exerted BY the body onto its own Free-Body Diagram.",
+          "core2_transfer_target": [
+            "PHYS-NLM-010",
+            "PHYS-NLM-026",
+            "PHYS-NLM-028",
+            "PHYS-NLM-029",
+            "PHYS-NLM-033"
+          ],
+          "pillar_ref": "P2"
+        },
+        "NLM-03": {
+          "title": "Net Force is a Vector Sum",
+          "subtitle": "Balanced forces and no forces are different statements",
+          "canonical_rule": "Forces add vectorially, not algebraically; balanced forces produce zero acceleration along each orthogonal axis independently.",
+          "scope_condition": "Orthogonal Cartesian coordinate decomposition (Sigma F_x = m a_x, Sigma F_y = m a_y).",
+          "model_check": "Decompose all diagonal forces into rectangular components before summing.",
+          "subtopics": [
+            "Collinear vector addition with explicit signed components",
+            "Orthogonal Cartesian force decomposition (Sigma F_x = m a_x, Sigma F_y = m a_y)",
+            "Dynamic equilibrium at constant velocity (horse pulling cart at constant speed)",
+            "Distinguishing balanced forces from absence of forces",
+            "Mass as the quantitative measure of translational inertia",
+            "Ranking inertia across equal-volume or differing-mass objects"
+          ],
+          "easy_mistake_to_make": "Adding vector magnitudes directly without trigonometric component resolution.",
+          "core2_transfer_target": [
+            "PHYS-NLM-012",
+            "PHYS-NLM-022",
+            "PHYS-NLM-025",
+            "PHYS-NLM-031",
+            "PHYS-NLM-034",
+            "PHYS-NLM-039"
+          ],
+          "pillar_ref": "P3"
+        },
+        "NLM-04": {
+          "title": "Newton II and Scaling",
+          "subtitle": "Acceleration responds to net force and mass together",
+          "canonical_rule": "Acceleration is directly proportional to net force and inversely proportional to total mass: a = Sigma F_ext / M_tot.",
+          "scope_condition": "Constant mass systems (non-relativistic, non-rocket mass shedding).",
+          "model_check": "When bodies move with common acceleration, treat the coupled assembly as a single composite system.",
+          "subtopics": [
+            "Fundamental dynamic equation: F_net = ma",
+            "Force and mass scaling ratios: a2/a1 = (F2/F1)(m1/m2)",
+            "Coupled masses under the same external force: a_tot = (a1 * a2)/(a1 + a2)",
+            "Single-body vs multi-body composite system acceleration",
+            "Atwood machine coupled acceleration and string tension harmonic mean"
+          ],
+          "easy_mistake_to_make": "Using individual applied force instead of vector net force in a = F/m.",
+          "core2_transfer_target": [
+            "PHYS-NLM-009",
+            "PHYS-NLM-015",
+            "PHYS-NLM-019",
+            "PHYS-NLM-021",
+            "PHYS-NLM-023",
+            "PHYS-NLM-024",
+            "PHYS-NLM-030",
+            "PHYS-NLM-035",
+            "PHYS-NLM-038"
+          ],
+          "pillar_ref": "P4"
+        },
+        "NLM-05": {
+          "title": "Stopping Force Needs Two Models",
+          "subtitle": "Kinematics supplies acceleration; Newton II supplies force",
+          "canonical_rule": "Determining stopping force requires coupling kinematics with dynamics: kinematics supplies acceleration; Newton II supplies retarding force.",
+          "scope_condition": "Uniform stopping acceleration over displacement s or duration t.",
+          "model_check": "Use v^2 = u^2 + 2as or v = u + at to isolate a, then evaluate F_stop = m|a|.",
+          "subtopics": [
+            "Two-stage model coupling: Kinematics <-> Dynamics",
+            "Stopping over distance s: v^2 = u^2 + 2as => a = -u^2/(2s)",
+            "Stopping force calculation: F_stop = m|a| = mu^2/(2s)",
+            "Stopping duration: v = u + at => t = u/|a| = 2s/u",
+            "Quadratic velocity scaling of stopping force"
+          ],
+          "easy_mistake_to_make": "Attempting to calculate stopping force without determining acceleration or time.",
+          "core2_transfer_target": [
+            "PHYS-NLM-018",
+            "PHYS-NLM-037"
+          ],
+          "pillar_ref": "P4"
+        },
+        "NLM-06": {
+          "title": "Momentum is a Signed State",
+          "subtitle": "Momentum carries the direction of velocity",
+          "canonical_rule": "Momentum p = m * v is a directional vector carrying the sign of velocity; reversing direction produces Delta p = -m(v1 + v2), not zero.",
+          "scope_condition": "1D and 2D particle dynamics.",
+          "model_check": "Always establish a positive axis before assigning signs to momentum states.",
+          "subtopics": [
+            "Linear momentum as signed vector quantity: p = mv",
+            "1D coordinate sign assignment (+p and -p)",
+            "Rebound dynamics: reversal of velocity producing large Delta p",
+            "Directional momentum change vs scalar speed difference",
+            "Momentum-velocity (p-v) graph slope as mass m",
+            "Momentum-mass (p-m) graph slope as velocity v"
+          ],
+          "easy_mistake_to_make": "Subtracting momentum magnitudes without accounting for opposite directional signs.",
+          "core2_transfer_target": [
+            "PHYS-NLM-020"
+          ],
+          "pillar_ref": "P1"
+        },
+        "NLM-07": {
+          "title": "Impulse and Average Force",
+          "subtitle": "The same momentum change can be spread over more time",
+          "canonical_rule": "Impulse J = Delta p = F_avg * Delta t; spreading a fixed momentum change over a longer time interval reduces the peak contact force.",
+          "scope_condition": "Collision dynamics; short-duration impact events.",
+          "model_check": "Area under F-t curve equals total momentum change Delta p.",
+          "subtopics": [
+            "Impulse-momentum theorem: J = Delta p = F_avg * Delta t",
+            "Impact duration tradeoff: extending Delta t reduces average force",
+            "Catching mechanics: cushioning impact by moving hands backward",
+            "Force-time (F-t) graph: area under curve equals total impulse Delta p",
+            "Distinguishing impulse (N*s) from work (J) and momentum from force"
+          ],
+          "easy_mistake_to_make": "Confusing impulse (change in momentum in N*s) with work done (energy transferred in Joules).",
+          "core2_transfer_target": [
+            "PHYS-NLM-003"
+          ],
+          "pillar_ref": "P5"
+        },
+        "NLM-08": {
+          "title": "Newton III Pairs",
+          "subtitle": "Equal and opposite does not mean same body",
+          "canonical_rule": "Every interaction between two bodies consists of equal and opposite forces acting simultaneously on different bodies: F_12 = -F_21.",
+          "scope_condition": "Universal interaction law valid across all mass ratios and contact/field interfaces.",
+          "model_check": "Because action and reaction act on strictly different bodies, they NEVER cancel each other out on an individual body's FBD.",
+          "subtopics": [
+            "Third-law reciprocal action-reaction pairs: F_AB = -F_BA",
+            "Forces acting on strictly different bodies: never cancelling on one body's FBD",
+            "Normal force vs weight distinction on a resting body (balanced forces on one body vs 3rd law pair)",
+            "Wall push reaction force",
+            "Horse and cart paradox resolution via ground friction on horse hooves",
+            "Sprinkler rotational reaction via backward fluid ejection"
+          ],
+          "easy_mistake_to_make": "Believing a massive object exerts a greater gravitational or contact force than a lighter object.",
+          "core2_transfer_target": [
+            "PHYS-NLM-002",
+            "PHYS-NLM-017",
+            "PHYS-NLM-027",
+            "PHYS-NLM-032"
+          ],
+          "pillar_ref": "P2"
+        },
+        "NLM-09": {
+          "title": "Momentum Conservation is a System Statement",
+          "subtitle": "Choose the system and check external impulse first",
+          "canonical_rule": "In the absence of net external impulse (Sigma F_ext = 0), the total momentum of a multi-body system is strictly conserved: P_total = const.",
+          "scope_condition": "Isolated multi-body systems; internal interaction forces cancel identically by Newton III.",
+          "model_check": "Choose the system boundary large enough that all explosive or collision forces become internal.",
+          "subtopics": [
+            "System boundary demarcation and internal force cancellation",
+            "External impulse verification condition: Sigma F_ext = 0",
+            "Why a falling ball alone does not conserve momentum (external gravity impulse)",
+            "Why the ball + Earth system conserves total momentum",
+            "Separation from rest: P_initial = 0 => m1*v1 + m2*v2 = 0",
+            "Two skaters pushing apart on frictionless ice"
+          ],
+          "easy_mistake_to_make": "Applying momentum conservation to an isolated single body under external gravity.",
+          "core2_transfer_target": [
+            "PHYS-NLM-013",
+            "PHYS-NLM-016",
+            "PHYS-NLM-036"
+          ],
+          "pillar_ref": "P2"
+        },
+        "NLM-10": {
+          "title": "Recoil, Rockets and Exchanged Momentum",
+          "subtitle": "Equal momentum can mean very different speeds",
+          "canonical_rule": "In recoil and separation events, internal momentum exchange produces equal and opposite momenta, with speeds scaling inversely with mass.",
+          "scope_condition": "Isolated explosive or recoil events; rocket mass expulsion.",
+          "model_check": "For equal momentum magnitude, speed and kinetic energy scale inversely with mass (v proportional to 1/m, K proportional to 1/m).",
+          "subtopics": [
+            "Recoil dynamics in isolated systems: m_bullet * v_bullet = m_gun * v_recoil",
+            "Inverse speed-mass scaling: v proportional to 1/m for equal momentum",
+            "Kinetic energy partitioning: K = p^2/(2m) proportional to 1/m (lighter object carries most kinetic energy)",
+            "Rocket propulsion in deep space via backward exhaust ejection",
+            "Thrust via continuous mass ejection rate: F_thrust = v_rel * (dm/dt)"
+          ],
+          "easy_mistake_to_make": "Assuming equal momentum implies equal speed or equal kinetic energy.",
+          "core2_transfer_target": [
+            "PHYS-NLM-007",
+            "PHYS-NLM-011"
+          ],
+          "pillar_ref": "P3"
+        },
+        "NLM-11": {
+          "title": "Read Force from a Motion Graph",
+          "subtitle": "v-t slope -> acceleration -> force",
+          "canonical_rule": "The slope of a velocity-time graph represents acceleration (dv/dt), which multiplied by mass yields net force: F_net = m * (dv/dt).",
+          "scope_condition": "Piecewise linear or differentiable 1D kinematics.",
+          "model_check": "Zero slope indicates zero net force; constant non-zero slope indicates constant net force; sign of slope dictates force direction.",
+          "subtopics": [
+            "Velocity-time graph slope as acceleration: a = Delta v / Delta t",
+            "Net force deduction: F_net = m * slope",
+            "Frictional retarding force deduction from deceleration slope",
+            "Segmented piecewise velocity-time profiles",
+            "Avoiding area misinterpretation (area under v-t is displacement, not force)"
+          ],
+          "easy_mistake_to_make": "Inferring force from the height of the velocity curve rather than its slope.",
+          "core2_transfer_target": [
+            "PHYS-NLM-014"
+          ],
+          "pillar_ref": "P3"
+        }
+      },
+      "misconception_discriminators": [
+        {
+          "code": "ARISTOTELIAN_FORCE_VELOCITY",
+          "pattern": "Believing a net force is needed to maintain constant velocity; confusing v = const with F_net > 0.",
+          "refutation": "Newton's 1st Law: Net force determines acceleration (rate of change of velocity), not velocity itself."
+        },
+        {
+          "code": "THIRD_LAW_INTERNAL_CANCELLATION",
+          "pattern": "Believing action and reaction cancel each other out on the same body.",
+          "refutation": "Newton's 3rd Law pairs act on strictly distinct interacting bodies: F_AB = -F_BA."
+        },
+        {
+          "code": "NORMAL_EQUALS_MG",
+          "pattern": "Assuming normal force N always equals mg, regardless of incline, vertical acceleration, or applied external forces.",
+          "refutation": "Normal force is a self-adjusting constraint force determined by equilibrium/acceleration along the perpendicular axis: Sigma F_perp = m a_perp."
+        },
+        {
+          "code": "STATIC_FRICTION_MAX_FALLACY",
+          "pattern": "Assuming static friction always equals mu_s * N even when external applied force is smaller.",
+          "refutation": "Static friction is self-adjusting: 0 <= f_s <= mu_s * N; it exactly matches applied driving force until slip threshold."
+        },
+        {
+          "code": "FRICTION_OPPOSES_MOTION_ABSOLUTE",
+          "pattern": "Believing friction always opposes the velocity of the body in the lab frame.",
+          "refutation": "Friction opposes relative sliding between surfaces in contact, not absolute motion in the lab frame (e.g. walking, car driving, stacked block accelerating)."
+        }
+      ],
+      "canonical_reasoning_moves": {
+        "stage_1_choose": "Which body or system is tracked? Establish system boundary; identify interacting bodies; select reference frame (inertial ground vs non-inertial).",
+        "stage_2_represent": "FBD, interaction map, momentum state, motion graph, or system boundary sketch. Text font floor >= 14px.",
+        "stage_3_connect": "Newton I / Sigma F = ma / Delta p / Delta t / Newton III / system momentum conservation. State domain of validity.",
+        "stage_4_execute_and_check": "Keep signs, units, bodies, and system membership explicit. Test limiting boundary cases."
+      },
+      "first_move_atlas": [
+        {
+          "cue": "constant velocity / rest",
+          "first_representation": "one-body FBD",
+          "first_physics_move": "test whether Sigma F = 0"
+        },
+        {
+          "cue": "force question",
+          "first_representation": "choose body + interactions",
+          "first_physics_move": "draw only forces on that body"
+        },
+        {
+          "cue": "several forces",
+          "first_representation": "signed component sum",
+          "first_physics_move": "find Fnet before ma"
+        },
+        {
+          "cue": "force/mass change",
+          "first_representation": "old/new state ratio",
+          "first_physics_move": "compare F/m"
+        },
+        {
+          "cue": "stopping over distance",
+          "first_representation": "kinematic state",
+          "first_physics_move": "find a first, then F=ma"
+        },
+        {
+          "cue": "catch / collision time",
+          "first_representation": "signed p states",
+          "first_physics_move": "Delta p then Delta p/Delta t"
+        },
+        {
+          "cue": "action-reaction",
+          "first_representation": "two-body interaction pair",
+          "first_physics_move": "force on B by A <-> force on A by B"
+        },
+        {
+          "cue": "collision / recoil",
+          "first_representation": "system boundary",
+          "first_physics_move": "check external impulse, then conserve total p"
+        },
+        {
+          "cue": "rocket / rifle",
+          "first_representation": "opposite signed momenta",
+          "first_physics_move": "lighter mass -> larger speed for same |p|"
+        },
+        {
+          "cue": "v-t friction graph",
+          "first_representation": "graph slope",
+          "first_physics_move": "a = Delta v / Delta t then F=ma"
+        },
+        {
+          "cue": "p-v or p-m graph",
+          "first_representation": "read axes + slope",
+          "first_physics_move": "slope gives m or v"
+        }
+      ],
+      "benchmark_calibration": {
+        "authority": "Owner-provided 2026-10-18 digest only; source PDFs unavailable in repository; challenge phrasing, figures and exact bands UNKNOWN.",
+        "core1_digest_sha256": "b6254947cd186c9150388bb255ecce284337eb61d0c22d0f113b204b7b0321c0",
+        "core2_digest_sha256": "02848b5b1a8c58306ef6ce8528d24d77e32aef18f9e61f32247a94aa340e2341",
+        "core1": [
+          {
+            "benchmark_item": "NLM-01",
+            "demand_descriptor": "Recognize velocity as a state and changing velocity as evidence of net force",
+            "target_demand": "EXPLAIN",
+            "provisional_band": "D1",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "NLM-02",
+            "demand_descriptor": "Select an isolated body before drawing forces; exclude forces it exerts on others",
+            "target_demand": "REPRESENT",
+            "provisional_band": "D1",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "NLM-03",
+            "demand_descriptor": "Vector-add forces along explicitly signed axes rather than add magnitudes",
+            "target_demand": "APPLY",
+            "provisional_band": "D2",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "NLM-04",
+            "demand_descriptor": "Connect acceleration to net force/mass; predict scaling under changed conditions",
+            "target_demand": "APPLY",
+            "provisional_band": "D2",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "NLM-05",
+            "demand_descriptor": "Connect stopping displacement or duration with Newton II to infer force",
+            "target_demand": "SYNTHESIZE",
+            "provisional_band": "D3",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "NLM-06",
+            "demand_descriptor": "Treat momentum as a signed vector state before/after interactions",
+            "target_demand": "REPRESENT",
+            "provisional_band": "D2",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "NLM-07",
+            "demand_descriptor": "Use signed momentum change and stopping time to determine average force",
+            "target_demand": "APPLY",
+            "provisional_band": "D2",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "NLM-08",
+            "demand_descriptor": "Locate equal and opposite contact forces on two different owners",
+            "target_demand": "REPRESENT",
+            "provisional_band": "D2",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "NLM-09",
+            "demand_descriptor": "Choose a system; identify when external impulse prohibits conservation",
+            "target_demand": "JUSTIFY",
+            "provisional_band": "D2",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "NLM-10",
+            "demand_descriptor": "Balance propellant/product momentum with launcher recoil in a specified system",
+            "target_demand": "MODEL",
+            "provisional_band": "D2",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "NLM-11",
+            "demand_descriptor": "Infer signed net force from slopes of v-t or p-t records",
+            "target_demand": "REPRESENT",
+            "provisional_band": "D2",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          }
+        ],
+        "core2": [
+          {
+            "benchmark_item": "Q01",
+            "demand_descriptor": "Changing velocity is evidence of nonzero resultant force",
+            "target_demand": "APPLY",
+            "provisional_band": "D1",
+            "competency": "NLM-01",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q02",
+            "demand_descriptor": "Distinguish equal opposite forces acting on different bodies",
+            "target_demand": "EXPLAIN",
+            "provisional_band": "D1",
+            "competency": "NLM-08",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q03",
+            "demand_descriptor": "Link catch duration to impulse and average stopping force",
+            "target_demand": "APPLY",
+            "provisional_band": "D2",
+            "competency": "NLM-07",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q04",
+            "demand_descriptor": "Explain inertia on sudden braking without an invented forward force",
+            "target_demand": "EXPLAIN",
+            "provisional_band": "D1",
+            "competency": "NLM-01",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q05",
+            "demand_descriptor": "Distinguish inertial from accelerated frame for a released projectile",
+            "target_demand": "MODEL",
+            "provisional_band": "D2",
+            "competency": "NLM-01",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q06",
+            "demand_descriptor": "Constant velocity needs zero resultant, not persistent forward force",
+            "target_demand": "RETRIEVE",
+            "provisional_band": "D1",
+            "competency": "NLM-01",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q07",
+            "demand_descriptor": "Assign system/exhaust momentum to understand propulsion",
+            "target_demand": "MODEL",
+            "provisional_band": "D2",
+            "competency": "NLM-10",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q08",
+            "demand_descriptor": "Explain inertia of fluid under braking",
+            "target_demand": "JUSTIFY",
+            "provisional_band": "D2",
+            "competency": "NLM-01",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q09",
+            "demand_descriptor": "Recognize inertial mass independent of shape/volume",
+            "target_demand": "RETRIEVE",
+            "provisional_band": "D2",
+            "competency": "NLM-04",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q10",
+            "demand_descriptor": "Challenge an ambiguous rolling assertion by analyzing contact torque and floor idealization",
+            "target_demand": "JUSTIFY",
+            "provisional_band": "D2",
+            "competency": "NLM-02",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q11",
+            "demand_descriptor": "Distinguish conserved recoil momentum from mass-dependent recoil velocity",
+            "target_demand": "APPLY",
+            "provisional_band": "D2",
+            "competency": "NLM-10",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q12",
+            "demand_descriptor": "Infer opposite resistive force from constant-speed equilibrium",
+            "target_demand": "APPLY",
+            "provisional_band": "D1",
+            "competency": "NLM-03",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q13",
+            "demand_descriptor": "Test momentum conservation on a declared system against external gravity impulse",
+            "target_demand": "JUSTIFY",
+            "provisional_band": "D2",
+            "competency": "NLM-09",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q14",
+            "demand_descriptor": "Read deceleration from v-t slope and convert to friction force",
+            "target_demand": "SYNTHESIZE",
+            "provisional_band": "D2",
+            "competency": "NLM-11",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q15",
+            "demand_descriptor": "Apply changed net-force and mass scaling without confusing proportionalities",
+            "target_demand": "APPLY",
+            "provisional_band": "D2",
+            "competency": "NLM-04",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q16",
+            "demand_descriptor": "Enforce signed momentum conservation for interacting initially-resting bodies",
+            "target_demand": "APPLY",
+            "provisional_band": "D2",
+            "competency": "NLM-09",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q17",
+            "demand_descriptor": "Explain rotational reaction to expelled fluid using interaction ownership and torque",
+            "target_demand": "EXPLAIN",
+            "provisional_band": "D2",
+            "competency": "NLM-08",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q18",
+            "demand_descriptor": "Combine stopping kinematics and Newton II with correct force/time sign",
+            "target_demand": "SYNTHESIZE",
+            "provisional_band": "D2",
+            "competency": "NLM-05",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q19",
+            "demand_descriptor": "Infer individual masses from accelerations then calculate a combined-system response",
+            "target_demand": "SYNTHESIZE",
+            "provisional_band": "D2",
+            "competency": "NLM-04",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          },
+          {
+            "benchmark_item": "Q20",
+            "demand_descriptor": "Read physical meaning of p-v, p-m and p-t gradients without slope confusion",
+            "target_demand": "SYNTHESIZE",
+            "provisional_band": "D2",
+            "competency": "NLM-06",
+            "band_provenance": "PROVISIONAL_FROM_DIGEST; PDF_UNKNOWN"
+          }
+        ],
+        "generation_guard": "Copy neither situation nor hint wording. Reconstruct new scenario from the invariant and test equivalent learner decision, signed axes, correct system, depth, H1/H2/H3. Unseen PDF wording remains UNKNOWN."
+      },
+      "d4_discriminators": [
+        {
+          "id": "friction-threshold-plus-constraints",
+          "requirements": "Couple at least two independently constrained bodies, a 2D force resolution, a static inequality and post-slip regime; solve a genuine parametric threshold before evaluating one regime.",
+          "non_example": "One movable pulley with 2T=W"
+        },
+        {
+          "id": "coupled-2d-response",
+          "requirements": "Use forces on multiple bodies with coupled 2D components and verify which sign of friction is consistent; make the regime conditional on a parameter.",
+          "non_example": "One block on one ramp with tan(theta)=mu"
+        },
+        {
+          "id": "system-boundary-switch",
+          "requirements": "Explain why one-body Newton II and a multi-body momentum/force balance have different external terms, with a threshold that changes permitted system treatment.",
+          "non_example": "One mass recoiling by a known momentum"
+        },
+        {
+          "id": "impulse-plus-kinematics",
+          "requirements": "Use a signed impulse balance and stopping-motion constraint for multiple coupled masses or stages, and identify parameter domain where a proposed solution is physical.",
+          "non_example": "Single bullet stopping via F=ma and v^2=u^2+2as"
+        }
+      ],
+      "represent_task_types": [
+        {
+          "competency": "NLM-02",
+          "task": "Choose the physical body and produce its FBD with force owner and direction labels",
+          "demand": "REPRESENT"
+        },
+        {
+          "competency": "NLM-08",
+          "task": "Draw two body-bound force arrows for an action-reaction pair; reject cancellation on a single FBD",
+          "demand": "REPRESENT"
+        },
+        {
+          "competency": "NLM-06",
+          "task": "Write signed momentum arrows or states along a declared positive axis before and after an interaction",
+          "demand": "REPRESENT"
+        },
+        {
+          "competency": "NLM-11",
+          "task": "Interpret a v-t or p-t slope graph as acceleration/force, including negative slopes and axes",
+          "demand": "REPRESENT"
+        }
+      ]
+    },
+    "kinematics-1d-2d": {
+      "topic_id": "phy-kinematics-1d-2d",
+      "display_name": "Kinematics: 1D Motion, 2D Projectiles & Relative Frames",
+      "subtopic_family_count": 11,
+      "coordinate_conventions": {
+        "system": "1D/2D Cartesian with fixed ground origin (0,0)",
+        "axes": "x-axis horizontal along launch direction (+x rightward), y-axis vertical (+y upward, so a_y = -g)",
+        "sign_convention": "Upward positive, rightward positive. Gravity acceleration vector is strictly a = -g j.",
+        "units": "SI (Position in m, Velocity in m s^-1, Acceleration in m s^-2, Time in s, Angle in radians/degrees)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": false,
+        "diagram_types": [
+          "MOTION_GRAPH",
+          "TRAJECTORY_PARABOLA",
+          "RELATIVE_VELOCITY_TRIANGLE",
+          "COMPONENT_RESOLUTION_DIAGRAM"
+        ],
+        "svg_specifications": [
+          "Coordinate axes labeled with variable and unit: x (m), y (m), v (m/s), t (s)",
+          "Minimum SVG text font floor >= 14px on all axis labels, coordinate values, and annotations",
+          "Key landmark points (apex, half-height, impact, graph intercepts) marked with distinct circles (r >= 4)",
+          "In projectile diagrams, initial launch vector u must show resolved components u_x and u_y with dashed projection lines"
+        ]
+      },
+      "dimensional_signatures": {
+        "displacement": "[L]",
+        "velocity": "[L T^-1]",
+        "acceleration": "[L T^-2]",
+        "time": "[T]",
+        "radius_of_curvature": "[L]",
+        "dimensionless": [
+          "angle",
+          "trigonometric_ratio",
+          "ratio_of_heights",
+          "ratio_of_times"
+        ]
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_THETA_90_VERTICAL",
+        "LIMITING_CASE_THETA_0_HORIZONTAL",
+        "LIMITING_CASE_ZERO_GRAVITY",
+        "LIMITING_CASE_ZERO_VELOCITY",
+        "GALILEO_ODD_NUMBER_RATIO_CHECK",
+        "TIME_REVERSAL_SYMMETRY_CHECK"
+      ],
+      "subtopic_competency_map": {
+        "KIN-01": {
+          "title": "Distance vs Displacement Invariant",
+          "canonical_rule": "Distance is the scalar cumulative path length; displacement is the vector difference between final and initial positions: Delta r = r_final - r_initial.",
+          "scope_condition": "1D and 2D trajectories.",
+          "model_check": "Distance equals magnitude of displacement IF AND ONLY IF motion is along a straight line without reversal.",
+          "easy_mistake_to_make": "Equating distance with displacement magnitude when motion reverses direction.",
+          "core2_transfer_target": [
+            "PHYS-KIN-001"
+          ],
+          "pillar_ref": "P1"
+        },
+        "KIN-02": {
+          "title": "Average Speed vs Average Velocity",
+          "canonical_rule": "Average speed is total distance divided by total elapsed time; average velocity is total vector displacement divided by total time: v_avg = Delta r / Delta t.",
+          "scope_condition": "Any finite time interval.",
+          "model_check": "For closed round trips, average velocity is identically zero, whereas average speed is strictly positive.",
+          "easy_mistake_to_make": "Calculating average speed by averaging initial and final velocities in non-uniformly accelerated motion.",
+          "core2_transfer_target": [
+            "PHYS-KIN-010"
+          ],
+          "pillar_ref": "P2"
+        },
+        "KIN-03": {
+          "title": "Weighted Kinematic Averages",
+          "canonical_rule": "Equal-time intervals yield arithmetic mean v_avg = (v1 + v2)/2; equal-distance intervals yield harmonic mean v_avg = 2*v1*v2 / (v1 + v2).",
+          "scope_condition": "Piecewise uniform speed segments.",
+          "model_check": "Never use arithmetic mean when equal distances are covered at different speeds.",
+          "easy_mistake_to_make": "Using arithmetic average for equal distance segments.",
+          "core2_transfer_target": [
+            "PHYS-KIN-002"
+          ],
+          "pillar_ref": "P3"
+        },
+        "KIN-04": {
+          "title": "Signs, Direction & Acceleration Reversal",
+          "canonical_rule": "Sign of velocity indicates direction of motion; sign of acceleration indicates direction of velocity change; negative acceleration speeds up a body moving in the negative direction.",
+          "scope_condition": "1D motion along signed axis.",
+          "model_check": "Speeding up occurs when v and a have identical signs; slowing down occurs when v and a have opposing signs.",
+          "easy_mistake_to_make": "Assuming negative acceleration always means slowing down (deceleration).",
+          "core2_transfer_target": [
+            "PHYS-KIN-015"
+          ],
+          "pillar_ref": "P4"
+        },
+        "KIN-05": {
+          "title": "Constant Acceleration Equation Selection",
+          "canonical_rule": "The kinematic quad (v = u + at, s = ut + 1/2 at^2, v^2 = u^2 + 2as, s = (u+v)/2 * t) is valid IF AND ONLY IF acceleration is constant.",
+          "scope_condition": "Strictly uniform acceleration: da/dt = 0.",
+          "model_check": "Select the single kinematic equation that eliminates the unmeasured/unrequested parameter.",
+          "easy_mistake_to_make": "Applying constant-acceleration equations to non-uniform or variable-acceleration motion.",
+          "core2_transfer_target": [
+            "PHYS-KIN-004"
+          ],
+          "pillar_ref": "P3"
+        },
+        "KIN-06": {
+          "title": "Multiphase & Delayed-Start Motion",
+          "canonical_rule": "Complex motions must be partitioned into piecewise uniform acceleration intervals, matching final state of phase 1 to initial state of phase 2.",
+          "scope_condition": "Piecewise constant acceleration phases.",
+          "model_check": "For delayed start, adjust time coordinate: t_B = t_A - Delta t.",
+          "easy_mistake_to_make": "Using a single global equation across multiple acceleration regimes.",
+          "core2_transfer_target": [
+            "PHYS-KIN-018"
+          ],
+          "pillar_ref": "P4"
+        },
+        "KIN-07": {
+          "title": "Vertical Free Fall & Apex Invariants",
+          "canonical_rule": "Under gravity, acceleration is strictly a_y = -g throughout flight; at apex, vertical velocity vanishes (v_y = 0) while acceleration remains exactly -g.",
+          "scope_condition": "Near-Earth surface; neglect aerodynamic drag.",
+          "model_check": "Time of ascent equals time of descent to the same horizontal level: t_up = t_down = u/g.",
+          "easy_mistake_to_make": "Assuming acceleration is zero at the highest point (apex) of flight.",
+          "core2_transfer_target": [
+            "PHYS-KIN-003",
+            "PHYS-KIN-007"
+          ],
+          "pillar_ref": "P3"
+        },
+        "KIN-08": {
+          "title": "2D Projectile Component Decoupling",
+          "canonical_rule": "Perpendicular motions are completely independent and share only a single common parameter: elapsed time t.",
+          "scope_condition": "2D motion in uniform gravity field.",
+          "model_check": "Horizontal velocity u_x = u cos theta remains constant; vertical motion is free fall u_y = u sin theta under a_y = -g.",
+          "easy_mistake_to_make": "Believing horizontal velocity influences vertical flight time or rate of vertical fall.",
+          "core2_transfer_target": [
+            "PHYS-KIN-006",
+            "PHYS-KIN-014",
+            "PHYS-KIN-022",
+            "PHYS-KIN-023",
+            "PHYS-KIN-025"
+          ],
+          "pillar_ref": "P1"
+        },
+        "KIN-09": {
+          "title": "Projectile Trajectory & Flight Landmarks",
+          "canonical_rule": "Trajectory is a parabola y(x) = x tan theta - (g / (2 u^2 cos^2 theta)) x^2; flight time T = 2u sin theta / g; range R = u^2 sin 2theta / g.",
+          "scope_condition": "Launch and landing on horizontal plane.",
+          "model_check": "Complementary launch angles (theta and 90 deg - theta) yield identical horizontal ranges at equal launch speeds.",
+          "easy_mistake_to_make": "Using symmetric range formula when launch and landing heights are unequal.",
+          "core2_transfer_target": [
+            "PHYS-KIN-008",
+            "PHYS-KIN-009",
+            "PHYS-KIN-017",
+            "PHYS-KIN-021"
+          ],
+          "pillar_ref": "P4"
+        },
+        "KIN-10": {
+          "title": "Relative Velocity & Common Acceleration Cancellation",
+          "canonical_rule": "Relative velocity is v_AB = v_A - v_B; two projectiles in the same gravity field share common acceleration (a_A = a_B = -g), so relative acceleration is ZERO.",
+          "scope_condition": "Classical Galilean relative frames.",
+          "model_check": "Because a_rel = 0, the trajectory of one projectile as viewed from another projectile is a straight line at constant velocity.",
+          "easy_mistake_to_make": "Adding velocities algebraically without vector subtraction.",
+          "core2_transfer_target": [
+            "PHYS-KIN-011",
+            "PHYS-KIN-013",
+            "PHYS-KIN-016",
+            "PHYS-KIN-019",
+            "PHYS-KIN-020",
+            "PHYS-KIN-024"
+          ],
+          "pillar_ref": "P5"
+        },
+        "KIN-11": {
+          "title": "Motion Graphs & Geometric Calculus",
+          "canonical_rule": "Slope of position graph is velocity; slope of velocity graph is acceleration; area under velocity-time graph is displacement; area under acceleration-time graph is change in velocity.",
+          "scope_condition": "Continuous 1D motion graphs.",
+          "model_check": "Sharp corners on x-t graphs imply infinite acceleration (physically impossible in finite force regimes).",
+          "easy_mistake_to_make": "Confusing position graph height with velocity, or negative velocity with deceleration.",
+          "core2_transfer_target": [
+            "PHYS-KIN-005",
+            "PHYS-KIN-012"
+          ],
+          "pillar_ref": "P2"
+        }
+      },
+      "misconception_discriminators": [
+        {
+          "code": "MIS-KIN-APEX-ZERO-A",
+          "pattern": "Assuming instantaneous zero velocity at apex implies zero acceleration.",
+          "refutation": "Acceleration is rate of velocity change (dv/dt = -g), not velocity. Zero acceleration would mean the particle stops and hovers."
+        },
+        {
+          "code": "MIS-KIN-DIST-DISP",
+          "pattern": "Equating total distance with magnitude of displacement when direction reverses.",
+          "refutation": "Distance is cumulative path length; displacement is net position difference r_final - r_initial."
+        },
+        {
+          "code": "MIS-KIN-AVG-SPEED",
+          "pattern": "Calculating average speed as arithmetic average (v1 + v2)/2 for equal distance segments.",
+          "refutation": "Average speed is total distance over total time, yielding harmonic mean 2*v1*v2 / (v1 + v2)."
+        },
+        {
+          "code": "MIS-KIN-BULLET-DROP",
+          "pattern": "Believing horizontal launch speed extends vertical flight time compared to pure drop.",
+          "refutation": "Orthogonal motions are decoupled. Vertical acceleration is -g regardless of horizontal velocity."
+        },
+        {
+          "code": "MIS-KIN-GRAPH-CONFLATE",
+          "pattern": "Confusing position graph height with velocity, or negative velocity with deceleration.",
+          "refutation": "Velocity is the slope dx/dt, not position coordinate x. Negative velocity with positive slope represents slowing down in the reverse direction."
+        },
+        {
+          "code": "MIS-KIN-UCM-NO-ACCEL",
+          "pattern": "Claiming constant speed in circular motion implies zero acceleration.",
+          "refutation": "Velocity vector turns continuously, requiring inward normal centripetal acceleration a_c = v^2/r."
+        }
+      ],
+      "blueprint_refs": {
+        "core1a_ontology": "TEST/physics-research/blueprints/core1a_physics_kinematics_ontology.v1.json",
+        "core1b_reconstruction": "TEST/physics-research/blueprints/core1b_physics_kinematics_reconstruction.v1.json"
+      },
+      "canonical_reasoning_moves": {
+        "stage_1_choose": "Declare spatial origin x = 0 (or launch level y = 0), define positive coordinate direction (+), and synchronize clock zero t = 0.",
+        "stage_2_represent": "Construct UVATS 5-parameter state table, signed number line, or motion graph (x-t / v-t) capturing phase boundaries.",
+        "stage_3_connect": "Select the exact kinematic quad equation eliminating the unmeasured variable, or decouple orthogonal 2D components.",
+        "stage_4_execute_and_check": "Solve closed-form algebraic expressions and verify asymptotic limits (a -> 0, g -> 0, t -> 0) and dimensional homogeneity."
+      },
+      "first_move_atlas": [
+        {
+          "competency_id": "KIN-01",
+          "cue": "Reversing direction, turnaround instant, or zigzag path along a straight line",
+          "representation": "Signed 1D number line with start point x_i, turning coordinates x_turn, and end point x_f clearly marked",
+          "first_executable_move": "Write displacement Delta x = x_f - x_i; write distance s = sum |Delta x_k| by summing absolute segment lengths",
+          "anti_pattern": "Converting signed leg displacements to absolute values before computing net displacement"
+        },
+        {
+          "competency_id": "KIN-02",
+          "cue": "Complete round trip or returning to initial origin with known leg speeds",
+          "representation": "Trajectory phase strip with individual segment times t_k = d_k / v_k and total clock Delta t_tot = sum t_k",
+          "first_executable_move": "Immediately set net displacement Delta x = 0 to establish v_avg = 0; compute average speed s_avg = (total distance) / (total time)",
+          "anti_pattern": "Confusing average speed with average velocity magnitude on round trips where displacement vanishes"
+        },
+        {
+          "competency_id": "KIN-03",
+          "cue": "Equal distance segments or equal time intervals covered at different uniform speeds v1 and v2",
+          "representation": "Dual-segment diagram explicitly labeling equal interval variable (Delta t vs d) and calculating dependent parameter",
+          "first_executable_move": "For equal distances, write t_tot = d/v1 + d/v2 to deduce harmonic mean v_avg = 2*v1*v2 / (v1 + v2); for equal times, write arithmetic mean (v1 + v2)/2",
+          "anti_pattern": "Blindly computing the arithmetic mean (v1 + v2)/2 when equal distances are traversed"
+        },
+        {
+          "competency_id": "KIN-04",
+          "cue": "Particle moving with negative velocity u < 0 or experiencing negative acceleration a < 0",
+          "representation": "1D coordinate axis with signed velocity and acceleration arrows placed at particle position",
+          "first_executable_move": "Compare signs of v and a: if sgn(v) == sgn(a), the particle is speeding up; if sgn(v) != sgn(a), the particle is slowing down",
+          "anti_pattern": "Equating negative acceleration directly to deceleration without checking the sign of velocity"
+        },
+        {
+          "competency_id": "KIN-05",
+          "cue": "Uniform acceleration motion with one omitted or unrequested variable among {u, v, a, t, s}",
+          "representation": "UVATS 5-parameter state table listing known values, target quantity, and the single excluded parameter",
+          "first_executable_move": "Select the exact kinematic equation that omits the unrequested parameter (e.g., v^2 = u^2 + 2as when time t is unmentioned)",
+          "anti_pattern": "Solving multi-step quadratic systems for intermediate time t when a direct time-free equation exists"
+        },
+        {
+          "competency_id": "KIN-06",
+          "cue": "Multi-phase piecewise acceleration, delayed vehicle launch, or distance in the n-th second",
+          "representation": "Multi-segment timeline with boundary state continuity (v_1,end = u_2,start) and local clocks tau = t - t_delay",
+          "first_executable_move": "Carry forward boundary speed as initial velocity for next phase; for n-th second, apply s_n = u + 0.5*a*(2n - 1)",
+          "anti_pattern": "Applying a single global kinematic formula across multiple distinct acceleration intervals"
+        },
+        {
+          "competency_id": "KIN-07",
+          "cue": "Vertical toss under gravity, apex summit turnaround, or symmetrical free fall",
+          "representation": "Vertical axis +y upward with a_y = -g labeled continuously at launch, apex, and descent",
+          "first_executable_move": "Set vertical apex velocity v_top = 0 while preserving acceleration a_y = -g; apply v^2 = u^2 - 2gH to find H_max = u^2 / (2g)",
+          "anti_pattern": "Setting acceleration a = 0 at the highest point of flight where instantaneous velocity momentarily vanishes"
+        },
+        {
+          "competency_id": "KIN-08",
+          "cue": "2D projectile launched horizontally from elevated height or obliquely across level ground",
+          "representation": "2D Cartesian coordinate frame with independent 1D horizontal (a_x = 0) and vertical (a_y = -g) projections",
+          "first_executable_move": "Decouple into independent motions: x(t) = (u cos theta)*t and y(t) = (u sin theta)*t - 0.5*g*t^2, linked strictly by clock t",
+          "anti_pattern": "Believing horizontal velocity influences the vertical time of fall or gravitational acceleration"
+        },
+        {
+          "competency_id": "KIN-09",
+          "cue": "Parabolic trajectory equation, maximum range condition, or complementary launch angles",
+          "representation": "Parabolic path sketch showing apex coordinates (R/2, H_max), range landing (R, 0), and velocity vector tangents",
+          "first_executable_move": "Substitute t = x / (u cos theta) into y(t) to form trajectory equation y = x tan theta - g*x^2 / (2*u^2*cos^2 theta)",
+          "anti_pattern": "Using symmetric ground-to-ground range formula R = u^2 sin 2theta / g when launch and landing heights are unequal"
+        },
+        {
+          "competency_id": "KIN-10",
+          "cue": "Two bodies in simultaneous flight under gravity or relative pursuit/interception",
+          "representation": "Relative reference frame anchored on body B with relative position r_rel = r_A - r_B and relative velocity v_rel = v_A - v_B",
+          "first_executable_move": "Notice common acceleration cancellation: a_rel = a_A - a_B = (-g) - (-g) = 0, reducing relative motion to a constant-velocity straight line",
+          "anti_pattern": "Retaining gravitational acceleration terms in the relative trajectory equation of two freely falling projectiles"
+        },
+        {
+          "competency_id": "KIN-11",
+          "cue": "Motion graphs (x-t, v-t, a-t), piecewise linear curves, or physical graph consistency checks",
+          "representation": "Graph geometry inspection: identify curve tangent slope as derivative and signed area under curve as definite integral",
+          "first_executable_move": "Extract physical rates: slope of x-t is v; slope of v-t is a; signed area under v-t is displacement Delta x; area under a-t is Delta v",
+          "anti_pattern": "Confusing the vertical height coordinate of an x-t graph with the instantaneous speed of the particle"
+        }
+      ]
+    },
+    "work-energy-power": {
+      "topic_id": "phy-work-energy-power",
+      "display_name": "Work, Energy & Power: Conservative Fields & Potential Wells",
+      "subtopic_family_count": 10,
+      "coordinate_conventions": {
+        "system": "1D/2D Cartesian with declared potential energy datum U = 0",
+        "axes": "x-axis along displacement direction; vertical elevation y-axis upward for gravity",
+        "sign_convention": "Work is positive when force has an acute component along displacement (cos theta > 0). Potential energy increases against the conservative force (dU = -F_c dx).",
+        "units": "SI (Work & Energy in Joules = N m = kg m^2 s^-2, Power in Watts = J s^-1 = kg m^2 s^-3, Spring constant in N m^-1 = kg s^-2)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": false,
+        "diagram_types": [
+          "POTENTIAL_WELL_CURVE",
+          "FORCE_DISPLACEMENT_GRAPH",
+          "SPRING_MASS_DIAGRAM",
+          "ENERGY_BAR_CHART"
+        ],
+        "svg_specifications": [
+          "Coordinate axes labeled with variable and unit: x (m), F (N), U (J), K (J), P (W)",
+          "Minimum SVG text font floor >= 14px on all axis labels, coordinate values, and annotations",
+          "Potential energy curves U(x) must show total mechanical energy line E and turning points where E = U(x)",
+          "Force-displacement graphs must distinguish positive area above axis from negative area below axis"
+        ]
+      },
+      "dimensional_signatures": {
+        "work": "[M L^2 T^-2]",
+        "kinetic_energy": "[M L^2 T^-2]",
+        "potential_energy": "[M L^2 T^-2]",
+        "power": "[M L^2 T^-3]",
+        "spring_constant": "[M T^-2]",
+        "dimensionless": [
+          "mechanical_efficiency",
+          "coefficient_of_restitution",
+          "energy_ratio"
+        ]
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_ZERO_DISPLACEMENT",
+        "LIMITING_CASE_PERPENDICULAR_FORCE",
+        "LIMITING_CASE_SMOOTH_INTERFACE_MU_ZERO",
+        "LIMITING_CASE_INFINITE_MASS_MOMENTUM",
+        "WORK_ENERGY_THEOREM_CONSISTENCY",
+        "POTENTIAL_DERIVATIVE_FORCE_CONSISTENCY"
+      ],
+      "subtopic_competency_map": {
+        "WEP-01": {
+          "title": "Definition of Mechanical Work",
+          "canonical_rule": "Work by a constant force is the scalar product W = F * d * cos theta; perpendicular forces (cos 90 deg = 0) perform identically zero work.",
+          "scope_condition": "Constant force and straight displacement.",
+          "model_check": "Centripetal force is strictly perpendicular to velocity (F_c perp v), doing zero work and keeping kinetic energy constant.",
+          "easy_mistake_to_make": "Assuming centripetal force does work because it redirects the path.",
+          "core2_transfer_target": [
+            "PHYS-WEP-001",
+            "PHYS-WEP-002"
+          ],
+          "pillar_ref": "P1"
+        },
+        "WEP-02": {
+          "title": "Work by Variable Forces & Spring Integration",
+          "canonical_rule": "Work by a variable force equals the integral W = int F(x) dx (area under F-x curve); Hookean spring work is W = 1/2 k x^2.",
+          "scope_condition": "1D variable force.",
+          "model_check": "Spring force increases linearly from 0 to kx, so average force is 1/2 kx, producing triangular area 1/2 kx^2.",
+          "easy_mistake_to_make": "Multiplying maximum spring force by displacement: W = F_max * x = kx^2.",
+          "core2_transfer_target": [
+            "PHYS-WEP-005",
+            "PHYS-WEP-016"
+          ],
+          "pillar_ref": "P2"
+        },
+        "WEP-03": {
+          "title": "Work-Energy Theorem",
+          "canonical_rule": "The net work done by ALL forces acting on a body equals its change in kinetic energy: W_net = Delta K = 1/2 m v_f^2 - 1/2 m v_i^2.",
+          "scope_condition": "Valid in any inertial reference frame across both conservative and non-conservative forces.",
+          "model_check": "W_net includes conservative forces, non-conservative friction, and external applied forces.",
+          "easy_mistake_to_make": "Equating work done by a single force to total change in kinetic energy when other forces act.",
+          "core2_transfer_target": [
+            "PHYS-WEP-007",
+            "PHYS-WEP-011",
+            "PHYS-WEP-022"
+          ],
+          "pillar_ref": "P2"
+        },
+        "WEP-04": {
+          "title": "Conservative Forces & Path Independence",
+          "canonical_rule": "A force is conservative if work done around any closed loop is zero (oint F . dr = 0), or equivalently, work between two points is path-independent.",
+          "scope_condition": "Conservative vector fields (gravity, ideal spring, electrostatic).",
+          "model_check": "Non-conservative forces (kinetic friction, air drag) dissipate mechanical energy into heat; work depends on actual path length.",
+          "easy_mistake_to_make": "Assuming friction work is path-independent.",
+          "core2_transfer_target": [
+            "PHYS-WEP-023"
+          ],
+          "pillar_ref": "P3"
+        },
+        "WEP-05": {
+          "title": "Gravitational & Elastic Potential Energy Wells",
+          "canonical_rule": "Potential energy is defined only for conservative forces via Delta U = -W_c; near Earth U = mgh; for springs U = 1/2 kx^2.",
+          "scope_condition": "Declared reference datum where U = 0.",
+          "model_check": "Only potential energy differences Delta U have physical meaning; absolute value depends on chosen arbitrary datum.",
+          "easy_mistake_to_make": "Treating potential energy as having an absolute intrinsic value without datum definition.",
+          "core2_transfer_target": [
+            "PHYS-WEP-006",
+            "PHYS-WEP-017"
+          ],
+          "pillar_ref": "P4"
+        },
+        "WEP-06": {
+          "title": "Conservative Force as Negative Potential Gradient",
+          "canonical_rule": "In 1D, conservative force is the negative derivative of potential energy: F(x) = -dU/dx; equilibrium occurs where dU/dx = 0.",
+          "scope_condition": "1D potential energy curves U(x).",
+          "model_check": "Stable equilibrium: d^2U/dx^2 > 0 (potential minimum); Unstable equilibrium: d^2U/dx^2 < 0 (potential maximum).",
+          "easy_mistake_to_make": "Equating force directly to potential energy U(x) instead of its negative spatial derivative.",
+          "core2_transfer_target": [
+            "PHYS-WEP-008",
+            "PHYS-WEP-013",
+            "PHYS-WEP-025"
+          ],
+          "pillar_ref": "P4"
+        },
+        "WEP-07": {
+          "title": "Mechanical Energy Conservation & Turning Points",
+          "canonical_rule": "In an isolated system with only conservative forces, total mechanical energy is conserved: E = K + U = const.",
+          "scope_condition": "Zero non-conservative work: W_nc = 0.",
+          "model_check": "Motion is bounded in regions where E >= U(x); turning points occur where E = U(x) and kinetic energy vanishes (K = 0).",
+          "easy_mistake_to_make": "Assuming energy is conserved when non-conservative friction is active.",
+          "core2_transfer_target": [
+            "PHYS-WEP-010",
+            "PHYS-WEP-012",
+            "PHYS-WEP-018",
+            "PHYS-WEP-019",
+            "PHYS-WEP-020",
+            "PHYS-WEP-021"
+          ],
+          "pillar_ref": "P5"
+        },
+        "WEP-08": {
+          "title": "Power as Rate of Energy Transfer",
+          "canonical_rule": "Instantaneous power is P = dW/dt = F . v; average power is P_avg = W_total / Delta t.",
+          "scope_condition": "Mechanical work and energy transfer.",
+          "model_check": "Distinguish between total work in Joules and delivery rate in Watts: a low-power engine running long can do more total work than a high-power engine running briefly.",
+          "easy_mistake_to_make": "Confusing total work (Joules) with power (Watts).",
+          "core2_transfer_target": [
+            "PHYS-WEP-004",
+            "PHYS-WEP-009",
+            "PHYS-WEP-015",
+            "PHYS-WEP-024"
+          ],
+          "pillar_ref": "P1"
+        },
+        "WEP-09": {
+          "title": "Non-Holonomic Friction Work in Multi-Body Systems",
+          "canonical_rule": "Kinetic friction does negative work on total system mechanical energy, but can do POSITIVE work on an individual accelerating component body.",
+          "scope_condition": "Coupled bodies or conveyor belts.",
+          "model_check": "A box placed on a moving conveyor belt accelerates due to forward kinetic friction, which does positive work on the box in the lab frame.",
+          "easy_mistake_to_make": "Believing friction can never do positive work on any individual body.",
+          "core2_transfer_target": [
+            "PHYS-WEP-014"
+          ],
+          "pillar_ref": "P3"
+        },
+        "WEP-10": {
+          "title": "Momentum vs Kinetic Energy Scaling",
+          "canonical_rule": "Kinetic energy relates to momentum via K = p^2 / (2m); for equal momentum, kinetic energy is inversely proportional to mass.",
+          "scope_condition": "Non-relativistic particle dynamics.",
+          "model_check": "When a gun fires a bullet, gun and bullet have equal and opposite momentum (p_g = p_b), but the light bullet carries vastly greater kinetic energy.",
+          "easy_mistake_to_make": "Assuming two objects with equal momentum must carry equal kinetic energy.",
+          "core2_transfer_target": [
+            "PHYS-WEP-003"
+          ],
+          "pillar_ref": "P5"
+        }
+      },
+      "misconception_discriminators": [
+        {
+          "code": "MIS-WEP-CENTRIPETAL-WORK",
+          "pattern": "Believing centripetal force does work because it continuously redirects the body.",
+          "refutation": "Centripetal force is strictly perpendicular to velocity (F_c perp v => F_c . dr = 0), doing zero work and leaving kinetic energy unchanged."
+        },
+        {
+          "code": "MIS-WEP-POTENTIAL-ABSOLUTE",
+          "pattern": "Treating potential energy as having an absolute intrinsic value without datum definition.",
+          "refutation": "Potential energy is physically meaningful only through differences Delta U = -W_c. The zero level U = 0 is an arbitrary coordinate convention."
+        },
+        {
+          "code": "MIS-WEP-POWER-WORK-CONFUSION",
+          "pattern": "Confusing total energy transferred (work in Joules) with rate of transfer (power in Watts).",
+          "refutation": "Power is dW/dt. A low-power machine running for a long duration can do vastly more total work than a high-power machine running for a microsecond."
+        },
+        {
+          "code": "MIS-WEP-SPRING-WORK-LINEAR",
+          "pattern": "Assuming spring work equals F_max * x = kx^2 instead of 0.5*k*x^2.",
+          "refutation": "Spring force varies linearly from 0 to kx. The work integral is int_0^x kx' dx' = 0.5 * k * x^2 (half the bounding rectangle)."
+        },
+        {
+          "code": "MIS-WEP-FRICTION-ALWAYS-DISSIPATES",
+          "pattern": "Believing friction can never do positive work on any individual body.",
+          "refutation": "Kinetic friction does positive work on a body that it accelerates forward (e.g. box placed on moving conveyor belt, top block on moving cart)."
+        },
+        {
+          "code": "MIS-WEP-MOMENTUM-KINETIC-CONFUSION",
+          "pattern": "Assuming two objects with equal momentum must possess equal kinetic energy.",
+          "refutation": "K = p^2 / (2m). For equal momentum, kinetic energy is inversely proportional to mass; the lighter object carries vastly greater kinetic energy."
+        }
+      ]
+    },
+    "gravitation-orbital-motion": {
+      "topic_id": "phy-grav-universal-law",
+      "display_name": "Universal Gravitation, Kepler's Laws & Orbital Mechanics",
+      "subtopic_family_count": 10,
+      "coordinate_conventions": {
+        "system": "Spherical / Polar coordinates (r, theta) centered at primary body center of mass",
+        "datum": "Gravitational potential datum strictly at infinity: U(r -> infinity) = 0, so U(r) = -G M m / r is universally negative for bound systems",
+        "sign_convention": "Radial unit vector r_hat points outward from center; gravitational force is strictly attractive: F_g = - (G M m / r^2) r_hat",
+        "units": "SI (Distance in m, Mass in kg, Gravitational constant G in N m^2 kg^-2 = m^3 kg^-1 s^-2, Field in m s^-2, Potential in J kg^-1 = m^2 s^-2)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": false,
+        "diagram_types": [
+          "ORBITAL_ELLIPSE_DIAGRAM",
+          "GRAVITATIONAL_FIELD_RADIUS_GRAPH",
+          "POTENTIAL_WELL_CURVE",
+          "TIDAL_BULGE_DECOMPOSITION"
+        ],
+        "svg_specifications": [
+          "Coordinate axes labeled: r (m), g (m/s^2), U (J), v (m/s)",
+          "Minimum SVG text font floor >= 14px on all labels and annotations",
+          "Primary central mass, orbiting satellite/planet, and focal points clearly distinguished",
+          "Inside vs outside Earth field profiles clearly marked with boundary at r = R"
+        ]
+      },
+      "dimensional_signatures": {
+        "gravitational_constant": "[M^-1 L^3 T^-2]",
+        "gravitational_field": "[L T^-2]",
+        "gravitational_potential": "[L^2 T^-2]",
+        "potential_energy": "[M L^2 T^-2]",
+        "orbital_velocity": "[L T^-1]",
+        "escape_velocity": "[L T^-1]",
+        "areal_velocity": "[L^2 T^-1]"
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_INFINITE_SEPARATION",
+        "LIMITING_CASE_SHELL_THEOREM_CENTER_ZERO",
+        "KEPLER_THIRD_LAW_SCALING",
+        "VIRIAL_THEOREM_CONSISTENCY"
+      ],
+      "subtopic_competency_map": {
+        "GRAV-01": {
+          "title": "Newton's Universal Inverse-Square Law",
+          "canonical_rule": "Every point mass attracts every other point mass with force F = G * m1 * m2 / r^2; Third law pairing |F_12| = |F_21| holds regardless of mass disparity.",
+          "scope_condition": "Point masses and spherically symmetric mass distributions in non-relativistic regimes.",
+          "model_check": "Earth attracts an apple with the exact same force magnitude that the apple attracts the Earth.",
+          "easy_mistake_to_make": "Assuming a massive planet exerts a greater gravitational force than a smaller attracted object.",
+          "core2_transfer_target": [
+            "PHYS-GRAV-001",
+            "PHYS-GRAV-002"
+          ],
+          "pillar_ref": "P1"
+        },
+        "GRAV-02": {
+          "title": "Surface Gravity & Proportional Scaling",
+          "canonical_rule": "Acceleration due to gravity at surface is g_0 = GM/R^2 = 4/3 pi G rho R; scaling depends on mass over radius squared.",
+          "scope_condition": "Spherical celestial bodies with uniform or radially symmetric density rho(r).",
+          "model_check": "Doubling mass and doubling radius halves surface gravity: 2 / 2^2 = 1/2.",
+          "easy_mistake_to_make": "Scaling surface gravity linearly with radius or mass without squaring radius.",
+          "core2_transfer_target": [
+            "PHYS-GRAV-003",
+            "PHYS-GRAV-004"
+          ],
+          "pillar_ref": "P1"
+        },
+        "GRAV-03": {
+          "title": "Altitude Variation of Gravity",
+          "canonical_rule": "At altitude h above surface, exact gravity is g(h) = g_0 * (R / (R + h))^2; linear binomial approximation 1 - 2h/R holds strictly for h << R.",
+          "scope_condition": "Exterior gravitational field (r >= R).",
+          "model_check": "At h = R, gravity is exactly 1/4 g_0; binomial approximation yields 1 - 2(1) = -1 (completely invalid).",
+          "easy_mistake_to_make": "Using the small-altitude linear approximation for large planetary altitudes.",
+          "core2_transfer_target": [
+            "PHYS-GRAV-006",
+            "PHYS-GRAV-009"
+          ],
+          "pillar_ref": "P2"
+        },
+        "GRAV-04": {
+          "title": "Newton's Shell Theorem & Interior Depth Field",
+          "canonical_rule": "A uniform spherical shell exerts zero net force inside; inside a uniform solid sphere, field decreases linearly g(d) = g_0(1 - d/R) = (GM/R^3)*r to zero at the center.",
+          "scope_condition": "Uniform density solid sphere.",
+          "model_check": "Only the enclosed core mass M(r) = M*(r/R)^3 attracts; outer layers cancel to zero by solid angle symmetry.",
+          "easy_mistake_to_make": "Assuming gravity increases to infinity as one descends toward Earth's center according to 1/r^2.",
+          "core2_transfer_target": [
+            "PHYS-GRAV-005",
+            "PHYS-GRAV-012"
+          ],
+          "pillar_ref": "P3"
+        },
+        "GRAV-05": {
+          "title": "Earth Tunnel Simple Harmonic Motion",
+          "canonical_rule": "A particle in an evacuated frictionless tunnel drilled through uniform Earth executes simple harmonic motion with period T = 2pi * sqrt(R/g_0) approx 84.6 min, invariant across all chords.",
+          "scope_condition": "Uniform Earth density; frictionless evacuated tunnel.",
+          "model_check": "Along any chord tunnel, the transverse normal force cancels, leaving F_x = -(mg_0/R)*x with identical effective stiffness k = mg_0/R.",
+          "easy_mistake_to_make": "Assuming a chord tunnel has a different period because it is shorter than a diametrical tunnel.",
+          "core2_transfer_target": [
+            "PHYS-GRAV-013",
+            "PHYS-GRAV-014"
+          ],
+          "pillar_ref": "P3"
+        },
+        "GRAV-06": {
+          "title": "Gravitational Potential Energy Well",
+          "canonical_rule": "With datum U(infinity) = 0, gravitational potential energy is strictly negative U(r) = -GMm/r for all bound states; work to lift mass to h = R is Delta U = 1/2 mg_0 R.",
+          "scope_condition": "Asymptotically flat space; datum at infinity.",
+          "model_check": "Negative sign signifies bound state; external agent must inject positive energy to separate masses to infinity.",
+          "easy_mistake_to_make": "Using flat-Earth W = mgh = mg_0 R at planetary altitudes where field dilutes.",
+          "core2_transfer_target": [
+            "PHYS-GRAV-010",
+            "PHYS-GRAV-015",
+            "PHYS-GRAV-022"
+          ],
+          "pillar_ref": "P4"
+        },
+        "GRAV-07": {
+          "title": "Kepler's Second Law & Angular Momentum Conservation",
+          "canonical_rule": "Under central gravity, torque is zero (tau = r x F = 0), so angular momentum is conserved, ensuring constant areal velocity dA/dt = L/(2m) and speed reciprocity r_p * v_p = r_a * v_a.",
+          "scope_condition": "Central inverse-square force.",
+          "model_check": "Orbital speed is strictly maximum at perihelion (closest) and minimum at aphelion (farthest).",
+          "easy_mistake_to_make": "Assuming planets travel at uniform speed in elliptical orbits.",
+          "core2_transfer_target": [
+            "PHYS-GRAV-007"
+          ],
+          "pillar_ref": "P2"
+        },
+        "GRAV-08": {
+          "title": "Kepler's Third Law Harmonic Scaling",
+          "canonical_rule": "Orbital period squared is proportional to semi-major axis cubed: T^2 = (4pi^2 / GM) * a^3; ratio T_1^2 / T_2^2 = a_1^3 / a_2^3.",
+          "scope_condition": "Two-body Keplerian system dominated by central mass M >> m.",
+          "model_check": "Period scaling follows power 3/2: T proportional to r^(1.5).",
+          "easy_mistake_to_make": "Assuming orbital period scales linearly with orbital radius.",
+          "core2_transfer_target": [
+            "PHYS-GRAV-008",
+            "PHYS-GRAV-017"
+          ],
+          "pillar_ref": "P4"
+        },
+        "GRAV-09": {
+          "title": "Orbital Speed, Escape Speed & Virial Theorem",
+          "canonical_rule": "Circular orbital velocity is v_orb = sqrt(GM/r); escape velocity is v_esc = sqrt(2) * v_orb; total energy is E = -K = 1/2 U; atmospheric drag causes inward spiral that paradoxically increases speed.",
+          "scope_condition": "Bound Keplerian orbits.",
+          "model_check": "Escape velocity is 41.4% higher than circular orbital velocity; escaping with residual speed yields v_inf = sqrt(v_0^2 - v_esc^2).",
+          "easy_mistake_to_make": "Confusing circular orbital velocity with parabolic escape velocity.",
+          "core2_transfer_target": [
+            "PHYS-GRAV-011",
+            "PHYS-GRAV-016",
+            "PHYS-GRAV-018",
+            "PHYS-GRAV-025"
+          ],
+          "pillar_ref": "P5"
+        },
+        "GRAV-10": {
+          "title": "Multi-Body Gravity, Cavities & Tides",
+          "canonical_rule": "Binary stars orbit common center of mass with identical period T = 2pi*sqrt(d^3 / G(m1+m2)); field inside an off-center spherical cavity is strictly uniform g_cav = -4/3 pi G rho d; tidal acceleration scales as 1/d^3 producing two daily bulges.",
+          "scope_condition": "Multi-body configurations and differential field gradients.",
+          "model_check": "Tides are differential (dg/dd proportional to 1/d^3), pulling near water toward Moon and pulling Earth away from far water, creating two symmetric bulges.",
+          "easy_mistake_to_make": "Believing tides pull only on the near side of Earth or that cavity field is non-uniform.",
+          "core2_transfer_target": [
+            "PHYS-GRAV-019",
+            "PHYS-GRAV-020",
+            "PHYS-GRAV-021",
+            "PHYS-GRAV-023",
+            "PHYS-GRAV-024"
+          ],
+          "pillar_ref": "P5"
+        }
+      },
+      "misconception_discriminators": [
+        {
+          "code": "MIS-GRAV-ZERO-G-IN-SPACE",
+          "pattern": "Believing astronauts in orbit experience zero gravity because gravity does not reach space.",
+          "refutation": "Gravity at 400 km ISS orbit is still ~8.8 m/s^2 (~90% of surface g). Weightlessness is free-fall apparent weightlessness where normal contact force N = 0."
+        },
+        {
+          "code": "MIS-GRAV-INTERIOR-INVERSE-SQUARE",
+          "pattern": "Assuming gravity increases without bound as one descends toward the Earth's center according to 1/r^2.",
+          "refutation": "By Newton's Shell Theorem, only mass enclosed within radius r contributes; field decreases linearly g(r) = (GM/R^3)*r to zero at the center."
+        },
+        {
+          "code": "MIS-GRAV-ESCAPE-VS-ORBIT",
+          "pattern": "Confusing circular orbital velocity v_orb = sqrt(GM/r) with parabolic escape velocity v_esc = sqrt(2GM/r).",
+          "refutation": "Escape velocity is larger by factor sqrt(2) approx 1.414; orbital velocity yields a bound closed circular orbit, whereas escape velocity permanently unbinds the body to r -> infinity with zero residual speed."
+        },
+        {
+          "code": "MIS-GRAV-KEPLER-SPEED-UNIFORM",
+          "pattern": "Assuming planets travel at uniform speed in elliptical orbits.",
+          "refutation": "By Kepler's 2nd Law (conservation of angular momentum L = m r v_perp), areal velocity is constant, so linear speed is maximum at perihelion and minimum at aphelion."
+        },
+        {
+          "code": "MIS-GRAV-TIDES-ONE-SIDED",
+          "pattern": "Believing the Moon attracts water only on the near side of Earth, producing a single daily tidal bulge.",
+          "refutation": "Differential gravitational tidal gradient pulls near water more than solid Earth, and pulls solid Earth more than far water, producing two symmetric tidal bulges."
+        },
+        {
+          "code": "MIS-GRAV-MASS-WEIGHT-CONFUSION",
+          "pattern": "Conflating invariant inertial mass m with local gravitational force W = mg.",
+          "refutation": "Mass is an intrinsic scalar measure of inertia independent of location; weight is the downward gravitational force that varies with local field g."
+        }
+      ]
+    },
+    "fluids-hydrostatics": {
+      "topic_id": "phy-fluid-bernoulli-equation",
+      "display_name": "Fluids: Hydrostatics, Pascal's Principle & Archimedes' Law",
+      "subtopic_family_count": 10,
+      "coordinate_conventions": {
+        "system": "1D/2D vertical depth axis h measured downward from free liquid surface, or elevation y measured upward",
+        "pressure_nature": "Scalar isotropic pressure acting perpendicular to any immersed surface: P = P_0 + rho * g * h",
+        "sign_convention": "Downward depth h increases hydrostatic pressure; upward normal buoyant force opposes gravity",
+        "units": "SI (Pressure in Pa = N m^-2 = kg m^-1 s^-2, Density in kg m^-3, Surface tension in N m^-1 = kg s^-2, Volume in m^3)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": true,
+        "diagram_types": [
+          "U_TUBE_MANOMETER",
+          "SUBMERGED_BODY_FBD",
+          "HYDRAULIC_PRESS_DIAGRAM",
+          "HYDROSTATIC_PRESSURE_PROFILE"
+        ],
+        "svg_specifications": [
+          "Liquid levels, interfaces, and free surfaces marked with distinct color/pattern",
+          "Minimum SVG text font floor >= 14px on all labels and annotations",
+          "Buoyant force vector F_B and weight vector W displayed with proper points of action (center of buoyancy vs center of gravity)",
+          "Hydrostatic pressure arrows against vertical walls displayed perpendicular to surface with linearly increasing magnitude"
+        ]
+      },
+      "dimensional_signatures": {
+        "pressure": "[M L^-1 T^-2]",
+        "density": "[M L^-3]",
+        "buoyant_force": "[M L T^-2]",
+        "surface_tension": "[M T^-2]",
+        "volume": "[L^3]",
+        "dimensionless": [
+          "specific_gravity",
+          "submerged_fraction"
+        ]
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_ZERO_GRAVITY",
+        "LIMITING_CASE_EQUAL_DENSITIES_NEUTRAL_BUOYANCY",
+        "LIMITING_CASE_ZERO_SURFACE_AREA",
+        "HYDROSTATIC_PRESSURE_ISOTROPY"
+      ],
+      "subtopic_competency_map": {
+        "FLUID-01": {
+          "title": "Fluid Pressure as Isotropic Scalar",
+          "canonical_rule": "Pressure P = dF_perp / dA is a scalar acting isotropically with equal magnitude in all spatial directions at a given depth.",
+          "scope_condition": "Static fluids in thermal equilibrium.",
+          "model_check": "Pressure force always acts strictly perpendicular to any immersed surface boundary regardless of surface orientation.",
+          "easy_mistake_to_make": "Treating pressure as a directional vector rather than an isotropic scalar.",
+          "core2_transfer_target": [
+            "PHYS-FLUID-001",
+            "PHYS-FLUID-002"
+          ],
+          "pillar_ref": "P1"
+        },
+        "FLUID-02": {
+          "title": "Hydrostatic Depth Law & Paradox",
+          "canonical_rule": "Hydrostatic pressure P(h) = P_0 + rho * g * h depends strictly on vertical column depth h and fluid density rho, completely independent of container geometry or lateral wall slope.",
+          "scope_condition": "Incompressible fluids in uniform gravity.",
+          "model_check": "Containers of different shapes with identical base areas and liquid depths experience identical bottom pressures and base forces (Hydrostatic Paradox).",
+          "easy_mistake_to_make": "Assuming liquid pressure at container bottom depends on container shape or total liquid volume.",
+          "core2_transfer_target": [
+            "PHYS-FLUID-003",
+            "PHYS-FLUID-004"
+          ],
+          "pillar_ref": "P1"
+        },
+        "FLUID-03": {
+          "title": "Pascal's Principle & Hydraulic Leverage",
+          "canonical_rule": "Pressure applied to an enclosed incompressible fluid is transmitted undiminished to every portion of the fluid and container walls: Delta P_1 = Delta P_2 => F_1 / A_1 = F_2 / A_2.",
+          "scope_condition": "Enclosed, incompressible fluids in static equilibrium.",
+          "model_check": "Work done on input piston equals work done by output piston (F1 * d1 = F2 * d2); mechanical advantage multiplies force while conserving energy.",
+          "easy_mistake_to_make": "Assuming hydraulic press creates energy rather than multiplying force through displacement trade-off.",
+          "core2_transfer_target": [
+            "PHYS-FLUID-005",
+            "PHYS-FLUID-006"
+          ],
+          "pillar_ref": "P2"
+        },
+        "FLUID-04": {
+          "title": "U-Tube Manometry & Immiscible Interfaces",
+          "canonical_rule": "In connected communicating vessels, continuous liquid of the same density equilibrates at equal horizontal levels; for immiscible liquids, column heights satisfy rho_1 * h_1 = rho_2 * h_2.",
+          "scope_condition": "Static equilibrium in connected open tubes.",
+          "model_check": "Equate pressures at the horizontal datum passing through the lowest common interface.",
+          "easy_mistake_to_make": "Equating liquid heights directly without weighting by fluid densities.",
+          "core2_transfer_target": [
+            "PHYS-FLUID-007",
+            "PHYS-FLUID-008"
+          ],
+          "pillar_ref": "P3"
+        },
+        "FLUID-05": {
+          "title": "Archimedes' Law & Buoyant Force Origin",
+          "canonical_rule": "Buoyant force F_B = rho_fluid * V_submerged * g originates from the net upward difference of hydrostatic pressures between bottom and top immersed surfaces.",
+          "scope_condition": "Immersed bodies in static fluid under gravity.",
+          "model_check": "Buoyant force equals the weight of displaced fluid; once completely submerged, F_B is constant and independent of depth in incompressible liquid.",
+          "easy_mistake_to_make": "Believing buoyant force increases as an object sinks deeper into an incompressible liquid.",
+          "core2_transfer_target": [
+            "PHYS-FLUID-009",
+            "PHYS-FLUID-010",
+            "PHYS-FLUID-023"
+          ],
+          "pillar_ref": "P4"
+        },
+        "FLUID-06": {
+          "title": "Floating Equilibrium & Submerged Fraction",
+          "canonical_rule": "A floating body equilibrates where its total weight equals buoyant force: rho_body * V_total * g = rho_fluid * V_submerged * g => V_submerged / V_total = rho_body / rho_fluid.",
+          "scope_condition": "Free floating body with rho_body <= rho_fluid.",
+          "model_check": "The submerged fraction equals the specific gravity ratio rho_body / rho_fluid; melting ice floating in water leaves liquid level unchanged.",
+          "easy_mistake_to_make": "Inverting the ratio to V_sub / V_tot = rho_fluid / rho_body.",
+          "core2_transfer_target": [
+            "PHYS-FLUID-011",
+            "PHYS-FLUID-012",
+            "PHYS-FLUID-022"
+          ],
+          "pillar_ref": "P5"
+        },
+        "FLUID-07": {
+          "title": "Apparent Weight & Scale Readings",
+          "canonical_rule": "Apparent weight of a submerged body is W_app = W - F_B = (rho_body - rho_fluid) * V * g; normal force reading from a support scale drops by F_B.",
+          "scope_condition": "Bodies suspended or resting on scales inside fluid.",
+          "model_check": "If rho_body = rho_fluid (neutral buoyancy), apparent weight is identically zero.",
+          "easy_mistake_to_make": "Assuming an object loses mass when submerged in liquid.",
+          "core2_transfer_target": [
+            "PHYS-FLUID-013",
+            "PHYS-FLUID-014",
+            "PHYS-FLUID-025"
+          ],
+          "pillar_ref": "P5"
+        },
+        "FLUID-08": {
+          "title": "Newton's Third Law in Buoyancy",
+          "canonical_rule": "If a fluid exerts upward buoyant force F_B on an object, the object exerts an equal downward reaction force F_B on the fluid, increasing a base scale reading by exactly F_B.",
+          "scope_condition": "Beakers resting on weighing scales containing suspended immersed bodies.",
+          "model_check": "Suspended mass decreases tension scale by F_B and increases beaker scale reading by F_B.",
+          "easy_mistake_to_make": "Assuming a suspended object exerts no downward force on the beaker containing the fluid.",
+          "core2_transfer_target": [
+            "PHYS-FLUID-015",
+            "PHYS-FLUID-016"
+          ],
+          "pillar_ref": "P4"
+        },
+        "FLUID-09": {
+          "title": "Accelerating Fluids & Effective Gravity",
+          "canonical_rule": "In an accelerating fluid container, the free surface tilts perpendicular to the effective gravity vector g_eff = g - a; surface angle satisfies tan theta = a_x / g.",
+          "scope_condition": "Rigid body fluid acceleration without sloshing turbulence.",
+          "model_check": "In free-falling fluid (a = g downward), g_eff = 0, so hydrostatic pressure differences and buoyant forces vanish identically.",
+          "easy_mistake_to_make": "Assuming buoyant force persists in free fall.",
+          "core2_transfer_target": [
+            "PHYS-FLUID-017",
+            "PHYS-FLUID-018",
+            "PHYS-FLUID-021"
+          ],
+          "pillar_ref": "P2"
+        },
+        "FLUID-10": {
+          "title": "Surface Energy & Capillary Invariants",
+          "canonical_rule": "Surface tension gamma = dF/dL = dW/dA produces excess pressure Delta P = 2gamma / R across spherical interfaces and capillary rise h = 2gamma cos theta / (rho g r).",
+          "scope_condition": "Narrow cylindrical capillary tubes and curved liquid interfaces.",
+          "model_check": "Jurin's law: capillary height is inversely proportional to tube radius (h * r = const).",
+          "easy_mistake_to_make": "Confusing excess pressure of a liquid droplet (1 surface: 2gamma/R) with a soap bubble (2 surfaces: 4gamma/R).",
+          "core2_transfer_target": [
+            "PHYS-FLUID-019",
+            "PHYS-FLUID-020",
+            "PHYS-FLUID-024"
+          ],
+          "pillar_ref": "P3"
+        }
+      },
+      "misconception_discriminators": [
+        {
+          "code": "MIS-FLUID-HYDROSTATIC-PARADOX",
+          "pattern": "Believing liquid pressure at the base depends on container shape or total liquid volume rather than vertical depth h.",
+          "refutation": "Hydrostatic pressure P = rho * g * h depends strictly on vertical column depth, completely independent of container geometry or lateral wall slope."
+        },
+        {
+          "code": "MIS-FLUID-BUOYANCY-DEPTH-DEPENDENCE",
+          "pattern": "Believing buoyant force increases as an object sinks deeper into an incompressible liquid.",
+          "refutation": "Buoyant force F_B = rho_fluid * V_submerged * g depends strictly on displaced volume. For an incompressible fluid, F_B is constant once completely submerged."
+        },
+        {
+          "code": "MIS-FLUID-BUOYANCY-MASS-DEPENDENCE",
+          "pattern": "Believing buoyant force depends on the mass or density of the submerged body.",
+          "refutation": "Buoyant force equals the weight of displaced liquid; it depends strictly on fluid density and displaced volume, independent of object material composition."
+        },
+        {
+          "code": "MIS-FLUID-SCALE-SUBMERGED-CONFUSION",
+          "pattern": "Assuming a submerged suspended object exerts no downward force on the beaker scale.",
+          "refutation": "By Newton's 3rd Law, if fluid exerts upward buoyant force F_B on the object, the object exerts an equal downward reaction force F_B on the fluid, increasing beaker scale reading by F_B."
+        },
+        {
+          "code": "MIS-FLUID-FLOATING-FRACTION-INVERT",
+          "pattern": "Inverting the submerged fraction ratio of a floating body.",
+          "refutation": "Floating equilibrium requires weight = buoyancy: rho_body * V_total * g = rho_fluid * V_submerged * g => V_submerged / V_total = rho_body / rho_fluid."
+        }
+      ]
+    },
+    "heat-thermodynamics": {
+      "topic_id": "phy-thermo-first-second-law",
+      "display_name": "Heat, Calorimetry & First Law of Thermodynamics",
+      "subtopic_family_count": 10,
+      "coordinate_conventions": {
+        "system": "Thermodynamic state variables (P, V, T)",
+        "sign_convention": "First Law dQ = dU + dW (Work done by expanding gas is positive: dW = P dV). Heat supplied to system is positive (+dQ).",
+        "temperature": "Absolute thermodynamic temperature in Kelvin: T(K) = T(C) + 273.15. Delta T(K) == Delta T(C).",
+        "units": "SI (Heat and Work in Joules = kg m^2 s^-2, Specific heat capacity in J kg^-1 K^-1, Latent heat in J kg^-1, Pressure in Pa, Volume in m^3)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": false,
+        "diagram_types": [
+          "PV_INDICATOR_DIAGRAM",
+          "CALORIMETRY_HEATING_CURVE",
+          "HEAT_ENGINE_FLOW_DIAGRAM"
+        ],
+        "svg_specifications": [
+          "State paths on PV diagrams marked with arrows indicating process direction",
+          "Minimum SVG text font floor >= 14px on all labels and annotations",
+          "Heating curves must clearly show flat plateau regimes for phase transitions at constant temperature",
+          "Cyclic loops must indicate clockwise (net positive work engine) vs counterclockwise (refrigerator)"
+        ]
+      },
+      "dimensional_signatures": {
+        "heat": "[M L^2 T^-2]",
+        "specific_heat_capacity": "[L^2 T^-2 Theta^-1]",
+        "latent_heat": "[L^2 T^-2]",
+        "thermal_conductivity": "[M L T^-3 Theta^-1]",
+        "internal_energy": "[M L^2 T^-2]",
+        "dimensionless": [
+          "efficiency",
+          "ratio_of_specific_heats_gamma"
+        ]
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_ZERO_HEAT_TRANSFER_ADIABATIC",
+        "LIMITING_CASE_INFINITE_HEAT_CAPACITY_THERMAL_RESERVOIR",
+        "LIMITING_CASE_ZERO_WORK_ISOCHORIC",
+        "FIRST_LAW_CYCLE_ENERGY_CONSERVATION"
+      ],
+      "subtopic_competency_map": {
+        "THERMO-01": {
+          "title": "Temperature vs Heat vs Internal Energy",
+          "canonical_rule": "Temperature is an intensive state variable measuring average molecular kinetic energy; Heat is thermal energy in transit across a boundary due to Delta T; Internal energy is total molecular state function U.",
+          "scope_condition": "Thermodynamic equilibrium.",
+          "model_check": "Two bodies in thermal equilibrium have identical temperatures, not necessarily equal heat or internal energy.",
+          "easy_mistake_to_make": "Conflating heat Q (energy in transit) with temperature T.",
+          "core2_transfer_target": [
+            "PHYS-THERMO-001",
+            "PHYS-THERMO-002"
+          ],
+          "pillar_ref": "P1"
+        },
+        "THERMO-02": {
+          "title": "Specific Heat Capacity & Sensible Heat",
+          "canonical_rule": "Sensible heat exchange without phase transition is Q = m * c * Delta T; thermal inertia is proportional to heat capacity C = mc.",
+          "scope_condition": "Uniform temperature change away from phase transition points.",
+          "model_check": "Water has a very high specific heat capacity (4186 J/(kg K)), allowing it to store large amounts of heat with small temperature shifts.",
+          "easy_mistake_to_make": "Assuming bodies receiving equal heat experience equal temperature rises regardless of mass and specific heat.",
+          "core2_transfer_target": [
+            "PHYS-THERMO-003",
+            "PHYS-THERMO-004"
+          ],
+          "pillar_ref": "P1"
+        },
+        "THERMO-03": {
+          "title": "Latent Heat & Phase Transitions",
+          "canonical_rule": "During first-order phase transitions (melting, boiling), supplied latent heat Q = m * L breaks intermolecular bonds at strictly constant temperature.",
+          "scope_condition": "Constant pressure phase transition.",
+          "model_check": "On heating curves, phase transitions appear as horizontal plateau lines (Delta T = 0).",
+          "easy_mistake_to_make": "Assuming temperature must rise whenever heat is supplied during a phase transition.",
+          "core2_transfer_target": [
+            "PHYS-THERMO-005",
+            "PHYS-THERMO-006"
+          ],
+          "pillar_ref": "P3"
+        },
+        "THERMO-04": {
+          "title": "Principle of Calorimetry & Water Equivalent",
+          "canonical_rule": "In an isolated calorimeter, heat lost by hot bodies equals heat gained by cold bodies: Sigma Q_lost = Sigma Q_gained; container water equivalent W_eq = m_cal * c_cal / c_w must be included.",
+          "scope_condition": "Thermally isolated mixing container (adiabatic boundary).",
+          "model_check": "Check whether mixture reaches equilibrium before or after complete phase melting.",
+          "easy_mistake_to_make": "Neglecting the heat absorbed by the calorimeter container vessel.",
+          "core2_transfer_target": [
+            "PHYS-THERMO-007",
+            "PHYS-THERMO-008",
+            "PHYS-THERMO-021"
+          ],
+          "pillar_ref": "P4"
+        },
+        "THERMO-05": {
+          "title": "Thermal Expansion in Solids & Liquids",
+          "canonical_rule": "Thermal expansion follows Delta L = alpha * L_0 * Delta T, Delta A = 2alpha * A_0 * Delta T, Delta V = 3alpha * V_0 * Delta T; water exhibits anomalous expansion between 0 C and 4 C.",
+          "scope_condition": "Small temperature intervals.",
+          "model_check": "Holes in metal plates expand when heated at the exact same fractional rate as if filled with solid metal.",
+          "easy_mistake_to_make": "Assuming a central hole in a heated metal ring shrinks.",
+          "core2_transfer_target": [
+            "PHYS-THERMO-009",
+            "PHYS-THERMO-010",
+            "PHYS-THERMO-022"
+          ],
+          "pillar_ref": "P2"
+        },
+        "THERMO-06": {
+          "title": "Modes of Heat Transfer",
+          "canonical_rule": "Conduction rate is dQ/dt = k * A * Delta T / L; Convection involves macroscopic fluid flow; Radiation follows Stefan-Boltzmann Law P = epsilon * sigma * A * T^4.",
+          "scope_condition": "Steady-state heat transport.",
+          "model_check": "Radiation requires no material medium and dominates at high temperatures due to T^4 dependence.",
+          "easy_mistake_to_make": "Assuming heat transfer rate depends on mass rather than temperature gradient and surface area.",
+          "core2_transfer_target": [
+            "PHYS-THERMO-011",
+            "PHYS-THERMO-012"
+          ],
+          "pillar_ref": "P2"
+        },
+        "THERMO-07": {
+          "title": "First Law of Thermodynamics",
+          "canonical_rule": "The First Law expresses energy conservation: dQ = dU + dW, where internal energy U is an exact state function (oint dU = 0) while Q and W are path-dependent process quantities.",
+          "scope_condition": "Closed thermodynamic systems.",
+          "model_check": "Internal energy of an ideal gas depends solely on temperature: Delta U = n * C_v * Delta T.",
+          "easy_mistake_to_make": "Treating heat Q and work W as state functions.",
+          "core2_transfer_target": [
+            "PHYS-THERMO-013",
+            "PHYS-THERMO-014",
+            "PHYS-THERMO-024"
+          ],
+          "pillar_ref": "P5"
+        },
+        "THERMO-08": {
+          "title": "Thermodynamic Work & PV Diagrams",
+          "canonical_rule": "Work done by a gas is W = int P dV (area under PV trajectory); work is positive for expansion (dV > 0) and negative for compression (dV < 0).",
+          "scope_condition": "Quasi-static reversible processes.",
+          "model_check": "Enclosed area in a cyclic PV diagram represents net work done per cycle; clockwise cycles produce positive net work (engines).",
+          "easy_mistake_to_make": "Calculating work without integrating under the specific PV path.",
+          "core2_transfer_target": [
+            "PHYS-THERMO-015",
+            "PHYS-THERMO-016",
+            "PHYS-THERMO-023"
+          ],
+          "pillar_ref": "P5"
+        },
+        "THERMO-09": {
+          "title": "Special Thermodynamic Processes",
+          "canonical_rule": "Isochoric (dV = 0 => W = 0, Q = Delta U); Isobaric (W = P Delta V); Isothermal (Delta T = 0 => Delta U = 0, Q = W); Adiabatic (Q = 0 => Delta U = -W, PV^gamma = const).",
+          "scope_condition": "Ideal gases undergoing standard quasi-static processes.",
+          "model_check": "Adiabatic expansion performs work at the expense of internal energy, causing temperature to fall (Delta T < 0).",
+          "easy_mistake_to_make": "Believing an adiabatic expansion (Q = 0) maintains constant temperature.",
+          "core2_transfer_target": [
+            "PHYS-THERMO-017",
+            "PHYS-THERMO-018"
+          ],
+          "pillar_ref": "P3"
+        },
+        "THERMO-10": {
+          "title": "Cyclic Engines & Second Law Invariants",
+          "canonical_rule": "A heat engine absorbs heat Q_H from hot reservoir, delivers net work W, and exhausts waste heat Q_C to cold sink; thermal efficiency is eta = W / Q_H = 1 - Q_C / Q_H < 1.",
+          "scope_condition": "Cyclic heat engines operating between thermal reservoirs.",
+          "model_check": "Kelvin-Planck statement: No engine can convert 100% of absorbed heat into work in a complete cycle; Carnot efficiency eta_max = 1 - T_C / T_H sets the thermodynamic ceiling.",
+          "easy_mistake_to_make": "Assuming an ideal frictionless engine can achieve 100% thermal efficiency.",
+          "core2_transfer_target": [
+            "PHYS-THERMO-019",
+            "PHYS-THERMO-020",
+            "PHYS-THERMO-025"
+          ],
+          "pillar_ref": "P5"
+        }
+      },
+      "misconception_discriminators": [
+        {
+          "code": "MIS-THERMO-HEAT-TEMP-CONFUSION",
+          "pattern": "Conflating heat Q (energy in transit) with temperature T (average microscopic kinetic energy).",
+          "refutation": "Heat is energy transferred across a boundary due to temperature difference; temperature is an intensive state variable measuring average particle kinetic energy."
+        },
+        {
+          "code": "MIS-THERMO-PHASE-CHANGE-TEMP-RISE",
+          "pattern": "Assuming temperature must rise while heat is supplied during a phase transition (melting/boiling).",
+          "refutation": "During a first-order phase transition at constant pressure, latent heat is consumed breaking intermolecular bonds while temperature remains strictly constant."
+        },
+        {
+          "code": "MIS-THERMO-WORK-INDEPENDENT-PATH",
+          "pattern": "Treating work W and heat Q as state functions that depend only on initial and final states.",
+          "refutation": "Heat and work are path-dependent process quantities; only internal energy U is an exact state function: oint dU = 0 while cyclic work oint dW = Area under PV curve."
+        },
+        {
+          "code": "MIS-THERMO-ADIABATIC-CONSTANT-TEMP",
+          "pattern": "Believing an adiabatic process (Q = 0) must maintain constant temperature.",
+          "refutation": "By the First Law, Delta U = -W. When a gas expands adiabatically doing positive work on surroundings, its internal energy drops and its temperature falls."
+        },
+        {
+          "code": "MIS-THERMO-CALORIMETRY-MASS-TEMP-SWAP",
+          "pattern": "Neglecting water equivalent of container in calorimetry mixtures.",
+          "refutation": "The calorimeter vessel absorbs heat: Q_vessel = m_cal * c_cal * Delta T = W_eq * c_water * Delta T, and must be included in heat balance."
+        }
+      ]
+    },
+    "vectors-and-components": {
+      "topic_id": "phy-vectors-and-components",
+      "display_name": "Vectors, Coordinate Frames & Geometric Invariants",
+      "subtopic_family_count": 11,
+      "coordinate_conventions": {
+        "system": "Standard right-handed Cartesian frame (i_hat, j_hat, k_hat)",
+        "axes": "x-axis horizontal positive right / east; y-axis vertical positive up / north; z-axis out of page",
+        "sign_convention": "Sign encodes orientation relative to declared positive axis; negative indicates antiparallel direction, not smaller magnitude",
+        "units": "SI derived units (arbitrary vector magnitude, angles in radians and degrees)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": true,
+        "diagram_types": [
+          "VECTOR_TRIANGLE",
+          "PARALLELOGRAM_RESULTANT",
+          "ORTHOGONAL_COMPONENTS",
+          "RELATIVE_VELOCITY_FRAME",
+          "POLAR_AND_INCLINED_PLANE_PROJECTION"
+        ],
+        "svg_specifications": [
+          "Vectors represented as sharp directed arrows with arrowheads terminating exactly at target coordinates",
+          "Component projections indicated by dashed orthogonal projection lines with right-angle indicators",
+          "Minimum SVG text font floor >= 14px on all vector magnitude, component, and angle annotations"
+        ]
+      },
+      "dimensional_signatures": {
+        "vector_magnitude": "Inherits base or derived physical dimension [L], [L T^-1], [M L T^-2], etc.",
+        "unit_vector": "[1] (Dimensionless unit norm)",
+        "dot_product_scalar": "Product of dimensions [Dim(A) * Dim(B)]",
+        "cross_product_vector": "Product of dimensions [Dim(A) * Dim(B)]",
+        "relative_velocity": "[L T^-1]",
+        "dimensionless": [
+          "angle_rad",
+          "direction_cosine",
+          "trigonometric_ratio"
+        ]
+      },
+      "independent_checks": [
+        "PYTHAGOREAN_NORM_INVARIANT",
+        "COORDINATE_ROTATION_INVARIANCE",
+        "VECTOR_SUBTRACTION_ANTISYMMETRY",
+        "ORTHOGONAL_PROJECTION_LIMITING_CASES",
+        "DOT_PRODUCT_COMMUTATIVITY_AND_ORTHOGONALITY",
+        "CROSS_PRODUCT_ANTICOMMUTATIVITY"
+      ],
+      "subtopic_competency_map": {
+        "VEC-01": {
+          "title": "Scalars, Vectors & Signed Axis Conventions",
+          "canonical_rule": "A scalar is fully characterized by magnitude alone; a vector requires magnitude and spatial direction. In 1D, sign indicates orientation along a declared axis; negative means antiparallel, not smaller.",
+          "scope_condition": "Spatial kinematics and dynamics.",
+          "model_check": "Reversing the declared coordinate axis flips component signs without altering physical state.",
+          "easy_mistake_to_make": "Treating negative vector components as smaller magnitudes rather than opposite directions.",
+          "core2_transfer_target": [
+            "PHYS-VEC-001",
+            "PHYS-VEC-002"
+          ],
+          "pillar_ref": "P1"
+        },
+        "VEC-02": {
+          "title": "Vector Equality, Opposite Vectors & Null Vector",
+          "canonical_rule": "Two vectors are equal if and only if both magnitude and direction match identically, regardless of origin; opposite vector -A has identical magnitude and reversed direction; A + (-A) = 0.",
+          "scope_condition": "Euclidean vector translations.",
+          "model_check": "Parallel translation in space preserves vector identity.",
+          "easy_mistake_to_make": "Judging vector equality solely by arrow length while ignoring spatial direction.",
+          "core2_transfer_target": [
+            "PHYS-VEC-003",
+            "PHYS-VEC-004"
+          ],
+          "pillar_ref": "P1"
+        },
+        "VEC-03": {
+          "title": "Orthogonal Components, Quadrants & Angle References",
+          "canonical_rule": "A 2D vector A resolves into rectangular components A_x = A cos theta and A_y = A sin theta where theta is measured from the adjacent axis; quadrant determines component algebraic signs.",
+          "scope_condition": "2D Cartesian planar projections.",
+          "model_check": "A_x^2 + A_y^2 = A^2 regardless of chosen coordinate frame orientation.",
+          "easy_mistake_to_make": "Memorizing cos theta always belongs to x-axis, failing when angle is referenced to vertical.",
+          "core2_transfer_target": [
+            "PHYS-VEC-005",
+            "PHYS-VEC-006"
+          ],
+          "pillar_ref": "P2"
+        },
+        "VEC-04": {
+          "title": "Vector Addition, Triangle & Parallelogram Laws, Resultant",
+          "canonical_rule": "Vector sum R = A + B is constructed geometrically by head-to-tail placement or diagonal of parallelogram; algebraically R_x = A_x + B_x and R_y = A_y + B_y; |A - B| <= R <= A + B.",
+          "scope_condition": "Concurrent vector addition.",
+          "model_check": "Resultant magnitude R = sqrt(A^2 + B^2 + 2AB cos theta).",
+          "easy_mistake_to_make": "Adding vector magnitudes algebraically without vector decomposition.",
+          "core2_transfer_target": [
+            "PHYS-VEC-007",
+            "PHYS-VEC-008",
+            "PHYS-VEC-021"
+          ],
+          "pillar_ref": "P3"
+        },
+        "VEC-05": {
+          "title": "Vector Subtraction & Change Vectors",
+          "canonical_rule": "Vector subtraction A - B equals adding the additive inverse: A + (-B); change in velocity Delta v = v_f - v_i points from initial velocity vector tip to final velocity vector tip when co-initial.",
+          "scope_condition": "Kinematic changes and impulse dynamics.",
+          "model_check": "Constant speed v turning through angle theta experiences Delta v = 2v sin(theta/2) != 0.",
+          "easy_mistake_to_make": "Assuming change in velocity is zero when speed remains constant along a curved path.",
+          "core2_transfer_target": [
+            "PHYS-VEC-009",
+            "PHYS-VEC-010",
+            "PHYS-VEC-022"
+          ],
+          "pillar_ref": "P3"
+        },
+        "VEC-06": {
+          "title": "Magnitude & Direction Angle Recovery",
+          "canonical_rule": "Given Cartesian components (A_x, A_y), vector magnitude is A = sqrt(A_x^2 + A_y^2) and orientation angle is recovered via tan phi = |A_y / A_x| with quadrant placed by signs of A_x and A_y.",
+          "scope_condition": "Component-to-polar reconstruction.",
+          "model_check": "Inverse tangent yields reference angle only; true azimuth requires Cartesian quadrant disambiguation.",
+          "easy_mistake_to_make": "Accepting raw calculator arctan output without adjusting for quadrant.",
+          "core2_transfer_target": [
+            "PHYS-VEC-011",
+            "PHYS-VEC-012"
+          ],
+          "pillar_ref": "P2"
+        },
+        "VEC-07": {
+          "title": "Relative Velocity in 1D & 2D Frames",
+          "canonical_rule": "Velocity of body A relative to observer B is v_AB = v_A - v_B; to observe from frame B, subtract vector v_B from all tracked objects: v_AB = -v_BA.",
+          "scope_condition": "Inertial reference frame transformations.",
+          "model_check": "Two objects approaching along a straight line have relative approach speed v_1 + v_2.",
+          "easy_mistake_to_make": "Reversing subtraction order or adding frame velocity instead of subtracting it.",
+          "core2_transfer_target": [
+            "PHYS-VEC-013",
+            "PHYS-VEC-014",
+            "PHYS-VEC-023"
+          ],
+          "pillar_ref": "P4"
+        },
+        "VEC-08": {
+          "title": "Radial & Tangential Decomposition in Curvilinear Paths",
+          "canonical_rule": "Curvilinear acceleration decomposes into tangential acceleration a_t = dv/dt (rate of change of speed) along tangent, and centripetal acceleration a_r = v^2/R directed toward instantaneous center of curvature.",
+          "scope_condition": "Planar curvilinear trajectory tracking.",
+          "model_check": "Total acceleration magnitude is a_net = sqrt(a_t^2 + a_r^2); for uniform circular motion a_t = 0.",
+          "easy_mistake_to_make": "Drawing release or instantaneous velocity radially outward due to centrifugal fallacy.",
+          "core2_transfer_target": [
+            "PHYS-VEC-015",
+            "PHYS-VEC-016"
+          ],
+          "pillar_ref": "P4"
+        },
+        "VEC-09": {
+          "title": "Component Ownership & Inclined Plane Decomposition",
+          "canonical_rule": "Gravity weight W = mg acts strictly vertically downward; along an incline of angle theta, weight decomposes into mg sin theta parallel to incline and mg cos theta perpendicular to incline.",
+          "scope_condition": "Constrained surface mechanics.",
+          "model_check": "Normal contact force balances perpendicular component N = mg cos theta; net driving force is mg sin theta - f_k.",
+          "easy_mistake_to_make": "Conflating incline angle theta with complement, swapping sine and cosine components.",
+          "core2_transfer_target": [
+            "PHYS-VEC-017",
+            "PHYS-VEC-018"
+          ],
+          "pillar_ref": "P3"
+        },
+        "VEC-10": {
+          "title": "Scalar (Dot) Product, Projection & Work Mechanics",
+          "canonical_rule": "Dot product A . B = |A||B| cos theta evaluates scalar projection of A along B; work W = F . d = F d cos theta is positive for acute angles, zero for perpendicular forces, and negative for obtuse angles.",
+          "scope_condition": "Conservative and non-conservative work evaluation.",
+          "model_check": "A . B = A_x B_x + A_y B_y; orthogonal vectors have A . B = 0.",
+          "easy_mistake_to_make": "Assigning a direction to a scalar dot product or failing to check sign from cosine.",
+          "core2_transfer_target": [
+            "PHYS-VEC-019",
+            "PHYS-VEC-020",
+            "PHYS-VEC-024"
+          ],
+          "pillar_ref": "P5"
+        },
+        "VEC-11": {
+          "title": "Vector (Cross) Product, Torque & Planar Orthogonal Invariants",
+          "canonical_rule": "Vector cross product C = A x B has magnitude |A||B| sin theta and direction normal to A-B plane via right-hand screw rule; torque tau = r x F; bridge to planar kinematics where independent perpendicular axes decouple.",
+          "scope_condition": "3D rotational mechanics and planar vector decoupling.",
+          "model_check": "Cross product is antisymmetric: B x A = -(A x B); parallel vectors have zero cross product.",
+          "easy_mistake_to_make": "Assuming cross product is commutative (A x B = B x A).",
+          "core2_transfer_target": [
+            "PHYS-VEC-025"
+          ],
+          "pillar_ref": "P5"
+        }
+      },
+      "misconception_discriminators": [
+        {
+          "code": "MISC-VEC-01",
+          "label": "Scalar Addition of Vector Magnitudes",
+          "description": "Adding vector magnitudes directly (|A + B| = A + B) regardless of angle between vectors.",
+          "remedy": "Apply parallelogram formula R = sqrt(A^2 + B^2 + 2AB cos theta) or sum rectangular components algebraically.",
+          "trigger_pattern": "direct arithmetic sum of lengths without direction cosine"
+        },
+        {
+          "code": "MISC-VEC-02",
+          "label": "Sign-Magnitude Confusion",
+          "description": "Interpreting negative component sign as smaller physical magnitude rather than opposite direction along chosen axis.",
+          "remedy": "Separate magnitude (strictly non-negative absolute value) from orientation sign (+/- indicates axis direction).",
+          "trigger_pattern": "treating -5 m/s as slower than +2 m/s"
+        },
+        {
+          "code": "MISC-VEC-03",
+          "label": "Angle-Reference Axis Inversion",
+          "description": "Rote application of cos theta to horizontal and sin theta to vertical regardless of specified reference axis.",
+          "remedy": "Identify adjacent axis to angle theta for cosine projection; opposite side receives sine projection.",
+          "trigger_pattern": "blind cos(theta) along x-axis when angle is given relative to vertical"
+        },
+        {
+          "code": "MISC-VEC-04",
+          "label": "Vector Subtraction Order Reversal",
+          "description": "Reversing subtraction vector order: constructing B - A instead of Delta v = v_f - v_i.",
+          "remedy": "Change vector Delta A = A_final - A_initial; arrow points from initial tip to final tip.",
+          "trigger_pattern": "drawing change vector pointing towards initial state"
+        },
+        {
+          "code": "MISC-VEC-05",
+          "label": "Relative Frame Sign Inversion",
+          "description": "Adding frame observer velocity rather than subtracting it: v_AB = v_A + v_B instead of v_A - v_B.",
+          "remedy": "To bring observer B to rest, apply equal and opposite velocity -v_B to all entities.",
+          "trigger_pattern": "conflating relative velocity with combined closing speed"
+        },
+        {
+          "code": "MISC-VEC-06",
+          "label": "Dot vs Cross Product Misapplication",
+          "description": "Confusing scalar projection (dot product) with vector normal generation (cross product) or treating dot product as vector.",
+          "remedy": "Dot product produces scalar work W = F . d; Cross product produces perpendicular pseudovector torque tau = r x F.",
+          "trigger_pattern": "assigning direction to work or treating torque as scalar projection"
+        }
+      ],
+      "blueprint_refs": {
+        "core1a_ontology": "TEST/physics-research/blueprints/core1a_physics_vectors_ontology.v1.json",
+        "core1b_reconstruction": "TEST/physics-research/blueprints/core1b_physics_vectors_reconstruction.v1.json"
+      },
+      "canonical_reasoning_moves": {
+        "stage_1_choose": "Declare reference frame, orthogonal coordinate axes (+x East, +y North), and origin.",
+        "stage_2_represent": "Construct directed vector arrows, component triangles, or head-to-tail polygon representations.",
+        "stage_3_connect": "Apply governing vector laws: component sum R_x = sum A_x, law of cosines, Galilean relative shift v_{AB} = v_A - v_B, or scalar work product W = F . s.",
+        "stage_4_execute_and_check": "Execute closed-form algebra; recover magnitude and compass direction; verify dimensional homogeneity and dual limiting boundary checks."
+      },
+      "first_move_atlas": [
+        {
+          "competency_id": "VEC-01",
+          "cue": "signed 1D motion, direction reversal, or sign-convention declaration",
+          "representation": "Declare + axis; mark signed displacement / velocity legs on 1D axis",
+          "first_executable_move": "State coordinate frame (+x East/Right); write Delta x = sum(signed legs); translate final sign back to physical direction",
+          "anti_pattern": "Treating negative sign as smaller physical magnitude rather than opposite direction"
+        },
+        {
+          "competency_id": "VEC-02",
+          "cue": "draw, compare, translate, or reverse free vectors",
+          "representation": "Directed arrows with origin, length proportional to magnitude, and terminating arrowhead",
+          "first_executable_move": "Verify equality: identical magnitude AND identical direction; translate free vector without rotating; reverse direction for opposite vector -A",
+          "anti_pattern": "Assuming parallel vectors with different lengths or collinear opposite vectors are equal"
+        },
+        {
+          "competency_id": "VEC-03",
+          "cue": "components, quadrants, and angle reference relative to axes",
+          "representation": "Cartesian coordinate axes (x, y) with vector arrow originating at origin and right projection triangle",
+          "first_executable_move": "Identify adjacent side for cosine (A_adj = |A| cos theta) and opposite side for sine (A_opp = |A| sin theta); assign quadrant signs manually",
+          "anti_pattern": "Blindly applying cos to horizontal and sin to vertical without checking the stated reference axis"
+        },
+        {
+          "competency_id": "VEC-04",
+          "cue": "two or more vectors added, resultant displacement, or polygon closure",
+          "representation": "Head-to-tail polygon / component triangle with closing diagonal resultant arrow",
+          "first_executable_move": "Place vectors head-to-tail; compute component sums R_x = sum(A_x) and R_y = sum(A_y); verify resultant |R| <= path length (triangle inequality)",
+          "anti_pattern": "Adding scalar magnitudes directly when vectors act along non-parallel directions"
+        },
+        {
+          "competency_id": "VEC-05",
+          "cue": "change vector Delta v, momentum change Delta p, or vector subtraction",
+          "representation": "Initial and final vectors drawn from common origin, with change vector pointing from tip of initial to tip of final",
+          "first_executable_move": "Apply vector subtraction Delta v = v_f - v_i = v_f + (-v_i); subtract corresponding Cartesian components (Delta v_x = v_fx - v_ix, Delta v_y = v_fy - v_iy)",
+          "anti_pattern": "Assuming Delta v = 0 when initial and final speeds are equal (|v_i| = |v_f|) despite a direction change"
+        },
+        {
+          "competency_id": "VEC-06",
+          "cue": "recover magnitude and compass direction from Cartesian components",
+          "representation": "Right-angled component triangle with legs R_x, R_y and hypotenuse R",
+          "first_executable_move": "Compute magnitude |R| = sqrt(R_x^2 + R_y^2); compute acute reference angle tan alpha = |R_y / R_x|; state compass direction from quadrant signs",
+          "anti_pattern": "Reporting magnitude alone without stating direction, or leaving angle without a reference axis"
+        },
+        {
+          "competency_id": "VEC-07",
+          "cue": "relative velocity of object A with respect to observer B (v_A/B)",
+          "representation": "Both velocity vectors plotted on common ground-frame axes; observer vector reversed",
+          "first_executable_move": "Identify object A and observer B; subtract observer velocity: v_{A/B} = v_A - v_B; apply -v_B to all entities",
+          "anti_pattern": "Reversing the subtraction order (computing v_B - v_A instead of v_A - v_B)"
+        },
+        {
+          "competency_id": "VEC-08",
+          "cue": "particle moving along circular path; tangential vs radial directions",
+          "representation": "Circular orbit with radius vector, perpendicular tangent velocity v, and inward radial acceleration a_c",
+          "first_executable_move": "Draw velocity tangent to curve in direction of motion; point centripetal acceleration radially inward toward center: a_c = v^2 / R",
+          "anti_pattern": "Believing tangential velocity and radial centripetal acceleration act in the same direction"
+        },
+        {
+          "competency_id": "VEC-09",
+          "cue": "Newton-III interaction pairs vs single-body net force",
+          "representation": "Two isolated free-body diagrams with body-on-body interaction labels (A on B vs B on A)",
+          "first_executable_move": "Identify interacting bodies; write F_{A on B} = -F_{B on A}; ensure action-reaction pairs NEVER appear on the same isolated body FBD",
+          "anti_pattern": "Cancelling action-reaction forces on a single object (e.g. normal force and gravity on a resting book)"
+        },
+        {
+          "competency_id": "VEC-10",
+          "cue": "angle between vectors, scalar dot product, or work sign determination",
+          "representation": "Force vector F and displacement vector s originating from common origin with enclosed angle theta",
+          "first_executable_move": "Measure true geometric tail-to-tail angle theta (0 <= theta <= 180 deg); compute W = F . s = |F||s| cos theta; sign follows cos theta",
+          "anti_pattern": "Using angle with arbitrary axis instead of the true geometric angle between the two physical vectors"
+        },
+        {
+          "competency_id": "VEC-11",
+          "cue": "2D vector state bridging to motion in a plane or vector torque/cross product",
+          "representation": "2D state vector v = v_x i + v_y j resolved into decoupled orthogonal evolution equations",
+          "first_executable_move": "Decompose 2D vector state into two independent 1D scalar equations linked only by shared clock time t; or compute vector product magnitude |r x F| = r F sin theta",
+          "anti_pattern": "Mixing orthogonal coordinates within a single 1D kinematic or dynamic equation"
+        }
+      ]
+    },
+    "motion-in-a-plane": {
+      "topic_id": "phy-motion-in-a-plane",
+      "display_name": "Motion in a Plane: Projectiles, Relative Frames & Curvilinear Motion",
+      "subtopic_family_count": 11,
+      "coordinate_conventions": {
+        "system": "2D Cartesian plane (x: horizontal range, y: vertical height)",
+        "axes": "x horizontal positive in launch direction; y vertical positive upward; origin at launch point or ground datum",
+        "sign_convention": "Downward gravity acceleration a_y = -g; horizontal acceleration a_x = 0 (ideal unresisted flight)",
+        "units": "SI units (m, m/s, m/s^2, s, rad/deg)"
+      },
+      "representation_rules": {
+        "fbd_mandatory": true,
+        "diagram_types": [
+          "PARABOLIC_TRAJECTORY",
+          "COMPONENT_DECOUPLING_VELOCITY_ARROWS",
+          "RIVER_BOAT_VECTOR_TRIANGLE",
+          "RAIN_MAN_RELATIVE_FRAME",
+          "TANGENTIAL_CENTRIPETAL_ACCELERATION_TRIANGLE"
+        ],
+        "svg_specifications": [
+          "Parabolic path rendered with apex landmark (v_y = 0) and ground landing coordinates",
+          "Horizontal velocity vector u_x kept strictly constant across all trajectory points",
+          "Minimum font floor >= 14px on all kinematic labels, velocity components, and angles"
+        ]
+      },
+      "dimensional_signatures": {
+        "horizontal_range": "[L]",
+        "maximum_height": "[L]",
+        "time_of_flight": "[T]",
+        "launch_velocity": "[L T^-1]",
+        "centripetal_acceleration": "[L T^-2]",
+        "trajectory_curvature": "[L^-1]",
+        "dimensionless": [
+          "launch_angle",
+          "aspect_ratio_range_height"
+        ]
+      },
+      "independent_checks": [
+        "DIMENSIONAL_HOMOGENEITY",
+        "LIMITING_CASE_VERTICAL_LAUNCH_90_DEG",
+        "LIMITING_CASE_HORIZONTAL_LAUNCH_0_DEG",
+        "COMPLEMENTARY_ANGLE_RANGE_EQUALITY",
+        "APEX_VELOCITY_NON_ZERO_CHECK",
+        "RIVER_BOAT_MINIMUM_TIME_INDEPENDENCE_OF_STREAM"
+      ],
+      "subtopic_competency_map": {
+        "PLANE-01": {
+          "title": "2D Position & Velocity Component Independence",
+          "canonical_rule": "Motion in a plane decomposes into two mutually perpendicular 1D motions that evolve independently under a shared universal time parameter t: r(t) = x(t) i_hat + y(t) j_hat.",
+          "scope_condition": "Orthogonal Cartesian reference frames.",
+          "model_check": "Gravity acting purely along the y-axis has zero effect on horizontal velocity component: a_x = 0 => v_x(t) = u_x.",
+          "easy_mistake_to_make": "Believing gravity slows down horizontal motion of a projectile.",
+          "core2_transfer_target": [
+            "PHYS-PLANE-001",
+            "PHYS-PLANE-002"
+          ],
+          "pillar_ref": "P1"
+        },
+        "PLANE-02": {
+          "title": "Constant-Acceleration Equations in Vector Form",
+          "canonical_rule": "For uniform acceleration a, displacement Delta r = u t + (1/2) a t^2 and velocity v = u + a t hold component-wise: x = u_x t, y = u_y t - (1/2) g t^2.",
+          "scope_condition": "Constant uniform field without aerodynamic drag.",
+          "model_check": "At any instant, speed is v = sqrt(v_x^2 + v_y^2) and velocity direction angle is phi = arctan(v_y / v_x).",
+          "easy_mistake_to_make": "Attempting to combine x and y displacements into a single scalar before squaring.",
+          "core2_transfer_target": [
+            "PHYS-PLANE-003",
+            "PHYS-PLANE-004"
+          ],
+          "pillar_ref": "P1"
+        },
+        "PLANE-03": {
+          "title": "Horizontal Launch from Elevated Height",
+          "canonical_rule": "In horizontal launch from height h with initial velocity u, u_y = 0; fall time t_f = sqrt(2h/g) depends purely on height; horizontal landing range is x = u sqrt(2h/g).",
+          "scope_condition": "Horizontal projection from elevated platform.",
+          "model_check": "Dropping a ball vertically and projecting a ball horizontally from identical height results in simultaneous ground impact.",
+          "easy_mistake_to_make": "Thinking greater horizontal launch speed prolongs the fall time.",
+          "core2_transfer_target": [
+            "PHYS-PLANE-005",
+            "PHYS-PLANE-006"
+          ],
+          "pillar_ref": "P2"
+        },
+        "PLANE-04": {
+          "title": "Ground-to-Ground Oblique Projectile Flight Time & Apex",
+          "canonical_rule": "For launch at angle theta with speed u: time of flight is T = 2 u sin theta / g; maximum apex height is H = u^2 sin^2 theta / (2g); at the apex, vertical velocity vanishes v_y = 0 while horizontal velocity remains v_x = u cos theta.",
+          "scope_condition": "Symmetric level-ground projectile flight.",
+          "model_check": "At the top of trajectory, speed reaches its global minimum v_min = u cos theta > 0.",
+          "easy_mistake_to_make": "Assuming total speed is zero at the apex of projectile flight.",
+          "core2_transfer_target": [
+            "PHYS-PLANE-007",
+            "PHYS-PLANE-008",
+            "PHYS-PLANE-021"
+          ],
+          "pillar_ref": "P2"
+        },
+        "PLANE-05": {
+          "title": "Horizontal Range & Maximum Range Invariant",
+          "canonical_rule": "Horizontal range R = u^2 sin(2 theta) / g; for a given launch speed u, maximum range R_max = u^2 / g occurs at theta = 45 degrees, where H_max = R_max / 4.",
+          "scope_condition": "Flat horizontal ground launch.",
+          "model_check": "Ratio of range to maximum height is R / H = 4 cot theta.",
+          "easy_mistake_to_make": "Assuming maximum height occurs at 45 degrees launch angle.",
+          "core2_transfer_target": [
+            "PHYS-PLANE-009",
+            "PHYS-PLANE-010",
+            "PHYS-PLANE-022"
+          ],
+          "pillar_ref": "P3"
+        },
+        "PLANE-06": {
+          "title": "Complementary Launch Angles & Trajectory Envelopes",
+          "canonical_rule": "Launch angles theta and (90 - theta) yield identical horizontal ranges R, because sin(2(90 - theta)) = sin(180 - 2 theta) = sin(2 theta); higher angle has longer flight time and greater apex.",
+          "scope_condition": "Symmetric ground-to-ground flights.",
+          "model_check": "Product of flight times for complementary angles is T_1 T_2 = 2 R / g.",
+          "easy_mistake_to_make": "Assuming equal range implies equal flight times or equal apex heights.",
+          "core2_transfer_target": [
+            "PHYS-PLANE-011",
+            "PHYS-PLANE-012"
+          ],
+          "pillar_ref": "P3"
+        },
+        "PLANE-07": {
+          "title": "Cartesian Trajectory Parabola Equation",
+          "canonical_rule": "Eliminating time t gives parabolic trajectory y(x) = x tan theta - g x^2 / (2 u^2 cos^2 theta) = x tan theta [1 - x / R].",
+          "scope_condition": "Path equation in x-y plane.",
+          "model_check": "Roots of y(x) = 0 occur at launch x = 0 and landing x = R.",
+          "easy_mistake_to_make": "Treating trajectory equation as linear or failing to convert 1/cos^2 theta to (1 + tan^2 theta).",
+          "core2_transfer_target": [
+            "PHYS-PLANE-013",
+            "PHYS-PLANE-014"
+          ],
+          "pillar_ref": "P4"
+        },
+        "PLANE-08": {
+          "title": "Relative Velocity: River-Boat Shortest Time vs Zero Drift",
+          "canonical_rule": "Boat ground velocity is v_b = v_bw + v_w; crossing time t = d / v_y is minimized (t_min = d / v_bw) when boat heads directly perpendicular to banks; zero drift requires heading upstream with sin theta = v_w / v_bw (requires v_bw > v_w).",
+          "scope_condition": "Crossing flowing stream of width d and water speed v_w.",
+          "model_check": "Crossing time in minimum-time route is completely independent of stream speed v_w.",
+          "easy_mistake_to_make": "Confusing shortest time route with shortest distance (zero drift) route.",
+          "core2_transfer_target": [
+            "PHYS-PLANE-015",
+            "PHYS-PLANE-016",
+            "PHYS-PLANE-023"
+          ],
+          "pillar_ref": "P5"
+        },
+        "PLANE-09": {
+          "title": "Relative Velocity: Rain-Man & Aircraft Wind Drift",
+          "canonical_rule": "Apparent rain velocity seen by moving person is v_rain/person = v_rain - v_person; umbrella must be aligned parallel to v_rain/person: tan theta = v_person / v_rain from vertical.",
+          "scope_condition": "Relative velocity in weather frames.",
+          "model_check": "If rain falls vertically and person moves east, relative rain arrives from east, requiring forward umbrella tilt.",
+          "easy_mistake_to_make": "Tilting umbrella backwards away from direction of motion.",
+          "core2_transfer_target": [
+            "PHYS-PLANE-017",
+            "PHYS-PLANE-018",
+            "PHYS-PLANE-024"
+          ],
+          "pillar_ref": "P5"
+        },
+        "PLANE-10": {
+          "title": "Uniform Circular Motion: Centripetal Acceleration Invariant",
+          "canonical_rule": "In uniform circular motion with constant speed v and radius R, velocity direction changes continuously; acceleration is purely centripetal a_c = v^2 / R = omega^2 R directed radially toward center.",
+          "scope_condition": "Planar circular trajectory with constant speed.",
+          "model_check": "Speed is constant but acceleration is non-zero because velocity vector rotates at rate omega.",
+          "easy_mistake_to_make": "Asserting that constant speed implies zero acceleration in circular motion.",
+          "core2_transfer_target": [
+            "PHYS-PLANE-019",
+            "PHYS-PLANE-020"
+          ],
+          "pillar_ref": "P5"
+        },
+        "PLANE-11": {
+          "title": "Non-Uniform Curvilinear Motion: Tangential vs Normal Components",
+          "canonical_rule": "In non-uniform planar motion, total acceleration a = a_t t_hat + a_c n_hat where tangential acceleration a_t = dv/dt changes speed and normal acceleration a_c = v^2/rho changes direction; a_net = sqrt(a_t^2 + a_c^2).",
+          "scope_condition": "General curvilinear trajectories with local radius of curvature rho.",
+          "model_check": "When particle speeds up, a_t is parallel to v; when slowing down, a_t is antiparallel to v.",
+          "easy_mistake_to_make": "Equating total acceleration magnitude directly to centripetal acceleration.",
+          "core2_transfer_target": [
+            "PHYS-PLANE-025"
+          ],
+          "pillar_ref": "P5"
+        }
+      },
+      "misconception_discriminators": [
+        {
+          "code": "MISC-PLANE-01",
+          "label": "Apex Velocity Vanishing Fallacy",
+          "description": "Believing that a projectile launched at an angle stops completely at the top of its trajectory.",
+          "remedy": "At the apex, only vertical velocity component vanishes (v_y = 0); horizontal velocity persists (v_x = u cos theta).",
+          "trigger_pattern": "setting apex speed to 0 m/s"
+        },
+        {
+          "code": "MISC-PLANE-02",
+          "label": "Gravity-Horizontal Velocity Coupling Fallacy",
+          "description": "Assuming that downward gravity reduces or retards horizontal projectile speed.",
+          "remedy": "Perpendicular vectors are decoupled: a_x = 0 throughout unresisted flight.",
+          "trigger_pattern": "introducing deceleration into horizontal motion equation"
+        },
+        {
+          "code": "MISC-PLANE-03",
+          "label": "Horizontal Launch Drop Time Fallacy",
+          "description": "Believing that a horizontally fired projectile takes longer to hit the ground than a dropped object.",
+          "remedy": "Vertical free-fall equation y = (1/2) g t^2 governs both identically: t = sqrt(2h/g).",
+          "trigger_pattern": "claiming horizontal speed delays downward impact"
+        },
+        {
+          "code": "MISC-PLANE-04",
+          "label": "River Crossing Minimum Time vs Zero Drift Conflation",
+          "description": "Conflating shortest crossing time with shortest crossing distance across a river.",
+          "remedy": "Shortest time requires aiming directly across (perpendicular); shortest distance requires angling upstream to cancel drift.",
+          "trigger_pattern": "asserting zero drift path has minimum crossing time"
+        },
+        {
+          "code": "MISC-PLANE-05",
+          "label": "Rain-Man Umbrella Tilt Inversion",
+          "description": "Tilting umbrella backwards or incorrectly calculating angle relative to horizontal instead of vertical.",
+          "remedy": "Relative rain velocity is v_r - v_m; if runner moves forward, rain appears to blow toward them, requiring forward tilt.",
+          "trigger_pattern": "inverting tangent ratio or tilting umbrella away from relative wind"
+        },
+        {
+          "code": "MISC-PLANE-06",
+          "label": "Centripetal vs Tangential Acceleration Conflation",
+          "description": "Confusing rate of change of speed (dv/dt) with rate of change of direction (v^2/R).",
+          "remedy": "Tangential acceleration a_t = dv/dt is collinear with velocity; normal acceleration a_n = v^2/R is strictly perpendicular.",
+          "trigger_pattern": "setting centripetal acceleration to zero because speed is constant"
+        }
+      ],
+      "blueprint_refs": {
+        "core1a_ontology": "TEST/physics-research/blueprints/core1a_physics_planar_motion_ontology.v1.json",
+        "core1b_reconstruction": "TEST/physics-research/blueprints/core1b_physics_planar_motion_reconstruction.v1.json"
+      },
+      "canonical_reasoning_moves": {
+        "stage_1_choose": "Declare orthogonal coordinate axes (x, y), reference directions (+x horizontal, +y vertical), and clock zero t = 0.",
+        "stage_2_represent": "Decompose vectors into orthogonal components (u_x = u cos theta, u_y = u sin theta) or construct Galilean relative velocity triangles (v_A/B = v_A - v_B).",
+        "stage_3_connect": "Select the governing 2D equations: Cartesian parabola y(x) = x tan theta - g*x^2 / (2*u^2*cos^2 theta), or Frenet-Serret decomposition a = a_t u_t + a_n u_n.",
+        "stage_4_execute_and_check": "Solve closed-form algebraic expressions; verify asymptotic limits (theta -> 0 deg, 90 deg, 45 deg, g -> 0, v_rel collinear) and base SI dimensional homogeneity."
+      },
+      "first_move_atlas": [
+        {
+          "competency_id": "PLANE-01",
+          "cue": "2D position vector r(t) or velocity v(t) with orthogonal (x, y) coordinates",
+          "representation": "Orthogonal Cartesian coordinate frame (x, y) with independent 1D projections",
+          "first_executable_move": "Decompose motion into independent perpendicular components: r(t) = x(t) i + y(t) j and v(t) = v_x(t) i + v_y(t) j, linked solely by clock t",
+          "anti_pattern": "Mixing horizontal and vertical kinematic variables inside a single 1D equation"
+        },
+        {
+          "competency_id": "PLANE-02",
+          "cue": "Constant acceleration in 2D with vector quantities u and a",
+          "representation": "Vector UVATS table separating horizontal (i) and vertical (j) components",
+          "first_executable_move": "Apply 2D vector kinematic quad equations: v = u + at and Delta r = ut + 0.5*a*t^2 independently along each orthogonal axis",
+          "anti_pattern": "Adding vector magnitudes algebraically without resolving into orthogonal components"
+        },
+        {
+          "competency_id": "PLANE-03",
+          "cue": "Horizontal launch from cliff or tower with speed u and zero initial vertical velocity (u_y = 0)",
+          "representation": "Origin at launch edge, +x horizontal, +y downward (or +y upward with launch at y = h)",
+          "first_executable_move": "Solve vertical free-fall time first: t_fall = sqrt(2h / g), then determine horizontal range x = u * t_fall",
+          "anti_pattern": "Believing higher horizontal launch velocity changes the vertical time of fall"
+        },
+        {
+          "competency_id": "PLANE-04",
+          "cue": "Oblique ground-to-ground projectile launch at elevation angle theta above horizontal",
+          "representation": "Launch velocity decomposed into u_x = u cos theta and u_y = u sin theta; apex summit at v_y = 0",
+          "first_executable_move": "Set vertical apex velocity v_y = u sin theta - gt = 0 => t_apex = (u sin theta) / g; total flight time T = (2u sin theta) / g",
+          "anti_pattern": "Setting total velocity to zero at the apex (horizontal speed u_x = u cos theta remains strictly non-zero)"
+        },
+        {
+          "competency_id": "PLANE-05",
+          "cue": "Ground-to-ground horizontal range, maximum range, or landing impact coordinate",
+          "representation": "Parabolic trajectory arc with landing coordinates (R, 0)",
+          "first_executable_move": "Compute range R = u_x * T = (u^2 sin 2theta) / g; maximum range occurs at theta = 45 deg where R_max = u^2 / g",
+          "anti_pattern": "Applying the level-ground range formula R = (u^2 sin 2theta)/g when launch and landing heights are unequal"
+        },
+        {
+          "competency_id": "PLANE-06",
+          "cue": "Two projectiles with equal launch speeds achieving identical horizontal range",
+          "representation": "Dual trajectory arcs showing steep lob vs flat drive with complementary launch angles",
+          "first_executable_move": "Apply complementary angle degeneracy: theta_1 + theta_2 = 90 deg => sin(2*theta_1) = sin(2*theta_2); ranges are identical, flight times scale as T1 / T2 = tan theta_1",
+          "anti_pattern": "Assuming equal range implies equal flight times or equal maximum apex heights"
+        },
+        {
+          "competency_id": "PLANE-07",
+          "cue": "Trajectory profile curve, target clearance at (x, y), or path equation without time t",
+          "representation": "Cartesian trajectory curve y(x) plotted on spatial (x, y) coordinate grid",
+          "first_executable_move": "Substitute t = x / (u cos theta) into y(t) to form trajectory equation y = x tan theta - (g x^2) / (2 u^2 cos^2 theta) = x tan theta * (1 - x / R)",
+          "anti_pattern": "Attempting multi-variable time quadratics when the Cartesian trajectory equation connects x and y directly"
+        },
+        {
+          "competency_id": "PLANE-08",
+          "cue": "Boat crossing river with stream current velocity v_r and engine speed v_b",
+          "representation": "Vector velocity triangle: v_net = v_b/r + v_r across river width W",
+          "first_executable_move": "For shortest time, steer perpendicular to bank (theta = 90 deg, t_min = W / v_b); for zero drift (v_b > v_r), steer upstream at sin alpha = v_r / v_b",
+          "anti_pattern": "Steering upstream when asked for shortest crossing time (shortest time strictly requires heading directly across)"
+        },
+        {
+          "competency_id": "PLANE-09",
+          "cue": "Rain falling vertically while observer moves horizontally, or aircraft in crosswind",
+          "representation": "Relative velocity vector subtraction triangle: v_rain/man = v_rain - v_man",
+          "first_executable_move": "Construct relative velocity vector v_rel = -v_rain j - v_man i; tilt umbrella into oncoming relative rain at tan theta = v_man / v_rain from vertical",
+          "anti_pattern": "Tilting umbrella backward or along walking direction instead of into the oncoming relative rain vector"
+        },
+        {
+          "competency_id": "PLANE-10",
+          "cue": "Particle moving along circular path of radius R at uniform speed v or angular velocity omega",
+          "representation": "Circular orbit with tangent velocity vector v and radially inward normal acceleration a_c",
+          "first_executable_move": "Apply centripetal acceleration invariant: a_c = v^2 / R = omega^2 * R = 4*pi^2*R / T^2 directed strictly toward orbit center",
+          "anti_pattern": "Claiming uniform circular motion has zero acceleration because scalar speed |v| is constant"
+        },
+        {
+          "competency_id": "PLANE-11",
+          "cue": "Particle moving along general curved path with changing speed",
+          "representation": "Intrinsic Frenet-Serret coordinate frame: unit tangent u_t and unit inward normal u_n",
+          "first_executable_move": "Decouple acceleration into tangential a_t = dv/dt (changes speed) and normal a_n = v^2 / rho (changes direction); total |a| = sqrt(a_t^2 + a_n^2)",
+          "anti_pattern": "Conflating total acceleration with centripetal acceleration in non-uniform curvilinear motion"
+        }
+      ]
+    }
+  }
+}

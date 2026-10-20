@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_5",
+  "qrt_cell": "QRT-REPRESENT-D3",
+  "source_question": {
+    "id": "GOLDEN-REP-D3-002",
+    "custody_hash": "b2c3d4e5f6a10718293a4b5c6d7e8f90123456789abcdef0123456789abcdef1",
+    "stem": "In a regular heptagon inscribed in a unit circle, chords are drawn from a single vertex to each of the other six vertices. What is the exact product of the lengths of these six chords?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$7$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$14$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$\\sqrt{7}$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$6$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "7",
+      "crux_move_ref": "CRUX-COMB-REPRESENT-CYCLOTOMIC-CHORD-PRODUCT"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "REPRESENT",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-COMB-REPRESENT-CYCLOTOMIC-CHORD-PRODUCT"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Represent the vertices of the regular heptagon in the complex plane as the seventh roots of unity, and express the chord lengths using the roots of the cyclotomic polynomial.",
+      "hint2_tactical_step": "The cyclotomic polynomial factors as the product of (z - omega^k) over all non-trivial roots. Evaluate the polynomial at z = 1 to obtain the product of the chord lengths."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student multiplies the polynomial evaluation by the circle diameter 2.",
+      "opt-C": "Student takes the square root of the cyclotomic evaluation.",
+      "opt-D": "Student confuses the product of chord lengths with the count of drawn chords (six)."
+    },
+    "core_links": {
+      "core1a_unit_id": "COMB-REP-CYCLOTOMIC-CHORDS-03",
+      "core1b_activity_id": "ACT-RECON-CYCLOTOMIC-CHORDS-03",
+      "core2a_practice_id": "PRAC-CYCLOTOMIC-CHORDS-03",
+      "core2b_transfer_id": "TRANS-CYCLOTOMIC-CHORDS-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COMB-REP-CYCLOTOMIC-CHORDS-03",
+      "title": "Cyclotomic Representation of Regular Polygon Chords",
+      "concept": "For a regular n-gon inscribed in a unit circle, placing one vertex at 1 allows the other vertices to be represented as the n-th roots of unity exp(2*pi*i*k / n). The product of distances from vertex 1 to all other vertices equals the evaluation of the cyclotomic polynomial Phi_n(z) = (z^n - 1)/(z - 1) = z^{n-1} + ... + 1 at z = 1, which equals n. For example, in a regular pentagon (n = 5), the product of the four chords from one vertex to all others is Phi_5(1) = 1 + 1 + 1 + 1 + 1 = 5.",
+      "boundary_conditions": "The unit circle radius must be exactly 1; for a circle of radius R, the product scales by R^{n-1}."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-CYCLOTOMIC-CHORDS-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What polynomial identity equates (z^n - 1) / (z - 1)?",
+      "scaffold_steps": [
+        "Divide z^n - 1 by z - 1 using polynomial long division",
+        "Obtain geometric series z^{n-1} + z^{n-2} + ... + 1",
+        "Conclude cyclotomic quotient has n unit terms at z = 1"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-REP-D3-002\"><div class=\"qb-stem\"><p>In a regular heptagon inscribed in a unit circle, chords are drawn from a single vertex to each of the other six vertices. What is the exact product of the lengths of these six chords?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $7$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $14$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $\\sqrt{7}$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $6$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-REP-D3-002\"><p>Represent the vertices of the regular heptagon in the complex plane as the seventh roots of unity, and express the chord lengths using the roots of the cyclotomic polynomial.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-REP-D3-002\"><p>The cyclotomic polynomial factors as the product of (z - omega^k) over all non-trivial roots. Evaluate the polynomial at z = 1 to obtain the product of the chord lengths.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COMB-REP-CYCLOTOMIC-CHORDS-03\">Review Cyclotomic Chord Products</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Represent the geometric vertices in the complex plane:</p><p>Place the regular heptagon on the unit circle in $\\mathbb{C}$, orienting vertex $V_0$ at $1$.</p><p>The remaining six vertices are the primitive seventh roots of unity: $\\omega^k = e^{2\\pi i k / 7}$ for $k = 1, 2, \\dots, 6$.</p><p>2. Express the chord lengths as complex moduli:</p><p>The length of the chord connecting $V_0 = 1$ to vertex $V_k$ is $|1 - \\omega^k|$.</p><p>The required product of all six chords is $P = \\prod_{k=1}^6 |1 - \\omega^k|$.</p><p>3. Utilize the cyclotomic polynomial identity:</p><p>The roots of $z^7 - 1 = 0$ are $1, \\omega, \\omega^2, \\dots, \\omega^6$. Factoring out $(z - 1)$ gives:</p><p>$\\Phi_7(z) = \\frac{z^7 - 1}{z - 1} = z^6 + z^5 + z^4 + z^3 + z^2 + z + 1 = \\prod_{k=1}^6 (z - \\omega^k)$.</p><p>4. Evaluate at $z = 1$:</p><p>$\\prod_{k=1}^6 (1 - \\omega^k) = 1^6 + 1^5 + 1^4 + 1^3 + 1^2 + 1 + 1 = 7$.</p><p>5. Take the absolute value:</p><p>$P = \\left|\\prod_{k=1}^6 (1 - \\omega^k)\\right| = |7| = 7$.</p><p>Thus the exact product of the six chord lengths is $7$.</p></div></details></div>"
+}

@@ -1,0 +1,96 @@
+{
+  "schema": "imo-qrt-tile-blueprint/v1",
+  "version": "1.0.0",
+  "tile_id": "tile_1_1",
+  "qrt_cell": "QRT-RETRIEVE-D1",
+  "coordinates": {
+    "band_index": 1,
+    "demand_index": 1,
+    "band": "D1",
+    "demand": "RETRIEVE"
+  },
+  "cognitive_contract": {
+    "label": "Retrieve / classify (Direct application)",
+    "decisive_act": "Reconstruct or select a fact, category, definition, property, unit, or condition.",
+    "band_protected_work": "Leave one meaningful identification, relation, translation, or execution decision to the learner; support may make the surrounding route explicit.",
+    "support_posture": "Narrow the immediate operation if useful, but do not perform W.",
+    "slots": {
+      "X": "the exact property, category, or condition being requested, including the qualifier that separates near-neighbours",
+      "Y": "a demonstrated anchor that lets the learner reconstruct the fact instead of guessing",
+      "Z": "retrieve or classify using the defining criterion",
+      "W": "the final retrieval or classification decision",
+      "wrong_idea": "a nearby fact or category is recalled because its surface wording looks familiar",
+      "replacement_rule": "use the defining criterion or boundary condition, not familiarity alone",
+      "visual_job": "make discriminating features visible when representation helps; otherwise prefer a justified waiver to decoration",
+      "check_job": "verify against the definition, unit, category boundary, or a counterexample"
+    }
+  },
+  "scoring_bounds": {
+    "min_score": 0,
+    "max_score": 2,
+    "band": "D1",
+    "allowed_component_max": 2,
+    "component_keys": [
+      "concept_model_selection",
+      "representation_translation",
+      "reasoning_chain_length",
+      "algebra_computational_load",
+      "trap_exception_sensitivity"
+    ]
+  },
+  "five_core_obligations": {
+    "core2_custody": {
+      "stem_requirement": "Exact question text, valid mathematical options",
+      "hint_ladder_requirement": "H1 clarifying, H2 tactical correlate; must preserve W",
+      "solution_requirement": "Locked pre-commit; step-by-step why-valid derivation with independent check",
+      "distractor_requirement": "Every distractor explained with specific student misconception"
+    },
+    "core1a_declarative": {
+      "blocks": [
+        "entry_assumptions",
+        "inferential_jump",
+        "why_valid_derivation",
+        "three_way_bridge",
+        "representation_anchor",
+        "boundary_conditions",
+        "worked_check"
+      ],
+      "anti_leak_rule": "Strict prohibition on leaking Core 2 exact parameters or answers in Core 1A text"
+    },
+    "core1b_reconstruction": {
+      "stages": [
+        "predict_gate",
+        "locked_attempt",
+        "reverse_reconstruction",
+        "scaffold_checkpoint",
+        "boundary_test",
+        "synthesis_reflection"
+      ],
+      "answer_before_attempt": "FORBIDDEN"
+    },
+    "core2a_supported_practice": {
+      "crux_alignment": "Identical crux move with progressive hints and after-commit unit link",
+      "navigation": "Data attribute data-core-unit-id binding to specific topic unit"
+    },
+    "core2b_transfer": {
+      "perturbation_rule": "Vary numerical parameters or geometric orientation while preserving identical cognitive crux",
+      "verification": "Confirm learner derivation W transferred without memorization"
+    }
+  },
+  "rules": {
+    "T01_PRECOMMIT_OPTION_STYLING": "Pre-commit option styling must not disclose the keyed answer via green borders, classes, or attributes",
+    "T02_SUMMARY_ANSWER_LEAK": "Summary elements must not disclose the answer letter or key prior to attempt commitment",
+    "T03_SOLUTION_PRECOMMIT_UNLOCKED": "Solution container must be inert and hidden prior to learner commitment",
+    "T04_SCORE_OUT_OF_BOUNDS": "Difficulty score must be within [0, 2] for Band D1",
+    "T05_CRUX_MOVE_REF_MISSING": "Question must declare a valid crux_move reference",
+    "T06_KATEX_RENDER_DEFECT": "HTML must not contain KaTeX error spans or unescaped macro issues",
+    "T07_CORE1A_PARAMETER_LEAK": "Core 1A declarative study must not leak Core 2 specific question parameters or answers",
+    "T08_CORE1B_PRECOMMIT_ANSWER_LEAK": "Core 1B reconstruction must enforce answer_before_attempt: FORBIDDEN",
+    "T09_CORE2A_UNIT_NAV_MISSING": "Core 2A must provide explicit question-specific unit navigation",
+    "T10_EMPTY_HINT": "Hints must provide meaningful question-specific guidance",
+    "T11_PRECOMMIT_PROTECTED_W_LEAK": "Pre-commit hints must not leak protected work W (the final retrieval/classification choice)",
+    "T12_CORE_P2_TOPIC_ONLY_NO_QUESTION_UNIT": "HTML must target a source-declared question-specific Core1 unit",
+    "T13_HINT_PROGRESSIVE_SEQUENCE_MISSING": "Hint sequence must progress from H1 conceptual nudge to H2 tactical step",
+    "T14_SOURCE_CUSTODY_INTEGRITY": "Source question must maintain verified provenance and custody hash"
+  }
+}

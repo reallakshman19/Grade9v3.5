@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_6",
+  "qrt_cell": "QRT-SYNTHESIZE-D2",
+  "source_question": {
+    "id": "GOLDEN-SYN-D2-003",
+    "custody_hash": "f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0123456789",
+    "stem": "A circle in the first quadrant is tangent to both the positive $x$-axis and the positive $y$-axis. Its center lies on the line $2x - y - 3 = 0$. What is the area of this circle?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$9\\pi$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$3\\pi$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$6\\pi$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$36\\pi$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "9\\pi",
+      "crux_move_ref": "CRUX-COORD-MENS-AXES-TANGENT-CIRCLE-RADIUS-SYNTHESIS"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "SYNTHESIZE",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-COORD-MENS-AXES-TANGENT-CIRCLE-RADIUS-SYNTHESIS"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall that a circle in the first quadrant tangent to both coordinate axes has center coordinates (r, r), where r is the radius.",
+      "hint2_tactical_step": "Substitute (r, r) into the linear equation 2x - y - 3 = 0 to solve for the radius r, then compute the circular area using pi r^2."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student multiplies by pi instead of squaring the radius (3 * pi instead of 3^2 * pi).",
+      "opt-C": "Student calculates circumference formula 2 * pi * r = 6 * pi instead of area.",
+      "opt-D": "Student mistakenly uses the diameter d = 6 in the area formula."
+    },
+    "core_links": {
+      "core1a_unit_id": "COORD-SYNTH-CIRCLE-LINE-02",
+      "core1b_activity_id": "ACT-RECON-CIRCLE-SYNTH-02",
+      "core2a_practice_id": "PRAC-CIRCLE-SYNTH-02",
+      "core2b_transfer_id": "TRANS-CIRCLE-SYNTH-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COORD-SYNTH-CIRCLE-LINE-02",
+      "title": "Cross-Topic Synthesis: Circle Tangency and Linear Loci",
+      "concept": "To synthesize coordinate tangency with geometric mensuration, note that a circle tangent to both positive axes has center (r, r) with r > 0. If its center lies on 3x - y - 8 = 0, substitute (r, r) to get 3r - r - 8 = 0, giving 2r = 8 so r = 4. The area is pi * r^2 = 16pi.",
+      "boundary_conditions": "In quadrant 1, both center coordinates and radius must be strictly positive: r > 0."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-CIRCLE-SYNTH-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If center (r, r) satisfies 2r - r - 3 = 0, what is the exact radius r?",
+      "scaffold_steps": [
+        "Simplify 2r - r - 3 = 0 to r - 3 = 0",
+        "Solve for r = 3",
+        "Conclude circle radius is 3 units"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-SYN-D2-003\"><div class=\"qb-stem\"><p>A circle in the first quadrant is tangent to both the positive $x$-axis and the positive $y$-axis. Its center lies on the line $2x - y - 3 = 0$. What is the area of this circle?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $9\\pi$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $3\\pi$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $6\\pi$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $36\\pi$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-SYN-D2-003\"><p>Recall that a circle in the first quadrant tangent to both coordinate axes has center coordinates (r, r), where r is the radius.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-SYN-D2-003\"><p>Substitute (r, r) into the linear equation 2x - y - 3 = 0 to solve for the radius r, then compute the circular area using pi r^2.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COORD-SYNTH-CIRCLE-LINE-02\">Review Circle Tangency Synthesis</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. A circle tangent to both positive axes in quadrant 1 has center $(r, r)$ with radius $r > 0$.</p><p>2. Since the center lies on $2x - y - 3 = 0$, substitute $x = r$ and $y = r$:</p><p>$2r - r - 3 = 0 \\implies r - 3 = 0 \\implies r = 3$.</p><p>3. Area of the circle $= \\pi r^2 = \\pi (3)^2 = 9\\pi$.</p></div></details></div>"
+}

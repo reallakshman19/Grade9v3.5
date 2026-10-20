@@ -1,0 +1,142 @@
+{
+  "schema": "core1b-physics-reconstruction/v2",
+  "version": "2.0.0",
+  "subject": "Physics",
+  "topic": "Motion in a Plane: Projectiles, Relative Frames & Curvilinear Motion",
+  "title": "Grade 9 Olympiad Physics Core 1B Phenomenological Reconstruction: Motion in a Plane",
+  "canonical_topic_id": "phy-motion-in-a-plane",
+  "reconstruction_cycles": [
+    {
+      "cycle_id": "RECON-01",
+      "phenomenon": "Zero-Acceleration Relative Frame of Two Freely Falling Projectiles",
+      "competency_ref": "PLANE-02",
+      "standard_derivation": "Particle 1: r1(t) = u1*t + 0.5*g*t^2. Particle 2: r2(t) = r2_0 + u2*t + 0.5*g*t^2. The relative position vector is r_rel(t) = r1(t) - r2(t) = -r2_0 + (u1 - u2)*t. Relative acceleration is a_rel = g - g = 0.",
+      "phenomenological_reconstruction": {
+        "perspective": "Moving Observer Geometric Rectification",
+        "conceptual_pivot": "Ride on particle 2. Because both particles experience the identical acceleration vector g, this common acceleration cancels out completely from the relative equation of motion.",
+        "rectified_path": "Seen from particle 2, particle 1 travels along an exact straight line with constant vector velocity v_rel = u1 - u2.",
+        "collision_criterion": "Collision occurs if and only if the constant relative velocity vector v_rel points directly along the initial line-of-sight vector r2_0 - r1_0."
+      },
+      "limiting_boundary_checks": [
+        {
+          "limit": "u1 = u2 (parallel identical launch)",
+          "physical_consequence": "v_rel = 0; separation distance remains strictly constant for all t"
+        },
+        {
+          "limit": "v_rel directed along line-of-sight",
+          "physical_consequence": "d_min = 0; collision is inevitable regardless of gravity"
+        }
+      ]
+    },
+    {
+      "cycle_id": "RECON-02",
+      "phenomenon": "Complementary Launch Angle Degeneracy & Geometric Mean Height",
+      "competency_ref": "PLANE-06",
+      "standard_derivation": "Let two projectiles be launched with speed u at angles theta and 90 - theta. Ranges are R1 = (u^2 sin 2theta)/g and R2 = (u^2 sin(180 - 2theta))/g = R1. Heights are H1 = (u^2 sin^2 theta)/(2g) and H2 = (u^2 cos^2 theta)/(2g). Their product is H1*H2 = (u^4 sin^2 theta cos^2 theta)/(4 g^2) = ((u^2 2 sin theta cos theta / g) / 4)^2 = (R/4)^2 => sqrt(H1*H2) = R/4. Flight time product is T1*T2 = (2u sin theta / g)*(2u cos theta / g) = 2R/g.",
+      "phenomenological_reconstruction": {
+        "perspective": "Trigonometric Duality & Kinetic Swap Invariant",
+        "conceptual_pivot": "Replacing theta with 90 - theta exactly swaps the horizontal and vertical velocity components: u_x <-> u_y.",
+        "root_decomposition": "Because horizontal range is proportional to the product u_x * u_y, swapping them leaves range R strictly invariant.",
+        "geometric_mean": "The product of apex heights isolates the product (u_x * u_y)^2, proving sqrt(H1 * H2) = R/4 is a universal invariant independent of launch angle."
+      },
+      "limiting_boundary_checks": [
+        {
+          "limit": "theta = 45 deg",
+          "physical_consequence": "H1 = H2 = R/4, self-complementary unique maximum range"
+        },
+        {
+          "limit": "theta -> 0 deg",
+          "physical_consequence": "H1 -> 0, H2 -> u^2/(2g), R -> 0, product identity holds trivially"
+        }
+      ]
+    },
+    {
+      "cycle_id": "RECON-03",
+      "phenomenon": "River Crossing Orthogonal Decoupling: Shortest Time vs Minimum Drift",
+      "competency_ref": "PLANE-08",
+      "standard_derivation": "Boat velocity relative to water is v_b at angle theta to downstream bank. Velocity components: v_x = v_r + v_b cos theta, v_y = v_b sin theta. Crossing time is t = W / v_y = W / (v_b sin theta). Downstream drift is x = v_x * t = (v_r + v_b cos theta) * W / (v_b sin theta).",
+      "phenomenological_reconstruction": {
+        "perspective": "Perpendicular Projection Decoupling",
+        "conceptual_pivot": "River flow is strictly parallel to the banks. The width of the river is strictly perpendicular to the banks.",
+        "shortest_time": "The river flow contributes zero velocity toward the opposing bank. To minimize time t = W / v_y, the boat must direct 100% of its engine effort across the river: sin theta = 1 => theta = 90 deg.",
+        "zero_drift": "To achieve zero drift, the boat's upstream component must cancel river speed exactly: v_b cos theta + v_r = 0 => cos theta = -v_r / v_b. This is physically possible if and only if v_b > v_r."
+      },
+      "limiting_boundary_checks": [
+        {
+          "limit": "v_b < v_r",
+          "physical_consequence": "Zero drift is impossible; boat is inevitably swept downstream"
+        },
+        {
+          "limit": "v_r = 0 (still lake)",
+          "physical_consequence": "t_min = W / v_b, drift is identically zero"
+        }
+      ]
+    },
+    {
+      "cycle_id": "RECON-04",
+      "phenomenon": "Frenet-Serret Curvature Decomposition: Projectile Apex Curvature Radius",
+      "competency_ref": "PLANE-11",
+      "standard_derivation": "Trajectory of projectile has velocity v(t) and acceleration a = -g j. Intrinsic acceleration components are a_t = dv/dt = (v . a) / v and a_n = sqrt(g^2 - a_t^2). Radius of curvature is rho = v^2 / a_n.",
+      "phenomenological_reconstruction": {
+        "perspective": "Osculating Circle & Centripetal Matching",
+        "conceptual_pivot": "At any point on a smooth curve, the motion can be locally modeled as circular motion with instantaneous radius rho and normal acceleration a_n.",
+        "apex_simplification": "At the highest point (apex), velocity is strictly horizontal v = u cos theta, and gravity is strictly vertical g. Therefore, velocity and acceleration are mutually perpendicular: a_t = 0 and a_n = g.",
+        "apex_curvature": "The apex radius of curvature is simply rho_apex = (u cos theta)^2 / g."
+      },
+      "limiting_boundary_checks": [
+        {
+          "limit": "theta = 0 deg (horizontal launch)",
+          "physical_consequence": "rho_apex = u^2 / g (maximum curvature radius)"
+        },
+        {
+          "limit": "theta -> 90 deg (vertical toss)",
+          "physical_consequence": "rho_apex -> 0 (path sharpens into a degenerate 1D line turnaround)"
+        }
+      ]
+    }
+  ],
+  "cognitive_dissonance_probes": [
+    {
+      "probe_id": "CDP-01",
+      "competency_ref": "PLANE-04",
+      "student_trap": "At the highest point of an oblique projectile flight, velocity is zero because the ball momentarily stops.",
+      "socratic_challenge": "If total velocity were zero at the top, which force halted the projectile's horizontal motion? Does gravity act horizontally?",
+      "resolution": "Gravity acts strictly downward! Horizontal velocity u_x = u cos theta is completely untouched by gravity and continues unaffected. At the top, the speed is u cos theta > 0."
+    },
+    {
+      "probe_id": "CDP-02",
+      "competency_ref": "PLANE-03",
+      "student_trap": "A bullet shot horizontally from a gun stays airborne longer than a dropped coin because its high speed lifts it.",
+      "socratic_challenge": "Which upward force lifts the bullet in a vacuum? Both objects start with zero vertical speed and fall under g.",
+      "resolution": "No upward force exists! Horizontal motion and vertical motion decouple completely. Both the bullet and coin experience vertical acceleration -g and hit the ground at the exact same instant."
+    },
+    {
+      "probe_id": "CDP-03",
+      "competency_ref": "PLANE-06",
+      "student_trap": "Because launch at 30 deg and 60 deg achieve the same horizontal range, they must have the same flight time.",
+      "socratic_challenge": "The 60 deg launch reaches a much higher peak. Can an object climb higher and return in the same time if acceleration is the same constant g?",
+      "resolution": "No! Higher ascent requires longer flight time: T = 2 u sin theta / g. The 60 deg launch stays airborne longer (T_60 / T_30 = tan 60 deg = sqrt(3)), but travels slower horizontally, yielding the exact same range product."
+    },
+    {
+      "probe_id": "CDP-04",
+      "competency_ref": "PLANE-08",
+      "student_trap": "To cross a river in the shortest time, you should aim downstream so the current pushes you across faster.",
+      "socratic_challenge": "The current pushes you parallel to the riverbank. Does pushing you parallel help you reach the opposite bank one second sooner?",
+      "resolution": "Not by a microsecond! River width is perpendicular to current. Progress across depends solely on v_boat * sin theta. Aiming perpendicular (theta = 90 deg) maximizes crossing speed."
+    },
+    {
+      "probe_id": "CDP-05",
+      "competency_ref": "PLANE-10",
+      "student_trap": "A car rounding a curve at constant speed of 60 km/h has zero acceleration because speedometer is steady.",
+      "socratic_challenge": "Is acceleration defined as change in speed or change in velocity? Is the direction of motion changing?",
+      "resolution": "Velocity is a vector! Turning the steering wheel changes the direction of velocity, demanding a continuous inward normal acceleration a_c = v^2 / R provided by tire friction."
+    },
+    {
+      "probe_id": "CDP-06",
+      "competency_ref": "PLANE-09",
+      "student_trap": "When walking forward in vertically falling rain, you should hold your umbrella vertically to block rain coming from above.",
+      "socratic_challenge": "If you hold a vertical umbrella and walk forward, into which raindrops does your body walk?",
+      "resolution": "You walk forward into the falling raindrops! In your moving reference frame, the rain appears to come diagonally from the front, so the umbrella must be tilted forward."
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-IMOCIRCLE-GRADE9",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "CIRCLES",
+  "topic_name": "Circles and Cyclic Quadrilaterals Conceptual Reconstruction",
+  "subtopic": "IMO-CIRCLES-COMPREHENSIVE-CURRICULUM",
+  "target_demand": "JUSTIFY",
+  "target_band": "D4",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating or writing equations: Consider a cyclic quadrilateral ABCD with side lengths a = 3, b = 4, c = 5, d = 6 and diagonals d_1, d_2. Next consider two concentric circles where a chord of length L of the outer circle is tangent to the inner circle. Which statement correctly identifies the governing invariants of these two configurations?",
+      "options": [
+        "A. In the cyclic quad, d_1 + d_2 = a + b + c + d; in the concentric circles, annulus area depends on both individual radii R and r.",
+        "B. In the cyclic quad, d_1 * d_2 = ac + bd (Ptolemy's Theorem); in the concentric circles, annulus area is pi * (L / 2)^2, invariant of individual radii R and r.",
+        "C. In the cyclic quad, the diagonals must be perpendicular; in concentric circles, the chord cannot be tangent.",
+        "D. In the cyclic quad, opposite sides must be parallel; in concentric circles, annulus area is 2 * pi * L."
+      ],
+      "predict_rationale": "Forces the learner to mentally commit to the distinction between linear perimeters and non-linear quadratic/product invariants (Ptolemy diagonal products and Pythagorean annulus area invariants) before numerical calculation."
+    },
+    "stage_2_attempt": {
+      "task": "Deduce the exact value of d_1 * d_2 for cyclic quad with sides 3, 4, 5, 6, and prove why the annulus area bounded by concentric circles with tangent chord length 20 cm is identically 100 * pi cm^2.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Ptolemy's Theorem applies directly to cyclic quad ABCD: d_1 * d_2 = (AB * CD) + (BC * DA) = (3 * 5) + (4 * 6) = 15 + 24 = 39.",
+        "step_2": "For the concentric circles: let outer radius be R, inner radius be r. The radius to point of tangency T is perpendicular to chord AB: OT perp AB. By chord bisection, AT = TB = L / 2 = 20 / 2 = 10 cm.",
+        "step_3": "In right triangle OTA: R^2 = r^2 + 10^2 implies R^2 - r^2 = 100.",
+        "conclusion": "The annulus area is pi * R^2 - pi * r^2 = pi * (R^2 - r^2) = 100 * pi cm^2. Both theorems exploit quadratic Pythagorean/similarity invariants."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "INVARIANT_CROSS_EXAMINATION_AND_DUAL_PROOF",
+      "dialog_steps": [
+        {
+          "step_id": "RECON-01-ANNULUS-MAMIKON",
+          "inquiry": "Suppose a student attempts to calculate the annulus area by measuring individual radii R and r. Why is this an unnecessary cognitive burden?",
+          "expected_insight": "Because only the DIFFERENCE of the squares (R^2 - r^2) matters for area, which is directly given by the half-chord squared (L / 2)^2 via the Pythagorean theorem at the point of tangency (Mamikon's sweeping principle)."
+        },
+        {
+          "step_id": "RECON-02-PTOLEMY-INVERSION",
+          "inquiry": "How does Ptolemy's Theorem generalize when quadrilateral ABCD is NOT cyclic, and what is the underlying projective engine?",
+          "expected_insight": "By Ptolemy's Inequality: for any general quadrilateral, d_1 * d_2 <= ac + bd. Under circular inversion centered at vertex D, points A, B, C map to A', B', C'. The triangle inequality A'B' + B'C' >= A'C' translates identically into Ptolemy's relation, with equality holding if and only if A', B', C' are collinear, which occurs if and only if A, B, C, D are concyclic."
+        },
+        {
+          "step_id": "RECON-03-SECANT-POWER-TRAP",
+          "inquiry": "In the Secant-Tangent theorem, why is PT^2 = PA * PB, and what is the fatal cognitive trap in setting up this relation?",
+          "expected_insight": "Similar triangles triangle PTA ~ triangle PBT share angle P and have equal alternate-segment angles (angle PTA = angle PBT). The fatal trap is writing PT^2 = PA * AB (multiplying external segment by internal chord) instead of PA * PB (external segment by entire secant)."
+        },
+        {
+          "step_id": "RECON-04-ORTHOCENTER-CONCYCLICITY",
+          "inquiry": "Why are the altitude feet of a triangle concyclic with vertices and orthocenter in cyclic subsets, and how does this guarantee parallel chords in intersecting circles?",
+          "expected_insight": "Right angles subtended by altitudes (e.g. angle ADC = angle AEC = 90 deg) force quadrilateral CDHE to be cyclic with diameter CH. In dual intersecting circles, shared chords transfer supplementarity across common boundaries, forcing consecutive interior angles to sum to 180 deg."
+        },
+        {
+          "step_id": "RECON-05-EULER-DISTANCE-INVARIANT",
+          "inquiry": "In Euler's distance formula d^2 = R(R - 2r), what is the geometric meaning when d = 0, and why is R >= 2r universally?",
+          "expected_insight": "When d = 0, circumcenter O and incenter I coincide, which characterizes equilateral triangles identically. Since d^2 >= 0 always, R(R - 2r) >= 0 implies R >= 2r, establishing the absolute extremal bound for all planar triangles."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Extremal Boundary Test: In Euler's distance formula d^2 = R * (R - 2r), what is the geometric meaning when d = 0 (circumcenter O and incenter I coincide)?",
+      "options": [
+        "A. The circle degenerates into a single line segment.",
+        "B. The triangle is strictly equilateral, with R = 2r and circumcenter coinciding identically with incenter and centroid.",
+        "C. The triangle is an isosceles right triangle with R = r * sqrt(2).",
+        "D. The incenter lies outside the triangle."
+      ],
+      "correct_option": "B",
+      "explanation": "When d = 0, R(R - 2r) = 0 implies R = 2r (since R > 0). In any triangle, circumcenter and incenter coincide if and only if the triangle is equilateral. This verifies the absolute lower bound of Euler's inequality R >= 2r."
+    }
+  },
+  "structural_reconstruction_scenarios": [
+    {
+      "scenario_id": "SCEN-01-PTOLEMY-INVERSION",
+      "focus": "Cyclic Diagonal Bilinear Forms vs General Metric Space",
+      "core_question": "Why does concyclicity enforce equality in diagonal products while general quadrilaterals only satisfy an inequality?",
+      "mathematical_core": "Under circular inversion with center D and radius k: A'B' = k^2 * AB / (DA * DB). Applying the triangle inequality to inverted points A', B', C' yields AB * CD + BC * DA >= AC * BD. Equality holds iff A', B', C' are collinear, which maps back to concyclicity of A, B, C, D.",
+      "cognitive_takeaway": "Ptolemy's theorem is not an isolated identity, but the metric shadow of the triangle inequality under conformal circular inversion."
+    },
+    {
+      "scenario_id": "SCEN-02-POWER-OF-A-POINT",
+      "focus": "Projective Chord Products and Constant Radial Distance",
+      "core_question": "Why is the product of segments through point P independent of the chord angle?",
+      "mathematical_core": "For circle C(O, R) and point P at distance d = OP, any line through P intersecting C at A, B satisfies (x - d_A)(x - d_B) with constant product term d^2 - R^2. Thus PA * PB = |d^2 - R^2| is invariant under rotation.",
+      "cognitive_takeaway": "Power of a point is an algebraic polynomial invariant: the constant term of the quadratic intersection equation."
+    },
+    {
+      "scenario_id": "SCEN-03-MAMIKON-ANNULUS",
+      "focus": "Tangent Sweeping and Radial Independence",
+      "core_question": "Why does the annulus area depend only on the tangent chord length and not on individual radii?",
+      "mathematical_core": "Mamikon's theorem states that the area swept out by a tangent segment of constant length L/2 as it moves around the inner circle equals the area of a circle with radius L/2: Area = pi * (L / 2)^2.",
+      "cognitive_takeaway": "Global area integrals can evaluate to local metric constants when geometry exhibits rotational tangent symmetry."
+    },
+    {
+      "scenario_id": "SCEN-04-EULER-EXTREMAL",
+      "focus": "Triangle Center Distance and Inequality Bounds",
+      "core_question": "How does circumcenter-incenter separation d govern the fundamental geometry of the triangle?",
+      "mathematical_core": "Euler's relation OI^2 = R(R - 2r) implies that the ratio R / 2r is strictly 1 + (OI / R)^2 / (1 - OI^2/R^2). As OI -> 0, the triangle converges to equilateral symmetry.",
+      "cognitive_takeaway": "Center distances measure geometric symmetry deficit; zero separation implies maximum symmetry (equilateral)."
+    }
+  ],
+  "cognitive_dissonance_resolution_framework": {
+    "dissonance_1": {
+      "intuitive_bias": "Assuming two circles looking similar have equal power lines.",
+      "resolution": "Radical axis is the unique straight line of equal power: P(P, C_1) = P(P, C_2). It is perpendicular to the line of centers O_1 O_2."
+    },
+    "dissonance_2": {
+      "intuitive_bias": "Assuming chords of equal length subtend equal angles at any point.",
+      "resolution": "Equal chords subtend equal angles ONLY at points on the circumcircle on the same side of the chord, not at arbitrary points in the plane."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Identify whether the problem asks for a linear relation (chords, bisectors) or a quadratic product relation (areas, power of a point, diagonal products)."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "For cyclic quads, apply Ptolemy's Theorem d_1 * d_2 = ac + bd. For tangent-secants, write PT^2 = PA * PB and express PB as PA + AB."
+    },
+    "hint_3_crux_move": {
+      "role": "UNIFYING_SYNTHESIS",
+      "text": "Always verify intermediate roots and quadratic solutions against physical geometric constraints (e.g., segment lengths must be strictly positive and satisfy triangle inequalities)."
+    }
+  }
+}

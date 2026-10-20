@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_6",
+  "qrt_cell": "QRT-SYNTHESIZE-D3",
+  "source_question": {
+    "id": "GOLDEN-SYN-D3-001",
+    "custody_hash": "d1e2f30415263748596a7b8c9d0e1f2031425364758697a8b9c0d1e2f3041526",
+    "stem": "Find the smallest possible perimeter of a right-angled triangle with integer side lengths whose area is numerically equal to $3$ times its perimeter.",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$70$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$182$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$35$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$72$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "70",
+      "crux_move_ref": "CRUX-GEO-NT-SYNTHESIZE-INRADIUS-DIOPHANTINE"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "SYNTHESIZE",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-GEO-NT-SYNTHESIZE-INRADIUS-DIOPHANTINE"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Relate the area and perimeter of the right triangle to its inradius r using the formula Area = r * s, then express the inradius in terms of the side lengths a, b, c.",
+      "hint2_tactical_step": "The inradius is r = 6, which induces the Diophantine relation (a - 12)(b - 12) = 72. Find the positive factor pair (u, v) with u * v = 72 that minimizes the perimeter a + b + c."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student evaluates the extreme factor pair (1, 72) yielding perimeter 13 + 84 + 85 = 182 instead of the minimal perimeter.",
+      "opt-C": "Student incorrectly sets the inradius r = 3 rather than r = 6, underestimating the side lengths.",
+      "opt-D": "Student reports the value of the Diophantine constant 72 rather than the perimeter."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEO-SYNTH-INRADIUS-DIOPHANTINE-03",
+      "core1b_activity_id": "ACT-RECON-INRADIUS-DIOPHANTINE-03",
+      "core2a_practice_id": "PRAC-INRADIUS-DIOPHANTINE-03",
+      "core2b_transfer_id": "TRANS-INRADIUS-DIOPHANTINE-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEO-SYNTH-INRADIUS-DIOPHANTINE-03",
+      "title": "Synthesis of Geometric Inradius and Diophantine Factoring",
+      "concept": "For any triangle with semi-perimeter s, Area = r * s. When Area = k * (2s), the inradius is fixed at r = 2k. In a right triangle with legs a and b and hypotenuse c, r = (a + b - c)/2. Combining this with a^2 + b^2 = c^2 yields the hyperbolic Diophantine identity (a - 2r)(b - 2r) = 2r^2. For example, when Area = Perimeter, r = 2, giving (a - 4)(b - 4) = 8. The factor pairs of 8 are (1, 8) yielding (a, b, c) = (5, 12, 13) with perimeter 30, and (2, 4) yielding (a, b, c) = (6, 8, 10) with perimeter 24.",
+      "boundary_conditions": "Both side lengths a and b must strictly exceed 2r so that the factors are positive integers."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-INRADIUS-DIOPHANTINE-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If Area = 3 * Perimeter, what is the inradius r of the triangle?",
+      "scaffold_steps": [
+        "Recall Area = r * s = r * (Perimeter / 2)",
+        "Equate r * (Perimeter / 2) = 3 * Perimeter",
+        "Conclude inradius r = 6"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-SYN-D3-001\"><div class=\"qb-stem\"><p>Find the smallest possible perimeter of a right-angled triangle with integer side lengths whose area is numerically equal to $3$ times its perimeter.</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $70$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $182$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $35$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $72$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-SYN-D3-001\"><p>Relate the area and perimeter of the right triangle to its inradius r using the formula Area = r * s, then express the inradius in terms of the side lengths a, b, c.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-SYN-D3-001\"><p>The inradius is r = 6, which induces the Diophantine relation (a - 12)(b - 12) = 72. Find the positive factor pair (u, v) with u * v = 72 that minimizes the perimeter a + b + c.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEO-SYNTH-INRADIUS-DIOPHANTINE-03\">Review Inradius Diophantine Synthesis</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Geometric inradius deduction:</p><p>For any triangle with semi-perimeter $s = \\frac{a+b+c}{2}$, the area is $\\text{Area} = r \\cdot s = r \\cdot \\frac{P}{2}$.</p><p>Given $\\text{Area} = 3P$, we have $r \\cdot \\frac{P}{2} = 3P \\implies r = 6$.</p><p>2. Right-triangle inradius identity:</p><p>For a right triangle with legs $a, b$ and hypotenuse $c$, $r = \\frac{a + b - c}{2} = 6 \\implies a + b - c = 12$.</p><p>3. Derive the Diophantine equation:</p><p>Rewrite as $a + b - 12 = c$. Squaring both sides:</p><p>$(a + b - 12)^2 = c^2 = a^2 + b^2$.</p><p>$a^2 + b^2 + 144 + 2ab - 24a - 24b = a^2 + b^2$.</p><p>$2ab - 24a - 24b + 144 = 0 \\implies ab - 12a - 12b + 72 = 0$.</p><p>$(a - 12)(b - 12) = 72$.</p><p>4. Factor pair minimization:</p><p>Let $u = a - 12$ and $v = b - 12$ with $u \\le v$ and $u \\cdot v = 72$.</p><p>The perimeter is $P = a + b + c = (a + b) + (a + b - 12) = 2(a + b) - 12 = 2(u + v + 24) - 12 = 2(u + v) + 36$.</p><p>To minimize $P$, we must minimize $u + v$. For a fixed product $uv = 72$, the sum $u + v$ is minimized when $u$ and $v$ are as close as possible.</p><p>The factor pairs of $72$ are $(1, 72), (2, 36), (3, 24), (4, 18), (6, 12), (8, 9)$.</p><p>The closest pair is $(8, 9)$ with $u = 8, v = 9$:</p><p>$a = 12 + 8 = 20$, $b = 12 + 9 = 21$.</p><p>$c = \\sqrt{20^2 + 21^2} = \\sqrt{400 + 441} = \\sqrt{841} = 29$.</p><p>5. Calculate the minimal perimeter:</p><p>$P_{\\min} = 20 + 21 + 29 = 70$.</p><p>Verification: $\\text{Area} = \\frac{1}{2}(20)(21) = 210$. $\\text{Perimeter} = 70$. $\\frac{\\text{Area}}{\\text{Perimeter}} = \\frac{210}{70} = 3$. Verified.</p></div></details></div>"
+}

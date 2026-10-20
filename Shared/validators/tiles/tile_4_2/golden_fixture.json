@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_4_2",
+  "qrt_cell": "QRT-EXPLAIN-D4",
+  "source_question": {
+    "id": "GOLDEN-EXP-D4-001",
+    "custody_hash": "e1f2a3b4c5d60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0",
+    "stem": "Under circular inversion centered at the origin $O$ with radius $R$, each point $P \\ne O$ is mapped to $P'$ on ray $OP$ satisfying $OP \\cdot OP' = R^2$. Let $\\Gamma$ be a circle passing through $O$ with diameter $OA$ of length $d$. Which of the following statements rigorously explains the geometric structural mechanism by which the inverted image of $\\Gamma \\setminus \\{O\\}$ is a straight line perpendicular to $OA$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "For any $P \\in \\Gamma$, $\\angle OPA = 90^\\circ$, so $OP = d \\cos \\theta$ where $\\theta = \\angle POA$. Then $OP' \\cos \\theta = \\frac{R^2}{d}$ is constant, meaning the orthogonal projection of $P'$ onto line $OA$ is fixed at distance $\\frac{R^2}{d}$ from $O$."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "Because circular inversion preserves angles, any line through the origin remains unchanged, forcing the tangent at $O$ to rotate by $90^\\circ$ into a line perpendicular to diameter $OA$."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "The circle $\\Gamma$ has constant curvature $1/d$, and because inversion scales curvature inversely by $R^2$, the curvature of the inverted image becomes exactly $0$ everywhere."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "The cross-ratio of four arbitrary points on $\\Gamma$ is preserved under inversion, which forces all inverted points to be collinear with the point at infinity."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "For any P on Gamma, angle OPA = 90 deg, so OP = d cos theta. Then OP' cos theta = R^2/d is constant, fixing the orthogonal projection of P' onto line OA",
+      "crux_move_ref": "CRUX-GEO-EXPLAIN-INVERSION-PROJECTION-INVARIANCE"
+    },
+    "cognitive_classification": {
+      "band": "D4",
+      "demand": "EXPLAIN",
+      "difficulty_band": "D4",
+      "difficulty_score": 9,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-GEO-EXPLAIN-INVERSION-PROJECTION-INVARIANCE"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Consider a point $P$ on circle $\\Gamma$ and the right triangle formed with diameter $OA$. Relate the chord length $OP$, diameter $d$, and the subtended angle $\\theta = \\angle POA$.",
+      "hint2_tactical_step": "Using $OP = d \\cos \\theta$ and the inversion definition $OP \\cdot OP' = R^2$, calculate $OP' \\cos \\theta$. What does this geometric projection along ray $OA$ imply about the locus of $P'$?"
+    },
+    "distractor_rationales": {
+      "opt-B": "Confuses angle preservation (conformality) with radial displacement, providing an invalid rotational argument instead of calculating the point locus.",
+      "opt-C": "Falsely assumes that inversion applies a simple uniform scaling to curvature rather than a position-dependent conformal factor.",
+      "opt-D": "Appeals to cross-ratio preservation in the abstract without establishing the geometric line locus perpendicular to the diameter."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEO-EXP-INVERSION-MECHANISM-04",
+      "core1b_activity_id": "ACT-RECON-INVERSION-MECHANISM-04",
+      "core2a_practice_id": "PRAC-INVERSION-MECHANISM-04",
+      "core2b_transfer_id": "TRANS-INVERSION-MECHANISM-04"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEO-EXP-INVERSION-MECHANISM-04",
+      "title": "The Conformal and Locus Mechanics of Circular Inversion",
+      "concept": "Circular inversion centered at $O$ with radius $k$ sends each point $X \\ne O$ to $X'$ on ray $OX$ such that $OX \\cdot OX' = k^2$. Inversion is an anti-conformal mapping that preserves angles and maps generalized circles (circles and lines) to generalized circles. A circle passing through the inversion pole $O$ contains the pole, whose image is the ideal point at infinity; hence its inverted locus must be unbounded, forming a straight line.",
+      "boundary_conditions": "The inversion center $O$ has no finite image and corresponds to the point at infinity."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-INVERSION-MECHANISM-04",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the angle subtended by a diameter at any point on the circumference of a circle?",
+      "scaffold_steps": [
+        "Apply Thales's theorem to identify the right angle",
+        "Express the chord length in terms of diameter and angle",
+        "Substitute into the circular inversion equation"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-EXP-D4-001\"><div class=\"qb-stem\"><p>Under circular inversion centered at the origin $O$ with radius $R$, each point $P \\ne O$ is mapped to $P'$ on ray $OP$ satisfying $OP \\cdot OP' = R^2$. Let $\\Gamma$ be a circle passing through $O$ with diameter $OA$ of length $d$. Which of the following statements rigorously explains the geometric structural mechanism by which the inverted image of $\\Gamma \\setminus \\{O\\}$ is a straight line perpendicular to $OA$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> For any $P \\in \\Gamma$, $\\angle OPA = 90^\\circ$, so $OP = d \\cos \\theta$ where $\\theta = \\angle POA$. Then $OP' \\cos \\theta = \\frac{R^2}{d}$ is constant, meaning the orthogonal projection of $P'$ onto line $OA$ is fixed at distance $\\frac{R^2}{d}$ from $O$.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> Because circular inversion preserves angles, any line through the origin remains unchanged, forcing the tangent at $O$ to rotate by $90^\\circ$ into a line perpendicular to diameter $OA$.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> The circle $\\Gamma$ has constant curvature $1/d$, and because inversion scales curvature inversely by $R^2$, the curvature of the inverted image becomes exactly $0$ everywhere.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> The cross-ratio of four arbitrary points on $\\Gamma$ is preserved under inversion, which forces all inverted points to be collinear with the point at infinity.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-EXP-D4-001\"><p>Consider a point $P$ on circle $\\Gamma$ and the right triangle formed with diameter $OA$. Relate the chord length $OP$, diameter $d$, and the subtended angle $\\theta = \\angle POA$.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-EXP-D4-001\"><p>Using $OP = d \\cos \\theta$ and the inversion definition $OP \\cdot OP' = R^2$, calculate $OP' \\cos \\theta$. What does this geometric projection along ray $OA$ imply about the locus of $P'$?</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEO-EXP-INVERSION-MECHANISM-04\">Review Circular Inversion Mechanism</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Geometric setup in the circle $\\Gamma$:</p><p>Let $OA$ be the diameter of length $d$ passing through $O$. For any point $P \\in \\Gamma$ ($P \\ne O$), by Thales's Theorem, $\\angle OPA = 90^\\circ$.</p><p>2. Expressing chord length via cosine:</p><p>In right triangle $\\triangle OPA$, let $\\theta = \\angle POA$. Then:</p><p>$OP = d \\cos \\theta$.</p><p>3. Applying the circular inversion definition:</p><p>Point $P$ maps to $P'$ on ray $OP$ such that $OP \\cdot OP' = R^2$. Therefore:</p><p>$OP' = \\frac{R^2}{OP} = \\frac{R^2}{d \\cos \\theta}$.</p><p>4. Orthogonal projection onto diameter ray $OA$:</p><p>Multiply both sides by $\\cos \\theta$:</p><p>$OP' \\cos \\theta = \\frac{R^2}{d}$.</p><p>Notice that $OP' \\cos \\theta$ is precisely the directed length of the orthogonal projection of $P'$ onto the line containing diameter $OA$.</p><p>5. Invariant locus identification:</p><p>Because $\\frac{R^2}{d}$ is completely constant and independent of the choice of $P$, the orthogonal projection of every point $P'$ onto line $OA$ coincides with the fixed point $A'$ on ray $OA$ at distance $\\frac{R^2}{d}$ from $O$.</p><p>Consequently, the locus of all inverted points $P'$ is the straight line passing through $A'$ and perpendicular to $OA$.</p></div></details></div>"
+}

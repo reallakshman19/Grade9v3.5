@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_4",
+  "qrt_cell": "QRT-MODEL-D2",
+  "source_question": {
+    "id": "GOLDEN-MOD-D2-002",
+    "custody_hash": "f8091a2b3c4d5e6f708192a3b4c5d6e7f80123456789abcdef0123456789abcdef",
+    "stem": "A rectangular community playground has an outer perimeter of 64 m. A running path of uniform width 2 m is built immediately inside the perimeter along all four sides, leaving an inner play lawn of area 180 m^2. If $L$ and $W$ represent the outer length and outer width in meters, which system of equations correctly models these geometric constraints?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$L + W = 32$ and $(L - 4)(W - 4) = 180$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$L + W = 64$ and $(L - 2)(W - 2) = 180$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$L + W = 32$ and $(L - 2)(W - 2) = 180$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$2(L + W) = 32$ and $(L - 4)(W - 4) = 180$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "L + W = 32 and (L - 4)(W - 4) = 180",
+      "crux_move_ref": "CRUX-MENS-RECTANGULAR-UNIFORM-BORDER-AREA-MODELING"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "MODEL",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 2,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-MENS-RECTANGULAR-UNIFORM-BORDER-AREA-MODELING"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Relate outer perimeter $2(L + W)$ to half-perimeter, and note that a uniform border of width $w$ reduces both length and width by $2w$ (deducting width from both opposite sides).",
+      "hint2_tactical_step": "Divide the outer perimeter equation $2(L + W) = 64$ by 2, and formulate the inner lawn dimensions as $(L - 2(2))$ and $(W - 2(2))$ before equating their product to 180."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student forgets to divide perimeter by 2 and subtracts width only once instead of from both ends.",
+      "opt-C": "Student subtracts border width 2m only once from each dimension instead of 2m from both ends (2 * 2m = 4m).",
+      "opt-D": "Student mistakenly sets 2(L + W) equal to half-perimeter 32."
+    },
+    "core_links": {
+      "core1a_unit_id": "MENS-RECT-BORDER-02",
+      "core1b_activity_id": "ACT-RECON-BORDER-02",
+      "core2a_practice_id": "PRAC-BORDER-02",
+      "core2b_transfer_id": "TRANS-BORDER-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "MENS-RECT-BORDER-02",
+      "title": "Geometric Constraint Modeling with Uniform Borders",
+      "concept": "For a rectangle with outer dimensions L and W and uniform border w, the inner rectangle has dimensions (L - 2w) and (W - 2w). Perimeter constraint gives L + W = P / 2, and inner area constraint gives (L - 2w)(W - 2w) = A.",
+      "boundary_conditions": "Outer dimensions must satisfy L > 2w and W > 2w for the inner rectangle to exist."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-BORDER-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If a rectangle of length L has a border of width 3m on all sides, what is the length of the inner region?",
+      "scaffold_steps": [
+        "Identify border on left and right sides",
+        "Subtract 2 * 3m from L",
+        "State inner length L - 6"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-MOD-D2-002\"><div class=\"qb-stem\"><p>A rectangular community playground has an outer perimeter of 64 m. A running path of uniform width 2 m is built immediately inside the perimeter along all four sides, leaving an inner play lawn of area 180 m^2. If $L$ and $W$ represent the outer length and outer width in meters, which system of equations correctly models these geometric constraints?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $L + W = 32$ and $(L - 4)(W - 4) = 180$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $L + W = 64$ and $(L - 2)(W - 2) = 180$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $L + W = 32$ and $(L - 2)(W - 2) = 180$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $2(L + W) = 32$ and $(L - 4)(W - 4) = 180$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-MOD-D2-002\"><p>Relate outer perimeter $2(L + W)$ to half-perimeter, and note that a uniform border of width $w$ reduces both length and width by $2w$ (deducting width from both opposite sides).</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-MOD-D2-002\"><p>Divide the outer perimeter equation $2(L + W) = 64$ by 2, and formulate the inner lawn dimensions as $(L - 2(2))$ and $(W - 2(2))$ before equating their product to 180.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"MENS-RECT-BORDER-02\">Review Border Constraint Modeling</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Solution</summary><div class=\"qb-solution-body\"><p>1. Perimeter constraint: $2(L + W) = 64 \\implies L + W = 32$.</p><p>2. The path is $2\\text{ m}$ wide on all 4 sides, so the inner lawn dimensions are $(L - 2 \\times 2) = (L - 4)$ and $(W - 2 \\times 2) = (W - 4)$.</p><p>3. Inner area constraint: $(L - 4)(W - 4) = 180$.</p><p>Therefore, the model is $L + W = 32$ and $(L - 4)(W - 4) = 180$.</p></div></details></div>"
+}

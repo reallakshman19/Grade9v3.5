@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_6",
+  "qrt_cell": "QRT-SYNTHESIZE-D2",
+  "source_question": {
+    "id": "GOLDEN-SYN-D2-002",
+    "custody_hash": "e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef01234567",
+    "stem": "Three consecutive terms of an arithmetic progression of positive integers have a sum of $21$ and a product of $315$. What is the largest of these three terms?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$9$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$7$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$5$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$11$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "9",
+      "crux_move_ref": "CRUX-SEQ-NT-ARITHMETIC-PROGRESSION-SYMMETRIC-FACTOR-SYNTHESIS"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "SYNTHESIZE",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-SEQ-NT-ARITHMETIC-PROGRESSION-SYMMETRIC-FACTOR-SYNTHESIS"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Represent the three terms symmetrically as a - d, a, and a + d. Notice how their sum immediately determines the middle term.",
+      "hint2_tactical_step": "The sum gives 3a = 21, so a = 7. Next, express the product as 7(49 - d^2) = 315 to solve for the common difference d, then compute the largest term a + d."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student selects the middle term a = 7 instead of the largest term.",
+      "opt-C": "Student selects the smallest term a - d = 5.",
+      "opt-D": "Student adds d^2 = 4 to 7 to get 11."
+    },
+    "core_links": {
+      "core1a_unit_id": "SEQ-SYNTH-AP-PRODUCT-02",
+      "core1b_activity_id": "ACT-RECON-AP-SYNTH-02",
+      "core2a_practice_id": "PRAC-AP-SYNTH-02",
+      "core2b_transfer_id": "TRANS-AP-SYNTH-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "SEQ-SYNTH-AP-PRODUCT-02",
+      "title": "Symmetric Representation in Arithmetic Progression Synthesis",
+      "concept": "To synthesize sequences with product conditions, express an odd number of AP terms symmetrically: a - d, a, a + d. Their sum is 3a. For example, if three terms sum to 12 and multiply to 48, then 3a = 12 yields a = 4. The product 4(16 - d^2) = 48 simplifies to 16 - d^2 = 12, so d^2 = 4 and d = 2. The largest term is 4 + 2 = 6.",
+      "boundary_conditions": "For strictly increasing sequences of positive integers, common difference must satisfy d in Z_{> 0} and a - d > 0."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-AP-SYNTH-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If three terms a - d, a, a + d sum to 21, what is the exact numerical value of the middle term a?",
+      "scaffold_steps": [
+        "Set (a - d) + a + (a + d) = 21",
+        "Simplify 3a = 21",
+        "Conclude middle term a = 7"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-SYN-D2-002\"><div class=\"qb-stem\"><p>Three consecutive terms of an arithmetic progression of positive integers have a sum of $21$ and a product of $315$. What is the largest of these three terms?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $9$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $7$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $5$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $11$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-SYN-D2-002\"><p>Represent the three terms symmetrically as a - d, a, and a + d. Notice how their sum immediately determines the middle term.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-SYN-D2-002\"><p>The sum gives 3a = 21, so a = 7. Next, express the product as 7(49 - d^2) = 315 to solve for the common difference d, then compute the largest term a + d.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"SEQ-SYNTH-AP-PRODUCT-02\">Review Arithmetic Progression Synthesis</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Represent the terms symmetrically: $(a - d), a, (a + d)$.</p><p>2. Sum of terms: $(a - d) + a + (a + d) = 3a = 21 \\implies a = 7$.</p><p>3. Product of terms: $(7 - d) \\times 7 \\times (7 + d) = 315$.</p><p>4. Divide by $7$: $(7 - d)(7 + d) = 45 \\implies 49 - d^2 = 45$.</p><p>5. Thus $d^2 = 4 \\implies d = 2$.</p><p>6. The terms are $5, 7, 9$. The largest term is $9$.</p></div></details></div>"
+}

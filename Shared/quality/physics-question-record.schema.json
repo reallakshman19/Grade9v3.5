@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Physics Question Canonical Record Schema",
+  "description": "Schema for Grade 9 Olympiad Physics canonical question records adhering to Issue #298 and 28-cell QRT profiles",
+  "type": "object",
+  "required": [
+    "question_id",
+    "subject",
+    "grade",
+    "topic",
+    "provenance",
+    "stem",
+    "system_parameters",
+    "options",
+    "correct_answer",
+    "qrt_contract",
+    "distractor_diagnostics",
+    "progressive_hints",
+    "model_proof",
+    "independent_check"
+  ],
+  "properties": {
+    "question_id": {
+      "type": "string",
+      "pattern": "^PHYS-[A-Z0-9-]+$"
+    },
+    "subject": {
+      "type": "string",
+      "enum": ["Physics"]
+    },
+    "grade": {
+      "type": "integer",
+      "enum": [9]
+    },
+    "topic": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["paper_code", "year", "question_number", "tier"],
+      "properties": {
+        "paper_code": { "type": "string" },
+        "year": { "type": "string" },
+        "question_number": { "type": "string" },
+        "tier": { "type": "string" }
+      }
+    },
+    "stem": {
+      "type": "string",
+      "minLength": 10
+    },
+    "system_parameters": {
+      "type": "object",
+      "required": ["system_boundary", "reference_frame", "idealizations"],
+      "properties": {
+        "system_boundary": { "type": "string" },
+        "reference_frame": { "type": "string" },
+        "idealizations": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "required": ["A", "B", "C", "D"],
+      "properties": {
+        "A": { "type": "string" },
+        "B": { "type": "string" },
+        "C": { "type": "string" },
+        "D": { "type": "string" }
+      }
+    },
+    "correct_answer": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D"]
+    },
+    "qrt_contract": {
+      "type": "object",
+      "required": [
+        "cell_id",
+        "primary_demand",
+        "difficulty_band",
+        "difficulty_factors",
+        "protected_work_W",
+        "rival_demands",
+        "topic_adapters"
+      ],
+      "properties": {
+        "cell_id": { "type": "string" },
+        "primary_demand": {
+          "type": "string",
+          "enum": ["RETRIEVE", "EXPLAIN", "APPLY", "MODEL", "REPRESENT", "SYNTHESIZE", "JUSTIFY"]
+        },
+        "difficulty_band": {
+          "type": "string",
+          "enum": ["D1", "D2", "D3", "D4"]
+        },
+        "difficulty_factors": {
+          "type": "object",
+          "required": ["system_coupling", "vector_dimensionality", "constraint_latency", "domain_coupling", "math_friction"],
+          "properties": {
+            "system_coupling": { "type": "integer", "minimum": 1, "maximum": 4 },
+            "vector_dimensionality": { "type": "integer", "minimum": 1, "maximum": 4 },
+            "constraint_latency": { "type": "integer", "minimum": 1, "maximum": 4 },
+            "domain_coupling": { "type": "integer", "minimum": 1, "maximum": 4 },
+            "math_friction": { "type": "integer", "minimum": 1, "maximum": 4 }
+          }
+        },
+        "protected_work_W": { "type": "string" },
+        "rival_demands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["demand", "rejection_rationale"],
+            "properties": {
+              "demand": { "type": "string" },
+              "rejection_rationale": { "type": "string" }
+            }
+          }
+        },
+        "topic_adapters": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "distractor_diagnostics": {
+      "type": "object",
+      "required": ["A", "B", "C", "D"],
+      "properties": {
+        "A": { "$ref": "#/$defs/diagnostic" },
+        "B": { "$ref": "#/$defs/diagnostic" },
+        "C": { "$ref": "#/$defs/diagnostic" },
+        "D": { "$ref": "#/$defs/diagnostic" }
+      }
+    },
+    "progressive_hints": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["tier", "title", "text"],
+        "properties": {
+          "tier": { "type": "integer", "enum": [1, 2, 3] },
+          "title": { "type": "string" },
+          "text": { "type": "string" }
+        }
+      }
+    },
+    "model_proof": {
+      "type": "object",
+      "required": ["derivation_steps", "final_expression"],
+      "properties": {
+        "derivation_steps": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "final_expression": { "type": "string" }
+      }
+    },
+    "independent_check": {
+      "type": "object",
+      "required": ["method", "dimensional_formula", "limiting_cases"],
+      "properties": {
+        "method": { "type": "string" },
+        "dimensional_formula": { "type": "string" },
+        "limiting_cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["condition", "expected_outcome"],
+            "properties": {
+              "condition": { "type": "string" },
+              "expected_outcome": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "figure": {
+      "type": "object",
+      "required": ["has_figure"],
+      "properties": {
+        "has_figure": { "type": "boolean" },
+        "svg_code": { "type": "string" },
+        "caption": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "diagnostic": {
+      "type": "object",
+      "required": ["type", "diagnostic"],
+      "properties": {
+        "type": { "type": "string" },
+        "diagnostic": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_6",
+  "qrt_cell": "QRT-SYNTHESIZE-D2",
+  "source_question": {
+    "id": "GOLDEN-SYN-D2-001",
+    "custody_hash": "d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef012345",
+    "stem": "A right-angled triangle has perpendicular legs of length $x$ and $x + 7$, and a hypotenuse of length $x + 8$, where lengths are measured in centimeters. What is the area of this triangle in square centimeters?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$30$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$15$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$60$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$65$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "30",
+      "crux_move_ref": "CRUX-GEOM-ALG-PYTHAGOREAN-QUADRATIC-SYNTHESIS"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "SYNTHESIZE",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-GEOM-ALG-PYTHAGOREAN-QUADRATIC-SYNTHESIS"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Apply the Pythagorean Theorem to the right triangle: equate the sum of squares of the legs to the square of the hypotenuse.",
+      "hint2_tactical_step": "Expand and simplify $x^2 + (x + 7)^2 = (x + 8)^2$ to obtain the standard quadratic $x^2 - 2x - 15 = 0$. Factor to find the physical positive root, then compute the triangle area."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student calculates half of 5 times 6 instead of 5 times 12.",
+      "opt-C": "Student forgets to multiply by 1/2 when calculating triangle area (5 * 12 = 60).",
+      "opt-D": "Student calculates half the product of hypotenuse and longer leg."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEOM-SYNTH-PYTH-QUAD-02",
+      "core1b_activity_id": "ACT-RECON-SYNTH-02",
+      "core2a_practice_id": "PRAC-SYNTH-02",
+      "core2b_transfer_id": "TRANS-SYNTH-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEOM-SYNTH-PYTH-QUAD-02",
+      "title": "Cross-Topic Synthesis: Pythagorean Metric and Quadratic Systems",
+      "concept": "To synthesize metric geometry and polynomial algebra, express geometric invariants such as the Pythagorean theorem a^2 + b^2 = c^2 in terms of algebraic variables. For legs x and x + 2 with hypotenuse x + 4, expanding gives x^2 - 4x - 12 = 0, which factors as (x - 6)(x + 2) = 0. Physical lengths require x > 0, so x = 6, yielding area 0.5 * 6 * 8 = 24.",
+      "boundary_conditions": "Physical geometric lengths must be strictly positive: x > 0. All negative algebraic roots must be discarded."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-SYNTH-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If (x + 8)^2 - (x + 7)^2 = x^2, what is the simplified linear expression for the difference of squares on the left?",
+      "scaffold_steps": [
+        "Apply difference of squares (A - B)(A + B)",
+        "Notice (x + 8 - x - 7)(x + 8 + x + 7) = 1 * (2x + 15)",
+        "Equate 2x + 15 = x^2 to form x^2 - 2x - 15 = 0"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-SYN-D2-001\"><div class=\"qb-stem\"><p>A right-angled triangle has perpendicular legs of length $x$ and $x + 7$, and a hypotenuse of length $x + 8$, where lengths are measured in centimeters. What is the area of this triangle in square centimeters?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $30$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $15$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $60$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $65$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-SYN-D2-001\"><p>Apply the Pythagorean Theorem to the right triangle: equate the sum of squares of the legs to the square of the hypotenuse.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-SYN-D2-001\"><p>Expand and simplify $x^2 + (x + 7)^2 = (x + 8)^2$ to obtain the standard quadratic $x^2 - 2x - 15 = 0$. Factor to find the physical positive root, then compute the triangle area.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEOM-SYNTH-PYTH-QUAD-02\">Review Metric Geometry Synthesis</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. By the Pythagorean theorem: $x^2 + (x + 7)^2 = (x + 8)^2$.</p><p>2. Expand binomials: $x^2 + x^2 + 14x + 49 = x^2 + 16x + 64$.</p><p>3. Simplify into standard quadratic form: $x^2 - 2x - 15 = 0$.</p><p>4. Factor: $(x - 5)(x + 3) = 0$. Since physical length $x > 0$, we have $x = 5$.</p><p>5. The perpendicular legs are $x = 5$ and $x + 7 = 12$.</p><p>6. Area $= \\frac{1}{2} \\times 5 \\times 12 = 30\\text{ cm}^2$.</p></div></details></div>"
+}

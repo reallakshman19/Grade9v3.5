@@ -1,0 +1,71 @@
+{
+  "schema": "imo-qrt-tile-blueprint/v1",
+  "version": "1.0.0",
+  "tile_id": "tile_2_5",
+  "qrt_cell": "QRT-REPRESENT-D2",
+  "coordinates": {
+    "band_index": 2,
+    "demand_index": 5,
+    "band": "D2",
+    "demand": "REPRESENT"
+  },
+  "cognitive_contract": {
+    "label": "Represent / translate (Standard Olympiad)",
+    "decisive_act": "Translate a mathematical structure across distinct representational modalities (geometric reflection to coordinate swap, graphical piecewise locus to zeros, or histogram frequency density to frequency counts).",
+    "band_protected_work": "Require learner to execute the multi-step representation mapping to produce the exact transformed equation, locus, or count W.",
+    "support_posture": "Activate the representational bridge invariant without applying the specific translation to the target object.",
+    "slots": {
+      "X": "the linear equation and reflection line in Cartesian plane",
+      "Y": "given original line 2x - 3y + 6 = 0 and reflection axis y = x",
+      "Z": "coordinate transformation invariant under diagonal reflection: (x, y) -> (y, x)",
+      "W": "3x - 2y - 6 = 0",
+      "wrong_idea": "confusing reflection across y = x with reflection across y-axis (x -> -x) or origin ((x, y) -> (-x, -y))",
+      "replacement_rule": "substitute x with y and y with x in 2x - 3y + 6 = 0 yielding 2y - 3x + 6 = 0, rearranged to 3x - 2y - 6 = 0",
+      "visual_job": "render Cartesian grid with original line, dashed axis y = x, and reflected line",
+      "check_job": "verify invariant points: intersection with y = x at (6, 6) remains fixed; original x-intercept (-3, 0) maps to reflected y-intercept (0, -3)"
+    }
+  },
+  "scoring_bounds": {
+    "min_score": 3,
+    "max_score": 5,
+    "band": "D2",
+    "allowed_component_max": 2,
+    "component_keys": [
+      "concept_model_selection",
+      "representation_translation",
+      "reasoning_chain_length",
+      "algebra_computational_load",
+      "trap_exception_sensitivity"
+    ]
+  },
+  "five_core_obligations": {
+    "core2_custody": {
+      "stem_requirement": "Exact representation object with clear transformation parameters, options with authentic translation traps",
+      "hint_ladder_requirement": "H1 representational invariant reminder, H2 tactical mapping step; preserves W",
+      "solution_requirement": "Locked pre-commit; step-by-step why-valid derivation with invariant point check",
+      "distractor_requirement": "Every distractor explained with specific student misconception"
+    },
+    "core1a_declarative": {
+      "blocks": [
+        "entry_assumptions",
+        "inferential_jump",
+        "why_valid_derivation",
+        "three_way_bridge",
+        "representation_anchor",
+        "boundary_conditions",
+        "worked_check"
+      ],
+      "anti_leak_rule": "Strict prohibition on leaking Core 2 exact parameters in Core 1A text"
+    },
+    "core1b_reconstruction": {
+      "predictive_gate": "Answer before attempt FORBIDDEN",
+      "model_alternation": "Reconstruction must use an alternative representational path (e.g. slope-intercept transformation instead of coordinate swap)"
+    },
+    "core2a_supported_practice": {
+      "transfer_obligation": "Near-transfer item with identical representational translation crux"
+    },
+    "core2b_transfer_assessment": {
+      "transfer_obligation": "Far-transfer item with compound or generalized representation translation"
+    }
+  }
+}

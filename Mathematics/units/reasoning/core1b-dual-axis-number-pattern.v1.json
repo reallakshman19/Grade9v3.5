@@ -1,0 +1,68 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-REASONING-DUAL-AXIS-NUMBER-PATTERN",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Verbal and Non-Verbal Reasoning",
+  "subtopic": "REASONING-DUAL-AXIS-NUMBER-PATTERN",
+  "target_demand": "SYNTHESIZE",
+  "target_band": "D2",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating the final central number: Notice that in Figure 1, the center 121 = 11^2, and in Figure 2, the center 81 = 9^2. What is the unsquared synthetic base S for Figure 3 (where Top=9, Bottom=5, Left=6, Right=14)?",
+      "options": [
+        "A. S = 10 (giving center 100)",
+        "B. S = 12 (giving center 144)",
+        "C. S = 14 (giving center 196)",
+        "D. S = 8 (giving center 64)"
+      ],
+      "predict_rationale": "Requires the learner to recognize the underlying square root structure and compute the composite linear sum (4 + 8 = 12) before evaluating the central square."
+    },
+    "stage_2_attempt": {
+      "task": "Synthesize the complete algebraic mapping that connects all four peripheral coordinates (T, B, L, R) to the central value C, and evaluate it for Figure 3.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Determine the vertical contribution: Delta_V = Top - Bottom = 9 - 5 = 4.",
+        "step_2": "Determine the horizontal contribution: Delta_H = Right - Left = 14 - 6 = 8.",
+        "step_3": "Synthesize the composite scalar base: S = Delta_V + Delta_H = 4 + 8 = 12.",
+        "conclusion": "Apply the squaring operator: C = S^2 = 12^2 = 144."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "REVERSE_SYNTHESIS_FROM_TARGET",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose a fourth figure has center C = 169 and vertical numbers Top=18, Bottom=11. What must the horizontal difference (Right - Left) be?",
+          "expected_insight": "Since C = 169, the synthetic base S = sqrt(169) = 13. Delta_V = 18 - 11 = 7. Therefore, Delta_H = S - Delta_V = 13 - 7 = 6."
+        },
+        {
+          "inquiry": "If Left = 8, what must Right be?",
+          "expected_insight": "Right - Left = 6 => Right - 8 = 6 => Right = 14. Reverse synthesis solves for missing peripheral inputs from the central invariant."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Boundary Test: Suppose a figure is constructed where Delta_V and Delta_H are exact opposites (for example, Top - Bottom = 7, but Right - Left = -7). What happens to the synthesized scalar S and the central number C?",
+      "options": [
+        "A. The center becomes negative: C = -49.",
+        "B. The composite scalar S = 7 + (-7) = 0, so the center collapses to C = 0^2 = 0.",
+        "C. The pattern is broken and no center can exist.",
+        "D. The center doubles to 98."
+      ],
+      "correct_option": "B",
+      "explanation": "Because synthesis is linear addition of directional differences, opposing variations cancel to 0: S = 7 - 7 = 0. The central value is 0^2 = 0. The quadratic mapping handles zero and sign cancellation smoothly."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "Observe that the centers 121 and 81 are perfect squares (11^2 and 9^2). Where do 11 and 9 come from using differences of opposite nodes?"
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Compute Delta_V = Top - Bottom and Delta_H = Right - Left. In Fig 1, 8 + 3 = 11. In Fig 2, 9 + 0 = 9. For Fig 3, compute (9 - 5) + (14 - 6) and square the result."
+    }
+  }
+}

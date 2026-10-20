@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460" role="img" aria-label="Circle with diameter AC and parallel chord ED with inscribed angles CEA = 30 deg and CBE = 25 deg" font-family="system-ui, sans-serif">
+  <title>Circle Central Angle, Cyclic Invariant and Parallel Chords</title>
+  <desc>A circle with diameter AC and center O. Chord ED is parallel to AC. Inscribed angle CEA measures 30 degrees, inscribed angle CBE measures 25 degrees, angle in semicircle AEC is 90 degrees, and angle DEC measures 65 degrees.</desc>
+  <style>
+    .bg { fill: #101826; }
+    .circle-main { fill: rgba(15, 23, 42, 0.6); stroke: #38bdf8; stroke-width: 3; }
+    .diameter { stroke: #f59e0b; stroke-width: 3; }
+    .chord-parallel { stroke: #34d399; stroke-width: 2.5; stroke-dasharray: 6,4; }
+    .chord-line { stroke: #94a3b8; stroke-width: 2; }
+    .highlight-tri { fill: rgba(56, 189, 248, 0.12); stroke: #38bdf8; stroke-width: 2; }
+    .node-pt { fill: #f1f5f9; stroke: #0284c7; stroke-width: 2; r: 5; }
+    .pt-label { font-size: 17px; font-weight: 800; fill: #f1f5f9; }
+    .angle-text { font-size: 15px; font-weight: 750; fill: #fbbf24; }
+    .dim-note { font-size: 15px; font-weight: 700; fill: #34d399; }
+  </style>
+
+  <rect width="700" height="460" class="bg" rx="12"/>
+
+  <!-- Main Circle (Center 350, 230; Radius 170) -->
+  <circle cx="350" cy="230" r="170" class="circle-main"/>
+
+  <!-- Center O -->
+  <circle cx="350" cy="230" class="node-pt"/>
+  <text x="350" y="255" class="pt-label" fill="#f59e0b">O (Center)</text>
+
+  <!-- Diameter AC (Horizontal at y = 230: A at 180, 230; C at 520, 230) -->
+  <line x1="180" y1="230" x2="520" y2="230" class="diameter"/>
+  <circle cx="180" cy="230" class="node-pt"/>
+  <text x="155" y="235" class="pt-label">A</text>
+  <circle cx="520" cy="230" class="node-pt"/>
+  <text x="530" y="235" class="pt-label">C</text>
+
+  <!-- Parallel Chord ED at y = 110: E at 230, 110; D at 470, 110 -->
+  <line x1="230" y1="110" x2="470" y2="110" class="chord-parallel"/>
+  <circle cx="230" cy="110" class="node-pt"/>
+  <text x="215" y="100" class="pt-label">E</text>
+  <circle cx="470" cy="110" class="node-pt"/>
+  <text x="480" y="100" class="pt-label">D</text>
+
+  <!-- Chord Chaining: AEC forming right triangle inscribed in semicircle -->
+  <polygon points="180,230 230,110 520,230" class="highlight-tri"/>
+  <line x1="230" y1="110" x2="520" y2="230" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- Point B on Bottom Arc: B at 290, 390 -->
+  <circle cx="290" cy="390" class="node-pt"/>
+  <text x="280" y="415" class="pt-label">B</text>
+
+  <!-- Chords EB and CB -->
+  <line x1="230" y1="110" x2="290" y2="390" class="chord-line"/>
+  <line x1="520" y1="230" x2="290" y2="390" class="chord-line"/>
+
+  <!-- Angles annotations -->
+  <text x="250" y="145" class="angle-text">∠AEC = 90°</text>
+  <text x="295" y="360" class="angle-text">∠CBE = 25°</text>
+  <text x="350" y="100" class="dim-note">Chord ED || Diameter AC</text>
+  <text x="420" y="140" class="angle-text">∠DEC = 65°</text>
+  <text x="460" y="215" class="angle-text">∠ECA = 65°</text>
+</svg>

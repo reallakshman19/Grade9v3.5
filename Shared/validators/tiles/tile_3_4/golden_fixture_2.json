@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_4",
+  "qrt_cell": "QRT-MODEL-D3",
+  "source_question": {
+    "id": "GOLDEN-MOD-D3-002",
+    "custody_hash": "e2f3a4b5c6d7e8f90123456789abcdef0123456789abcdef0123456789abcdef01",
+    "stem": "Two distributed computing nodes, $A$ and $B$, collaboratively process a dataset of $480$ gigabytes. Node $A$ processes data at a constant rate of $r$ GB/min, while Node $B$ operates at an adaptive rate of $r + 4$ GB/min. When both nodes operate concurrently, a shared bandwidth bottleneck decreases their combined throughput by $20\\%$. If the two nodes working together complete the entire $480$ GB dataset in exactly $15$ minutes, model this system to find the base throughput rate $r$ of Node $A$ in GB/min.",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$18$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$14$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$22$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$16$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "18",
+      "crux_move_ref": "CRUX-ALG-MODEL-CONCURRENT-RATE-BOTTLENECK"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "MODEL",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-ALG-MODEL-CONCURRENT-RATE-BOTTLENECK"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Express the total unconstrained throughput of Node A and Node B together, then apply the 20% degradation factor (1 - 0.20) to establish the effective rate.",
+      "hint2_tactical_step": "Equate 15 * 0.8 * (2r + 4) = 480, which simplifies to 12 * (2r + 4) = 480. Solve for r."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student omits the 20% concurrency bottleneck degradation, solving 15 * (2r + 4) = 480 to obtain r = 14.",
+      "opt-C": "Student correctly solves for r = 18 but inadvertently reports the rate of Node B (r + 4 = 22).",
+      "opt-D": "Student applies the 20% discount only to Node A rather than the combined total throughput."
+    },
+    "core_links": {
+      "core1a_unit_id": "ALG-MODEL-DISTRIBUTED-RATE-03",
+      "core1b_activity_id": "ACT-RECON-DISTRIBUTED-RATE-03",
+      "core2a_practice_id": "PRAC-DISTRIBUTED-RATE-03",
+      "core2b_transfer_id": "TRANS-DISTRIBUTED-RATE-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-MODEL-DISTRIBUTED-RATE-03",
+      "title": "Modeling Concurrent Work with Efficiency Coupling",
+      "concept": "When multiple agents work concurrently with interaction losses, model the effective system rate R_eff as a scaled combination of individual rates: R_eff = (1 - alpha) * sum(r_i), where alpha represents the fractional contention loss. For example, two drainage pumps with base capacities 10 L/s and 30 L/s experiencing 25% friction loss yield R_eff = 0.75 * (10 + 30) = 30 L/s. To empty a 600 L reservoir takes 600 / 30 = 20 seconds.",
+      "boundary_conditions": "Contention discount alpha satisfies 0 <= alpha < 1. Rates r_i must be strictly positive."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-DISTRIBUTED-RATE-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What multiplier represents a 20% decrease in combined throughput?",
+      "scaffold_steps": [
+        "Calculate 1 - 0.20",
+        "Obtain 0.80 or 4/5",
+        "Conclude effective rate multiplier is 0.8"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-MOD-D3-002\"><div class=\"qb-stem\"><p>Two distributed computing nodes, $A$ and $B$, collaboratively process a dataset of $480$ gigabytes. Node $A$ processes data at a constant rate of $r$ GB/min, while Node $B$ operates at an adaptive rate of $r + 4$ GB/min. When both nodes operate concurrently, a shared bandwidth bottleneck decreases their combined throughput by $20\\%$. If the two nodes working together complete the entire $480$ GB dataset in exactly $15$ minutes, model this system to find the base throughput rate $r$ of Node $A$ in GB/min.</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $18$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $14$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $22$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $16$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-MOD-D3-002\"><p>Express the total unconstrained throughput of Node A and Node B together, then apply the 20% degradation factor (1 - 0.20) to establish the effective rate.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-MOD-D3-002\"><p>Equate 15 * 0.8 * (2r + 4) = 480, which simplifies to 12 * (2r + 4) = 480. Solve for r.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"ALG-MODEL-DISTRIBUTED-RATE-03\">Review Concurrent Rate Modeling</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Formulate the unconstrained combined throughput of the two nodes:</p><p>$R_{\\text{raw}} = r_A + r_B = r + (r + 4) = 2r + 4$ GB/min.</p><p>2. Model the bottleneck penalty:</p><p>The effective throughput $R_{\\text{eff}}$ is reduced by $20\\%$, so:</p><p>$R_{\\text{eff}} = (1 - 0.20) R_{\\text{raw}} = 0.8(2r + 4)$ GB/min.</p><p>3. Set up the governing work equation: $\\text{Work} = \\text{Time} \\times R_{\\text{eff}}$:</p><p>$15 \\times 0.8(2r + 4) = 480$.</p><p>4. Solve for $r$:</p><p>$12(2r + 4) = 480$</p><p>$2r + 4 = \\frac{480}{12} = 40$</p><p>$2r = 36 \\implies r = 18$ GB/min.</p><p>5. Verification:</p><p>Node $A$ rate $= 18$, Node $B$ rate $= 22$. Raw sum $= 40$ GB/min.</p><p>Effective rate $= 0.8 \\times 40 = 32$ GB/min.</p><p>Time $= \\frac{480}{32} = 15$ minutes. The model holds exactly.</p></div></details></div>"
+}

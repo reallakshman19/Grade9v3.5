@@ -1,0 +1,609 @@
+{
+  "schema": "core1a-physics-ontology/v2",
+  "version": "2.0.0",
+  "subject": "Physics",
+  "topic": "Newton's Laws of Motion & Momentum Systems",
+  "title": "Grade 9 Olympiad Mechanics Conceptual Ontology, First-Move Atlas & Subtopic Competencies",
+  "source_authority": "Golden Benchmark Fixtures (physics-nlm-revised-core1.pdf & physics-nlm-revised-core2.pdf)",
+  "canonical_topic_id": "phy-mechanics-nlm",
+  "canonical_strategy": {
+    "stage_1_choose": {
+      "name": "System Demarcation & Frame Selection",
+      "invariants": [
+        "Explicitly identify the physical body or closed multi-body system boundary.",
+        "Select reference frame (inertial ground frame vs accelerated non-inertial frame with explicit D'Alembert pseudo-forces).",
+        "Declare coordinate origin, positive axis orientation, and shared clock baseline (t = 0).",
+        "Register explicit model assumptions and idealizations before applying formulas."
+      ]
+    },
+    "stage_2_represent": {
+      "name": "Representation Construction",
+      "invariants": [
+        "Translate physical story into an exact scientific representation before algebraic computation.",
+        "Allowed representation forms: Free-Body Diagram (FBD), Interaction Map, Coordinate/Trajectory Graph, Potential Well Curve, State Table, or Momentum Vector Triangle.",
+        "Typography floor: Every SVG diagram must declare text font-size >= 14px on all labels, coordinates, and annotations.",
+        "Visual integrity: Force vectors must originate at point of application/COM; action-reaction pairs must NEVER appear on the same isolated body."
+      ]
+    },
+    "stage_3_connect": {
+      "name": "Law Connection & Governing Constraints",
+      "invariants": [
+        "Connect representation to the fundamental physical invariant law, never by guessing a formula name.",
+        "State explicit scope conditions: identify where the model holds and where it breaks.",
+        "Identify kinematic constraints: string inextensibility, rigid contact, shared time across orthogonal components."
+      ]
+    },
+    "stage_4_execute_and_check": {
+      "name": "Execution & Multi-Engine Physical Verification",
+      "invariants": [
+        "Execute algebra step-by-step without skipping intermediate learner operations.",
+        "Sanity Check: Direction and sign must match physical reality.",
+        "Dimensional Homogeneity: Verify base SI dimensional powers [M]^a [L]^b [T]^c.",
+        "Dual Limiting Extremals: Stress-test at least 2 independent boundary conditions.",
+        "Cross-Core Recovery Anchor: Every distractor trap and reasoning step must link to an explicit numbered Core 1 atomic competency."
+      ]
+    }
+  },
+  "structural_pillars": [
+    {
+      "pillar_id": "P1",
+      "name": "Inertial Reference Frames & Motion as a State",
+      "statement": "An inertial frame is one in which Newton's 1st Law holds without fictitious forces. Motion is a state of velocity; net force determines acceleration (rate of change of velocity), not velocity itself.",
+      "mathematical_invariant": "\\Sigma \\vec{F} = \\vec{0} \\iff \\frac{d\\vec{v}}{dt} = \\vec{0} \\iff \\vec{v} = \\text{const}",
+      "scope_condition": "Inertial reference frames; non-accelerating observers.",
+      "competency_refs": [
+        "NLM-01",
+        "NLM-06"
+      ]
+    },
+    {
+      "pillar_id": "P2",
+      "name": "System Demarcation, Interaction Pairs & Isolated Systems",
+      "statement": "Forces are pairwise interactions between distinct bodies. Third-law pairs act on different bodies and never cancel on a single body's FBD. In an isolated multi-body system (net external impulse = 0), total momentum is strictly conserved.",
+      "mathematical_invariant": "\\vec{F}_{AB} = -\\vec{F}_{BA}, \\quad \\Sigma \\vec{F}_{\\text{ext}} = \\frac{d\\vec{P}_{\\text{total}}}{dt} = \\vec{0} \\implies \\vec{P}_{\\text{total}} = \\text{const}",
+      "scope_condition": "Closed system boundary demarcating internal from external interactions.",
+      "competency_refs": [
+        "NLM-02",
+        "NLM-08",
+        "NLM-09"
+      ]
+    },
+    {
+      "pillar_id": "P3",
+      "name": "Vector Addition, Orthogonal Decomposition & Motion Graphs",
+      "statement": "Forces add vectorially, not algebraically. Newton's 2nd Law holds independently along orthogonal axes. Velocity-time graph slopes represent acceleration, which multiplied by mass yields net force.",
+      "mathematical_invariant": "\\Sigma F_x = m a_x, \\quad \\Sigma F_y = m a_y, \\quad F_{\\text{net}} = m \\frac{dv}{dt}",
+      "scope_condition": "Orthogonal Cartesian coordinate decomposition; piecewise differentiable kinematics.",
+      "competency_refs": [
+        "NLM-03",
+        "NLM-10",
+        "NLM-11"
+      ]
+    },
+    {
+      "pillar_id": "P4",
+      "name": "Newton II Dynamic Scaling & Two-Stage Stopping Models",
+      "statement": "Acceleration responds directly to net force and inversely to total system inertia. Stopping over distance or time requires coupling kinematic motion equations with dynamic force laws.",
+      "mathematical_invariant": "a = \\frac{\\Sigma F_{\\text{ext}}}{M_{\\text{tot}}}, \\quad v^2 = u^2 + 2as \\implies F_{\\text{stop}} = m|a| = \\frac{m u^2}{2s}",
+      "scope_condition": "Constant mass systems; uniform stopping acceleration.",
+      "competency_refs": [
+        "NLM-04",
+        "NLM-05"
+      ]
+    },
+    {
+      "pillar_id": "P5",
+      "name": "Impulse-Momentum Theorem & Impact Duration Tradeoffs",
+      "statement": "Impulse equals total momentum change: J = Delta p = F_avg * Delta t. Spreading a fixed momentum change over a longer duration reduces peak contact force.",
+      "mathematical_invariant": "\\vec{J} = \\int \\vec{F} dt = \\vec{F}_{\\text{avg}} \\Delta t = \\Delta \\vec{p}",
+      "scope_condition": "Collision dynamics; short-duration impact events.",
+      "competency_refs": [
+        "NLM-07"
+      ]
+    }
+  ],
+  "atomic_competencies": {
+    "NLM-01": {
+      "title": "Motion is not Force",
+      "subtitle": "Constant velocity can coexist with zero net force",
+      "canonical_rule": "Constant velocity can coexist with zero net force; net force determines acceleration (rate of change of velocity), not velocity itself.",
+      "scope_condition": "Inertial reference frames; non-accelerating observers.",
+      "how_it_works": [
+        "Choose the body and ask whether its velocity is changing.",
+        "Draw all external forces acting on that body.",
+        "Add them vectorially before discussing motion.",
+        "Check: zero net force means constant velocity, including rest."
+      ],
+      "subtopics": [
+        "Zero net force coexisting with constant velocity",
+        "Distinction between zero net force and absence of individual forces",
+        "Inertial reference frames and the principle of inertia",
+        "Inertia during sudden braking (passenger lurch without fictitious forward force)",
+        "Coin tossed vertically in an accelerating train (horizontal velocity retention)",
+        "Fluid inertia in decelerating tankers (liquid surge toward front)",
+        "Motion on ideal frictionless surfaces requiring zero sustaining force"
+      ],
+      "easy_mistake_to_make": "Assuming an object moving forward must have a net forward force pushing it.",
+      "worked_example": "A crate moves right at 3 m/s while 60 N right and 60 N left act on it. Fnet = 0, so a = 0; it continues at constant velocity.",
+      "guided_try": {
+        "prompt": "A puck glides at constant velocity on an ideal frictionless surface. What horizontal net force is required?",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: 0 N."
+      },
+      "faded_try": "Change one feature of the worked example (direction, mass, force, time, or system boundary). Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "A moving object does not automatically need a forward net force.",
+      "core2_transfer_targets": [
+        "PHYS-NLM-001",
+        "PHYS-NLM-004",
+        "PHYS-NLM-005",
+        "PHYS-NLM-006",
+        "PHYS-NLM-008"
+      ]
+    },
+    "NLM-02": {
+      "title": "Choose the Body Before Drawing Forces",
+      "subtitle": "Interactions become forces only after the body is chosen",
+      "canonical_rule": "Interactions become forces only after the target body is chosen; only external forces acting ON the chosen body enter Sigma F = ma.",
+      "scope_condition": "Closed system boundary demarcating internal from external interactions.",
+      "how_it_works": [
+        "Circle the body/system being analysed.",
+        "List interacting bodies: Earth, surface, rope, hand, etc.",
+        "Convert each interaction into one force arrow on the chosen body.",
+        "Do not include forces the chosen body exerts on something else."
+      ],
+      "subtopics": [
+        "Closed system boundary demarcation",
+        "Interaction mapping: identifying contact vs non-contact external agents",
+        "Naming convention: 'force on X by Y'",
+        "Eliminating body confusion (never placing forces exerted BY the body on its own FBD)",
+        "FBD construction for isolated bodies",
+        "Ideal frictionless surfaces: normal contact force only, zero shear"
+      ],
+      "easy_mistake_to_make": "Drawing forces exerted BY the body onto its own Free-Body Diagram.",
+      "worked_example": "For a book on a table, the book FBD contains Earth-on-book weight and table-on-book normal. The book-on-table force belongs to the table FBD.",
+      "guided_try": {
+        "prompt": "A crate is pushed by a worker while sliding on a floor. Name three possible external interactions on the crate.",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: Worker-crate, Earth-crate, floor-crate."
+      },
+      "faded_try": "Change one feature of the worked example. Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "An interaction pair is not automatically two arrows on one FBD.",
+      "core2_transfer_targets": [
+        "PHYS-NLM-010"
+      ]
+    },
+    "NLM-03": {
+      "title": "Net Force is a Vector Sum",
+      "subtitle": "Balanced forces and no forces are different statements",
+      "canonical_rule": "Forces add vectorially, not algebraically; balanced forces produce zero acceleration along each orthogonal axis independently.",
+      "scope_condition": "Orthogonal Cartesian coordinate decomposition (Sigma F_x = m a_x, Sigma F_y = m a_y).",
+      "how_it_works": [
+        "Choose +x and +y.",
+        "Resolve forces into components when needed.",
+        "Compute Sigma Fx and Sigma Fy.",
+        "Only then infer acceleration components."
+      ],
+      "subtopics": [
+        "Collinear vector addition with explicit signed components",
+        "Orthogonal Cartesian force decomposition (Sigma F_x = m a_x, Sigma F_y = m a_y)",
+        "Dynamic equilibrium at constant velocity (horse pulling cart at constant speed)",
+        "Distinguishing balanced forces from absence of forces",
+        "Mass as the quantitative measure of translational inertia",
+        "Ranking inertia across equal-volume or differing-mass objects"
+      ],
+      "easy_mistake_to_make": "Adding vector magnitudes directly without trigonometric component resolution.",
+      "worked_example": "A cart has 25 N right and 10 N left. With right positive, Fnet,x = 25 - 10 = 15 N right.",
+      "guided_try": {
+        "prompt": "A box has 30 N right and 30 N left. What is its horizontal acceleration?",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: 0 m/s^2, regardless of its current velocity."
+      },
+      "faded_try": "Change one feature of the worked example. Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "Do not confuse 'Fnet = 0' with 'there are no forces.'",
+      "core2_transfer_targets": [
+        "PHYS-NLM-012",
+        "PHYS-NLM-022",
+        "PHYS-NLM-025"
+      ]
+    },
+    "NLM-04": {
+      "title": "Newton II and Scaling",
+      "subtitle": "Acceleration responds to net force and mass together",
+      "canonical_rule": "Acceleration is directly proportional to net force and inversely proportional to total mass: a = Sigma F_ext / M_tot.",
+      "scope_condition": "Constant mass systems (non-relativistic, non-rocket mass shedding).",
+      "how_it_works": [
+        "Find Fnet from the FBD.",
+        "Read or calculate the mass in kilograms.",
+        "Use a = Fnet / m.",
+        "For scaling, form the ratio (F2/F1) / (m2/m1)."
+      ],
+      "subtopics": [
+        "Fundamental dynamic equation: F_net = ma",
+        "Force and mass scaling ratios: a2/a1 = (F2/F1)(m1/m2)",
+        "Coupled masses under the same external force: a_tot = (a1 * a2)/(a1 + a2)",
+        "Single-body vs multi-body composite system acceleration",
+        "Atwood machine coupled acceleration and string tension harmonic mean"
+      ],
+      "easy_mistake_to_make": "Using individual applied force instead of vector net force in a = F/m.",
+      "worked_example": "If force doubles while mass triples, a_new / a_old = 2 / 3.",
+      "guided_try": {
+        "prompt": "The same force accelerates mass A at 6 m/s^2 and mass B at 3 m/s^2. If they are tied together, what is the acceleration?",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: 2 m/s^2 (since 1/a_tot = 1/6 + 1/3 = 1/2)."
+      },
+      "faded_try": "Change one feature of the worked example. Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "Mass in the denominator means larger mass gives smaller acceleration for the same net force.",
+      "core2_transfer_targets": [
+        "PHYS-NLM-009",
+        "PHYS-NLM-015",
+        "PHYS-NLM-019",
+        "PHYS-NLM-021",
+        "PHYS-NLM-023",
+        "PHYS-NLM-024"
+      ]
+    },
+    "NLM-05": {
+      "title": "Stopping Force Needs Two Models",
+      "subtitle": "Kinematics supplies acceleration; Newton II supplies force",
+      "canonical_rule": "Determining stopping force requires coupling kinematics with dynamics: kinematics supplies acceleration; Newton II supplies retarding force.",
+      "scope_condition": "Uniform stopping acceleration over displacement s or duration t.",
+      "how_it_works": [
+        "Write the motion state: u, v = 0, s.",
+        "Use v^2 = u^2 + 2as to find a.",
+        "Use F = ma with sign/direction explicit.",
+        "If time is requested, use v = u + at."
+      ],
+      "subtopics": [
+        "Two-stage model coupling: Kinematics <-> Dynamics",
+        "Stopping over distance s: v^2 = u^2 + 2as => a = -u^2/(2s)",
+        "Stopping force calculation: F_stop = m|a| = mu^2/(2s)",
+        "Stopping duration: v = u + at => t = u/|a| = 2s/u",
+        "Quadratic velocity scaling of stopping force"
+      ],
+      "easy_mistake_to_make": "Attempting to calculate stopping force without determining acceleration or time.",
+      "worked_example": "A 0.020 kg pellet at 100 m/s stops uniformly in 0.10 m. a = (0 - 10000) / 0.20 = -50000 m/s^2, so F = -1000 N.",
+      "guided_try": {
+        "prompt": "If the same pellet stops over twice the distance, what happens to |a| and |F|?",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: Both are halved."
+      },
+      "faded_try": "Change one feature of the worked example. Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "Do not skip the acceleration step when distance is given.",
+      "core2_transfer_targets": [
+        "PHYS-NLM-018"
+      ]
+    },
+    "NLM-06": {
+      "title": "Momentum is a Signed State",
+      "subtitle": "Momentum carries the direction of velocity",
+      "canonical_rule": "Momentum p = m * v is a directional vector carrying the sign of velocity; reversing direction produces Delta p = -m(v1 + v2), not zero.",
+      "scope_condition": "1D and 2D particle dynamics.",
+      "how_it_works": [
+        "Choose a positive direction.",
+        "Write signed velocities.",
+        "Convert to signed momenta.",
+        "Subtract final minus initial: Delta p = p_f - p_i."
+      ],
+      "subtopics": [
+        "Linear momentum as signed vector quantity: p = mv",
+        "1D coordinate sign assignment (+p and -p)",
+        "Rebound dynamics: reversal of velocity producing large Delta p",
+        "Directional momentum change vs scalar speed difference",
+        "Momentum-velocity (p-v) graph slope as mass m",
+        "Momentum-mass (p-m) graph slope as velocity v"
+      ],
+      "easy_mistake_to_make": "Subtracting momentum magnitudes without accounting for opposite directional signs.",
+      "worked_example": "A 0.20 kg ball changes from +8 m/s to -6 m/s. Delta p = 0.20(-6) - 0.20(8) = -2.8 kg m/s.",
+      "guided_try": {
+        "prompt": "At fixed mass, what is the shape of a p-v graph?",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: A straight line through the origin with slope equal to mass m."
+      },
+      "faded_try": "Change one feature of the worked example. Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "Rebounding doubles roughly the momentum change compared to just stopping.",
+      "core2_transfer_targets": [
+        "PHYS-NLM-020"
+      ]
+    },
+    "NLM-07": {
+      "title": "Impulse and Average Force",
+      "subtitle": "The same momentum change can be spread over more time",
+      "canonical_rule": "Impulse J = Delta p = F_avg * Delta t; spreading a fixed momentum change over a longer time interval reduces the peak contact force.",
+      "scope_condition": "Collision dynamics; short-duration impact events.",
+      "how_it_works": [
+        "Find the signed Delta p.",
+        "Identify the interaction duration Delta t.",
+        "Divide Delta p by Delta t to obtain F_avg.",
+        "Check sign: force direction matches Delta p."
+      ],
+      "subtopics": [
+        "Impulse-momentum theorem: J = Delta p = F_avg * Delta t",
+        "Impact duration tradeoff: extending Delta t reduces average force",
+        "Catching mechanics: cushioning impact by moving hands backward",
+        "Force-time (F-t) graph: area under curve equals total impulse Delta p",
+        "Distinguishing impulse (N*s) from work (J) and momentum from force"
+      ],
+      "easy_mistake_to_make": "Confusing impulse (change in momentum in N*s) with work done (energy transferred in Joules).",
+      "worked_example": "A 0.50 kg ball at +12 m/s stops in 0.30 s: Delta p = -6 kg m/s, F_avg = -20 N.",
+      "guided_try": {
+        "prompt": "If the same ball is stopped in twice the time, what happens to average force magnitude?",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: It is halved."
+      },
+      "faded_try": "Change one feature of the worked example. Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "Moving hands backward while catching increases Delta t, reducing F_avg.",
+      "core2_transfer_targets": [
+        "PHYS-NLM-003"
+      ]
+    },
+    "NLM-08": {
+      "title": "Newton III Pairs",
+      "subtitle": "Equal and opposite does not mean same body",
+      "canonical_rule": "Every interaction between two bodies consists of equal and opposite forces acting simultaneously on different bodies: F_12 = -F_21.",
+      "scope_condition": "Universal interaction law valid across all mass ratios and contact/field interfaces.",
+      "how_it_works": [
+        "Name both interacting bodies.",
+        "Write the two force names: 'force on B by A' and 'force on A by B'.",
+        "Place each force on the correct body's FBD.",
+        "Use Newton II separately to compare accelerations."
+      ],
+      "subtopics": [
+        "Third-law reciprocal action-reaction pairs: F_AB = -F_BA",
+        "Forces acting on strictly different bodies: never cancelling on one body's FBD",
+        "Normal force vs weight distinction on a resting body (balanced forces on one body vs 3rd law pair)",
+        "Wall push reaction force",
+        "Horse and cart paradox resolution via ground friction on horse hooves",
+        "Sprinkler rotational reaction via backward fluid ejection"
+      ],
+      "easy_mistake_to_make": "Believing a massive object exerts a greater gravitational or contact force than a lighter object.",
+      "worked_example": "Earth pulls an apple downward with the same force magnitude that the apple pulls Earth upward. Their accelerations differ because their masses differ.",
+      "guided_try": {
+        "prompt": "What is the third-law partner of the table-on-book normal force?",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: Book-on-table normal contact force."
+      },
+      "faded_try": "Change one feature of the worked example. Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "Normal and weight on a book are not a third-law pair; they act on the same body.",
+      "core2_transfer_targets": [
+        "PHYS-NLM-002",
+        "PHYS-NLM-017"
+      ]
+    },
+    "NLM-09": {
+      "title": "Momentum Conservation is a System Statement",
+      "subtitle": "Choose the system and check external impulse first",
+      "canonical_rule": "In the absence of net external impulse (Sigma F_ext = 0), the total momentum of a multi-body system is strictly conserved: P_total = const.",
+      "scope_condition": "Isolated multi-body systems; internal interaction forces cancel identically by Newton III.",
+      "how_it_works": [
+        "Draw a system boundary.",
+        "Choose a positive direction.",
+        "List all system bodies before and after.",
+        "Equate total initial and final momentum along the axis."
+      ],
+      "subtopics": [
+        "System boundary demarcation and internal force cancellation",
+        "External impulse verification condition: Sigma F_ext = 0",
+        "Why a falling ball alone does not conserve momentum (external gravity impulse)",
+        "Why the ball + Earth system conserves total momentum",
+        "Separation from rest: P_initial = 0 => m1*v1 + m2*v2 = 0",
+        "Two skaters pushing apart on frictionless ice"
+      ],
+      "easy_mistake_to_make": "Applying momentum conservation to an isolated single body under external gravity.",
+      "worked_example": "Two skaters push apart from rest. For the two-skater system, initial total p = 0, so their final momenta are equal in magnitude and opposite in direction.",
+      "guided_try": {
+        "prompt": "A falling ball speeds up under gravity. Is the ball-only momentum conserved?",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: No; gravity exerts an external impulse on the ball."
+      },
+      "faded_try": "Change one feature of the worked example. Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "Always check external impulse before writing p_initial = p_final.",
+      "core2_transfer_targets": [
+        "PHYS-NLM-013",
+        "PHYS-NLM-016"
+      ]
+    },
+    "NLM-10": {
+      "title": "Recoil, Rockets and Exchanged Momentum",
+      "subtitle": "Equal momentum can mean very different speeds",
+      "canonical_rule": "In recoil and separation events, internal momentum exchange produces equal and opposite momenta, with speeds scaling inversely with mass.",
+      "scope_condition": "Isolated explosive or recoil events; rocket mass expulsion.",
+      "how_it_works": [
+        "Choose launcher + projectile (or rocket + exhaust) as the system.",
+        "Set initial total momentum.",
+        "Assign opposite signs after separation.",
+        "Solve for the unknown velocity; check kinetic energy ratio K2/K1 = m1/m2."
+      ],
+      "subtopics": [
+        "Recoil dynamics in isolated systems: m_bullet * v_bullet = m_gun * v_recoil",
+        "Inverse speed-mass scaling: v proportional to 1/m for equal momentum",
+        "Kinetic energy partitioning: K = p^2/(2m) proportional to 1/m (lighter object carries most kinetic energy)",
+        "Rocket propulsion in deep space via backward exhaust ejection",
+        "Thrust via continuous mass ejection rate: F_thrust = v_rel * (dm/dt)"
+      ],
+      "easy_mistake_to_make": "Assuming equal momentum implies equal speed or equal kinetic energy.",
+      "worked_example": "A 0.020 kg bullet leaves a 2.0 kg pistol at +150 m/s from rest. 0 = (0.020)(150) + 2*v, so v = -1.5 m/s.",
+      "guided_try": {
+        "prompt": "Two rifles fire identical bullets with the same bullet momentum. Which rifle has larger recoil speed?",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: The lighter rifle (since v_recoil = p / m_rifle)."
+      },
+      "faded_try": "Change one feature of the worked example. Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "The lighter body always carries away the majority of kinetic energy: K = p^2 / (2m).",
+      "core2_transfer_targets": [
+        "PHYS-NLM-007",
+        "PHYS-NLM-011"
+      ]
+    },
+    "NLM-11": {
+      "title": "Read Force from a Motion Graph",
+      "subtitle": "v-t slope -> acceleration -> force",
+      "canonical_rule": "The slope of a velocity-time graph represents acceleration (dv/dt), which multiplied by mass yields net force: F_net = m * (dv/dt).",
+      "scope_condition": "Piecewise linear or differentiable 1D kinematics.",
+      "how_it_works": [
+        "Read two points on the straight segment.",
+        "Compute a = Delta v / Delta t.",
+        "Convert mass to kilograms.",
+        "Apply F = ma and interpret the sign (retardation vs acceleration)."
+      ],
+      "subtopics": [
+        "Velocity-time graph slope as acceleration: a = Delta v / Delta t",
+        "Net force deduction: F_net = m * slope",
+        "Frictional retarding force deduction from deceleration slope",
+        "Segmented piecewise velocity-time profiles",
+        "Avoiding area misinterpretation (area under v-t is displacement, not force)"
+      ],
+      "easy_mistake_to_make": "Inferring force from the height of the velocity curve rather than its slope.",
+      "worked_example": "A 50 g object slows from 80 m/s to 0 in 8 s. a = -10 m/s^2; F = 0.050 * (-10) = -0.50 N.",
+      "guided_try": {
+        "prompt": "If the same velocity change takes twice as long, what happens to |a| and |F|?",
+        "guide": "Name the body/system -> draw the representation -> state the law before calculating.",
+        "solution": "Answer: Both are halved."
+      },
+      "faded_try": "Change one feature of the worked example. Which parts of the reasoning remain valid and which must change?",
+      "watch_out": "Do not confuse graph height (velocity) with graph slope (acceleration).",
+      "core2_transfer_targets": [
+        "PHYS-NLM-014"
+      ]
+    }
+  },
+  "first_move_atlas": [
+    {
+      "cue": "constant velocity / rest",
+      "first_representation": "one-body FBD",
+      "first_physics_move": "test whether Sigma F = 0"
+    },
+    {
+      "cue": "force question",
+      "first_representation": "choose body + interactions",
+      "first_physics_move": "draw only forces on that body"
+    },
+    {
+      "cue": "several forces",
+      "first_representation": "signed component sum",
+      "first_physics_move": "find Fnet before ma"
+    },
+    {
+      "cue": "force/mass change",
+      "first_representation": "old/new state ratio",
+      "first_physics_move": "compare F/m"
+    },
+    {
+      "cue": "stopping over distance",
+      "first_representation": "kinematic state",
+      "first_physics_move": "find a first, then F=ma"
+    },
+    {
+      "cue": "catch / collision time",
+      "first_representation": "signed p states",
+      "first_physics_move": "Delta p then Delta p/Delta t"
+    },
+    {
+      "cue": "action-reaction",
+      "first_representation": "two-body interaction pair",
+      "first_physics_move": "force on B by A <-> force on A by B"
+    },
+    {
+      "cue": "collision / recoil",
+      "first_representation": "system boundary",
+      "first_physics_move": "check external impulse, then conserve total p"
+    },
+    {
+      "cue": "rocket / rifle",
+      "first_representation": "opposite signed momenta",
+      "first_physics_move": "lighter mass -> larger speed for same |p|"
+    },
+    {
+      "cue": "v-t friction graph",
+      "first_representation": "graph slope",
+      "first_physics_move": "a = Delta v / Delta t then F=ma"
+    },
+    {
+      "cue": "p-v or p-m graph",
+      "first_representation": "read axes + slope",
+      "first_physics_move": "slope gives m or v"
+    }
+  ],
+  "dependency_graph": {
+    "layers": [
+      {
+        "layer_index": 1,
+        "name": "Kinematic Foundations & State Definitions",
+        "competencies": [
+          "NLM-01",
+          "NLM-06"
+        ]
+      },
+      {
+        "layer_index": 2,
+        "name": "Single-Body Boundaries & Interaction Laws",
+        "competencies": [
+          "NLM-02",
+          "NLM-03",
+          "NLM-08"
+        ]
+      },
+      {
+        "layer_index": 3,
+        "name": "Dynamic Equations & Rate of Change",
+        "competencies": [
+          "NLM-04",
+          "NLM-05",
+          "NLM-07",
+          "NLM-11"
+        ]
+      },
+      {
+        "layer_index": 4,
+        "name": "System Momentum & Recoil Synthesis",
+        "competencies": [
+          "NLM-09",
+          "NLM-10"
+        ]
+      }
+    ]
+  },
+  "cognitive_conflict_matrix": [
+    {
+      "id": "CCM-01",
+      "concept": "Velocity Maintenance (Aristotelian Trap)",
+      "intuitive_misconception": "A sustained net force is required to keep a body in constant velocity.",
+      "newtonian_scientific_truth": "Zero net force maintains constant velocity (Newton's 1st Law). Forces are only required to change velocity (accelerate).",
+      "competency_ref": "NLM-01"
+    },
+    {
+      "id": "CCM-02",
+      "concept": "Action-Reaction Mutual Cancellation",
+      "intuitive_misconception": "If Action equals Reaction, they must cancel each other out, making acceleration impossible.",
+      "newtonian_scientific_truth": "Action and Reaction act on strictly distinct bodies. Acceleration of any single body depends only on forces acting ON that body.",
+      "competency_ref": "NLM-08"
+    },
+    {
+      "id": "CCM-03",
+      "concept": "Normal Force Magnitude vs Weight",
+      "intuitive_misconception": "Normal reaction N always equals mg.",
+      "newtonian_scientific_truth": "Normal force is an adjusting constraint force: on an incline N = mg cos theta; in an accelerating elevator N = m(g +- a).",
+      "competency_ref": "NLM-02"
+    },
+    {
+      "id": "CCM-04",
+      "concept": "Direction of Driving Friction",
+      "intuitive_misconception": "Friction always acts in the direction opposite to the object's velocity in the lab frame.",
+      "newtonian_scientific_truth": "Friction opposes relative motion between contacting surfaces. It can accelerate an object forward (e.g. car drive wheels, walking, crate on accelerating truck bed).",
+      "competency_ref": "NLM-01"
+    },
+    {
+      "id": "CCM-05",
+      "concept": "Rebound Momentum vs Stopping",
+      "intuitive_misconception": "Stopping an object transfers more momentum than having it bounce back at the same speed.",
+      "newtonian_scientific_truth": "Momentum is a signed state vector. Rebounding reverses direction, producing Delta p = -m(v1 + v2), roughly double the momentum change of merely stopping.",
+      "competency_ref": "NLM-06"
+    },
+    {
+      "id": "CCM-06",
+      "concept": "Recoil Kinetic Energy Split",
+      "intuitive_misconception": "In a rifle-bullet explosion, equal momenta mean equal kinetic energy and equal destructiveness.",
+      "newtonian_scientific_truth": "Kinetic energy K = p^2 / (2m). For equal momentum magnitudes, kinetic energy is inversely proportional to mass: the light bullet absorbs almost all explosive energy.",
+      "competency_ref": "NLM-10"
+    }
+  ]
+}

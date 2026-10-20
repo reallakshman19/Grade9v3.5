@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_5",
+  "qrt_cell": "QRT-REPRESENT-D3",
+  "source_question": {
+    "id": "GOLDEN-REP-D3-003",
+    "custody_hash": "c3d4e5f6a1b20718293a4b5c6d7e8f90123456789abcdef0123456789abcdef2",
+    "stem": "Determine the smallest positive real root $x > 0$ of the algebraic equation $\\frac{3x - x^3}{1 - 3x^2} = 1$.",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$2 - \\sqrt{3}$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$2 + \\sqrt{3}$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$\\frac{\\sqrt{3}}{3}$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$\\sqrt{3} - 1$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "2 - \\sqrt{3}",
+      "crux_move_ref": "CRUX-ALG-REPRESENT-TANGENT-TRIPLE-ANGLE"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "REPRESENT",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-ALG-REPRESENT-TANGENT-TRIPLE-ANGLE"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Notice the algebraic structure of (3x - x^3)/(1 - 3x^2): substitute x = tan(theta) to translate the rational expression into a single trigonometric function.",
+      "hint2_tactical_step": "The substitution yields tan(3*theta) = 1. The smallest positive angle satisfying this is 3*theta = pi/4, so theta = pi/12. Now compute x = tan(pi/12) using angle difference formulas."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student selects the larger positive root corresponding to theta = 5*pi/12 rather than the smallest positive root.",
+      "opt-C": "Student incorrectly evaluates tan(pi/6) instead of tan(pi/12).",
+      "opt-D": "Student makes an incomplete radical rationalization slip when simplifying (1 - 1/sqrt(3))/(1 + 1/sqrt(3))."
+    },
+    "core_links": {
+      "core1a_unit_id": "ALG-REP-TRIG-SUBSTITUTION-03",
+      "core1b_activity_id": "ACT-RECON-TRIG-SUBSTITUTION-03",
+      "core2a_practice_id": "PRAC-TRIG-SUBSTITUTION-03",
+      "core2b_transfer_id": "TRANS-TRIG-SUBSTITUTION-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-REP-TRIG-SUBSTITUTION-03",
+      "title": "Trigonometric Representations of Rational and Radical Equations",
+      "concept": "Certain polynomial or rational equations can be simplified by trigonometric substitution. For example, to solve 2*x*sqrt(1 - x^2) = 1 for positive x, setting x = sin(theta) converts the equation into sin(2*theta) = 1. This gives 2*theta = pi/2, so theta = pi/4, yielding x = sin(pi/4) = sqrt(2)/2.",
+      "boundary_conditions": "Ensure the domain of substitution x = f(theta) matches the allowed real interval of the original algebraic variable."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-TRIG-SUBSTITUTION-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What trigonometric expression equals (3*tan(theta) - tan^3(theta)) / (1 - 3*tan^2(theta))?",
+      "scaffold_steps": [
+        "Recall the tangent addition formula tan(A + B)",
+        "Expand tan(2*theta + theta)",
+        "Conclude the quotient represents tan(3*theta)"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-REP-D3-003\"><div class=\"qb-stem\"><p>Determine the smallest positive real root $x > 0$ of the algebraic equation $\\frac{3x - x^3}{1 - 3x^2} = 1$.</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $2 - \\sqrt{3}$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $2 + \\sqrt{3}$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $\\frac{\\sqrt{3}}{3}$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $\\sqrt{3} - 1$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-REP-D3-003\"><p>Notice the algebraic structure of (3x - x^3)/(1 - 3x^2): substitute x = tan(theta) to translate the rational expression into a single trigonometric function.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-REP-D3-003\"><p>The substitution yields tan(3*theta) = 1. The smallest positive angle satisfying this is 3*theta = pi/4, so theta = pi/12. Now compute x = tan(pi/12) using angle difference formulas.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"ALG-REP-TRIG-SUBSTITUTION-03\">Review Trigonometric Substitution</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Recognize the tangent triple-angle identity:</p><p>For any angle $\\theta$ where defined:</p><p>$\\tan 3\\theta = \\frac{3\\tan\\theta - \\tan^3\\theta}{1 - 3\\tan^2\\theta}$.</p><p>2. Substitute $x = \\tan\\theta$ with $\\theta \\in \\left(0, \\frac{\\pi}{2}\\right)$ for positive $x$:</p><p>The equation $\\frac{3x - x^3}{1 - 3x^2} = 1$ translates directly into:</p><p>$\\tan 3\\theta = 1$.</p><p>3. Find the smallest positive angle $\\theta$:</p><p>$3\\theta = \\frac{\\pi}{4} \\implies \\theta = \\frac{\\pi}{12} = 15^\\circ$.</p><p>4. Evaluate $x = \\tan\\frac{\\pi}{12}$ using the tangent angle subtraction identity:</p><p>$\\tan\\frac{\\pi}{12} = \\tan(45^\\circ - 30^\\circ) = \\frac{\\tan 45^\\circ - \\tan 30^\\circ}{1 + \\tan 45^\\circ \\tan 30^\\circ} = \\frac{1 - \\frac{1}{\\sqrt{3}}}{1 + \\frac{1}{\\sqrt{3}}} = \\frac{\\sqrt{3} - 1}{\\sqrt{3} + 1}$.</p><p>5. Rationalize the denominator:</p><p>$x = \\frac{(\\sqrt{3} - 1)^2}{(\\sqrt{3} + 1)(\\sqrt{3} - 1)} = \\frac{3 - 2\\sqrt{3} + 1}{3 - 1} = \\frac{4 - 2\\sqrt{3}}{2} = 2 - \\sqrt{3}$.</p><p>Thus the smallest positive real root is $x = 2 - \\sqrt{3}$.</p></div></details></div>"
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "grade9v3-core1b-reconstruction/v1",
+  "version": "1.0.0",
+  "package_id": "CORE1B-MATH-LINEAR-EQUATIONS-CONSISTENCY-CLASSIFICATION",
+  "blueprint_ref": "BP-CORE1B-RECONSTRUCTION",
+  "topic": "Linear Equations in Two Variables",
+  "subtopic": "ALG-SYSTEM-CONSISTENCY-CLASSIFICATION",
+  "target_demand": "JUSTIFY",
+  "target_band": "D4",
+  "answer_before_attempt": "FORBIDDEN",
+  "interactive_tutor_flow": {
+    "stage_1_predict": {
+      "prompt": "Before calculating algebraic expressions: For two linear equations in standard form a1*x + b1*y = c1 and a2*x + b2*y = c2, what is the geometric meaning when a1/a2 != b1/b2?",
+      "options": [
+        "A. The two lines have identical slopes and never meet.",
+        "B. The two lines coincide entirely into a single line.",
+        "C. The two lines have different slopes and intersect at exactly one unique point.",
+        "D. The two lines pass through the origin."
+      ],
+      "predict_rationale": "Forces the student to connect algebraic coefficient inequality to geometric non-parallelism before algebraic parameter solving."
+    },
+    "stage_2_attempt": {
+      "task": "Consider the system 5x + my = 8 and 10x - 4y = 3. Formulate the ratio condition and deduce the exact condition on m for the system to have a unique solution.",
+      "lock_state": "LOCKED_UNTIL_STUDENT_COMMITMENT",
+      "model_closure_revealed_post_attempt": {
+        "step_1": "Extract coefficients: a1 = 5, b1 = m; a2 = 10, b2 = -4.",
+        "step_2": "State criterion for unique solution: a1/a2 != b1/b2.",
+        "step_3": "Substitute values: 5/10 != m/(-4) => 1/2 != m/(-4).",
+        "conclusion": "Cross-multiply to isolate m: m != -2. The system possesses a unique solution for every real value m != -2."
+      }
+    },
+    "stage_3_reconstruct": {
+      "differs_from_teaching_path": true,
+      "reconstruction_route": "MATRIX_DETERMINANT_AND_SLOPE_COMPARISON",
+      "dialog_steps": [
+        {
+          "inquiry": "Suppose you rewrite both equations in slope-intercept form y = m_slope * x + c_int. What are the slopes of L1 and L2?",
+          "expected_insight": "Slope of L1 is -a1/b1, and slope of L2 is -a2/b2. Equating slopes -a1/b1 = -a2/b2 yields a1/a2 = b1/b2!"
+        },
+        {
+          "inquiry": "How does the determinant of the coefficient matrix |[a1, b1], [a2, b2]| = a1*b2 - a2*b1 relate to the condition a1/a2 != b1/b2?",
+          "expected_insight": "Delta = a1*b2 - a2*b1 != 0 is the exact algebraic determinant condition ensuring the matrix is invertible, which directly rearranges to a1/a2 != b1/b2."
+        }
+      ]
+    },
+    "stage_4_boundary_test": {
+      "prompt": "Perturbation & Singularity Test: Suppose in the system a1*x + b1*y = c1 and a2*x + b2*y = c2, we have a1/a2 = b1/b2 = 3/4, but c1/c2 = 5/7. How many solutions does the system admit?",
+      "options": [
+        "A. Exactly one unique solution.",
+        "B. Infinitely many solutions.",
+        "C. Exactly two solutions.",
+        "D. Zero solutions (inconsistent, strictly parallel lines)."
+      ],
+      "correct_option": "D",
+      "explanation": "Because the slope ratio is identical (a1/a2 = b1/b2) but the constant ratio differs (c1/c2 != a1/a2), the lines are parallel and separated by a non-zero distance, admitting zero common solutions."
+    }
+  },
+  "hint_ladder": {
+    "hint_1_conceptual_nudge": {
+      "role": "ACTIVATE_INVARIANT",
+      "text": "A system has a unique solution if and only if the lines are not parallel, which means their normal vectors are linearly independent: a1/a2 != b1/b2."
+    },
+    "hint_2_tactical_step": {
+      "role": "DECISIVE_INTERMEDIATE_FORMULATION",
+      "text": "Compute the ratio of x-coefficients: a1/a2. Then equate a1/a2 != b1/b2 and solve for the unknown parameter."
+    }
+  }
+}

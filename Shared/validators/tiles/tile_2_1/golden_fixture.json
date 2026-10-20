@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_1",
+  "qrt_cell": "QRT-RETRIEVE-D2",
+  "source_question": {
+    "id": "GOLDEN-RET-D2-001",
+    "custody_hash": "a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0",
+    "stem": "In a convex quadrilateral $PQRS$, $\\angle P = 75^\\circ$ and $\\angle R = 105^\\circ$. Which of the following statements provides the precise geometric criterion that guarantees vertices $P, Q, R,$ and $S$ are concyclic?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "The adjacent angles are complementary: $\\angle P + \\angle Q = 90^\\circ$."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "The sum of a pair of opposite angles equals $180^\\circ$: $\\angle P + \\angle R = 180^\\circ$."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "The opposite angles are equal: $\\angle P = \\angle R$."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "The diagonals bisect each other at right angles."
+      }
+    ],
+    "answer": {
+      "choice": "B",
+      "value": "The sum of a pair of opposite angles equals 180",
+      "crux_move_ref": "CRUX-GEO-CYCLIC-OPPOSITE-ANGLES-SUPPLEMENTARY"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "RETRIEVE",
+      "difficulty_band": "D2",
+      "difficulty_score": 3,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-GEO-CYCLIC-OPPOSITE-ANGLES-SUPPLEMENTARY"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall the necessary and sufficient condition for four vertices of a quadrilateral to lie on a single circle.",
+      "hint2_tactical_step": "Compute the sum $\\angle P + \\angle R$ and relate this sum to the cyclic quadrilateral theorem."
+    },
+    "distractor_rationales": {
+      "opt-A": "Student confuses concyclicity with complementary angles in a right triangle.",
+      "opt-C": "Student confuses cyclic quadrilaterals with parallelograms where opposite angles are equal.",
+      "opt-D": "Student confuses cyclic quadrilaterals with rhombi where diagonals are perpendicular."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEO-CIRC-CONCYC-01",
+      "core1b_activity_id": "ACT-RECON-CIRC-01",
+      "core2a_practice_id": "PRAC-CIRC-01",
+      "core2b_transfer_id": "TRANS-CIRC-01"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEO-CIRC-CONCYC-01",
+      "title": "Concyclicity and Cyclic Quadrilaterals",
+      "concept": "A convex quadrilateral is concyclic (cyclic) if and only if each pair of opposite angles sums to 180 degrees. For angles alpha and beta, alpha + beta = 180 degrees ensures a circumcircle exists.",
+      "boundary_conditions": "If opposite angles sum to strictly less than or greater than 180 degrees, the four vertices cannot lie on a common circle."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-CIRC-01",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What relationship must opposite angles have for all four vertices to lie on a circle?",
+      "scaffold_steps": [
+        "Recall inscribed angle theorem subtending semicircle or arc",
+        "Formulate equation for opposite vertices",
+        "State concyclicity criterion"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-RET-D2-001\"><div class=\"qb-stem\"><p>In a convex quadrilateral $PQRS$, $\\angle P = 75^\\circ$ and $\\angle R = 105^\\circ$. Which of the following statements provides the precise geometric criterion that guarantees vertices $P, Q, R,$ and $S$ are concyclic?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> The adjacent angles are complementary: $\\angle P + \\angle Q = 90^\\circ$.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> The sum of a pair of opposite angles equals $180^\\circ$: $\\angle P + \\angle R = 180^\\circ$.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> The opposite angles are equal: $\\angle P = \\angle R$.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> The diagonals bisect each other at right angles.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-RET-D2-001\"><p>Recall the necessary and sufficient condition for four vertices of a quadrilateral to lie on a single circle.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-RET-D2-001\"><p>Compute the sum $\\angle P + \\angle R$ and relate this sum to the cyclic quadrilateral theorem.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEO-CIRC-CONCYC-01\">Review Concyclicity Fundamentals</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Solution</summary><div class=\"qb-solution-body\"><p>By the converse of the cyclic quadrilateral theorem, if the sum of a pair of opposite angles of a convex quadrilateral is $180^\\circ$, then the quadrilateral is cyclic (its four vertices are concyclic).</p><p>Here $\\angle P + \\angle R = 75^\\circ + 105^\\circ = 180^\\circ$. Therefore, statement B is the exact criterion.</p></div></details></div>"
+}

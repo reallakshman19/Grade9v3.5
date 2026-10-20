@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_7",
+  "qrt_cell": "QRT-JUSTIFY-D3",
+  "source_question": {
+    "id": "GOLDEN-JUS-D3-002",
+    "custody_hash": "b2030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f2021",
+    "stem": "Prove that the only integer solution to the Diophantine equation $x^3 + 2y^3 = 4z^3$ is $(x, y, z) = (0, 0, 0)$. Which of the following statements provides the rigorous deductive justification by the method of infinite descent?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "Divisibility forces 2 to divide x, then y, then z, creating an infinite sequence of strictly smaller integer solutions that contradicts the existence of a minimal non-zero solution."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "Checking modulo 3 reveals that non-zero cubes can only be 1 or 2, which immediately precludes any balance."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "Because the sum of two positive cubes cannot equal a cube by Fermat's Last Theorem, no non-zero solutions exist."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "Dividing by z^3 yields a rational polynomial with three irrational roots, precluding any integer points."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "Divisibility forces 2 to divide x, then y, then z, creating an infinite sequence of strictly smaller integer solutions that contradicts the existence of a minimal non-zero solution",
+      "crux_move_ref": "CRUX-NT-JUSTIFY-INFINITE-DESCENT-CUBIC"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "JUSTIFY",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-NT-JUSTIFY-INFINITE-DESCENT-CUBIC"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Assume a non-trivial integer solution with gcd(x, y, z) = 1 exists, and analyze the divisibility of each variable by 2 starting with the left-hand side.",
+      "hint2_tactical_step": "Since x^3 = 2(2z^3 - y^3), 2 divides x. Substituting x = 2*x1 gives y^3 = 2(z^3 - 2*x1^3), so 2 divides y. Complete the step for z to establish the descent condition."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student mistakenly claims modulo 3 arithmetic eliminates solutions, whereas modulo 3 residues allow 0 = 0.",
+      "opt-C": "Student inappropriately appeals to Fermat's Last Theorem, which only applies to equations of the form x^n + y^n = z^n.",
+      "opt-D": "Student confuses the existence of integer solutions with the irrationality of polynomial roots."
+    },
+    "core_links": {
+      "core1a_unit_id": "NT-JUS-INFINITE-DESCENT-03",
+      "core1b_activity_id": "ACT-RECON-INFINITE-DESCENT-03",
+      "core2a_practice_id": "PRAC-INFINITE-DESCENT-03",
+      "core2b_transfer_id": "TRANS-INFINITE-DESCENT-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "NT-JUS-INFINITE-DESCENT-03",
+      "title": "Method of Infinite Descent for Diophantine Impossibility",
+      "concept": "Fermat's method of infinite descent proves that an equation has no positive or non-zero integer solutions by demonstrating that any assumed solution implies the existence of a strictly smaller solution in positive integers (or absolute value), which violates the well-ordering principle of the positive integers. For example, for x^2 = 2y^2: 2 divides x^2, so x = 2x1. Then 4x1^2 = 2y^2, so y^2 = 2x1^2, meaning 2 divides y. This forces an infinite descent sequence of smaller integer pairs, proving no non-zero integer solution exists.",
+      "boundary_conditions": "Infinite descent requires an order-bounded metric such as absolute value or height on the positive integers."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-INFINITE-DESCENT-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If x^3 is a multiple of 2, what must be true about the integer x?",
+      "scaffold_steps": [
+        "Recall 2 is a prime number",
+        "Apply Euclid's lemma: if a prime divides a product, it divides at least one factor",
+        "Conclude x must be divisible by 2"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-JUS-D3-002\"><div class=\"qb-stem\"><p>Prove that the only integer solution to the Diophantine equation $x^3 + 2y^3 = 4z^3$ is $(x, y, z) = (0, 0, 0)$. Which of the following statements provides the rigorous deductive justification by the method of infinite descent?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> Divisibility forces 2 to divide x, then y, then z, creating an infinite sequence of strictly smaller integer solutions that contradicts the existence of a minimal non-zero solution.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> Checking modulo 3 reveals that non-zero cubes can only be 1 or 2, which immediately precludes any balance.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> Because the sum of two positive cubes cannot equal a cube by Fermat's Last Theorem, no non-zero solutions exist.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> Dividing by z^3 yields a rational polynomial with three irrational roots, precluding any integer points.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-JUS-D3-002\"><p>Assume a non-trivial integer solution with gcd(x, y, z) = 1 exists, and analyze the divisibility of each variable by 2 starting with the left-hand side.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-JUS-D3-002\"><p>Since x^3 = 2(2z^3 - y^3), 2 divides x. Substituting x = 2*x1 gives y^3 = 2(z^3 - 2*x1^3), so 2 divides y. Complete the step for z to establish the descent condition.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"NT-JUS-INFINITE-DESCENT-03\">Review Method of Infinite Descent</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Formulate the minimal solution hypothesis:</p><p>Suppose there exists a non-trivial integer solution $(x, y, z) \\ne (0, 0, 0)$. Without loss of generality, choose a solution that minimizes $|x| + |y| + |z| > 0$ (or equivalently with $\\gcd(x, y, z) = 1$).</p><p>2. Analyze divisibility of $x$:</p><p>Rearrange: $x^3 = 4z^3 - 2y^3 = 2(2z^3 - y^3)$.</p><p>Since the right-hand side is divisible by $2$, $x^3$ is even, which implies $x$ is even. Let $x = 2x_1$ for some integer $x_1$.</p><p>3. Analyze divisibility of $y$:</p><p>Substitute $x = 2x_1$ into the equation:</p><p>$(2x_1)^3 + 2y^3 = 4z^3 \\implies 8x_1^3 + 2y^3 = 4z^3$.</p><p>Divide the entire equation by $2$:</p><p>$4x_1^3 + y^3 = 2z^3 \\implies y^3 = 2z^3 - 4x_1^3 = 2(z^3 - 2x_1^3)$.</p><p>Thus $y^3$ is even, which implies $y$ is even. Let $y = 2y_1$ for some integer $y_1$.</p><p>4. Analyze divisibility of $z$:</p><p>Substitute $y = 2y_1$ into the divided equation:</p><p>$4x_1^3 + (2y_1)^3 = 2z^3 \\implies 4x_1^3 + 8y_1^3 = 2z^3$.</p><p>Divide by $2$ again:</p><p>$2x_1^3 + 4y_1^3 = z^3 \\implies z^3 = 2(x_1^3 + 2y_1^3)$.</p><p>Thus $z^3$ is even, which implies $z$ is even. Let $z = 2z_1$ for some integer $z_1$.</p><p>5. Establish the infinite descent contradiction:</p><p>Substitute $z = 2z_1$:</p><p>$2x_1^3 + 4y_1^3 = 8z_1^3 \\implies x_1^3 + 2y_1^3 = 4z_1^3$.</p><p>The triple $(x_1, y_1, z_1) = (x/2, y/2, z/2)$ is another integer solution, but its norm $|x_1| + |y_1| + |z_1| = \\frac{1}{2}(|x| + |y| + |z|) < |x| + |y| + |z|$, directly contradicting the minimality assumption.</p><p>Therefore, no non-zero integer solution exists; the only solution is $(x, y, z) = (0, 0, 0)$.</p></div></details></div>"
+}

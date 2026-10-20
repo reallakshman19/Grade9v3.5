@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_2",
+  "qrt_cell": "QRT-EXPLAIN-D3",
+  "source_question": {
+    "id": "GOLDEN-EXP-D3-003",
+    "custody_hash": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef3",
+    "stem": "The number of non-negative integer solutions to $x_1 + x_2 + \\dots + x_k = n$ is given by $\\binom{n + k - 1}{k - 1}$. Which of the following provides the core combinatorial explanation for why this formula holds?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "The solutions correspond bijectively to arranging $n$ identical stars and $k - 1$ identical bars in a sequence of $n + k - 1$ total positions, choosing the $k - 1$ positions for the bars."
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "There are $n - 1$ spaces between $n$ objects, and we choose $k - 1$ spaces to insert division markers."
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "Each variable can take $n + 1$ values, and symmetry divides the total state space by $(k - 1)!$."
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "The expression evaluates the multinomial coefficient of $(x_1 + \\dots + x_k)^n$ evaluated at unit weights."
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "The solutions correspond bijectively to arranging n identical stars and k - 1 identical bars in a sequence of n + k - 1 total positions, choosing the k - 1 positions for the bars.",
+      "crux_move_ref": "CRUX-COMB-EXPLAIN-STARS-AND-BARS-BIJECTIVE-PARTITION"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "EXPLAIN",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 1
+      },
+      "crux_move": "CRUX-COMB-EXPLAIN-STARS-AND-BARS-BIJECTIVE-PARTITION"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Think about representing the problem as an arrangement of n identical items and dividers separating them into k bins.",
+      "hint2_tactical_step": "To partition into k groups, exactly k - 1 dividers are needed. Since items can be zero, dividers can be adjacent, meaning we select k - 1 locations out of the combined total of items plus dividers."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student confuses non-negative integer solutions with strictly positive integer solutions (which gives C(n - 1, k - 1)).",
+      "opt-C": "Student incorrectly assumes the variables are mutually independent without conservation constraints.",
+      "opt-D": "Student confuses the number of terms in an expansion with the multinomial coefficient of an individual term."
+    },
+    "core_links": {
+      "core1a_unit_id": "COMB-EXPLAIN-STARS-BARS-03",
+      "core1b_activity_id": "ACT-RECON-STARS-BARS-03",
+      "core2a_practice_id": "PRAC-STARS-BARS-03",
+      "core2b_transfer_id": "TRANS-STARS-BARS-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "COMB-EXPLAIN-STARS-BARS-03",
+      "title": "Stars and Bars Bijective Partitioning Mechanism",
+      "concept": "To distribute n identical items among k distinct bins, the method of stars and bars maps each partition to a sequence of symbols. For strictly positive integers y_1 + y_2 + ... + y_k = n, there are n - 1 internal gaps between items, and choosing k - 1 gaps yields C(n - 1, k - 1) solutions. For example, for y_1 + y_2 + y_3 = 8 with y_i >= 1, we choose 2 gaps out of 7, giving C(7, 2) = 21 solutions.",
+      "boundary_conditions": "For non-negative integers x_i >= 0, the substitution y_i = x_i + 1 converts the equation to y_1 + ... + y_k = n + k with y_i >= 1, immediately producing C(n + k - 1, k - 1)."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-STARS-BARS-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "How many dividers (bars) are required to separate items into k distinct bins?",
+      "scaffold_steps": [
+        "Notice that 1 divider splits a row into 2 bins",
+        "Notice that 2 dividers split a row into 3 bins",
+        "Conclude k - 1 dividers are needed for k bins"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-EXP-D3-003\"><div class=\"qb-stem\"><p>The number of non-negative integer solutions to $x_1 + x_2 + \\dots + x_k = n$ is given by $\\binom{n + k - 1}{k - 1}$. Which of the following provides the core combinatorial explanation for why this formula holds?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> The solutions correspond bijectively to arranging $n$ identical stars and $k - 1$ identical bars in a sequence of $n + k - 1$ total positions, choosing the $k - 1$ positions for the bars.</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> There are $n - 1$ spaces between $n$ objects, and we choose $k - 1$ spaces to insert division markers.</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> Each variable can take $n + 1$ values, and symmetry divides the total state space by $(k - 1)!$.</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> The expression evaluates the multinomial coefficient of $(x_1 + \\dots + x_k)^n$ evaluated at unit weights.</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-EXP-D3-003\"><p>Think about representing the problem as an arrangement of n identical items and dividers separating them into k bins.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-EXP-D3-003\"><p>To partition into k groups, exactly k - 1 dividers are needed. Since items can be zero, dividers can be adjacent, meaning we select k - 1 locations out of the combined total of items plus dividers.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"COMB-EXPLAIN-STARS-BARS-03\">Review Stars and Bars Mechanism</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Represent each unit of the sum as a star $\\star$ (total $n$ stars), and use $k - 1$ bars $|$ as dividers between bins.</p><p>2. A solution $(x_1, x_2, \\dots, x_k)$ corresponds to a sequence where $x_1$ stars precede the first bar, $x_2$ stars lie between the first and second bars, and so on.</p><p>3. The total number of symbols in any such sequence is $n + (k - 1) = n + k - 1$.</p><p>4. Since the stars and bars can appear in any order, any sequence is uniquely determined by choosing which $k - 1$ positions are occupied by bars.</p><p>5. The number of ways to choose $k - 1$ positions out of $n + k - 1$ is $\\binom{n + k - 1}{k - 1}$.</p></div></details></div>"
+}

@@ -1,0 +1,71 @@
+{
+  "schema": "imo-qrt-tile-blueprint/v1",
+  "version": "1.0.0",
+  "tile_id": "tile_4_5",
+  "qrt_cell": "QRT-REPRESENT-D4",
+  "coordinates": {
+    "band_index": 4,
+    "demand_index": 5,
+    "band": "D4",
+    "demand": "REPRESENT"
+  },
+  "cognitive_contract": {
+    "label": "Represent / cross-domain structural isomorphisms (National/International Olympiad)",
+    "decisive_act": "Translating, encoding, and transforming mathematical structures across disparate mathematical domains and evaluating protected quantity W.",
+    "band_protected_work": "Require learner to establish de Moivre polynomial root maps, F_2 incidence vector spaces, or Apollonian coordinate translations without intermediate scaffolding.",
+    "support_posture": "Activate the starting domain representation without revealing the target polynomial, vector space, or coordinate completion.",
+    "slots": {
+      "X": "translating regular heptagon angle relations into polynomial roots of de Moivre's formula in u = cot^2(theta) to evaluate the cotangent square sum",
+      "Y": "three angles theta_k = k*pi/7 for k in {1, 2, 3}",
+      "Z": "cyclotomic polynomial representation: sin(7*theta) = 0 expanded in cotangent powers yields 7*u^3 - 35*u^2 + 21*u - 1 = 0",
+      "W": "5",
+      "wrong_idea": "attempting numerical decimal approximations of trigonometric functions or confusing tangent and cotangent Vieta coefficients",
+      "replacement_rule": "Vieta's formula on the cubic 7*u^3 - 35*u^2 + 21*u - 1 = 0 gives root sum 35/7 = 5",
+      "visual_job": "render regular heptagon with inscribed angles on unit circle, mapping vertices to cyclotomic roots; avoid unmounted SVGs",
+      "check_job": "independent verification: verify via tangent polynomial 7*t - 35*t^3 + 21*t^5 - t^7 = 0 => 7 - 35*v + 21*v^2 - v^3 = 0 where v = tan^2(theta). Sum of roots is 21, sum of reciprocal roots is 35/7 = 5. Verified."
+    }
+  },
+  "scoring_bounds": {
+    "min_score": 9,
+    "max_score": 10,
+    "band": "D4",
+    "allowed_component_max": 2,
+    "component_keys": [
+      "concept_model_selection",
+      "representation_translation",
+      "reasoning_chain_length",
+      "algebra_computational_load",
+      "trap_exception_sensitivity"
+    ]
+  },
+  "five_core_obligations": {
+    "core2_custody": {
+      "stem_requirement": "Exact formulation of an international Olympiad cross-domain representational transformation demand",
+      "hint_ladder_requirement": "H1 activates the algebraic/cyclotomic bridge; H2 provides intermediate polynomial formulation; preserves W",
+      "solution_requirement": "Locked pre-commit; complete formal step-by-step translation evaluating W",
+      "distractor_requirement": "Every distractor explained with specific student representational confusions or algebraic inversion errors"
+    },
+    "core1a_declarative": {
+      "blocks": [
+        "entry_assumptions",
+        "inferential_jump",
+        "why_valid_derivation",
+        "three_way_bridge",
+        "representation_anchor",
+        "boundary_conditions",
+        "worked_check"
+      ],
+      "anti_leak_rule": "Strict prohibition on leaking Core 2 exact parameters or textual answer in Core 1A text"
+    },
+    "core1b_reconstruction": {
+      "predictive_gate": "Answer before attempt FORBIDDEN",
+      "model_alternation": "Reconstruction must use an alternative analytical pathway (e.g. tangent polynomial reciprocal sums or complex root products)"
+    },
+    "core2a_supported_practice": {
+      "transfer_obligation": "Near-transfer item translating a companion cyclotomic or vector representation"
+    },
+    "core2b_transfer_assessment": {
+      "transfer_obligation": "Far-transfer item applying cross-domain representation to an Olympiad problem"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_2_4",
+  "qrt_cell": "QRT-MODEL-D2",
+  "source_question": {
+    "id": "GOLDEN-MOD-D2-001",
+    "custody_hash": "e7f8091a2b3c4d5e6f708192a3b4c5d6e7f80123456789abcdef0123456789ab",
+    "stem": "A school auditorium sold a total of 50 tickets for a play, consisting of student tickets at $10 each and adult tickets at $25 each. The total revenue collected was $800. If $x$ represents the number of student tickets and $y$ represents the number of adult tickets, which system of equations correctly models this situation?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$x + y = 50$ and $2x + 5y = 160$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$x + y = 50$ and $5x + 2y = 160$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$x + y = 800$ and $10x + 25y = 50$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$2x + 5y = 50$ and $x + y = 160$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "x + y = 50 and 2x + 5y = 160",
+      "crux_move_ref": "CRUX-ALG-BIVARIATE-LINEAR-SYSTEM-REVENUE-COUNT-MODELING"
+    },
+    "cognitive_classification": {
+      "band": "D2",
+      "demand": "MODEL",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "difficulty_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 2,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-ALG-BIVARIATE-LINEAR-SYSTEM-REVENUE-COUNT-MODELING"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Identify the two separate quantities being conserved: total number of tickets sold, and total money collected.",
+      "hint2_tactical_step": "Express the count equation $x + y = 50$ and the raw revenue equation $10x + 25y = 800$, then divide the revenue equation by its greatest common factor 5."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student swaps the prices, associating $25 with students and $10 with adults.",
+      "opt-C": "Student inverts the totals, setting total count to 800 and total revenue to 50.",
+      "opt-D": "Student confuses which equation represents the total count versus the simplified revenue."
+    },
+    "core_links": {
+      "core1a_unit_id": "ALG-LINE-MODEL-02",
+      "core1b_activity_id": "ACT-RECON-MODEL-02",
+      "core2a_practice_id": "PRAC-MODEL-02",
+      "core2b_transfer_id": "TRANS-MODEL-02"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "ALG-LINE-MODEL-02",
+      "title": "Bivariate Linear Systems Modeling",
+      "concept": "To model real-world constraint problems with two unknowns, assign variables to discrete units. Formulate two independent equations: one representing unit count conservation (x + y = Total), and the second representing weighted rate or value conservation (r1*x + r2*y = Value). Simplify equations by dividing by common factors.",
+      "boundary_conditions": "Quantities representing counts of physical objects must satisfy non-negativity and integer constraints: x, y in Z_{>= 0}."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-MODEL-02",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "If a basket has x apples at 150g each and y oranges at 200g each, what expression represents the total weight?",
+      "scaffold_steps": [
+        "Identify variable weights",
+        "Formulate weighted sum expression 150x + 200y",
+        "Equate to target total"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-MOD-D2-001\"><div class=\"qb-stem\"><p>A school auditorium sold a total of 50 tickets for a play, consisting of student tickets at $10 each and adult tickets at $25 each. The total revenue collected was $800. If $x$ represents the number of student tickets and $y$ represents the number of adult tickets, which system of equations correctly models this situation?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $x + y = 50$ and $2x + 5y = 160$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $x + y = 50$ and $5x + 2y = 160$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $x + y = 800$ and $10x + 25y = 50$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $2x + 5y = 50$ and $x + y = 160$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-MOD-D2-001\"><p>Identify the two separate quantities being conserved: total number of tickets sold, and total money collected.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-MOD-D2-001\"><p>Express the count equation $x + y = 50$ and the raw revenue equation $10x + 25y = 800$, then divide the revenue equation by its greatest common factor 5.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"ALG-LINE-MODEL-02\">Review Linear Systems Modeling</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Solution</summary><div class=\"qb-solution-body\"><p>1. Total ticket count: $x + y = 50$.</p><p>2. Total monetary revenue: $10x + 25y = 800$.</p><p>3. Dividing both sides by 5 yields: $2x + 5y = 160$.</p><p>Therefore, the system is $x + y = 50$ and $2x + 5y = 160$.</p></div></details></div>"
+}

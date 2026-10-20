@@ -1,0 +1,85 @@
+{
+  "schema": "imo-qrt-tile-golden-fixture/v1",
+  "tile_id": "tile_3_3",
+  "qrt_cell": "QRT-APPLY-D3",
+  "source_question": {
+    "id": "GOLDEN-APP-D3-002",
+    "custody_hash": "b5c6d7e8f90123456789abcdef0123456789abcdef0123456789abcdef012345",
+    "stem": "In triangle $ABC$, the side lengths are $AB = 13$, $AC = 15$, and $BC = 14$. A cevian $AD$ is drawn to side $BC$ such that $BD = 6$ and $DC = 8$. What is the exact length of $AD$?",
+    "options": [
+      {
+        "id": "opt-A",
+        "label": "A",
+        "text": "$\\sqrt{145}$"
+      },
+      {
+        "id": "opt-B",
+        "label": "B",
+        "text": "$\\sqrt{193}$"
+      },
+      {
+        "id": "opt-C",
+        "label": "C",
+        "text": "$\\sqrt{153}$"
+      },
+      {
+        "id": "opt-D",
+        "label": "D",
+        "text": "$12$"
+      }
+    ],
+    "answer": {
+      "choice": "A",
+      "value": "\\sqrt{145}",
+      "crux_move_ref": "CRUX-GEO-APPLY-STEWARTS-THEOREM-CEVIAN-LENGTH"
+    },
+    "cognitive_classification": {
+      "band": "D3",
+      "demand": "APPLY",
+      "difficulty_band": "D3",
+      "difficulty_score": 7,
+      "difficulty_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 2,
+        "trap_exception_sensitivity": 0
+      },
+      "crux_move": "CRUX-GEO-APPLY-STEWARTS-THEOREM-CEVIAN-LENGTH"
+    },
+    "hint_ladder": {
+      "hint1_conceptual_nudge": "Recall Stewart's Theorem for cevian AD: b^2 * m + c^2 * n = a * (d^2 + m * n), where m = BD and n = DC.",
+      "hint2_tactical_step": "Substitute the given side lengths into the left side: 15^2 * 6 + 13^2 * 8 = 1350 + 1352 = 2702. Equate to 14 * (d^2 + 48) and solve for d^2."
+    },
+    "distractor_rationales": {
+      "opt-B": "Student calculates d^2 = 2702 / 14 = 193 but forgets to subtract m * n = 48 before taking the square root.",
+      "opt-C": "Student swaps opposite side pairings: calculates 13^2 * 6 + 15^2 * 8 = 2814, yielding 2814 / 14 - 48 = 153.",
+      "opt-D": "Student approximates the square root of 145 as 12 without retaining exact radical form."
+    },
+    "core_links": {
+      "core1a_unit_id": "GEO-APPLY-STEWARTS-THM-03",
+      "core1b_activity_id": "ACT-RECON-STEWARTS-THM-03",
+      "core2a_practice_id": "PRAC-STEWARTS-THM-03",
+      "core2b_transfer_id": "TRANS-STEWARTS-THM-03"
+    }
+  },
+  "core_context": {
+    "core1a": {
+      "unit_id": "GEO-APPLY-STEWARTS-THM-03",
+      "title": "Stewart's Theorem for Cevian Lengths",
+      "concept": "Stewart's Theorem relates the lengths of the sides of a triangle to the length of a cevian. For a triangle with side lengths a, b, c and a cevian of length d dividing side a into segments of length m and n (such that m + n = a), the relation is b^2 * m + c^2 * n = a * (d^2 + m * n). A common mnemonic is 'man + dad = bmb + cnc'. For example, in a triangle with sides 5, 6, 7 where d is a median (m = n = 3, a = 6): 7^2 * 3 + 5^2 * 3 = 6 * (d^2 + 9), giving 3 * 74 = 6 * (d^2 + 9), so 37 = d^2 + 9, d^2 = 28, d = 2*sqrt(7).",
+      "boundary_conditions": "Stewart's Theorem applies to any triangle and any cevian dividing a side into collinear segments m and n. If the cevian is an altitude or angle bisector, the formula specializes accordingly."
+    },
+    "core1b": {
+      "activity_id": "ACT-RECON-STEWARTS-THM-03",
+      "answer_before_attempt": "FORBIDDEN",
+      "prediction_prompt": "What is the product of the two base segments m and n?",
+      "scaffold_steps": [
+        "Multiply BD = 6 by DC = 8",
+        "Obtain 6 * 8 = 48",
+        "Conclude mn = 48"
+      ]
+    }
+  },
+  "html_representation": "<div class=\"qb-card\" id=\"card-GOLDEN-APP-D3-002\"><div class=\"qb-stem\"><p>In triangle $ABC$, the side lengths are $AB = 13$, $AC = 15$, and $BC = 14$. A cevian $AD$ is drawn to side $BC$ such that $BD = 6$ and $DC = 8$. What is the exact length of $AD$?</p></div><div class=\"qb-options\"><button class=\"qb-option-btn\" id=\"opt-A\" type=\"button\"><span class=\"opt-label\">A</span> $\\sqrt{145}$</button><button class=\"qb-option-btn\" id=\"opt-B\" type=\"button\"><span class=\"opt-label\">B</span> $\\sqrt{193}$</button><button class=\"qb-option-btn\" id=\"opt-C\" type=\"button\"><span class=\"opt-label\">C</span> $\\sqrt{153}$</button><button class=\"qb-option-btn\" id=\"opt-D\" type=\"button\"><span class=\"opt-label\">D</span> $12$</button></div><div class=\"qb-support-container\"><div class=\"qb-hint-item\" id=\"hint1-GOLDEN-APP-D3-002\"><p>Recall Stewart's Theorem for cevian AD: b^2 * m + c^2 * n = a * (d^2 + m * n), where m = BD and n = DC.</p></div><div class=\"qb-hint-item\" id=\"hint2-GOLDEN-APP-D3-002\"><p>Substitute the given side lengths into the left side: 15^2 * 6 + 13^2 * 8 = 1350 + 1352 = 2702. Equate to 14 * (d^2 + 48) and solve for d^2.</p></div></div><div class=\"qb-core-nav\"><a href=\"#study-unit\" data-core-unit-id=\"GEO-APPLY-STEWARTS-THM-03\">Review Stewart's Theorem</a></div><details class=\"qb-solution\" inert hidden data-locked=\"true\"><summary class=\"qb-solution-summary\">Show Complete Olympiad Derivation</summary><div class=\"qb-solution-body\"><p>1. Identify the given parameters for triangle $ABC$ with cevian $AD$ of length $d$:</p><p>$c = AB = 13$, $b = AC = 15$, $a = BC = 14$, $m = BD = 6$, $n = DC = 8$.</p><p>2. Verify base segments sum: $m + n = 6 + 8 = 14 = a$.</p><p>3. Apply Stewart's Theorem: $b^2 m + c^2 n = a(d^2 + mn)$.</p><p>4. Evaluate the left-hand side:</p><p>$15^2 \\times 6 + 13^2 \\times 8 = 225 \\times 6 + 169 \\times 8 = 1350 + 1352 = 2702$.</p><p>5. Set equal to the right-hand side:</p><p>$14(d^2 + 6 \\times 8) = 14(d^2 + 48) = 2702$.</p><p>6. Divide both sides by $14$:</p><p>$d^2 + 48 = \\frac{2702}{14} = 193$.</p><p>7. Solve for $d^2$:</p><p>$d^2 = 193 - 48 = 145 \\implies d = \\sqrt{145}$.</p><p>8. Independent check via Law of Cosines on triangle $ABC$:</p><p>$\\cos B = \\frac{13^2 + 14^2 - 15^2}{2 \\times 13 \\times 14} = \\frac{169 + 196 - 225}{364} = \\frac{140}{364} = \\frac{5}{13}$.</p><p>In triangle $ABD$: $d^2 = 13^2 + 6^2 - 2(13)(6)\\left(\\frac{5}{13}\\right) = 169 + 36 - 60 = 145$.</p><p>Thus $d = \\sqrt{145}$, confirming the calculation.</p></div></details></div>"
+}

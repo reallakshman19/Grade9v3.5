@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade 9 IMO · Circles & Cyclic Quadrilaterals Core Self-Tutor</title>
+  <style>
+    /* G9-TABLET-SHELL-V1 Pure Local Responsive Styling */
+    :root {
+      --bg-canvas: #f8fafc;
+      --bg-card: #ffffff;
+      --border-card: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --accent: #b91c1c;
+      --success: #15803d;
+      --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --touch-target-min: 48px;
+      --font-floor: 14px;
+      --font-base: 17px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      font-family: var(--font-stack);
+      font-size: var(--font-base);
+      line-height: 1.6;
+      padding: 24px 16px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .badge-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: var(--font-floor);
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-primary { background-color: #e0f2fe; color: var(--primary); }
+    .badge-accent { background-color: #fee2e2; color: var(--accent); }
+    .badge-success { background-color: #dcfce7; color: var(--success); }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      font-size: var(--font-base);
+      color: var(--text-muted);
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .svg-wrapper {
+      width: 100%;
+      background-color: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      text-align: center;
+    }
+
+    svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: var(--touch-target-min);
+      min-width: var(--touch-target-min);
+      padding: 12px 24px;
+      font-size: var(--font-base);
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      text-decoration: none;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      margin-right: 12px;
+      margin-bottom: 12px;
+    }
+
+    .btn-outline:hover {
+      background-color: #f0f9ff;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      min-height: var(--touch-target-min);
+      padding: 12px 16px;
+      border: 2px solid var(--border-card);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: var(--font-base);
+      background-color: #ffffff;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .option-label:hover {
+      border-color: var(--primary);
+      background-color: #f0f9ff;
+    }
+
+    .option-label input[type="radio"] {
+      margin-right: 14px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .response-area {
+      width: 100%;
+      min-height: 110px;
+      font-family: inherit;
+      font-size: var(--font-base);
+      padding: 14px;
+      border: 2px solid var(--border-card);
+      border-radius: 8px;
+      margin: 16px 0;
+      resize: vertical;
+    }
+
+    .response-area:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .callout {
+      border-left: 5px solid var(--primary);
+      background-color: #f0f9ff;
+      padding: 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+      font-size: var(--font-base);
+    }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background-color: #f0fdf4;
+    }
+
+    .callout-warn {
+      border-left-color: var(--accent);
+      background-color: #fef2f2;
+    }
+
+    .hint-drawer {
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      margin: 12px 0;
+      background-color: #ffffff;
+    }
+
+    .hint-header {
+      padding: 14px 18px;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: var(--touch-target-min);
+    }
+
+    .hint-content {
+      padding: 16px 18px;
+      border-top: 1px solid var(--border-card);
+      font-size: var(--font-base);
+      color: var(--text-muted);
+      background-color: #fafafa;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="badge-bar">
+      <span class="badge badge-primary">Topic: Circles</span>
+      <span class="badge badge-accent">Demand: Justify (D4)</span>
+      <span class="badge badge-success">G9-TABLET-SHELL-V1</span>
+    </div>
+    <h1>Cyclic Quadrilaterals &amp; Parallel Chords</h1>
+    <p class="subtitle">Interactive Core 1A &amp; Core 1B Self-Tutor · Reconstructing Invariants across Intersecting Circles</p>
+  </header>
+
+  <!-- Section 1: The Vector Diagram -->
+  <section class="card">
+    <div class="card-title">1 · Interactive Visual Specification</div>
+    <p>Examine the two intersecting circles below. Points \(A\) and \(B\) lie on both circles. Line \(AD\) is a secant meeting the inner circle at \(E\), and line \(BC\) is a secant meeting the inner circle at \(F\).</p>
+    
+    <div class="svg-wrapper">
+      <svg viewBox="0 0 700 500" role="img" aria-label="Outer circle ABCD with inner circle ABEF and parallel chords EF and DC">
+        <circle cx="350" cy="250" r="190" fill="none" stroke="#1e293b" stroke-width="3.5"/>
+        <circle cx="310" cy="250" r="155" fill="none" stroke="#0284c7" stroke-width="3" stroke-dasharray="6,4"/>
+        <circle cx="350" cy="60" r="6" fill="#0f172a"/><text x="345" y="42" font-size="22" font-weight="700">A</text>
+        <circle cx="350" cy="440" r="6" fill="#0f172a"/><text x="345" y="475" font-size="22" font-weight="700">B</text>
+        <line x1="350" y1="60" x2="535" y2="210" stroke="#1e293b" stroke-width="3"/>
+        <circle cx="535" cy="210" r="6" fill="#0f172a"/><text x="550" y="215" font-size="22" font-weight="700">D</text>
+        <line x1="350" y1="440" x2="510" y2="350" stroke="#1e293b" stroke-width="3"/>
+        <circle cx="510" cy="350" r="6" fill="#0f172a"/><text x="525" y="360" font-size="22" font-weight="700">C</text>
+        <line x1="535" y1="210" x2="510" y2="350" stroke="#1e293b" stroke-width="4"/>
+        <circle cx="420" cy="117" r="6" fill="#b91c1c"/><text x="415" y="98" font-size="22" font-weight="700" fill="#b91c1c">E</text>
+        <circle cx="425" cy="398" r="6" fill="#b91c1c"/><text x="420" y="425" font-size="22" font-weight="700" fill="#b91c1c">F</text>
+        <line x1="420" y1="117" x2="425" y2="398" stroke="#b91c1c" stroke-width="3.5" stroke-dasharray="8,4"/>
+      </svg>
+    </div>
+
+    <!-- 3-Way Representation Table -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--border-card); text-align: left;">
+          <th style="padding: 10px;">Symbol</th>
+          <th style="padding: 10px;">Visual Element in SVG</th>
+          <th style="padding: 10px;">Exact Mathematical Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid var(--border-card);">
+          <td style="padding: 10px; font-weight: 700;">\(\angle BAD\)</td>
+          <td style="padding: 10px;">Vertex A on black outer circle</td>
+          <td style="padding: 10px;">Inscribed angle subtended by arc BCD.</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border-card);">
+          <td style="padding: 10px; font-weight: 700;">\(\angle DEF\)</td>
+          <td style="padding: 10px;">Exterior angle at red vertex E</td>
+          <td style="padding: 10px;">Exterior angle to cyclic quad ABFE, equal to interior \(\angle ABF\).</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px; font-weight: 700;">\(EF \parallel DC\)</td>
+          <td style="padding: 10px;">Red dashed chord &amp; black solid chord</td>
+          <td style="padding: 10px;">Parallel line pair proved via supplementary consecutive interior angles.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 2: Core 1B Interactive Stage 1 (Predict) -->
+  <section class="card" id="stage-predict-card">
+    <div class="card-title">2 · Stage 1: Prediction &amp; Cognitive Commitment</div>
+    <div class="callout">
+      <strong>Core 1B Rule:</strong> You must commit your initial judgment <em>before</em> any calculation or model answer is unlocked.
+    </div>
+    <p>Before calculating, which circle contains quadrilateral \(ABFE\), and which theorem allows you to relate its angles across to quadrilateral \(ABCD\)?</p>
+
+    <div class="options-grid">
+      <label class="option-label">
+        <input type="radio" name="pred-opt" value="A">
+        <span>A. Both quadrilaterals belong to outer circle; theorem is Alternate Segment Theorem.</span>
+      </label>
+      <label class="option-label">
+        <input type="radio" name="pred-opt" value="B">
+        <span>B. \(ABFE\) is cyclic in the inner circle; theorem is Exterior Angle of Cyclic Quad equals Interior Opposite Angle.</span>
+      </label>
+      <label class="option-label">
+        <input type="radio" name="pred-opt" value="C">
+        <span>C. \(ABFE\) is a parallelogram; theorem is Opposite Angles of a Parallelogram are Equal.</span>
+      </label>
+    </div>
+
+    <button type="button" class="btn btn-primary" id="btn-submit-predict" onclick="commitPrediction()">Lock Prediction &amp; Unlock Attempt</button>
+  </section>
+
+  <!-- Section 3: Core 1B Interactive Stage 2 (Attempt) -->
+  <section class="card hidden" id="stage-attempt-card">
+    <div class="card-title">3 · Stage 2: Active Student Attempt</div>
+    <p>State the exact chain of two angle equalities connecting \(\angle ABF\) to \(\angle DEF\) and to \(\angle CDE\), and state why they force \(EF \parallel DC\):</p>
+    
+    <textarea class="response-area" id="attempt-input" placeholder="Type your proof formulation here (e.g., In inner circle C2, angle DEF = ...; In outer circle C1, angle ADC = ...)"></textarea>
+
+    <!-- Two-Tier Hint Ladders -->
+    <details class="hint-drawer">
+      <summary class="hint-header">💡 Need a Nudge? (Hint 1: Conceptual Invariant)</summary>
+      <div class="hint-content">
+        Vertices \(A\) and \(B\) lie on <em>both</em> circles. Look at the angle at vertex \(B\) (\(\angle ABF\)). How does it relate to the exterior angle at \(E\) in the inner circle, and how does it relate to the opposite angle at \(D\) in the outer circle?
+      </div>
+    </details>
+
+    <details class="hint-drawer">
+      <summary class="hint-header">🎯 Need Tactical Help? (Hint 2: Formulating Intermediate Step)</summary>
+      <div class="hint-content">
+        Write: (1) \(\angle DEF = \angle ABF\) (exterior angle equals interior opposite in quad \(ABFE\)).<br>
+        Write: (2) \(\angle ADC + \angle ABF = 180^\circ\) (opposite angles in cyclic quad \(ABCD\)).<br>
+        Substitute equation (1) into equation (2) to find \(\angle ADC + \angle DEF\).
+      </div>
+    </details>
+
+    <button type="button" class="btn btn-primary" style="margin-top: 16px;" onclick="revealModelClosure()">Commit Attempt &amp; View Model Closure</button>
+  </section>
+
+  <!-- Section 4: Stage 3 (Reverse Reconstruction Route) -->
+  <section class="card hidden" id="stage-closure-card">
+    <div class="card-title">4 · Stage 3: Reverse Reconstruction (Symptom to Root Cause)</div>
+    <div class="callout callout-success">
+      <strong>Model Closure (Formal Mathematical Warrant):</strong><br>
+      1. In inner circle \(C_2\): \(ABFE\) is cyclic \(\implies \angle DEF = \angle ABF\).<br>
+      2. In outer circle \(C_1\): \(ABCD\) is cyclic \(\implies \angle CDE = 180^\circ - \angle ABF\).<br>
+      3. Sum: \(\angle DEF + \angle CDE = \angle ABF + (180^\circ - \angle ABF) = 180^\circ\).<br>
+      4. Since consecutive interior angles on the same side of transversal \(AD\) sum to \(180^\circ\), \(EF \parallel DC\).
+    </div>
+
+    <div class="callout">
+      <strong>Why Reconstruction Differs from Teaching Path:</strong><br>
+      Teaching starts from circle axioms and moves forward. In problem solving, you work <em>backward from the symptom</em>: To prove \(EF \parallel DC\), what angle sum do we need? We need supplementary interior angles along \(AD\). What shared vertex connects both circles? Vertex \(B\)!
+    </div>
+
+    <!-- Section 5: Boundary Test -->
+    <div style="margin-top: 24px;">
+      <h3 style="font-size: 19px; margin-bottom: 12px;">5 · Stage 4: Boundary &amp; Perturbation Test</h3>
+      <p>Suppose the inner circle is continuously dilated until it coincides identically with the outer circle. What happens to chord \(EF\)?</p>
+      <div class="options-grid">
+        <label class="option-label">
+          <input type="radio" name="bound-opt" value="1">
+          <span>Point \(E \to D\) and \(F \to C\); chord \(EF\) becomes \(DC\), making the parallel relation \(DC \parallel DC\) trivially true.</span>
+        </label>
+        <label class="option-label">
+          <input type="radio" name="bound-opt" value="2">
+          <span>The intersection points disappear and the chords become perpendicular.</span>
+        </label>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="verifyBoundary()">Check Invariant Limit</button>
+      <div id="bound-feedback" class="callout callout-success hidden" style="margin-top: 16px;">
+        <strong>Correct!</strong> In the limit as \(C_2 \to C_1\), \(E \to D\) and \(F \to C\). The continuous deformation preserves the angle invariant across the entire family of circles.
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  function commitPrediction() {
+    const selected = document.querySelector('input[name="pred-opt"]:checked');
+    if (!selected) {
+      alert("Please select an option before committing.");
+      return;
+    }
+    document.getElementById('stage-attempt-card').classList.remove('hidden');
+    document.getElementById('stage-attempt-card').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function revealModelClosure() {
+    const txt = document.getElementById('attempt-input').value.trim();
+    if (txt.length < 5) {
+      alert("Please write your attempt notes or equation chain before viewing model closure.");
+      return;
+    }
+    document.getElementById('stage-closure-card').classList.remove('hidden');
+    document.getElementById('stage-closure-card').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function verifyBoundary() {
+    const sel = document.querySelector('input[name="bound-opt"]:checked');
+    if (!sel) {
+      alert("Please select a choice.");
+      return;
+    }
+    document.getElementById('bound-feedback').classList.remove('hidden');
+  }
+</script>
+
+</body>
+</html>
