@@ -161,5 +161,53 @@ class OwnerBankIdentityGuard(unittest.TestCase):
             self.assertIn("ALIAS_COLLISION", stdout.getvalue())
 
 
+    def _malformed_check(self, bank, category, intake_value, complete):
+        sentinel = "SYNTHETIC_SENTINEL_NO_ECHO_88431"
+        outcomes = []
+        for source in (None, intake_value):
+            with self.subTest(category=category, with_intake=source is not None, complete=complete):
+                problems = owner_bank.check(bank, intake=source, complete=complete)
+                rendered = "\n".join(problems)
+                self.assertIn(category, rendered)
+                self.assertIn("questions[0]", rendered)
+                self.assertNotIn(sentinel, rendered)
+                outcomes.append(problems)
+        return outcomes
+
+    def test_t12_unhashable_canonical_id_list_is_fail_closed(self):
+        bank = copy.deepcopy(self.bank)
+        bank["questions"][0]["id"] = ["SYNTHETIC_SENTINEL_NO_ECHO_88431"]
+        for complete in (False, True):
+            self._malformed_check(bank, "CANONICAL_ID_INVALID", self.source, complete)
+        # Combined mutant: a malformed canonical id must not mask invalid custody.
+        bank["questions"][0]["extensions"][self.custody] = ["SYNTHETIC_SENTINEL_NO_ECHO_88431"]
+        for complete in (False, True):
+            rendered = "\n".join(owner_bank.check(bank, intake=self.source, complete=complete))
+            self.assertIn("CANONICAL_ID_INVALID", rendered)
+            self.assertIn("CUSTODY_MAPPING_INVALID", rendered)
+            self.assertNotIn("SYNTHETIC_SENTINEL_NO_ECHO_88431", rendered)
+
+    def test_t13_nonempty_list_extensions_is_fail_closed(self):
+        bank = copy.deepcopy(self.bank)
+        bank["questions"][0]["extensions"] = ["SYNTHETIC_SENTINEL_NO_ECHO_88431"]
+        for complete in (False, True):
+            self._malformed_check(bank, "EXTENSIONS_INVALID", self.source, complete)
+
+    def test_t14_nonempty_list_custody_is_fail_closed_and_cli_nonzero(self):
+        bank = copy.deepcopy(self.bank)
+        bank["questions"][0]["extensions"][self.custody] = ["SYNTHETIC_SENTINEL_NO_ECHO_88431"]
+        for complete in (False, True):
+            self._malformed_check(bank, "CUSTODY_MAPPING_INVALID", self.source, complete)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "synthetic.bank.json"
+            path.write_text(json.dumps(bank), encoding="utf-8")
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                result = owner_bank.main(["check", str(path)])
+            self.assertEqual(result, 1)
+            self.assertIn("CUSTODY_MAPPING_INVALID", stdout.getvalue())
+            self.assertNotIn("SYNTHETIC_SENTINEL_NO_ECHO_88431", stdout.getvalue())
+
+
 if __name__ == "__main__":
     unittest.main()
