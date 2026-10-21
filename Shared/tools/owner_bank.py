@@ -13,6 +13,9 @@ An owner bank is a JSON file with `"schema_version": "grade9v3-owner-supplied-ba
     {"authority_class": "OWNER_SUPPLIED_RAW_INPUT", "intake_ref": "<the intake's id for the question>",
      "wording_custody": "VERBATIM", "text_sha256": "sha256:<digest of the stem as the Owner supplied it>"}
 
+The intake_ref names the exact intake.inputs.questions[] item id, never an archive or intake digest.
+Without --intake, check can establish only local bank invariants (such as unique references), not external source membership.
+
 "Verbatim" is checked, not asserted: `new` copies each question's text from the intake and records its digest,
 and `check` refuses a stem that no longer matches its digest, so tidying the Owner's words is caught. With
 `--intake` it also checks each stem against the intake text itself and that no intake question is missing.
@@ -29,6 +32,7 @@ author to fill; `check` names each one, with the same messages the renderer woul
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import hashlib
 import json
 import re
@@ -53,6 +57,7 @@ OFFICIAL_ONLY = ("exam", "year", "paper", "section", "question_number", "paper_u
                  "answer_key_url", "answer_authority", "source_status", "parent_ref")
 REQUIRED = ("id", "original_identifier", "stem", "answer", "primary_capability_ref", "extensions")
 BANK_ID = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
+INTAKE_QUESTION_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 HINTS = {"primary_capability_ref": " (the id of a capability in the package this bank is used with)",
          "answer": " (an object: summary, a typed reasoning_route, crux_move_ref)"}
 
@@ -78,6 +83,33 @@ def is_owner_bank(document: object) -> bool:
 
 def intake_questions(intake: dict) -> list[dict]:
     return list((intake.get("inputs") or {}).get("questions") or [])
+
+
+def _intake_occurrences(intake: dict, where: str) -> tuple[list[tuple[str, dict]], list[str]]:
+    """Validate every source occurrence before constructing a lookup; never echo stem text."""
+    inputs = intake.get("inputs") if isinstance(intake, dict) else None
+    rows = inputs.get("questions") if isinstance(inputs, dict) else None
+    if not isinstance(rows, list) or not rows:
+        return [], [f"{where}: the intake has no questions to compare with"]
+    seen: dict[str, int] = {}
+    valid: list[tuple[str, dict]] = []
+    problems: list[str] = []
+    for index, item in enumerate(rows):
+        label = f"{where}: intake.questions[{index}]"
+        if not isinstance(item, dict):
+            problems.append(f"{label}: INTAKE_ID_INVALID: question must be an object")
+            continue
+        ref = item.get("id")
+        if not isinstance(ref, str) or not ref.strip():
+            problems.append(f"{label}: INTAKE_ID_MISSING: question id is required")
+        elif not INTAKE_QUESTION_ID.fullmatch(ref):
+            problems.append(f"{label}: INTAKE_ID_INVALID: question id has invalid syntax")
+        elif ref in seen:
+            problems.append(f"{label}: INTAKE_ID_COLLISION: id {ref!r} duplicates intake.questions[{seen[ref]}]")
+        else:
+            seen[ref] = index
+            valid.append((ref, item))
+    return valid, problems
 
 
 def _page_problems(question: dict, label: str, complete: bool = True, seen: set | None = None) -> list[str]:
@@ -151,6 +183,7 @@ def check(document: dict, where: str = "bank", intake: dict | None = None, compl
     if not isinstance(questions, list) or not questions:
         return problems + [f"{where}: questions must be a non-empty list"]
     seen: set[str] = set()
+    seen_refs: dict[str, int] = {}
     explained: set[str] = set()          # a component's authoring instruction is given once, at its first shortfall
     for index, question in enumerate(questions):
         label = f"{where}: questions[{index}]" + (f" {question.get('id')}" if isinstance(question, dict) else "")
@@ -168,8 +201,17 @@ def check(document: dict, where: str = "bank", intake: dict | None = None, compl
         custody = (question.get("extensions") or {}).get(CUSTODY_KEY) or {}
         if custody.get("authority_class") != CUSTODY_CLASS:
             problems.append(f"{label}: {CUSTODY_KEY}.authority_class must be {CUSTODY_CLASS}")
-        if not str(custody.get("intake_ref") or "").strip():
-            problems.append(f"{label}: {CUSTODY_KEY}.intake_ref is required (the intake digest or input id)")
+        ref = custody.get("intake_ref")
+        if not isinstance(ref, str) or not ref.strip():
+            problems.append(f"{label}: {CUSTODY_KEY}.intake_ref is required (the exact intake.questions item id)")
+        else:
+            if not INTAKE_QUESTION_ID.fullmatch(ref):
+                problems.append(f"{label}: INTAKE_REF_INVALID: {CUSTODY_KEY}.intake_ref has invalid syntax")
+            if ref in seen_refs:
+                problems.append(f"{label}: ALIAS_COLLISION: {CUSTODY_KEY}.intake_ref {ref!r} "
+                                f"also belongs to questions[{seen_refs[ref]}]")
+            else:
+                seen_refs[ref] = index
         if custody.get("wording_custody") != "VERBATIM":
             problems.append(f"{label}: {CUSTODY_KEY}.wording_custody must be VERBATIM")
         stem = question.get("stem")
@@ -194,28 +236,32 @@ def check(document: dict, where: str = "bank", intake: dict | None = None, compl
 
 
 def _against_intake(document: dict, questions: list, intake: dict, where: str) -> list[str]:
-    supplied = {q.get("id"): q for q in intake_questions(intake)}
-    if not supplied:
-        return [f"{where}: the intake has no questions to compare with"]
-    problems: list[str] = []
+    occurrences, problems = _intake_occurrences(intake, where)
+    if problems:
+        return problems  # ambiguous source IDs cannot establish a one-to-one mapping
+    supplied = dict(occurrences)  # uniqueness has been proved, so indexing is safe
     if document.get("intake_digest") and document["intake_digest"] != intake.get("intake_digest"):
         problems.append(f"{where}: the bank was made from a different intake (intake_digest differs)")
-    used: set[str] = set()
+    if len(questions) != len(occurrences):
+        problems.append(f"{where}: CARDINALITY_MISMATCH: bank has {len(questions)} question(s), "
+                        f"intake has {len(occurrences)}")
+    used: Counter[str] = Counter()
     for index, question in enumerate(questions):
         if not isinstance(question, dict):
             continue
         ref = ((question.get("extensions") or {}).get(CUSTODY_KEY) or {}).get("intake_ref")
         label = f"{where}: questions[{index}] {question.get('id')}"
-        if ref not in supplied:
+        if not isinstance(ref, str) or ref not in supplied:
             problems.append(f"{label}: {CUSTODY_KEY}.intake_ref {ref!r} is not a question id in the intake")
             continue
-        used.add(ref)
+        used[ref] += 1
+        if used[ref] > 1:
+            problems.append(f"{label}: INTAKE_REF_REUSED: source id {ref!r} was already consumed")
         if question.get("stem") != supplied[ref].get("text"):
             problems.append(f"{label}: the stem is not the intake's text for {ref}; the Owner's wording is kept exactly")
-    for ref, question in supplied.items():
-        if ref not in used:
-            shown = str(question.get("text") or "")[:50]
-            problems.append(f"{where}: intake question {ref} ({shown!r}) is not in the bank")
+    for ref in supplied:
+        if not used[ref]:
+            problems.append(f"{where}: intake question {ref} is not in the bank")
     return problems
 
 
@@ -224,13 +270,15 @@ def new(intake: dict, bank_id: str) -> dict:
     and the answer and capability left empty for the author."""
     if not BANK_ID.fullmatch(bank_id or ""):
         raise ValueError(f"bank id {bank_id!r} must match {BANK_ID.pattern}")
+    if not isinstance(intake, dict):
+        raise ValueError("the intake must be an object")
     if intake.get("status") == "INVALID_REQUEST" or intake.get("errors"):
-        raise ValueError(f"the intake has errors: {intake.get('errors')}")
-    supplied = intake_questions(intake)
-    if not supplied:
-        raise ValueError("the intake has no questions")
+        raise ValueError("the intake has errors; resolve its validation findings first")
+    occurrences, identity_errors = _intake_occurrences(intake, "owner_bank.new")
+    if identity_errors:
+        raise ValueError("; ".join(identity_errors))
     questions = []
-    for number, item in enumerate(supplied, 1):
+    for number, (ref, item) in enumerate(occurrences, 1):
         text = item.get("text")
         if not isinstance(text, str) or not text.strip():
             raise ValueError(f"intake question {item.get('id')} has no text; there is nothing to keep verbatim")
@@ -245,7 +293,7 @@ def new(intake: dict, bank_id: str) -> dict:
             "extensions": {
                 CUSTODY_KEY: {
                     "authority_class": CUSTODY_CLASS,
-                    "intake_ref": item["id"],
+                    "intake_ref": ref,
                     "wording_custody": "VERBATIM",
                     "text_sha256": text_digest(text),
                 },
