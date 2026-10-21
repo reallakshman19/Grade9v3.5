@@ -212,8 +212,6 @@ def check(document: dict, where: str = "bank", intake: dict | None = None, compl
         if not isinstance(custody, dict):
             problems.append(f"{label}: CUSTODY_MAPPING_INVALID: {CUSTODY_KEY} must be an object")
             continue
-        if not valid_id:
-            continue  # malformed canonical ID cannot be safely projected into metadata or blueprints
         if custody.get("authority_class") != CUSTODY_CLASS:
             problems.append(f"{label}: {CUSTODY_KEY}.authority_class must be {CUSTODY_CLASS}")
         ref = custody.get("intake_ref")
@@ -238,6 +236,8 @@ def check(document: dict, where: str = "bank", intake: dict | None = None, compl
         elif isinstance(stem, str) and text_digest(stem) != custody["text_sha256"]:
             problems.append(f"{label}: the stem is not the text the Owner supplied (its digest differs from "
                             f"{CUSTODY_KEY}.text_sha256); owner questions are kept verbatim, so restore the stem")
+        if not valid_id:
+            continue  # keep safe custody checks; skip only projections requiring a usable canonical ID
         problems += _page_problems(question, label, complete, explained)
         # The same projection the renderer makes: provenance, difficulty and question type. Say it here, not as a gap later.
         problems += [f"{label}: {problem}" for problem in learner_metadata.bank_question_problems(question)]
