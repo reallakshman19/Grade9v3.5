@@ -98,6 +98,9 @@ python3 Shared/tools/raw_intake.py --input workspace/request.json --out workspac
 python3 Shared/tools/owner_bank.py new --intake workspace/intake.json --bank-id SLUG --out TEST/question-bank/SLUG.json
 #    fill every empty field the scaffold lists in each question (docs/specs/PAGE-BLUEPRINT-COMPONENTS.md says what each is for); never edit a stem
 python3 Shared/tools/owner_bank.py check TEST/question-bank/SLUG.json --intake workspace/intake.json
+# intake_ref is the exact intake.inputs.questions[] item id, never the intake/archive digest.
+# 'check' without --intake (as used by the renderer) proves local reference uniqueness and
+# wording-to-recorded-digest only, not that an external intake item actually exists.
 
 # 2  a package (capabilities first; concepts for Core1A later), then the manifest
 python3 Shared/tools/product_manifest.py derive --package TEST/library/SLUG.v1.json --bank TEST/question-bank/SLUG.json \
