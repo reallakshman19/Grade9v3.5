@@ -186,19 +186,34 @@ def check(document: dict, where: str = "bank", intake: dict | None = None, compl
     seen_refs: dict[str, int] = {}
     explained: set[str] = set()          # a component's authoring instruction is given once, at its first shortfall
     for index, question in enumerate(questions):
-        label = f"{where}: questions[{index}]" + (f" {question.get('id')}" if isinstance(question, dict) else "")
+        # Do not format malformed IDs: a list may contain untrusted source wording.
+        raw_id = question.get("id") if isinstance(question, dict) else None
+        valid_id = isinstance(raw_id, str) and bool(raw_id.strip())
+        label = f"{where}: questions[{index}]" + (f" {raw_id}" if valid_id else "")
         if not isinstance(question, dict):
             problems.append(f"{label}: must be an object")
             continue
         for key in REQUIRED:
             if not question.get(key):
                 problems.append(f"{label}: {key} is required{HINTS.get(key, '')}")
-        if question.get("id") in seen:
+        if not valid_id:
+            problems.append(f"{label}: CANONICAL_ID_INVALID: id must be a nonblank string")
+        elif raw_id in seen:
             problems.append(f"{label}: duplicate id")
-        seen.add(question.get("id"))
+        else:
+            seen.add(raw_id)
         if isinstance(question.get("answer"), dict) and not str(question["answer"].get("summary") or "").strip():
             problems.append(f"{label}: answer.summary is required")
-        custody = (question.get("extensions") or {}).get(CUSTODY_KEY) or {}
+        extensions = question.get("extensions") or {}
+        if not isinstance(extensions, dict):
+            problems.append(f"{label}: EXTENSIONS_INVALID: extensions must be an object")
+            continue
+        custody = extensions.get(CUSTODY_KEY) or {}
+        if not isinstance(custody, dict):
+            problems.append(f"{label}: CUSTODY_MAPPING_INVALID: {CUSTODY_KEY} must be an object")
+            continue
+        if not valid_id:
+            continue  # malformed canonical ID cannot be safely projected into metadata or blueprints
         if custody.get("authority_class") != CUSTODY_CLASS:
             problems.append(f"{label}: {CUSTODY_KEY}.authority_class must be {CUSTODY_CLASS}")
         ref = custody.get("intake_ref")
@@ -249,9 +264,18 @@ def _against_intake(document: dict, questions: list, intake: dict, where: str) -
     for index, question in enumerate(questions):
         if not isinstance(question, dict):
             continue
-        ref = ((question.get("extensions") or {}).get(CUSTODY_KEY) or {}).get("intake_ref")
-        label = f"{where}: questions[{index}] {question.get('id')}"
-        if not isinstance(ref, str) or ref not in supplied:
+        extensions = question.get("extensions") or {}
+        if not isinstance(extensions, dict):
+            continue  # outer check already records EXTENSIONS_INVALID
+        custody = extensions.get(CUSTODY_KEY) or {}
+        if not isinstance(custody, dict):
+            continue  # outer check already records CUSTODY_MAPPING_INVALID
+        ref = custody.get("intake_ref")
+        if not isinstance(ref, str) or not INTAKE_QUESTION_ID.fullmatch(ref):
+            continue  # outer check already records missing/invalid source-reference syntax
+        raw_id = question.get("id")
+        label = f"{where}: questions[{index}]" + (f" {raw_id}" if isinstance(raw_id, str) else "")
+        if ref not in supplied:
             problems.append(f"{label}: {CUSTODY_KEY}.intake_ref {ref!r} is not a question id in the intake")
             continue
         used[ref] += 1
