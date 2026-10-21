@@ -60,7 +60,8 @@ def owner_questions(package: dict, count: int = 2) -> list[dict]:
     caps = {c["id"] for c in package["capabilities"]}
     rows = copy.deepcopy([q for q in bank["questions"] if q.get("primary_capability_ref") in caps][:count])
     for index, row in enumerate(rows, 1):
-        row["extensions"]["grade9v3:source_custody"] = dict(OWNER_CUSTODY, text_sha256=owner_bank.text_digest(row["stem"]))
+        row["extensions"]["grade9v3:source_custody"] = dict(OWNER_CUSTODY, intake_ref=f"fixture-{index:02d}",
+                                                            text_sha256=owner_bank.text_digest(row["stem"]))
         # An owner question names no exam: no exam badge and no exam provenance class, whatever the borrowed record carried.
         row["extensions"].pop("grade9v3:provenance_class", None)
         row["extensions"]["grade9v3:analysis"].pop("exam_source_badge", None)
