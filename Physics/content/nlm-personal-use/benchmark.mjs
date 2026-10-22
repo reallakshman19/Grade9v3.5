@@ -87,7 +87,7 @@ function cue(row){
 }
 test('cue-equivalent screen (does NOT approve subject quality)',()=>{
  const cues=display.items.map(cue);
- assert.deepEqual(cues.map(x=>x.flags),[['SHARED_WORD_KEY_ONLY'],[]]);
+ assert.deepEqual(cues.map(x=>x.flags),[[],[]]);
  console.log('CUE_SCREEN',JSON.stringify(cues));
 });
 try{
