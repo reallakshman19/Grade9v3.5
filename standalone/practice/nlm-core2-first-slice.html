@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Newton's laws | Two questions and one guided return</title>
+<style>
+:root{color-scheme:dark;--bg:#080d1a;--surface:#0f172a;--card:#152238;--line:#344a69;--text:#f8fafc;--muted:#c5d3e5;--accent:#38bdf8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}main,header,footer{max-width:870px;margin:auto;padding:22px}header{padding-bottom:0}
+h1{font-size:clamp(1.65rem,4vw,2.3rem);line-height:1.18;margin:.5rem 0}h2{font-size:1.4rem}h3{font-size:1.12rem}p{margin:.65rem 0 1rem}.eyebrow{color:var(--accent);font-weight:750;letter-spacing:.03em}.muted{color:var(--muted)}.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin:16px 0}.notice{border-left:4px solid var(--accent);padding:9px 14px;background:var(--card)}
+fieldset{border:0;padding:0;margin:17px 0}legend,label{font-weight:650}label.option{min-height:52px;display:flex;align-items:center;gap:12px;margin:9px 0;padding:9px 13px;background:var(--card);border:1px solid var(--line);border-radius:10px;cursor:pointer}
+input[type=radio]{width:22px;height:22px;flex:none;accent-color:var(--accent)}textarea,select{width:100%;display:block;margin:7px 0 18px;padding:12px;min-height:52px;border:1px solid #6b859f;background:#080d1a;color:white;border-radius:9px;font:inherit}textarea{min-height:110px}
+button{min-height:48px;border-radius:10px;border:1px solid #6287a8;background:#234a6c;color:white;font:650 1rem system-ui;padding:10px 16px;cursor:pointer;margin:5px 7px 5px 0}button.primary{background:#036b9e;border-color:#6fd9ff}button:disabled{opacity:.42;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #facc15;outline-offset:3px}
+.inset{padding:12px 15px;background:var(--card);border-left:4px solid #9bdbf9;margin:13px 0}.danger{border-left-color:#f59e0b}.compact{font-size:.9rem}.divider{height:1px;background:var(--line);margin:25px 0}ol{padding-left:1.5rem}li{margin:7px 0}.meta{font-size:.88rem;color:var(--muted)}#download{background:#284457}footer{font-size:.92rem;color:var(--muted);padding-top:0}
+@media(max-width:550px){main,header,footer{padding:16px}.card{padding:15px}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">Grade 9 Physics · Newton's laws</div>
+<h1>Two first attempts. One guided return.</h1>
+<p class="muted">Personal-use study pilot · independently authored bank questions, <strong>not original exam papers</strong>. No mastery score is inferred from your choices.</p>
+</header>
+<main>
+<div class="notice" id="progress" aria-live="polite">Loading…</div>
+<div id="workspace"></div>
+<div class="divider"></div>
+<button id="download" type="button">Download my session answers (.json)</button>
+<button id="reset" type="button">Reset this session</button>
+<p class="meta">Your answers stay in this browser tab's memory until you download them. Refreshing or resetting clears them. Do not use the displayed questions to claim an unseen transfer test.</p>
+</main>
+<footer>Source identities: PHYS-NLM-001 and PHYS-NLM-002 (2 of 39). Display options are explicitly adapted; original authored-bank rows remain preserved separately. The supported 001 return repeats an already-seen question.</footer>
+<script type="application/json" id="nlm-payload">{"items":[{"source_id":"PHYS-NLM-001","variant_id":"PHYS-NLM-001-PU1","origin":"ADAPTED_AUTHORED_PRACTICE","stem":"A service lift is descending but its downward speed is decreasing. Taking upward as positive, what direction must its net force point?","figure":{"has_figure":false,"svg":"","caption":""},"system_parameters":{},"options":{"A":"Upward net force.","B":"Downward net force.","C":"Zero net force.","D":"Net-force direction is indeterminate."},"key":"A","changes":["A-D option texts shortened; key remains A; original option reasons withheld from first attempt; original text retained in source-rows.v1.json"],"scaffolds":[{"tier":1,"role":"CLARIFY","author":"NLM-PROD1","text":"Name the direction of travel, what happens to speed, and which force quantity is being asked for. Does travel direction alone decide net-force direction?"},{"tier":2,"role":"CORRELATE","author":"NLM-PROD1","text":"Treat a downward velocity as a negative number. Compare an earlier and later velocity when the downward speed is shrinking. Which value is closer to zero, and what does their change per second mean?"},{"tier":3,"role":"OPEN_THE_WAY","author":"NLM-PROD1","text":"Use the vertical form of Newton's second law, ΣFᵧ = maᵧ. The mass is positive. First infer the acceleration sign from the change in signed velocity, then decide the force direction yourself."}],"teacher":{"option":"A","reasoning":["The lift moves downward, but its downward speed decreases. Velocity is therefore becoming less negative on an upward-positive axis.","A later velocity minus an earlier velocity is positive, so the acceleration points upward.","By Newton's second law, ΣFᵧ = maᵧ. Because mass is positive, net force is upward."],"check":"If the downward speed were constant instead, acceleration and net force would both be zero. Moving down alone does not determine force direction."},"feedback":{"A":"This is the intended net-force direction. Compare your written justification with the signed-velocity reasoning below.","B":"This identifies the direction of travel, not necessarily the direction of acceleration. Compare two velocity values.","C":"A steady slowing is still a change in velocity. Zero net force would mean constant velocity.","D":"Mass affects magnitude, but a positive mass does not obscure the direction when acceleration direction is known."}},{"source_id":"PHYS-NLM-002","variant_id":"PHYS-NLM-002-PU1","origin":"ADAPTED_AUTHORED_PRACTICE","stem":"Two small robots pull against the ends of the same taut strap. Robot A pulls the strap left with 40 N. Which two forces make a Newton-third-law pair at A's connection to the strap?","figure":{"has_figure":false,"svg":"","caption":""},"system_parameters":{},"options":{"A":"A pulls the strap; gravity pulls A.","B":"A pulls the strap; B pulls the strap.","C":"A pulls the strap; the strap pulls A.","D":"The strap pulls A; the floor pushes A."},"key":"C","changes":["Source A (correct) moved to C and rewritten in parallel verb form; source C moved to A; B and D rewritten in parallel verb form; resulting key C; magnitude and direction conditions kept in stem; source remains unchanged"],"scaffolds":[],"teacher":{"option":"C","reasoning":["At the A–strap contact, A exerts a force on the strap and the strap exerts a force on A.","The paired forces act on different objects, have the same magnitude (40 N), and point in opposite directions.","Two forces on the strap, or two forces on A, are not each other's Newton-third-law interaction pair."]},"feedback":{"A":"These are different interactions, not two directions of one A–strap contact.","B":"Both of these forces are exerted on the strap. They do not make an action–reaction pair with each other.","C":"These are forces at the same contact, with different objects receiving each force.","D":"Both forces act on A and come from different interactions."}}],"source_hints_001":[{"tier":1,"guidance_role":"decisive_physics","title":"H1 · decisive physics","prompt_question":"What changes physically, and which body or system owns that change?","reveal_text":"Deceleration while descending is upward acceleration, not upward velocity."},{"tier":2,"guidance_role":"representation","title":"H2 · representation","prompt_question":"Which signed diagram, axis, system boundary or state comparison should come before equations?","reveal_text":"Use a vertical signed axis and mark velocity down, acceleration up."},{"tier":3,"guidance_role":"first_equation_only","title":"H3 · opening constraint","prompt_question":"What is the first law or constraint to write, without computing the answer?","reveal_text":"The first constraint is ΣF_y = m a_y, with upward chosen positive."}],"source_provenance":[{"id":"PHYS-NLM-001","source":"Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)","author":"NLM-FIX1 demand calibration","source_qrt":"PHYS-APPLY-D1"},{"id":"PHYS-NLM-002","source":"Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)","author":"NLM-FIX1 demand calibration","source_qrt":"PHYS-EXPLAIN-D1"}],"source_count":39}</script>
+<script>
+"use strict";
+const data=JSON.parse(document.getElementById("nlm-payload").textContent);
+const fresh=()=>({stage:0,baseline:[],supported:[],hintLevel:0,hintEvents:[],answerRevealed:false,revealedAt:null,feedbackSeen:false});
+let state=fresh();
+const workspace=document.getElementById("workspace");
+const progress=document.getElementById("progress");
+const node=(tag,text,cls)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(cls)el.className=cls;return el};
+const add=(parent,...children)=>children.forEach(c=>parent.append(c));
+function questionCard(q,subtitle){
+ const card=node("section",undefined,"card"),head=node("h2",q.source_id+" · "+subtitle),id=node("p",q.variant_id+" · adapted from independently authored bank item "+q.source_id,"meta");
+ add(card,head,id,node("p",q.stem));
+ if(q.figure.has_figure){const figure=node("figure");if(q.figure.svg){const img=node("div");img.textContent="Figure SVG held in the original bank; review original figure before use.";figure.append(img)}add(figure,node("figcaption",q.figure.caption||"No supplied caption"));card.append(figure)}
+ return card;
+}
+function attemptForm(q,submitLabel,callback){
+ const form=node("form");form.setAttribute("aria-label",q.source_id+" answer entry");
+ const field=node("fieldset");field.append(node("legend","Choose one answer"));
+ Object.entries(q.options).forEach(([letter,wording])=>{
+  const label=node("label",undefined,"option");const input=node("input");input.type="radio";input.name="choice";input.value=letter;input.required=true;add(label,input,node("span",letter+". "+wording));field.append(label);
+ });form.append(field);
+ const why=node("label","My reasoning (one or two sentences)");why.htmlFor="why";
+ const explain=node("textarea");explain.id="why";explain.name="explanation";explain.required=true;explain.maxLength=1200;explain.placeholder="Explain why you chose it; this is not automatically graded.";
+ const sure=node("label","How certain are you?");sure.htmlFor="confidence";
+ const confidence=node("select");confidence.id="confidence";confidence.name="confidence";confidence.required=true;
+ [["","Select"],["unsure","Unsure"],["somewhat","Somewhat certain"],["sure","Certain"]].forEach(([v,t])=>{const opt=node("option",t);opt.value=v;confidence.append(opt)});
+ const submit=node("button",submitLabel,"primary");submit.type="submit";
+ add(form,why,explain,sure,confidence,submit);
+ form.addEventListener("submit",e=>{e.preventDefault();const f=new FormData(form);const choice=f.get("choice"),reason=String(f.get("explanation")||"").trim(),certainty=f.get("confidence");
+ if(!choice||!reason||!certainty){form.reportValidity();return}callback({source_id:q.source_id,variant_id:q.variant_id,choice,explanation:reason,confidence:certainty,time:new Date().toISOString()})});
+ return form;
+}
+function baselineStage(){
+ const q=data.items[state.stage],card=questionCard(q,"Unaided diagnostic "+(state.stage+1)+" of 2");
+ add(card,node("p","Work independently first. No hints, feedback, answer or source answer text is shown during the two baseline attempts.","notice"));
+ card.append(attemptForm(q,"Save unaided answer and continue",record=>{
+ state.baseline.push({...record,assisted:false,support_events:[],correctness_hidden_until_baselines_complete:true});
+ state.stage++;render();
+ }));workspace.append(card);
+}
+function showHint(){
+ if(state.hintLevel>=3||state.answerRevealed)return;
+ state.hintLevel++;state.hintEvents.push({kind:"authored_scaffold",tier:state.hintLevel,time:new Date().toISOString()});render();
+}
+function showTeacher(){
+ if(state.answerRevealed)return;
+ state.answerRevealed=true;state.revealedAt=new Date().toISOString();
+ state.hintEvents.push({kind:"deliberate_full_teacher_reveal",time:state.revealedAt});
+ render();
+}
+function renderedSupport(){
+ const q=data.items[0],card=questionCard(q,"Supported return · already seen, NOT an unseen retry");
+ add(card,node("p","The two original diagnostic records are saved separately. This repeat is practice, not proof of transfer.","notice"));
+ const count=node("p","Supported attempts recorded: "+state.supported.length+". Assistance or prior feedback makes later attempts assisted.","meta");card.append(count);
+ card.append(attemptForm(q,"Save supported attempt",record=>{
+ const assisted=state.hintLevel>0||state.answerRevealed||state.feedbackSeen;
+ state.supported.push({...record,assisted,hints_seen_at_attempt:state.hintLevel,answer_seen_at_attempt:state.answerRevealed,prior_feedback_seen:state.feedbackSeen});
+ state.feedbackSeen=true;render();
+ }));
+ const help=node("section",undefined,"inset");
+ add(help,node("h3","Graduated help (newly authored, not the original bank hints)"),node("p","Opening help before a supported attempt will mark that attempt as assisted.","compact"));
+ q.scaffolds.slice(0,state.hintLevel).forEach(s=>help.append(node("p","H"+s.tier+" · "+s.role+": "+s.text)));
+ const hintBtn=node("button",state.hintLevel>=3?"All three hints opened":"Open next hint H"+(state.hintLevel+1));
+ hintBtn.type="button";hintBtn.id="hint";hintBtn.disabled=state.hintLevel>=3||state.answerRevealed;hintBtn.addEventListener("click",showHint);help.append(hintBtn);
+ const revealBtn=node("button",state.answerRevealed?"Teacher answer revealed":"Deliberately reveal full teacher answer");
+ revealBtn.type="button";revealBtn.id="reveal";revealBtn.disabled=state.answerRevealed;revealBtn.addEventListener("click",showTeacher);
+ add(help,revealBtn);card.append(help);
+ if(state.supported.length){
+ const latest=state.supported[state.supported.length-1],panel=node("section",undefined,"inset");
+ add(panel,node("h3","Feedback on the selected option (not automatic diagnosis)"),node("p",q.feedback[latest.choice]),node("p","Recorded as "+(latest.assisted?"ASSISTED":"without opened help before this supported attempt")+". Your written reasoning was saved, not automatically interpreted."));
+ card.append(panel);
+ }
+ if(state.answerRevealed){
+ const answer=node("section",undefined,"inset danger");
+ add(answer,node("h3","Full teacher answer · deliberately revealed"),node("p","Correct adapted option: "+q.teacher.option));
+ const ol=node("ol");q.teacher.reasoning.forEach(x=>ol.append(node("li",x)));add(answer,ol,node("p","Independent check: "+q.teacher.check));
+ answer.append(node("h3","Original authored bank hints (separate from our scaffolds)"));
+ data.source_hints_001.forEach(h=>answer.append(node("p","Source H"+h.tier+": "+h.prompt_question+" · Source reveal text: "+h.reveal_text)));
+ card.append(answer);
+ }
+ workspace.append(card);
+ const summary=node("section",undefined,"card");
+ add(summary,node("h3","Session states, not grades"),node("p","Unaided diagnostics saved: "+state.baseline.length+"/2. Supported attempts: "+state.supported.length+". Authored hints opened: "+state.hintLevel+"/3. Teacher revealed: "+(state.answerRevealed?"yes":"no")+"."),
+ node("p","For an independent record, download the session JSON. A learner's answer alone does not prove mastery or explain a misconception.","muted"));workspace.append(summary);
+}
+function render(){
+ workspace.replaceChildren();
+ if(state.stage<2){progress.textContent="Phase "+(state.stage+1)+"/3 · Diagnostic "+(state.stage+1)+" of 2 · answer and reasoning hidden until both saved";baselineStage()}
+ else{progress.textContent="Phase 3/3 · Supported PHYS-NLM-001 · practice after first exposure";renderedSupport()}
+}
+document.getElementById("reset").addEventListener("click",()=>{if(window.confirm("Clear both baseline records, supported attempts and opened help from this tab?")){state=fresh();render()}});
+document.getElementById("download").addEventListener("click",()=>{const record={schema:"nlm-personal-use-session/v1",provenance:"AUTHORED_PRACTICE",source_count:data.source_count,baseline:state.baseline,supported:state.supported,help_events:state.hintEvents,answer_revealed:state.answerRevealed,revealed_at:state.revealedAt,generated_at:new Date().toISOString(),evaluation:"OBSERVATIONS_ONLY_NOT_MASTERY"};const blob=new Blob([JSON.stringify(record,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="nlm-personal-session.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+render();
+</script>
+</body>
+</html>
