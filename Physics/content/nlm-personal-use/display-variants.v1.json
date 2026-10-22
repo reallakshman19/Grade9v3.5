@@ -1,0 +1,125 @@
+{
+  "schema": "nlm-display-variants/v1",
+  "variant_policy": "Precisely one labeled adaptation per selected authored bank row; no changes to stored source rows. Two source IDs, not four new source questions.",
+  "exposure": [
+    "PHYS-NLM-001",
+    "PHYS-NLM-002",
+    "PHYS-NLM-001 supported repeat, already exposed"
+  ],
+  "items": [
+    {
+      "source_id": "PHYS-NLM-001",
+      "variant_id": "PHYS-NLM-001-PU1",
+      "origin": "ADAPTED_AUTHORED_PRACTICE",
+      "stem": "A service lift is descending but its downward speed is decreasing. Taking upward as positive, what direction must its net force point?",
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "system_parameters": {},
+      "options": {
+        "A": "Upward net force.",
+        "B": "Downward net force.",
+        "C": "Zero net force.",
+        "D": "Net-force direction is indeterminate."
+      },
+      "key": "A",
+      "changes": [
+        "A-D option texts shortened; key remains A; original option reasons withheld from first attempt; original text retained in source-rows.v1.json"
+      ],
+      "scaffolds": [
+        {
+          "tier": 1,
+          "role": "CLARIFY",
+          "author": "NLM-PROD1",
+          "text": "Name the direction of travel, what happens to speed, and which force quantity is being asked for. Does travel direction alone decide net-force direction?"
+        },
+        {
+          "tier": 2,
+          "role": "CORRELATE",
+          "author": "NLM-PROD1",
+          "text": "Treat a downward velocity as a negative number. Compare an earlier and later velocity when the downward speed is shrinking. Which value is closer to zero, and what does their change per second mean?"
+        },
+        {
+          "tier": 3,
+          "role": "OPEN_THE_WAY",
+          "author": "NLM-PROD1",
+          "text": "Use the vertical form of Newton's second law, ΣFᵧ = maᵧ. The mass is positive. First infer the acceleration sign from the change in signed velocity, then decide the force direction yourself."
+        }
+      ],
+      "teacher": {
+        "option": "A",
+        "reasoning": [
+          "The lift moves downward, but its downward speed decreases. Velocity is therefore becoming less negative on an upward-positive axis.",
+          "A later velocity minus an earlier velocity is positive, so the acceleration points upward.",
+          "By Newton's second law, ΣFᵧ = maᵧ. Because mass is positive, net force is upward."
+        ],
+        "check": "If the downward speed were constant instead, acceleration and net force would both be zero. Moving down alone does not determine force direction."
+      },
+      "feedback": {
+        "A": "This is the intended net-force direction. Compare your written justification with the signed-velocity reasoning below.",
+        "B": "This identifies the direction of travel, not necessarily the direction of acceleration. Compare two velocity values.",
+        "C": "A steady slowing is still a change in velocity. Zero net force would mean constant velocity.",
+        "D": "Mass affects magnitude, but a positive mass does not obscure the direction when acceleration direction is known."
+      }
+    },
+    {
+      "source_id": "PHYS-NLM-002",
+      "variant_id": "PHYS-NLM-002-PU1",
+      "origin": "ADAPTED_AUTHORED_PRACTICE",
+      "stem": "Two small robots pull against the ends of the same taut strap. Robot A pulls the strap left with 40 N. Which two forces make a Newton-third-law pair at A's connection to the strap?",
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "system_parameters": {},
+      "options": {
+        "A": "A pulls the strap; gravity pulls A.",
+        "B": "A pulls the strap; B pulls the strap.",
+        "C": "A pulls the strap; the strap pulls A.",
+        "D": "The strap pulls A; the floor pushes A."
+      },
+      "key": "C",
+      "changes": [
+        "Source A (correct) moved to C and rewritten in parallel verb form; source C moved to A; B and D rewritten in parallel verb form; resulting key C; magnitude and direction conditions kept in stem; source remains unchanged"
+      ],
+      "scaffolds": [],
+      "teacher": {
+        "option": "C",
+        "reasoning": [
+          "At the A–strap contact, A exerts a force on the strap and the strap exerts a force on A.",
+          "The paired forces act on different objects, have the same magnitude (40 N), and point in opposite directions.",
+          "Two forces on the strap, or two forces on A, are not each other's Newton-third-law interaction pair."
+        ]
+      },
+      "feedback": {
+        "A": "These are different interactions, not two directions of one A–strap contact.",
+        "B": "Both of these forces are exerted on the strap. They do not make an action–reaction pair with each other.",
+        "C": "These are forces at the same contact, with different objects receiving each force.",
+        "D": "Both forces act on A and come from different interactions."
+      }
+    }
+  ],
+  "interpretations": {
+    "PHYS-NLM-001": {
+      "source_cell": "PHYS-APPLY-D1",
+      "proposed_cell": "PHYS-APPLY-D1",
+      "demand": "APPLY",
+      "secondary": "REPRESENT",
+      "difficulty": "D1",
+      "reason": "One signed-motion inference followed by Newton II; a single decisive mapping to the force sign remains.",
+      "review": "PRODUCER_ONLY"
+    },
+    "PHYS-NLM-002": {
+      "source_cell": "PHYS-EXPLAIN-D1",
+      "proposed_cell": "PHYS-RETRIEVE-D1",
+      "demand": "RETRIEVE (classification)",
+      "secondary": "EXPLAIN when learner independently supplies a why",
+      "difficulty": "D1",
+      "reason": "The option choice classifies an interaction pair using the two participating bodies; it does not require a causal explanation of why a relation holds. Written justification is captured but not machine graded.",
+      "review": "DISPUTED_ORACLE_RECONCILIATION_REQUIRED"
+    }
+  }
+}
