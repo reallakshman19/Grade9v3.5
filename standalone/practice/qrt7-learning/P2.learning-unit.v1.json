@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "unit_id": "CONTACT-SYNTHESIZE-D1-LEARN-01",
+  "version": 1,
+  "author": "ORACLE · G9V35-O5",
+  "status": "DRAFT_OWNER_TRIAL_ONLY",
+  "topic_id": "newtons-laws.contact-blocks",
+  "target_type": "SYNTHESIZE",
+  "level": "D1",
+  "target": "Choose and connect a route from the combined system to an individual block; distinguish its net force from its contact force.",
+  "prerequisites": [
+    "Force source and receiver",
+    "Net horizontal force = mass × acceleration",
+    "Third-law reciprocal pair"
+  ],
+  "entry_message": "A contact force and a block's net force can have different values. We will connect the parts and check which force belongs where.",
+  "diagnostic_interpretation_note": "A selected distractor is a hypothesis, not proof of the route used. Do not diagnose the kid from the Owner's synthetic trial.",
+  "worked_case": {
+    "diagram": "20 N -> [A: 2 kg][B: 3 kg], frictionless horizontal table; blocks remain in contact.",
+    "question": "What contact force does B exert on A?",
+    "stages": [
+      {
+        "id": "whole",
+        "see": "Circle A+B. The 20 N push comes from outside. The contact pair is internal to this combined system.",
+        "do": "Choose the system you would start with and say what force remains external.",
+        "feedback": "For A+B the internal contact pair cancels in the combined sum, while the external 20 N push remains.",
+        "equation": "a = 20 / (2 + 3) = 4 m/s² right"
+      },
+      {
+        "id": "part",
+        "see": "Now isolate B. Its only horizontal force is A's contact force on B.",
+        "do": "Use the common acceleration to find that contact force.",
+        "feedback": "For B: C = 3 × 4 = 12 N right. B's reciprocal force on A is 12 N left.",
+        "equation": "C = m_B a = 3 × 4 = 12 N"
+      },
+      {
+        "id": "distinguish",
+        "see": "Return to A: a 20 N push right and a 12 N contact force left.",
+        "do": "Choose what 8 N describes: A's net force / A on B contact force / B on A contact force / the whole system's net force.",
+        "correct_choice": "A's net force",
+        "feedback": "A's net force is 20 - 12 = 8 N right = 2 × 4. The contact force is 12 N; the net force is the sum of the forces received by A.",
+        "equation": "F_net,A = 20 - 12 = 8 N right"
+      },
+      {
+        "id": "explain",
+        "see": "Hide the worked equations when you are ready.",
+        "do": "Explain or reconstruct how you would get the contact force, and why it differs from A's net force. A sentence, sketch description or calculation is welcome. You can also choose 'I cannot explain it yet.'",
+        "feedback": "Compare with: use A+B to get their common acceleration, then isolate B to get its contact force, then reverse direction for the reciprocal force on A. An equivalent consistent route is valid.",
+        "evidence_rule": "Save the attempt before comparison. Mark it as guided learning, never independent re-check evidence. No arbitrary text-length gate and no automatic semantic grading."
+      }
+    ]
+  },
+  "recheck": {
+    "id": "CONTACT-D1-SYNTHESIZE-02",
+    "version": 1,
+    "type": "SYNTHESIZE",
+    "level": "D1",
+    "stem": "A (3 kg, on the left) and B (2 kg, on the right) touch on a frictionless horizontal table. A 35 N horizontal push acts rightward on A and they remain in contact. What contact force does B exert on A?",
+    "options": [
+      {
+        "id": "A",
+        "text": "35 N to the left."
+      },
+      {
+        "id": "B",
+        "text": "21 N to the left."
+      },
+      {
+        "id": "C",
+        "text": "14 N to the left."
+      },
+      {
+        "id": "D",
+        "text": "0 N."
+      }
+    ],
+    "correct_option_id": "C",
+    "expected_reason": "For A+B, a=35/(3+2)=7 m/s² right. For B, A's contact force on B=2×7=14 N right; its reciprocal force on A is 14 N left. A's net force is instead 3×7=21 N right. Accept an equivalent consistent route.",
+    "type_rationale": "A fresh same-cell problem with a route to choose and dependent system/body steps; no intermediate acceleration, law selection, route menu or hints are supplied.",
+    "level_note": "Proposed D1 to match the P1 cell; the non-author must verify type and level before learner use.",
+    "distractors": {
+      "A": {
+        "tag": "ENTIRE_PUSH_TRANSMITTED",
+        "possible_interpretation": "May equate the contact force with the full external push."
+      },
+      "B": {
+        "tag": "NET_FORCE_CONFUSED_WITH_CONTACT",
+        "possible_interpretation": "May report the 21 N magnitude of A's net force as its contact force."
+      },
+      "D": {
+        "tag": "INTERNAL_FORCE_CALLED_ZERO",
+        "possible_interpretation": "May treat an internal force as zero because its reciprocal pair cancels in a combined sum."
+      }
+    },
+    "administration": "Capture choice or no_answer, optional reason, confidence and time before feedback. Do not supply a route or hint. If help is requested, submit as not demonstrated before teaching. After the solution has been exposed, repeating this item is practice, not a fresh check.",
+    "result_rule": "Show the observed independent answer result and whether a route was recorded. Never auto-declare mastery or promote to D2 from this one item."
+  },
+  "physics_sources": [
+    "https://openstax.org/books/university-physics-volume-1/pages/5-5-newtons-third-law",
+    "https://openstax.org/books/university-physics-volume-1/pages/5-3-newtons-second-law"
+  ]
+}

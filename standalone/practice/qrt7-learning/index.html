@@ -1,0 +1,2955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newton's Laws · Touching Blocks · Learning Loop (P2)</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --border-focus: #3b82f6;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-secondary: #334155;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --correct-bg: #f0fdf4;
+      --correct-border: #86efac;
+      --correct-text: #166534;
+      --incorrect-bg: #fef2f2;
+      --incorrect-border: #fca5a5;
+      --incorrect-text: #991b1b;
+      --noanswer-bg: #f1f5f9;
+      --noanswer-border: #cbd5e1;
+      --noanswer-text: #475569;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --warning-text: #92400e;
+      --accent: #8b5cf6;
+      --accent-light: #f5f3ff;
+      --accent-border: #ddd6fe;
+      --accent-text: #6d28d9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    header {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .topic-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .topic-badge.accent {
+      background: var(--accent-light);
+      color: var(--accent-text);
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .notice-box {
+      background: var(--warning-bg);
+      border-left: 4px solid #d97706;
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--warning-text);
+      margin-top: 10px;
+    }
+
+    .info-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #1e40af;
+      margin-top: 10px;
+    }
+
+    /* Views */
+    .view-panel {
+      display: none;
+    }
+    .view-panel.active {
+      display: block;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 18px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #ffffff;
+    }
+    .btn-accent:hover:not(:disabled) {
+      background: #7c3aed;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--text-secondary);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .btn-danger {
+      background: #ffffff;
+      color: #b91c1c;
+      border-color: #fca5a5;
+    }
+    .btn-danger:hover:not(:disabled) {
+      background: #fef2f2;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-block {
+      display: block;
+      width: 100%;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .btn-row .btn {
+      flex: 1;
+    }
+
+    /* Entry Screen Options */
+    .entry-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: all 0.2s ease;
+    }
+    .entry-card:hover {
+      border-color: var(--border-focus);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+    }
+    .entry-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+    .entry-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .drop-zone {
+      border: 2px dashed #94a3b8;
+      border-radius: 8px;
+      padding: 24px 16px;
+      text-align: center;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      margin-top: 10px;
+    }
+    .drop-zone.dragover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+    .drop-zone p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Stepper & Progress */
+    .stepper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .stepper-text {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+    }
+    .stepper-help {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--primary);
+      width: 14.28%;
+      transition: width 0.25s ease;
+    }
+
+    /* Question View */
+    .stem-box {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text-main);
+      margin-bottom: 20px;
+    }
+
+    /* Evidence Table */
+    .evidence-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .evidence-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    .evidence-table th, .evidence-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .evidence-table th {
+      background: #f1f5f9;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .evidence-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Options */
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 12px 14px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: #ffffff;
+      min-height: 48px;
+    }
+    .option-item:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+    .option-item.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+    .option-item input[type="radio"] {
+      margin-right: 12px;
+      margin-top: 3px;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+    .option-item label {
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1.4;
+      flex: 1;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .no-answer-card {
+      margin-top: 4px;
+      background: #f8fafc;
+      border-style: dashed;
+    }
+
+    /* Confidence */
+    .section-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .confidence-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .confidence-btn {
+      flex: 1;
+      min-height: 44px;
+      padding: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 2px solid var(--border);
+      background: #ffffff;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.15s ease;
+    }
+    .confidence-btn:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+    .confidence-btn.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* Why Input */
+    .why-container {
+      margin-bottom: 20px;
+    }
+    .why-input {
+      width: 100%;
+      min-height: 70px;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 14px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.15s ease;
+      color: var(--text-main);
+    }
+    .why-input:focus {
+      border-color: var(--border-focus);
+    }
+    .why-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Validation Alert */
+    .validation-alert {
+      background: var(--incorrect-bg);
+      border: 1px solid var(--incorrect-border);
+      color: var(--incorrect-text);
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    /* Evidence Profile / 7 Rows */
+    .evidence-summary-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .evidence-row-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      background: #ffffff;
+    }
+    .evidence-row-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .type-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+    .status-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .status-correct-sure {
+      background: var(--correct-bg);
+      border: 1px solid var(--correct-border);
+      color: var(--correct-text);
+    }
+    .status-correct-unsure {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #15803d;
+    }
+    .status-correct-guessed {
+      background: #fefce8;
+      border: 1px solid #fef08a;
+      color: #854d0e;
+    }
+    .status-practice {
+      background: var(--incorrect-bg);
+      border: 1px solid var(--incorrect-border);
+      color: var(--incorrect-text);
+    }
+    .status-noanswer {
+      background: var(--noanswer-bg);
+      border: 1px solid var(--noanswer-border);
+      color: var(--noanswer-text);
+    }
+
+    .evidence-field {
+      margin-top: 6px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--text-secondary);
+    }
+    .evidence-label {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .distractor-warning {
+      background: #fffbeb;
+      border-left: 3px solid #f59e0b;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #92400e;
+      margin-top: 8px;
+    }
+
+    .evidence-limit-alert {
+      background: #f8fafc;
+      border-left: 3px solid #64748b;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #475569;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* 28-Cell Coverage Grid */
+    .coverage-grid-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 12px;
+      margin-bottom: 16px;
+    }
+    .coverage-grid {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 520px;
+      font-size: 11px;
+      text-align: center;
+    }
+    .coverage-grid th, .coverage-grid td {
+      border: 1px solid var(--border);
+      padding: 6px 4px;
+    }
+    .coverage-grid th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+    .cell-box {
+      border-radius: 4px;
+      padding: 4px 2px;
+      font-weight: 600;
+    }
+    .cell-box.assessed {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+    }
+    .cell-box.unassessed {
+      background: #f8fafc;
+      color: #94a3b8;
+      border: 1px dashed #cbd5e1;
+    }
+    .cell-box.rechecked {
+      background: var(--accent-light);
+      color: var(--accent-text);
+      border: 1px solid var(--accent-border);
+    }
+
+    /* Guided Lesson Worked Case */
+    .diagram-card {
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .diagram-graphic {
+      background: #1e293b;
+      padding: 12px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 600;
+      color: #38bdf8;
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .stage-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 14px;
+      background: #ffffff;
+      transition: all 0.2s ease;
+    }
+    .stage-card.current {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    .stage-card.completed {
+      border-color: #86efac;
+      background: #fafdfa;
+    }
+    .stage-num-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #475569;
+      margin-bottom: 8px;
+    }
+    .stage-card.current .stage-num-badge {
+      background: var(--accent-light);
+      color: var(--accent-text);
+    }
+    .stage-see {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .stage-do {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .stage-equation-box {
+      background: #f1f5f9;
+      border-left: 3px solid var(--accent);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+      margin: 10px 0;
+    }
+    .stage-feedback {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin: 10px 0;
+      line-height: 1.4;
+    }
+
+    /* Comparison / Reconstruction Box */
+    .comparison-box {
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      border-radius: 8px;
+      padding: 14px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #4c1d95;
+      line-height: 1.5;
+    }
+
+    /* Re-check Feedback Box */
+    .recheck-feedback-card {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .recheck-feedback-card.correct {
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+      color: var(--correct-text);
+    }
+    .recheck-feedback-card.incorrect {
+      background: var(--incorrect-bg);
+      border-color: var(--incorrect-border);
+      color: var(--incorrect-text);
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 480px) {
+      .container {
+        padding: 12px;
+      }
+      header {
+        padding: 14px 16px;
+      }
+      h1 {
+        font-size: 18px;
+      }
+      .confidence-btn {
+        font-size: 13px;
+        padding: 6px 2px;
+      }
+      .btn-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <span class="topic-badge" id="header-badge">QRT Prototype · P2</span>
+        <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;" id="mode-indicator">DRAFT OWNER TRIAL</span>
+      </div>
+      <h1 id="header-title">Newton's Laws · Touching Blocks</h1>
+      <p style="font-size: 13px; color: var(--text-muted);">From one diagnostic observation to one guided learning loop and fresh re-check.</p>
+    </header>
+
+    <!-- ============================================================= -->
+    <!-- VIEW 0: ENTRY SCREEN                                          -->
+    <!-- ============================================================= -->
+    <div id="view-entry" class="view-panel active">
+      <div class="entry-card">
+        <h2 class="entry-title">Option 1: Start a new diagnostic</h2>
+        <p class="entry-desc">
+          Take the unassisted 7-question diagnostic across all 7 cognitive types at level D1.
+          Reasoning ("How did you decide?") is optional for all confidence levels.
+        </p>
+        <button type="button" class="btn btn-primary btn-block" id="btn-start-new-diagnostic">Start New Diagnostic (7 Questions)</button>
+      </div>
+
+      <div class="entry-card">
+        <h2 class="entry-title">Option 2: Open saved diagnostic or P2 session</h2>
+        <p class="entry-desc">
+          Reopen an exported P1 diagnostic JSON (v1.0), diagnostic v1.1, or a saved P2 learning session record (v2.0).
+          Raw parent bytes and hashes are preserved intact.
+        </p>
+        <div class="drop-zone" id="drop-zone">
+          <input type="file" id="input-file-diagnostic" accept=".json,application/json" style="display:none;">
+          <button type="button" class="btn btn-secondary" id="btn-browse-file" style="margin-bottom:8px;">Choose JSON File</button>
+          <p id="drop-zone-text">or drop exported JSON file here</p>
+        </div>
+        <div id="entry-error-msg" class="validation-alert" style="margin-top:12px;"></div>
+      </div>
+
+      <div class="notice-box">
+        <strong>Pilot Limits & Integrity:</strong> Non-author content check is pending. No mastery is declared from single items. All D2-D4 cells remain unassessed. The only available pilot lesson is SYNTHESIZE D1 ("Practise connecting steps").
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- VIEW 1: DIAGNOSTIC QUESTIONS SCREEN                           -->
+    <!-- ============================================================= -->
+    <div id="view-diagnostic" class="view-panel">
+      <div class="stepper-header">
+        <span class="stepper-text" id="diag-stepper-text">Question 1 of 7</span>
+        <span class="stepper-help" id="diag-level-text">Level D1 · Unassisted Observation</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="diag-progress-bar"></div>
+      </div>
+
+      <div class="card">
+        <div class="notice-box" style="margin-top:0; margin-bottom:16px;">
+          Zero-help diagnostic observation. No hints, type cues, or formulas are provided before submission.
+        </div>
+
+        <div class="stem-box" id="diag-question-stem"></div>
+        <div id="diag-evidence-table-container" style="display:none;"></div>
+
+        <span class="section-label">Select your answer:</span>
+        <div class="options-group" id="diag-options-group"></div>
+
+        <span class="section-label">How certain are you?</span>
+        <div class="confidence-group">
+          <button type="button" class="confidence-btn" data-val="Sure" id="diag-conf-sure">Sure</button>
+          <button type="button" class="confidence-btn" data-val="Unsure" id="diag-conf-unsure">Unsure</button>
+          <button type="button" class="confidence-btn" data-val="Guessing" id="diag-conf-guessing">Guessing</button>
+        </div>
+
+        <div class="why-container">
+          <label class="section-label" for="diag-why-input" style="text-transform:none; font-size:14px; font-weight:600;">
+            How did you decide? <span style="font-weight:400; color:var(--text-muted);">(optional)</span>
+          </label>
+          <textarea class="why-input" id="diag-why-input" placeholder="A short reason or calculation, or leave blank for now."></textarea>
+          <div class="why-hint">Reasoning is optional for all confidence levels. Blank will not block proceeding.</div>
+        </div>
+
+        <div class="validation-alert" id="diag-validation-alert"></div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" id="btn-diag-back" style="display:none;">Previous</button>
+          <button type="button" class="btn btn-primary" id="btn-diag-next">Next Question</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- VIEW 2: DIAGNOSTIC PROFILE & EVIDENCE ROWS SCREEN             -->
+    <!-- ============================================================= -->
+    <div id="view-profile" class="view-panel">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+          <div>
+            <h2 style="font-size:18px; font-weight:700;">Diagnostic Evidence & Profile</h2>
+            <p style="font-size:13px; color:var(--text-muted);" id="profile-source-info">Source: Fresh Diagnostic (v1.1)</p>
+          </div>
+          <button type="button" class="btn btn-secondary" id="btn-download-diag-json" style="font-size:13px; min-height:36px; padding:6px 12px;">Download Diagnostic JSON</button>
+        </div>
+
+        <div class="info-box" style="margin-top:0; margin-bottom:14px;">
+          <strong>Profile Grounding:</strong> Seven distinct cognitive types observed at level D1. Never calls a type secure or mastered from a single correct option. All D2-D4 cells remain unassessed.
+        </div>
+
+        <h3 class="section-label" style="margin-top:16px;">Seven Observed Evidence Rows</h3>
+        <div id="profile-evidence-rows"></div>
+
+        <h3 class="section-label" style="margin-top:20px;">28-Cell Topic Coverage Grid</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">
+          7 assessed D1 cells; 21 unassessed cells (D2–D4).
+        </p>
+        <div class="coverage-grid-wrapper" id="profile-coverage-wrapper"></div>
+
+        <!-- Pilot Lesson Call to Action -->
+        <div class="card" style="background:var(--accent-light); border:2px solid var(--accent-border); margin-top:20px; padding:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <span class="topic-badge accent">Pilot Learning Loop</span>
+              <h3 style="font-size:16px; font-weight:700; color:var(--accent-text); margin-top:4px;">Practise connecting steps: Contact Force vs Net Force</h3>
+              <p style="font-size:13px; color:var(--text-secondary); margin-top:4px; max-width:540px;">
+                Available unit: <strong>SYNTHESIZE D1</strong>. Guided breakdown of a 20 N contact case, distinguishing net force from contact force, followed by a fresh 35 N unassisted re-check.
+              </p>
+            </div>
+            <button type="button" class="btn btn-accent" id="btn-open-lesson" style="margin-top:8px;">Open Guided Lesson</button>
+          </div>
+          <div style="font-size:11px; color:#6b21a8; margin-top:10px; font-style:italic;">
+            Note: Deliberately isolated pilot. Does not claim all-type teaching or adaptive engine.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- VIEW 3: GUIDED PILOT LESSON (SYNTHESIZE D1)                   -->
+    <!-- ============================================================= -->
+    <div id="view-lesson" class="view-panel">
+      <div class="stepper-header">
+        <span class="stepper-text" style="color:var(--accent-text);">Guided Lesson · SYNTHESIZE D1</span>
+        <span class="stepper-help">Practise connecting steps</span>
+      </div>
+
+      <div class="card">
+        <div class="info-box" style="margin-top:0; margin-bottom:14px; background:var(--accent-light); border-left-color:var(--accent); color:#4c1d95;">
+          <strong>Target:</strong> Choose and connect a route from the combined system to an individual block; distinguish its net force from its contact force.
+        </div>
+
+        <p style="font-size:14px; color:var(--text-secondary); margin-bottom:14px;">
+          <em>"A contact force and a block's net force can have different values. We will connect the parts and check which force belongs where."</em>
+        </p>
+
+        <!-- Worked Case Box -->
+        <div class="diagram-card">
+          <div class="diagram-graphic">
+            [ 20 N push -> ] [ Block A: 2 kg ] [ Block B: 3 kg ]
+          </div>
+          <div>Frictionless horizontal table · Blocks remain in contact.</div>
+          <div style="color:#fde047; margin-top:4px; font-weight:600;">Question: What contact force does B exert on A?</div>
+        </div>
+
+        <!-- 4 Stages -->
+        <!-- Stage 1: Whole -->
+        <div class="stage-card current" id="lesson-stage-1">
+          <span class="stage-num-badge">Stage 1: System Boundary</span>
+          <div class="stage-see">Circle A+B. The 20 N push comes from outside. The contact pair is internal to this combined system.</div>
+          <div class="stage-do">Choose the system you would start with and say what force remains external:</div>
+          <div class="options-group" id="stage-1-options">
+            <div class="option-item" data-choice="correct">
+              <input type="radio" name="stage1" id="s1-opt-a">
+              <label for="s1-opt-a">Combined system A+B (5 kg), where internal contact forces cancel and the external 20 N push remains.</label>
+            </div>
+            <div class="option-item" data-choice="wrong1">
+              <input type="radio" name="stage1" id="s1-opt-b">
+              <label for="s1-opt-b">Block B alone (3 kg), treating the 20 N push as directly acting on B.</label>
+            </div>
+            <div class="option-item" data-choice="wrong2">
+              <input type="radio" name="stage1" id="s1-opt-c">
+              <label for="s1-opt-c">Block A alone (2 kg), ignoring any force exerted by block B.</label>
+            </div>
+          </div>
+          <div class="stage-feedback" id="stage-1-feedback" style="display:none;">
+            <strong>Feedback:</strong> For A+B the internal contact pair cancels in the combined sum, while the external 20 N push remains.
+            <div class="stage-equation-box">a = 20 / (2 + 3) = 4 m/s² right</div>
+            <button type="button" class="btn btn-accent btn-block" id="btn-stage-1-next" style="margin-top:8px;">Continue to Stage 2 -></button>
+          </div>
+        </div>
+
+        <!-- Stage 2: Part -->
+        <div class="stage-card" id="lesson-stage-2" style="display:none;">
+          <span class="stage-num-badge">Stage 2: Isolate Block B</span>
+          <div class="stage-see">Now isolate B. Its only horizontal force is A's contact force on B.</div>
+          <div class="stage-do">Use the common acceleration (4 m/s²) to find that contact force:</div>
+          <div class="options-group" id="stage-2-options">
+            <div class="option-item" data-choice="correct">
+              <input type="radio" name="stage2" id="s2-opt-a">
+              <label for="s2-opt-a">C = m_B × a = 3 kg × 4 m/s² = 12 N right; reciprocal force on A is 12 N left.</label>
+            </div>
+            <div class="option-item" data-choice="wrong1">
+              <input type="radio" name="stage2" id="s2-opt-b">
+              <label for="s2-opt-b">C = m_A × a = 2 kg × 4 m/s² = 8 N right.</label>
+            </div>
+            <div class="option-item" data-choice="wrong2">
+              <input type="radio" name="stage2" id="s2-opt-c">
+              <label for="s2-opt-c">C = 20 N - 4 N = 16 N right.</label>
+            </div>
+          </div>
+          <div class="stage-feedback" id="stage-2-feedback" style="display:none;">
+            <strong>Feedback:</strong> For B: C = 3 × 4 = 12 N right. B's reciprocal force on A is 12 N left.
+            <div class="stage-equation-box">C = m_B a = 3 × 4 = 12 N</div>
+            <button type="button" class="btn btn-accent btn-block" id="btn-stage-2-next" style="margin-top:8px;">Continue to Stage 3 -></button>
+          </div>
+        </div>
+
+        <!-- Stage 3: Distinguish -->
+        <div class="stage-card" id="lesson-stage-3" style="display:none;">
+          <span class="stage-num-badge">Stage 3: Distinguish Net Force vs Contact Force</span>
+          <div class="stage-see">Return to A: a 20 N push right and a 12 N contact force left.</div>
+          <div class="stage-do">Choose what 8 N describes:</div>
+          <div class="options-group" id="stage-3-options">
+            <div class="option-item" data-choice="correct">
+              <input type="radio" name="stage3" id="s3-opt-a">
+              <label for="s3-opt-a">A's net force</label>
+            </div>
+            <div class="option-item" data-choice="wrong1">
+              <input type="radio" name="stage3" id="s3-opt-b">
+              <label for="s3-opt-b">A on B contact force</label>
+            </div>
+            <div class="option-item" data-choice="wrong2">
+              <input type="radio" name="stage3" id="s3-opt-c">
+              <label for="s3-opt-c">B on A contact force</label>
+            </div>
+            <div class="option-item" data-choice="wrong3">
+              <input type="radio" name="stage3" id="s3-opt-d">
+              <label for="s3-opt-d">the whole system's net force</label>
+            </div>
+          </div>
+          <div class="stage-feedback" id="stage-3-feedback" style="display:none;">
+            <strong>Feedback:</strong> A's net force is 20 - 12 = 8 N right = 2 × 4. The contact force is 12 N; the net force is the sum of the forces received by A.
+            <div class="stage-equation-box">F_net,A = 20 - 12 = 8 N right</div>
+            <button type="button" class="btn btn-accent btn-block" id="btn-stage-3-next" style="margin-top:8px;">Continue to Stage 4 -></button>
+          </div>
+        </div>
+
+        <!-- Stage 4: Reconstruct & Explain -->
+        <div class="stage-card" id="lesson-stage-4" style="display:none;">
+          <span class="stage-num-badge">Stage 4: Reconstruct the Route</span>
+          <div class="stage-see" id="stage-4-equation-peek-area">
+            Worked equations hidden for recall.
+            <button type="button" class="btn btn-secondary" id="btn-peek-equations" style="font-size:12px; min-height:30px; padding:4px 8px; margin-left:8px;">Peek at equations (guided assistance)</button>
+          </div>
+          <div id="peeked-equations-box" style="display:none;" class="stage-equation-box">
+            Combined: a = 20 / (2+3) = 4 m/s²<br>
+            Block B: C = 3 × 4 = 12 N right (reciprocal on A: 12 N left)<br>
+            Block A net: F_net = 20 - 12 = 8 N right
+          </div>
+
+          <div class="stage-do" style="margin-top:12px;">
+            Explain or reconstruct how you would get the contact force, and why it differs from A's net force. A sentence, sketch description or calculation is welcome. You can also choose "I cannot explain it yet."
+          </div>
+
+          <textarea class="why-input" id="lesson-explain-input" placeholder="Explain the route from A+B to contact force, and why contact force differs from net force..."></textarea>
+
+          <div class="btn-row" id="stage-4-actions">
+            <button type="button" class="btn btn-secondary" id="btn-cannot-explain">I cannot explain it yet</button>
+            <button type="button" class="btn btn-accent" id="btn-save-explanation">Save explanation attempt</button>
+          </div>
+
+          <!-- Comparison feedback -->
+          <div id="stage-4-comparison" style="display:none;">
+            <div class="comparison-box" id="stage-4-demonstration-status"></div>
+            <div class="comparison-box">
+              <strong>Compare with:</strong> Use A+B to get their common acceleration, then isolate B to get its contact force, then reverse direction for the reciprocal force on A. An equivalent consistent route is valid.
+              <div style="font-size:12px; margin-top:6px; color:#5b21b6;">
+                <em>Rule: Saved before comparison as guided learning; never independent re-check evidence.</em>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" id="btn-proceed-recheck" style="margin-top:16px;">
+              Proceed to Fresh Unassisted Re-Check ->
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- VIEW 4: FRESH UNASSISTED RE-CHECK (SYNTHESIZE D1)             -->
+    <!-- ============================================================= -->
+    <div id="view-recheck" class="view-panel">
+      <div class="stepper-header">
+        <span class="stepper-text" style="color:#b91c1c;">Fresh Re-Check · SYNTHESIZE D1</span>
+        <span class="stepper-help">Unassisted Observation</span>
+      </div>
+
+      <div class="card">
+        <div class="notice-box" style="margin-top:0; margin-bottom:16px; border-left-color:#b91c1c; background:#fef2f2; color:#991b1b;">
+          <strong>Unassisted Rule:</strong> Both masses and the force are changed. No route, intermediate acceleration, formula or hint is shown before commitment.
+        </div>
+
+        <div class="stem-box" id="recheck-stem">
+          A (3 kg, on the left) and B (2 kg, on the right) touch on a frictionless horizontal table. A 35 N horizontal push acts rightward on A and they remain in contact. What contact force does B exert on A?
+        </div>
+
+        <span class="section-label">Select your answer:</span>
+        <div class="options-group" id="recheck-options-group">
+          <div class="option-item" data-opt="A">
+            <input type="radio" name="recheck_opt" id="rc-opt-a" value="A">
+            <label for="rc-opt-a">A. 35 N to the left.</label>
+          </div>
+          <div class="option-item" data-opt="B">
+            <input type="radio" name="recheck_opt" id="rc-opt-b" value="B">
+            <label for="rc-opt-b">B. 21 N to the left.</label>
+          </div>
+          <div class="option-item" data-opt="C">
+            <input type="radio" name="recheck_opt" id="rc-opt-c" value="C">
+            <label for="rc-opt-c">C. 14 N to the left.</label>
+          </div>
+          <div class="option-item" data-opt="D">
+            <input type="radio" name="recheck_opt" id="rc-opt-d" value="D">
+            <label for="rc-opt-d">D. 0 N.</label>
+          </div>
+          <div class="option-item no-answer-card" data-opt="no_answer">
+            <input type="radio" name="recheck_opt" id="rc-opt-none" value="no_answer">
+            <label for="rc-opt-none">I prefer not to guess (no answer)</label>
+          </div>
+        </div>
+
+        <span class="section-label">How certain are you?</span>
+        <div class="confidence-group">
+          <button type="button" class="confidence-btn" data-val="Sure" id="rc-conf-sure">Sure</button>
+          <button type="button" class="confidence-btn" data-val="Unsure" id="rc-conf-unsure">Unsure</button>
+          <button type="button" class="confidence-btn" data-val="Guessing" id="rc-conf-guessing">Guessing</button>
+        </div>
+
+        <div class="why-container">
+          <label class="section-label" for="recheck-why-input" style="text-transform:none; font-size:14px; font-weight:600;">
+            How did you decide? <span style="font-weight:400; color:var(--text-muted);">(optional)</span>
+          </label>
+          <textarea class="why-input" id="recheck-why-input" placeholder="A short reason or calculation, or leave blank for now."></textarea>
+          <div class="why-hint">Reasoning is optional. Blank will not block commitment.</div>
+        </div>
+
+        <div class="validation-alert" id="recheck-validation-alert"></div>
+
+        <div class="btn-row" id="recheck-action-buttons">
+          <button type="button" class="btn btn-secondary" id="btn-recheck-help">I need help / Show solution</button>
+          <button type="button" class="btn btn-primary" id="btn-recheck-commit">Commit and Submit Answer</button>
+        </div>
+
+        <!-- Post-Commit Feedback Area -->
+        <div id="recheck-feedback-area" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- VIEW 5: LINKED SESSION SUMMARY & DOWNLOAD                     -->
+    <!-- ============================================================= -->
+    <div id="view-summary" class="view-panel">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+          <div>
+            <span class="topic-badge" style="background:#f0fdf4; color:#166534; border:1px solid #86efac;">P2 Record · Version 2.0</span>
+            <h2 style="font-size:18px; font-weight:700; margin-top:4px;">Linked Learning Session Summary</h2>
+            <p style="font-size:13px; color:var(--text-muted);" id="summary-meta-info"></p>
+          </div>
+          <button type="button" class="btn btn-primary" id="btn-download-p2-json" style="font-size:13px; min-height:40px; padding:8px 14px;">
+            Download P2 Session Record (JSON)
+          </button>
+        </div>
+
+        <div class="info-box" style="margin-top:0; margin-bottom:16px;">
+          <strong>Linked Integrity:</strong> Unchanged parent diagnostic evidence + guided learning stages + separate unassisted re-check. No original responses were overwritten. All 21 other cells stay unassessed.
+        </div>
+
+        <!-- Section 1: Frozen Original Diagnostic -->
+        <h3 class="section-label">1. Original Diagnostic Evidence (Frozen)</h3>
+        <div id="summary-parent-evidence"></div>
+
+        <!-- Section 2: Guided Lesson Record -->
+        <h3 class="section-label" style="margin-top:20px;">2. Guided Learning Unit (SYNTHESIZE D1)</h3>
+        <div class="evidence-row-card" id="summary-guided-card"></div>
+
+        <!-- Section 3: Fresh Same-Cell Re-Check Record -->
+        <h3 class="section-label" style="margin-top:20px;">3. Fresh Re-Check Result (CONTACT-D1-SYNTHESIZE-02)</h3>
+        <div class="evidence-row-card" id="summary-recheck-card"></div>
+
+        <!-- Section 4: 28-Cell Coverage Map -->
+        <h3 class="section-label" style="margin-top:20px;">4. Updated 28-Cell Topic Coverage</h3>
+        <div class="coverage-grid-wrapper" id="summary-coverage-wrapper"></div>
+
+        <div class="btn-row" style="margin-top:24px;">
+          <button type="button" class="btn btn-secondary" id="btn-summary-home">Return to Start Screen</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Embedded Question Bank (Snapshot of P1 bank) -->
+  <script id="embedded-question-bank" type="application/json">
+{
+  "schema_version": "1.0",
+  "bank_id": "G9V35-QRT-CONTACT-D1",
+  "bank_version": "1",
+  "status": "DRAFT_OWNER_TRIAL_ONLY",
+  "author": "ORACLE · G9V35-O5",
+  "learner_grade": 10,
+  "exam_target": "JEE Main",
+  "exam_year": null,
+  "topic_id": "newtons-laws.contact-blocks",
+  "topic_title": "Newton's laws for touching blocks",
+  "level": "D1",
+  "qrt_types": [
+    "RETRIEVE",
+    "EXPLAIN",
+    "APPLY",
+    "MODEL",
+    "REPRESENT",
+    "SYNTHESIZE",
+    "JUSTIFY"
+  ],
+  "qrt_levels": [
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+  ],
+  "level_note": "Proposed baseline tags. D1 means the smallest familiar demand within each type; SYNTHESIZE still requires a short dependent chain. Tags require non-author checking; this bank is not calibrated to JEE Main exam difficulty.",
+  "sources": [
+    {
+      "title": "OpenStax: Newton's third law",
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/5-5-newtons-third-law"
+    },
+    {
+      "title": "OpenStax: Newton's second law",
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/5-3-newtons-second-law"
+    }
+  ],
+  "questions": [
+    {
+      "id": "CONTACT-D1-APPLY-01",
+      "version": 1,
+      "type": "APPLY",
+      "level": "D1",
+      "stem": "Block A (2 kg) pushes block B (3 kg) with 8 N to the right. What contact force does B exert on A?",
+      "options": [
+        {
+          "id": "A",
+          "text": "8 N to the right."
+        },
+        {
+          "id": "B",
+          "text": "12 N to the left."
+        },
+        {
+          "id": "C",
+          "text": "0 N."
+        },
+        {
+          "id": "D",
+          "text": "8 N to the left."
+        }
+      ],
+      "correct_option_id": "D",
+      "expected_reason": "Apply the third law to the specified interaction: equal magnitude 8 N, opposite direction left, received by A. The mass ratio does not scale this pair.",
+      "type_rationale": "Uses a known law directly on a specified interaction.",
+      "distractors": {
+        "A": {
+          "tag": "PAIR_DIRECTION_UNCHANGED",
+          "possible_interpretation": "May preserve magnitude without reversing direction."
+        },
+        "B": {
+          "tag": "PAIR_SCALED_BY_MASS",
+          "possible_interpretation": "May multiply the force by the 3/2 mass ratio."
+        },
+        "C": {
+          "tag": "PAIR_MEANS_ZERO_FORCE",
+          "possible_interpretation": "May replace either member of a force pair with the combined sum."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-SYNTHESIZE-01",
+      "version": 1,
+      "type": "SYNTHESIZE",
+      "level": "D1",
+      "stem": "A (2 kg, on the left) and B (3 kg, on the right) touch on a frictionless horizontal table. A 15 N horizontal push acts rightward on A and they remain in contact. What contact force does B exert on A?",
+      "options": [
+        {
+          "id": "A",
+          "text": "15 N to the left."
+        },
+        {
+          "id": "B",
+          "text": "9 N to the left."
+        },
+        {
+          "id": "C",
+          "text": "6 N to the left."
+        },
+        {
+          "id": "D",
+          "text": "0 N."
+        }
+      ],
+      "correct_option_id": "C",
+      "expected_reason": "For the combined system A+B, acceleration a = 15/(2+3) = 3 m/s² to the right. Isolating B, the only horizontal force is A's contact force on B = 3 kg × 3 m/s² = 9 N to the right. By Newton's third law, B exerts an equal and opposite contact force on A = 9 N to the left (note: A's net force is 2×3 = 6 N right = 15 - 9).",
+      "type_rationale": "Requires combining two concepts: finding system acceleration from total mass, then isolating one block to determine the internal contact force.",
+      "distractors": {
+        "A": {
+          "tag": "ENTIRE_PUSH_TRANSMITTED",
+          "possible_interpretation": "May assume the entire external push is transmitted across the contact interface."
+        },
+        "B": {
+          "tag": "NET_FORCE_CONFUSED_WITH_CONTACT",
+          "possible_interpretation": "May confuse the net force on A (6 N) with the contact force (9 N) or mix up the target block's mass."
+        },
+        "D": {
+          "tag": "INTERNAL_FORCE_ZERO",
+          "possible_interpretation": "May treat internal contact forces as zero because they cancel in the combined system."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-REPRESENT-01",
+      "version": 1,
+      "type": "REPRESENT",
+      "level": "D1",
+      "stem": "Block A touches block B on a table. Which diagram correctly identifies the horizontal interaction pair between them?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Two equal opposite arrows drawn on block A alone."
+        },
+        {
+          "id": "B",
+          "text": "One arrow on A pointing left (force by B on A) and one arrow on B pointing right (force by A on B)."
+        },
+        {
+          "id": "C",
+          "text": "One arrow on B pointing left and one arrow on A pointing right."
+        },
+        {
+          "id": "D",
+          "text": "Two arrows pointing in the same direction across the contact boundary."
+        }
+      ],
+      "correct_option_id": "B",
+      "expected_reason": "A third-law interaction pair acts on two distinct bodies: the force on A by B acts on A (pointing away from B), and the force on B by A acts on B (pointing away from A).",
+      "type_rationale": "Translates verbal and physical interaction descriptions into correct free-body representation conventions.",
+      "distractors": {
+        "A": {
+          "tag": "PAIR_ON_SAME_BODY",
+          "possible_interpretation": "May believe a third-law action-reaction pair acts on a single body."
+        },
+        "C": {
+          "tag": "INVERTED_INTERACTION_DIRECTIONS",
+          "possible_interpretation": "May reverse the push directions exerted on each respective body."
+        },
+        "D": {
+          "tag": "CO-DIRECTIONAL_PAIR",
+          "possible_interpretation": "May represent interaction forces in the same direction."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-MODEL-01",
+      "version": 1,
+      "type": "MODEL",
+      "level": "D1",
+      "stem": "Two blocks A (4 kg) and B (6 kg) are pushed together horizontally along a frictionless surface by an external force. When can we treat (A + B) as a single composite object of mass 10 kg to find their common acceleration?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Always, as long as the blocks stay in contact with no relative motion."
+        },
+        {
+          "id": "B",
+          "text": "Only if block A and block B have the exact same mass."
+        },
+        {
+          "id": "C",
+          "text": "Only if there is no contact force acting between them."
+        },
+        {
+          "id": "D",
+          "text": "Never, because Newton's second law only applies to single elementary bodies."
+        }
+      ],
+      "correct_option_id": "A",
+      "expected_reason": "A combined system boundary is valid whenever all internal constituents share a rigid kinematic constraint (same acceleration) and internal forces cancel in the vector sum.",
+      "type_rationale": "Tests the boundary assumptions under which a composite system model is valid.",
+      "distractors": {
+        "B": {
+          "tag": "EQUAL_MASS_PREREQUISITE_FALLACY",
+          "possible_interpretation": "May believe composite modeling requires symmetrical mass distribution."
+        },
+        "C": {
+          "tag": "CONTACT_DISQUALIFIES_COMPOSITE",
+          "possible_interpretation": "May think the existence of internal contact forces invalidates the system boundary."
+        },
+        "D": {
+          "tag": "SYSTEM_BOUNDARY_DENIAL",
+          "possible_interpretation": "May not recognize that Newton's second law applies to arbitrary closed systems of particles."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-EXPLAIN-01",
+      "version": 1,
+      "type": "EXPLAIN",
+      "level": "D1",
+      "stem": "A 10 N push accelerates two touching blocks A and B across a smooth floor. Why is the contact force between A and B not equal to 10 N?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Because part of the 10 N push is lost to friction at the contact boundary."
+        },
+        {
+          "id": "B",
+          "text": "Because third-law pairs cancel each other out before motion begins."
+        },
+        {
+          "id": "C",
+          "text": "Because part of the 10 N external push is required to accelerate block A itself, so only the force required to accelerate B is transmitted."
+        },
+        {
+          "id": "D",
+          "text": "Because block B pushes back on A with a force greater than 10 N to maintain contact."
+        }
+      ],
+      "correct_option_id": "C",
+      "expected_reason": "By Newton's second law for block A alone, F_ext - F_contact = m_A × a. Since m_A × a > 0, F_contact must be strictly less than F_ext.",
+      "type_rationale": "Requires explaining the causal mechanism governing force transmission across an accelerating interface.",
+      "distractors": {
+        "A": {
+          "tag": "ENERGY_LOSS_FALLACY",
+          "possible_interpretation": "May attribute force difference to friction or energy dissipation on a frictionless surface."
+        },
+        "B": {
+          "tag": "PAIR_CANCELLATION_MISCONCEPTION",
+          "possible_interpretation": "May confuse internal cancellation with external force extinction."
+        },
+        "D": {
+          "tag": "ACCELERATION_NEEDS_UNEQUAL_PAIR",
+          "possible_interpretation": "May confuse unequal net forces with unequal mutual contact forces."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-JUSTIFY-01",
+      "version": 1,
+      "type": "JUSTIFY",
+      "level": "D1",
+      "stem": "Blocks A (2 kg) and B (3 kg) touch. Calibrated contact-force measurements are listed below. Which conclusion is supported by these measurements?",
+      "evidence_table": {
+        "columns": [
+          "Trial",
+          "A on B",
+          "B on A"
+        ],
+        "rows": [
+          [
+            "1",
+            "4 N right",
+            "4 N left"
+          ],
+          [
+            "2",
+            "9 N right",
+            "9 N left"
+          ],
+          [
+            "3",
+            "15 N right",
+            "15 N left"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "text": "Across all trials, the force by A on B and the force by B on A have identical magnitudes and opposite directions, confirming Newton's third law."
+        },
+        {
+          "id": "B",
+          "text": "The larger mass B exerts more force on A in every trial."
+        },
+        {
+          "id": "C",
+          "text": "As the push increases, the contact force pair becomes unbalanced."
+        },
+        {
+          "id": "D",
+          "text": "The data shows that contact force depends only on mass ratio, not on the applied push."
+        }
+      ],
+      "correct_option_id": "A",
+      "expected_reason": "Direct empirical comparison shows magnitude equality (4=4, 9=9, 15=15) and directional opposition across all trials, verifying third-law reciprocity regardless of magnitude.",
+      "type_rationale": "Requires connecting empirical data rows to a theoretical conclusion.",
+      "distractors": {
+        "B": {
+          "tag": "LARGER_MASS_EXERTS_MORE",
+          "possible_interpretation": "May assert heavier objects exert greater contact force regardless of empirical evidence."
+        },
+        "C": {
+          "tag": "HIGH_FORCE_ASYMMETRY",
+          "possible_interpretation": "May suppose third-law reciprocity breaks down at higher force magnitudes."
+        },
+        "D": {
+          "tag": "INCORRECT_EMPIRICAL_CORRELATION",
+          "possible_interpretation": "May ignore variation across trials 1, 2, and 3."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-RETRIEVE-01",
+      "version": 1,
+      "type": "RETRIEVE",
+      "level": "D1",
+      "stem": "According to Newton's third law, when object A exerts a contact force on object B, what force does object B exert on object A?",
+      "options": [
+        {
+          "id": "A",
+          "text": "A force proportional to the ratio of their masses."
+        },
+        {
+          "id": "B",
+          "text": "A force in the same direction, but smaller in magnitude."
+        },
+        {
+          "id": "C",
+          "text": "An equal magnitude force in the opposite direction."
+        },
+        {
+          "id": "D",
+          "text": "Zero force, because the contact force cancels at the boundary."
+        }
+      ],
+      "correct_option_id": "C",
+      "expected_reason": "Direct recall of Newton's third law statement: forces between interacting bodies are equal in magnitude and opposite in direction.",
+      "type_rationale": "Direct recall of standard definition.",
+      "distractors": {
+        "A": {
+          "tag": "MASS_SCALING_MISCONCEPTION",
+          "possible_interpretation": "May believe third-law reciprocity scales with mass."
+        },
+        "B": {
+          "tag": "SAME_DIRECTION_FALLACY",
+          "possible_interpretation": "May confuse reciprocal forces with co-directional forces."
+        },
+        "D": {
+          "tag": "BOUNDARY_EXTINCTION_FALLACY",
+          "possible_interpretation": "May believe forces cancel to zero at the boundary."
+        }
+      }
+    }
+  ],
+  "delivery_order": [
+    "CONTACT-D1-APPLY-01",
+    "CONTACT-D1-SYNTHESIZE-01",
+    "CONTACT-D1-REPRESENT-01",
+    "CONTACT-D1-MODEL-01",
+    "CONTACT-D1-EXPLAIN-01",
+    "CONTACT-D1-JUSTIFY-01",
+    "CONTACT-D1-RETRIEVE-01"
+  ]
+}
+  </script>
+
+  <!-- Embedded Pilot Learning Unit (Snapshot of P2 unit) -->
+  <script id="embedded-learning-unit" type="application/json">
+{
+  "schema_version": "1.0",
+  "unit_id": "CONTACT-SYNTHESIZE-D1-LEARN-01",
+  "version": 1,
+  "author": "ORACLE · G9V35-O5",
+  "status": "DRAFT_OWNER_TRIAL_ONLY",
+  "topic_id": "newtons-laws.contact-blocks",
+  "target_type": "SYNTHESIZE",
+  "level": "D1",
+  "target": "Choose and connect a route from the combined system to an individual block; distinguish its net force from its contact force.",
+  "prerequisites": [
+    "Force source and receiver",
+    "Net horizontal force = mass × acceleration",
+    "Third-law reciprocal pair"
+  ],
+  "entry_message": "A contact force and a block's net force can have different values. We will connect the parts and check which force belongs where.",
+  "diagnostic_interpretation_note": "A selected distractor is a hypothesis, not proof of the route used. Do not diagnose the kid from the Owner's synthetic trial.",
+  "worked_case": {
+    "diagram": "20 N -> [A: 2 kg][B: 3 kg], frictionless horizontal table; blocks remain in contact.",
+    "question": "What contact force does B exert on A?",
+    "stages": [
+      {
+        "id": "whole",
+        "see": "Circle A+B. The 20 N push comes from outside. The contact pair is internal to this combined system.",
+        "do": "Choose the system you would start with and say what force remains external.",
+        "feedback": "For A+B the internal contact pair cancels in the combined sum, while the external 20 N push remains.",
+        "equation": "a = 20 / (2 + 3) = 4 m/s² right"
+      },
+      {
+        "id": "part",
+        "see": "Now isolate B. Its only horizontal force is A's contact force on B.",
+        "do": "Use the common acceleration to find that contact force.",
+        "feedback": "For B: C = 3 × 4 = 12 N right. B's reciprocal force on A is 12 N left.",
+        "equation": "C = m_B a = 3 × 4 = 12 N"
+      },
+      {
+        "id": "distinguish",
+        "see": "Return to A: a 20 N push right and a 12 N contact force left.",
+        "do": "Choose what 8 N describes: A's net force / A on B contact force / B on A contact force / the whole system's net force.",
+        "correct_choice": "A's net force",
+        "feedback": "A's net force is 20 - 12 = 8 N right = 2 × 4. The contact force is 12 N; the net force is the sum of the forces received by A.",
+        "equation": "F_net,A = 20 - 12 = 8 N right"
+      },
+      {
+        "id": "explain",
+        "see": "Hide the worked equations when you are ready.",
+        "do": "Explain or reconstruct how you would get the contact force, and why it differs from A's net force. A sentence, sketch description or calculation is welcome. You can also choose 'I cannot explain it yet.'",
+        "feedback": "Compare with: use A+B to get their common acceleration, then isolate B to get its contact force, then reverse direction for the reciprocal force on A. An equivalent consistent route is valid.",
+        "evidence_rule": "Save the attempt before comparison. Mark it as guided learning, never independent re-check evidence. No arbitrary text-length gate and no automatic semantic grading."
+      }
+    ]
+  },
+  "recheck": {
+    "id": "CONTACT-D1-SYNTHESIZE-02",
+    "version": 1,
+    "type": "SYNTHESIZE",
+    "level": "D1",
+    "stem": "A (3 kg, on the left) and B (2 kg, on the right) touch on a frictionless horizontal table. A 35 N horizontal push acts rightward on A and they remain in contact. What contact force does B exert on A?",
+    "options": [
+      {
+        "id": "A",
+        "text": "35 N to the left."
+      },
+      {
+        "id": "B",
+        "text": "21 N to the left."
+      },
+      {
+        "id": "C",
+        "text": "14 N to the left."
+      },
+      {
+        "id": "D",
+        "text": "0 N."
+      }
+    ],
+    "correct_option_id": "C",
+    "expected_reason": "For A+B, a=35/(3+2)=7 m/s² right. For B, A's contact force on B=2×7=14 N right; its reciprocal force on A is 14 N left. A's net force is instead 3×7=21 N right. Accept an equivalent consistent route.",
+    "type_rationale": "A fresh same-cell problem with a route to choose and dependent system/body steps; no intermediate acceleration, law selection, route menu or hints are supplied.",
+    "level_note": "Proposed D1 to match the P1 cell; the non-author must verify type and level before learner use.",
+    "distractors": {
+      "A": {
+        "tag": "ENTIRE_PUSH_TRANSMITTED",
+        "possible_interpretation": "May equate the contact force with the full external push."
+      },
+      "B": {
+        "tag": "NET_FORCE_CONFUSED_WITH_CONTACT",
+        "possible_interpretation": "May report the 21 N magnitude of A's net force as its contact force."
+      },
+      "D": {
+        "tag": "INTERNAL_FORCE_CALLED_ZERO",
+        "possible_interpretation": "May treat an internal force as zero because its reciprocal pair cancels in a combined sum."
+      }
+    },
+    "administration": "Capture choice or no_answer, optional reason, confidence and time before feedback. Do not supply a route or hint. If help is requested, submit as not demonstrated before teaching. After the solution has been exposed, repeating this item is practice, not a fresh check.",
+    "result_rule": "Show the observed independent answer result and whether a route was recorded. Never auto-declare mastery or promote to D2 from this one item."
+  },
+  "physics_sources": [
+    "https://openstax.org/books/university-physics-volume-1/pages/5-5-newtons-third-law",
+    "https://openstax.org/books/university-physics-volume-1/pages/5-3-newtons-second-law"
+  ]
+}
+  </script>
+
+  <!-- Application Logic -->
+  <script>
+    // --- Pure JS Synchronous SHA-256 for File Hashing ---
+    function sha256Sync(ascii) {
+      function rightRotate(value, amount) { return (value >>> amount) | (value << (32 - amount)); }
+      const mathPow = Math.pow;
+      const maxWord = mathPow(2, 32);
+      let lengthProperty = 'length';
+      let i, j;
+      let result = '';
+      const words = [];
+      const asciiBitLength = ascii[lengthProperty] * 8;
+      let hash = [];
+      const k = [];
+      let primeCounter = 0;
+      const isComposite = {};
+      for (let candidate = 2; primeCounter < 64; candidate++) {
+        if (!isComposite[candidate]) {
+          for (i = candidate * candidate; i < 312; i += candidate) isComposite[i] = true;
+          hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+          k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+        }
+      }
+      hash = hash.slice(0, 8);
+      ascii += '\x80';
+      while (ascii[lengthProperty] % 64 - 56) ascii += '\x00';
+      for (i = 0; i < ascii[lengthProperty]; i++) {
+        j = ascii.charCodeAt(i);
+        words[i >> 2] |= j << ((3 - i % 4) * 8);
+      }
+      words[words[lengthProperty]] = (asciiBitLength / maxWord) | 0;
+      words[words[lengthProperty]] = asciiBitLength;
+      for (j = 0; j < words[lengthProperty];) {
+        const w = words.slice(j, j += 16);
+        const oldHash = hash;
+        hash = hash.slice(0, 8);
+        for (i = 0; i < 64; i++) {
+          const w15 = w[i - 15], w2 = w[i - 2];
+          const s0 = rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3);
+          const s1 = rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10);
+          const ch = (hash[4] & hash[5]) ^ (~hash[4] & hash[6]);
+          const temp1 = hash[7] + (rightRotate(hash[4], 6) ^ rightRotate(hash[4], 11) ^ rightRotate(hash[4], 25)) + ch + k[i] + (w[i] = (i < 16) ? w[i] : (w[i - 16] + s0 + w[i - 7] + s1) | 0);
+          const maj = (hash[0] & hash[1]) ^ (hash[0] & hash[2]) ^ (hash[1] & hash[2]);
+          const temp2 = (rightRotate(hash[0], 2) ^ rightRotate(hash[0], 13) ^ rightRotate(hash[0], 22)) + maj;
+          hash = [(temp1 + temp2) | 0].concat(hash);
+          hash[4] = (hash[4] + temp1) | 0;
+        }
+        for (i = 0; i < 8; i++) hash[i] = (hash[i] + oldHash[i]) | 0;
+      }
+      for (i = 0; i < 8; i++) {
+        for (j = 3; j >= 0; j--) {
+          const b = (hash[i] >> (8 * j)) & 255;
+          result += ((b < 16) ? '0' : '') + b.toString(16);
+        }
+      }
+      return result;
+    }
+
+    function calculateSha256(text) {
+      try {
+        return sha256Sync(unescape(encodeURIComponent(text)));
+      } catch (e) {
+        return 'sha256-fallback-' + Math.random().toString(36).substring(2, 15);
+      }
+    }
+
+    function generateId(prefix) {
+      return prefix + '_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 7);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // --- Load Data Banks ---
+    const bankEl = document.getElementById('embedded-question-bank');
+    const QUESTION_BANK = JSON.parse(bankEl.textContent);
+
+    const unitEl = document.getElementById('embedded-learning-unit');
+    const LEARNING_UNIT = JSON.parse(unitEl.textContent);
+
+    const QUESTIONS = QUESTION_BANK.delivery_order.map(id => {
+      return QUESTION_BANK.questions.find(q => q.id === id);
+    });
+    const TOTAL_QUESTIONS = QUESTIONS.length; // 7
+
+    const QRT_TYPES = ["RETRIEVE", "EXPLAIN", "APPLY", "MODEL", "REPRESENT", "SYNTHESIZE", "JUSTIFY"];
+    const QRT_LEVELS = ["D1", "D2", "D3", "D4"];
+
+    // --- Application State ---
+    const STATE = {
+      view: 'entry', // 'entry' | 'diagnostic' | 'profile' | 'lesson' | 'recheck' | 'summary'
+
+      // Diagnostic State
+      diagAttempt: null,
+
+      // Provenance & Parent Record
+      parentDiagnostic: null,
+      parentHash: null,
+      parentSource: null, // 'imported_p1_v1.0' | 'new_diagnostic_v1.1'
+
+      // Derived Diagnostic Profile (7 rows)
+      derivedProfile: null,
+
+      // Guided Lesson State
+      guidedUnit: null,
+
+      // Re-Check State
+      recheckState: null,
+      recheckResponse: null,
+      recheckPracticeAttempts: [],
+
+      // P2 Session State
+      p2Record: null
+    };
+
+    // --- Active & Wall Timing Engine for Diagnostic ---
+    let isWindowFocused = true;
+    let isPageVisible = true;
+    let questionEnterWallTimestamp = null;
+    let lastActiveTimestamp = null;
+
+    function isCurrentlyActive() {
+      return isWindowFocused && isPageVisible && STATE.diagAttempt && !STATE.diagAttempt.completed;
+    }
+
+    function updateActiveAccumulator() {
+      if (!STATE.diagAttempt || STATE.diagAttempt.completed) return;
+      const now = performance.now();
+      if (isCurrentlyActive() && lastActiveTimestamp !== null) {
+        const delta = now - lastActiveTimestamp;
+        if (delta > 0) {
+          STATE.diagAttempt.activeMs[STATE.diagAttempt.currentIndex] += delta;
+        }
+      }
+      lastActiveTimestamp = isCurrentlyActive() ? now : null;
+    }
+
+    window.addEventListener('focus', () => {
+      isWindowFocused = true;
+      if (isCurrentlyActive()) lastActiveTimestamp = performance.now();
+    });
+
+    window.addEventListener('blur', () => {
+      updateActiveAccumulator();
+      isWindowFocused = false;
+      lastActiveTimestamp = null;
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        updateActiveAccumulator();
+        isPageVisible = false;
+        lastActiveTimestamp = null;
+      } else {
+        isPageVisible = true;
+        if (isCurrentlyActive()) lastActiveTimestamp = performance.now();
+      }
+    });
+
+    // --- View Navigation ---
+    function showView(viewName) {
+      STATE.view = viewName;
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+      const activePanel = document.getElementById('view-' + viewName);
+      if (activePanel) activePanel.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // --- VIEW 0: Entry Handlers ---
+    document.getElementById('btn-start-new-diagnostic').addEventListener('click', () => {
+      startNewDiagnostic();
+    });
+
+    const fileInput = document.getElementById('input-file-diagnostic');
+    const dropZone = document.getElementById('drop-zone');
+
+    document.getElementById('btn-browse-file').addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        processUploadedFile(e.target.files[0]);
+      }
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        processUploadedFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    function showEntryError(msg) {
+      const el = document.getElementById('entry-error-msg');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    function processUploadedFile(file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const rawText = evt.target.result;
+          const parsed = JSON.parse(rawText);
+          const fileHash = calculateSha256(rawText);
+
+          // Check if this is a P2 Session Record (v2.0)
+          if (parsed.record_version === '2.0' && parsed.phase === 'learn_recheck') {
+            loadP2SessionRecord(parsed, fileHash);
+            return;
+          }
+
+          // Otherwise, validate as Diagnostic Record (v1.0 or v1.1)
+          if (!parsed.record_version || (parsed.record_version !== '1.0' && parsed.record_version !== '1.1')) {
+            showEntryError('Unsupported record version: ' + parsed.record_version + '. Expected 1.0, 1.1 or 2.0.');
+            return;
+          }
+
+          if (!Array.isArray(parsed.responses) || parsed.responses.length !== 7) {
+            showEntryError('Invalid diagnostic record: expected exactly 7 responses.');
+            return;
+          }
+
+          loadImportedDiagnosticRecord(parsed, fileHash, rawText);
+        } catch (err) {
+          showEntryError('Failed to parse JSON file: ' + err.message);
+        }
+      };
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function loadImportedDiagnosticRecord(record, fileHash, rawText) {
+      STATE.parentDiagnostic = record;
+      STATE.parentHash = fileHash;
+      STATE.parentSource = 'imported_p1_v1.0';
+
+      // Build derived profile from imported record
+      STATE.derivedProfile = deriveProfileFromRecord(record);
+
+      // Render profile view
+      renderProfileView();
+      showView('profile');
+    }
+
+    function loadP2SessionRecord(p2Record, fileHash) {
+      STATE.p2Record = p2Record;
+      STATE.parentDiagnostic = p2Record.parent_diagnostic ? p2Record.parent_diagnostic.raw_record : null;
+      STATE.parentHash = p2Record.parent_diagnostic ? p2Record.parent_diagnostic.parent_hash_sha256 : fileHash;
+      STATE.parentSource = p2Record.parent_diagnostic ? p2Record.parent_diagnostic.parent_source : 'imported_p2_v2.0';
+      STATE.derivedProfile = p2Record.derived_profile;
+      STATE.guidedUnit = p2Record.guided_unit;
+      STATE.recheckResponse = p2Record.recheck_response;
+      STATE.recheckPracticeAttempts = p2Record.recheck_practice_attempts || [];
+
+      // Render summary view directly
+      renderSummaryView();
+      showView('summary');
+    }
+
+    // --- Profile Derivation Engine ---
+    function deriveProfileFromRecord(record) {
+      const rows = [];
+      const questionsMap = {};
+      QUESTION_BANK.questions.forEach(q => questionsMap[q.id] = q);
+
+      record.responses.forEach(resp => {
+        const q = questionsMap[resp.question_id];
+        if (!q) return;
+
+        const isNoAnswer = resp.response_kind === 'no_answer' || resp.selected_option_id === null;
+        const isCorrect = isNoAnswer ? null : (resp.selected_option_id === q.correct_option_id);
+        const conf = resp.confidence || 'Not specified';
+        const rawWhy = resp.why_text !== undefined ? String(resp.why_text) : '';
+        const trimmedWhy = rawWhy.trim();
+
+        // Why status classification
+        let whyStatus = 'provided';
+        let whyVerbatim = rawWhy;
+        if (trimmedWhy === '' || trimmedWhy === 'Not sure' && isNoAnswer) {
+          whyStatus = 'omitted';
+        } else if (trimmedWhy === '-' || trimmedWhy === '--' || trimmedWhy === '...') {
+          whyStatus = 'placeholder';
+        }
+
+        // Profile label assignment
+        let profileLabel = '';
+        let badgeClass = '';
+        if (isNoAnswer) {
+          profileLabel = 'Not assessed yet';
+          badgeClass = 'status-noanswer';
+        } else if (!isCorrect) {
+          profileLabel = 'Needs practice';
+          badgeClass = 'status-practice';
+        } else {
+          // Correct
+          if (conf === 'Sure') {
+            profileLabel = 'Correct and sure — one question';
+            badgeClass = 'status-correct-sure';
+          } else if (conf === 'Unsure') {
+            profileLabel = 'Correct, unsure';
+            badgeClass = 'status-correct-unsure';
+          } else if (conf === 'Guessing') {
+            profileLabel = 'Correct, guessed';
+            badgeClass = 'status-correct-guessed';
+          } else {
+            profileLabel = 'Correct (single question)';
+            badgeClass = 'status-correct-sure';
+          }
+        }
+
+        // Distractor interpretation (hypothetical only)
+        let distractorTag = null;
+        let distractorHypothesis = null;
+        if (!isNoAnswer && !isCorrect && q.distractors && resp.selected_option_id) {
+          const d = q.distractors[resp.selected_option_id];
+          if (d) {
+            distractorTag = d.tag;
+            distractorHypothesis = d.possible_interpretation;
+          }
+        }
+
+        // Evidence limit for EXPLAIN / JUSTIFY
+        let evidenceLimitNote = null;
+        if ((q.type === 'EXPLAIN' || q.type === 'JUSTIFY') && isCorrect) {
+          if (whyStatus === 'omitted' || whyStatus === 'placeholder') {
+            evidenceLimitNote = 'Selecting the supplied correct option without independent reasoning demonstrates recognition only. It does not demonstrate that the learner can construct an explanation or justification.';
+          } else {
+            evidenceLimitNote = 'Selected correct option with recorded reason (unreviewed). Demonstrates recognition and an unreviewed candidate route.';
+          }
+        }
+
+        rows.push({
+          question_id: q.id,
+          question_version: q.version || 1,
+          type: q.type,
+          level: q.level || 'D1',
+          stem_summary: q.stem.substring(0, 75) + '...',
+          selected_option_id: resp.selected_option_id,
+          response_kind: resp.response_kind,
+          is_correct: isCorrect,
+          confidence: conf,
+          profile_label: profileLabel,
+          badge_class: badgeClass,
+          why_status: whyStatus,
+          why_text_verbatim: whyVerbatim,
+          why_review: resp.why_review || 'unreviewed',
+          distractor_tag: distractorTag,
+          distractor_hypothesis: distractorHypothesis,
+          evidence_limit_note: evidenceLimitNote,
+          active_ms: resp.active_ms || 0,
+          wall_ms: resp.wall_ms || 0
+        });
+      });
+
+      return rows;
+    }
+
+    // --- VIEW 1: Diagnostic Execution Handlers ---
+    function startNewDiagnostic() {
+      STATE.diagAttempt = {
+        attemptId: generateId('att_diag'),
+        startedAt: new Date().toISOString(),
+        completed: false,
+        currentIndex: 0,
+        activeMs: new Array(TOTAL_QUESTIONS).fill(0),
+        wallMs: new Array(TOTAL_QUESTIONS).fill(0),
+        responses: QUESTIONS.map(q => ({
+          question_id: q.id,
+          question_version: q.version,
+          type: q.type,
+          level: q.level,
+          response_kind: null,
+          selected_option_id: null,
+          why_text: '',
+          confidence: null
+        }))
+      };
+
+      const now = performance.now();
+      questionEnterWallTimestamp = now;
+      lastActiveTimestamp = (isWindowFocused && isPageVisible) ? now : null;
+
+      renderDiagQuestion();
+      showView('diagnostic');
+    }
+
+    function renderDiagQuestion() {
+      const idx = STATE.diagAttempt.currentIndex;
+      const q = QUESTIONS[idx];
+      const r = STATE.diagAttempt.responses[idx];
+
+      // Stepper & Progress
+      document.getElementById('diag-stepper-text').textContent = `Question ${idx + 1} of ${TOTAL_QUESTIONS}`;
+      document.getElementById('diag-level-text').textContent = `Level ${q.level} · Unassisted Observation`;
+      const pct = ((idx + 1) / TOTAL_QUESTIONS) * 100;
+      document.getElementById('diag-progress-bar').style.width = pct + '%';
+
+      // Stem
+      document.getElementById('diag-question-stem').textContent = q.stem;
+
+      // Evidence Table if present
+      const tableWrapper = document.getElementById('diag-evidence-table-container');
+      if (q.evidence_table) {
+        let html = '<div class="evidence-table-wrapper"><table class="evidence-table"><thead><tr>';
+        q.evidence_table.columns.forEach(col => {
+          html += `<th>${escapeHtml(col)}</th>`;
+        });
+        html += '</tr></thead><tbody>';
+        q.evidence_table.rows.forEach(row => {
+          html += '<tr>';
+          row.forEach(cell => {
+            html += `<td>${escapeHtml(cell)}</td>`;
+          });
+          html += '</tr>';
+        });
+        html += '</tbody></table></div>';
+        tableWrapper.innerHTML = html;
+        tableWrapper.style.display = 'block';
+      } else {
+        tableWrapper.style.display = 'none';
+        tableWrapper.innerHTML = '';
+      }
+
+      // Options
+      renderDiagOptionsGroup();
+
+      // Confidence
+      renderDiagConfidenceButtons();
+
+      // Why Input (Optional)
+      const whyInput = document.getElementById('diag-why-input');
+      whyInput.value = r.why_text || '';
+
+      // Back / Next buttons
+      const btnBack = document.getElementById('btn-diag-back');
+      const btnNext = document.getElementById('btn-diag-next');
+      btnBack.style.display = idx > 0 ? 'inline-flex' : 'none';
+      btnNext.textContent = idx === TOTAL_QUESTIONS - 1 ? 'Submit Diagnostic' : 'Next Question';
+
+      hideDiagValidation();
+    }
+
+    function renderDiagOptionsGroup() {
+      const idx = STATE.diagAttempt.currentIndex;
+      const q = QUESTIONS[idx];
+      const r = STATE.diagAttempt.responses[idx];
+      const group = document.getElementById('diag-options-group');
+      group.innerHTML = '';
+
+      q.options.forEach(opt => {
+        const isSelected = r.response_kind === 'choice' && r.selected_option_id === opt.id;
+        const item = document.createElement('div');
+        item.className = 'option-item' + (isSelected ? ' selected' : '');
+        item.id = `diag-opt-${opt.id}`;
+        item.innerHTML = `
+          <input type="radio" name="diag_opt" id="radio-${opt.id}" ${isSelected ? 'checked' : ''}>
+          <label for="radio-${opt.id}">${escapeHtml(opt.id)}. ${escapeHtml(opt.text)}</label>
+        `;
+        item.addEventListener('click', () => {
+          r.response_kind = 'choice';
+          r.selected_option_id = opt.id;
+          hideDiagValidation();
+          renderDiagOptionsGroup();
+        });
+        group.appendChild(item);
+      });
+
+      // No answer option
+      const isNoAns = r.response_kind === 'no_answer';
+      const noAnsItem = document.createElement('div');
+      noAnsItem.className = 'option-item no-answer-card' + (isNoAns ? ' selected' : '');
+      noAnsItem.id = 'opt-diag-noanswer';
+      noAnsItem.innerHTML = `
+        <input type="radio" name="diag_opt" id="radio-noanswer" ${isNoAns ? 'checked' : ''}>
+        <label for="radio-noanswer">I prefer not to guess (no answer)</label>
+      `;
+      noAnsItem.addEventListener('click', () => {
+        r.response_kind = 'no_answer';
+        r.selected_option_id = null;
+        hideDiagValidation();
+        renderDiagOptionsGroup();
+      });
+      group.appendChild(noAnsItem);
+    }
+
+    function renderDiagConfidenceButtons() {
+      const idx = STATE.diagAttempt.currentIndex;
+      const r = STATE.diagAttempt.responses[idx];
+      ['sure', 'unsure', 'guessing'].forEach(k => {
+        const btn = document.getElementById('diag-conf-' + k);
+        const val = btn.getAttribute('data-val');
+        if (r.confidence === val) {
+          btn.classList.add('selected');
+        } else {
+          btn.classList.remove('selected');
+        }
+      });
+    }
+
+    document.querySelectorAll('#view-diagnostic .confidence-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = STATE.diagAttempt.currentIndex;
+        STATE.diagAttempt.responses[idx].confidence = btn.getAttribute('data-val');
+        hideDiagValidation();
+        renderDiagConfidenceButtons();
+      });
+    });
+
+    function showDiagValidation(msg) {
+      const alertEl = document.getElementById('diag-validation-alert');
+      alertEl.textContent = msg;
+      alertEl.style.display = 'block';
+    }
+
+    function hideDiagValidation() {
+      const alertEl = document.getElementById('diag-validation-alert');
+      alertEl.style.display = 'none';
+      alertEl.textContent = '';
+    }
+
+    function validateDiagQuestion() {
+      const idx = STATE.diagAttempt.currentIndex;
+      const r = STATE.diagAttempt.responses[idx];
+
+      // 1. Answer or no_answer is required
+      if (!r.response_kind) {
+        showDiagValidation('Please select an option or choose "I prefer not to guess (no answer)".');
+        return false;
+      }
+
+      // 2. Confidence is required
+      if (!r.confidence) {
+        showDiagValidation('Please select your confidence level: Sure, Unsure, or Guessing.');
+        return false;
+      }
+
+      // 3. Why text is OPTIONAL! Blank must never block Next/Submit.
+      const whyVal = document.getElementById('diag-why-input').value.trim();
+      r.why_text = whyVal;
+
+      hideDiagValidation();
+      return true;
+    }
+
+    document.getElementById('btn-diag-back').addEventListener('click', () => {
+      if (STATE.diagAttempt.currentIndex > 0) {
+        updateActiveAccumulator();
+        const now = performance.now();
+        if (questionEnterWallTimestamp !== null) {
+          STATE.diagAttempt.wallMs[STATE.diagAttempt.currentIndex] += (now - questionEnterWallTimestamp);
+        }
+        STATE.diagAttempt.responses[STATE.diagAttempt.currentIndex].why_text = document.getElementById('diag-why-input').value.trim();
+        STATE.diagAttempt.currentIndex--;
+        questionEnterWallTimestamp = now;
+        lastActiveTimestamp = isCurrentlyActive() ? now : null;
+        renderDiagQuestion();
+      }
+    });
+
+    document.getElementById('btn-diag-next').addEventListener('click', () => {
+      if (!validateDiagQuestion()) return;
+
+      updateActiveAccumulator();
+      const now = performance.now();
+      if (questionEnterWallTimestamp !== null) {
+        STATE.diagAttempt.wallMs[STATE.diagAttempt.currentIndex] += (now - questionEnterWallTimestamp);
+      }
+
+      if (STATE.diagAttempt.currentIndex < TOTAL_QUESTIONS - 1) {
+        STATE.diagAttempt.currentIndex++;
+        questionEnterWallTimestamp = now;
+        lastActiveTimestamp = isCurrentlyActive() ? now : null;
+        renderDiagQuestion();
+      } else {
+        submitNewDiagnostic();
+      }
+    });
+
+    function submitNewDiagnostic() {
+      STATE.diagAttempt.completed = true;
+      const submittedAt = new Date().toISOString();
+
+      // Build 1.1 record with why_requirement="optional"
+      const diagRecord = {
+        record_version: "1.1",
+        why_requirement: "optional",
+        attempt_id: STATE.diagAttempt.attemptId,
+        phase: "diagnose",
+        topic_id: QUESTION_BANK.topic_id,
+        bank_id: QUESTION_BANK.bank_id,
+        bank_version: QUESTION_BANK.bank_version,
+        level: "D1",
+        started_at: STATE.diagAttempt.startedAt,
+        submitted_at: submittedAt,
+        completed: true,
+        bank_snapshot: QUESTION_BANK,
+        responses: STATE.diagAttempt.responses.map((r, i) => {
+          const q = QUESTIONS[i];
+          const isNoAns = r.response_kind === 'no_answer';
+          const isCorrect = isNoAns ? null : (r.selected_option_id === q.correct_option_id);
+          let distractorTag = null;
+          let distractorInterp = null;
+          if (!isNoAns && !isCorrect && q.distractors && r.selected_option_id) {
+            const d = q.distractors[r.selected_option_id];
+            if (d) {
+              distractorTag = d.tag;
+              distractorInterp = d.possible_interpretation;
+            }
+          }
+          return {
+            response_id: `resp_${q.id}`,
+            question_id: q.id,
+            question_version: q.version,
+            type: q.type,
+            level: q.level,
+            response_kind: r.response_kind,
+            selected_option_id: r.selected_option_id,
+            why_text: r.why_text,
+            why_status: r.why_text.length > 0 ? 'provided' : 'omitted',
+            confidence: r.confidence,
+            active_ms: Math.round(STATE.diagAttempt.activeMs[i]),
+            wall_ms: Math.round(STATE.diagAttempt.wallMs[i]),
+            is_correct: isCorrect,
+            possible_misconception_tag: distractorTag,
+            possible_interpretation: distractorInterp,
+            why_review: "unreviewed"
+          };
+        }),
+        coverage_map_28: buildCoverageMap28(STATE.diagAttempt.responses),
+        assistance: {
+          hints_used: 0,
+          follow_up_questions: 0
+        }
+      };
+
+      const recordJson = JSON.stringify(diagRecord, null, 2);
+      const hash = calculateSha256(recordJson);
+
+      STATE.parentDiagnostic = diagRecord;
+      STATE.parentHash = hash;
+      STATE.parentSource = 'new_diagnostic_v1.1';
+      STATE.derivedProfile = deriveProfileFromRecord(diagRecord);
+
+      renderProfileView();
+      showView('profile');
+    }
+
+    function buildCoverageMap28(responses) {
+      const map = [];
+      const respByType = {};
+      responses.forEach(r => {
+        respByType[r.type] = r;
+      });
+
+      QRT_TYPES.forEach(t => {
+        QRT_LEVELS.forEach(lvl => {
+          const cellId = `${t}-${lvl}`;
+          if (lvl === 'D1') {
+            const r = respByType[t];
+            map.push({
+              cell_id: cellId,
+              type: t,
+              level: lvl,
+              status: 'assessed',
+              evidence: r ? [{
+                response_id: `resp_${r.question_id}`,
+                question_id: r.question_id,
+                question_version: r.question_version || 1,
+                response_kind: r.response_kind,
+                selected_option_id: r.selected_option_id,
+                is_correct: r.is_correct !== undefined ? r.is_correct : (r.selected_option_id ? (r.selected_option_id === QUESTION_BANK.questions.find(q=>q.id===r.question_id)?.correct_option_id) : null),
+                confidence: r.confidence
+              }] : []
+            });
+          } else {
+            map.push({
+              cell_id: cellId,
+              type: t,
+              level: lvl,
+              status: 'unassessed',
+              evidence: []
+            });
+          }
+        });
+      });
+      return map;
+    }
+
+    // --- VIEW 2: Profile Rendering ---
+    function renderProfileView() {
+      const sourceEl = document.getElementById('profile-source-info');
+      sourceEl.innerHTML = `
+        <strong>Attempt ID:</strong> ${escapeHtml(STATE.parentDiagnostic.attempt_id)} |
+        <strong>Source:</strong> ${escapeHtml(STATE.parentSource)} |
+        <strong>SHA-256:</strong> <code>${escapeHtml(STATE.parentHash.substring(0, 16))}...</code>
+      `;
+
+      const container = document.getElementById('profile-evidence-rows');
+      container.innerHTML = '';
+
+      STATE.derivedProfile.forEach((row, i) => {
+        const card = document.createElement('div');
+        card.className = 'evidence-row-card';
+        card.id = `evidence-row-${i + 1}`;
+
+        let reasonDisplay = '';
+        if (row.why_status === 'omitted') {
+          reasonDisplay = '<span style="color:var(--text-muted); font-style:italic;">Not recorded (omitted)</span>';
+        } else if (row.why_status === 'placeholder') {
+          reasonDisplay = `<span style="color:var(--text-muted); font-style:italic;">Not recorded (placeholder reasoning: "${escapeHtml(row.why_text_verbatim)}")</span>`;
+        } else {
+          reasonDisplay = `<span>"${escapeHtml(row.why_text_verbatim)}"</span> <span style="font-size:11px; color:var(--text-muted);">[${escapeHtml(row.why_review)}]</span>`;
+        }
+
+        let distractorHtml = '';
+        if (row.distractor_hypothesis) {
+          distractorHtml = `
+            <div class="distractor-warning">
+              <strong>Hypothetical interpretation (possibility only):</strong> ${escapeHtml(row.distractor_hypothesis)}
+              <div style="font-size:11px; margin-top:2px; color:#b45309;">(Tag: ${escapeHtml(row.distractor_tag)}) — Do not infer a child's diagnosis from synthetic trial.</div>
+            </div>
+          `;
+        }
+
+        let limitHtml = '';
+        if (row.evidence_limit_note) {
+          limitHtml = `<div class="evidence-limit-alert">${escapeHtml(row.evidence_limit_note)}</div>`;
+        }
+
+        card.innerHTML = `
+          <div class="evidence-row-header">
+            <div>
+              <span class="type-badge">${escapeHtml(row.type)} · ${escapeHtml(row.level)}</span>
+              <span style="font-size:13px; font-weight:600; margin-left:6px; color:var(--text-secondary);">${escapeHtml(row.question_id)}</span>
+            </div>
+            <span class="status-badge ${row.badge_class}">${escapeHtml(row.profile_label)}</span>
+          </div>
+          <div class="evidence-field">
+            <span class="evidence-label">Choice:</span> ${row.selected_option_id ? `Option ${escapeHtml(row.selected_option_id)}` : 'None (not answered)'} |
+            <span class="evidence-label">Confidence:</span> ${escapeHtml(row.confidence)}
+          </div>
+          <div class="evidence-field">
+            <span class="evidence-label">Learner Reason:</span> ${reasonDisplay}
+          </div>
+          ${distractorHtml}
+          ${limitHtml}
+        `;
+        container.appendChild(card);
+      });
+
+      // Render 28-cell grid
+      const gridWrapper = document.getElementById('profile-coverage-wrapper');
+      gridWrapper.innerHTML = renderCoverageGridHtml(STATE.parentDiagnostic.coverage_map_28 || buildCoverageMap28(STATE.parentDiagnostic.responses));
+    }
+
+    function renderCoverageGridHtml(coverageMap) {
+      const cellMap = {};
+      coverageMap.forEach(c => {
+        cellMap[c.cell_id] = c;
+      });
+
+      let html = '<table class="coverage-grid"><thead><tr><th>Level</th>';
+      QRT_TYPES.forEach(t => {
+        html += `<th>${escapeHtml(t)}</th>`;
+      });
+      html += '</tr></thead><tbody>';
+
+      QRT_LEVELS.forEach(lvl => {
+        html += `<tr><td style="font-weight:700; background:#f8fafc;">${escapeHtml(lvl)}</td>`;
+        QRT_TYPES.forEach(t => {
+          const cid = `${t}-${lvl}`;
+          const cell = cellMap[cid];
+          const isAssessed = cell && cell.status === 'assessed';
+          const isRechecked = cell && cell.evidence && cell.evidence.some(e => e.item_id === 'CONTACT-D1-SYNTHESIZE-02');
+          let cls = 'unassessed';
+          let label = 'Unassessed';
+          if (isRechecked) {
+            cls = 'rechecked';
+            label = 'Re-checked';
+          } else if (isAssessed) {
+            cls = 'assessed';
+            label = 'Assessed';
+          }
+          html += `<td><div class="cell-box ${cls}" id="grid-cell-${cid}">${escapeHtml(label)}</div></td>`;
+        });
+        html += '</tr>';
+      });
+
+      html += '</tbody></table>';
+      return html;
+    }
+
+    document.getElementById('btn-download-diag-json').addEventListener('click', () => {
+      if (!STATE.parentDiagnostic) return;
+      downloadJson(STATE.parentDiagnostic, `diagnostic-${STATE.parentDiagnostic.topic_id}-${STATE.parentDiagnostic.attempt_id}.json`);
+    });
+
+    document.getElementById('btn-open-lesson').addEventListener('click', () => {
+      startGuidedLesson();
+    });
+
+    // --- VIEW 3: Guided Pilot Lesson (SYNTHESIZE D1) Handlers ---
+    function startGuidedLesson() {
+      STATE.guidedUnit = {
+        unit_id: LEARNING_UNIT.unit_id,
+        version: LEARNING_UNIT.version,
+        topic_id: LEARNING_UNIT.topic_id,
+        target_type: LEARNING_UNIT.target_type,
+        level: LEARNING_UNIT.level,
+        stages_completed: [],
+        explanation_attempt: {
+          text: '',
+          opted_cannot_explain: false,
+          demonstrated: false
+        },
+        assistance_used: {
+          equation_revealed: false,
+          help_clicks: 0
+        },
+        feedback_exposed: true
+      };
+
+      // Reset stages
+      document.getElementById('lesson-stage-1').className = 'stage-card current';
+      document.getElementById('lesson-stage-1').style.display = 'block';
+      document.getElementById('stage-1-feedback').style.display = 'none';
+
+      document.getElementById('lesson-stage-2').className = 'stage-card';
+      document.getElementById('lesson-stage-2').style.display = 'none';
+      document.getElementById('stage-2-feedback').style.display = 'none';
+
+      document.getElementById('lesson-stage-3').className = 'stage-card';
+      document.getElementById('lesson-stage-3').style.display = 'none';
+      document.getElementById('stage-3-feedback').style.display = 'none';
+
+      document.getElementById('lesson-stage-4').className = 'stage-card';
+      document.getElementById('lesson-stage-4').style.display = 'none';
+      document.getElementById('stage-4-comparison').style.display = 'none';
+      document.getElementById('lesson-explain-input').value = '';
+      document.getElementById('peeked-equations-box').style.display = 'none';
+
+      showView('lesson');
+    }
+
+    // Stage 1 Choices
+    document.querySelectorAll('#stage-1-options .option-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('#stage-1-options .option-item').forEach(o => o.classList.remove('selected'));
+        item.classList.add('selected');
+        item.querySelector('input').checked = true;
+        document.getElementById('stage-1-feedback').style.display = 'block';
+        if (!STATE.guidedUnit.stages_completed.includes('whole')) {
+          STATE.guidedUnit.stages_completed.push('whole');
+        }
+      });
+    });
+
+    document.getElementById('btn-stage-1-next').addEventListener('click', () => {
+      document.getElementById('lesson-stage-1').className = 'stage-card completed';
+      const s2 = document.getElementById('lesson-stage-2');
+      s2.style.display = 'block';
+      s2.className = 'stage-card current';
+      s2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Stage 2 Choices
+    document.querySelectorAll('#stage-2-options .option-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('#stage-2-options .option-item').forEach(o => o.classList.remove('selected'));
+        item.classList.add('selected');
+        item.querySelector('input').checked = true;
+        document.getElementById('stage-2-feedback').style.display = 'block';
+        if (!STATE.guidedUnit.stages_completed.includes('part')) {
+          STATE.guidedUnit.stages_completed.push('part');
+        }
+      });
+    });
+
+    document.getElementById('btn-stage-2-next').addEventListener('click', () => {
+      document.getElementById('lesson-stage-2').className = 'stage-card completed';
+      const s3 = document.getElementById('lesson-stage-3');
+      s3.style.display = 'block';
+      s3.className = 'stage-card current';
+      s3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Stage 3 Choices
+    document.querySelectorAll('#stage-3-options .option-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('#stage-3-options .option-item').forEach(o => o.classList.remove('selected'));
+        item.classList.add('selected');
+        item.querySelector('input').checked = true;
+        document.getElementById('stage-3-feedback').style.display = 'block';
+        if (!STATE.guidedUnit.stages_completed.includes('distinguish')) {
+          STATE.guidedUnit.stages_completed.push('distinguish');
+        }
+      });
+    });
+
+    document.getElementById('btn-stage-3-next').addEventListener('click', () => {
+      document.getElementById('lesson-stage-3').className = 'stage-card completed';
+      const s4 = document.getElementById('lesson-stage-4');
+      s4.style.display = 'block';
+      s4.className = 'stage-card current';
+      s4.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Stage 4 Handlers
+    document.getElementById('btn-peek-equations').addEventListener('click', () => {
+      const box = document.getElementById('peeked-equations-box');
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
+      STATE.guidedUnit.assistance_used.equation_revealed = true;
+      STATE.guidedUnit.assistance_used.help_clicks++;
+    });
+
+    document.getElementById('btn-cannot-explain').addEventListener('click', () => {
+      saveExplanationAttempt('', true);
+    });
+
+    document.getElementById('btn-save-explanation').addEventListener('click', () => {
+      const text = document.getElementById('lesson-explain-input').value.trim();
+      saveExplanationAttempt(text, false);
+    });
+
+    function saveExplanationAttempt(text, optedCannotExplain) {
+      const demonstrated = !optedCannotExplain && text.length > 0;
+      STATE.guidedUnit.explanation_attempt = {
+        text: text,
+        opted_cannot_explain: optedCannotExplain,
+        demonstrated: demonstrated
+      };
+      if (!STATE.guidedUnit.stages_completed.includes('explain')) {
+        STATE.guidedUnit.stages_completed.push('explain');
+      }
+
+      // Hide actions
+      document.getElementById('stage-4-actions').style.display = 'none';
+
+      // Status note
+      const statusEl = document.getElementById('stage-4-demonstration-status');
+      if (demonstrated) {
+        statusEl.innerHTML = `<strong>Your attempt saved:</strong> "${escapeHtml(text)}" (Recorded as guided learning · unreviewed).`;
+      } else {
+        statusEl.innerHTML = `<strong>Status:</strong> Explanation has not yet been demonstrated unassisted.`;
+      }
+
+      document.getElementById('stage-4-comparison').style.display = 'block';
+      document.getElementById('stage-4-comparison').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    document.getElementById('btn-proceed-recheck').addEventListener('click', () => {
+      startRecheck();
+    });
+
+    // --- VIEW 4: Fresh Same-Cell Re-Check Handlers ---
+    function startRecheck() {
+      STATE.recheckState = {
+        startedAt: performance.now(),
+        isCommitted: false,
+        selectedOpt: null,
+        confidence: null,
+        whyText: '',
+        helpBeforeCommit: false,
+        activeMs: 0,
+        wallMs: 0
+      };
+
+      // Reset options & inputs
+      document.querySelectorAll('#recheck-options-group .option-item').forEach(o => {
+        o.classList.remove('selected');
+        o.querySelector('input').checked = false;
+      });
+      document.querySelectorAll('#view-recheck .confidence-btn').forEach(b => b.classList.remove('selected'));
+      document.getElementById('recheck-why-input').value = '';
+      document.getElementById('recheck-validation-alert').style.display = 'none';
+      document.getElementById('recheck-action-buttons').style.display = 'flex';
+      document.getElementById('recheck-feedback-area').style.display = 'none';
+      document.getElementById('recheck-feedback-area').innerHTML = '';
+
+      showView('recheck');
+    }
+
+    // Re-check options
+    document.querySelectorAll('#recheck-options-group .option-item').forEach(item => {
+      item.addEventListener('click', () => {
+        if (STATE.recheckState.isCommitted) return;
+        document.querySelectorAll('#recheck-options-group .option-item').forEach(o => o.classList.remove('selected'));
+        item.classList.add('selected');
+        const radio = item.querySelector('input');
+        radio.checked = true;
+        STATE.recheckState.selectedOpt = radio.value;
+        document.getElementById('recheck-validation-alert').style.display = 'none';
+      });
+    });
+
+    // Re-check confidence
+    document.querySelectorAll('#view-recheck .confidence-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (STATE.recheckState.isCommitted) return;
+        document.querySelectorAll('#view-recheck .confidence-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        STATE.recheckState.confidence = btn.getAttribute('data-val');
+        document.getElementById('recheck-validation-alert').style.display = 'none';
+      });
+    });
+
+    // Help before commit
+    document.getElementById('btn-recheck-help').addEventListener('click', () => {
+      if (STATE.recheckState.isCommitted) return;
+      STATE.recheckState.helpBeforeCommit = true;
+      STATE.recheckState.selectedOpt = 'no_answer';
+      STATE.recheckState.confidence = 'Unsure';
+      STATE.recheckState.whyText = 'Help requested before commitment';
+      commitRecheckAnswer();
+    });
+
+    // Commit answer
+    document.getElementById('btn-recheck-commit').addEventListener('click', () => {
+      if (STATE.recheckState.isCommitted) return;
+
+      const alertEl = document.getElementById('recheck-validation-alert');
+      if (!STATE.recheckState.selectedOpt) {
+        alertEl.textContent = 'Please select an option or choose "I prefer not to guess (no answer)".';
+        alertEl.style.display = 'block';
+        return;
+      }
+      if (!STATE.recheckState.confidence) {
+        alertEl.textContent = 'Please select your confidence level: Sure, Unsure, or Guessing.';
+        alertEl.style.display = 'block';
+        return;
+      }
+
+      STATE.recheckState.whyText = document.getElementById('recheck-why-input').value.trim();
+      commitRecheckAnswer();
+    });
+
+    function commitRecheckAnswer() {
+      STATE.recheckState.isCommitted = true;
+      const elapsedWall = Math.round(performance.now() - STATE.recheckState.startedAt);
+      STATE.recheckState.wallMs = elapsedWall;
+      STATE.recheckState.activeMs = elapsedWall;
+
+      const isNoAns = STATE.recheckState.selectedOpt === 'no_answer' || !STATE.recheckState.selectedOpt;
+      const isCorrect = isNoAns ? false : (STATE.recheckState.selectedOpt === LEARNING_UNIT.recheck.correct_option_id);
+
+      const respObj = {
+        item_id: LEARNING_UNIT.recheck.id,
+        version: LEARNING_UNIT.recheck.version,
+        type: LEARNING_UNIT.recheck.type,
+        level: LEARNING_UNIT.recheck.level,
+        response_kind: isNoAns ? 'no_answer' : 'choice',
+        selected_option_id: isNoAns ? null : STATE.recheckState.selectedOpt,
+        is_correct: isNoAns ? null : isCorrect,
+        confidence: STATE.recheckState.confidence,
+        why_text: STATE.recheckState.whyText,
+        why_status: STATE.recheckState.whyText.length > 0 ? 'provided' : 'omitted',
+        active_ms: STATE.recheckState.activeMs,
+        wall_ms: STATE.recheckState.wallMs,
+        help_before_commit: STATE.recheckState.helpBeforeCommit,
+        feedback_exposed: true,
+        is_first_commit: STATE.recheckResponse === null,
+        attempt_kind: STATE.recheckResponse === null ? 'fresh_check' : 'practice'
+      };
+
+      if (!STATE.recheckResponse) {
+        STATE.recheckResponse = respObj;
+      } else {
+        STATE.recheckPracticeAttempts.push(respObj);
+      }
+
+      // Hide actions
+      document.getElementById('recheck-action-buttons').style.display = 'none';
+
+      // Render post-commit feedback
+      renderRecheckFeedback(respObj);
+    }
+
+    function renderRecheckFeedback(resp) {
+      const area = document.getElementById('recheck-feedback-area');
+      area.style.display = 'block';
+
+      let html = '';
+      if (resp.help_before_commit) {
+        html = `
+          <div class="recheck-feedback-card incorrect">
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:6px;">Help Requested — Recorded as Gap</h3>
+            <p style="font-size:14px; line-height:1.4;">
+              Because assistance was requested before committing an independent answer, this check is recorded as not yet demonstrated unassisted.
+            </p>
+            <div class="stage-equation-box" style="margin-top:10px;">
+              <strong>Worked Solution:</strong><br>
+              1. Combined system A+B: a = 35 / (3 + 2) = 7 m/s² rightward.<br>
+              2. Block B (2 kg) receives force from A: C = m_B × a = 2 × 7 = 14 N to the right.<br>
+              3. By Newton's third law, B exerts an equal and opposite force on A: 14 N to the left.
+            </div>
+            <div style="margin-top:14px;">
+              <button type="button" class="btn btn-secondary" id="btn-recheck-retry">Try Again (Practice Only)</button>
+              <button type="button" class="btn btn-primary" id="btn-recheck-view-summary" style="margin-left:8px;">View Linked Session Summary -></button>
+            </div>
+          </div>
+        `;
+      } else if (resp.is_correct) {
+        html = `
+          <div class="recheck-feedback-card correct">
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:6px;">Correct: 14 N to the left (Option C)</h3>
+            <p style="font-size:14px; line-height:1.4;">
+              ${escapeHtml(LEARNING_UNIT.recheck.expected_reason)}
+            </p>
+            <div style="font-size:12px; margin-top:8px; color:#15803d; font-weight:600;">
+              Observed independent answer result. Single-item observation: never auto-declares mastery or promotes to D2.
+            </div>
+            <div style="margin-top:14px; display:flex; gap:10px;">
+              <button type="button" class="btn btn-secondary" id="btn-recheck-retry" style="flex:1;">Try Again (Practice Only)</button>
+              <button type="button" class="btn btn-primary" id="btn-recheck-view-summary" style="flex:1;">View Linked Session Summary -></button>
+            </div>
+          </div>
+        `;
+      } else {
+        // Wrong option
+        const d = LEARNING_UNIT.recheck.distractors[resp.selected_option_id];
+        const distractorNote = d ? d.possible_interpretation : 'Incorrect contact force value.';
+        html = `
+          <div class="recheck-feedback-card incorrect">
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:6px;">Result: Needs Practice</h3>
+            <p style="font-size:14px; line-height:1.4;">
+              Correct answer is <strong>C (14 N to the left)</strong>.
+            </p>
+            <div class="distractor-warning" style="margin:10px 0;">
+              <strong>Hypothetical Interpretation (possibility only):</strong> ${escapeHtml(distractorNote)}
+            </div>
+            <div class="stage-equation-box">
+              <strong>Worked Route:</strong><br>
+              • Combined system: a = 35 / (3 + 2) = 7 m/s² right.<br>
+              • Block B: contact force by A = 2 kg × 7 m/s² = 14 N right.<br>
+              • Reciprocal on A: 14 N left (Newton's 3rd law).<br>
+              • (Note: A's net force is 3 × 7 = 21 N right = 35 - 14).
+            </div>
+            <div style="margin-top:14px;">
+              <button type="button" class="btn btn-secondary" id="btn-recheck-retry">Try Again (Practice Only)</button>
+              <button type="button" class="btn btn-primary" id="btn-recheck-view-summary" style="margin-left:8px;">View Linked Session Summary -></button>
+            </div>
+          </div>
+        `;
+      }
+
+      area.innerHTML = html;
+
+      const retryBtn = document.getElementById('btn-recheck-retry');
+      if (retryBtn) {
+        retryBtn.addEventListener('click', () => {
+          STATE.recheckState.isCommitted = false;
+          STATE.recheckState.selectedOpt = null;
+          STATE.recheckState.confidence = null;
+          document.querySelectorAll('#recheck-options-group .option-item').forEach(o => o.classList.remove('selected'));
+          document.querySelectorAll('#view-recheck .confidence-btn').forEach(b => b.classList.remove('selected'));
+          document.getElementById('recheck-action-buttons').style.display = 'flex';
+          document.getElementById('recheck-feedback-area').style.display = 'none';
+        });
+      }
+
+      const summaryBtn = document.getElementById('btn-recheck-view-summary');
+      if (summaryBtn) {
+        summaryBtn.addEventListener('click', () => {
+          renderSummaryView();
+          showView('summary');
+        });
+      }
+    }
+
+    // --- VIEW 5: Linked Summary & Export Handlers ---
+    function renderSummaryView() {
+      // Build final P2 record object
+      const attemptId = STATE.p2Record ? STATE.p2Record.attempt_id : generateId('att_p2');
+      const nowIso = new Date().toISOString();
+
+      // Updated coverage map with re-check evidence on SYNTHESIZE-D1
+      const coverage = buildUpdatedCoverageMap();
+
+      STATE.p2Record = {
+        record_version: "2.0",
+        phase: "learn_recheck",
+        attempt_id: attemptId,
+        started_at: STATE.parentDiagnostic.started_at,
+        completed_at: nowIso,
+        completed: true,
+        topic_id: QUESTION_BANK.topic_id,
+        level: "D1",
+        parent_diagnostic: {
+          parent_attempt_id: STATE.parentDiagnostic.attempt_id,
+          parent_source: STATE.parentSource,
+          parent_hash_sha256: STATE.parentHash,
+          raw_record: STATE.parentDiagnostic
+        },
+        why_policy: {
+          version: "1.1",
+          rule: "optional"
+        },
+        derived_profile: STATE.derivedProfile,
+        guided_unit: STATE.guidedUnit,
+        recheck_response: STATE.recheckResponse,
+        recheck_practice_attempts: STATE.recheckPracticeAttempts,
+        coverage_map_28: coverage,
+        assistance: {
+          diagnostic_help: { hints_used: 0, follow_up_questions: 0 },
+          guided_lesson_help: STATE.guidedUnit ? STATE.guidedUnit.assistance_used : null,
+          recheck_help_before_commit: STATE.recheckResponse ? STATE.recheckResponse.help_before_commit : false
+        }
+      };
+
+      document.getElementById('summary-meta-info').textContent =
+        `Attempt ID: ${STATE.p2Record.attempt_id} · Parent Hash: ${STATE.parentHash.substring(0, 12)}...`;
+
+      // 1. Frozen Parent Diagnostic Summary
+      const parentContainer = document.getElementById('summary-parent-evidence');
+      parentContainer.innerHTML = '';
+      STATE.derivedProfile.forEach(r => {
+        const item = document.createElement('div');
+        item.style.padding = '8px 12px';
+        item.style.borderBottom = '1px solid var(--border)';
+        item.style.fontSize = '13px';
+        item.style.display = 'flex';
+        item.style.justifyContent = 'space-between';
+        item.style.alignItems = 'center';
+        item.innerHTML = `
+          <div>
+            <strong>${escapeHtml(r.type)} · ${escapeHtml(r.level)}</strong>
+            <span style="color:var(--text-muted); margin-left:8px;">${escapeHtml(r.selected_option_id ? `Option ${r.selected_option_id}` : 'No answer')}</span>
+          </div>
+          <span class="status-badge ${r.badge_class}">${escapeHtml(r.profile_label)}</span>
+        `;
+        parentContainer.appendChild(item);
+      });
+
+      // 2. Guided Unit Card
+      const guidedCard = document.getElementById('summary-guided-card');
+      const g = STATE.guidedUnit;
+      if (g) {
+        guidedCard.innerHTML = `
+          <div style="font-weight:700; font-size:14px; margin-bottom:6px;">Unit: ${escapeHtml(g.unit_id)} (v${g.version})</div>
+          <div style="font-size:13px; color:var(--text-secondary); line-height:1.4;">
+            <strong>Stages completed:</strong> ${escapeHtml(g.stages_completed.join(', '))}<br>
+            <strong>Explanation:</strong> ${g.explanation_attempt.demonstrated ? `"${escapeHtml(g.explanation_attempt.text)}" (guided learning · unreviewed)` : '<span style="color:var(--text-muted); font-style:italic;">Not demonstrated unassisted</span>'}<br>
+            <strong>Assistance used:</strong> ${g.assistance_used.equation_revealed ? `Equation peeked (${g.assistance_used.help_clicks} click/s)` : 'None'}
+          </div>
+        `;
+      }
+
+      // 3. Re-Check Card
+      const rcCard = document.getElementById('summary-recheck-card');
+      const rc = STATE.recheckResponse;
+      if (rc) {
+        rcCard.innerHTML = `
+          <div class="evidence-row-header">
+            <div>
+              <span class="type-badge">${escapeHtml(rc.type)} · ${escapeHtml(rc.level)}</span>
+              <span style="font-size:13px; font-weight:600; margin-left:6px;">Item: ${escapeHtml(rc.item_id)}</span>
+            </div>
+            <span class="status-badge ${rc.is_correct ? 'status-correct-sure' : (rc.response_kind === 'no_answer' ? 'status-noanswer' : 'status-practice')}">
+              ${rc.is_correct ? 'Correct (14 N left)' : (rc.response_kind === 'no_answer' ? 'Not answered' : 'Needs practice')}
+            </span>
+          </div>
+          <div class="evidence-field">
+            <span class="evidence-label">Selected:</span> ${rc.selected_option_id ? `Option ${escapeHtml(rc.selected_option_id)}` : 'None'} |
+            <span class="evidence-label">Confidence:</span> ${escapeHtml(rc.confidence)} |
+            <span class="evidence-label">Time:</span> ${rc.wall_ms}ms (active: ${rc.active_ms}ms)
+          </div>
+          <div class="evidence-field">
+            <span class="evidence-label">Reasoning:</span> ${rc.why_text ? `"${escapeHtml(rc.why_text)}"` : '<span style="color:var(--text-muted); font-style:italic;">Not recorded (omitted)</span>'}
+          </div>
+          <div class="evidence-field">
+            <span class="evidence-label">Help before commit:</span> ${rc.help_before_commit ? 'Yes (recorded as gap)' : 'No (independent)'}
+          </div>
+        `;
+      }
+
+      // 4. Coverage grid
+      const covWrapper = document.getElementById('summary-coverage-wrapper');
+      covWrapper.innerHTML = renderCoverageGridHtml(coverage);
+    }
+
+    function buildUpdatedCoverageMap() {
+      const baseMap = STATE.parentDiagnostic.coverage_map_28 || buildCoverageMap28(STATE.parentDiagnostic.responses);
+      // Deep clone map
+      const newMap = JSON.parse(JSON.stringify(baseMap));
+
+      // Append fresh recheck evidence to SYNTHESIZE-D1 cell
+      const synCell = newMap.find(c => c.cell_id === 'SYNTHESIZE-D1');
+      if (synCell && STATE.recheckResponse) {
+        synCell.evidence.push({
+          item_id: STATE.recheckResponse.item_id,
+          item_version: STATE.recheckResponse.version,
+          response_kind: STATE.recheckResponse.response_kind,
+          selected_option_id: STATE.recheckResponse.selected_option_id,
+          is_correct: STATE.recheckResponse.is_correct,
+          confidence: STATE.recheckResponse.confidence,
+          phase: 'recheck',
+          help_before_commit: STATE.recheckResponse.help_before_commit
+        });
+      }
+      return newMap;
+    }
+
+    document.getElementById('btn-download-p2-json').addEventListener('click', () => {
+      if (!STATE.p2Record) return;
+      downloadJson(STATE.p2Record, `learning-session-newtons-laws-contact-blocks-${STATE.p2Record.attempt_id}.json`);
+    });
+
+    document.getElementById('btn-summary-home').addEventListener('click', () => {
+      showView('entry');
+    });
+
+    function downloadJson(obj, filename) {
+      const jsonStr = JSON.stringify(obj, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
