@@ -1,17 +1,19 @@
-# Newton's laws · WBS 1.1 / M0, B1 · personal-use draft
+# Newton's laws B1 — Owner-first mechanics demo (draft, not accepted)
 
-This standalone learner slice shows **two of 39** independently authored NLM bank items, **not original exam questions**. Bank custody: `TEST/physics-research/question_bank_mechanics_grade9.v1.json` at `455103ad312ab8b6627aa7a1199b0bd7d5b0af8e` (SHA-256 `c87ad141e4db355276b8ae4e2afb925663b12d5b0e55761df763ee1c7b387685`). Never claim a benchmark exam PDF was available.
+WBS **1.1 / M0 / B1**; sealed [Oracle O4 round 2](https://github.com/reallakshman19/CoordinatorLandingpage/issues/128#issuecomment-6355691618). Independently authored Newton's-laws bank (39 rows), **not original exam questions**; no learner outcomes yet.
 
-**Order:** PHYS-NLM-001 original unchanged → PHYS-NLM-002 one documented adapted choice set → PHYS-NLM-001 original repeated as supported practice, **not unseen assessment/transfer**. The two initial attempts collect letter, short explanation, uncertainty and assistance status without hints/reveal. Then authored H1/H2/H3 and intentional teacher-answer disclosure are logged as assistance; source hints are preserved and visually separated. Download session JSON before refresh, because this personal-use prototype stores no persistent learner profile.
+**Two original source IDs:** PHYS-NLM-001 and PHYS-NLM-002, 2/39 unique coverage. First answer 001 and 002 without help, recording your choice, explanation and uncertainty. **Both selected-answer feedback panels unlock together only after the second attempt**. The 001 question uses its **exact authored-bank original** wording, key A and fields. 002 has **one documented adaptation** with key restored to source position A: A–strap is the correct equal/opposite 40 N interaction; B–strap is a reciprocal pair at a **different contact**; C/D are same-recipient traps. Source bank rows are preserved verbatim; detailed option provenance and differences live in `display-variants.v1.json`.
 
-**Only 002 is adapted**, for the source's asymmetrical 40 N/reverse-force detail and the previous display's dropped magnitude/direction and actor-mirror cue. The complete original rows and 002's exact variant change list live in `source-rows.v1.json` and `display-variants.v1.json`. 001 retains exact stem/options/key/figure. The source's 002 EXPLAIN-D1 label is preserved; Oracle O4's derived primary RETRIEVE-D1 ruling pertains to *this choice-identification action* and does not rewrite the bank. Both bank rows lack canonical `answer.crux_move_ref` binding.
+Then practise the **already-seen 001** (not unseen transfer), use newly authored H1/H2/H3, deliberately reveal the 001/002 teacher answers, download the timestamped attempts/help record, and reset. The source's immediately decisive H1 is not used as a preattempt scaffold. Feedback exposure and reveal are logged as support. Written explanations are **observations, never automatically graded misconceptions/mastery**.
 
-**Reproduce evidence** from the repo root:
+Source bank reference: `455103ad312ab8b6627aa7a1199b0bd7d5b0af8e`, SHA-256 `c87ad141e4db355276b8ae4e2afb925663b12d5b0e55761df763ee1c7b387685`. Original 001 source `SHARED_WORD_KEY_ONLY` flag for "upward" remains pending the independent physics/cue check. Source 002 PHYS-EXPLAIN-D1 stays unchanged; derived RETRIEVE-D1 follows Oracle's ruling. Canonical crux binding is missing in these authored rows.
+
+**Owner demo and offline cache:** Use the separately delivered version-pinned local launcher ZIP. It downloads the exact PR-head files over HTTPS, checks all SHA-256 digests and launches `http://127.0.0.1:8765/standalone/practice/nlm-core2-first-slice.html`. The first setup needs an Internet connection. Files then remain on the Owner's computer; no student work leaves the browser unless intentionally exported.
+
+**Technical checks with a prepared checkout:**
 ```sh
 python /path/to/Common/skills/agent-work/nudge-designer/scripts/nd_item_cues.py --items Physics/content/nlm-personal-use/cue-final-items.json
 node Physics/content/nlm-personal-use/benchmark.mjs
 python Physics/content/nlm-personal-use/benchmark-browser.py
 ```
-`cue-screen-output.json` holds the actual two-item cue result. Original 001 triggers the correct-only shared word `upward`; retain the source, flag the cue for reviewer judgment. The mechanical screen is **not** academic acceptance. See `benchmark-report.md` for precise executed-vs-NOT_RUN outcomes, CI infrastructure 404 and remaining checker work.
-
-**Status:** DRAFT / producer SELF-ASSESSED; no executable browser verdict or learner mastery claimed. OTM routes the frozen candidate to IR-G9V35 for independent checking; producer cannot accept, merge, or release it.
+See `benchmark-report.md` for exact observed vs NOT_RUN evidence, cue dispositions, CI infrastructure scope, and falsifiers. These checks do **not** replace the independent IR-G9V35 scientific/cue verdict or Owner acceptance. Do not use with the learner before that check.
