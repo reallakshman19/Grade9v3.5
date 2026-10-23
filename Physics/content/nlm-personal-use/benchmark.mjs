@@ -12,6 +12,8 @@ import {dirname,resolve} from 'node:path';
 const dir=dirname(fileURLToPath(import.meta.url));
 const source=JSON.parse(readFileSync(resolve(dir,'source-rows.v1.json'),'utf8'));
 const display=JSON.parse(readFileSync(resolve(dir,'display-variants.v1.json'),'utf8'));
+const cueFixture=JSON.parse(readFileSync(resolve(dir,'cue-final-items.json'),'utf8'));
+
 const html=readFileSync(resolve(dir,'../../../standalone/practice/nlm-core2-first-slice.html'),'utf8');
 const sourceIDs=['PHYS-NLM-001','PHYS-NLM-002'];
 const rowDigests=['d00fe1196ad1f344da0b9560c2068ebcc80db08bddc180fabe7eb492c96a5a52','27e3ce8879503452fcca0521f9dc865234e900486340a8401b7a49c1919f5148'];
@@ -24,9 +26,24 @@ function verifySource(rows){
 }
 function verifyDisplay(v){
  assert.deepEqual(v.items.map(x=>x.source_id),sourceIDs);
- assert.deepEqual(v.items.map(x=>x.variant_id),['PHYS-NLM-001-PU1','PHYS-NLM-002-PU1']);
+ assert.deepEqual(v.items.map(x=>x.variant_id),['PHYS-NLM-001','PHYS-NLM-002-PU1']);
  assert.deepEqual(v.items.map(x=>x.key),['A','C']);
- v.items.forEach((x,i)=>{assert.equal(x.stem,source.source_questions[i].stem);assert.deepEqual(x.figure,source.source_questions[i].figure);assert.deepEqual(x.system_parameters,source.source_questions[i].system_parameters);assert.equal(x.origin,'ADAPTED_AUTHORED_PRACTICE');assert.ok(x.changes.length);assert.deepEqual(Object.keys(x.options),['A','B','C','D'])});
+ const original=v.items[0],originalSource=source.source_questions[0];
+ assert.equal(original.origin,'AUTHORED_BANK_ITEM_UNMODIFIED');
+ assert.deepEqual(original.changes,[]);
+ assert.deepEqual(original.options,originalSource.options);
+ assert.equal(original.key,originalSource.correct_answer);
+ const adapted=v.items[1],source002=source.source_questions[1];
+ assert.equal(adapted.origin,'ADAPTED_AUTHORED_PRACTICE');
+ assert.ok(adapted.adaptation_defect_note.includes('40 N'));
+ assert.ok(adapted.changes.length>=4);
+ assert.equal(source002.correct_answer,'A');
+ assert.equal(adapted.key,'C');
+ assert.ok(adapted.options.C.includes('strap pulls A right with 40 N'));
+ assert.ok(adapted.options.C.includes('A pulls the strap left with 40 N'));
+ assert.ok(adapted.options.B.includes('other end'));
+ assert.ok(!adapted.options.B.includes('40 N; the strap pulls B right with 40 N'));
+ v.items.forEach((x,i)=>{assert.equal(x.stem,source.source_questions[i].stem);assert.deepEqual(x.figure,source.source_questions[i].figure);assert.deepEqual(x.system_parameters,source.source_questions[i].system_parameters);assert.deepEqual(Object.keys(x.options),['A','B','C','D'])});
  assert.equal(v.exposure.length,3);assert.ok(v.exposure[2].includes('already exposed'));
 }
 function verifyPreAttempt(txt){
@@ -40,7 +57,7 @@ function verifyPreAttempt(txt){
  assert.ok(txt.includes('state.stage<2')&&txt.includes('state.stage++'));
 }
 test('two authored source IDs + fixed per-row SHA-256, complete custody fields',()=>{assert.equal(source.bank_denominator,39);verifySource(source.source_questions)});
-test('variants are exactly two labeled source-backed adaptations; source conditions and figures preserved',()=>verifyDisplay(display));
+test('001 is original exact options and 002 is sole documented adaptation; preserve original conditions/figures',()=>verifyDisplay(display));
 test('displayed stems and hint provenance bound to source',()=>{assert.equal(display.items[0].scaffolds.length,3);assert.deepEqual(display.items[0].scaffolds.map(s=>s.role),['CLARIFY','CORRELATE','OPEN_THE_WAY']);assert.equal(source.source_questions[0].progressive_hints.length,3)});
 test('the standalone payload matches custody and display',()=>{
  const match=html.match(/<script type="application\/json" id="nlm-payload">([\s\S]*?)<\/script>/);
@@ -70,6 +87,18 @@ test('negative control: pre-attempt answer disclosure is rejected',()=>{
  const bad=html.replace('<div id="workspace"></div>','<div id="workspace">Correct adapted option: A</div>');
  assert.notEqual(bad,html);assert.throws(()=>verifyPreAttempt(bad));
 });
+test('negative control: source 001 option mutation is rejected',()=>{
+ const bad=structuredClone(display);bad.items[0].options.A='Toward roof (unauthorized)';
+ assert.throws(()=>verifyDisplay(bad));
+});
+test('negative control: 002 reciprocal force magnitude or direction removed is rejected',()=>{
+ const bad=structuredClone(display);bad.items[1].options.C='A pulls the strap; the strap pulls A';
+ assert.throws(()=>verifyDisplay(bad));
+});
+test('negative control: original 001 adapted origin is rejected',()=>{
+ const bad=structuredClone(display);bad.items[0].origin='ADAPTED_AUTHORED_PRACTICE';
+ assert.throws(()=>verifyDisplay(bad));
+});
 test('negative control: wrong display key is rejected',()=>{
  const bad=structuredClone(display);bad.items[1].key='A';assert.throws(()=>verifyDisplay(bad));
 });
@@ -85,9 +114,17 @@ function cue(row){
  if(mark[row.key].length&&!Object.entries(mark).some(([id,a])=>id!==row.key&&a.length))flags.push('REASONING_KEY_ONLY');
  return {id:row.variant_id,word_counts:wc,correct_only_question_words:shared,reasoning_markers:mark,flags};
 }
+test('exact final displayed options match saved cue-tool input',()=>{
+ assert.deepEqual(cueFixture.items.map(x=>x.id),sourceIDs);
+ cueFixture.items.forEach((row,i)=>{
+  assert.equal(row.question,display.items[i].stem);
+  assert.equal(row.answer,display.items[i].key);
+  assert.deepEqual(row.options, Object.entries(display.items[i].options).map(([id,text])=>({id,text})));
+ });
+});
 test('cue-equivalent screen (does NOT approve subject quality)',()=>{
  const cues=display.items.map(cue);
- assert.deepEqual(cues.map(x=>x.flags),[[],[]]);
+ assert.deepEqual(cues.map(x=>x.flags),[['SHARED_WORD_KEY_ONLY'],[]]);
  console.log('CUE_SCREEN',JSON.stringify(cues));
 });
 try{
