@@ -1,6 +1,6 @@
 {
-  "schema": "nlm-display-variants/v1",
-  "variant_policy": "Precisely one labeled adaptation per selected authored bank row; no changes to stored source rows. Two source IDs, not four new source questions.",
+  "schema": "nlm-display-slice/v2",
+  "variant_policy": "Exactly source-authored 001 with unchanged stem/options/key/conditions/figure plus at most one documented 002 derived adaptation. Original source rows retained verbatim.",
   "exposure": [
     "PHYS-NLM-001",
     "PHYS-NLM-002",
@@ -9,8 +9,8 @@
   "items": [
     {
       "source_id": "PHYS-NLM-001",
-      "variant_id": "PHYS-NLM-001-PU1",
-      "origin": "ADAPTED_AUTHORED_PRACTICE",
+      "variant_id": "PHYS-NLM-001",
+      "origin": "AUTHORED_BANK_ITEM_UNMODIFIED",
       "stem": "A service lift is descending but its downward speed is decreasing. Taking upward as positive, what direction must its net force point?",
       "figure": {
         "has_figure": false,
@@ -19,15 +19,13 @@
       },
       "system_parameters": {},
       "options": {
-        "A": "Toward the roof.",
-        "B": "Toward the floor.",
-        "C": "Zero net force.",
-        "D": "Cannot be determined."
+        "A": "Upward, since its acceleration opposes its downward velocity.",
+        "B": "Downward, because it is moving downward.",
+        "C": "Zero, because the slowing is steady.",
+        "D": "The direction cannot be inferred without its mass."
       },
       "key": "A",
-      "changes": [
-        "Source options A-D rewritten as parallel short phrases: A roof, B floor, C zero, D indeterminate; original reasons preserved in source-rows.v1.json; correctness/conditions unchanged."
-      ],
+      "changes": [],
       "scaffolds": [
         {
           "tier": 1,
@@ -62,7 +60,13 @@
         "B": "This identifies the direction of travel, not necessarily the direction of acceleration. Compare two velocity values.",
         "C": "A steady slowing is still a change in velocity. Zero net force would mean constant velocity.",
         "D": "Mass affects magnitude, but a positive mass does not obscure the direction when acceleration direction is known."
-      }
+      },
+      "source_provenance": {
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q01",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "source_qrt": "PHYS-APPLY-D1"
     },
     {
       "source_id": "PHYS-NLM-002",
@@ -76,14 +80,18 @@
       },
       "system_parameters": {},
       "options": {
-        "A": "A pulls the strap; gravity pulls A.",
-        "B": "A pulls the strap; B pulls the strap.",
-        "C": "A pulls the strap; the strap pulls A.",
-        "D": "The strap pulls A; the floor pushes A."
+        "A": "A pulls the strap left with 40 N; gravity pulls A down.",
+        "B": "A pulls the strap left with 40 N; the strap pulls B at its other end.",
+        "C": "A pulls the strap left with 40 N; the strap pulls A right with 40 N.",
+        "D": "The strap pulls A right with 40 N; gravity pulls A down."
       },
       "key": "C",
       "changes": [
-        "Source A (correct) moved to C and rewritten in parallel verb form; source C moved to A; B and D rewritten in parallel verb form; resulting key C; magnitude and direction conditions kept in stem; source remains unchanged"
+        "Source keyed A is rewritten for explicit equal magnitude and opposite direction and moved to displayed C; correct interaction remains A-on-strap / strap-on-A, 40 N left/right.",
+        "Source B: A-on-strap and B-on-strap rewritten as two separate interaction partners at different strap ends (display B: A-on-strap / strap-on-B), not a same-contact reciprocal pair; added B-contact description from stated robot–strap setup, but no B force magnitude or equilibrium assumed.",
+        "Source C: A-on-strap and A's weight changed to A-on-strap and gravity-on-A with explicit A's 40 N left on strap; moved to displayed A.",
+        "Source D: strap-on-A and floor-on-A rewritten as strap-on-A and gravity-on-A so both forces on A are physically unambiguous without presuming robot-floor contact; displayed D.",
+        "All display option edits are distinct from the unaltered source; original stem/40 N left condition, figure, authored provenance, source key A and source QRT EXPLAIN-D1 preserved in source-rows.v1.json."
       ],
       "scaffolds": [],
       "teacher": {
@@ -95,11 +103,18 @@
         ]
       },
       "feedback": {
-        "A": "These are different interactions, not two directions of one A–strap contact.",
-        "B": "Both of these forces are exerted on the strap. They do not make an action–reaction pair with each other.",
-        "C": "These are forces at the same contact, with different objects receiving each force.",
-        "D": "Both forces act on A and come from different interactions."
-      }
+        "A": "Different interactions: gravity-on-A and A-on-strap are not the reciprocal pair of one contact.",
+        "B": "The listed strap-on-B force occurs at the other robot's connection, not at A's connection; identify the recipient at A's specific contact.",
+        "C": "At A's contact, these forces are equal/opposite 40 N and act on A and strap respectively; read the written reasoning before comparing with the teacher answer.",
+        "D": "Both listed forces act on A, so they are not a third-law pair of each other."
+      },
+      "adaptation_defect_note": "Source keyed A alone stated opposite 40 N reaction with rightward force while all distractors had less magnitude/direction specificity; previous PU1 wrongly omitted 40 N/rightward and exposed a uniquely bare actor/object reversal. This replacement retains scientific pair detail and tests same-contact force owners with comparable actor-action constructions. Semantic cue risk remains for independent review.",
+      "source_provenance": {
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q02",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "source_qrt": "PHYS-EXPLAIN-D1"
     }
   ],
   "interpretations": {
@@ -110,7 +125,12 @@
       "secondary": "REPRESENT",
       "difficulty": "D1",
       "reason": "One signed-motion inference followed by Newton II; a single decisive mapping to the force sign remains.",
-      "review": "PRODUCER_ONLY"
+      "review": "PRODUCER_ONLY",
+      "binding": {
+        "source_crux_move_ref": null,
+        "source_reasoning_route_present": false,
+        "status": "STRUCTURAL_GAP_NO_CANONICAL_ANSWER_CRUX_MOVE_REF_IN_BANK_ROW"
+      }
     },
     "PHYS-NLM-002": {
       "source_cell": "PHYS-EXPLAIN-D1",
@@ -119,7 +139,13 @@
       "secondary": "EXPLAIN when learner independently supplies a why",
       "difficulty": "D1",
       "reason": "The option choice classifies an interaction pair using the two participating bodies; it does not require a causal explanation of why a relation holds. Written justification is captured but not machine graded.",
-      "review": "DISPUTED_ORACLE_RECONCILIATION_REQUIRED"
+      "review": "ORACLE_O4_RULED_DERIVED_PRIMARY_RETRIEVE_D1_SOURCE_EXPLAIN_D1_UNCHANGED",
+      "binding": {
+        "source_crux_move_ref": null,
+        "source_reasoning_route_present": false,
+        "status": "STRUCTURAL_GAP_NO_CANONICAL_ANSWER_CRUX_MOVE_REF_IN_BANK_ROW",
+        "derived_operation": "classify by same A-strap contact, two distinct receiving bodies; no second canonical crux authored"
+      }
     }
   }
 }
