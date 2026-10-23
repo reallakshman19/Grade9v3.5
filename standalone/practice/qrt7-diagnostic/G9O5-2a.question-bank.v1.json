@@ -1,0 +1,368 @@
+{
+  "schema_version": "1.0",
+  "bank_id": "G9V35-QRT-CONTACT-D1",
+  "bank_version": "1",
+  "status": "DRAFT_OWNER_TRIAL_ONLY",
+  "author": "ORACLE · G9V35-O5",
+  "learner_grade": 10,
+  "exam_target": "JEE Main",
+  "exam_year": null,
+  "topic_id": "newtons-laws.contact-blocks",
+  "topic_title": "Newton's laws for touching blocks",
+  "level": "D1",
+  "qrt_types": [
+    "RETRIEVE",
+    "EXPLAIN",
+    "APPLY",
+    "MODEL",
+    "REPRESENT",
+    "SYNTHESIZE",
+    "JUSTIFY"
+  ],
+  "qrt_levels": [
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+  ],
+  "level_note": "Proposed baseline tags. D1 means the smallest familiar demand within each type; SYNTHESIZE still requires a short dependent chain. Tags require non-author checking; this bank is not calibrated to JEE Main exam difficulty.",
+  "sources": [
+    {
+      "title": "OpenStax: Newton's third law",
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/5-5-newtons-third-law"
+    },
+    {
+      "title": "OpenStax: Newton's second law",
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/5-3-newtons-second-law"
+    }
+  ],
+  "questions": [
+    {
+      "id": "CONTACT-D1-APPLY-01",
+      "version": 1,
+      "type": "APPLY",
+      "level": "D1",
+      "stem": "Block A (2 kg) pushes block B (3 kg) with 8 N to the right. What contact force does B exert on A?",
+      "options": [
+        {
+          "id": "A",
+          "text": "8 N to the right."
+        },
+        {
+          "id": "B",
+          "text": "12 N to the left."
+        },
+        {
+          "id": "C",
+          "text": "0 N."
+        },
+        {
+          "id": "D",
+          "text": "8 N to the left."
+        }
+      ],
+      "correct_option_id": "D",
+      "expected_reason": "Apply the third law to the specified interaction: equal magnitude 8 N, opposite direction left, received by A. The mass ratio does not scale this pair.",
+      "type_rationale": "Uses a known law directly on a specified interaction.",
+      "distractors": {
+        "A": {
+          "tag": "PAIR_DIRECTION_UNCHANGED",
+          "possible_interpretation": "May preserve magnitude without reversing direction."
+        },
+        "B": {
+          "tag": "PAIR_SCALED_BY_MASS",
+          "possible_interpretation": "May multiply the force by the 3/2 mass ratio."
+        },
+        "C": {
+          "tag": "PAIR_MEANS_ZERO_FORCE",
+          "possible_interpretation": "May replace either member of a force pair with the combined sum."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-SYNTHESIZE-01",
+      "version": 1,
+      "type": "SYNTHESIZE",
+      "level": "D1",
+      "stem": "A (2 kg, on the left) and B (3 kg, on the right) touch on a frictionless horizontal table. A 15 N horizontal push acts rightward on A and they remain in contact. What contact force does B exert on A?",
+      "options": [
+        {
+          "id": "A",
+          "text": "15 N to the left."
+        },
+        {
+          "id": "B",
+          "text": "6 N to the left."
+        },
+        {
+          "id": "C",
+          "text": "9 N to the left."
+        },
+        {
+          "id": "D",
+          "text": "0 N."
+        }
+      ],
+      "correct_option_id": "C",
+      "expected_reason": "Choose a route: for A+B, a=15/(2+3)=3 m/s² right. Isolate B: A's contact force on B=3×3=9 N right. The reciprocal force on A is 9 N left. An equivalent consistent route is acceptable.",
+      "type_rationale": "Must choose and connect a short dependent route through the combined system and an individual body; no route or intermediate acceleration is given.",
+      "distractors": {
+        "A": {
+          "tag": "ENTIRE_PUSH_TRANSMITTED",
+          "possible_interpretation": "May equate the contact force to the full external push."
+        },
+        "B": {
+          "tag": "NET_FORCE_CONFUSED_WITH_CONTACT",
+          "possible_interpretation": "May report A's net force, 2×3=6 N, as the contact force."
+        },
+        "D": {
+          "tag": "INTERNAL_FORCE_CALLED_ZERO",
+          "possible_interpretation": "May treat an internal force as individually zero because the pair cancels in a combined sum."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-REPRESENT-01",
+      "version": 1,
+      "type": "REPRESENT",
+      "level": "D1",
+      "stem": "On block B, block A exerts 6 N to the right and the table exerts 2 N of friction to the left. Right is positive. Which equation translates these words into the net horizontal force on B?",
+      "options": [
+        {
+          "id": "A",
+          "text": "F_net,x = (6 + 2) N."
+        },
+        {
+          "id": "B",
+          "text": "F_net,x = (6 - 2) N."
+        },
+        {
+          "id": "C",
+          "text": "F_net,x = (2 - 6) N."
+        },
+        {
+          "id": "D",
+          "text": "F_net,x = (6 - 2 - 6) N."
+        }
+      ],
+      "correct_option_id": "B",
+      "expected_reason": "Translate the supplied directions and axis: +6 N from A and -2 N from the table. B's reciprocal force on A does not belong in B's force sum.",
+      "type_rationale": "Translates a verbal description into a signed equation; forces and positive direction are supplied.",
+      "distractors": {
+        "A": {
+          "tag": "OPPOSING_FORCES_ADDED",
+          "possible_interpretation": "May add magnitudes without representing direction."
+        },
+        "C": {
+          "tag": "GIVEN_AXIS_REVERSED",
+          "possible_interpretation": "May reverse the specified positive direction."
+        },
+        "D": {
+          "tag": "RECIPROCAL_FORCE_IMPORTED",
+          "possible_interpretation": "May add B's force on A to the forces received by B."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-MODEL-01",
+      "version": 1,
+      "type": "MODEL",
+      "level": "D1",
+      "stem": "Touching blocks A (4 kg) and B (6 kg) move together on a frictionless horizontal table. A 20 N horizontal push acts on A. To find their common acceleration without first finding the contact force, which system and force choice is valid?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Choose A+B; use 20 N as the net horizontal external force and 10 kg as the mass."
+        },
+        {
+          "id": "B",
+          "text": "Choose A alone; use 20 N as its net horizontal force and 4 kg as the mass."
+        },
+        {
+          "id": "C",
+          "text": "Choose A+B; use 0 N because the contact pair cancels."
+        },
+        {
+          "id": "D",
+          "text": "Choose B alone; use 20 N as its net horizontal force and 6 kg as the mass."
+        }
+      ],
+      "correct_option_id": "A",
+      "expected_reason": "Choose both blocks as the system. Their mutual contact forces are internal; the external horizontal push is 20 N and the system mass is 4+6=10 kg.",
+      "type_rationale": "Selects a system and strategy among plausible alternatives; calculation is not requested.",
+      "distractors": {
+        "B": {
+          "tag": "INDIVIDUAL_CONTACT_OMITTED",
+          "possible_interpretation": "May ignore B's contact force when isolating A."
+        },
+        "C": {
+          "tag": "INTERNAL_CANCELS_EXTERNAL",
+          "possible_interpretation": "May extend cancellation of internal forces to the external push."
+        },
+        "D": {
+          "tag": "PUSH_ASSIGNED_TO_WRONG_BODY",
+          "possible_interpretation": "May assign the push on A directly to B."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-EXPLAIN-01",
+      "version": 1,
+      "type": "EXPLAIN",
+      "level": "D1",
+      "stem": "Two touching blocks can speed up under an external push even though their mutual contact forces are equal and opposite. Which explanation resolves this?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The pair cancels on each block, so the external push does all the accelerating."
+        },
+        {
+          "id": "B",
+          "text": "Each contact force has a different receiver; the net force on each block must be considered separately."
+        },
+        {
+          "id": "C",
+          "text": "Acceleration temporarily makes the third law invalid."
+        },
+        {
+          "id": "D",
+          "text": "The contact forces become unequal whenever the blocks accelerate."
+        }
+      ],
+      "correct_option_id": "B",
+      "expected_reason": "Equal and opposite contact forces have different receivers. They are not two forces to cancel in the force sum for either individual block; the combined system can accelerate under a net external push.",
+      "type_rationale": "Explains why an apparently contradictory result is consistent with the law.",
+      "distractors": {
+        "A": {
+          "tag": "PAIR_CANCELS_ON_EACH_BODY",
+          "possible_interpretation": "May cancel forces belonging to different individual force diagrams."
+        },
+        "C": {
+          "tag": "LAW_ONLY_WITHOUT_ACCELERATION",
+          "possible_interpretation": "May restrict the third law to unaccelerated situations."
+        },
+        "D": {
+          "tag": "ACCELERATION_NEEDS_UNEQUAL_PAIR",
+          "possible_interpretation": "May confuse unequal net forces with unequal mutual contact forces."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-JUSTIFY-01",
+      "version": 1,
+      "type": "JUSTIFY",
+      "level": "D1",
+      "stem": "Blocks A (2 kg) and B (3 kg) touch. Calibrated contact-force measurements are listed below. Which conclusion is supported by these measurements?",
+      "evidence_table": {
+        "columns": [
+          "Trial",
+          "A on B",
+          "B on A"
+        ],
+        "rows": [
+          [
+            "1",
+            "4 N right",
+            "4 N left"
+          ],
+          [
+            "2",
+            "7 N right",
+            "7 N left"
+          ],
+          [
+            "3",
+            "5 N right",
+            "5 N left"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "text": "In all three trials the contact-force magnitudes matched even though the masses differed."
+        },
+        {
+          "id": "B",
+          "text": "The heavier block always exerted more force."
+        },
+        {
+          "id": "C",
+          "text": "The blocks must have been stationary in all three trials."
+        },
+        {
+          "id": "D",
+          "text": "These three measurements prove the law for every possible interaction."
+        }
+      ],
+      "correct_option_id": "A",
+      "expected_reason": "Use the explicit evidence: 4=4, 7=7 and 5=5 N with unequal masses. The table supports the stated conclusion for these trials; it supplies no motion measurements and is not a universal proof.",
+      "type_rationale": "Selects and defends a conclusion constrained by explicit measurement evidence, rather than merely reciting a law.",
+      "distractors": {
+        "B": {
+          "tag": "CLAIM_CONTRADICTS_DATA",
+          "possible_interpretation": "May prefer a mass-based claim over the listed equal measurements."
+        },
+        "C": {
+          "tag": "MOTION_INFERRED_WITHOUT_EVIDENCE",
+          "possible_interpretation": "May infer rest from the reciprocal contact pair alone."
+        },
+        "D": {
+          "tag": "FINITE_EVIDENCE_OVERGENERALIZED",
+          "possible_interpretation": "May treat three supporting trials as proof for every possible case."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-RETRIEVE-01",
+      "version": 1,
+      "type": "RETRIEVE",
+      "level": "D1",
+      "stem": "Which statement must be true for a Newton's third-law force pair?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The two forces act on the same object."
+        },
+        {
+          "id": "B",
+          "text": "The heavier object exerts the larger force."
+        },
+        {
+          "id": "C",
+          "text": "The forces have equal magnitudes, opposite directions and different receivers."
+        },
+        {
+          "id": "D",
+          "text": "The reaction starts after the action ends."
+        }
+      ],
+      "correct_option_id": "C",
+      "expected_reason": "Recall the defining properties of a third-law pair: reciprocal interactions, equal magnitude, opposite direction, different receiving objects, simultaneous.",
+      "type_rationale": "Recalls defining properties of a law; no calculation or strategy choice is required.",
+      "distractors": {
+        "A": {
+          "tag": "PAIR_ON_ONE_BODY",
+          "possible_interpretation": "May place both interaction forces on one receiving object."
+        },
+        "B": {
+          "tag": "MASS_SETS_PAIR_SIZE",
+          "possible_interpretation": "May think unequal masses imply unequal interaction forces."
+        },
+        "D": {
+          "tag": "DELAYED_REACTION",
+          "possible_interpretation": "May interpret reaction as a later event."
+        }
+      }
+    }
+  ],
+  "delivery_order": [
+    "CONTACT-D1-APPLY-01",
+    "CONTACT-D1-SYNTHESIZE-01",
+    "CONTACT-D1-REPRESENT-01",
+    "CONTACT-D1-MODEL-01",
+    "CONTACT-D1-EXPLAIN-01",
+    "CONTACT-D1-JUSTIFY-01",
+    "CONTACT-D1-RETRIEVE-01"
+  ]
+}

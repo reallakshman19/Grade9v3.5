@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newton's Laws · Touching Blocks · Diagnostic (D1)</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --border-focus: #3b82f6;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-secondary: #334155;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --correct-bg: #f0fdf4;
+      --correct-border: #86efac;
+      --correct-text: #166534;
+      --incorrect-bg: #fef2f2;
+      --incorrect-border: #fca5a5;
+      --incorrect-text: #991b1b;
+      --noanswer-bg: #f1f5f9;
+      --noanswer-border: #cbd5e1;
+      --noanswer-text: #475569;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --warning-text: #92400e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    header {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .topic-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .notice-box {
+      background: var(--warning-bg);
+      border-left: 4px solid #d97706;
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--warning-text);
+      margin-top: 10px;
+    }
+
+    /* Stepper & Progress */
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: var(--border);
+      border-radius: 999px;
+      margin: 14px 0 10px 0;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+
+    .stepper-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* Question Card */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      margin-bottom: 16px;
+    }
+
+    .question-stem {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      line-height: 1.45;
+    }
+
+    /* Evidence Table */
+    .evidence-table-wrapper {
+      margin: 14px 0 18px 0;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    table.evidence-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    table.evidence-table th {
+      background: #f1f5f9;
+      color: var(--text-secondary);
+      font-weight: 600;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.evidence-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--text-main);
+    }
+
+    table.evidence-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Options */
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .option-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--card-bg);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: 48px;
+    }
+
+    .option-card:hover {
+      border-color: #94a3b8;
+      background: #fafafa;
+    }
+
+    .option-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .option-card input[type="radio"] {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .option-content {
+      font-size: 14.5px;
+      color: var(--text-main);
+      word-break: break-word;
+    }
+
+    .no-answer-card {
+      border-style: dashed;
+      background: #f8fafc;
+    }
+
+    .no-answer-card.selected {
+      border-color: #64748b;
+      background: #e2e8f0;
+    }
+
+    /* Form Section */
+    .section-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .section-title span.required {
+      color: #dc2626;
+    }
+
+    .why-input-container {
+      margin-bottom: 18px;
+    }
+
+    textarea.why-textarea {
+      width: 100%;
+      min-height: 64px;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text-main);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      resize: vertical;
+      background: #ffffff;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    textarea.why-textarea:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    .confidence-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .confidence-btn {
+      padding: 10px 8px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .confidence-btn:hover {
+      border-color: #94a3b8;
+    }
+
+    .confidence-btn.selected {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Inline Validation Alert */
+    .validation-alert {
+      display: none;
+      background: #fee2e2;
+      border: 1px solid #f87171;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #991b1b;
+      margin-bottom: 16px;
+    }
+
+    /* Actions Bar */
+    .actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-top: 10px;
+    }
+
+    button.btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+      min-height: 44px;
+    }
+
+    button.btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    button.btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    button.btn-secondary {
+      background: #ffffff;
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
+
+    button.btn-secondary:hover {
+      border-color: #94a3b8;
+      background: #f8fafc;
+    }
+
+    button.btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Review Screen */
+    .review-header {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+
+    .review-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .review-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .review-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 20px 0;
+    }
+
+    .review-item-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .review-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .badge-correct {
+      background: var(--correct-bg);
+      border: 1px solid var(--correct-border);
+      color: var(--correct-text);
+    }
+
+    .badge-incorrect {
+      background: var(--incorrect-bg);
+      border: 1px solid var(--incorrect-border);
+      color: var(--incorrect-text);
+    }
+
+    .badge-noanswer {
+      background: var(--noanswer-bg);
+      border: 1px solid var(--noanswer-border);
+      color: var(--noanswer-text);
+    }
+
+    .review-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      font-size: 13.5px;
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+      border: 1px solid #f1f5f9;
+    }
+
+    .review-detail-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .detail-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .detail-value {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .explanation-box {
+      margin-top: 10px;
+      padding: 12px;
+      background: #f8fafc;
+      border-left: 3px solid var(--primary);
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .distractor-tag-box {
+      margin-top: 8px;
+      padding: 8px 10px;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: #92400e;
+    }
+
+    /* Coverage Map */
+    .coverage-section {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 20px;
+    }
+
+    .coverage-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .cell-box {
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .cell-box.assessed {
+      background: #f0fdf4;
+      border-color: #86efac;
+      color: #166534;
+      font-weight: 600;
+    }
+
+    .cell-box.unassessed {
+      background: #f8fafc;
+      color: #94a3b8;
+    }
+
+    /* Modal / JSON inspector */
+    .json-preview {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 14px;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      max-height: 350px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin-top: 10px;
+    }
+
+    .file-input-wrapper {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f8fafc;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="app">
+    <header>
+      <div class="topic-badge">Newton's Laws · Touching Blocks · D1 Diagnostic</div>
+      <h1 id="diagnostic-title">Diagnostic Step 1 — Cognitive Baseline</h1>
+      <p style="font-size: 13.5px; color: var(--text-secondary); margin-top: 4px;">
+        Seven unassisted questions assessing touching blocks. One question per thinking type.
+      </p>
+      <div class="notice-box">
+        No hints during these seven questions; answers appear together at the end.
+      </div>
+      <div class="progress-bar-container" id="progress-container">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <div class="stepper-label" id="stepper-container">
+        <span id="step-counter">Question 1 of 7</span>
+        <span id="status-timing" style="font-size: 12px; font-weight: normal; color: var(--text-muted);">Self-paced observation</span>
+      </div>
+    </header>
+
+    <!-- Main Question View -->
+    <main id="question-view">
+      <div class="card">
+        <div id="question-stem" class="question-stem">Loading question...</div>
+        <div id="evidence-table-container"></div>
+
+        <div class="section-title">Select your choice <span class="required">*</span></div>
+        <div class="options-group" id="options-group">
+          <!-- Dynamic options -->
+        </div>
+
+        <div class="why-input-container">
+          <div class="section-title">Why? Explain your reasoning <span class="required">*</span></div>
+          <textarea id="why-input" class="why-textarea" placeholder="Briefly explain your choice (or enter 'Not sure')..."></textarea>
+        </div>
+
+        <div class="section-title">Confidence <span class="required">*</span></div>
+        <div class="confidence-group">
+          <button type="button" class="confidence-btn" data-val="Sure" onclick="setConfidence('Sure')">Sure</button>
+          <button type="button" class="confidence-btn" data-val="Unsure" onclick="setConfidence('Unsure')">Unsure</button>
+          <button type="button" class="confidence-btn" data-val="Guessing" onclick="setConfidence('Guessing')">Guessing</button>
+        </div>
+
+        <div id="validation-alert" class="validation-alert"></div>
+
+        <div class="actions-bar">
+          <button type="button" id="btn-back" class="btn btn-secondary" onclick="handleBack()">Previous</button>
+          <button type="button" id="btn-next" class="btn btn-primary" onclick="handleNext()">Next</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Post-submission Review View (Hidden initially) -->
+    <section id="review-view" style="display: none;">
+      <div class="review-header">
+        <div class="review-title">Diagnostic Completed &amp; Frozen</div>
+        <div class="review-meta" id="review-meta">Attempt metadata</div>
+        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 6px;">
+          All seven answers and bank explanations are revealed together below. Correctness is a raw diagnostic observation (not a score or mastery classification).
+        </div>
+        <div class="review-buttons">
+          <button type="button" id="btn-download-json" class="btn btn-primary" onclick="downloadDiagnosticJSON()">Save my diagnostic (.json)</button>
+          <button type="button" id="btn-new-attempt" class="btn btn-secondary" onclick="startNewAttempt()">Start New Attempt</button>
+          <button type="button" id="btn-toggle-json" class="btn btn-secondary" onclick="toggleJSONInspector()">Inspect Saved JSON</button>
+        </div>
+
+        <div class="file-input-wrapper">
+          <label style="font-weight: 600; display: block; margin-bottom: 4px;">Reopen / Verify Saved JSON File:</label>
+          <input type="file" id="json-file-input" accept=".json,application/json" onchange="handleReopenFile(event)">
+          <div id="reopen-status" style="margin-top: 6px; font-size: 12.5px; color: var(--text-secondary);"></div>
+        </div>
+      </div>
+
+      <div id="json-inspector-box" style="display: none; margin-bottom: 16px;">
+        <div style="font-weight: 600; font-size: 13.5px; margin-bottom: 4px;">Saved Contract JSON Snapshot:</div>
+        <pre class="json-preview" id="json-preview-content"></pre>
+      </div>
+
+      <div id="review-rows-container">
+        <!-- 7-row review rendered here -->
+      </div>
+
+      <div class="coverage-section">
+        <h3 style="font-size: 15px; font-weight: 700; color: var(--text-main);">28-Cell Topic Map Coverage</h3>
+        <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">
+          Seven types × four levels (D1–D4). Seven attempted D1 cells carry linked response evidence. 21 cells remain explicitly unassessed.
+        </p>
+        <div class="coverage-grid" id="coverage-grid">
+          <!-- 28 cells rendered here -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Embedded Question Bank (Exact copy of G9O5-2a.question-bank.v1.json) -->
+  <script id="embedded-question-bank" type="application/json">
+{
+  "schema_version": "1.0",
+  "bank_id": "G9V35-QRT-CONTACT-D1",
+  "bank_version": "1",
+  "status": "DRAFT_OWNER_TRIAL_ONLY",
+  "author": "ORACLE · G9V35-O5",
+  "learner_grade": 10,
+  "exam_target": "JEE Main",
+  "exam_year": null,
+  "topic_id": "newtons-laws.contact-blocks",
+  "topic_title": "Newton's laws for touching blocks",
+  "level": "D1",
+  "qrt_types": [
+    "RETRIEVE",
+    "EXPLAIN",
+    "APPLY",
+    "MODEL",
+    "REPRESENT",
+    "SYNTHESIZE",
+    "JUSTIFY"
+  ],
+  "qrt_levels": [
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+  ],
+  "level_note": "Proposed baseline tags. D1 means the smallest familiar demand within each type; SYNTHESIZE still requires a short dependent chain. Tags require non-author checking; this bank is not calibrated to JEE Main exam difficulty.",
+  "sources": [
+    {
+      "title": "OpenStax: Newton's third law",
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/5-5-newtons-third-law"
+    },
+    {
+      "title": "OpenStax: Newton's second law",
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/5-3-newtons-second-law"
+    }
+  ],
+  "questions": [
+    {
+      "id": "CONTACT-D1-APPLY-01",
+      "version": 1,
+      "type": "APPLY",
+      "level": "D1",
+      "stem": "Block A (2 kg) pushes block B (3 kg) with 8 N to the right. What contact force does B exert on A?",
+      "options": [
+        {
+          "id": "A",
+          "text": "8 N to the right."
+        },
+        {
+          "id": "B",
+          "text": "12 N to the left."
+        },
+        {
+          "id": "C",
+          "text": "0 N."
+        },
+        {
+          "id": "D",
+          "text": "8 N to the left."
+        }
+      ],
+      "correct_option_id": "D",
+      "expected_reason": "Apply the third law to the specified interaction: equal magnitude 8 N, opposite direction left, received by A. The mass ratio does not scale this pair.",
+      "type_rationale": "Uses a known law directly on a specified interaction.",
+      "distractors": {
+        "A": {
+          "tag": "PAIR_DIRECTION_UNCHANGED",
+          "possible_interpretation": "May preserve magnitude without reversing direction."
+        },
+        "B": {
+          "tag": "PAIR_SCALED_BY_MASS",
+          "possible_interpretation": "May multiply the force by the 3/2 mass ratio."
+        },
+        "C": {
+          "tag": "PAIR_MEANS_ZERO_FORCE",
+          "possible_interpretation": "May replace either member of a force pair with the combined sum."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-SYNTHESIZE-01",
+      "version": 1,
+      "type": "SYNTHESIZE",
+      "level": "D1",
+      "stem": "A (2 kg, on the left) and B (3 kg, on the right) touch on a frictionless horizontal table. A 15 N horizontal push acts rightward on A and they remain in contact. What contact force does B exert on A?",
+      "options": [
+        {
+          "id": "A",
+          "text": "15 N to the left."
+        },
+        {
+          "id": "B",
+          "text": "6 N to the left."
+        },
+        {
+          "id": "C",
+          "text": "9 N to the left."
+        },
+        {
+          "id": "D",
+          "text": "0 N."
+        }
+      ],
+      "correct_option_id": "C",
+      "expected_reason": "Choose a route: for A+B, a=15/(2+3)=3 m/s² right. Isolate B: A's contact force on B=3×3=9 N right. The reciprocal force on A is 9 N left. An equivalent consistent route is acceptable.",
+      "type_rationale": "Must choose and connect a short dependent route through the combined system and an individual body; no route or intermediate acceleration is given.",
+      "distractors": {
+        "A": {
+          "tag": "ENTIRE_PUSH_TRANSMITTED",
+          "possible_interpretation": "May equate the contact force to the full external push."
+        },
+        "B": {
+          "tag": "NET_FORCE_CONFUSED_WITH_CONTACT",
+          "possible_interpretation": "May report A's net force, 2×3=6 N, as the contact force."
+        },
+        "D": {
+          "tag": "INTERNAL_FORCE_CALLED_ZERO",
+          "possible_interpretation": "May treat an internal force as individually zero because the pair cancels in a combined sum."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-REPRESENT-01",
+      "version": 1,
+      "type": "REPRESENT",
+      "level": "D1",
+      "stem": "On block B, block A exerts 6 N to the right and the table exerts 2 N of friction to the left. Right is positive. Which equation translates these words into the net horizontal force on B?",
+      "options": [
+        {
+          "id": "A",
+          "text": "F_net,x = (6 + 2) N."
+        },
+        {
+          "id": "B",
+          "text": "F_net,x = (6 - 2) N."
+        },
+        {
+          "id": "C",
+          "text": "F_net,x = (2 - 6) N."
+        },
+        {
+          "id": "D",
+          "text": "F_net,x = (6 - 2 - 6) N."
+        }
+      ],
+      "correct_option_id": "B",
+      "expected_reason": "Translate the supplied directions and axis: +6 N from A and -2 N from the table. B's reciprocal force on A does not belong in B's force sum.",
+      "type_rationale": "Translates a verbal description into a signed equation; forces and positive direction are supplied.",
+      "distractors": {
+        "A": {
+          "tag": "OPPOSING_FORCES_ADDED",
+          "possible_interpretation": "May add magnitudes without representing direction."
+        },
+        "C": {
+          "tag": "GIVEN_AXIS_REVERSED",
+          "possible_interpretation": "May reverse the specified positive direction."
+        },
+        "D": {
+          "tag": "RECIPROCAL_FORCE_IMPORTED",
+          "possible_interpretation": "May add B's force on A to the forces received by B."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-MODEL-01",
+      "version": 1,
+      "type": "MODEL",
+      "level": "D1",
+      "stem": "Touching blocks A (4 kg) and B (6 kg) move together on a frictionless horizontal table. A 20 N horizontal push acts on A. To find their common acceleration without first finding the contact force, which system and force choice is valid?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Choose A+B; use 20 N as the net horizontal external force and 10 kg as the mass."
+        },
+        {
+          "id": "B",
+          "text": "Choose A alone; use 20 N as its net horizontal force and 4 kg as the mass."
+        },
+        {
+          "id": "C",
+          "text": "Choose A+B; use 0 N because the contact pair cancels."
+        },
+        {
+          "id": "D",
+          "text": "Choose B alone; use 20 N as its net horizontal force and 6 kg as the mass."
+        }
+      ],
+      "correct_option_id": "A",
+      "expected_reason": "Choose both blocks as the system. Their mutual contact forces are internal; the external horizontal push is 20 N and the system mass is 4+6=10 kg.",
+      "type_rationale": "Selects a system and strategy among plausible alternatives; calculation is not requested.",
+      "distractors": {
+        "B": {
+          "tag": "INDIVIDUAL_CONTACT_OMITTED",
+          "possible_interpretation": "May ignore B's contact force when isolating A."
+        },
+        "C": {
+          "tag": "INTERNAL_CANCELS_EXTERNAL",
+          "possible_interpretation": "May extend cancellation of internal forces to the external push."
+        },
+        "D": {
+          "tag": "PUSH_ASSIGNED_TO_WRONG_BODY",
+          "possible_interpretation": "May assign the push on A directly to B."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-EXPLAIN-01",
+      "version": 1,
+      "type": "EXPLAIN",
+      "level": "D1",
+      "stem": "Two touching blocks can speed up under an external push even though their mutual contact forces are equal and opposite. Which explanation resolves this?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The pair cancels on each block, so the external push does all the accelerating."
+        },
+        {
+          "id": "B",
+          "text": "Each contact force has a different receiver; the net force on each block must be considered separately."
+        },
+        {
+          "id": "C",
+          "text": "Acceleration temporarily makes the third law invalid."
+        },
+        {
+          "id": "D",
+          "text": "The contact forces become unequal whenever the blocks accelerate."
+        }
+      ],
+      "correct_option_id": "B",
+      "expected_reason": "Equal and opposite contact forces have different receivers. They are not two forces to cancel in the force sum for either individual block; the combined system can accelerate under a net external push.",
+      "type_rationale": "Explains why an apparently contradictory result is consistent with the law.",
+      "distractors": {
+        "A": {
+          "tag": "PAIR_CANCELS_ON_EACH_BODY",
+          "possible_interpretation": "May cancel forces belonging to different individual force diagrams."
+        },
+        "C": {
+          "tag": "LAW_ONLY_WITHOUT_ACCELERATION",
+          "possible_interpretation": "May restrict the third law to unaccelerated situations."
+        },
+        "D": {
+          "tag": "ACCELERATION_NEEDS_UNEQUAL_PAIR",
+          "possible_interpretation": "May confuse unequal net forces with unequal mutual contact forces."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-JUSTIFY-01",
+      "version": 1,
+      "type": "JUSTIFY",
+      "level": "D1",
+      "stem": "Blocks A (2 kg) and B (3 kg) touch. Calibrated contact-force measurements are listed below. Which conclusion is supported by these measurements?",
+      "evidence_table": {
+        "columns": [
+          "Trial",
+          "A on B",
+          "B on A"
+        ],
+        "rows": [
+          [
+            "1",
+            "4 N right",
+            "4 N left"
+          ],
+          [
+            "2",
+            "7 N right",
+            "7 N left"
+          ],
+          [
+            "3",
+            "5 N right",
+            "5 N left"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "text": "In all three trials the contact-force magnitudes matched even though the masses differed."
+        },
+        {
+          "id": "B",
+          "text": "The heavier block always exerted more force."
+        },
+        {
+          "id": "C",
+          "text": "The blocks must have been stationary in all three trials."
+        },
+        {
+          "id": "D",
+          "text": "These three measurements prove the law for every possible interaction."
+        }
+      ],
+      "correct_option_id": "A",
+      "expected_reason": "Use the explicit evidence: 4=4, 7=7 and 5=5 N with unequal masses. The table supports the stated conclusion for these trials; it supplies no motion measurements and is not a universal proof.",
+      "type_rationale": "Selects and defends a conclusion constrained by explicit measurement evidence, rather than merely reciting a law.",
+      "distractors": {
+        "B": {
+          "tag": "CLAIM_CONTRADICTS_DATA",
+          "possible_interpretation": "May prefer a mass-based claim over the listed equal measurements."
+        },
+        "C": {
+          "tag": "MOTION_INFERRED_WITHOUT_EVIDENCE",
+          "possible_interpretation": "May infer rest from the reciprocal contact pair alone."
+        },
+        "D": {
+          "tag": "FINITE_EVIDENCE_OVERGENERALIZED",
+          "possible_interpretation": "May treat three supporting trials as proof for every possible case."
+        }
+      }
+    },
+    {
+      "id": "CONTACT-D1-RETRIEVE-01",
+      "version": 1,
+      "type": "RETRIEVE",
+      "level": "D1",
+      "stem": "Which statement must be true for a Newton's third-law force pair?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The two forces act on the same object."
+        },
+        {
+          "id": "B",
+          "text": "The heavier object exerts the larger force."
+        },
+        {
+          "id": "C",
+          "text": "The forces have equal magnitudes, opposite directions and different receivers."
+        },
+        {
+          "id": "D",
+          "text": "The reaction starts after the action ends."
+        }
+      ],
+      "correct_option_id": "C",
+      "expected_reason": "Recall the defining properties of a third-law pair: reciprocal interactions, equal magnitude, opposite direction, different receiving objects, simultaneous.",
+      "type_rationale": "Recalls defining properties of a law; no calculation or strategy choice is required.",
+      "distractors": {
+        "A": {
+          "tag": "PAIR_ON_ONE_BODY",
+          "possible_interpretation": "May place both interaction forces on one receiving object."
+        },
+        "B": {
+          "tag": "MASS_SETS_PAIR_SIZE",
+          "possible_interpretation": "May think unequal masses imply unequal interaction forces."
+        },
+        "D": {
+          "tag": "DELAYED_REACTION",
+          "possible_interpretation": "May interpret reaction as a later event."
+        }
+      }
+    }
+  ],
+  "delivery_order": [
+    "CONTACT-D1-APPLY-01",
+    "CONTACT-D1-SYNTHESIZE-01",
+    "CONTACT-D1-REPRESENT-01",
+    "CONTACT-D1-MODEL-01",
+    "CONTACT-D1-EXPLAIN-01",
+    "CONTACT-D1-JUSTIFY-01",
+    "CONTACT-D1-RETRIEVE-01"
+  ]
+}
+  </script>
+
+  <script>
+    // --- Parse Question Bank ---
+    const bankEl = document.getElementById('embedded-question-bank');
+    const QUESTION_BANK = JSON.parse(bankEl.textContent);
+
+    // Map questions by ID following delivery_order
+    const QUESTIONS = QUESTION_BANK.delivery_order.map(id => {
+      return QUESTION_BANK.questions.find(q => q.id === id);
+    });
+
+    const TOTAL_QUESTIONS = QUESTIONS.length; // exactly 7
+
+    // --- State Initialization ---
+    function generateId() {
+      return 'att_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 7);
+    }
+
+    let attemptState = null;
+    let isWindowFocused = document.hasFocus();
+    let isPageVisible = !document.hidden;
+    let lastActiveTimestamp = null;
+    let questionEnterWallTimestamp = null;
+
+    function initNewAttempt() {
+      attemptState = {
+        attempt_id: generateId(),
+        record_version: "1.0",
+        phase: "diagnose",
+        topic_id: QUESTION_BANK.topic_id,
+        bank_id: QUESTION_BANK.bank_id,
+        bank_version: QUESTION_BANK.bank_version,
+        level: "D1",
+        started_at: new Date().toISOString(),
+        submitted_at: null,
+        completed: false,
+        currentIndex: 0,
+        activeMs: new Array(TOTAL_QUESTIONS).fill(0),
+        wallMs: new Array(TOTAL_QUESTIONS).fill(0),
+        responses: Array.from({ length: TOTAL_QUESTIONS }, () => ({
+          response_kind: null,        // 'choice' | 'no_answer'
+          selected_option_id: null,   // 'A' | 'B' | 'C' | 'D' | null
+          why_text: '',
+          confidence: null            // 'Sure' | 'Unsure' | 'Guessing'
+        }))
+      };
+
+      const now = performance.now();
+      questionEnterWallTimestamp = now;
+      lastActiveTimestamp = (isWindowFocused && isPageVisible) ? now : null;
+    }
+
+    // --- Timing Engine ---
+    function isCurrentlyActive() {
+      return isWindowFocused && isPageVisible && attemptState && !attemptState.completed;
+    }
+
+    function updateActiveAccumulator() {
+      if (!attemptState || attemptState.completed) return;
+      const now = performance.now();
+      if (isCurrentlyActive() && lastActiveTimestamp !== null) {
+        const delta = now - lastActiveTimestamp;
+        if (delta > 0) {
+          attemptState.activeMs[attemptState.currentIndex] += delta;
+        }
+      }
+      lastActiveTimestamp = isCurrentlyActive() ? now : null;
+    }
+
+    window.addEventListener('focus', () => {
+      isWindowFocused = true;
+      if (isCurrentlyActive()) {
+        lastActiveTimestamp = performance.now();
+      }
+    });
+
+    window.addEventListener('blur', () => {
+      updateActiveAccumulator();
+      isWindowFocused = false;
+      lastActiveTimestamp = null;
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        updateActiveAccumulator();
+        isPageVisible = false;
+        lastActiveTimestamp = null;
+      } else {
+        isPageVisible = true;
+        if (isCurrentlyActive()) {
+          lastActiveTimestamp = performance.now();
+        }
+      }
+    });
+
+    function transitionQuestion(newIndex) {
+      updateActiveAccumulator();
+      const now = performance.now();
+      if (questionEnterWallTimestamp !== null) {
+        attemptState.wallMs[attemptState.currentIndex] += (now - questionEnterWallTimestamp);
+      }
+      attemptState.currentIndex = newIndex;
+      questionEnterWallTimestamp = now;
+      lastActiveTimestamp = isCurrentlyActive() ? now : null;
+      renderQuestion();
+    }
+
+    // --- Answer Selection Helpers ---
+    function selectOption(optionId) {
+      if (attemptState.completed) return;
+      const r = attemptState.responses[attemptState.currentIndex];
+      r.response_kind = 'choice';
+      r.selected_option_id = optionId;
+      hideValidationAlert();
+      renderOptionsGroup();
+    }
+
+    function selectNoAnswer() {
+      if (attemptState.completed) return;
+      const r = attemptState.responses[attemptState.currentIndex];
+      r.response_kind = 'no_answer';
+      r.selected_option_id = null;
+      hideValidationAlert();
+      renderOptionsGroup();
+    }
+
+    function setConfidence(val) {
+      if (attemptState.completed) return;
+      attemptState.responses[attemptState.currentIndex].confidence = val;
+      hideValidationAlert();
+      renderConfidenceButtons();
+    }
+
+    function hideValidationAlert() {
+      const alertEl = document.getElementById('validation-alert');
+      alertEl.style.display = 'none';
+      alertEl.textContent = '';
+    }
+
+    function showValidationAlert(msg) {
+      const alertEl = document.getElementById('validation-alert');
+      alertEl.textContent = msg;
+      alertEl.style.display = 'block';
+    }
+
+    // --- Validation ---
+    function validateCurrentQuestion() {
+      const r = attemptState.responses[attemptState.currentIndex];
+      
+      // 1. Must select an option or 'I cannot choose yet'
+      if (!r.response_kind) {
+        showValidationAlert('Please select an option or choose "I cannot choose yet".');
+        return false;
+      }
+      if (r.response_kind === 'choice' && !r.selected_option_id) {
+        showValidationAlert('Please select one of the four options.');
+        return false;
+      }
+
+      // 2. Why text is required (accepts 'Not sure' or learner rationale)
+      const whyVal = document.getElementById('why-input').value.trim();
+      r.why_text = whyVal;
+      if (!whyVal) {
+        showValidationAlert('Please provide a short reason in the Why box (or enter "Not sure").');
+        return false;
+      }
+
+      // 3. Confidence choice is required (no default)
+      if (!r.confidence) {
+        showValidationAlert('Please select your confidence level: Sure, Unsure, or Guessing.');
+        return false;
+      }
+
+      hideValidationAlert();
+      return true;
+    }
+
+    // --- Navigation Handlers ---
+    function handleBack() {
+      if (attemptState.currentIndex > 0) {
+        // Save current why text before leaving
+        attemptState.responses[attemptState.currentIndex].why_text = document.getElementById('why-input').value.trim();
+        hideValidationAlert();
+        transitionQuestion(attemptState.currentIndex - 1);
+      }
+    }
+
+    function handleNext() {
+      if (!validateCurrentQuestion()) return;
+
+      if (attemptState.currentIndex < TOTAL_QUESTIONS - 1) {
+        transitionQuestion(attemptState.currentIndex + 1);
+      } else {
+        // Submission on question 7
+        submitDiagnostic();
+      }
+    }
+
+    function submitDiagnostic() {
+      updateActiveAccumulator();
+      const now = performance.now();
+      if (questionEnterWallTimestamp !== null) {
+        attemptState.wallMs[attemptState.currentIndex] += (now - questionEnterWallTimestamp);
+      }
+
+      attemptState.completed = true;
+      attemptState.submitted_at = new Date().toISOString();
+      lastActiveTimestamp = null;
+
+      renderReview();
+    }
+
+    // --- Rendering Question View ---
+    function renderQuestion() {
+      window.scrollTo(0, 0);
+      const qIndex = attemptState.currentIndex;
+      const q = QUESTIONS[qIndex];
+      const r = attemptState.responses[qIndex];
+
+      // Update progress & stepper (NO type name or key cues shown!)
+      const pct = Math.round(((qIndex + 1) / TOTAL_QUESTIONS) * 100);
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('step-counter').textContent = `Question ${qIndex + 1} of ${TOTAL_QUESTIONS}`;
+
+      // Render stem
+      document.getElementById('question-stem').textContent = q.stem;
+
+      // Evidence table if present
+      const tableContainer = document.getElementById('evidence-table-container');
+      if (q.evidence_table) {
+        let html = '<div class="evidence-table-wrapper"><table class="evidence-table"><thead><tr>';
+        q.evidence_table.columns.forEach(col => {
+          html += `<th>${escapeHtml(col)}</th>`;
+        });
+        html += '</tr></thead><tbody>';
+        q.evidence_table.rows.forEach(row => {
+          html += '<tr>';
+          row.forEach(cell => {
+            html += `<td>${escapeHtml(cell)}</td>`;
+          });
+          html += '</tr>';
+        });
+        html += '</tbody></table></div>';
+        tableContainer.innerHTML = html;
+        tableContainer.style.display = 'block';
+      } else {
+        tableContainer.innerHTML = '';
+        tableContainer.style.display = 'none';
+      }
+
+      // Render Options
+      renderOptionsGroup();
+
+      // Render Why
+      const whyInput = document.getElementById('why-input');
+      whyInput.value = r.why_text || '';
+
+      // Render Confidence
+      renderConfidenceButtons();
+
+      // Buttons
+      document.getElementById('btn-back').disabled = (qIndex === 0);
+      document.getElementById('btn-next').textContent = (qIndex === TOTAL_QUESTIONS - 1) ? 'Submit Diagnostic' : 'Next';
+
+      hideValidationAlert();
+    }
+
+    function renderOptionsGroup() {
+      const qIndex = attemptState.currentIndex;
+      const q = QUESTIONS[qIndex];
+      const r = attemptState.responses[qIndex];
+      const container = document.getElementById('options-group');
+
+      let html = '';
+      q.options.forEach(opt => {
+        const isSelected = (r.response_kind === 'choice' && r.selected_option_id === opt.id);
+        html += `
+          <div class="option-card ${isSelected ? 'selected' : ''}" onclick="selectOption('${opt.id}')">
+            <input type="radio" name="option_choice" value="${opt.id}" ${isSelected ? 'checked' : ''} tabindex="-1">
+            <div class="option-content">
+              <strong>${opt.id}.</strong> ${escapeHtml(opt.text)}
+            </div>
+          </div>
+        `;
+      });
+
+      // Explicit "I cannot choose yet" option
+      const isNoAnswer = (r.response_kind === 'no_answer');
+      html += `
+        <div class="option-card no-answer-card ${isNoAnswer ? 'selected' : ''}" onclick="selectNoAnswer()">
+          <input type="radio" name="option_choice" value="__no_answer__" ${isNoAnswer ? 'checked' : ''} tabindex="-1">
+          <div class="option-content" style="color: var(--text-secondary); font-style: italic;">
+            <strong>I cannot choose yet</strong> (explicit no-answer response)
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function renderConfidenceButtons() {
+      const r = attemptState.responses[attemptState.currentIndex];
+      const btns = document.querySelectorAll('.confidence-btn');
+      btns.forEach(btn => {
+        const val = btn.getAttribute('data-val');
+        if (r.confidence === val) {
+          btn.classList.add('selected');
+        } else {
+          btn.classList.remove('selected');
+        }
+      });
+    }
+
+    // --- Contract Export Builder ---
+    function buildExportContract() {
+      const responsesList = QUESTIONS.map((q, idx) => {
+        const r = attemptState.responses[idx];
+        const isNoAnswer = (r.response_kind === 'no_answer');
+        const isCorrect = isNoAnswer ? null : (r.selected_option_id === q.correct_option_id);
+        
+        let misconceptionTag = null;
+        let possibleInterpretation = null;
+        if (!isNoAnswer && !isCorrect && q.distractors && q.distractors[r.selected_option_id]) {
+          misconceptionTag = q.distractors[r.selected_option_id].tag || null;
+          possibleInterpretation = q.distractors[r.selected_option_id].possible_interpretation || null;
+        }
+
+        return {
+          response_id: `resp_${q.id}`,
+          question_id: q.id,
+          question_version: q.version,
+          type: q.type,
+          level: q.level,
+          response_kind: isNoAnswer ? 'no_answer' : 'choice',
+          selected_option_id: isNoAnswer ? null : r.selected_option_id,
+          why_text: r.why_text || '',
+          confidence: r.confidence,
+          active_ms: Math.round(attemptState.activeMs[idx]),
+          wall_ms: Math.round(attemptState.wallMs[idx]),
+          is_correct: isCorrect,
+          possible_misconception_tag: misconceptionTag,
+          possible_interpretation: possibleInterpretation,
+          why_review: "unreviewed"
+        };
+      });
+
+      // 28-cell coverage map (7 types × 4 levels)
+      const coverageMap = [];
+      QUESTION_BANK.qrt_types.forEach(type => {
+        QUESTION_BANK.qrt_levels.forEach(level => {
+          const cellId = `${type}-${level}`;
+          if (level === 'D1') {
+            const resp = responsesList.find(r => r.type === type && r.level === 'D1');
+            coverageMap.push({
+              cell_id: cellId,
+              type: type,
+              level: level,
+              status: "assessed",
+              evidence: resp ? [
+                {
+                  response_id: resp.response_id,
+                  question_id: resp.question_id,
+                  question_version: resp.question_version,
+                  response_kind: resp.response_kind,
+                  selected_option_id: resp.selected_option_id,
+                  is_correct: resp.is_correct,
+                  confidence: resp.confidence
+                }
+              ] : []
+            });
+          } else {
+            coverageMap.push({
+              cell_id: cellId,
+              type: type,
+              level: level,
+              status: "unassessed",
+              evidence: []
+            });
+          }
+        });
+      });
+
+      return {
+        record_version: attemptState.record_version,
+        attempt_id: attemptState.attempt_id,
+        phase: attemptState.phase,
+        topic_id: attemptState.topic_id,
+        bank_id: attemptState.bank_id,
+        bank_version: attemptState.bank_version,
+        level: attemptState.level,
+        started_at: attemptState.started_at,
+        submitted_at: attemptState.submitted_at,
+        completed: attemptState.completed,
+        bank_snapshot: QUESTION_BANK,
+        responses: responsesList,
+        coverage_map_28: coverageMap,
+        assistance: {
+          hints_used: 0,
+          follow_up_questions: 0
+        }
+      };
+    }
+
+    // --- Render Post-Submission Review ---
+    function renderReview() {
+      document.getElementById('question-view').style.display = 'none';
+      document.getElementById('progress-container').style.display = 'none';
+      document.getElementById('stepper-container').style.display = 'none';
+      document.getElementById('review-view').style.display = 'block';
+      window.scrollTo(0, 0);
+
+      const contract = buildExportContract();
+
+      document.getElementById('review-meta').innerHTML = `
+        <strong>Attempt ID:</strong> <code>${escapeHtml(contract.attempt_id)}</code> &bull;
+        <strong>Phase:</strong> ${escapeHtml(contract.phase)} &bull;
+        <strong>Topic:</strong> ${escapeHtml(contract.topic_id)} &bull;
+        <strong>Submitted:</strong> ${new Date(contract.submitted_at).toLocaleTimeString()}
+      `;
+
+      // Render the 7 review rows
+      const rowsContainer = document.getElementById('review-rows-container');
+      let rowsHtml = '';
+
+      contract.responses.forEach((resp, idx) => {
+        const q = QUESTIONS[idx];
+        let statusBadge = '';
+        let ownChoiceText = '';
+
+        if (resp.response_kind === 'no_answer') {
+          statusBadge = '<span class="badge badge-noanswer">Not answered</span>';
+          ownChoiceText = '<em>I cannot choose yet (no answer selected)</em>';
+        } else if (resp.is_correct === true) {
+          statusBadge = '<span class="badge badge-correct">Correct</span>';
+          const opt = q.options.find(o => o.id === resp.selected_option_id);
+          ownChoiceText = `<strong>Option ${resp.selected_option_id}:</strong> ${escapeHtml(opt ? opt.text : '')}`;
+        } else {
+          statusBadge = '<span class="badge badge-incorrect">Incorrect</span>';
+          const opt = q.options.find(o => o.id === resp.selected_option_id);
+          ownChoiceText = `<strong>Option ${resp.selected_option_id}:</strong> ${escapeHtml(opt ? opt.text : '')}`;
+        }
+
+        const correctOpt = q.options.find(o => o.id === q.correct_option_id);
+
+        let tableHtml = '';
+        if (q.evidence_table) {
+          tableHtml = '<div class="evidence-table-wrapper" style="margin: 8px 0;"><table class="evidence-table"><thead><tr>';
+          q.evidence_table.columns.forEach(col => {
+            tableHtml += `<th>${escapeHtml(col)}</th>`;
+          });
+          tableHtml += '</tr></thead><tbody>';
+          q.evidence_table.rows.forEach(row => {
+            tableHtml += '<tr>';
+            row.forEach(cell => {
+              tableHtml += `<td>${escapeHtml(cell)}</td>`;
+            });
+            tableHtml += '</tr>';
+          });
+          tableHtml += '</tbody></table></div>';
+        }
+
+        let distractorHtml = '';
+        if (resp.possible_misconception_tag) {
+          distractorHtml = `
+            <div class="distractor-tag-box">
+              <strong>Distractor Tag Hypothesis:</strong> <code>${escapeHtml(resp.possible_misconception_tag)}</code>
+              ${resp.possible_interpretation ? ` &mdash; <em>${escapeHtml(resp.possible_interpretation)}</em>` : ''}
+            </div>
+          `;
+        }
+
+        rowsHtml += `
+          <div class="review-item-card" id="review-row-${idx + 1}">
+            <div class="review-item-top">
+              <div>
+                <span style="font-size: 14.5px; font-weight: 700; color: var(--text-main);">
+                  Question ${idx + 1} &bull; <code>${q.id}</code>
+                </span>
+                <span style="margin-left: 8px; font-size: 12px; font-weight: 600; color: var(--primary); background: var(--primary-light); padding: 2px 6px; border-radius: 4px;">
+                  ${q.type} (${q.level})
+                </span>
+              </div>
+              <div>${statusBadge}</div>
+            </div>
+
+            <div style="font-size: 14.5px; font-weight: 500; color: var(--text-main); margin-bottom: 8px;">
+              ${escapeHtml(q.stem)}
+            </div>
+            ${tableHtml}
+
+            <div class="review-detail-grid">
+              <div class="review-detail-row">
+                <span class="detail-label">Learner's Choice</span>
+                <span class="detail-value">${ownChoiceText}</span>
+              </div>
+              <div class="review-detail-row">
+                <span class="detail-label">Reasoning Given (Why)</span>
+                <span class="detail-value">${escapeHtml(resp.why_text || '(None)')}</span>
+              </div>
+              <div class="review-detail-row">
+                <span class="detail-label">Confidence &bull; Active View Time</span>
+                <span class="detail-value">
+                  Confidence: <strong>${escapeHtml(resp.confidence || 'None')}</strong> &bull;
+                  Active: <strong>${(resp.active_ms / 1000).toFixed(1)}s</strong> &bull;
+                  Wall: <strong>${(resp.wall_ms / 1000).toFixed(1)}s</strong>
+                </span>
+              </div>
+              <div class="review-detail-row">
+                <span class="detail-label">Correct Key</span>
+                <span class="detail-value"><strong>Option ${q.correct_option_id}:</strong> ${escapeHtml(correctOpt ? correctOpt.text : '')}</span>
+              </div>
+            </div>
+
+            <div class="explanation-box">
+              <strong>Bank Explanation:</strong> ${escapeHtml(q.expected_reason)}
+              <div style="margin-top: 4px; font-size: 12px; color: var(--text-muted);">
+                <strong>Type Demand:</strong> ${escapeHtml(q.type_rationale)}
+              </div>
+            </div>
+            ${distractorHtml}
+          </div>
+        `;
+      });
+
+      rowsContainer.innerHTML = rowsHtml;
+
+      // Render 28-cell coverage
+      const gridContainer = document.getElementById('coverage-grid');
+      let gridHtml = '';
+      contract.coverage_map_28.forEach(cell => {
+        const isAssessed = (cell.status === 'assessed');
+        gridHtml += `
+          <div class="cell-box ${isAssessed ? 'assessed' : 'unassessed'}">
+            <div style="font-weight: 700;">${cell.cell_id}</div>
+            <div style="font-size: 11px;">
+              ${isAssessed ? '&check; Assessed (D1)' : '&bull; Unassessed'}
+            </div>
+          </div>
+        `;
+      });
+      gridContainer.innerHTML = gridHtml;
+
+      // Update JSON preview string
+      document.getElementById('json-preview-content').textContent = JSON.stringify(contract, null, 2);
+    }
+
+    // --- Action: Download Diagnostic JSON ---
+    function downloadDiagnosticJSON() {
+      const contract = buildExportContract();
+      const jsonStr = JSON.stringify(contract, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `diagnostic-${contract.topic_id}-${contract.attempt_id}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // --- Action: Start New Attempt ---
+    function startNewAttempt() {
+      initNewAttempt();
+      document.getElementById('review-view').style.display = 'none';
+      document.getElementById('question-view').style.display = 'block';
+      document.getElementById('progress-container').style.display = 'block';
+      document.getElementById('stepper-container').style.display = 'flex';
+      renderQuestion();
+    }
+
+    // --- Action: Inspect JSON ---
+    function toggleJSONInspector() {
+      const box = document.getElementById('json-inspector-box');
+      box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
+    }
+
+    // --- Action: Reopen Saved JSON File ---
+    function handleReopenFile(event) {
+      const file = event.target.files[0];
+      const statusEl = document.getElementById('reopen-status');
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          // Verify contract
+          if (!parsed.attempt_id || !Array.isArray(parsed.responses) || !Array.isArray(parsed.coverage_map_28)) {
+            statusEl.innerHTML = '<span style="color: #dc2626;">&times; Invalid diagnostic JSON contract format.</span>';
+            return;
+          }
+
+          const assessedCount = parsed.coverage_map_28.filter(c => c.status === 'assessed').length;
+          const unassessedCount = parsed.coverage_map_28.filter(c => c.status === 'unassessed').length;
+
+          statusEl.innerHTML = `
+            <span style="color: #16a34a; font-weight: 600;">&check; Successfully re-opened saved diagnostic!</span><br>
+            Attempt ID: <code>${escapeHtml(parsed.attempt_id)}</code> &bull;
+            Responses: <strong>${parsed.responses.length}</strong> &bull;
+            Cells Assessed: <strong>${assessedCount}</strong> &bull;
+            Cells Unassessed: <strong>${unassessedCount}</strong>
+          `;
+
+          // Show in inspector
+          document.getElementById('json-preview-content').textContent = JSON.stringify(parsed, null, 2);
+          document.getElementById('json-inspector-box').style.display = 'block';
+        } catch (err) {
+          statusEl.innerHTML = `<span style="color: #dc2626;">&times; Error parsing JSON: ${escapeHtml(err.message)}</span>`;
+        }
+      };
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    // Utility: HTML Escaping
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // --- Onload Bootstrap ---
+    window.addEventListener('DOMContentLoaded', () => {
+      initNewAttempt();
+      renderQuestion();
+    });
+  </script>
+</body>
+</html>
