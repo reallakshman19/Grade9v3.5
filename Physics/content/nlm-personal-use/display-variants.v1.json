@@ -56,10 +56,10 @@
         "check": "If the downward speed were constant instead, acceleration and net force would both be zero. Moving down alone does not determine force direction."
       },
       "feedback": {
-        "A": "This is the intended net-force direction. Compare your written justification with the signed-velocity reasoning below.",
-        "B": "This identifies the direction of travel, not necessarily the direction of acceleration. Compare two velocity values.",
-        "C": "A steady slowing is still a change in velocity. Zero net force would mean constant velocity.",
-        "D": "Mass affects magnitude, but a positive mass does not obscure the direction when acceleration direction is known."
+        "A": "Selected A names upward net force. To check your reasoning, compare a later downward velocity with an earlier one: it is less negative, so acceleration is upward and Newton II points net force upward.",
+        "B": "Downward is the lift's motion direction, not its acceleration as it slows. With upward positive, its velocity becomes less negative; net force follows acceleration.",
+        "C": "A steady rate of slowing still changes velocity. Zero net force would require constant velocity; here it is not constant.",
+        "D": "The lift's mass affects the magnitude, not the force direction inferred from the acceleration sign. Newton II ties force direction to acceleration."
       },
       "source_provenance": {
         "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
@@ -80,22 +80,22 @@
       },
       "system_parameters": {},
       "options": {
-        "A": "A pulls the strap left with 40 N; gravity pulls A down.",
-        "B": "A pulls the strap left with 40 N; the strap pulls B at its other end.",
-        "C": "A pulls the strap left with 40 N; the strap pulls A right with 40 N.",
-        "D": "The strap pulls A right with 40 N; gravity pulls A down."
+        "A": "Robot A pulls the strap left with 40 N; the strap pulls A right with 40 N.",
+        "B": "Robot B pulls the strap at B's end; the strap pulls B oppositely with equal force.",
+        "C": "Robot A pulls the strap left with 40 N; robot B pulls the strap at B's end.",
+        "D": "The strap pulls A right with 40 N; gravity pulls A downward."
       },
-      "key": "C",
+      "key": "A",
       "changes": [
-        "Source keyed A is rewritten for explicit equal magnitude and opposite direction and moved to displayed C; correct interaction remains A-on-strap / strap-on-A, 40 N left/right.",
-        "Source B: A-on-strap and B-on-strap rewritten as two separate interaction partners at different strap ends (display B: A-on-strap / strap-on-B), not a same-contact reciprocal pair; added B-contact description from stated robot–strap setup, but no B force magnitude or equilibrium assumed.",
-        "Source C: A-on-strap and A's weight changed to A-on-strap and gravity-on-A with explicit A's 40 N left on strap; moved to displayed A.",
-        "Source D: strap-on-A and floor-on-A rewritten as strap-on-A and gravity-on-A so both forces on A are physically unambiguous without presuming robot-floor contact; displayed D.",
-        "All display option edits are distinct from the unaltered source; original stem/40 N left condition, figure, authored provenance, source key A and source QRT EXPLAIN-D1 preserved in source-rows.v1.json."
+        "Correct source option A remains at displayed A; its complete reciprocal force detail is restated in parallel two-clause syntax: A-on-strap left 40 N, strap-on-A right 40 N. Previous R1 display C→A; this removes unsupported A→C key rotation.",
+        "Displayed B: reciprocal strap–B connection, with opposite equal force but NO invented B force number, direction or equilibrium. B is a real third-law pair at B's DIFFERENT contact, not the requested A–strap contact.",
+        "Displayed C: robot A-on-strap (left 40 N) and robot B-on-strap (magnitude unspecified); forces on the SAME strap, hence not a third-law pair.",
+        "Displayed D: strap-on-A (right 40 N) and gravity-on-A (downward, magnitude unspecified); forces on the SAME robot A from different interactions.",
+        "All display choices are an explicitly authorized adaptation of PHYS-NLM-002; source options A–D, original stem, zero-figure, authored provenance, source key A, source EXPLAIN-D1 remain unchanged in source-rows.v1.json."
       ],
       "scaffolds": [],
       "teacher": {
-        "option": "C",
+        "option": "A",
         "reasoning": [
           "At the A–strap contact, A exerts a force on the strap and the strap exerts a force on A.",
           "The paired forces act on different objects, have the same magnitude (40 N), and point in opposite directions.",
@@ -103,12 +103,12 @@
         ]
       },
       "feedback": {
-        "A": "Different interactions: gravity-on-A and A-on-strap are not the reciprocal pair of one contact.",
-        "B": "The listed strap-on-B force occurs at the other robot's connection, not at A's connection; identify the recipient at A's specific contact.",
-        "C": "At A's contact, these forces are equal/opposite 40 N and act on A and strap respectively; read the written reasoning before comparing with the teacher answer.",
-        "D": "Both listed forces act on A, so they are not a third-law pair of each other."
+        "A": "This selects the two forces at A's contact. They act on different bodies (strap and A), with opposite directions and equal 40 N magnitudes. Your explanation was recorded but not automatically judged.",
+        "B": "This is a reciprocal pair at B's end, not at the requested connection to A. Identify the contact named in the stem; no magnitude for B is given.",
+        "C": "Both forces here act on the strap. Third-law partners must act on different bodies at the same interaction.",
+        "D": "Both forces act on A, from the strap and gravity. They are not each other's third-law partners."
       },
-      "adaptation_defect_note": "Source keyed A alone stated opposite 40 N reaction with rightward force while all distractors had less magnitude/direction specificity; previous PU1 wrongly omitted 40 N/rightward and exposed a uniquely bare actor/object reversal. This replacement retains scientific pair detail and tests same-contact force owners with comparable actor-action constructions. Semantic cue risk remains for independent review.",
+      "adaptation_defect_note": "The source originally has answer-specific rightward 40 N details and shorter distractors; prior R1 C was the unique actor/object reversal and rotated key without a basis. R2 correct A and distractor B are both genuine reciprocal patterns, but only A is at the requested A–strap contact. C/D preserve same-recipient wrong-force pairs; no 40 N asserted for B or gravity. Exact 001 source is not adapted.",
       "source_provenance": {
         "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
         "benchmark_demand_anchor": "Core2 Q02",
@@ -139,7 +139,7 @@
       "secondary": "EXPLAIN when learner independently supplies a why",
       "difficulty": "D1",
       "reason": "The option choice classifies an interaction pair using the two participating bodies; it does not require a causal explanation of why a relation holds. Written justification is captured but not machine graded.",
-      "review": "ORACLE_O4_RULED_DERIVED_PRIMARY_RETRIEVE_D1_SOURCE_EXPLAIN_D1_UNCHANGED",
+      "review": "ORACLE_O4_R2_DERIVED_RETRIEVE_D1_SOURCE_EXPLAIN_D1_UNCHANGED",
       "binding": {
         "source_crux_move_ref": null,
         "source_reasoning_route_present": false,
