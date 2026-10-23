@@ -1,0 +1,2233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Newton's Third Law & Connected Blocks · Learning Session</title>
+<style>
+:root {
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-light: #64748b;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-bg: #eff6ff;
+  --success: #16a34a;
+  --success-bg: #f0fdf4;
+  --success-border: #bbf7d0;
+  --warning: #d97706;
+  --warning-bg: #fffbeb;
+  --warning-border: #fde68a;
+  --error: #dc2626;
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --hint-bg: #fefce8;
+  --hint-border: #fef08a;
+  --hint-text: #854d0e;
+  --focus-ring: #3b82f6;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.6;
+  padding: 24px 16px 56px;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
+
+.time-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-bg);
+  border-radius: 9999px;
+  margin-top: 8px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.step-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.body-text {
+  font-size: 1rem;
+  color: var(--text-main);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.svg-box {
+  width: 100%;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 16px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.svg-box svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.question-block {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--card-border);
+}
+
+.question-block:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.question-prompt {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.option-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  min-height: 52px;
+  background: var(--card-bg);
+  border: 2px solid var(--card-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+  user-select: none;
+}
+
+.option-item:hover {
+  border-color: #93c5fd;
+  background-color: var(--primary-bg);
+}
+
+.option-item.selected {
+  border-color: var(--primary);
+  background-color: var(--primary-bg);
+}
+
+.option-item input[type="radio"],
+.option-item input[type="checkbox"] {
+  margin-top: 3px;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.option-desc {
+  font-size: 0.98rem;
+  color: var(--text-main);
+  line-height: 1.45;
+}
+
+.field-group {
+  margin-top: 14px;
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+input[type="number"],
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  display: block;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-main);
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus-visible {
+  outline: none;
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+.input-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.input-row input {
+  flex: 1;
+}
+
+.input-row select {
+  width: 130px;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+button {
+  min-height: 48px;
+  min-width: 48px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, opacity 0.15s, border-color 0.15s;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: var(--text-main);
+  border-color: #cbd5e1;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #f1f5f9;
+}
+
+.btn-unsure {
+  background-color: #f1f5f9;
+  color: var(--text-muted);
+  border-color: #cbd5e1;
+  font-size: 0.9rem;
+  min-height: 48px;
+  padding: 8px 16px;
+}
+
+.btn-unsure.active {
+  background-color: #fef3c7;
+  color: #92400e;
+  border-color: #f59e0b;
+}
+
+.btn-hint {
+  background-color: var(--hint-bg);
+  color: var(--hint-text);
+  border-color: var(--hint-border);
+}
+
+.btn-hint:hover:not(:disabled) {
+  background-color: #fef08a;
+}
+
+.alert {
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.alert-error {
+  background-color: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: #991b1b;
+}
+
+.alert-warning {
+  background-color: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  color: #92400e;
+}
+
+.alert-success {
+  background-color: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: #166534;
+}
+
+.alert-info {
+  background-color: var(--primary-bg);
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+}
+
+.hint-box {
+  background-color: var(--hint-bg);
+  border: 1px solid var(--hint-border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 14px;
+  color: #713f12;
+}
+
+.hint-box h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #854d0e;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.badge-success {
+  background-color: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: #166534;
+}
+
+.badge-warning {
+  background-color: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  color: #92400e;
+}
+
+.badge-info {
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+}
+
+.skill-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--card-border);
+  gap: 12px;
+}
+
+.skill-row:last-child {
+  border-bottom: none;
+}
+
+.skill-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.file-input-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.file-input-wrapper input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 16px 12px 40px;
+  }
+  .card {
+    padding: 18px 14px;
+  }
+  .option-item {
+    padding: 12px;
+  }
+  .input-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .input-row select {
+    width: 100%;
+  }
+  .btn-row {
+    flex-direction: column;
+  }
+  .btn-row button {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <!-- Dynamic Screens Render Here -->
+</div>
+
+<script>
+// --- State Management ---
+const state = {
+  step: 0, // 0: Start, 1: Warmups, 2: Teaching, 3: Diagrams, 4: Main, 5: Reconstruction, 6: Fresh, 7: Summary
+  startTime: null,
+  
+  // Start screen resume
+  loadedRecord: null,
+
+  // Block 1 Warmups
+  warmup1: { choice: null, why: '', unsure: false },
+  warmup2: { choice: null, why: '', unsure: false },
+  warmup3: { choice: null, why: '', unsure: false },
+  warmupsSaved: false,
+
+  // Block 2 Teaching routing
+  gapIdentified: 'none', // 'forces', 'arithmetic', 'both', 'none'
+  learnerInteraction: '',
+  block2Completed: false,
+
+  // Block 3 Diagrams
+  diagramA: {
+    selected: [],
+    firstAttempt: [],
+    revisedAttempt: [],
+    receiverErrorShown: false,
+    checked: false
+  },
+  diagramB: {
+    selected: [],
+    firstAttempt: [],
+    revisedAttempt: [],
+    receiverErrorShown: false,
+    checked: false
+  },
+  diagramCombined: {
+    internalReason: '',
+    completed: false
+  },
+
+  // Block 4 Main Problem
+  mainAccelVal: '',
+  mainAccelDir: 'right',
+  mainAccelWhy: '',
+  mainContactVal: '',
+  mainContactWhy: '',
+  mainFirstAttempt: null,
+  mainRetryAttempt: null,
+  mainHintsOpened: [],
+  mainAttemptsCount: 0,
+  mainRetryActive: false,
+  mainSolutionOpened: false,
+  mainPassed: false,
+
+  // Block 5 Reconstruction
+  reconWhy6N: '',
+  reconWhyNoCancel: '',
+  reconFollowupShown: false,
+  reconReopenGuideShown: false,
+  reconAssisted: false,
+  reconCompleted: false,
+
+  // Block 6 Fresh Problem
+  freshPred: '',
+  freshPredWhy: '',
+  freshForcesB: [],
+  freshForcesA: [],
+  freshAccelVal: '',
+  freshAccelDir: 'left',
+  freshAccelWhy: '',
+  freshContactVal: '',
+  freshContactWhy: '',
+  freshEqualWhy: '',
+  freshFirstAttempt: null, // Saved before feedback
+  freshFirstAttemptCorrect: false,
+  freshGuidedRepairActive: false,
+  freshGuidedRepairCompleted: false,
+
+  // Block 7 Summary
+  summaryClearer: '',
+  summaryHard: '',
+  summarySavedAt: null
+};
+
+// Check correctness
+function checkWarmup1Correct() {
+  return state.warmup1.choice === 'C' && !state.warmup1.unsure;
+}
+function checkWarmup2Correct() {
+  return state.warmup2.choice === 'A' && !state.warmup2.unsure;
+}
+function checkWarmup3Correct() {
+  return state.warmup3.choice === 'A' && !state.warmup3.unsure;
+}
+
+function evaluateGaps() {
+  const forcesGap = !checkWarmup1Correct() || !checkWarmup2Correct();
+  const arithmeticGap = !checkWarmup3Correct();
+  if (forcesGap && arithmeticGap) return 'both';
+  if (forcesGap) return 'forces';
+  if (arithmeticGap) return 'arithmetic';
+  return 'none';
+}
+
+function evaluateSkills() {
+  // Skill 1: names the force receivers
+  // Independent if diagram A and B had zero receiver errors and warmups 1&2 correct
+  // With help if receiver check triggered or forces passage shown
+  // Needs practice if unresolved
+  let s1 = 'independent';
+  if (state.diagramA.firstAttempt.includes('a-on-b') || state.diagramB.firstAttempt.includes('b-on-a') || state.gapIdentified === 'forces' || state.gapIdentified === 'both') {
+    s1 = 'with help';
+  }
+
+  // Skill 2: explains the system boundary
+  // Independent if combined explanation written and Block 5 completed without reopening explanation guide
+  // With help if follow-up used or explanation guide reopened
+  // Needs practice if blank
+  let s2 = 'independent';
+  if (state.reconAssisted || state.reconFollowupShown) {
+    s2 = 'with help';
+  }
+
+  // Skill 3: computes a from the combined system
+  // Independent if main problem accel correct on first attempt without hints
+  // With help if hints opened or retry used
+  // Needs practice if solution opened
+  let s3 = 'independent';
+  if (state.mainSolutionOpened) {
+    s3 = 'needs practice';
+  } else if (state.mainHintsOpened.length > 0 || state.mainAttemptsCount > 1) {
+    s3 = 'with help';
+  }
+
+  // Skill 4: computes the contact force from one block
+  // Independent if contact force 6 N correct on first attempt without Hint 3
+  // With help if Hint 3 used or retry used
+  // Needs practice if solution opened
+  let s4 = 'independent';
+  if (state.mainSolutionOpened) {
+    s4 = 'needs practice';
+  } else if (state.mainHintsOpened.includes(3) || state.mainAttemptsCount > 1) {
+    s4 = 'with help';
+  }
+
+  // Skill 5: solves the changed problem
+  // Independent if fresh problem first attempt correct (a = 2 left, C = 4 N)
+  // With help if guided repair used
+  // Needs practice if wrong after guided repair
+  let s5 = 'independent';
+  if (state.freshFirstAttemptCorrect) {
+    s5 = 'independent';
+  } else if (state.freshGuidedRepairCompleted) {
+    s5 = 'with help';
+  } else {
+    s5 = 'needs practice';
+  }
+
+  return [
+    { id: 'names_receivers', name: 'Names the force receivers', status: s1 },
+    { id: 'system_boundary', name: 'Explains the system boundary', status: s2 },
+    { id: 'accel_combined', name: 'Computes a from the combined system', status: s3 },
+    { id: 'contact_isolated', name: 'Computes the contact force from one block', status: s4 },
+    { id: 'changed_problem', name: 'Solves the changed problem', status: s5 }
+  ];
+}
+
+function getRemainingGap(skills) {
+  const needs = skills.filter(s => s.status === 'needs practice');
+  const helped = skills.filter(s => s.status === 'with help');
+  if (needs.length > 0) {
+    return 'Needs more practice with: ' + needs.map(s => s.name.toLowerCase()).join(', ') + '.';
+  }
+  if (helped.length > 0) {
+    return 'Strengthen independence on: ' + helped.map(s => s.name.toLowerCase()).join(', ') + '.';
+  }
+  return 'None. Solid independent understanding of action-reaction pairs and connected blocks.';
+}
+
+function getSuggestedOpeningCheck(skills) {
+  const hasChangedGap = skills.some(s => s.id === 'changed_problem' && s.status !== 'independent');
+  if (hasChangedGap) {
+    return 'Opening check: Two blocks (2 kg and 3 kg) pushed with 10 N leftward on the 3 kg block. Draw force arrows and find contact force.';
+  }
+  return 'Opening check: Three blocks in line (1 kg, 2 kg, 3 kg) on frictionless table pushed with 12 N from left. Find system acceleration and both contact forces.';
+}
+
+// --- Render Engine ---
+function render() {
+  const app = document.getElementById('app');
+  switch (state.step) {
+    case 0:
+      renderStartScreen(app);
+      break;
+    case 1:
+      renderWarmupsScreen(app);
+      break;
+    case 2:
+      renderTeachingScreen(app);
+      break;
+    case 3:
+      renderDiagramsScreen(app);
+      break;
+    case 4:
+      renderMainProblemScreen(app);
+      break;
+    case 5:
+      renderReconstructionScreen(app);
+      break;
+    case 6:
+      renderFreshProblemScreen(app);
+      break;
+    case 7:
+      renderSummaryScreen(app);
+      break;
+  }
+}
+
+// --- SCREEN 0: START SCREEN ---
+function renderStartScreen(app) {
+  app.innerHTML = `
+    <header>
+      <h1>Newton's Laws: Connected Blocks</h1>
+      <p class="subtitle">Action-reaction pairs & system boundaries · Grade 10 Physics</p>
+      <span class="time-pill">About 38 min · 7 quick steps</span>
+    </header>
+
+    <div class="card">
+      <h2 class="section-title">Today's Setup</h2>
+      <p class="body-text">
+        Two blocks, <strong>A = 2 kg</strong> and <strong>B = 3 kg</strong>, touch each other on a smooth, frictionless table.
+        A horizontal push of <strong>10 N</strong> pushes rightward against Block A.
+      </p>
+
+      <div class="svg-box">
+        <svg viewBox="0 0 460 160" width="460" height="160" aria-label="Setup diagram">
+          <!-- Table -->
+          <line x1="20" y1="130" x2="440" y2="130" stroke="#334155" stroke-width="3" />
+          <line x1="20" y1="130" x2="10" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="60" y1="130" x2="50" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="100" y1="130" x2="90" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="140" y1="130" x2="130" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="180" y1="130" x2="170" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="220" y1="130" x2="210" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="260" y1="130" x2="250" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="300" y1="130" x2="290" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="340" y1="130" x2="330" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="380" y1="130" x2="370" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="420" y1="130" x2="410" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+
+          <!-- Push Arrow -->
+          <defs>
+            <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626" />
+            </marker>
+          </defs>
+          <line x1="40" y1="80" x2="120" y2="80" stroke="#dc2626" stroke-width="4" marker-end="url(#arrow-red)" />
+          <text x="75" y="65" fill="#dc2626" font-size="14" font-weight="700" text-anchor="middle">Push = 10 N</text>
+
+          <!-- Block A (2 kg) -->
+          <rect x="130" y="55" width="85" height="75" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5" />
+          <text x="172" y="92" fill="#1e40af" font-size="16" font-weight="700" text-anchor="middle">A</text>
+          <text x="172" y="112" fill="#1e40af" font-size="13" font-weight="600" text-anchor="middle">2 kg</text>
+
+          <!-- Block B (3 kg) -->
+          <rect x="215" y="40" width="115" height="90" rx="6" fill="#e0e7ff" stroke="#4338ca" stroke-width="2.5" />
+          <text x="272" y="85" fill="#3730a3" font-size="18" font-weight="700" text-anchor="middle">B</text>
+          <text x="272" y="107" fill="#3730a3" font-size="14" font-weight="600" text-anchor="middle">3 kg</text>
+
+          <!-- Table Label -->
+          <text x="375" y="122" fill="#64748b" font-size="12" font-style="italic">Smooth table</text>
+        </svg>
+      </div>
+
+      <p class="body-text">
+        In this session, you will see how Newton's third law connects these two blocks, why internal forces cancel when we look at both blocks together, and how to find the acceleration and contact force.
+      </p>
+
+      <div class="btn-row">
+        <button type="button" class="btn-primary" id="start-btn">Begin Session</button>
+      </div>
+    </div>
+
+    <!-- Continue from last time card -->
+    <div class="card" id="continue-card">
+      <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">Continue from Last Time</h3>
+      <p class="body-text" style="color:var(--text-muted); font-size:0.95rem;">
+        Have a saved session file? Open it here to see where you left off and try the opening check.
+      </p>
+
+      <div class="file-input-wrapper">
+        <button type="button" class="btn-secondary" id="continue-btn">Choose Session File (.json)</button>
+        <input type="file" id="load-session-file" accept=".json">
+      </div>
+
+      <div id="resumed-info-card" style="display:none; margin-top:16px;" class="alert alert-info">
+        <h4 style="font-size:1rem; font-weight:700; margin-bottom:6px;">Welcome Back!</h4>
+        <p style="margin-bottom:8px;"><strong>Remaining gap from last time:</strong> <span id="resumed-gap"></span></p>
+        <p style="margin-bottom:12px;"><strong>Suggested opening check:</strong> <span id="resumed-check"></span></p>
+        <button type="button" class="btn-primary" id="resumed-start-btn">Start Today's Session</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('start-btn').addEventListener('click', () => {
+    state.step = 1;
+    state.startTime = new Date().toISOString();
+    render();
+  });
+
+  const fileInput = document.getElementById('load-session-file');
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const data = JSON.parse(event.target.result);
+        state.loadedRecord = data;
+        const infoCard = document.getElementById('resumed-info-card');
+        const gapSpan = document.getElementById('resumed-gap');
+        const checkSpan = document.getElementById('resumed-check');
+
+        gapSpan.textContent = data.remaining_gap || 'None recorded.';
+        checkSpan.textContent = data.suggested_opening_check || 'Standard warm-up.';
+        infoCard.style.display = 'block';
+
+        document.getElementById('resumed-start-btn').addEventListener('click', () => {
+          state.step = 1;
+          state.startTime = new Date().toISOString();
+          render();
+        });
+      } catch (err) {
+        alert('Could not read session file. Please select a valid JSON file.');
+      }
+    };
+    reader.readAsText(file);
+  });
+}
+
+// --- SCREEN 1: WARMUPS ---
+function renderWarmupsScreen(app) {
+  app.innerHTML = `
+    <header>
+      <div class="step-label">Step 1 of 7 · Warm-up Check</div>
+      <h1>Three Quick Warm-ups</h1>
+      <span class="time-pill">About 4 min · Take your time</span>
+    </header>
+
+    <div class="card">
+      <p class="body-text">
+        Answer these 3 warm-up questions. Give a brief explanation for your thinking, or tap "I'm unsure" if you're not confident.
+        Your answers help select the right explanation for you.
+      </p>
+
+      <!-- Warmup 1 -->
+      <div class="question-block" id="warmup-q1">
+        <div class="question-prompt">
+          1. Blocks A (2 kg) and B (3 kg) touch on a frictionless table. A 10 N push acts rightward on A.
+          Between Block A and Block B, which contact force has a larger magnitude?
+        </div>
+        <div class="options-list">
+          <label class="option-item ${state.warmup1.choice === 'A' ? 'selected' : ''}" data-warmup="1" data-choice="A">
+            <input type="radio" name="w1-choice" value="A" ${state.warmup1.choice === 'A' ? 'checked' : ''}>
+            <span class="option-desc">The push of A on B is larger because B has more mass (3 kg).</span>
+          </label>
+          <label class="option-item ${state.warmup1.choice === 'B' ? 'selected' : ''}" data-warmup="1" data-choice="B">
+            <input type="radio" name="w1-choice" value="B" ${state.warmup1.choice === 'B' ? 'checked' : ''}>
+            <span class="option-desc">The push of B on A is larger because B resists the motion.</span>
+          </label>
+          <label class="option-item ${state.warmup1.choice === 'C' ? 'selected' : ''}" data-warmup="1" data-choice="C">
+            <input type="radio" name="w1-choice" value="C" ${state.warmup1.choice === 'C' ? 'checked' : ''}>
+            <span class="option-desc">Both contact forces have the exact same magnitude (equal and opposite).</span>
+          </label>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="warmup-1-why">Why? Explain your thinking:</label>
+          <textarea id="warmup-1-why" placeholder="Explain your reason here...">${state.warmup1.why}</textarea>
+        </div>
+        <div class="btn-row" style="margin-top:10px;">
+          <button type="button" class="btn-unsure ${state.warmup1.unsure ? 'active' : ''}" id="warmup-1-unsure-btn">
+            ${state.warmup1.unsure ? 'Marked: I am unsure' : "I'm unsure"}
+          </button>
+        </div>
+      </div>
+
+      <!-- Warmup 2 -->
+      <div class="question-block" id="warmup-q2">
+        <div class="question-prompt">
+          2. Since the two contact forces between A and B are equal in magnitude and point in opposite directions, can the blocks accelerate together?
+        </div>
+        <div class="options-list">
+          <label class="option-item ${state.warmup2.choice === 'A' ? 'selected' : ''}" data-warmup="2" data-choice="A">
+            <input type="radio" name="w2-choice" value="A" ${state.warmup2.choice === 'A' ? 'checked' : ''}>
+            <span class="option-desc">Yes, because the two contact forces act on different blocks, so they do not cancel each other out on any single block.</span>
+          </label>
+          <label class="option-item ${state.warmup2.choice === 'B' ? 'selected' : ''}" data-warmup="2" data-choice="B">
+            <input type="radio" name="w2-choice" value="B" ${state.warmup2.choice === 'B' ? 'checked' : ''}>
+            <span class="option-desc">No, because two equal and opposite forces always cancel out completely and prevent any motion.</span>
+          </label>
+          <label class="option-item ${state.warmup2.choice === 'C' ? 'selected' : ''}" data-warmup="2" data-choice="C">
+            <input type="radio" name="w2-choice" value="C" ${state.warmup2.choice === 'C' ? 'checked' : ''}>
+            <span class="option-desc">No, unless the external push is bigger than both contact forces added together.</span>
+          </label>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="warmup-2-why">Why? Explain your thinking:</label>
+          <textarea id="warmup-2-why" placeholder="Explain your reason here...">${state.warmup2.why}</textarea>
+        </div>
+        <div class="btn-row" style="margin-top:10px;">
+          <button type="button" class="btn-unsure ${state.warmup2.unsure ? 'active' : ''}" id="warmup-2-unsure-btn">
+            ${state.warmup2.unsure ? 'Marked: I am unsure' : "I'm unsure"}
+          </button>
+        </div>
+      </div>
+
+      <!-- Warmup 3 -->
+      <div class="question-block" id="warmup-q3">
+        <div class="question-prompt">
+          3. A separate object with mass m = 2 kg feels an unbalanced net force of 4 N. What is its acceleration?
+        </div>
+        <div class="options-list">
+          <label class="option-item ${state.warmup3.choice === 'A' ? 'selected' : ''}" data-warmup="3" data-choice="A">
+            <input type="radio" name="w3-choice" value="A" ${state.warmup3.choice === 'A' ? 'checked' : ''}>
+            <span class="option-desc">2 m/s² (using acceleration = net force ÷ mass)</span>
+          </label>
+          <label class="option-item ${state.warmup3.choice === 'B' ? 'selected' : ''}" data-warmup="3" data-choice="B">
+            <input type="radio" name="w3-choice" value="B" ${state.warmup3.choice === 'B' ? 'checked' : ''}>
+            <span class="option-desc">8 m/s² (using acceleration = net force × mass)</span>
+          </label>
+          <label class="option-item ${state.warmup3.choice === 'C' ? 'selected' : ''}" data-warmup="3" data-choice="C">
+            <input type="radio" name="w3-choice" value="C" ${state.warmup3.choice === 'C' ? 'checked' : ''}>
+            <span class="option-desc">0.5 m/s² (using acceleration = mass ÷ net force)</span>
+          </label>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="warmup-3-why">Why? Explain your thinking:</label>
+          <textarea id="warmup-3-why" placeholder="Explain your reason here...">${state.warmup3.why}</textarea>
+        </div>
+        <div class="btn-row" style="margin-top:10px;">
+          <button type="button" class="btn-unsure ${state.warmup3.unsure ? 'active' : ''}" id="warmup-3-unsure-btn">
+            ${state.warmup3.unsure ? 'Marked: I am unsure' : "I'm unsure"}
+          </button>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:32px;">
+        <button type="button" class="btn-primary" id="warmups-submit-btn">Save Warm-ups & Continue</button>
+      </div>
+    </div>
+  `;
+
+  // Option selection handlers
+  document.querySelectorAll('input[type="radio"][name^="w"]').forEach(input => {
+    input.addEventListener('change', () => {
+      const label = input.closest('.option-item');
+      const qNum = label.getAttribute('data-warmup');
+      const choice = label.getAttribute('data-choice');
+      if (qNum === '1') state.warmup1.choice = choice;
+      if (qNum === '2') state.warmup2.choice = choice;
+      if (qNum === '3') state.warmup3.choice = choice;
+
+      // Update selected class
+      document.querySelectorAll(`.option-item[data-warmup="${qNum}"]`).forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+    });
+  });
+
+  // Why handlers
+  document.getElementById('warmup-1-why').addEventListener('input', (e) => state.warmup1.why = e.target.value);
+  document.getElementById('warmup-2-why').addEventListener('input', (e) => state.warmup2.why = e.target.value);
+  document.getElementById('warmup-3-why').addEventListener('input', (e) => state.warmup3.why = e.target.value);
+
+  // Unsure handlers
+  document.getElementById('warmup-1-unsure-btn').addEventListener('click', function() {
+    state.warmup1.unsure = !state.warmup1.unsure;
+    this.classList.toggle('active', state.warmup1.unsure);
+    this.textContent = state.warmup1.unsure ? 'Marked: I am unsure' : "I'm unsure";
+  });
+  document.getElementById('warmup-2-unsure-btn').addEventListener('click', function() {
+    state.warmup2.unsure = !state.warmup2.unsure;
+    this.classList.toggle('active', state.warmup2.unsure);
+    this.textContent = state.warmup2.unsure ? 'Marked: I am unsure' : "I'm unsure";
+  });
+  document.getElementById('warmup-3-unsure-btn').addEventListener('click', function() {
+    state.warmup3.unsure = !state.warmup3.unsure;
+    this.classList.toggle('active', state.warmup3.unsure);
+    this.textContent = state.warmup3.unsure ? 'Marked: I am unsure' : "I'm unsure";
+  });
+
+  // Submit button: capture all 3 before any feedback!
+  document.getElementById('warmups-submit-btn').addEventListener('click', () => {
+    // Read current text values
+    state.warmup1.why = document.getElementById('warmup-1-why').value;
+    state.warmup2.why = document.getElementById('warmup-2-why').value;
+    state.warmup3.why = document.getElementById('warmup-3-why').value;
+
+    state.warmupsSaved = true;
+    state.gapIdentified = evaluateGaps();
+    state.step = 2;
+    render();
+  });
+}
+
+// --- SCREEN 2: SHORT EXPLANATION (TEACHING PASSAGE) ---
+function renderTeachingScreen(app) {
+  const gap = state.gapIdentified;
+  const showForces = (gap === 'forces' || gap === 'both');
+  const showArithmetic = (gap === 'arithmetic' || gap === 'both');
+  const showReady = (gap === 'none');
+
+  app.innerHTML = `
+    <header>
+      <div class="step-label">Step 2 of 7 · Core Concept</div>
+      <h1>Key Concept Guide</h1>
+      <span class="time-pill">About 5 min</span>
+    </header>
+
+    <div class="card">
+      ${showReady ? `
+        <div id="ready-note" class="alert alert-success">
+          <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">You're Ready!</h3>
+          <p class="body-text" style="margin-bottom:0;">
+            Great job on the warm-ups. You clearly recognize that contact forces act on different bodies in equal and opposite pairs,
+            and you know how to calculate acceleration from net force. Let's build the complete force diagrams.
+          </p>
+        </div>
+      ` : ''}
+
+      ${showForces ? `
+        <div id="forces-passage" style="margin-bottom:24px;">
+          <h2 class="section-title">Forces Always Come in Pairs on Different Bodies</h2>
+          <p class="body-text">
+            Whenever two objects interact, they exert equal and opposite forces on each other (Newton's third law).
+          </p>
+          <div class="alert alert-info">
+            <strong>Rule:</strong> Label every single force as <em>[who pushes] → [who receives]</em>.
+          </div>
+          <p class="body-text">
+            Imagine your hand pushes a single wooden block:
+          </p>
+          <ul style="margin-left:24px; margin-bottom:16px; line-height:1.7;">
+            <li><strong>Hand → Block:</strong> The push from your hand acts ON the block. This force can accelerate the block.</li>
+            <li><strong>Block → Hand:</strong> The push from the block acts ON your hand. You feel this push against your palm.</li>
+          </ul>
+          <p class="body-text">
+            <strong>Why don't they cancel?</strong><br>
+            Forces can only cancel each other out if they act on the <em>exact same body</em>.
+            Because the hand's push acts on the block, while the reaction acts on your hand, they act on <strong>different bodies</strong>.
+            They never cancel each other out on any single body!
+          </p>
+        </div>
+      ` : ''}
+
+      ${showArithmetic ? `
+        <div id="arithmetic-passage" style="margin-bottom:24px;">
+          <h2 class="section-title">Calculating Acceleration from Net Force</h2>
+          <p class="body-text">
+            Newton's second law connects the unbalanced net force on any body to its acceleration:
+          </p>
+          <div class="alert alert-info" style="font-family:monospace; font-size:1.05rem;">
+            Net Force = mass × acceleration<br>
+            acceleration = Net Force ÷ mass
+          </div>
+          <p class="body-text">
+            <strong>Example:</strong> For a body of mass <strong>2 kg</strong> experiencing an unbalanced net force of <strong>4 N</strong>:
+          </p>
+          <p class="body-text" style="font-family:monospace; background:#f8fafc; padding:12px; border-radius:8px;">
+            a = 4 N ÷ 2 kg = 2 m/s²
+          </p>
+          <p class="body-text">
+            The body accelerates at 2 m/s² in the direction of the net force.
+          </p>
+        </div>
+      ` : ''}
+
+      <div class="question-block" style="margin-top:20px;">
+        <div class="question-prompt">
+          In your own words, describe one interaction: label who pushes → who receives, and explain why the two forces do not cancel.
+        </div>
+        <div class="field-group">
+          <textarea id="learner-interaction-text" placeholder="For example: When a foot kicks a ball, the foot pushes the ball, and the ball pushes the foot...">${state.learnerInteraction}</textarea>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn-primary" id="step2-next-btn">Continue to Force Diagrams</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('learner-interaction-text').addEventListener('input', (e) => {
+    state.learnerInteraction = e.target.value;
+  });
+
+  document.getElementById('step2-next-btn').addEventListener('click', () => {
+    state.learnerInteraction = document.getElementById('learner-interaction-text').value;
+    state.block2Completed = true;
+    state.step = 3;
+    render();
+  });
+}
+
+// --- SCREEN 3: FORCE DIAGRAMS WITHOUT FREE DRAWING ---
+function renderDiagramsScreen(app) {
+  app.innerHTML = `
+    <header>
+      <div class="step-label">Step 3 of 7 · Force Diagrams</div>
+      <h1>Horizontal Force Diagrams</h1>
+      <span class="time-pill">About 5 min</span>
+    </header>
+
+    <div class="card">
+      <p class="body-text">
+        Let's construct the horizontal forces acting on <strong>Block A alone</strong>, <strong>Block B alone</strong>, and then the <strong>combined system (A+B)</strong>.
+        Select which horizontal forces act on each body.
+      </p>
+
+      <!-- 3A: Block A -->
+      <div class="question-block" id="diagram-a-section">
+        <h2 class="section-title" style="font-size:1.15rem;">Part 1: Diagram for Block A (2 kg)</h2>
+        <p class="body-text" style="color:var(--text-muted); font-size:0.95rem;">
+          Select the horizontal forces that act directly ON Block A:
+        </p>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 340 130" width="340" height="130">
+            <line x1="20" y1="110" x2="320" y2="110" stroke="#334155" stroke-width="2.5" />
+            <!-- Block A -->
+            <rect id="svg-block-a" x="120" y="30" width="100" height="80" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5" />
+            <text x="170" y="70" fill="#1e40af" font-size="16" font-weight="700" text-anchor="middle">A (2 kg)</text>
+
+            <!-- Arrows if selected -->
+            ${state.diagramA.selected.includes('hand-on-a') ? `
+              <line x1="30" y1="70" x2="110" y2="70" stroke="#dc2626" stroke-width="3.5" marker-end="url(#arrow-red)" />
+              <text x="70" y="55" fill="#dc2626" font-size="11" font-weight="700" text-anchor="middle">Hand on A (10 N →)</text>
+            ` : ''}
+
+            ${state.diagramA.selected.includes('b-on-a') ? `
+              <line x1="290" y1="70" x2="230" y2="70" stroke="#4338ca" stroke-width="3.5" marker-end="url(#arrow-red)" />
+              <text x="260" y="55" fill="#4338ca" font-size="11" font-weight="700" text-anchor="middle">← B on A (C)</text>
+            ` : ''}
+
+            ${state.diagramA.selected.includes('a-on-b') ? `
+              <line x1="220" y1="70" x2="290" y2="70" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="4,3" marker-end="url(#arrow-red)" />
+              <text x="255" y="95" fill="#dc2626" font-size="11" font-weight="700" text-anchor="middle">A on B (?)</text>
+            ` : ''}
+          </svg>
+        </div>
+
+        <div class="options-list">
+          <label class="option-item ${state.diagramA.selected.includes('hand-on-a') ? 'selected' : ''}">
+            <input type="checkbox" data-diagram="A" value="hand-on-a" ${state.diagramA.selected.includes('hand-on-a') ? 'checked' : ''}>
+            <span class="option-desc"><strong>Hand on A:</strong> 10 N pushing rightward on Block A</span>
+          </label>
+          <label class="option-item ${state.diagramA.selected.includes('b-on-a') ? 'selected' : ''}">
+            <input type="checkbox" data-diagram="A" value="b-on-a" ${state.diagramA.selected.includes('b-on-a') ? 'checked' : ''}>
+            <span class="option-desc"><strong>Block B on A:</strong> Contact force C pushing leftward on Block A</span>
+          </label>
+          <label class="option-item ${state.diagramA.selected.includes('a-on-b') ? 'selected' : ''}">
+            <input type="checkbox" data-diagram="A" value="a-on-b" ${state.diagramA.selected.includes('a-on-b') ? 'checked' : ''}>
+            <span class="option-desc"><strong>Block A on B:</strong> Contact force C pushing rightward on Block B</span>
+          </label>
+        </div>
+
+        <div id="receiver-feedback-a" style="${state.diagramA.receiverErrorShown ? 'display:block;' : 'display:none;'}">
+          <div class="alert alert-warning" id="highlight-receiver-b">
+            <h4 style="font-weight:700; margin-bottom:4px;">Which body receives this force?</h4>
+            <p>
+              Look closely at "Block A on B": Block A is the pusher, but <strong>Block B is the receiver</strong>!
+              A force diagram for Block A only contains forces received by Block A.
+              Remove this force from Block A's diagram and update.
+            </p>
+          </div>
+        </div>
+
+        ${state.diagramA.checked && !state.diagramA.receiverErrorShown ? `
+          <div class="alert alert-success">
+            Block A diagram verified! Two horizontal forces act on A: 10 N rightward from the hand, and contact force C leftward from B.
+          </div>
+        ` : ''}
+
+        <div class="btn-row">
+          <button type="button" class="btn-secondary" id="check-diagram-a-btn">Check Block A Diagram</button>
+        </div>
+      </div>
+
+      <!-- 3B: Block B -->
+      <div class="question-block" id="diagram-b-section" style="margin-top:28px;">
+        <h2 class="section-title" style="font-size:1.15rem;">Part 2: Diagram for Block B (3 kg)</h2>
+        <p class="body-text" style="color:var(--text-muted); font-size:0.95rem;">
+          Select the horizontal forces that act directly ON Block B:
+        </p>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 340 130" width="340" height="130">
+            <line x1="20" y1="110" x2="320" y2="110" stroke="#334155" stroke-width="2.5" />
+            <!-- Block B -->
+            <rect id="svg-block-b" x="110" y="20" width="120" height="90" rx="6" fill="#e0e7ff" stroke="#4338ca" stroke-width="2.5" />
+            <text x="170" y="65" fill="#3730a3" font-size="18" font-weight="700" text-anchor="middle">B (3 kg)</text>
+
+            <!-- Arrows if selected -->
+            ${state.diagramB.selected.includes('a-on-b') ? `
+              <line x1="20" y1="65" x2="100" y2="65" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arrow-red)" />
+              <text x="60" y="50" fill="#2563eb" font-size="11" font-weight="700" text-anchor="middle">A on B (C →)</text>
+            ` : ''}
+
+            ${state.diagramB.selected.includes('b-on-a') ? `
+              <line x1="240" y1="65" x2="310" y2="65" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="4,3" marker-end="url(#arrow-red)" />
+              <text x="275" y="85" fill="#dc2626" font-size="11" font-weight="700" text-anchor="middle">B on A (?)</text>
+            ` : ''}
+
+            ${state.diagramB.selected.includes('hand-on-b') ? `
+              <line x1="30" y1="85" x2="100" y2="85" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="4,3" marker-end="url(#arrow-red)" />
+              <text x="65" y="105" fill="#dc2626" font-size="11" font-weight="700" text-anchor="middle">Hand on B (?)</text>
+            ` : ''}
+          </svg>
+        </div>
+
+        <div class="options-list">
+          <label class="option-item ${state.diagramB.selected.includes('a-on-b') ? 'selected' : ''}">
+            <input type="checkbox" data-diagram="B" value="a-on-b" ${state.diagramB.selected.includes('a-on-b') ? 'checked' : ''}>
+            <span class="option-desc"><strong>Block A on B:</strong> Contact force C pushing rightward on Block B</span>
+          </label>
+          <label class="option-item ${state.diagramB.selected.includes('b-on-a') ? 'selected' : ''}">
+            <input type="checkbox" data-diagram="B" value="b-on-a" ${state.diagramB.selected.includes('b-on-a') ? 'checked' : ''}>
+            <span class="option-desc"><strong>Block B on A:</strong> Contact force C pushing leftward on Block A</span>
+          </label>
+          <label class="option-item ${state.diagramB.selected.includes('hand-on-b') ? 'selected' : ''}">
+            <input type="checkbox" data-diagram="B" value="hand-on-b" ${state.diagramB.selected.includes('hand-on-b') ? 'checked' : ''}>
+            <span class="option-desc"><strong>Hand on B:</strong> 10 N pushing rightward on Block B</span>
+          </label>
+        </div>
+
+        <div id="receiver-feedback-b" style="${state.diagramB.receiverErrorShown ? 'display:block;' : 'display:none;'}">
+          <div class="alert alert-warning" id="highlight-receiver-a">
+            <h4 style="font-weight:700; margin-bottom:4px;">Which body receives this force?</h4>
+            <p>
+              "Block B on A" acts on Block A, not B! And the hand only pushes Block A, never touching Block B directly.
+              Only forces received directly by Block B belong on Block B's diagram.
+            </p>
+          </div>
+        </div>
+
+        ${state.diagramB.checked && !state.diagramB.receiverErrorShown ? `
+          <div class="alert alert-success">
+            Block B diagram verified! Only one horizontal force acts on B: the contact push C from Block A.
+          </div>
+        ` : ''}
+
+        <div class="btn-row">
+          <button type="button" class="btn-secondary" id="check-diagram-b-btn">Check Block B Diagram</button>
+        </div>
+      </div>
+
+      <!-- 3C: Circled Combined System -->
+      <div class="question-block" id="diagram-combined-section" style="margin-top:28px;">
+        <h2 class="section-title" style="font-size:1.15rem;">Part 3: Circle Both Blocks Together (A+B)</h2>
+        <p class="body-text">
+          Now imagine drawing a circle around both blocks together, treating them as one single combined system of mass (2 kg + 3 kg = 5 kg).
+        </p>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 420 150" width="420" height="150">
+            <line x1="20" y1="130" x2="400" y2="130" stroke="#334155" stroke-width="2.5" />
+            <!-- Circled boundary -->
+            <ellipse cx="230" cy="80" rx="130" ry="55" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="6,4" />
+            <text x="230" y="20" fill="#166534" font-size="12" font-weight="700" text-anchor="middle">System Boundary: (A + B)</text>
+
+            <!-- Push -->
+            <line x1="30" y1="80" x2="115" y2="80" stroke="#dc2626" stroke-width="3.5" marker-end="url(#arrow-red)" />
+            <text x="70" y="65" fill="#dc2626" font-size="12" font-weight="700" text-anchor="middle">10 N Push</text>
+
+            <!-- A & B -->
+            <rect x="125" y="55" width="70" height="65" rx="4" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+            <text x="160" y="92" fill="#1e40af" font-size="14" font-weight="700" text-anchor="middle">A (2 kg)</text>
+
+            <rect x="195" y="45" width="95" height="75" rx="4" fill="#e0e7ff" stroke="#4338ca" stroke-width="2" />
+            <text x="242" y="90" fill="#3730a3" font-size="15" font-weight="700" text-anchor="middle">B (3 kg)</text>
+
+            <!-- Internal arrows -->
+            <text x="195" y="115" fill="#166534" font-size="10" font-weight="700" text-anchor="middle">← C | C →</text>
+            <text x="195" y="128" fill="#166534" font-size="9" text-anchor="middle">(internal pair cancels)</text>
+          </svg>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="internal-forces-reason">
+            What becomes internal when we circle A+B together, and why does that pair drop out of the net force sum?
+          </label>
+          <textarea id="internal-forces-reason" placeholder="Explain what happens to the contact forces inside the boundary...">${state.diagramCombined.internalReason}</textarea>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:32px;">
+        <button type="button" class="btn-primary" id="step3-next-btn">Continue to Main Problem</button>
+      </div>
+    </div>
+  `;
+
+  // Checkbox handlers for Diagram A
+  document.querySelectorAll('input[data-diagram="A"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const val = cb.value;
+      if (cb.checked) {
+        if (!state.diagramA.selected.includes(val)) state.diagramA.selected.push(val);
+      } else {
+        state.diagramA.selected = state.diagramA.selected.filter(x => x !== val);
+      }
+      renderDiagramsScreen(app);
+    });
+  });
+
+  // Checkbox handlers for Diagram B
+  document.querySelectorAll('input[data-diagram="B"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const val = cb.value;
+      if (cb.checked) {
+        if (!state.diagramB.selected.includes(val)) state.diagramB.selected.push(val);
+      } else {
+        state.diagramB.selected = state.diagramB.selected.filter(x => x !== val);
+      }
+      renderDiagramsScreen(app);
+    });
+  });
+
+  // Check A button
+  document.getElementById('check-diagram-a-btn').addEventListener('click', () => {
+    state.diagramA.checked = true;
+    if (state.diagramA.firstAttempt.length === 0) {
+      state.diagramA.firstAttempt = [...state.diagramA.selected];
+    } else {
+      state.diagramA.revisedAttempt = [...state.diagramA.selected];
+    }
+
+    if (state.diagramA.selected.includes('a-on-b')) {
+      state.diagramA.receiverErrorShown = true;
+    } else if (state.diagramA.selected.includes('hand-on-a') && state.diagramA.selected.includes('b-on-a')) {
+      state.diagramA.receiverErrorShown = false;
+    }
+    renderDiagramsScreen(app);
+  });
+
+  // Check B button
+  document.getElementById('check-diagram-b-btn').addEventListener('click', () => {
+    state.diagramB.checked = true;
+    if (state.diagramB.firstAttempt.length === 0) {
+      state.diagramB.firstAttempt = [...state.diagramB.selected];
+    } else {
+      state.diagramB.revisedAttempt = [...state.diagramB.selected];
+    }
+
+    if (state.diagramB.selected.includes('b-on-a') || state.diagramB.selected.includes('hand-on-b')) {
+      state.diagramB.receiverErrorShown = true;
+    } else if (state.diagramB.selected.includes('a-on-b')) {
+      state.diagramB.receiverErrorShown = false;
+    }
+    renderDiagramsScreen(app);
+  });
+
+  document.getElementById('internal-forces-reason').addEventListener('input', (e) => {
+    state.diagramCombined.internalReason = e.target.value;
+  });
+
+  document.getElementById('step3-next-btn').addEventListener('click', () => {
+    state.diagramCombined.internalReason = document.getElementById('internal-forces-reason').value;
+    state.diagramCombined.completed = true;
+    state.step = 4;
+    render();
+  });
+}
+
+// --- SCREEN 4: MAIN PROBLEM ---
+function renderMainProblemScreen(app) {
+  const isCorrect = (state.mainAccelVal.trim() === '2' && state.mainAccelDir === 'right' && state.mainContactVal.trim() === '6');
+
+  app.innerHTML = `
+    <header>
+      <div class="step-label">Step 4 of 7 · Main Problem</div>
+      <h1>Find Acceleration & Contact Force</h1>
+      <span class="time-pill">About 9 min</span>
+    </header>
+
+    <div class="card">
+      <p class="body-text">
+        <strong>Setup:</strong> Blocks A (2 kg) and B (3 kg) touch on a frictionless table.
+        A horizontal push of <strong>10 N</strong> pushes rightward on Block A.
+      </p>
+
+      <div class="question-block">
+        <div class="question-prompt">
+          1. What is the acceleration of the blocks?
+        </div>
+        <div class="input-row">
+          <input type="number" id="main-accel-val" placeholder="Value (e.g. 2)" value="${state.mainAccelVal}">
+          <select id="main-accel-dir">
+            <option value="right" ${state.mainAccelDir === 'right' ? 'selected' : ''}>to the right</option>
+            <option value="left" ${state.mainAccelDir === 'left' ? 'selected' : ''}>to the left</option>
+          </select>
+          <span style="font-weight:600;">m/s²</span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="main-accel-why">Why? Show your calculation:</label>
+          <textarea id="main-accel-why" placeholder="Explain how you calculated acceleration...">${state.mainAccelWhy}</textarea>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-prompt">
+          2. What is the magnitude of the contact force between Block A and Block B?
+        </div>
+        <div class="input-row">
+          <input type="number" id="main-contact-val" placeholder="Value (e.g. 6)" value="${state.mainContactVal}">
+          <span style="font-weight:600;">N</span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="main-contact-why">Why? Show your calculation:</label>
+          <textarea id="main-contact-why" placeholder="Explain how you calculated contact force...">${state.mainContactWhy}</textarea>
+        </div>
+      </div>
+
+      <!-- Hints Section -->
+      <div style="margin-top:20px;">
+        <button type="button" class="btn-hint" id="hint-btn">
+          Need a hint? (${state.mainHintsOpened.length}/3 opened)
+        </button>
+
+        ${state.mainHintsOpened.includes(1) ? `
+          <div class="hint-box" id="hint-tier-1">
+            <h4>Hint 1: Choose the combined system (A+B)</h4>
+            <p>
+              Treat both blocks together as one combined mass: m_total = 2 kg + 3 kg = 5 kg.
+              The contact forces inside cancel out in the net force sum, leaving only the 10 N external push.
+            </p>
+          </div>
+        ` : ''}
+
+        ${state.mainHintsOpened.includes(2) ? `
+          <div class="hint-box" id="hint-tier-2">
+            <h4>Hint 2: Find acceleration</h4>
+            <p>
+              Use Newton's second law on the combined 5 kg system:<br>
+              <strong>a = F_net ÷ (m_A + m_B) = 10 N ÷ (2 + 3) kg = 10 ÷ 5 = 2 m/s² to the right</strong>.
+            </p>
+          </div>
+        ` : ''}
+
+        ${state.mainHintsOpened.includes(3) ? `
+          <div class="hint-box" id="hint-tier-3">
+            <h4>Hint 3: Isolate Block B to find contact force</h4>
+            <p>
+              Look at Block B (mass 3 kg). The only horizontal force acting on B is the contact push C from Block A.<br>
+              Using F = m × a on Block B alone:<br>
+              <strong>C = m_B × a = 3 kg × 2 m/s² = 6 N</strong>.
+            </p>
+          </div>
+        ` : ''}
+      </div>
+
+      <!-- Feedback Area -->
+      ${state.mainPassed ? `
+        <div class="alert alert-success" style="margin-top:20px;">
+          <h4 style="font-weight:700; margin-bottom:4px;">Spot On!</h4>
+          <p>
+            Acceleration = <strong>2 m/s² to the right</strong>.<br>
+            Contact force = <strong>6 N</strong>.
+          </p>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn-primary" id="step4-next-btn">Continue to Reasoning Step</button>
+        </div>
+      ` : `
+        ${state.mainAttemptsCount > 0 && !isCorrect ? `
+          <div class="alert alert-warning" style="margin-top:20px;">
+            <p>Check your numbers or open a hint above. Remember to find acceleration first from the combined mass, then isolate one block.</p>
+          </div>
+        ` : ''}
+
+        <div class="btn-row">
+          ${state.mainAttemptsCount === 0 ? `
+            <button type="button" class="btn-primary" id="check-main-btn">Check My Answers</button>
+          ` : `
+            ${state.mainRetryActive ? `
+              <button type="button" class="btn-primary" id="check-retry-btn">Check Retry</button>
+            ` : `
+              <button type="button" class="btn-secondary" id="retry-main-btn">Try Again</button>
+              <button type="button" class="btn-hint" id="show-solution-btn">Show Full Worked Solution</button>
+            `}
+          `}
+        </div>
+
+        ${state.mainSolutionOpened ? `
+          <div class="card" id="solution-card" style="margin-top:20px; background:#f8fafc; border:1px solid #cbd5e1;">
+            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:10px; color:#1e293b;">Full Worked Solution</h3>
+            <p class="body-text">
+              <strong>Step 1: Acceleration of the combined system</strong><br>
+              Masses touch and accelerate together. Combining A and B into one system of mass (2 + 3 = 5 kg):<br>
+              <em>a = F_external ÷ m_total = 10 N ÷ 5 kg = 2 m/s² to the right.</em>
+            </p>
+            <p class="body-text">
+              <strong>Step 2: Contact force from Block B's equation</strong><br>
+              Block B has mass 3 kg and accelerates at 2 m/s² rightward. The only horizontal force acting on B is the contact force C exerted by A:<br>
+              <em>C = m_B × a = 3 kg × 2 m/s² = 6 N.</em>
+            </p>
+            <p class="body-text">
+              <strong>Step 3: Quick check on Block A</strong><br>
+              Net force on A = Push - C = 10 N - 6 N = 4 N to the right.<br>
+              Acceleration of A = 4 N ÷ 2 kg = 2 m/s² right. Everything matches!
+            </p>
+            <div class="btn-row">
+              <button type="button" class="btn-primary" id="step4-next-btn">Continue to Reasoning Step</button>
+            </div>
+          </div>
+        ` : ''}
+      `}
+    </div>
+  `;
+
+  function syncMainProblemFromDOM() {
+    const av = document.getElementById('main-accel-val');
+    if (av) state.mainAccelVal = av.value;
+    const ad = document.getElementById('main-accel-dir');
+    if (ad) state.mainAccelDir = ad.value;
+    const aw = document.getElementById('main-accel-why');
+    if (aw) state.mainAccelWhy = aw.value;
+    const cv = document.getElementById('main-contact-val');
+    if (cv) state.mainContactVal = cv.value;
+    const cw = document.getElementById('main-contact-why');
+    if (cw) state.mainContactWhy = cw.value;
+  }
+
+  // Input listeners
+  document.getElementById('main-accel-val').addEventListener('input', (e) => state.mainAccelVal = e.target.value);
+  document.getElementById('main-accel-dir').addEventListener('change', (e) => state.mainAccelDir = e.target.value);
+  document.getElementById('main-accel-why').addEventListener('input', (e) => state.mainAccelWhy = e.target.value);
+  document.getElementById('main-contact-val').addEventListener('input', (e) => state.mainContactVal = e.target.value);
+  document.getElementById('main-contact-why').addEventListener('input', (e) => state.mainContactWhy = e.target.value);
+
+  // Hint button
+  document.getElementById('hint-btn').addEventListener('click', () => {
+    syncMainProblemFromDOM();
+    if (state.mainHintsOpened.length < 3) {
+      state.mainHintsOpened.push(state.mainHintsOpened.length + 1);
+      renderMainProblemScreen(app);
+    }
+  });
+
+  // Check initial
+  const checkBtn = document.getElementById('check-main-btn');
+  if (checkBtn) {
+    checkBtn.addEventListener('click', () => {
+      syncMainProblemFromDOM();
+      state.mainAttemptsCount++;
+      state.mainFirstAttempt = {
+        accelVal: state.mainAccelVal,
+        accelDir: state.mainAccelDir,
+        accelWhy: state.mainAccelWhy,
+        contactVal: state.mainContactVal,
+        contactWhy: state.mainContactWhy
+      };
+      if (state.mainAccelVal.trim() === '2' && state.mainAccelDir === 'right' && state.mainContactVal.trim() === '6') {
+        state.mainPassed = true;
+      }
+      renderMainProblemScreen(app);
+    });
+  }
+
+  // Retry button
+  const retryBtn = document.getElementById('retry-main-btn');
+  if (retryBtn) {
+    retryBtn.addEventListener('click', () => {
+      syncMainProblemFromDOM();
+      state.mainRetryActive = true;
+      renderMainProblemScreen(app);
+    });
+  }
+
+  // Check retry
+  const checkRetryBtn = document.getElementById('check-retry-btn');
+  if (checkRetryBtn) {
+    checkRetryBtn.addEventListener('click', () => {
+      syncMainProblemFromDOM();
+      state.mainAttemptsCount++;
+      state.mainRetryAttempt = {
+        accelVal: state.mainAccelVal,
+        accelDir: state.mainAccelDir,
+        contactVal: state.mainContactVal
+      };
+      state.mainRetryActive = false;
+      if (state.mainAccelVal.trim() === '2' && state.mainAccelDir === 'right' && state.mainContactVal.trim() === '6') {
+        state.mainPassed = true;
+      }
+      renderMainProblemScreen(app);
+    });
+  }
+
+  // Show solution
+  const showSolBtn = document.getElementById('show-solution-btn');
+  if (showSolBtn) {
+    showSolBtn.addEventListener('click', () => {
+      syncMainProblemFromDOM();
+      state.mainSolutionOpened = true;
+      renderMainProblemScreen(app);
+    });
+  }
+
+  // Next step
+  const nextBtn = document.getElementById('step4-next-btn');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      syncMainProblemFromDOM();
+      state.step = 5;
+      render();
+    });
+  }
+}
+
+// --- SCREEN 5: RECONSTRUCTION (SOLUTION HIDDEN) ---
+function renderReconstructionScreen(app) {
+  app.innerHTML = `
+    <header>
+      <div class="step-label">Step 5 of 7 · Explain the Reasoning</div>
+      <h1>Reconstruct the Core Physics</h1>
+      <span class="time-pill">About 5 min</span>
+    </header>
+
+    <div class="card">
+      <div class="alert alert-info" style="margin-top:0;">
+        <strong>Solution hidden:</strong> The worked numbers are now hidden so you can test your understanding.
+        Explain the two key ideas below in your own words.
+      </div>
+
+      <!-- Question 1 -->
+      <div class="question-block">
+        <div class="question-prompt">
+          1. Why is the contact force between A and B equal to 6 N, while the external push is 10 N?
+        </div>
+        <p class="body-text" style="color:var(--text-muted); font-size:0.92rem;">
+          Where does the other 4 N go? Connect the 10 N push to Block A's own acceleration and mass.
+        </p>
+        <div class="field-group">
+          <textarea id="recon-why-6n" placeholder="Explain why the contact force is 6 N instead of 10 N...">${state.reconWhy6N}</textarea>
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question-block" style="margin-top:24px;">
+        <div class="question-prompt">
+          2. Why don't the two contact forces (A on B, and B on A) cancel each other out on Block A alone?
+        </div>
+        <p class="body-text" style="color:var(--text-muted); font-size:0.92rem;">
+          Think about which object receives each force.
+        </p>
+        <div class="field-group">
+          <textarea id="recon-why-no-cancel" placeholder="Explain why they do not cancel on Block A alone...">${state.reconWhyNoCancel}</textarea>
+        </div>
+      </div>
+
+      <!-- Assistance section -->
+      <div class="btn-row" style="margin-top:20px;">
+        <button type="button" class="btn-hint" id="focused-followup-btn">
+          Need a thinking prompt?
+        </button>
+        <button type="button" class="btn-secondary" id="reopen-explanation-btn">
+          Reopen explanation guide
+        </button>
+      </div>
+
+      <div id="focused-followup-box" style="${state.reconFollowupShown ? 'display:block;' : 'display:none;'} margin-top:16px;">
+        <div class="alert alert-warning">
+          <strong>Focused prompt:</strong> Look at Block A alone (mass 2 kg, acceleration 2 m/s²).
+          Block A requires a net force of F = m × a = 2 kg × 2 m/s² = 4 N to accelerate itself.
+          Of the 10 N push exerted on A, 4 N accelerates A, leaving 10 N - 4 N = 6 N to be passed on to Block B!
+        </div>
+      </div>
+
+      <div id="reopened-explanation-box" style="${state.reconReopenGuideShown ? 'display:block;' : 'display:none;'} margin-top:16px;">
+        <div class="card" style="background:#f1f5f9; border:1px solid #cbd5e1;">
+          <h4 style="font-weight:700; margin-bottom:6px;">Equal & Opposite Pairs on Different Objects</h4>
+          <p class="body-text">
+            Block B on A acts on Block A (pointing left). Block A on B acts on Block B (pointing right).
+            Because they act on <strong>two different objects</strong>, they never cancel on Block A alone.
+            Only forces received by Block A can affect Block A!
+          </p>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:28px;">
+        <button type="button" class="btn-primary" id="step5-next-btn">Save Reasoning & Continue</button>
+      </div>
+    </div>
+  `;
+
+  function syncReconFromDOM() {
+    const r1 = document.getElementById('recon-why-6n');
+    if (r1) state.reconWhy6N = r1.value;
+    const r2 = document.getElementById('recon-why-no-cancel');
+    if (r2) state.reconWhyNoCancel = r2.value;
+  }
+
+  document.getElementById('recon-why-6n').addEventListener('input', (e) => state.reconWhy6N = e.target.value);
+  document.getElementById('recon-why-no-cancel').addEventListener('input', (e) => state.reconWhyNoCancel = e.target.value);
+
+  document.getElementById('focused-followup-btn').addEventListener('click', () => {
+    syncReconFromDOM();
+    state.reconFollowupShown = true;
+    renderReconstructionScreen(app);
+  });
+
+  document.getElementById('reopen-explanation-btn').addEventListener('click', () => {
+    syncReconFromDOM();
+    state.reconReopenGuideShown = true;
+    state.reconAssisted = true;
+    renderReconstructionScreen(app);
+  });
+
+  document.getElementById('step5-next-btn').addEventListener('click', () => {
+    syncReconFromDOM();
+    state.reconCompleted = true;
+    state.step = 6;
+    render();
+  });
+}
+
+// --- SCREEN 6: FRESH PROBLEM ---
+function renderFreshProblemScreen(app) {
+  app.innerHTML = `
+    <header>
+      <div class="step-label">Step 6 of 7 · Fresh Challenge</div>
+      <h1>Pushing From the Other Side</h1>
+      <span class="time-pill">About 7 min · Unaided first check</span>
+    </header>
+
+    <div class="card">
+      <p class="body-text">
+        Now let's switch the push!
+        The same two blocks, <strong>A = 2 kg</strong> and <strong>B = 3 kg</strong>, touch on the frictionless table.
+        This time, a horizontal push of <strong>10 N</strong> pushes <strong>LEFTWARD on Block B</strong>.
+      </p>
+
+      <div class="svg-box">
+        <svg viewBox="0 0 460 160" width="460" height="160">
+          <line x1="20" y1="130" x2="440" y2="130" stroke="#334155" stroke-width="3" />
+          <line x1="40" y1="130" x2="30" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="100" y1="130" x2="90" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="160" y1="130" x2="150" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="220" y1="130" x2="210" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="280" y1="130" x2="270" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="340" y1="130" x2="330" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+          <line x1="400" y1="130" x2="390" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+
+          <!-- Leftward Push Arrow onto B -->
+          <line x1="410" y1="80" x2="335" y2="80" stroke="#dc2626" stroke-width="4" marker-end="url(#arrow-red)" />
+          <text x="370" y="65" fill="#dc2626" font-size="14" font-weight="700" text-anchor="middle">← 10 N Push</text>
+
+          <!-- Block A (2 kg) on left -->
+          <rect x="130" y="55" width="85" height="75" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5" />
+          <text x="172" y="92" fill="#1e40af" font-size="16" font-weight="700" text-anchor="middle">A</text>
+          <text x="172" y="112" fill="#1e40af" font-size="13" font-weight="600" text-anchor="middle">2 kg</text>
+
+          <!-- Block B (3 kg) on right -->
+          <rect x="215" y="40" width="115" height="90" rx="6" fill="#e0e7ff" stroke="#4338ca" stroke-width="2.5" />
+          <text x="272" y="85" fill="#3730a3" font-size="18" font-weight="700" text-anchor="middle">B</text>
+          <text x="272" y="107" fill="#3730a3" font-size="14" font-weight="600" text-anchor="middle">3 kg</text>
+        </svg>
+      </div>
+
+      <!-- Question 1: Prediction -->
+      <div class="question-block">
+        <div class="question-prompt">
+          1. Prediction: Will the contact force between A and B still be 6 N, or will it change?
+        </div>
+        <div class="options-list">
+          <label class="option-item ${state.freshPred === 'smaller' ? 'selected' : ''}" data-fresh-pred="smaller">
+            <input type="radio" name="fresh-pred" value="smaller" ${state.freshPred === 'smaller' ? 'checked' : ''}>
+            <span class="option-desc">The contact force will be smaller than 6 N (it will be 4 N).</span>
+          </label>
+          <label class="option-item ${state.freshPred === 'same' ? 'selected' : ''}" data-fresh-pred="same">
+            <input type="radio" name="fresh-pred" value="same" ${state.freshPred === 'same' ? 'checked' : ''}>
+            <span class="option-desc">The contact force will stay 6 N.</span>
+          </label>
+          <label class="option-item ${state.freshPred === 'larger' ? 'selected' : ''}" data-fresh-pred="larger">
+            <input type="radio" name="fresh-pred" value="larger" ${state.freshPred === 'larger' ? 'checked' : ''}>
+            <span class="option-desc">The contact force will be larger than 6 N.</span>
+          </label>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="fresh-pred-why">Why do you predict this?</label>
+          <textarea id="fresh-pred-why" placeholder="Explain your prediction...">${state.freshPredWhy}</textarea>
+        </div>
+      </div>
+
+      <!-- Question 2: Diagram Choices -->
+      <div class="question-block" style="margin-top:24px;">
+        <div class="question-prompt">
+          2. Force diagram choices: Which horizontal forces act on each block now?
+        </div>
+        <p class="body-text" style="color:var(--text-muted); font-size:0.92rem; margin-bottom:8px;">
+          <strong>On Block B (pushed by hand):</strong>
+        </p>
+        <div class="options-list" style="margin-bottom:12px;">
+          <label class="option-item ${state.freshForcesB.includes('hand-on-b') ? 'selected' : ''}">
+            <input type="checkbox" data-fresh-b="hand-on-b" value="hand-on-b" ${state.freshForcesB.includes('hand-on-b') ? 'checked' : ''}>
+            <span class="option-desc">Hand on B (10 N pushing left)</span>
+          </label>
+          <label class="option-item ${state.freshForcesB.includes('a-on-b') ? 'selected' : ''}">
+            <input type="checkbox" data-fresh-b="a-on-b" value="a-on-b" ${state.freshForcesB.includes('a-on-b') ? 'checked' : ''}>
+            <span class="option-desc">Block A on B (Contact force pointing right)</span>
+          </label>
+          <label class="option-item ${state.freshForcesB.includes('b-on-a') ? 'selected' : ''}">
+            <input type="checkbox" data-fresh-b="b-on-a" value="b-on-a" ${state.freshForcesB.includes('b-on-a') ? 'checked' : ''}>
+            <span class="option-desc">Block B on A (Contact force pointing left)</span>
+          </label>
+        </div>
+
+        <p class="body-text" style="color:var(--text-muted); font-size:0.92rem; margin-bottom:8px;">
+          <strong>On Block A (touching B):</strong>
+        </p>
+        <div class="options-list">
+          <label class="option-item ${state.freshForcesA.includes('b-on-a') ? 'selected' : ''}">
+            <input type="checkbox" data-fresh-a="b-on-a" value="b-on-a" ${state.freshForcesA.includes('b-on-a') ? 'checked' : ''}>
+            <span class="option-desc">Block B on A (Contact force pointing left)</span>
+          </label>
+          <label class="option-item ${state.freshForcesA.includes('hand-on-a') ? 'selected' : ''}">
+            <input type="checkbox" data-fresh-a="hand-on-a" value="hand-on-a" ${state.freshForcesA.includes('hand-on-a') ? 'checked' : ''}>
+            <span class="option-desc">Hand on A (10 N pushing left)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Question 3: Calculations -->
+      <div class="question-block" style="margin-top:24px;">
+        <div class="question-prompt">
+          3. Calculate the acceleration of the blocks:
+        </div>
+        <div class="input-row">
+          <input type="number" id="fresh-accel-val" placeholder="Value (e.g. 2)" value="${state.freshAccelVal}">
+          <select id="fresh-accel-dir">
+            <option value="left" ${state.freshAccelDir === 'left' ? 'selected' : ''}>to the left</option>
+            <option value="right" ${state.freshAccelDir === 'right' ? 'selected' : ''}>to the right</option>
+          </select>
+          <span style="font-weight:600;">m/s²</span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="fresh-accel-why">Why? Show your calculation:</label>
+          <textarea id="fresh-accel-why" placeholder="Show your acceleration calculation...">${state.freshAccelWhy}</textarea>
+        </div>
+      </div>
+
+      <div class="question-block" style="margin-top:24px;">
+        <div class="question-prompt">
+          4. Calculate the magnitude of the contact force between A and B:
+        </div>
+        <div class="input-row">
+          <input type="number" id="fresh-contact-val" placeholder="Value (e.g. 4)" value="${state.freshContactVal}">
+          <span style="font-weight:600;">N</span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="fresh-contact-why">Why? Show which block you isolated and your equation:</label>
+          <textarea id="fresh-contact-why" placeholder="Show your contact force calculation...">${state.freshContactWhy}</textarea>
+        </div>
+      </div>
+
+      <div class="question-block" style="margin-top:24px;">
+        <div class="question-prompt">
+          5. Why do the two contact forces (push of B on A, and push of A on B) still have equal magnitude to each other?
+        </div>
+        <div class="field-group">
+          <textarea id="fresh-equal-why" placeholder="Explain why the reciprocal forces remain equal...">${state.freshEqualWhy}</textarea>
+        </div>
+      </div>
+
+      <!-- Submit Section -->
+      ${!state.freshFirstAttempt ? `
+        <div class="btn-row" style="margin-top:32px;">
+          <button type="button" class="btn-primary" id="fresh-submit-btn">Submit My Answers</button>
+        </div>
+      ` : `
+        <!-- Feedback shown only AFTER first attempt is saved -->
+        ${state.freshFirstAttemptCorrect ? `
+          <div class="alert alert-success" style="margin-top:24px;">
+            <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">Brilliant Independent Solution!</h3>
+            <p class="body-text">
+              Acceleration = <strong>2 m/s² to the left</strong>.<br>
+              Contact force = <strong>4 N</strong>.
+            </p>
+            <p class="body-text" style="margin-bottom:0;">
+              Notice the beauty of this: when pushing B leftward, the contact force only has to accelerate Block A (2 kg × 2 m/s² = 4 N).
+              When pushing A earlier, the contact force had to accelerate Block B (3 kg × 2 m/s² = 6 N)!
+            </p>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn-primary" id="step6-next-btn">View Session Summary</button>
+          </div>
+        ` : `
+          <!-- Guided Repair -->
+          <div class="card" id="guided-repair-card" style="margin-top:24px; background:#fffbeb; border:1px solid #fde68a;">
+            <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:10px; color:#92400e;">Guided Walkthrough</h3>
+            <p class="body-text">
+              Let's walk through the steps to see what changed:
+            </p>
+            <ol style="margin-left:24px; margin-bottom:16px; line-height:1.7;">
+              <li>
+                <strong>Combined acceleration:</strong><br>
+                Total mass = 2 kg + 3 kg = 5 kg. The net force is 10 N pointing left.<br>
+                <em>a = 10 N ÷ 5 kg = 2 m/s² to the left.</em>
+              </li>
+              <li>
+                <strong>Isolate Block A (mass 2 kg):</strong><br>
+                The ONLY horizontal force acting on Block A is the contact push from Block B to the left.<br>
+                Applying Newton's second law on Block A alone:<br>
+                <em>Contact force C = m_A × a = 2 kg × 2 m/s² = 4 N.</em>
+              </li>
+              <li>
+                <strong>Check Block B (mass 3 kg):</strong><br>
+                Net force on B = 10 N (left) - 4 N (right) = 6 N left.<br>
+                Acceleration of B = 6 N ÷ 3 kg = 2 m/s² left. Exactly matches!
+              </li>
+            </ol>
+            <div class="btn-row">
+              <button type="button" class="btn-primary" id="guided-repair-btn">I Understand this Walkthrough</button>
+            </div>
+          </div>
+
+          ${state.freshGuidedRepairCompleted ? `
+            <div class="btn-row" style="margin-top:20px;">
+              <button type="button" class="btn-primary" id="step6-next-btn">View Session Summary</button>
+            </div>
+          ` : ''}
+        `}
+      `}
+    </div>
+  `;
+
+  // Prediction listeners
+  document.querySelectorAll('input[name="fresh-pred"]').forEach(r => {
+    r.addEventListener('change', () => {
+      state.freshPred = r.value;
+      document.querySelectorAll('label[data-fresh-pred]').forEach(l => l.classList.remove('selected'));
+      r.closest('.option-item').classList.add('selected');
+    });
+  });
+
+  // Checkbox listeners for Block B forces
+  document.querySelectorAll('input[data-fresh-b]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const val = cb.value;
+      if (cb.checked) {
+        if (!state.freshForcesB.includes(val)) state.freshForcesB.push(val);
+      } else {
+        state.freshForcesB = state.freshForcesB.filter(x => x !== val);
+      }
+      cb.closest('.option-item').classList.toggle('selected', cb.checked);
+    });
+  });
+
+  // Checkbox listeners for Block A forces
+  document.querySelectorAll('input[data-fresh-a]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const val = cb.value;
+      if (cb.checked) {
+        if (!state.freshForcesA.includes(val)) state.freshForcesA.push(val);
+      } else {
+        state.freshForcesA = state.freshForcesA.filter(x => x !== val);
+      }
+      cb.closest('.option-item').classList.toggle('selected', cb.checked);
+    });
+  });
+
+  document.getElementById('fresh-pred-why').addEventListener('input', (e) => state.freshPredWhy = e.target.value);
+  document.getElementById('fresh-accel-val').addEventListener('input', (e) => state.freshAccelVal = e.target.value);
+  document.getElementById('fresh-accel-dir').addEventListener('change', (e) => state.freshAccelDir = e.target.value);
+  document.getElementById('fresh-accel-why').addEventListener('input', (e) => state.freshAccelWhy = e.target.value);
+  document.getElementById('fresh-contact-val').addEventListener('input', (e) => state.freshContactVal = e.target.value);
+  document.getElementById('fresh-contact-why').addEventListener('input', (e) => state.freshContactWhy = e.target.value);
+  document.getElementById('fresh-equal-why').addEventListener('input', (e) => state.freshEqualWhy = e.target.value);
+
+  // Submit first attempt BEFORE feedback!
+  const submitBtn = document.getElementById('fresh-submit-btn');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', () => {
+      // Sync from DOM directly to be 100% current
+      const selPred = document.querySelector('input[name="fresh-pred"]:checked');
+      if (selPred) state.freshPred = selPred.value;
+      state.freshPredWhy = document.getElementById('fresh-pred-why').value;
+      state.freshAccelVal = document.getElementById('fresh-accel-val').value;
+      state.freshAccelDir = document.getElementById('fresh-accel-dir').value;
+      state.freshAccelWhy = document.getElementById('fresh-accel-why').value;
+      state.freshContactVal = document.getElementById('fresh-contact-val').value;
+      state.freshContactWhy = document.getElementById('fresh-contact-why').value;
+      state.freshEqualWhy = document.getElementById('fresh-equal-why').value;
+
+      // Save exact first attempt unchanged
+      state.freshFirstAttempt = {
+        prediction: state.freshPred,
+        predictionWhy: state.freshPredWhy,
+        diagramChoices: {
+          forcesOnB: [...state.freshForcesB],
+          forcesOnA: [...state.freshForcesA]
+        },
+        accelVal: state.freshAccelVal,
+        accelDir: state.freshAccelDir,
+        accelWhy: state.freshAccelWhy,
+        contactVal: state.freshContactVal,
+        contactWhy: state.freshContactWhy,
+        equalWhy: state.freshEqualWhy,
+        timestamp: new Date().toISOString()
+      };
+
+      const isCorrect = (state.freshAccelVal.trim() === '2' && state.freshAccelDir === 'left' && state.freshContactVal.trim() === '4');
+      state.freshFirstAttemptCorrect = isCorrect;
+      renderFreshProblemScreen(app);
+    });
+  }
+
+  // Guided repair button
+  const repairBtn = document.getElementById('guided-repair-btn');
+  if (repairBtn) {
+    repairBtn.addEventListener('click', () => {
+      state.freshGuidedRepairCompleted = true;
+      renderFreshProblemScreen(app);
+    });
+  }
+
+  // Next step
+  const nextBtn = document.getElementById('step6-next-btn');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      state.step = 7;
+      render();
+    });
+  }
+}
+
+// --- SCREEN 7: SUMMARY & SAVE ---
+function renderSummaryScreen(app) {
+  const skills = evaluateSkills();
+  const remainingGap = getRemainingGap(skills);
+  const openingCheck = getSuggestedOpeningCheck(skills);
+
+  app.innerHTML = `
+    <header>
+      <div class="step-label">Step 7 of 7 · Session Summary</div>
+      <h1>Session Summary</h1>
+      <span class="time-pill">About 3 min · Reflection & Export</span>
+    </header>
+
+    <div class="card">
+      <h2 class="section-title">Demonstrated Skills</h2>
+      <p class="body-text" style="color:var(--text-muted); font-size:0.95rem;">
+        Here is how you performed across the core skills practiced in this session:
+      </p>
+
+      <div style="margin-bottom:20px; border:1px solid var(--card-border); border-radius:10px; overflow:hidden;">
+        ${skills.map(s => {
+          let badgeClass = 'badge-success';
+          if (s.status === 'with help') badgeClass = 'badge-warning';
+          if (s.status === 'needs practice') badgeClass = 'badge-info';
+          return `
+            <div class="skill-row" id="skill-${s.id}">
+              <span class="skill-name">${s.name}</span>
+              <span class="badge ${badgeClass} skill-badge">${s.status}</span>
+            </div>
+          `;
+        }).join('')}
+      </div>
+
+      <!-- Reflection Questions -->
+      <div class="question-block">
+        <div class="question-prompt">
+          What became clearer to you today?
+        </div>
+        <div class="field-group">
+          <textarea id="summary-clearer" placeholder="What clicked for you during this session?">${state.summaryClearer}</textarea>
+        </div>
+      </div>
+
+      <div class="question-block" style="margin-top:20px;">
+        <div class="question-prompt">
+          What is still hard or confusing?
+        </div>
+        <div class="field-group">
+          <textarea id="summary-hard" placeholder="What part would you like to practice more next time?">${state.summaryHard}</textarea>
+        </div>
+      </div>
+
+      <!-- Next Steps & Check -->
+      <div class="card" style="margin-top:24px; background:#f8fafc; border:1px solid #cbd5e1;">
+        <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px; color:#1e293b;">Next Session Plan</h3>
+        <p style="margin-bottom:8px;">
+          <strong>Remaining gap:</strong> <span id="remaining-gap">${remainingGap}</span>
+        </p>
+        <p style="margin-bottom:0;">
+          <strong>Suggested opening check for next time:</strong><br>
+          <span id="opening-check">${openingCheck}</span>
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="btn-row" style="margin-top:28px;">
+        <button type="button" class="btn-primary" id="save-session-btn">Save My Session</button>
+        <button type="button" class="btn-secondary" id="start-again-btn">Start Fresh</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('summary-clearer').addEventListener('input', (e) => state.summaryClearer = e.target.value);
+  document.getElementById('summary-hard').addEventListener('input', (e) => state.summaryHard = e.target.value);
+
+  // Save session JSON download
+  document.getElementById('save-session-btn').addEventListener('click', () => {
+    state.summaryClearer = document.getElementById('summary-clearer').value;
+    state.summaryHard = document.getElementById('summary-hard').value;
+    state.summarySavedAt = new Date().toISOString();
+
+    const sessionData = {
+      page_version: "2.0.0",
+      saved_at: state.summarySavedAt,
+      start_time: state.startTime,
+      target_learner: {
+        grade: "Grade 10",
+        focus: "IIT JEE",
+        depth_target: "JEE Advanced",
+        exam_year: "undecided"
+      },
+      baseline_warmups: {
+        q1: {
+          choice: state.warmup1.choice,
+          why: state.warmup1.why,
+          unsure: state.warmup1.unsure,
+          correct: checkWarmup1Correct()
+        },
+        q2: {
+          choice: state.warmup2.choice,
+          why: state.warmup2.why,
+          unsure: state.warmup2.unsure,
+          correct: checkWarmup2Correct()
+        },
+        q3: {
+          choice: state.warmup3.choice,
+          why: state.warmup3.why,
+          unsure: state.warmup3.unsure,
+          correct: checkWarmup3Correct()
+        }
+      },
+      teaching_passage: {
+        gap_identified: state.gapIdentified,
+        learner_interaction_text: state.learnerInteraction
+      },
+      diagrams: {
+        diagram_A: {
+          first_attempt: state.diagramA.firstAttempt,
+          revised_attempt: state.diagramA.revisedAttempt,
+          receiver_check_triggered: state.diagramA.receiverErrorShown
+        },
+        diagram_B: {
+          first_attempt: state.diagramB.firstAttempt,
+          revised_attempt: state.diagramB.revisedAttempt,
+          receiver_check_triggered: state.diagramB.receiverErrorShown
+        },
+        combined: {
+          internal_forces_reason: state.diagramCombined.internalReason
+        }
+      },
+      main_problem: {
+        problem_setup: "A = 2 kg, B = 3 kg, push = 10 N right on A",
+        first_attempt: state.mainFirstAttempt,
+        retry_attempt: state.mainRetryAttempt,
+        hints_opened: state.mainHintsOpened,
+        attempts_count: state.mainAttemptsCount,
+        solution_opened: state.mainSolutionOpened,
+        correct_values: { a: "2 m/s^2 right", contact_force: "6 N" }
+      },
+      reconstruction: {
+        why_contact_is_6n: state.reconWhy6N,
+        why_no_cancel_on_a: state.reconWhyNoCancel,
+        thinking_prompt_used: state.reconFollowupShown,
+        reopened_guide_used: state.reconReopenGuideShown,
+        assisted: state.reconAssisted
+      },
+      fresh_problem: {
+        problem_setup: "A = 2 kg, B = 3 kg, push = 10 N left on B",
+        first_attempt: state.freshFirstAttempt,
+        first_attempt_correct: state.freshFirstAttemptCorrect,
+        guided_repair_completed: state.freshGuidedRepairCompleted,
+        correct_values: { a: "2 m/s^2 left", contact_force: "4 N" }
+      },
+      summary: {
+        skills: skills,
+        what_became_clearer: state.summaryClearer,
+        what_is_still_hard: state.summaryHard,
+        remaining_gap: remainingGap,
+        suggested_opening_check: openingCheck
+      },
+      remaining_gap: remainingGap,
+      suggested_opening_check: openingCheck
+    };
+
+    const blob = new Blob([JSON.stringify(sessionData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `nlm-session-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Start fresh button
+  document.getElementById('start-again-btn').addEventListener('click', () => {
+    // Reset state
+    state.step = 0;
+    state.warmup1 = { choice: null, why: '', unsure: false };
+    state.warmup2 = { choice: null, why: '', unsure: false };
+    state.warmup3 = { choice: null, why: '', unsure: false };
+    state.warmupsSaved = false;
+    state.gapIdentified = 'none';
+    state.learnerInteraction = '';
+    state.block2Completed = false;
+    state.diagramA = { selected: [], firstAttempt: [], revisedAttempt: [], receiverErrorShown: false, checked: false };
+    state.diagramB = { selected: [], firstAttempt: [], revisedAttempt: [], receiverErrorShown: false, checked: false };
+    state.diagramCombined = { internalReason: '', completed: false };
+    state.mainAccelVal = '';
+    state.mainAccelDir = 'right';
+    state.mainAccelWhy = '';
+    state.mainContactVal = '';
+    state.mainContactWhy = '';
+    state.mainFirstAttempt = null;
+    state.mainRetryAttempt = null;
+    state.mainHintsOpened = [];
+    state.mainAttemptsCount = 0;
+    state.mainRetryActive = false;
+    state.mainSolutionOpened = false;
+    state.mainPassed = false;
+    state.reconWhy6N = '';
+    state.reconWhyNoCancel = '';
+    state.reconFollowupShown = false;
+    state.reconReopenGuideShown = false;
+    state.reconAssisted = false;
+    state.freshPred = '';
+    state.freshPredWhy = '';
+    state.freshAccelVal = '';
+    state.freshAccelDir = 'left';
+    state.freshAccelWhy = '';
+    state.freshContactVal = '';
+    state.freshContactWhy = '';
+    state.freshEqualWhy = '';
+    state.freshFirstAttempt = null;
+    state.freshFirstAttemptCorrect = false;
+    state.freshGuidedRepairCompleted = false;
+    state.summaryClearer = '';
+    state.summaryHard = '';
+    render();
+  });
+}
+
+// Initial render
+render();
+</script>
+</body>
+</html>
