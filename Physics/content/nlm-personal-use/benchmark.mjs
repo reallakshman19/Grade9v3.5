@@ -27,7 +27,7 @@ function verifySource(rows){
 function verifyDisplay(v){
  assert.deepEqual(v.items.map(x=>x.source_id),sourceIDs);
  assert.deepEqual(v.items.map(x=>x.variant_id),['PHYS-NLM-001','PHYS-NLM-002-PU1']);
- assert.deepEqual(v.items.map(x=>x.key),['A','C']);
+ assert.deepEqual(v.items.map(x=>x.key),['A','A']);
  const original=v.items[0],originalSource=source.source_questions[0];
  assert.equal(original.origin,'AUTHORED_BANK_ITEM_UNMODIFIED');
  assert.deepEqual(original.changes,[]);
@@ -38,21 +38,26 @@ function verifyDisplay(v){
  assert.ok(adapted.adaptation_defect_note.includes('40 N'));
  assert.ok(adapted.changes.length>=4);
  assert.equal(source002.correct_answer,'A');
- assert.equal(adapted.key,'C');
- assert.ok(adapted.options.C.includes('strap pulls A right with 40 N'));
- assert.ok(adapted.options.C.includes('A pulls the strap left with 40 N'));
- assert.ok(adapted.options.B.includes('other end'));
+ assert.equal(adapted.key,'A');
+ assert.ok(adapted.options.A.includes('strap pulls A right with 40 N'));
+ assert.ok(adapted.options.A.includes('Robot A pulls the strap left with 40 N'));
+ assert.ok(adapted.options.B.includes("B's end"));
+ assert.ok(adapted.options.B.includes('strap pulls B oppositely with equal force'));
+ assert.ok(adapted.options.C.includes("robot B pulls the strap at B's end"));
+ assert.ok(adapted.options.D.includes('gravity pulls A downward'));
+ assert.ok(adapted.options.B.indexOf('40 N') === -1, 'B magnitude not given');
  assert.ok(!adapted.options.B.includes('40 N; the strap pulls B right with 40 N'));
+ assert.ok(adapted.changes.some(x=>x.includes('source option A')||x.includes('source option A remains')));
  v.items.forEach((x,i)=>{assert.equal(x.stem,source.source_questions[i].stem);assert.deepEqual(x.figure,source.source_questions[i].figure);assert.deepEqual(x.system_parameters,source.source_questions[i].system_parameters);assert.deepEqual(Object.keys(x.options),['A','B','C','D'])});
  assert.equal(v.exposure.length,3);assert.ok(v.exposure[2].includes('already exposed'));
 }
 function verifyPreAttempt(txt){
  const shell=txt.split('<script type="application/json" id="nlm-payload">')[0];
- assert.ok(!/Correct adapted option:|answer is [A-D]|Upward net force\./i.test(shell),'initial visible shell leaked answer');
+ assert.ok(!/Correct (adapted|original source) option:|answer is [A-D]|Upward net force\./i.test(shell),'initial visible shell leaked answer');
  const start=txt.indexOf('function baselineStage()'),end=txt.indexOf('function showHint()',start);
  assert.ok(start!==-1&&end>start,'baseline stage missing');
  const baseline=txt.slice(start,end);
- assert.ok(!/\.key\b|\.teacher\b|\.feedback\b|source_hints_001|correct adapted option/i.test(baseline),'pre-attempt flow references answer data');
+ assert.ok(!/\.key\b|\.teacher\b|\.feedback\b|source_hints_001|correct (adapted|original source) option/i.test(baseline),'pre-attempt flow references answer data');
  assert.ok(baseline.includes('state.baseline.push')&&baseline.includes('assisted:false'));
  assert.ok(txt.includes('state.stage<2')&&txt.includes('state.stage++'));
 }
@@ -74,6 +79,24 @@ test('no pre-baseline answer/feedback reference; baseline reason+uncertainty cap
  assert.ok(html.includes('choice,explanation:reason,confidence:certainty'));
  assert.ok(html.includes('correctness_hidden_until_baselines_complete:true'));
 });
+test('post-baseline 001/002 feedback is gated, keyed, and both teacher labels are truthful',()=>{
+ const start=html.indexOf('function baselineStage()'),end=html.indexOf('function showHint()',start);
+ const baseline=html.slice(start,end);
+ assert.ok(!/renderedDiagnosticFeedback\(|q\.feedback|\.teacher/.test(baseline));
+ assert.ok(html.includes('if(state.stage===2){state.feedbackSeen=true;'), 'feedback only after both baseline saves');
+ assert.ok(html.includes('renderedDiagnosticFeedback();'), 'post-baseline feedback must render');
+ assert.ok(html.includes('state.baseline[i]'), 'feedback must use actual selected answer');
+ assert.ok(html.includes('q.feedback[record.choice]'), 'both feedback paths use the selected option');
+ assert.ok(html.includes('Correct original source option: '), '001 must be marked original');
+ assert.ok(html.includes('Correct adapted option: '), '002 adapted label must remain');
+ assert.ok(html.includes('kind:"deliberate_002_teacher_reveal"'), '002 reveal should be recorded');
+ assert.ok(html.includes('diagnostic2_revealed:state.diagnostic2Revealed'), '002 reveal must survive export');
+});
+test('negative case: remove post-baseline feedback gate fails',()=>{
+ const bad=html.replace('if(state.stage===2){state.feedbackSeen=true;', 'if(state.stage===1){state.feedbackSeen=true;');
+ assert.notEqual(bad,html);
+ assert.ok(!bad.includes('if(state.stage===2){state.feedbackSeen=true;'));
+});
 test('supported hint progression, assistance state, deliberate reveal and reset',()=>{
  ['state.hintLevel++','state.hintLevel>=3','prior_feedback_seen:state.feedbackSeen','answer_seen_at_attempt:state.answerRevealed','kind:"deliberate_full_teacher_reveal"','state=fresh();render()','window.confirm('].forEach(t=>assert.ok(html.includes(t),t));
 });
@@ -92,7 +115,7 @@ test('negative control: source 001 option mutation is rejected',()=>{
  assert.throws(()=>verifyDisplay(bad));
 });
 test('negative control: 002 reciprocal force magnitude or direction removed is rejected',()=>{
- const bad=structuredClone(display);bad.items[1].options.C='A pulls the strap; the strap pulls A';
+ const bad=structuredClone(display);bad.items[1].options.A='A pulls the strap; the strap pulls A';
  assert.throws(()=>verifyDisplay(bad));
 });
 test('negative control: original 001 adapted origin is rejected',()=>{
@@ -100,7 +123,7 @@ test('negative control: original 001 adapted origin is rejected',()=>{
  assert.throws(()=>verifyDisplay(bad));
 });
 test('negative control: wrong display key is rejected',()=>{
- const bad=structuredClone(display);bad.items[1].key='A';assert.throws(()=>verifyDisplay(bad));
+ const bad=structuredClone(display);bad.items[1].key='C';assert.throws(()=>verifyDisplay(bad));
 });
 const tokens=s=>new Set((s.match(/\p{L}+(?:['’]\p{L}+)*/gu)||[]).map(x=>x.toLowerCase()));
 function cue(row){
