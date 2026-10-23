@@ -1,0 +1,3637 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Newton's Laws Practice</title>
+<style>
+:root {
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-light: #64748b;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-bg: #eff6ff;
+  --success: #16a34a;
+  --success-bg: #f0fdf4;
+  --success-border: #bbf7d0;
+  --error: #dc2626;
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --hint-bg: #fefce8;
+  --hint-border: #fef08a;
+  --hint-text: #854d0e;
+  --focus-ring: #3b82f6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.6;
+  padding: 24px 16px 48px;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 660px;
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.step-badge {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.question-stem {
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.option-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  min-height: 54px;
+  background: var(--card-bg);
+  border: 2px solid var(--card-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+  user-select: none;
+}
+
+.option-label:hover {
+  border-color: #93c5fd;
+  background-color: var(--primary-bg);
+}
+
+.option-label.selected {
+  border-color: var(--primary);
+  background-color: #eff6ff;
+}
+
+.option-label input[type="radio"] {
+  margin-top: 3px;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.option-text {
+  font-size: 1rem;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+.field-block {
+  margin-top: 18px;
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+textarea, select {
+  width: 100%;
+  display: block;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-main);
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+textarea:focus, select:focus, button:focus-visible {
+  outline: none;
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+button {
+  min-height: 48px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, opacity 0.15s, border-color 0.15s;
+  border: 1px solid transparent;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: var(--text-main);
+  border-color: #cbd5e1;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #f1f5f9;
+}
+
+.btn-hint {
+  background-color: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.btn-hint:hover:not(:disabled) {
+  background-color: #fde68a;
+}
+
+.alert {
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.alert-error {
+  background-color: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: #991b1b;
+}
+
+.alert-success {
+  background-color: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: #166534;
+}
+
+.hints-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hint-card {
+  background: var(--hint-bg);
+  border: 1px solid var(--hint-border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.hint-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--hint-text);
+  margin-bottom: 6px;
+}
+
+.hint-prompt {
+  font-size: 1rem;
+  color: #713f12;
+  margin-bottom: 10px;
+}
+
+.hint-reveal-box {
+  margin-top: 10px;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1px solid #fef08a;
+  border-radius: 8px;
+  color: var(--text-main);
+  font-size: 0.98rem;
+}
+
+.solution-card {
+  margin-top: 20px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.solution-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: var(--text-main);
+}
+
+.solution-step {
+  margin-bottom: 12px;
+}
+
+.step-heading {
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 2px;
+}
+
+.step-body {
+  font-size: 0.98rem;
+  color: var(--text-main);
+}
+
+.final-answer-box {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #eff6ff;
+  border-left: 4px solid var(--primary);
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.badge-success {
+  background-color: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success-border);
+}
+
+.badge-error {
+  background-color: var(--error-bg);
+  color: var(--error);
+  border: 1px solid var(--error-border);
+}
+
+.result-item {
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.result-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.result-stem {
+  font-size: 1rem;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.result-detail {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.result-explanation {
+  margin-top: 10px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border-left: 3px solid #94a3b8;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 16px 12px 36px;
+  }
+  .card {
+    padding: 18px 14px;
+  }
+  .option-label {
+    padding: 12px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <!-- Dynamic screens render here -->
+</div>
+
+<script type="application/json" id="nlm-bank">
+[
+  {
+    "question_id": "PHYS-NLM-001",
+    "stem": "A service lift is descending but its downward speed is decreasing. Taking upward as positive, what direction must its net force point?",
+    "options": {
+      "A": "Upward, since its acceleration opposes its downward velocity.",
+      "B": "Downward, because it is moving downward.",
+      "C": "Zero, because the slowing is steady.",
+      "D": "The direction cannot be inferred without its mass."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "What changes physically, and which body or system owns that change?",
+        "reveal_text": "Deceleration while descending is upward acceleration, not upward velocity."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+        "reveal_text": "Use a vertical signed axis and mark velocity down, acceleration up."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · opening constraint",
+        "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+        "reveal_text": "The first constraint is ΣF_y = m a_y, with upward chosen positive."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Deceleration while descending is upward acceleration, not upward velocity.",
+        "represent": "Use a vertical signed axis and mark velocity down, acceleration up.",
+        "connect": "The first constraint is ΣF_y = m a_y, with upward chosen positive.",
+        "calculate": "Since the downward velocity becomes less negative, a_y is positive and so is ΣF_y.",
+        "interpret": "Upward, since its acceleration opposes its downward velocity."
+      },
+      "final_expression": "Upward, since its acceleration opposes its downward velocity.",
+      "final_answer_value": "Upward, since its acceleration opposes its downward velocity."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Since the downward velocity becomes less negative, a_y is positive and so is ΣF_y."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect: Velocity direction and acceleration direction need not agree."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Confuses the named system or the governing invariant; Deceleration while descending is upward acceleration, not upward velocity."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails the declared force/momentum direction or a dimensional check; At constant downward velocity a_y becomes zero."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-002",
+    "stem": "Two small robots pull against the ends of the same taut, light (massless) strap. Robot A pulls the strap left with 40 N. Which two forces make a Newton-third-law pair at A's connection to the strap?",
+    "options": {
+      "A": "Robot A pulls the strap left with 40 N; the strap pulls robot A right with 40 N.",
+      "B": "Robot B pulls the strap right with 40 N; the strap pulls robot B left with 40 N.",
+      "C": "Robot A pulls the strap left with 40 N; robot B pulls the strap right with 40 N.",
+      "D": "The strap pulls robot A right with 40 N; gravity pulls robot A downward."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "What changes physically, and which body or system owns that change?",
+        "reveal_text": "Newton-third-law partners act on different owners at the same interaction."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+        "reveal_text": "Draw one arrow on A and the opposite arrow on the strap, explicitly naming each owner."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · opening constraint",
+        "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+        "reveal_text": "First write F_(A on strap) = -F_(strap on A)."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Newton-third-law partners act on different bodies at the same interaction point.",
+        "represent": "At the connection between robot A and the strap, robot A pulls the strap and the strap pulls robot A.",
+        "connect": "The two forces are equal in magnitude (40 N) and opposite in direction.",
+        "calculate": "Robot A exerts 40 N left on the strap; the strap exerts 40 N right on robot A.",
+        "interpret": "Robot A pulls the strap left with 40 N; the strap pulls robot A right with 40 N."
+      },
+      "final_expression": "Robot A pulls the strap left with 40 N; the strap pulls robot A right with 40 N.",
+      "final_answer_value": "Robot A pulls the strap left with 40 N; the strap pulls robot A right with 40 N."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "At robot A's connection, robot A pulls the strap left with 40 N, and the strap pulls robot A right with 40 N. These two forces act on different bodies and form a Newton third-law pair."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "This is a real third-law pair at robot B's connection to the strap, not at robot A's connection."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Both of these forces act on the strap. Third-law partners must act on two different interacting objects."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Both of these forces act on robot A. Third-law partners must act on two different interacting objects."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-003",
+    "stem": "A 0.50 kg test parcel moving at 8 m/s is brought to rest by two alternative landing pads. One stops it in 0.20 s, the other in 0.50 s. What are the average resisting-force magnitudes?",
+    "options": {
+      "A": "20 N and 8 N, respectively.",
+      "B": "8 N and 20 N, respectively.",
+      "C": "4 N and 4 N, respectively.",
+      "D": "40 N and 16 N, respectively."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "What changes physically, and which body or system owns that change?",
+        "reveal_text": "The parcel undergoes the same impulse for both stopping pads."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+        "reveal_text": "Sketch signed momentum before (+4 kg m/s) and after (zero), with force opposite motion."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · opening constraint",
+        "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+        "reveal_text": "Begin with F_avg Δt = p_after − p_before."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The parcel undergoes the same impulse for both stopping pads.",
+        "represent": "Sketch signed momentum before (+4 kg m/s) and after (zero), with force opposite motion.",
+        "connect": "Begin with F_avg Δt = p_after − p_before.",
+        "calculate": "The momentum change magnitude is 0.50×8=4 kg m/s; 4/0.20=20 N and 4/0.50=8 N.",
+        "interpret": "20 N and 8 N, respectively."
+      },
+      "final_expression": "20 N and 8 N, respectively.",
+      "final_answer_value": "20 N and 8 N, respectively."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "The momentum change magnitude is 0.50×8=4 kg m/s; 4/0.20=20 N and 4/0.50=8 N."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect: Do not confuse impulse (N s) with average force (N)."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Confuses the named system or the governing invariant; The parcel undergoes the same impulse for both stopping pads."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails the declared force/momentum direction or a dimensional check; A longer stopping time lowers average force for the same momentum change."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-004",
+    "stem": "A coin rests on a fast airport conveyor. When the conveyor abruptly halts, the coin initially slides onward relative to the belt. Why?",
+    "options": {
+      "A": "Its previous forward motion persists until a horizontal contact force changes it.",
+      "B": "The stopped conveyor gives the coin an extra forward force.",
+      "C": "Gravity is pulling the coin horizontally.",
+      "D": "The coin becomes heavier at the instant of braking."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "What changes physically, and which body or system owns that change?",
+        "reveal_text": "The conveyor decelerates before the coin's horizontal velocity fully changes."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+        "reveal_text": "Mark the coin as the chosen body and place its pre-stop velocity arrow forward."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · opening constraint",
+        "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+        "reveal_text": "Start with ΣF_x = m a_x for the coin, not the stopped conveyor."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The conveyor decelerates before the coin's horizontal velocity fully changes.",
+        "represent": "Mark the coin as the chosen body and place its pre-stop velocity arrow forward.",
+        "connect": "Start with ΣF_x = m a_x for the coin, not the stopped conveyor.",
+        "calculate": "Inertia means the coin initially maintains its velocity; friction then slows its motion.",
+        "interpret": "Its previous forward motion persists until a horizontal contact force changes it."
+      },
+      "final_expression": "Its previous forward motion persists until a horizontal contact force changes it.",
+      "final_answer_value": "Its previous forward motion persists until a horizontal contact force changes it."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Inertia means the coin initially maintains its velocity; friction then slows its motion."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect: Inertia is not a separate forward force."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Confuses the named system or the governing invariant; The conveyor decelerates before the coin's horizontal velocity fully changes."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails the declared force/momentum direction or a dimensional check; With no friction, it would continue at its old velocity relative to the ground."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-005",
+    "stem": "An inspection cart accelerates east at a constant rate a on level ground. A vertical launcher fixed on the cart fires a bead straight upward. Ignoring air drag, where does the bead land relative to the moving launcher?",
+    "options": {
+      "A": "West of the launcher because the cart moves farther east during flight.",
+      "B": "Directly back in the launcher because both started together.",
+      "C": "East of the launcher because the bead carries additional eastward acceleration.",
+      "D": "It depends only on the bead's mass."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "What changes physically, and which body or system owns that change?",
+        "reveal_text": "The free bead retains the cart's release velocity but not its continuing horizontal acceleration."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+        "reveal_text": "Represent separate horizontal x(t) paths for free bead and accelerating launcher."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · opening constraint",
+        "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+        "reveal_text": "First compare x_bead=x0+v0t and x_cart=x0+v0t+(1/2)at²."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The free bead retains the cart's release velocity but not its continuing horizontal acceleration.",
+        "represent": "Represent separate horizontal x(t) paths for free bead and accelerating launcher.",
+        "connect": "First compare x_bead=x0+v0t and x_cart=x0+v0t+(1/2)at².",
+        "calculate": "For positive flight time the cart gains (1/2)at² east on the bead, so the bead is west of the launcher.",
+        "interpret": "West of the launcher because the cart moves farther east during flight."
+      },
+      "final_expression": "West of the launcher because the cart moves farther east during flight.",
+      "final_answer_value": "West of the launcher because the cart moves farther east during flight."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "For positive flight time the cart gains (1/2)at² east on the bead, so the bead is west of the launcher."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect: A vertical launch does not confer the cart's later horizontal acceleration."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Confuses the named system or the governing invariant; The free bead retains the cart's release velocity but not its continuing horizontal acceleration."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails the declared force/momentum direction or a dimensional check; If a=0 both return to the same horizontal position."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-006",
+    "stem": "Far from other objects, a space probe coasts at a fixed speed in a straight line with its thrusters off. What net force is needed to maintain that motion?",
+    "options": {
+      "A": "Zero net force.",
+      "B": "A forward force proportional to its speed.",
+      "C": "A force opposite the direction of travel.",
+      "D": "A force equal in magnitude to its momentum."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "What changes physically, and which body or system owns that change?",
+        "reveal_text": "Uniform straight-line velocity needs no unbalanced force."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+        "reveal_text": "Show a constant velocity arrow and no resultant force arrow."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · opening constraint",
+        "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+        "reveal_text": "Use ΣF = 0 whenever velocity is constant in an inertial frame."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Uniform straight-line velocity needs no unbalanced force.",
+        "represent": "Show a constant velocity arrow and no resultant force arrow.",
+        "connect": "Use ΣF = 0 whenever velocity is constant in an inertial frame.",
+        "calculate": "No acceleration occurs, so Newton II gives zero net force.",
+        "interpret": "Zero net force."
+      },
+      "final_expression": "Zero net force.",
+      "final_answer_value": "Zero net force."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "No acceleration occurs, so Newton II gives zero net force."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect: Force changes velocity; it does not maintain it."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Confuses the named system or the governing invariant; Uniform straight-line velocity needs no unbalanced force."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails the declared force/momentum direction or a dimensional check; The answer is unchanged if the probe is faster but still constant in velocity."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-007",
+    "stem": "In empty space an astronaut at rest uses a gas maneuvering pack. The 90 kg astronaut-plus-pack ejects 1 kg of gas at 9 m/s backward, measured in the initial inertial frame. Immediately after, what forward velocity does the remaining 89 kg have?",
+    "options": {
+      "A": "About 0.101 m/s forward.",
+      "B": "9 m/s forward.",
+      "C": "About 0.101 m/s backward.",
+      "D": "Zero, because the astronaut and gas exert equal forces."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "What changes physically, and which body or system owns that change?",
+        "reveal_text": "Choose gas plus remaining astronaut as one isolated system before ejection."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+        "reveal_text": "Mark expelled gas momentum negative and remaining astronaut momentum positive."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · opening constraint",
+        "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+        "reveal_text": "Begin with 0 = (89 kg)v + (1 kg)(−9 m/s)."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Choose gas plus remaining astronaut as one isolated system before ejection.",
+        "represent": "Mark expelled gas momentum negative and remaining astronaut momentum positive.",
+        "connect": "Begin with 0 = (89 kg)v + (1 kg)(−9 m/s).",
+        "calculate": "Momentum balance gives v=9/89 ≈0.101 m/s forward.",
+        "interpret": "About 0.101 m/s forward."
+      },
+      "final_expression": "About 0.101 m/s forward.",
+      "final_answer_value": "About 0.101 m/s forward."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Momentum balance gives v=9/89 ≈0.101 m/s forward."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect: Third-law equal forces do not imply equal speeds."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Confuses the named system or the governing invariant; Choose gas plus remaining astronaut as one isolated system before ejection."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails the declared force/momentum direction or a dimensional check; A heavier astronaut recoils more slowly for the same emitted gas momentum."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-008",
+    "stem": "A fragile sculpture is loosely placed on a motorized display platform moving east. The platform brakes abruptly; the sculpture slides toward its east edge. Which justification is physically correct?",
+    "options": {
+      "A": "The sculpture retains its earlier eastward velocity while the platform slows beneath it.",
+      "B": "A new eastward inertia force acts on the sculpture.",
+      "C": "Its mass increases briefly when the motor brakes.",
+      "D": "The sculpture must have a net eastward force throughout the slide."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "What changes physically, and which body or system owns that change?",
+        "reveal_text": "The sculpture and platform do not instantly acquire the same new horizontal velocity."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+        "reveal_text": "Compare two eastward velocity arrows just after braking, one on each owner."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · opening constraint",
+        "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+        "reveal_text": "Represent a_sculpture and a_platform separately under ΣF_x=m a_x."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The sculpture and platform do not instantly acquire the same new horizontal velocity.",
+        "represent": "Compare two eastward velocity arrows just after braking, one on each owner.",
+        "connect": "Represent a_sculpture and a_platform separately under ΣF_x=m a_x.",
+        "calculate": "The platform loses speed more rapidly; relative to it the sculpture advances east.",
+        "interpret": "The sculpture retains its earlier eastward velocity while the platform slows beneath it."
+      },
+      "final_expression": "The sculpture retains its earlier eastward velocity while the platform slows beneath it.",
+      "final_answer_value": "The sculpture retains its earlier eastward velocity while the platform slows beneath it."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "The platform loses speed more rapidly; relative to it the sculpture advances east."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect: Relative forward motion need not mean a net forward force."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Confuses the named system or the governing invariant; The sculpture and platform do not instantly acquire the same new horizontal velocity."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails the declared force/momentum direction or a dimensional check; If firmly fastened, the sculpture would decelerate with the platform."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-009",
+    "stem": "Three calibration satellites have equal external dimensions but masses 2 kg, 6 kg and 3 kg. Rank them from least to greatest resistance to a given change in velocity.",
+    "options": {
+      "A": "2 kg, 3 kg, 6 kg.",
+      "B": "6 kg, 3 kg, 2 kg.",
+      "C": "They have equal inertia because they look identical.",
+      "D": "3 kg, 2 kg, 6 kg."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "What changes physically, and which body or system owns that change?",
+        "reveal_text": "Translational inertia is measured by mass, not silhouette."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+        "reveal_text": "Construct a smallest-to-largest ordered list of the three masses."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · opening constraint",
+        "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+        "reveal_text": "Recall a=F_net/m for the same applied force."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Translational inertia is measured by mass, not silhouette.",
+        "represent": "Construct a smallest-to-largest ordered list of the three masses.",
+        "connect": "Recall a=F_net/m for the same applied force.",
+        "calculate": "The 2 kg satellite has the least inertia, then 3 kg, then 6 kg.",
+        "interpret": "2 kg, 3 kg, 6 kg."
+      },
+      "final_expression": "2 kg, 3 kg, 6 kg.",
+      "final_answer_value": "2 kg, 3 kg, 6 kg."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "The 2 kg satellite has the least inertia, then 3 kg, then 6 kg."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect: Appearance and volume alone do not measure inertial mass."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Confuses the named system or the governing invariant; Translational inertia is measured by mass, not silhouette."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails the declared force/momentum direction or a dimensional check; Doubling mass halves acceleration under identical net force."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-010",
+    "stem": "A solid sphere is placed on a perfectly frictionless laboratory table with horizontal translational speed but initially no spin. Must it begin to roll without slipping?",
+    "options": {
+      "A": "No; without tangential contact force it has no frictional torque to start spinning.",
+      "B": "Yes; every moving sphere automatically rotates.",
+      "C": "Yes; the table's normal force supplies a horizontal torque.",
+      "D": "No; it must immediately stop translating."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "What changes physically, and which body or system owns that change?",
+        "reveal_text": "Check the body's applied torque instead of inferring rolling from shape."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+        "reveal_text": "Draw the sphere FBD: gravity down and normal up, no horizontal friction arrow."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · opening constraint",
+        "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+        "reveal_text": "Start with Στ_about_CM=Iα and identify any nonzero contact torque."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Check the body's applied torque instead of inferring rolling from shape.",
+        "represent": "Draw the sphere FBD: gravity down and normal up, no horizontal friction arrow.",
+        "connect": "Start with Στ_about_CM=Iα and identify any nonzero contact torque.",
+        "calculate": "Gravity and normal give no torque about the center, so α=0 and the sphere keeps translating without gaining spin.",
+        "interpret": "No; without tangential contact force it has no frictional torque to start spinning."
+      },
+      "final_expression": "No; without tangential contact force it has no frictional torque to start spinning.",
+      "final_answer_value": "No; without tangential contact force it has no frictional torque to start spinning."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Gravity and normal give no torque about the center, so α=0 and the sphere keeps translating without gaining spin."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect: A rolling constraint requires a physical coupling such as static friction."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Confuses the named system or the governing invariant; Check the body's applied torque instead of inferring rolling from shape."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails the declared force/momentum direction or a dimensional check; If it initially spun, the spin would persist independently in the idealization."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-011",
+    "stem": "Two wheeled laboratory launchers of masses 4 kg and 8 kg each expel a test pellet carrying 16 kg m/s of eastward momentum. Compare the two launchers' westward recoil momenta and speeds.",
+    "options": {
+      "A": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west.",
+      "B": "The heavy launcher has twice the recoil momentum.",
+      "C": "Their recoil speeds are equal because impulses match.",
+      "D": "The light launcher recoils east while the heavy one goes west."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "Which interaction, state change, or system must you decide first?",
+        "reveal_text": "An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+        "reveal_text": "Mark east positive and write separate signed momentum balances for both launchers."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "Write the first law before computing any final quantity.",
+        "reveal_text": "First use 0=p_pellet+p_launcher for either initially stationary launch event."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed.",
+        "represent": "Mark east positive and write separate signed momentum balances for both launchers.",
+        "connect": "First use 0=p_pellet+p_launcher for either initially stationary launch event.",
+        "calculate": "The launcher momentum is −16 kg m/s in both cases. Divide by 4 and 8 kg to get −4 and −2 m/s.",
+        "interpret": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west."
+      },
+      "final_expression": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west.",
+      "final_answer_value": "Each recoil momentum is 16 kg m/s west; speeds are 4 m/s and 2 m/s west."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "The launcher momentum is −16 kg m/s in both cases. Divide by 4 and 8 kg to get −4 and −2 m/s."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect. Equal momentum does not imply equal kinetic energy or speed."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Incorrect physical model. An equal ejection impulse gives equal opposite recoil momentum, but not equal recoil speed."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Inconsistent with the signed equations. Doubling chassis mass halves recoil speed under the same impulse."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-012",
+    "stem": "A powered cable pulls a service platform east with 300 N while the platform travels at constant velocity on level rails. What total horizontal resistance acts on it?",
+    "options": {
+      "A": "300 N west.",
+      "B": "300 N east.",
+      "C": "Zero, because there is no acceleration.",
+      "D": "More than 300 N west."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "Which interaction, state change, or system must you decide first?",
+        "reveal_text": "A constant velocity means horizontal acceleration and resultant force both vanish."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+        "reveal_text": "Choose the platform; sketch eastward cable tension and westward resistance."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "Write the first law before computing any final quantity.",
+        "reveal_text": "Begin with ΣF_x=T−R=ma_x=0."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "A constant velocity means horizontal acceleration and resultant force both vanish.",
+        "represent": "Choose the platform; sketch eastward cable tension and westward resistance.",
+        "connect": "Begin with ΣF_x=T−R=ma_x=0.",
+        "calculate": "R must equal 300 N west to balance the eastward cable force.",
+        "interpret": "300 N west."
+      },
+      "final_expression": "300 N west.",
+      "final_answer_value": "300 N west."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "R must equal 300 N west to balance the eastward cable force."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect. Zero net force does not mean zero individual forces."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Incorrect physical model. A constant velocity means horizontal acceleration and resultant force both vanish."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Inconsistent with the signed equations. If resistance exceeded cable pull, the platform would slow."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-013",
+    "stem": "A motor hoists a tool bucket upward and its upward momentum increases. A student says the bucket's momentum is conserved because it is one object. Which objection is valid?",
+    "options": {
+      "A": "The rope and Earth exert external impulses on the bucket-only system, so its momentum need not be constant.",
+      "B": "Momentum is conserved for every single moving object.",
+      "C": "Only the bucket's weight acts, so upward momentum must be conserved.",
+      "D": "The bucket has no momentum because it is being lifted by a rope."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "Which interaction, state change, or system must you decide first?",
+        "reveal_text": "Conservation is a property of a specified isolated system, not of any arbitrary object."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+        "reveal_text": "Draw a bucket-only system boundary with tension entering upward and weight downward."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "Write the first law before computing any final quantity.",
+        "reveal_text": "Start with Δp_bucket = ∫(T−mg)dt."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Conservation is a property of a specified isolated system, not of any arbitrary object.",
+        "represent": "Draw a bucket-only system boundary with tension entering upward and weight downward.",
+        "connect": "Start with Δp_bucket = ∫(T−mg)dt.",
+        "calculate": "Since net external impulse is not zero, the bucket's upward momentum changes without violating any conservation law.",
+        "interpret": "The rope and Earth exert external impulses on the bucket-only system, so its momentum need not be constant."
+      },
+      "final_expression": "The rope and Earth exert external impulses on the bucket-only system, so its momentum need not be constant.",
+      "final_answer_value": "The rope and Earth exert external impulses on the bucket-only system, so its momentum need not be constant."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Since net external impulse is not zero, the bucket's upward momentum changes without violating any conservation law."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect. Do not label rope tension internal unless the rope belongs to the chosen system."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Incorrect physical model. Conservation is a property of a specified isolated system, not of any arbitrary object."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Inconsistent with the signed equations. When T=mg the momentum can be constant, even if the bucket is moving."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-014",
+    "stem": "A 0.20 kg miniature rover moves east on a rough level test strip. Its velocity-time sensor shows 6 m/s at t=0 and 2 m/s at t=4 s, with a straight graph between. If friction is the only horizontal force, what friction acts?",
+    "options": {
+      "A": "0.20 N west.",
+      "B": "0.20 N east.",
+      "C": "1.0 N west.",
+      "D": "1.2 N east."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "Which interaction, state change, or system must you decide first?",
+        "reveal_text": "The negative slope of a signed velocity-time graph is the horizontal acceleration."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+        "reveal_text": "Mark east positive; find the signed rise/run of the v-t segment."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "Write the first law before computing any final quantity.",
+        "reveal_text": "First write a_x = Δv_x/Δt, then ΣF_x=m a_x."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The negative slope of a signed velocity-time graph is the horizontal acceleration.",
+        "represent": "Mark east positive; find the signed rise/run of the v-t segment.",
+        "connect": "First write a_x = Δv_x/Δt, then ΣF_x=m a_x.",
+        "calculate": "a_x=(2−6)/4=−1 m/s², so F_x=0.20×(−1)=−0.20 N, west.",
+        "interpret": "0.20 N west."
+      },
+      "final_expression": "0.20 N west.",
+      "final_answer_value": "0.20 N west."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "a_x=(2−6)/4=−1 m/s², so F_x=0.20×(−1)=−0.20 N, west."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect. A positive velocity can coexist with negative acceleration."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Incorrect physical model. The negative slope of a signed velocity-time graph is the horizontal acceleration."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Inconsistent with the signed equations. A horizontal velocity line would imply zero resultant horizontal force."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-015",
+    "stem": "A workshop's robotic vehicle accelerates at a under thrust F and mass m. In a second test its thrust is tripled while a payload doubles its total mass. What acceleration follows under the stated frictionless model?",
+    "options": {
+      "A": "3a/2.",
+      "B": "6a.",
+      "C": "a/6.",
+      "D": "a/2."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "Which interaction, state change, or system must you decide first?",
+        "reveal_text": "Acceleration depends on the ratio of resultant force to total mass."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+        "reveal_text": "Write original and modified force-over-mass expressions side by side."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "Write the first law before computing any final quantity.",
+        "reveal_text": "First set a=F/m and a_new=(3F)/(2m)."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Acceleration depends on the ratio of resultant force to total mass.",
+        "represent": "Write original and modified force-over-mass expressions side by side.",
+        "connect": "First set a=F/m and a_new=(3F)/(2m).",
+        "calculate": "Dividing the expressions gives a_new/a=3/2.",
+        "interpret": "3a/2."
+      },
+      "final_expression": "3a/2.",
+      "final_answer_value": "3a/2."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Dividing the expressions gives a_new/a=3/2."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect. Scaling force and scaling mass have opposite effects on acceleration."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Incorrect physical model. Acceleration depends on the ratio of resultant force to total mass."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Inconsistent with the signed equations. If force and mass both tripled, acceleration would remain unchanged."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-016",
+    "stem": "Two frictionless magnetic trolleys of masses 2 kg and 5 kg initially drift east together at 1 m/s. Their compressed spring releases; the 2 kg trolley subsequently moves west at 4 m/s. What is the other trolley's final velocity?",
+    "options": {
+      "A": "3 m/s east.",
+      "B": "3 m/s west.",
+      "C": "1 m/s east.",
+      "D": "5 m/s east."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "Which interaction, state change, or system must you decide first?",
+        "reveal_text": "The spring impulse changes each trolley's momentum but not the system total."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+        "reveal_text": "Choose east positive; draw initial momenta +2 and +5 and final first-cart momentum −8."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "Write the first law before computing any final quantity.",
+        "reveal_text": "Start with (2+5)(+1)=2(−4)+5v_2."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The spring impulse changes each trolley's momentum but not the system total.",
+        "represent": "Choose east positive; draw initial momenta +2 and +5 and final first-cart momentum −8.",
+        "connect": "Start with (2+5)(+1)=2(−4)+5v_2.",
+        "calculate": "Initial p=7; final p=−8+5v_2, hence 5v_2=15 and v_2=+3 m/s.",
+        "interpret": "3 m/s east."
+      },
+      "final_expression": "3 m/s east.",
+      "final_answer_value": "3 m/s east."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Initial p=7; final p=−8+5v_2, hence 5v_2=15 and v_2=+3 m/s."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect. Opposite directions require opposite algebraic signs."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Incorrect physical model. The spring impulse changes each trolley's momentum but not the system total."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Inconsistent with the signed equations. The computed total final momentum −8+15 equals the initial +7."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-017",
+    "stem": "A freely turning spacecraft test table expels compressed air through a tangential nozzle at its rim toward the clockwise direction. What makes the table rotate counterclockwise?",
+    "options": {
+      "A": "The exiting gas receives clockwise tangential momentum; its reaction exerts counterclockwise torque on the table.",
+      "B": "The gas exerts only a radial force and therefore no torque.",
+      "C": "The table turns clockwise because motion follows the escaping gas.",
+      "D": "An external atmosphere is necessary to push the table."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "Which interaction, state change, or system must you decide first?",
+        "reveal_text": "The nozzle and departing gas exchange opposite tangential momenta and torques."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+        "reveal_text": "Draw two opposite tangential force arrows on distinct owners at a nonzero lever arm."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "Write the first law before computing any final quantity.",
+        "reveal_text": "First identify τ_z = r×F_reaction and its sign about the pivot."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The nozzle and departing gas exchange opposite tangential momenta and torques.",
+        "represent": "Draw two opposite tangential force arrows on distinct owners at a nonzero lever arm.",
+        "connect": "First identify τ_z = r×F_reaction and its sign about the pivot.",
+        "calculate": "Air is pushed clockwise; the equal opposite force on the nozzle produces counterclockwise torque.",
+        "interpret": "The exiting gas receives clockwise tangential momentum; its reaction exerts counterclockwise torque on the table."
+      },
+      "final_expression": "The exiting gas receives clockwise tangential momentum; its reaction exerts counterclockwise torque on the table.",
+      "final_answer_value": "The exiting gas receives clockwise tangential momentum; its reaction exerts counterclockwise torque on the table."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Air is pushed clockwise; the equal opposite force on the nozzle produces counterclockwise torque."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect. A force on the gas must not be drawn as a force on the table."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Incorrect physical model. The nozzle and departing gas exchange opposite tangential momenta and torques."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Inconsistent with the signed equations. If a nozzle pointed through the rotation axis its lever arm would be zero."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-018",
+    "stem": "An unmanned 40 kg land test capsule slides at 5 m/s onto a braking mat. If the mat provides uniform retarding force and the capsule stops in 2.0 m, find the resisting-force magnitude and stopping time.",
+    "options": {
+      "A": "250 N and 0.80 s.",
+      "B": "100 N and 0.40 s.",
+      "C": "500 N and 1.60 s.",
+      "D": "250 N and 2.0 s."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "Which interaction, state change, or system must you decide first?",
+        "reveal_text": "Stopping distance first determines signed acceleration; dynamics then gives force."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+        "reveal_text": "Choose positive along initial motion and mark v_initial=+5, v_final=0, Δx=+2."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "Write the first law before computing any final quantity.",
+        "reveal_text": "Start with v_f²=v_i²+2aΔx before writing F=ma."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Stopping distance first determines signed acceleration; dynamics then gives force.",
+        "represent": "Choose positive along initial motion and mark v_initial=+5, v_final=0, Δx=+2.",
+        "connect": "Start with v_f²=v_i²+2aΔx before writing F=ma.",
+        "calculate": "0=25+4a gives a=−6.25 m/s²; |F|=40×6.25=250 N and t=5/6.25=0.80 s.",
+        "interpret": "250 N and 0.80 s."
+      },
+      "final_expression": "250 N and 0.80 s.",
+      "final_answer_value": "250 N and 0.80 s."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "0=25+4a gives a=−6.25 m/s²; |F|=40×6.25=250 N and t=5/6.25=0.80 s."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect. Do not confuse retarding force direction with the positive stopping distance."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Incorrect physical model. Stopping distance first determines signed acceleration; dynamics then gives force."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Inconsistent with the signed equations. Doubling stopping distance at fixed initial speed halves average resisting force."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-019",
+    "stem": "A thruster supplies 12 N to orbital lab module A, causing 3 m/s² acceleration, and separately to module B, causing 4 m/s². If the modules dock rigidly and that same thruster supplies 12 N to their combined mass, find the acceleration.",
+    "options": {
+      "A": "12/7 m/s² (about 1.71 m/s²).",
+      "B": "7 m/s².",
+      "C": "3.5 m/s².",
+      "D": "1/7 m/s²."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "Which interaction, state change, or system must you decide first?",
+        "reveal_text": "The same thrust gives each object's mass; docked masses add before acceleration is found."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+        "reveal_text": "Draw separate masses inferred from each test, then one enclosing system boundary after docking."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "Write the first law before computing any final quantity.",
+        "reveal_text": "Begin with m_A=F/a_A and m_B=F/a_B."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The same thrust gives each object's mass; docked masses add before acceleration is found.",
+        "represent": "Draw separate masses inferred from each test, then one enclosing system boundary after docking.",
+        "connect": "Begin with m_A=F/a_A and m_B=F/a_B.",
+        "calculate": "m_A=4 kg and m_B=3 kg; together mass=7 kg so a=12/7 m/s².",
+        "interpret": "12/7 m/s² (about 1.71 m/s²)."
+      },
+      "final_expression": "12/7 m/s² (about 1.71 m/s²).",
+      "final_answer_value": "12/7 m/s² (about 1.71 m/s²)."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "m_A=4 kg and m_B=3 kg; together mass=7 kg so a=12/7 m/s²."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect. Add masses, not accelerations."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Incorrect physical model. The same thrust gives each object's mass; docked masses add before acceleration is found."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Inconsistent with the signed equations. The combined acceleration must be lower than either individual acceleration under fixed force."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-020",
+    "stem": "A linear glider's momentum plots yield these gradients: at fixed glider mass, the p-v slope is 2 kg; at fixed velocity, the p-m slope is +3 m/s. A separate signed p-t trace grows from 0 to 12 kg m/s in 3 s. What physical values follow?",
+    "options": {
+      "A": "Mass 2 kg, speed +3 m/s, net force +4 N.",
+      "B": "Mass 3 kg, speed 2 m/s, net force 36 N.",
+      "C": "Mass 2 kg, speed −3 m/s, net force zero.",
+      "D": "Mass 6 kg, speed +4 m/s, net force +3 N."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · decisive physics",
+        "prompt_question": "Which interaction, state change, or system must you decide first?",
+        "reveal_text": "Each graph holds a different variable fixed; only p-t slope is net force."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "Which body-labelled diagram, signed axis or graph is needed?",
+        "reveal_text": "Label the horizontal variable and units for each p-v, p-m and p-t axis."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "Write the first law before computing any final quantity.",
+        "reveal_text": "Start with p=mv and F_net=Δp/Δt."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Each graph holds a different variable fixed; only p-t slope is net force.",
+        "represent": "Label the horizontal variable and units for each p-v, p-m and p-t axis.",
+        "connect": "Start with p=mv and F_net=Δp/Δt.",
+        "calculate": "Slope of p against v is m=2 kg, slope of p against m is v=+3 m/s, and slope of p against t is +12/3=+4 N.",
+        "interpret": "Mass 2 kg, speed +3 m/s, net force +4 N."
+      },
+      "final_expression": "Mass 2 kg, speed +3 m/s, net force +4 N.",
+      "final_answer_value": "Mass 2 kg, speed +3 m/s, net force +4 N."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Slope of p against v is m=2 kg, slope of p against m is v=+3 m/s, and slope of p against t is +12/3=+4 N."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect. Do not mix a p-v graph slope with a p-t slope."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Incorrect physical model. Each graph holds a different variable fixed; only p-t slope is net force."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Inconsistent with the signed equations. The signed p-t slope must carry force units kg m/s²."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-021",
+    "stem": "A 4.0 kg sample box lies on a 30° rough slope and is joined over an ideal fixed pulley to a hanging counterweight of variable mass M. Coefficients between box and slope are μ_s=0.30 and μ_k=0.20; take g=10 m/s² and cos30°≈0.866. First find the largest M for which rest is possible. Then replace it with M=3.20 kg and find the subsequent acceleration and direction.",
+    "options": {
+      "A": "M_limit≈3.04 kg; with 3.20 kg hanging it moves downward at about 0.70 m/s².",
+      "B": "M_limit=2.00 kg; the two masses remain at rest.",
+      "C": "M_limit=4.00 kg; the slope box moves down at 3 m/s².",
+      "D": "M_limit≈3.04 kg; with 3.20 kg it remains motionless."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · key physical decision",
+        "prompt_question": "Which regime, body, or contact constraint must be decided before calculation?",
+        "reveal_text": "Static holding requires the hanging tendency to be resisted by downslope weight and limited upslope/down-slope friction; test the inequality before switching to kinetic friction."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · force representation",
+        "prompt_question": "How should the system and signed axes be drawn?",
+        "reveal_text": "Draw separate FBDs; incline axis up-slope positive, hanging axis downward positive, and label both possible friction senses."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first governing constraint",
+        "prompt_question": "Write only the first inequality or force equation, not its solution.",
+        "reveal_text": "Begin with Mg ≤ 4g(sin30°+μ_s cos30°) for the upper hanging-mass limit."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Static holding requires the hanging tendency to be resisted by downslope weight and limited upslope/down-slope friction; test the inequality before switching to kinetic friction.",
+        "represent": "Draw separate FBDs; incline axis up-slope positive, hanging axis downward positive, and label both possible friction senses.",
+        "connect": "Begin with Mg ≤ 4g(sin30°+μ_s cos30°) for the upper hanging-mass limit.",
+        "calculate": "M_limit=4(0.5+0.30×0.866)=3.0392 kg. For M=3.20 it exceeds the limit: kinetic net drive=32−20−0.20×40×0.866=5.072 N, total mass=7.20 kg, a=5.072/7.20≈0.704 m/s² hanging down.",
+        "interpret": "M_limit≈3.04 kg; with 3.20 kg hanging it moves downward at about 0.70 m/s²."
+      },
+      "final_expression": "M_limit≈3.04 kg; with 3.20 kg hanging it moves downward at about 0.70 m/s².",
+      "final_answer_value": "M_limit≈3.04 kg; with 3.20 kg hanging it moves downward at about 0.70 m/s²."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "M_limit=4(0.5+0.30×0.866)=3.0392 kg. For M=3.20 it exceeds the limit: kinetic net drive=32−20−0.20×40×0.866=5.072 N, total mass=7.20 kg, a=5.072/7.20≈0.704 m/s² hanging down."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect model: Static friction is an inequality, not automatically μ_s N; do not use μ_k until slip is established."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Invalid regime or force ownership: Static holding requires the hanging tendency to be resisted by downslope weight and limited upslope/down-slope friction; test the inequality before switching to kinetic friction."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails threshold/check: At M=M_limit the static state is marginal; μ_s→0 reduces the limit to 2.0 kg."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-022",
+    "stem": "A single wooden sample block rests on a rough laboratory tilting tray. Its static-friction coefficient is μ_s=0.40. Prove that the first angle at which it can begin to slide is independent of the sample's mass, and give its approximate value.",
+    "options": {
+      "A": "tanθ_critical=0.40, so θ≈21.8°, independent of mass.",
+      "B": "θ_critical=40°, increasing with sample mass.",
+      "C": "sinθ_critical=0.40 times its mass.",
+      "D": "There is no finite critical angle."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · key physical decision",
+        "prompt_question": "Which regime, body, or contact constraint must be decided before calculation?",
+        "reveal_text": "Compare the downhill component of gravity with the greatest available static friction; the mass factor cancels."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · force representation",
+        "prompt_question": "How should the system and signed axes be drawn?",
+        "reveal_text": "FBD with mg sinθ down slope, N=mg cosθ normal, and potential friction up slope."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first governing constraint",
+        "prompt_question": "Write only the first inequality or force equation, not its solution.",
+        "reveal_text": "Start from mg sinθ ≤ μ_s mg cosθ at the resting limit."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Compare the downhill component of gravity with the greatest available static friction; the mass factor cancels.",
+        "represent": "FBD with mg sinθ down slope, N=mg cosθ normal, and potential friction up slope.",
+        "connect": "Start from mg sinθ ≤ μ_s mg cosθ at the resting limit.",
+        "calculate": "Divide by mg cosθ to get tanθ≤μ_s; therefore θ_critical=arctan(0.40)≈21.8° independent of mass.",
+        "interpret": "tanθ_critical=0.40, so θ≈21.8°, independent of mass."
+      },
+      "final_expression": "tanθ_critical=0.40, so θ≈21.8°, independent of mass.",
+      "final_answer_value": "tanθ_critical=0.40, so θ≈21.8°, independent of mass."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Divide by mg cosθ to get tanθ≤μ_s; therefore θ_critical=arctan(0.40)≈21.8° independent of mass."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect model: The equality applies only at impending slip, not at every resting angle."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Invalid regime or force ownership: Compare the downhill component of gravity with the greatest available static friction; the mass factor cancels."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails threshold/check: At μ_s=0 any nonzero positive tilt causes motion."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-023",
+    "stem": "On a frictionless straight track, a 2 kg block A lies on a 3 kg cart B; cart B is tethered by a taut light string to a 1 kg cart C. A horizontal force F pulls C right. Only contact A–B has friction: μ_s=0.40, μ_k=0.25; g=10 m/s². Find the greatest F that keeps A from sliding. If F=30 N, find both accelerations (A and linked B+C), and string tension.",
+    "options": {
+      "A": "F_limit=24 N; at F=30 N, a_A=2.5 m/s², a_(B+C)=6.25 m/s², T=23.75 N.",
+      "B": "F_limit=8 N; all three accelerate at 5 m/s².",
+      "C": "F_limit=24 N; all three still accelerate together at 5 m/s².",
+      "D": "F_limit=30 N; the upper block remains at rest."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · key physical decision",
+        "prompt_question": "Which regime, body, or contact constraint must be decided before calculation?",
+        "reveal_text": "In the no-slip regime A needs friction m_A F/(m_A+m_B+m_C); once beyond μ_s m_Ag, kinetic friction gives A a different acceleration."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · force representation",
+        "prompt_question": "How should the system and signed axes be drawn?",
+        "reveal_text": "Draw the FBD for each cart/block and one external FBD for the combined system, with two possible motion regimes."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first governing constraint",
+        "prompt_question": "Write only the first inequality or force equation, not its solution.",
+        "reveal_text": "First test m_A F/(m_A+m_B+m_C) ≤ μ_s m_A g."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "In the no-slip regime A needs friction m_A F/(m_A+m_B+m_C); once beyond μ_s m_Ag, kinetic friction gives A a different acceleration.",
+        "represent": "Draw the FBD for each cart/block and one external FBD for the combined system, with two possible motion regimes.",
+        "connect": "First test m_A F/(m_A+m_B+m_C) ≤ μ_s m_A g.",
+        "calculate": "Together a=F/6 and A needs f=F/3≤8 N, giving F_limit=24 N. At F=30, f_k=0.25×2×10=5 N. A accelerates 5/2=2.5; linked B+C accelerate (30−5)/4=6.25; for C, T=30−1×6.25=23.75 N.",
+        "interpret": "F_limit=24 N; at F=30 N, a_A=2.5 m/s², a_(B+C)=6.25 m/s², T=23.75 N."
+      },
+      "final_expression": "F_limit=24 N; at F=30 N, a_A=2.5 m/s², a_(B+C)=6.25 m/s², T=23.75 N.",
+      "final_answer_value": "F_limit=24 N; at F=30 N, a_A=2.5 m/s², a_(B+C)=6.25 m/s², T=23.75 N."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Together a=F/6 and A needs f=F/3≤8 N, giving F_limit=24 N. At F=30, f_k=0.25×2×10=5 N. A accelerates 5/2=2.5; linked B+C accelerate (30−5)/4=6.25; for C, T=30−1×6.25=23.75 N."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect model: Do not keep the common-acceleration assumption after static friction is exceeded."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Invalid regime or force ownership: In the no-slip regime A needs friction m_A F/(m_A+m_B+m_C); once beyond μ_s m_Ag, kinetic friction gives A a different acceleration."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails threshold/check: For F just below 24 N both groups must share acceleration F/6."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-024",
+    "stem": "A stage technician holds a 20 kg lighting unit at rest using one ideal movable pulley supported by two vertical parts of a massless cord. With g=9.8 m/s², what upward effort is necessary at the free end, and what is the ideal mechanical advantage?",
+    "options": {
+      "A": "98 N and mechanical advantage 2.",
+      "B": "196 N and mechanical advantage 1.",
+      "C": "392 N and mechanical advantage 0.5.",
+      "D": "49 N and mechanical advantage 4."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · key physical decision",
+        "prompt_question": "Which regime, body, or contact constraint must be decided before calculation?",
+        "reveal_text": "The weight is shared by two supporting string sections of equal tension."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · force representation",
+        "prompt_question": "How should the system and signed axes be drawn?",
+        "reveal_text": "Make the moving pulley-plus-load FBD with two upward T arrows and one downward W arrow."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first governing constraint",
+        "prompt_question": "Write only the first inequality or force equation, not its solution.",
+        "reveal_text": "Begin with ΣF_y=2T−W=0 and F_effort=T."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The weight is shared by two supporting string sections of equal tension.",
+        "represent": "Make the moving pulley-plus-load FBD with two upward T arrows and one downward W arrow.",
+        "connect": "Begin with ΣF_y=2T−W=0 and F_effort=T.",
+        "calculate": "W=20×9.8=196 N; equal string tension gives F_effort=196/2=98 N and W/F_effort=2.",
+        "interpret": "98 N and mechanical advantage 2."
+      },
+      "final_expression": "98 N and mechanical advantage 2.",
+      "final_answer_value": "98 N and mechanical advantage 2."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "W=20×9.8=196 N; equal string tension gives F_effort=196/2=98 N and W/F_effort=2."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect model: A single moving pulley is not a four-segment block-and-tackle."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Invalid regime or force ownership: The weight is shared by two supporting string sections of equal tension."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails threshold/check: Work balance doubles the free-end movement relative to the load displacement."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-025",
+    "stem": "Two crates of masses 2 kg and 3 kg share a 30° incline and are joined by a taut cord; the upper crate is also linked over an ideal pulley to a 4 kg hanging load. Both slope contacts have μ_s=0.30 and μ_k=0.20, with g=10 m/s² and cos30°≈0.866. Justify whether rest is possible; if not, justify the hanging load's direction and acceleration.",
+    "options": {
+      "A": "Rest is impossible; the 4 kg load descends and the linked system accelerates about 0.704 m/s².",
+      "B": "The system remains at rest because friction always equals μ_s N.",
+      "C": "The 4 kg load rises at 0.704 m/s².",
+      "D": "The load drops at 4.44 m/s² because slope friction cancels gravity."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · key physical decision",
+        "prompt_question": "Which regime, body, or contact constraint must be decided before calculation?",
+        "reveal_text": "Treat the three linked bodies as a system for net drive but inspect contact friction limits before asserting motion."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · force representation",
+        "prompt_question": "How should the system and signed axes be drawn?",
+        "reveal_text": "Three owner-specific FBDs; draw ramp weight components, both normal forces, rope tensions and a signed hanging-down axis."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first governing constraint",
+        "prompt_question": "Write only the first inequality or force equation, not its solution.",
+        "reveal_text": "Test 4g−(2+3)g sin30° ≤ μ_s(2+3)g cos30° before using μ_k."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Treat the three linked bodies as a system for net drive but inspect contact friction limits before asserting motion.",
+        "represent": "Three owner-specific FBDs; draw ramp weight components, both normal forces, rope tensions and a signed hanging-down axis.",
+        "connect": "Test 4g−(2+3)g sin30° ≤ μ_s(2+3)g cos30° before using μ_k.",
+        "calculate": "Downward drive=40−25=15 N; max static total=0.30×50×0.866≈12.99 N, so it slides hanging-down. Kinetic drag=0.20×50×0.866=8.66 N; a=(40−25−8.66)/(2+3+4)≈0.704 m/s².",
+        "interpret": "Rest is impossible; the 4 kg load descends and the linked system accelerates about 0.704 m/s²."
+      },
+      "final_expression": "Rest is impossible; the 4 kg load descends and the linked system accelerates about 0.704 m/s².",
+      "final_answer_value": "Rest is impossible; the 4 kg load descends and the linked system accelerates about 0.704 m/s²."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Downward drive=40−25=15 N; max static total=0.30×50×0.866≈12.99 N, so it slides hanging-down. Kinetic drag=0.20×50×0.866=8.66 N; a=(40−25−8.66)/(2+3+4)≈0.704 m/s²."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Incorrect model: Do not assume momentum is conserved for boxes-plus-load in external gravity fields."
+      },
+      "C": {
+        "type": "KEY_CONCEPT_MISCONCEPTION",
+        "diagnostic": "Invalid regime or force ownership: Treat the three linked bodies as a system for net drive but inspect contact friction limits before asserting motion."
+      },
+      "D": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Fails threshold/check: If μ_s were raised above 15/(50×0.866)≈0.346, a static configuration could exist."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-026",
+    "stem": "A festival lantern hangs motionless from one vertical cord. Choose the correct free-body diagram for the lantern itself; every arrow must identify a force ON the lantern.",
+    "options": {
+      "A": "One upward cord-on-lantern tension arrow and one downward Earth-on-lantern weight arrow.",
+      "B": "Upward lantern-on-cord and downward Earth-on-lantern arrows.",
+      "C": "Only one upward tension arrow.",
+      "D": "Two upward arrows and a downward lantern-on-Earth arrow."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · body ownership",
+        "prompt_question": "Which body owns each force and what state or possible direction is assumed?",
+        "reveal_text": "For an FBD, draw only forces on the selected lantern, never forces that it exerts on others."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · FBD/axis",
+        "prompt_question": "What forces and signed directions belong in the diagram?",
+        "reveal_text": "Draw the lantern as a dot, T upward from the cord and mg downward from Earth."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "What is the first consistency law without evaluating an answer?",
+        "reveal_text": "First register ΣF_y=T−mg=0 without calculating T."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "For an FBD, draw only forces on the selected lantern, never forces that it exerts on others.",
+        "represent": "Draw the lantern as a dot, T upward from the cord and mg downward from Earth.",
+        "connect": "First register ΣF_y=T−mg=0 without calculating T.",
+        "calculate": "The cord pulls the lantern up, Earth pulls it down; their equal, opposite actions are both ON the lantern.",
+        "interpret": "One upward cord-on-lantern tension arrow and one downward Earth-on-lantern weight arrow."
+      },
+      "final_expression": "One upward cord-on-lantern tension arrow and one downward Earth-on-lantern weight arrow.",
+      "final_answer_value": "One upward cord-on-lantern tension arrow and one downward Earth-on-lantern weight arrow."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "The cord pulls the lantern up, Earth pulls it down; their equal, opposite actions are both ON the lantern."
+      },
+      "B": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Wrong direction or force owner. A lantern-on-cord pull belongs on the cord's FBD, not the lantern's."
+      },
+      "C": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Incomplete FBD. For an FBD, draw only forces on the selected lantern, never forces that it exerts on others."
+      },
+      "D": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Ignores contact constraints. Removing the cord leaves only gravity down."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-027",
+    "stem": "A robot gripper's left jaw pushes a rubber ball toward the right. Which paired-arrow representation correctly identifies its Newton-third-law contact pair?",
+    "options": {
+      "A": "Rightward force labelled 'jaw on ball' ON ball, and leftward 'ball on jaw' ON jaw.",
+      "B": "Both arrows rightward on the ball.",
+      "C": "Rightward 'jaw on ball' and downward 'Earth on ball' on the same ball.",
+      "D": "Two equal opposite arrows on the ball cancelling each other."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · body ownership",
+        "prompt_question": "Which body owns each force and what state or possible direction is assumed?",
+        "reveal_text": "Third-law partners are different forces placed on different bodies."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · FBD/axis",
+        "prompt_question": "What forces and signed directions belong in the diagram?",
+        "reveal_text": "Make two small FBDs: ball gets a rightward contact arrow, left jaw gets a leftward reaction arrow."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "What is the first consistency law without evaluating an answer?",
+        "reveal_text": "Write F_(jaw on ball)=−F_(ball on jaw)."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Third-law partners are different forces placed on different bodies.",
+        "represent": "Make two small FBDs: ball gets a rightward contact arrow, left jaw gets a leftward reaction arrow.",
+        "connect": "Write F_(jaw on ball)=−F_(ball on jaw).",
+        "calculate": "The jaw pushes the ball right; the ball reacts on the jaw left with equal magnitude.",
+        "interpret": "Rightward force labelled 'jaw on ball' ON ball, and leftward 'ball on jaw' ON jaw."
+      },
+      "final_expression": "Rightward force labelled 'jaw on ball' ON ball, and leftward 'ball on jaw' ON jaw.",
+      "final_answer_value": "Rightward force labelled 'jaw on ball' ON ball, and leftward 'ball on jaw' ON jaw."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "The jaw pushes the ball right; the ball reacts on the jaw left with equal magnitude."
+      },
+      "B": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Wrong direction or force owner. Opposite forces on the same body are not the third-law interaction pair."
+      },
+      "C": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Incomplete FBD. Third-law partners are different forces placed on different bodies."
+      },
+      "D": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Ignores contact constraints. The pair still has equal magnitude even if the ball accelerates."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-028",
+    "stem": "A rough incline slider is attached by a light string over a fixed pulley to a hanging counterweight. An investigator hypothesizes that the counterweight is about to descend and the slider is about to climb the incline. Which representation is consistent before calculating a threshold?",
+    "options": {
+      "A": "On the slider: weight down, normal perpendicular to ramp, tension up slope, static friction down slope; on the hanger: weight down and tension up.",
+      "B": "On the slider: tension and friction both up slope whenever the hanger descends.",
+      "C": "On the hanger: weight and tension both downward.",
+      "D": "On the slider: replace friction by μ_k N without testing whether sliding begins."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · body ownership",
+        "prompt_question": "Which body owns each force and what state or possible direction is assumed?",
+        "reveal_text": "The hypothesized impending motion decides the possible friction direction; static friction magnitude is bounded, not automatically maximal."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · FBD/axis",
+        "prompt_question": "What forces and signed directions belong in the diagram?",
+        "reveal_text": "Draw separate slope-aligned and vertical FBDs, and label the assumed up-slope slider motion."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "What is the first consistency law without evaluating an answer?",
+        "reveal_text": "Start with |f_s|≤μ_s N together with N=m_slider g cosθ."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The hypothesized impending motion decides the possible friction direction; static friction magnitude is bounded, not automatically maximal.",
+        "represent": "Draw separate slope-aligned and vertical FBDs, and label the assumed up-slope slider motion.",
+        "connect": "Start with |f_s|≤μ_s N together with N=m_slider g cosθ.",
+        "calculate": "For impending upward slider motion, friction acts down the slope. Tension points up the slope; the hanger has tension up and gravity down. Test the static bound before selecting a kinetic model.",
+        "interpret": "On the slider: weight down, normal perpendicular to ramp, tension up slope, static friction down slope; on the hanger: weight down and tension up."
+      },
+      "final_expression": "On the slider: weight down, normal perpendicular to ramp, tension up slope, static friction down slope; on the hanger: weight down and tension up.",
+      "final_answer_value": "On the slider: weight down, normal perpendicular to ramp, tension up slope, static friction down slope; on the hanger: weight down and tension up."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "For impending upward slider motion, friction acts down the slope. Tension points up the slope; the hanger has tension up and gravity down. Test the static bound before selecting a kinetic model."
+      },
+      "B": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Wrong direction or force owner. Do not place a force exerted by the slider on the rope into the slider FBD."
+      },
+      "C": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Incomplete FBD. The hypothesized impending motion decides the possible friction direction; static friction magnitude is bounded, not automatically maximal."
+      },
+      "D": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Ignores contact constraints. Reversing hypothetical motion reverses friction direction, not weight."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-029",
+    "stem": "Two separate rough slopes each carry one crate, A and B. Separate light cords over fixed pulleys connect both crates to the same hanging mass C. Suppose C is about to descend, so A and B each ascend their slopes. Which force-and-constraint representation correctly prepares a no-slip-versus-slip analysis?",
+    "options": {
+      "A": "Each slope crate has T up its slope, mg sinθ and friction down slope, N=mg cosθ; C has mg down and both tensions up; all three signed accelerations share magnitude while cords remain taut.",
+      "B": "Both slope crates have friction up slope, and C has only one tension.",
+      "C": "All three weights point along their string directions, with no normal reactions.",
+      "D": "Both string tensions must have the same numerical value even though they belong to different cords."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · body ownership",
+        "prompt_question": "Which body owns each force and what state or possible direction is assumed?",
+        "reveal_text": "The two cords constrain three different bodies; their separate tensions and separate friction thresholds cannot be collapsed into one contact."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · FBD/axis",
+        "prompt_question": "What forces and signed directions belong in the diagram?",
+        "reveal_text": "Choose positive up both slopes, positive down for C; draw three FBDs with T_A and T_B distinct and conditional friction directions."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first constraint",
+        "prompt_question": "What is the first consistency law without evaluating an answer?",
+        "reveal_text": "Begin with a_A=a_B=a_C for taut cords and |f_s,A|≤μ_s,A N_A, |f_s,B|≤μ_s,B N_B."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The two cords constrain three different bodies; their separate tensions and separate friction thresholds cannot be collapsed into one contact.",
+        "represent": "Choose positive up both slopes, positive down for C; draw three FBDs with T_A and T_B distinct and conditional friction directions.",
+        "connect": "Begin with a_A=a_B=a_C for taut cords and |f_s,A|≤μ_s,A N_A, |f_s,B|≤μ_s,B N_B.",
+        "calculate": "Represent both incline normals, weight components and distinct string tensions on their owners. The imposed motion makes friction oppose each ascending slider; each static bound must be checked before substituting kinetic terms.",
+        "interpret": "Each slope crate has T up its slope, mg sinθ and friction down slope, N=mg cosθ; C has mg down and both tensions up; all three signed accelerations share magnitude while cords remain taut."
+      },
+      "final_expression": "Each slope crate has T up its slope, mg sinθ and friction down slope, N=mg cosθ; C has mg down and both tensions up; all three signed accelerations share magnitude while cords remain taut.",
+      "final_answer_value": "Each slope crate has T up its slope, mg sinθ and friction down slope, N=mg cosθ; C has mg down and both tensions up; all three signed accelerations share magnitude while cords remain taut."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Represent both incline normals, weight components and distinct string tensions on their owners. The imposed motion makes friction oppose each ascending slider; each static bound must be checked before substituting kinetic terms."
+      },
+      "B": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Wrong direction or force owner. Equal acceleration magnitudes from two constraints do not force equal tensions in different cords."
+      },
+      "C": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Incomplete FBD. The two cords constrain three different bodies; their separate tensions and separate friction thresholds cannot be collapsed into one contact."
+      },
+      "D": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Ignores contact constraints. With one cord slack, its acceleration equality and transmitted tension no longer apply."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-030",
+    "stem": "A 3 kg block on a 30° rough incline is connected to a 4 kg hanging mass over an ideal fixed pulley. The incline block moves upward; μ_k=0.20, g=10 m/s², cos30°=0.866. Find acceleration (hanging-down positive) and string tension; check the energy change over 1 m.",
+    "options": {
+      "A": "a≈2.83 m/s²; T≈28.7 N, consistent with gravitational work less friction.",
+      "B": "a=5 m/s²; T=20 N.",
+      "C": "a≈2.83 m/s² but T≈40 N.",
+      "D": "a=0 because the incline force cancels all load weight."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · physical decision",
+        "prompt_question": "Which system, interaction or regime governs this situation?",
+        "reveal_text": "The system's drive equals hanging weight minus the uphill block's weight component and kinetic drag."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "What diagram and signed axes should precede any calculation?",
+        "reveal_text": "Draw the ramp-body FBD with positive uphill and the hanging-body FBD with positive down, sharing one a."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first equation",
+        "prompt_question": "What first equation or inequality starts the solution?",
+        "reveal_text": "Begin with (4g−3g sin30°−μ_k 3g cos30°)=(3+4)a."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The system's drive equals hanging weight minus the uphill block's weight component and kinetic drag.",
+        "represent": "Draw the ramp-body FBD with positive uphill and the hanging-body FBD with positive down, sharing one a.",
+        "connect": "Begin with (4g−3g sin30°−μ_k 3g cos30°)=(3+4)a.",
+        "calculate": "Net drive=40−15−5.196=19.804 N; a=19.804/7≈2.829 m/s²; T=4(10−a)≈28.69 N. Over 1 m, net work 19.804 J equals (1/2)(7)(a²? velocity-square gain 2a×1)=19.804 J.",
+        "interpret": "a≈2.83 m/s²; T≈28.7 N, consistent with gravitational work less friction."
+      },
+      "final_expression": "a≈2.83 m/s²; T≈28.7 N, consistent with gravitational work less friction.",
+      "final_answer_value": "a≈2.83 m/s²; T≈28.7 N, consistent with gravitational work less friction."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Net drive=40−15−5.196=19.804 N; a=19.804/7≈2.829 m/s²; T=4(10−a)≈28.69 N. Over 1 m, net work 19.804 J equals (1/2)(7)(a²? velocity-square gain 2a×1)=19.804 J."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "This alternative fails the governing regime or model. Include the incline normal in friction and check the assumed direction."
+      },
+      "C": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "The proposed sign or ownership is invalid. The system's drive equals hanging weight minus the uphill block's weight component and kinetic drag."
+      },
+      "D": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Omitted coupled force/constraint: Draw the ramp-body FBD with positive uphill and the hanging-body FBD with positive down, sharing one a."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-031",
+    "stem": "A rough-slope trolley is tethered over a pulley to an adjustable hanging weight. When the hanging weight is very light the trolley tends to slide down the slope; with a very heavy hanger it tends to climb. Explain why one fixed-direction friction arrow cannot model every possible resting or moving case.",
+    "options": {
+      "A": "Friction opposes the trolley's impending/actual relative motion, so its arrow may reverse; first test the static limit, then choose kinetic friction if it slips.",
+      "B": "Friction always acts uphill because gravity acts downhill.",
+      "C": "Friction always acts downward because the rope pulls upward.",
+      "D": "Friction must equal μ_s N in every resting position."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · physical decision",
+        "prompt_question": "Which system, interaction or regime governs this situation?",
+        "reveal_text": "The direction of friction depends on the proposed motion; static friction adjusts within its limit until slip occurs."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "What diagram and signed axes should precede any calculation?",
+        "reveal_text": "Sketch the two alternative slope FBDs with opposite friction arrows and the hanger's vertical FBD."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first equation",
+        "prompt_question": "What first equation or inequality starts the solution?",
+        "reveal_text": "First write |f_s|≤μ_s N while treating assumed slip direction as a hypothesis."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The direction of friction depends on the proposed motion; static friction adjusts within its limit until slip occurs.",
+        "represent": "Sketch the two alternative slope FBDs with opposite friction arrows and the hanger's vertical FBD.",
+        "connect": "First write |f_s|≤μ_s N while treating assumed slip direction as a hypothesis.",
+        "calculate": "A light hanger can require uphill friction to oppose downslope tendency; a heavy hanger can require downhill friction to oppose upslope tendency. If required friction exceeds μ_s N, the case switches to kinetic friction.",
+        "interpret": "Friction opposes the trolley's impending/actual relative motion, so its arrow may reverse; first test the static limit, then choose kinetic friction if it slips."
+      },
+      "final_expression": "Friction opposes the trolley's impending/actual relative motion, so its arrow may reverse; first test the static limit, then choose kinetic friction if it slips.",
+      "final_answer_value": "Friction opposes the trolley's impending/actual relative motion, so its arrow may reverse; first test the static limit, then choose kinetic friction if it slips."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "A light hanger can require uphill friction to oppose downslope tendency; a heavy hanger can require downhill friction to oppose upslope tendency. If required friction exceeds μ_s N, the case switches to kinetic friction."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "This alternative fails the governing regime or model. μ_s N is the maximum static friction, not always its actual value."
+      },
+      "C": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "The proposed sign or ownership is invalid. The direction of friction depends on the proposed motion; static friction adjusts within its limit until slip occurs."
+      },
+      "D": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Omitted coupled force/constraint: Sketch the two alternative slope FBDs with opposite friction arrows and the hanger's vertical FBD."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-032",
+    "stem": "When two tiny spacecraft docking plates press against each other, a student says the heavier spacecraft must push harder on the lighter one. Which short argument disproves the statement?",
+    "options": {
+      "A": "At the same contact each pushes the other with equal force magnitude in opposite directions, regardless of their different accelerations.",
+      "B": "The heavier craft always applies twice the contact force.",
+      "C": "The forces cancel because both act on the lighter craft.",
+      "D": "The lighter craft cannot exert any force until it moves."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · physical decision",
+        "prompt_question": "Which system, interaction or regime governs this situation?",
+        "reveal_text": "Mutual contact force magnitudes are equal even when the resultant forces and accelerations differ."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "What diagram and signed axes should precede any calculation?",
+        "reveal_text": "Draw one contact force on each separate spacecraft, directed opposite."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first equation",
+        "prompt_question": "What first equation or inequality starts the solution?",
+        "reveal_text": "Begin with F_(A on B)=−F_(B on A)."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Mutual contact force magnitudes are equal even when the resultant forces and accelerations differ.",
+        "represent": "Draw one contact force on each separate spacecraft, directed opposite.",
+        "connect": "Begin with F_(A on B)=−F_(B on A).",
+        "calculate": "Newton III gives equal and opposite interaction forces. Newton II explains any acceleration difference from mass and other forces.",
+        "interpret": "At the same contact each pushes the other with equal force magnitude in opposite directions, regardless of their different accelerations."
+      },
+      "final_expression": "At the same contact each pushes the other with equal force magnitude in opposite directions, regardless of their different accelerations.",
+      "final_answer_value": "At the same contact each pushes the other with equal force magnitude in opposite directions, regardless of their different accelerations."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Newton III gives equal and opposite interaction forces. Newton II explains any acceleration difference from mass and other forces."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "This alternative fails the governing regime or model. Do not subtract the pair on a single spacecraft FBD."
+      },
+      "C": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "The proposed sign or ownership is invalid. Mutual contact force magnitudes are equal even when the resultant forces and accelerations differ."
+      },
+      "D": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Omitted coupled force/constraint: Draw one contact force on each separate spacecraft, directed opposite."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-033",
+    "stem": "A hanging temperature sensor is held at rest by a single vertical strap. To calculate the strap's pull on the sensor, what is the correct modeling first move?",
+    "options": {
+      "A": "Isolate the sensor and include strap-on-sensor upward and Earth-on-sensor downward.",
+      "B": "Isolate the strap and treat sensor-on-strap as the force on the sensor.",
+      "C": "Add an upward inertia force just because the sensor is at rest.",
+      "D": "Treat the sensor and the Earth as having no external interactions."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · physical decision",
+        "prompt_question": "Which system, interaction or regime governs this situation?",
+        "reveal_text": "The body for Newton II must be the object whose acceleration and contact force are sought."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "What diagram and signed axes should precede any calculation?",
+        "reveal_text": "Draw a single-body system boundary around the sensor with T up and mg down."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first equation",
+        "prompt_question": "What first equation or inequality starts the solution?",
+        "reveal_text": "Start with ΣF_y(on sensor)=T−mg=0."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The body for Newton II must be the object whose acceleration and contact force are sought.",
+        "represent": "Draw a single-body system boundary around the sensor with T up and mg down.",
+        "connect": "Start with ΣF_y(on sensor)=T−mg=0.",
+        "calculate": "Choose the sensor as the target; gravity and strap tension are the external forces on it.",
+        "interpret": "Isolate the sensor and include strap-on-sensor upward and Earth-on-sensor downward."
+      },
+      "final_expression": "Isolate the sensor and include strap-on-sensor upward and Earth-on-sensor downward.",
+      "final_answer_value": "Isolate the sensor and include strap-on-sensor upward and Earth-on-sensor downward."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Choose the sensor as the target; gravity and strap tension are the external forces on it."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "This alternative fails the governing regime or model. Do not put sensor-on-strap force on the sensor's own diagram."
+      },
+      "C": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "The proposed sign or ownership is invalid. The body for Newton II must be the object whose acceleration and contact force are sought."
+      },
+      "D": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Omitted coupled force/constraint: Draw a single-body system boundary around the sensor with T up and mg down."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-034",
+    "stem": "A rough incline carriage is attached over a fixed pulley to a hanging calibration weight. The static-friction coefficient is known, but the weights are adjustable. Before computing acceleration, which mathematical model correctly decides whether rest is possible and, if not, which direction to take as positive?",
+    "options": {
+      "A": "Draw both FBDs; solve required static friction from zero acceleration, check |f_required|≤μ_s N, then choose a signed moving branch if the inequality fails.",
+      "B": "Always insert kinetic friction μ_k N from the beginning.",
+      "C": "Assume the incline block moves uphill because a rope is attached.",
+      "D": "Apply momentum conservation to the block alone instead of checking external forces."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · physical decision",
+        "prompt_question": "Which system, interaction or regime governs this situation?",
+        "reveal_text": "Do not pick an acceleration sign before evaluating the static balance feasibility."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "What diagram and signed axes should precede any calculation?",
+        "reveal_text": "Use slope-tangent and slope-normal axes for the carriage, vertical for the hanger, and separate friction hypotheses."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first equation",
+        "prompt_question": "What first equation or inequality starts the solution?",
+        "reveal_text": "Begin with f_required + T −mg sinθ =0 and |f_required|≤μ_s mg cosθ."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Do not pick an acceleration sign before evaluating the static balance feasibility.",
+        "represent": "Use slope-tangent and slope-normal axes for the carriage, vertical for the hanger, and separate friction hypotheses.",
+        "connect": "Begin with f_required + T −mg sinθ =0 and |f_required|≤μ_s mg cosθ.",
+        "calculate": "If the static requirements stay inside the cone of available friction the system may rest; otherwise select the physically consistent slip branch and apply Newton II with kinetic friction.",
+        "interpret": "Draw both FBDs; solve required static friction from zero acceleration, check |f_required|≤μ_s N, then choose a signed moving branch if the inequality fails."
+      },
+      "final_expression": "Draw both FBDs; solve required static friction from zero acceleration, check |f_required|≤μ_s N, then choose a signed moving branch if the inequality fails.",
+      "final_answer_value": "Draw both FBDs; solve required static friction from zero acceleration, check |f_required|≤μ_s N, then choose a signed moving branch if the inequality fails."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "If the static requirements stay inside the cone of available friction the system may rest; otherwise select the physically consistent slip branch and apply Newton II with kinetic friction."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "This alternative fails the governing regime or model. A failed static inequality is essential evidence for using kinetic friction."
+      },
+      "C": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "The proposed sign or ownership is invalid. Do not pick an acceleration sign before evaluating the static balance feasibility."
+      },
+      "D": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Omitted coupled force/constraint: Use slope-tangent and slope-normal axes for the carriage, vertical for the hanger, and separate friction hypotheses."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-035",
+    "stem": "A 1 kg instrument case rests on a 3 kg cart on a rough horizontal table; a separate 2 kg hanging counterweight pulls the cart by a cord over a pulley. There is friction at case–cart and cart–table contacts, each with its own μ_s and μ_k. Which proposed model can actually distinguish all possible initial and later regimes?",
+    "options": {
+      "A": "Draw three FBDs, apply independent static-friction bounds at both contacts, impose shared acceleration only on bodies that stick, then switch each failed contact to its kinetic law.",
+      "B": "Assign one μ_s to the entire three-body assembly and one acceleration for every later state.",
+      "C": "Ignore the case–cart friction because the upper case has no rope attached.",
+      "D": "Use momentum conservation for the hanging mass alone as the complete model."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · physical decision",
+        "prompt_question": "Which system, interaction or regime governs this situation?",
+        "reveal_text": "Two contacts can fail independently; their regime variables cannot be replaced by one global friction coefficient."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "What diagram and signed axes should precede any calculation?",
+        "reveal_text": "Draw case, cart, and hanger separately; distinguish normal forces, rope tension, table friction and internal case friction."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first equation",
+        "prompt_question": "What first equation or inequality starts the solution?",
+        "reveal_text": "Start with |f_s,case-cart|≤μ_s1 N_1 and |f_s,cart-table|≤μ_s2 N_2."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Two contacts can fail independently; their regime variables cannot be replaced by one global friction coefficient.",
+        "represent": "Draw case, cart, and hanger separately; distinguish normal forces, rope tension, table friction and internal case friction.",
+        "connect": "Start with |f_s,case-cart|≤μ_s1 N_1 and |f_s,cart-table|≤μ_s2 N_2.",
+        "calculate": "The model must test both static inequalities first. If the case slides but the cart is rope-coupled to the hanger, only cart and hanger share acceleration; contact kinetic drag enters different FBDs.",
+        "interpret": "Draw three FBDs, apply independent static-friction bounds at both contacts, impose shared acceleration only on bodies that stick, then switch each failed contact to its kinetic law."
+      },
+      "final_expression": "Draw three FBDs, apply independent static-friction bounds at both contacts, impose shared acceleration only on bodies that stick, then switch each failed contact to its kinetic law.",
+      "final_answer_value": "Draw three FBDs, apply independent static-friction bounds at both contacts, impose shared acceleration only on bodies that stick, then switch each failed contact to its kinetic law."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "The model must test both static inequalities first. If the case slides but the cart is rope-coupled to the hanger, only cart and hanger share acceleration; contact kinetic drag enters different FBDs."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "This alternative fails the governing regime or model. Treating a slipping upper case as sharing the cart acceleration is inconsistent."
+      },
+      "C": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "The proposed sign or ownership is invalid. Two contacts can fail independently; their regime variables cannot be replaced by one global friction coefficient."
+      },
+      "D": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Omitted coupled force/constraint: Draw case, cart, and hanger separately; distinguish normal forces, rope tension, table friction and internal case friction."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-036",
+    "stem": "Two loads are connected over an ideal pulley: one travels up a frictionless 30° guide, the other down vertically. A student argues that the uphill block's momentum alone is conserved because the rope and pulley are ideal. Which justification correctly rejects this and identifies the appropriate joint-system check?",
+    "options": {
+      "A": "Gravity, normal and rope act externally on the block-only system; instead use Newton II for each body and check the combined energy change under ideal constraints.",
+      "B": "The rope is ideal, so every block separately conserves momentum.",
+      "C": "A normal reaction must always be zero on a frictionless guide.",
+      "D": "Both weights cancel in a single-block FBD."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · physical decision",
+        "prompt_question": "Which system, interaction or regime governs this situation?",
+        "reveal_text": "An ideal rope constraint does not remove external forces from the individual-block momentum equation."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "What diagram and signed axes should precede any calculation?",
+        "reveal_text": "Sketch two system boundaries: one block and both blocks; label external gravity, guide normal and tensions."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first equation",
+        "prompt_question": "What first equation or inequality starts the solution?",
+        "reveal_text": "Begin with Δp_block=∫ΣF_external dt, not Δp_block=0."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "An ideal rope constraint does not remove external forces from the individual-block momentum equation.",
+        "represent": "Sketch two system boundaries: one block and both blocks; label external gravity, guide normal and tensions.",
+        "connect": "Begin with Δp_block=∫ΣF_external dt, not Δp_block=0.",
+        "calculate": "A single block has nonzero external gravity and tension. For an ideal joint system, equal displacement magnitudes let gravitational work transfer into total kinetic energy, while normals do zero work.",
+        "interpret": "Gravity, normal and rope act externally on the block-only system; instead use Newton II for each body and check the combined energy change under ideal constraints."
+      },
+      "final_expression": "Gravity, normal and rope act externally on the block-only system; instead use Newton II for each body and check the combined energy change under ideal constraints.",
+      "final_answer_value": "Gravity, normal and rope act externally on the block-only system; instead use Newton II for each body and check the combined energy change under ideal constraints."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "A single block has nonzero external gravity and tension. For an ideal joint system, equal displacement magnitudes let gravitational work transfer into total kinetic energy, while normals do zero work."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "This alternative fails the governing regime or model. Frictionless does not mean force-free, and massless rope does not imply conserved single-body momentum."
+      },
+      "C": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "The proposed sign or ownership is invalid. An ideal rope constraint does not remove external forces from the individual-block momentum equation."
+      },
+      "D": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Omitted coupled force/constraint: Sketch two system boundaries: one block and both blocks; label external gravity, guide normal and tensions."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-037",
+    "stem": "A 1 kg lab cart moves at 6 m/s and collides inelastically with a 2 kg stationary cart; they latch together. Immediately afterward the joined 3 kg cart goes onto a rough 30° upward track (g=10 m/s², μ_k=0.20, cos30°≈0.866). Neglect loss at the track join. How far uphill does it move before stopping?",
+    "options": {
+      "A": "About 0.30 m.",
+      "B": "About 1.20 m.",
+      "C": "About 0.60 m.",
+      "D": "It keeps climbing at constant speed."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · physical decision",
+        "prompt_question": "Which system, interaction or regime governs this situation?",
+        "reveal_text": "The short collision first fixes common speed by momentum; climbing then requires a separate gravity-and-friction stopping model."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "What diagram and signed axes should precede any calculation?",
+        "reveal_text": "Draw the two collision momentum arrows, then one uphill cart with downslope mg sinθ and μ_k mg cosθ."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first equation",
+        "prompt_question": "What first equation or inequality starts the solution?",
+        "reveal_text": "Start with m_1 u_1=(m_1+m_2)v_after before applying v_f²=v_after²+2as."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The short collision first fixes common speed by momentum; climbing then requires a separate gravity-and-friction stopping model.",
+        "represent": "Draw the two collision momentum arrows, then one uphill cart with downslope mg sinθ and μ_k mg cosθ.",
+        "connect": "Start with m_1 u_1=(m_1+m_2)v_after before applying v_f²=v_after²+2as.",
+        "calculate": "Momentum gives v_after=(1×6)/3=2 m/s. Uphill deceleration=10×0.5+0.20×10×0.866=6.732 m/s²; s=2²/(2×6.732)=0.297 m.",
+        "interpret": "About 0.30 m."
+      },
+      "final_expression": "About 0.30 m.",
+      "final_answer_value": "About 0.30 m."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Momentum gives v_after=(1×6)/3=2 m/s. Uphill deceleration=10×0.5+0.20×10×0.866=6.732 m/s²; s=2²/(2×6.732)=0.297 m."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "This alternative fails the governing regime or model. Mechanical energy is not conserved during the inelastic collision."
+      },
+      "C": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "The proposed sign or ownership is invalid. The short collision first fixes common speed by momentum; climbing then requires a separate gravity-and-friction stopping model."
+      },
+      "D": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Omitted coupled force/constraint: Draw the two collision momentum arrows, then one uphill cart with downslope mg sinθ and μ_k mg cosθ."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-038",
+    "stem": "A 4 kg block lies on a rough horizontal tabletop, joined by separate light cords over left and right pulleys to a 2 kg hanging mass on the left and an adjustable M kg hanging mass on the right. Static and kinetic coefficients on the tabletop are μ_s=0.25 and μ_k=0.20, with g=10 m/s². Find the full interval of M allowing rest; then put M=4 kg and find acceleration and direction.",
+    "options": {
+      "A": "Rest for 1≤M≤3 kg; at M=4 kg the right hanger descends with a=1.2 m/s².",
+      "B": "Rest for any M; at M=4 kg all stay still.",
+      "C": "Rest only for M=2 kg; at M=4 kg the left hanger descends.",
+      "D": "Rest for 0≤M≤4 kg; at M=4 kg a=4.0 m/s²."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · physical decision",
+        "prompt_question": "Which system, interaction or regime governs this situation?",
+        "reveal_text": "The two hanging weights compete; static friction has a bounded adjustable direction, while the moving state uses kinetic friction."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · representation",
+        "prompt_question": "What diagram and signed axes should precede any calculation?",
+        "reveal_text": "Draw all three FBDs, left tension versus right tension on the table block, and separate vertical axes for both hanging loads."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first equation",
+        "prompt_question": "What first equation or inequality starts the solution?",
+        "reveal_text": "First impose |Mg−2g|≤μ_s(4g) to characterize the static interval."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "The two hanging weights compete; static friction has a bounded adjustable direction, while the moving state uses kinetic friction.",
+        "represent": "Draw all three FBDs, left tension versus right tension on the table block, and separate vertical axes for both hanging loads.",
+        "connect": "First impose |Mg−2g|≤μ_s(4g) to characterize the static interval.",
+        "calculate": "Static requirement |10M−20|≤10 gives 1≤M≤3. At M=4 it must move right: kinetic drag=0.20×40=8 N; net drive 40−20−8=12 N across total mass 4+2+4=10 kg, so a=1.2 m/s² right on table and down on right hanger.",
+        "interpret": "Rest for 1≤M≤3 kg; at M=4 kg the right hanger descends with a=1.2 m/s²."
+      },
+      "final_expression": "Rest for 1≤M≤3 kg; at M=4 kg the right hanger descends with a=1.2 m/s².",
+      "final_answer_value": "Rest for 1≤M≤3 kg; at M=4 kg the right hanger descends with a=1.2 m/s²."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "Static requirement |10M−20|≤10 gives 1≤M≤3. At M=4 it must move right: kinetic drag=0.20×40=8 N; net drive 40−20−8=12 N across total mass 4+2+4=10 kg, so a=1.2 m/s² right on table and down on right hanger."
+      },
+      "B": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "This alternative fails the governing regime or model. Do not assume friction always points toward the same pulley throughout the parameter interval."
+      },
+      "C": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "The proposed sign or ownership is invalid. The two hanging weights compete; static friction has a bounded adjustable direction, while the moving state uses kinetic friction."
+      },
+      "D": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Omitted coupled force/constraint: Draw all three FBDs, left tension versus right tension on the table block, and separate vertical axes for both hanging loads."
+      }
+    }
+  },
+  {
+    "question_id": "PHYS-NLM-039",
+    "stem": "Two trolleys A and B are joined by one taut massless cord on a frictionless horizontal track. A laboratory motor pulls A right with external force F, and both share rightward acceleration a. Without calculating any value, which stored Newton-II system relation should a student recall for the combined A+B system?",
+    "options": {
+      "A": "F_external=(m_A+m_B)a because internal string tension cancels for the combined system.",
+      "B": "F_external=m_A a because tension is external.",
+      "C": "F_external=(m_A−m_B)a because B opposes A.",
+      "D": "F_external=0 because the internal tensions cancel."
+    },
+    "correct_answer": "A",
+    "progressive_hints": [
+      {
+        "tier": 1,
+        "guidance_role": "decisive_physics",
+        "title": "H1 · system ownership",
+        "prompt_question": "Which forces remain external for the selected A+B system?",
+        "reveal_text": "String pulls are internal to A+B, but the motor's pull acts from outside the boundary."
+      },
+      {
+        "tier": 2,
+        "guidance_role": "representation",
+        "title": "H2 · chosen system",
+        "prompt_question": "What FBD summarizes the entire two-cart system?",
+        "reveal_text": "Draw one enclosure around both trolleys with only the rightward motor pull crossing its horizontal boundary."
+      },
+      {
+        "tier": 3,
+        "guidance_role": "first_equation_only",
+        "title": "H3 · first law",
+        "prompt_question": "Which Newton-II statement starts a whole-system description?",
+        "reveal_text": "First write ΣF_external=M_total a_cm, then identify the declared total mass."
+      }
+    ],
+    "model_proof": {
+      "reasoning_ladder": {
+        "understand": "Two taut-string-connected carts share acceleration but tension is internal.",
+        "represent": "Draw one system enclosing A and B and label external motor force F.",
+        "connect": "Apply ΣF_external=M_total a_cm.",
+        "calculate": "M_total=m_A+m_B, so F_external=(m_A+m_B)a.",
+        "interpret": "F_external=(m_A+m_B)a because internal string tension cancels for the combined system."
+      },
+      "final_expression": "F_external=(m_A+m_B)a because internal string tension cancels for the combined system.",
+      "final_answer_value": "F_external=(m_A+m_B)a because internal string tension cancels for the combined system."
+    },
+    "distractor_diagnostics": {
+      "A": {
+        "type": "CORRECT",
+        "diagnostic": "The internal tension acts on different internal bodies and sums to zero; total external F accelerates both masses."
+      },
+      "B": {
+        "type": "SINGLE_FORCE_NEGLECT",
+        "diagnostic": "Drops the inertia of cart B from the declared whole system."
+      },
+      "C": {
+        "type": "SIGN_CONVENTION_ERROR",
+        "diagnostic": "Internal opposition does not subtract one cart's mass."
+      },
+      "D": {
+        "type": "FORMULA_MISAPPLICATION",
+        "diagnostic": "Internal forces cancel but the external motor pull does not."
+      }
+    }
+  }
+]
+</script>
+
+<script>
+"use strict";
+
+const bankData = JSON.parse(document.getElementById("nlm-bank").textContent);
+const bankMap = {};
+bankData.forEach(q => {
+  bankMap[q.question_id] = q;
+});
+
+const PAGE_VERSION = "1.0.0";
+
+function freshState() {
+  return {
+    screen: "start", // 'start' | 'baseline' | 'supported' | 'results'
+    baselineIndex: 0,
+    baselineAnswers: [],
+    supported: {
+      question_id: null,
+      choice: null,
+      attempts: 0,
+      correct: false,
+      retryAllowed: false,
+      hints_opened: 0,
+      reveals_used: [],
+      solution_shown: false,
+      timestamp: null
+    }
+  };
+}
+
+let state = freshState();
+const app = document.getElementById("app");
+
+function pickSupportedId(b0, b1, b2) {
+  if (b0.choice !== bankMap["PHYS-NLM-001"].correct_answer) {
+    return "PHYS-NLM-013";
+  }
+  if (b1.choice !== bankMap["PHYS-NLM-002"].correct_answer) {
+    return "PHYS-NLM-032";
+  }
+  if (b2.choice !== bankMap["PHYS-NLM-012"].correct_answer) {
+    return "PHYS-NLM-006";
+  }
+  return "PHYS-NLM-021";
+}
+
+function renderStart() {
+  app.innerHTML = "";
+  const header = document.createElement("header");
+  const h1 = document.createElement("h1");
+  h1.textContent = "Newton's Laws Practice";
+  const sub = document.createElement("p");
+  sub.className = "subtitle";
+  sub.textContent = "3 warm-up questions, then one question with hints.";
+  header.appendChild(h1);
+  header.appendChild(sub);
+
+  const card = document.createElement("div");
+  card.className = "card";
+  const p = document.createElement("p");
+  p.style.marginBottom = "20px";
+  p.textContent = "Work through three short warm-up questions on your own. Then tackle one practice problem where hints are ready whenever you need them.";
+  
+  const btnGroup = document.createElement("div");
+  btnGroup.className = "btn-group";
+  const startBtn = document.createElement("button");
+  startBtn.type = "button";
+  startBtn.id = "start-btn";
+  startBtn.className = "btn-primary";
+  startBtn.textContent = "Start";
+  startBtn.addEventListener("click", () => {
+    state.screen = "baseline";
+    state.baselineIndex = 0;
+    render();
+  });
+  btnGroup.appendChild(startBtn);
+
+  card.appendChild(p);
+  card.appendChild(btnGroup);
+
+  app.appendChild(header);
+  app.appendChild(card);
+}
+
+function renderBaseline() {
+  app.innerHTML = "";
+  const targetIds = ["PHYS-NLM-001", "PHYS-NLM-002", "PHYS-NLM-012"];
+  const currentId = targetIds[state.baselineIndex];
+  const q = bankMap[currentId];
+
+  const header = document.createElement("header");
+  const h1 = document.createElement("h1");
+  h1.textContent = "Newton's Laws Practice";
+  header.appendChild(h1);
+
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const stepBadge = document.createElement("div");
+  stepBadge.className = "step-badge";
+  stepBadge.textContent = "Warm-up Question " + (state.baselineIndex + 1) + " of 3";
+  card.appendChild(stepBadge);
+
+  const stem = document.createElement("div");
+  stem.className = "question-stem";
+  stem.textContent = q.stem;
+  card.appendChild(stem);
+
+  const optionsGroup = document.createElement("div");
+  optionsGroup.className = "options-group";
+
+  let selectedOption = null;
+
+  Object.entries(q.options).forEach(([letter, text]) => {
+    const label = document.createElement("label");
+    label.className = "option-label";
+    label.setAttribute("data-choice", letter);
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "baseline-choice";
+    input.value = letter;
+
+    input.addEventListener("change", () => {
+      selectedOption = letter;
+      optionsGroup.querySelectorAll(".option-label").forEach(l => l.classList.remove("selected"));
+      label.classList.add("selected");
+    });
+
+    const span = document.createElement("span");
+    span.className = "option-text";
+    span.textContent = letter + ". " + text;
+
+    label.appendChild(input);
+    label.appendChild(span);
+    optionsGroup.appendChild(label);
+  });
+  card.appendChild(optionsGroup);
+
+  // Optional reasoning
+  const whyBlock = document.createElement("div");
+  whyBlock.className = "field-block";
+  const whyLabel = document.createElement("label");
+  whyLabel.className = "field-label";
+  whyLabel.htmlFor = "why-input";
+  whyLabel.textContent = "Why I think so (optional)";
+  const whyText = document.createElement("textarea");
+  whyText.id = "why-input";
+  whyText.placeholder = "Write your thinking here...";
+  whyBlock.appendChild(whyLabel);
+  whyBlock.appendChild(whyText);
+  card.appendChild(whyBlock);
+
+  // Confidence select
+  const confBlock = document.createElement("div");
+  confBlock.className = "field-block";
+  const confLabel = document.createElement("label");
+  confLabel.className = "field-label";
+  confLabel.htmlFor = "confidence-select";
+  confLabel.textContent = "How sure are you?";
+  const confSelect = document.createElement("select");
+  confSelect.id = "confidence-select";
+  
+  const defaultOpt = document.createElement("option");
+  defaultOpt.value = "";
+  defaultOpt.textContent = "Choose your confidence level";
+  confSelect.appendChild(defaultOpt);
+
+  const opts = [
+    { value: "unsure", label: "Not sure" },
+    { value: "somewhat", label: "Somewhat sure" },
+    { value: "sure", label: "Very sure" }
+  ];
+  opts.forEach(o => {
+    const optEl = document.createElement("option");
+    optEl.value = o.value;
+    optEl.textContent = o.label;
+    confSelect.appendChild(optEl);
+  });
+  confBlock.appendChild(confLabel);
+  confBlock.appendChild(confSelect);
+  card.appendChild(confBlock);
+
+  // Error alert placeholder
+  const errorBox = document.createElement("div");
+  errorBox.className = "alert alert-error";
+  errorBox.style.display = "none";
+  card.appendChild(errorBox);
+
+  // Next button
+  const btnGroup = document.createElement("div");
+  btnGroup.className = "btn-group";
+  const nextBtn = document.createElement("button");
+  nextBtn.type = "button";
+  nextBtn.id = "baseline-next-btn";
+  nextBtn.className = "btn-primary";
+  nextBtn.textContent = state.baselineIndex === 2 ? "Continue to practice question" : "Next question";
+  
+  nextBtn.addEventListener("click", () => {
+    if (!selectedOption) {
+      errorBox.textContent = "Please select an answer to continue.";
+      errorBox.style.display = "block";
+      return;
+    }
+    errorBox.style.display = "none";
+
+    const answerRecord = {
+      question_id: q.question_id,
+      choice: selectedOption,
+      why_text: whyText.value.trim(),
+      confidence: confSelect.value || "unsure",
+      correct: (selectedOption === q.correct_answer),
+      timestamp: new Date().toISOString()
+    };
+
+    state.baselineAnswers.push(answerRecord);
+
+    if (state.baselineIndex < 2) {
+      state.baselineIndex++;
+      render();
+    } else {
+      const b0 = state.baselineAnswers[0];
+      const b1 = state.baselineAnswers[1];
+      const b2 = state.baselineAnswers[2];
+      const supportedId = pickSupportedId(b0, b1, b2);
+
+      state.supported = {
+        question_id: supportedId,
+        choice: null,
+        attempts: 0,
+        correct: false,
+        retryAllowed: false,
+        hints_opened: 0,
+        reveals_used: [],
+        solution_shown: false,
+        timestamp: null
+      };
+      state.screen = "supported";
+      render();
+    }
+  });
+
+  btnGroup.appendChild(nextBtn);
+  card.appendChild(btnGroup);
+
+  app.appendChild(header);
+  app.appendChild(card);
+}
+
+function renderSupported() {
+  app.innerHTML = "";
+  const q = bankMap[state.supported.question_id];
+
+  const header = document.createElement("header");
+  const h1 = document.createElement("h1");
+  h1.textContent = "Newton's Laws Practice";
+  header.appendChild(h1);
+
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const stepBadge = document.createElement("div");
+  stepBadge.className = "step-badge";
+  stepBadge.textContent = "Practice Question";
+  card.appendChild(stepBadge);
+
+  const stem = document.createElement("div");
+  stem.className = "question-stem";
+  stem.textContent = q.stem;
+  card.appendChild(stem);
+
+  // Options group
+  const optionsGroup = document.createElement("div");
+  optionsGroup.className = "options-group";
+
+  let selectedOption = state.supported.choice;
+  const isLocked = state.supported.correct || (state.supported.attempts >= 2 && !state.supported.retryAllowed);
+
+  Object.entries(q.options).forEach(([letter, text]) => {
+    const label = document.createElement("label");
+    label.className = "option-label" + (selectedOption === letter ? " selected" : "");
+    label.setAttribute("data-choice", letter);
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "supported-choice";
+    input.value = letter;
+    if (selectedOption === letter) input.checked = true;
+    if (isLocked) input.disabled = true;
+
+    input.addEventListener("change", () => {
+      selectedOption = letter;
+      optionsGroup.querySelectorAll(".option-label").forEach(l => l.classList.remove("selected"));
+      label.classList.add("selected");
+    });
+
+    const span = document.createElement("span");
+    span.className = "option-text";
+    span.textContent = letter + ". " + text;
+
+    label.appendChild(input);
+    label.appendChild(span);
+    optionsGroup.appendChild(label);
+  });
+  card.appendChild(optionsGroup);
+
+  // Error / feedback messages
+  const errorBox = document.createElement("div");
+  errorBox.className = "alert alert-error";
+  errorBox.style.display = "none";
+  card.appendChild(errorBox);
+
+  const feedbackBox = document.createElement("div");
+  feedbackBox.className = "alert";
+  feedbackBox.style.display = "none";
+  card.appendChild(feedbackBox);
+
+  if (state.supported.attempts > 0) {
+    feedbackBox.style.display = "block";
+    if (state.supported.correct) {
+      feedbackBox.className = "alert alert-success";
+      const diag = q.distractor_diagnostics[state.supported.choice]?.diagnostic || "Well done! Your answer is correct.";
+      feedbackBox.textContent = "Correct! " + diag;
+    } else {
+      feedbackBox.className = "alert alert-error";
+      const diag = q.distractor_diagnostics[state.supported.choice]?.diagnostic || "That answer is not correct.";
+      if (state.supported.attempts === 1 && state.supported.retryAllowed) {
+        feedbackBox.textContent = "Not quite. " + diag + " You can try once more.";
+      } else {
+        feedbackBox.textContent = "Not quite. " + diag;
+      }
+    }
+  }
+
+  // Action buttons (Check / Retry / Show solution / See results)
+  const actionGroup = document.createElement("div");
+  actionGroup.className = "btn-group";
+
+  if (state.supported.attempts === 0) {
+    const checkBtn = document.createElement("button");
+    checkBtn.type = "button";
+    checkBtn.id = "check-answer-btn";
+    checkBtn.className = "btn-primary";
+    checkBtn.textContent = "Check answer";
+    checkBtn.addEventListener("click", () => {
+      if (!selectedOption) {
+        errorBox.textContent = "Please select an answer first.";
+        errorBox.style.display = "block";
+        return;
+      }
+      errorBox.style.display = "none";
+      state.supported.choice = selectedOption;
+      state.supported.attempts = 1;
+      state.supported.timestamp = new Date().toISOString();
+      state.supported.correct = (selectedOption === q.correct_answer);
+      if (!state.supported.correct) {
+        state.supported.retryAllowed = true;
+      }
+      render();
+    });
+    actionGroup.appendChild(checkBtn);
+  } else if (state.supported.attempts === 1 && state.supported.retryAllowed) {
+    const retryBtn = document.createElement("button");
+    retryBtn.type = "button";
+    retryBtn.id = "retry-btn";
+    retryBtn.className = "btn-primary";
+    retryBtn.textContent = "Try again";
+    retryBtn.addEventListener("click", () => {
+      state.supported.retryAllowed = false;
+      state.supported.choice = null;
+      render();
+    });
+    actionGroup.appendChild(retryBtn);
+
+    const solutionBtn = document.createElement("button");
+    solutionBtn.type = "button";
+    solutionBtn.id = "show-solution-btn";
+    solutionBtn.className = "btn-secondary";
+    solutionBtn.textContent = "Show full solution";
+    solutionBtn.addEventListener("click", () => {
+      state.supported.solution_shown = true;
+      state.supported.retryAllowed = false;
+      render();
+    });
+    actionGroup.appendChild(solutionBtn);
+  } else if (state.supported.attempts === 1 && !state.supported.retryAllowed && !state.supported.correct) {
+    // During retry submission
+    const submitRetryBtn = document.createElement("button");
+    submitRetryBtn.type = "button";
+    submitRetryBtn.id = "check-retry-btn";
+    submitRetryBtn.className = "btn-primary";
+    submitRetryBtn.textContent = "Check my retry";
+    submitRetryBtn.addEventListener("click", () => {
+      if (!selectedOption) {
+        errorBox.textContent = "Please select an answer for your retry.";
+        errorBox.style.display = "block";
+        return;
+      }
+      errorBox.style.display = "none";
+      state.supported.choice = selectedOption;
+      state.supported.attempts = 2;
+      state.supported.correct = (selectedOption === q.correct_answer);
+      render();
+    });
+    actionGroup.appendChild(submitRetryBtn);
+  } else {
+    // Attempt finished (either correct or 2 attempts done)
+    if (!state.supported.solution_shown) {
+      const solutionBtn = document.createElement("button");
+      solutionBtn.type = "button";
+      solutionBtn.id = "show-solution-btn";
+      solutionBtn.className = "btn-secondary";
+      solutionBtn.textContent = "Show full solution";
+      solutionBtn.addEventListener("click", () => {
+        state.supported.solution_shown = true;
+        render();
+      });
+      actionGroup.appendChild(solutionBtn);
+    }
+
+    const finishBtn = document.createElement("button");
+    finishBtn.type = "button";
+    finishBtn.id = "see-results-btn";
+    finishBtn.className = "btn-primary";
+    finishBtn.textContent = "See my results";
+    finishBtn.addEventListener("click", () => {
+      state.screen = "results";
+      render();
+    });
+    actionGroup.appendChild(finishBtn);
+  }
+
+  card.appendChild(actionGroup);
+
+  // Hints section
+  const hintsContainer = document.createElement("div");
+  hintsContainer.className = "hints-container";
+
+  // Render hints opened so far
+  for (let tier = 1; tier <= state.supported.hints_opened; tier++) {
+    const hintData = q.progressive_hints[tier - 1];
+    if (!hintData) continue;
+
+    const hintCard = document.createElement("div");
+    hintCard.className = "hint-card";
+    hintCard.id = "hint-tier-" + tier;
+
+    const hTitle = document.createElement("div");
+    hTitle.className = "hint-title";
+    hTitle.textContent = "Hint " + tier;
+    hintCard.appendChild(hTitle);
+
+    const hPrompt = document.createElement("div");
+    hPrompt.className = "hint-prompt";
+    hPrompt.textContent = hintData.prompt_question;
+    hintCard.appendChild(hPrompt);
+
+    const isRevealed = state.supported.reveals_used.includes(tier);
+    if (!isRevealed) {
+      const revealBtn = document.createElement("button");
+      revealBtn.type = "button";
+      revealBtn.id = "reveal-hint-" + tier + "-btn";
+      revealBtn.className = "btn-secondary";
+      revealBtn.style.minHeight = "40px";
+      revealBtn.style.padding = "6px 14px";
+      revealBtn.style.fontSize = "0.9rem";
+      revealBtn.textContent = "Show explanation";
+      revealBtn.addEventListener("click", () => {
+        state.supported.reveals_used.push(tier);
+        render();
+      });
+      hintCard.appendChild(revealBtn);
+    } else {
+      const revealBox = document.createElement("div");
+      revealBox.className = "hint-reveal-box";
+      revealBox.textContent = hintData.reveal_text;
+      hintCard.appendChild(revealBox);
+    }
+
+    hintsContainer.appendChild(hintCard);
+  }
+
+  // Button to open next hint
+  if (state.supported.hints_opened < 3) {
+    const hintBtn = document.createElement("button");
+    hintBtn.type = "button";
+    hintBtn.id = "hint-btn";
+    hintBtn.className = "btn-hint";
+    const nextTier = state.supported.hints_opened + 1;
+    hintBtn.textContent = state.supported.hints_opened === 0 ? "Get a hint (1 of 3)" : "Get Hint " + nextTier + " (" + nextTier + " of 3)";
+    hintBtn.addEventListener("click", () => {
+      state.supported.hints_opened++;
+      render();
+    });
+    hintsContainer.appendChild(hintBtn);
+  }
+
+  card.appendChild(hintsContainer);
+
+  // Solution section if opened
+  if (state.supported.solution_shown) {
+    const solCard = document.createElement("div");
+    solCard.className = "solution-card";
+    solCard.id = "solution-card";
+
+    const solHeading = document.createElement("h3");
+    solHeading.textContent = "Full Solution";
+    solCard.appendChild(solHeading);
+
+    const ladder = q.model_proof.reasoning_ladder || {};
+    const steps = [
+      { key: "understand", title: "1. Key physical idea" },
+      { key: "represent", title: "2. Visual model" },
+      { key: "connect", title: "3. Governing equation" },
+      { key: "calculate", title: "4. Step-by-step logic" },
+      { key: "interpret", title: "5. Conclusion" }
+    ];
+
+    steps.forEach(st => {
+      if (ladder[st.key]) {
+        const stepDiv = document.createElement("div");
+        stepDiv.className = "solution-step";
+        const h = document.createElement("div");
+        h.className = "step-heading";
+        h.textContent = st.title;
+        const b = document.createElement("div");
+        b.className = "step-body";
+        b.textContent = ladder[st.key];
+        stepDiv.appendChild(h);
+        stepDiv.appendChild(b);
+        solCard.appendChild(stepDiv);
+      }
+    });
+
+    if (q.model_proof.final_expression) {
+      const finalBox = document.createElement("div");
+      finalBox.className = "final-answer-box";
+      finalBox.textContent = "Final answer: " + q.model_proof.final_expression;
+      solCard.appendChild(finalBox);
+    }
+
+    card.appendChild(solCard);
+  }
+
+  app.appendChild(header);
+  app.appendChild(card);
+}
+
+function renderResults() {
+  app.innerHTML = "";
+
+  const header = document.createElement("header");
+  const h1 = document.createElement("h1");
+  h1.textContent = "Your Practice Summary";
+  header.appendChild(h1);
+
+  const card = document.createElement("div");
+  card.className = "card";
+
+  // Baseline questions summary
+  state.baselineAnswers.forEach((ans, idx) => {
+    const q = bankMap[ans.question_id];
+    const isCorrect = ans.choice === q.correct_answer;
+
+    const item = document.createElement("div");
+    item.className = "result-item";
+
+    const rHeader = document.createElement("div");
+    rHeader.className = "result-header";
+
+    const rTitle = document.createElement("span");
+    rTitle.className = "result-title";
+    rTitle.textContent = "Warm-up Question " + (idx + 1);
+
+    const badge = document.createElement("span");
+    badge.className = "badge " + (isCorrect ? "badge-success" : "badge-error");
+    badge.textContent = isCorrect ? "Correct" : "Needs review";
+
+    rHeader.appendChild(rTitle);
+    rHeader.appendChild(badge);
+    item.appendChild(rHeader);
+
+    const stem = document.createElement("div");
+    stem.className = "result-stem";
+    stem.textContent = q.stem;
+    item.appendChild(stem);
+
+    const yourChoice = document.createElement("div");
+    yourChoice.className = "result-detail";
+    yourChoice.innerHTML = "<strong>Your answer:</strong> " + ans.choice + ". " + q.options[ans.choice];
+    item.appendChild(yourChoice);
+
+    if (!isCorrect) {
+      const rightChoice = document.createElement("div");
+      rightChoice.className = "result-detail";
+      rightChoice.innerHTML = "<strong>Right answer:</strong> " + q.correct_answer + ". " + q.options[q.correct_answer];
+      item.appendChild(rightChoice);
+    }
+
+    const conf = document.createElement("div");
+    conf.className = "result-detail";
+    const confLabels = { unsure: "Not sure", somewhat: "Somewhat sure", sure: "Very sure" };
+    conf.innerHTML = "<strong>Confidence:</strong> " + (confLabels[ans.confidence] || ans.confidence);
+    item.appendChild(conf);
+
+    if (ans.why_text) {
+      const why = document.createElement("div");
+      why.className = "result-detail";
+      why.innerHTML = "<strong>Your thinking:</strong> " + ans.why_text;
+      item.appendChild(why);
+    }
+
+    const exp = document.createElement("div");
+    exp.className = "result-explanation";
+    const diag = q.distractor_diagnostics[ans.choice]?.diagnostic || q.model_proof.reasoning_ladder?.understand || "";
+    exp.innerHTML = "<strong>Explanation:</strong> " + diag;
+    item.appendChild(exp);
+
+    card.appendChild(item);
+  });
+
+  // Supported question summary
+  const qSupp = bankMap[state.supported.question_id];
+  const suppCorrect = state.supported.correct;
+
+  const suppItem = document.createElement("div");
+  suppItem.className = "result-item";
+
+  const sHeader = document.createElement("div");
+  sHeader.className = "result-header";
+
+  const sTitle = document.createElement("span");
+  sTitle.className = "result-title";
+  sTitle.textContent = "Practice Question";
+
+  const sBadge = document.createElement("span");
+  sBadge.className = "badge " + (suppCorrect ? "badge-success" : "badge-error");
+  sBadge.textContent = suppCorrect ? "Correct" : "Needs review";
+
+  sHeader.appendChild(sTitle);
+  sHeader.appendChild(sBadge);
+  suppItem.appendChild(sHeader);
+
+  const sStem = document.createElement("div");
+  sStem.className = "result-stem";
+  sStem.textContent = qSupp.stem;
+  suppItem.appendChild(sStem);
+
+  const sChoice = document.createElement("div");
+  sChoice.className = "result-detail";
+  sChoice.innerHTML = "<strong>Your answer:</strong> " + state.supported.choice + ". " + qSupp.options[state.supported.choice];
+  suppItem.appendChild(sChoice);
+
+  if (!suppCorrect) {
+    const sRight = document.createElement("div");
+    sRight.className = "result-detail";
+    sRight.innerHTML = "<strong>Right answer:</strong> " + qSupp.correct_answer + ". " + qSupp.options[qSupp.correct_answer];
+    suppItem.appendChild(sRight);
+  }
+
+  const sHints = document.createElement("div");
+  sHints.className = "result-detail";
+  sHints.innerHTML = "<strong>Hints opened:</strong> " + state.supported.hints_opened + " of 3 (" + state.supported.reveals_used.length + " explanations revealed)";
+  suppItem.appendChild(sHints);
+
+  const sAttempts = document.createElement("div");
+  sAttempts.className = "result-detail";
+  sAttempts.innerHTML = "<strong>Attempts taken:</strong> " + state.supported.attempts;
+  suppItem.appendChild(sAttempts);
+
+  const sExp = document.createElement("div");
+  sExp.className = "result-explanation";
+  const suppDiag = qSupp.distractor_diagnostics[state.supported.choice]?.diagnostic || qSupp.distractor_diagnostics[qSupp.correct_answer]?.diagnostic || "";
+  sExp.innerHTML = "<strong>Explanation:</strong> " + suppDiag;
+  suppItem.appendChild(sExp);
+
+  card.appendChild(suppItem);
+
+  // Buttons: Save my answers and Start again
+  const btnGroup = document.createElement("div");
+  btnGroup.className = "btn-group";
+  btnGroup.style.marginTop = "28px";
+
+  const saveBtn = document.createElement("button");
+  saveBtn.type = "button";
+  saveBtn.id = "save-answers-btn";
+  saveBtn.className = "btn-primary";
+  saveBtn.textContent = "Save my answers";
+  saveBtn.addEventListener("click", () => {
+    const sessionData = {
+      page_version: PAGE_VERSION,
+      saved_at: new Date().toISOString(),
+      baseline_questions: state.baselineAnswers.map(b => ({
+        question_id: b.question_id,
+        choice: b.choice,
+        why_text: b.why_text,
+        confidence: b.confidence,
+        correct: b.correct,
+        timestamp: b.timestamp
+      })),
+      supported_question: {
+        question_id: state.supported.question_id,
+        choice: state.supported.choice,
+        correct: state.supported.correct,
+        attempts: state.supported.attempts,
+        hints_opened: state.supported.hints_opened,
+        reveal_used: state.supported.reveals_used,
+        solution_viewed: state.supported.solution_shown,
+        timestamp: state.supported.timestamp
+      }
+    };
+
+    const blob = new Blob([JSON.stringify(sessionData, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "nlm-answers.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+  btnGroup.appendChild(saveBtn);
+
+  const resetBtn = document.createElement("button");
+  resetBtn.type = "button";
+  resetBtn.id = "start-again-btn";
+  resetBtn.className = "btn-secondary";
+  resetBtn.textContent = "Start again";
+  resetBtn.addEventListener("click", () => {
+    state = freshState();
+    render();
+  });
+  btnGroup.appendChild(resetBtn);
+
+  card.appendChild(btnGroup);
+
+  app.appendChild(header);
+  app.appendChild(card);
+}
+
+function render() {
+  switch (state.screen) {
+    case "start":
+      renderStart();
+      break;
+    case "baseline":
+      renderBaseline();
+      break;
+    case "supported":
+      renderSupported();
+      break;
+    case "results":
+      renderResults();
+      break;
+  }
+}
+
+// Initial render
+render();
+</script>
+</body>
+</html>

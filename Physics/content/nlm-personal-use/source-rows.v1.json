@@ -1,0 +1,266 @@
+{
+  "schema": "nlm-personal-use-custody/v1",
+  "source_ref": "455103ad312ab8b6627aa7a1199b0bd7d5b0af8e",
+  "bank_sha256": "c87ad141e4db355276b8ae4e2afb925663b12d5b0e55761df763ee1c7b387685",
+  "provenance": "independently authored practice; benchmark PDF wording UNKNOWN",
+  "bank_denominator": 39,
+  "source_questions": [
+    {
+      "question_id": "PHYS-NLM-001",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-01",
+      "provenance": {
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q01",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "A service lift is descending but its downward speed is decreasing. Taking upward as positive, what direction must its net force point?",
+      "system_parameters": {},
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "Upward, since its acceleration opposes its downward velocity.",
+        "B": "Downward, because it is moving downward.",
+        "C": "Zero, because the slowing is steady.",
+        "D": "The direction cannot be inferred without its mass."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-APPLY-D1",
+        "primary_demand": "APPLY",
+        "difficulty_band": "D1",
+        "subtopic_competency_ref": "NLM-01",
+        "difficulty_factors": {
+          "system_coupling": 1,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 2,
+          "math_friction": 1
+        },
+        "protected_work_W": "Deceleration while descending is upward acceleration, not upward velocity.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires dynamic physical reasoning, not isolated recall."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "RETRIEVE",
+          "EXPLAIN"
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 1: Only the lift cabin's motion is evaluated.",
+          "vector_dimensionality": "Score 2: Up is chosen positive although velocity is downward.",
+          "constraint_latency": "Score 1: Mass and slowing trend are supplied directly.",
+          "domain_coupling": "Score 2: Translate change of velocity into acceleration then use Newton II.",
+          "math_friction": "Score 1: Only a sign inference, no equation system."
+        }
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "Since the downward velocity becomes less negative, a_y is positive and so is ΣF_y."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect: Velocity direction and acceleration direction need not agree."
+        },
+        "C": {
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; Deceleration while descending is upward acceleration, not upward velocity."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; At constant downward velocity a_y becomes zero."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "Deceleration while descending is upward acceleration, not upward velocity."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Use a vertical signed axis and mark velocity down, acceleration up."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "The first constraint is ΣF_y = m a_y, with upward chosen positive."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "Deceleration while descending is upward acceleration, not upward velocity.",
+          "represent": "Use a vertical signed axis and mark velocity down, acceleration up.",
+          "connect": "The first constraint is ΣF_y = m a_y, with upward chosen positive.",
+          "calculate": "Since the downward velocity becomes less negative, a_y is positive and so is ΣF_y.",
+          "interpret": "Upward, since its acceleration opposes its downward velocity."
+        },
+        "final_expression": "Upward, since its acceleration opposes its downward velocity.",
+        "final_answer_value": "Upward, since its acceleration opposes its downward velocity."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
+        "quick_check": "At constant downward velocity a_y becomes zero.",
+        "check_it_another_way": "Deceleration while descending is upward acceleration, not upward velocity.",
+        "watch_out": "Velocity direction and acceleration direction need not agree.",
+        "review_this_idea": "Core 1: NLM-01",
+        "limiting_cases": [
+          {
+            "condition": "Ideal or zero-change limit",
+            "expected": "At constant downward velocity a_y becomes zero."
+          },
+          {
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "Velocity direction and acceleration direction need not agree."
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "PHYS-NLM-002",
+      "subject": "Physics",
+      "grade": 9,
+      "topic": "Newton's Laws of Motion & Friction",
+      "subtopic_competency_ref": "NLM-08",
+      "provenance": {
+        "source": "Independent NLM transfer scenario derived from Owner demand digest (benchmark PDF wording UNKNOWN)",
+        "benchmark_demand_anchor": "Core2 Q02",
+        "author": "NLM-FIX1 demand calibration"
+      },
+      "stem": "Two small robots pull against the ends of the same taut strap. Robot A pulls the strap left with 40 N. Which two forces make a Newton-third-law pair at A's connection to the strap?",
+      "system_parameters": {},
+      "figure": {
+        "has_figure": false,
+        "svg": "",
+        "caption": ""
+      },
+      "options": {
+        "A": "A's leftward pull on the strap and the strap's 40 N rightward pull on A.",
+        "B": "A's pull on the strap and B's pull on the strap.",
+        "C": "A's pull on the strap and A's weight.",
+        "D": "The strap's force on A and the floor's force on A."
+      },
+      "correct_answer": "A",
+      "qrt_contract": {
+        "cell_id": "PHYS-EXPLAIN-D1",
+        "primary_demand": "EXPLAIN",
+        "difficulty_band": "D1",
+        "subtopic_competency_ref": "NLM-08",
+        "difficulty_factors": {
+          "system_coupling": 3,
+          "vector_dimensionality": 2,
+          "constraint_latency": 1,
+          "domain_coupling": 1,
+          "math_friction": 1
+        },
+        "protected_work_W": "Newton-third-law partners act on different owners at the same interaction.",
+        "rival_demands": [
+          {
+            "demand": "RETRIEVE",
+            "rejection_rationale": "Requires dynamic physical reasoning, not isolated recall."
+          }
+        ],
+        "topic_adapters": [
+          "mechanics-nlm"
+        ],
+        "supporting_demands": [
+          "RETRIEVE"
+        ],
+        "factor_evidence": {
+          "system_coupling": "Score 3: Two tugging robots form one force-interaction pair.",
+          "vector_dimensionality": "Score 2: Opposite horizontal arrows need owner labels.",
+          "constraint_latency": "Score 1: The interaction is explicitly specified.",
+          "domain_coupling": "Score 1: One third-law principle is sufficient.",
+          "math_friction": "Score 1: No algebra beyond equality of magnitudes."
+        }
+      },
+      "distractor_diagnostics": {
+        "A": {
+          "type": "CORRECT",
+          "diagnostic": "A exerts 40 N on the strap to the left; that same connection exerts 40 N on A to the right."
+        },
+        "B": {
+          "type": "FORMULA_MISAPPLICATION",
+          "diagnostic": "Incorrect: A pair cannot be two forces drawn on one single-body FBD."
+        },
+        "C": {
+          "type": "KEY_CONCEPT_MISCONCEPTION",
+          "diagnostic": "Confuses the named system or the governing invariant; Newton-third-law partners act on different owners at the same interaction."
+        },
+        "D": {
+          "type": "SIGN_CONVENTION_ERROR",
+          "diagnostic": "Fails the declared force/momentum direction or a dimensional check; The two forces have identical magnitude even if robot A accelerates."
+        }
+      },
+      "progressive_hints": [
+        {
+          "tier": 1,
+          "guidance_role": "decisive_physics",
+          "title": "H1 · decisive physics",
+          "prompt_question": "What changes physically, and which body or system owns that change?",
+          "reveal_text": "Newton-third-law partners act on different owners at the same interaction."
+        },
+        {
+          "tier": 2,
+          "guidance_role": "representation",
+          "title": "H2 · representation",
+          "prompt_question": "Which signed diagram, axis, system boundary or state comparison should come before equations?",
+          "reveal_text": "Draw one arrow on A and the opposite arrow on the strap, explicitly naming each owner."
+        },
+        {
+          "tier": 3,
+          "guidance_role": "first_equation_only",
+          "title": "H3 · opening constraint",
+          "prompt_question": "What is the first law or constraint to write, without computing the answer?",
+          "reveal_text": "First write F_(A on strap) = -F_(strap on A)."
+        }
+      ],
+      "model_proof": {
+        "reasoning_ladder": {
+          "understand": "Newton-third-law partners act on different owners at the same interaction.",
+          "represent": "Draw one arrow on A and the opposite arrow on the strap, explicitly naming each owner.",
+          "connect": "First write F_(A on strap) = -F_(strap on A).",
+          "calculate": "A exerts 40 N on the strap to the left; that same connection exerts 40 N on A to the right.",
+          "interpret": "A's leftward pull on the strap and the strap's 40 N rightward pull on A."
+        },
+        "final_expression": "A's leftward pull on the strap and the strap's 40 N rightward pull on A.",
+        "final_answer_value": "A's leftward pull on the strap and the strap's 40 N rightward pull on A."
+      },
+      "independent_check": {
+        "dimensional_formula": "[M L T^-2] / dimensional or signed-state consistency",
+        "quick_check": "The two forces have identical magnitude even if robot A accelerates.",
+        "check_it_another_way": "Newton-third-law partners act on different owners at the same interaction.",
+        "watch_out": "A pair cannot be two forces drawn on one single-body FBD.",
+        "review_this_idea": "Core 1: NLM-08",
+        "limiting_cases": [
+          {
+            "condition": "Ideal or zero-change limit",
+            "expected": "The two forces have identical magnitude even if robot A accelerates."
+          },
+          {
+            "condition": "Reverse sign or increase the relevant parameter",
+            "expected": "A pair cannot be two forces drawn on one single-body FBD."
+          }
+        ]
+      }
+    }
+  ]
+}
