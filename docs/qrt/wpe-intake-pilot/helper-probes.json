@@ -1,0 +1,170 @@
+{
+  "observed_utc": "2026-10-27T01:35:42.169518+00:00",
+  "scope": "isolated synthetic helper probes plus read-only real index load; no live harvest or upstream changes",
+  "inputs": {
+    "SKILL.md": "9a369dc9cd7b02bde64a93a489538cb53f1471895db2fcd64880b63d5b128737",
+    "references\\agent_prompts.md": "00b5a297d60cd56e9877ffd8d3f6997d54c338d6eba104f96bbf79511fc984d5",
+    "references\\target_patterns.json": "5c5fdd4c1f99ac7cea83a83a3a85758e5793c142b091eab30dbe43de92db9b90",
+    "scripts\\deduplicator.py": "0cfc8306d6c1d3c6ad324b4b8b602b07389cc08cb16b53e71c0b5687d810f189",
+    "scripts\\latex_sanitizer.py": "bd36bed2b0c5a00b58e195c804ea9468ab202e56628fa69f6f3de7ee2253910f",
+    "scripts\\svg_generator.py": "579d3a1af4f6e160145299fd236f805214b12661c2d5b770a4e565aa32b6cacc"
+  },
+  "dedup": [
+    {
+      "left": "Find x + y = 2.",
+      "right": "Find x - y = 2.",
+      "score": 1.0,
+      "left_tokens": [
+        "find"
+      ],
+      "right_tokens": [
+        "find"
+      ]
+    },
+    {
+      "left": "x + y = 2",
+      "right": "x + y = 2",
+      "score": 0.0,
+      "left_tokens": [],
+      "right_tokens": []
+    },
+    {
+      "left": "A body has a charge of -12 coulombs.",
+      "right": "A body has a charge of +12 coulombs.",
+      "score": 1.0,
+      "left_tokens": [
+        "12",
+        "body",
+        "body_has_charge",
+        "charge",
+        "charge_of_12",
+        "coulombs",
+        "has",
+        "has_charge_of",
+        "of",
+        "of_12_coulombs"
+      ],
+      "right_tokens": [
+        "12",
+        "body",
+        "body_has_charge",
+        "charge",
+        "charge_of_12",
+        "coulombs",
+        "has",
+        "has_charge_of",
+        "of",
+        "of_12_coulombs"
+      ]
+    }
+  ],
+  "sanitizer": [
+    {
+      "input": "AB = &radic;50 cm",
+      "output": "AB = \\sqrt50 cm"
+    },
+    {
+      "input": "Compute sqrt: $\u221a50$.",
+      "output": "Compute sqrt: $\\sqrt50$."
+    },
+    {
+      "input": "A book costs $5 and a pen costs $2.",
+      "output": "A book costs $5 and a pen costs $2."
+    },
+    {
+      "input": "$ x + 1$ and $y + 1 $",
+      "output": "$ x + 1$and$y + 1 $"
+    },
+    {
+      "input": "The product is 2 \u00d7 3 = 6.",
+      "output": "The product is 2 \\times 3 = 6."
+    },
+    {
+      "input": "$$ x + 5 $$",
+      "output": "$$x + 5$$"
+    }
+  ],
+  "options": [
+    {
+      "input": "Value? (A) 1 (B) 2 (C) 3 (D) 4",
+      "result": [
+        "Value?",
+        {
+          "A": "1",
+          "B": "2",
+          "C": "3",
+          "D": "4"
+        }
+      ]
+    },
+    {
+      "input": "Value?\n(A) 1\n(B) 2\n(C) 3\n(D) 4",
+      "result": [
+        "Value?\n(A) 1\n(B) 2\n(C) 3\n(D) 4",
+        {}
+      ]
+    },
+    {
+      "input": "Evaluate. (A) (x+1) (B) (x-1) (C) 0 (D) 1",
+      "result": [
+        "Evaluate. (A) (x+1) (B) (x-1) (C) 0 (D) 1",
+        {}
+      ]
+    },
+    {
+      "input": "Value? (A) 1 (B) 2 (C) 3 (C) 4",
+      "result": [
+        "Value?",
+        {
+          "A": "1",
+          "B": "2",
+          "C": "4"
+        }
+      ]
+    },
+    {
+      "input": "Choose point A. Now solve. (A) 1 (B) 2 (C) 3 (D) 4",
+      "result": [
+        "Choose point",
+        {
+          "A": "1",
+          "B": "2",
+          "C": "3",
+          "D": "4"
+        }
+      ]
+    }
+  ],
+  "svg": [
+    {
+      "name": "unescaped_metadata",
+      "parse": "not well-formed (invalid token): line 1, column 120",
+      "text_elements": "<g id=\"figure-geometry\">\n    <polygon points=\"60,210 340,210 200,50\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"2.5\" />\n    <text x=\"50\" y=\"230\" fill=\"#f8fafc\" font-size=\"14\" font-weight=\"bold\">A</text>\n    <text x=\"345\" y=\"230\" fill=\"#f8fafc\" font-size=\"14\" font-weight=\"bold\">B</text>\n    <text x=\"195\" y=\"40\" fill=\"#f8fafc\" font-size=\"14\" font-weight=\"bold\">C</text>\n  </g>"
+    },
+    {
+      "name": "unchecked_custom_text",
+      "parse": "valid XML",
+      "text_elements": "<g id=\"figure-geometry\">\n    <text x=\"5\" y=\"5\" font-size=\"8\">tiny</text>\n  </g>"
+    },
+    {
+      "name": "default",
+      "parse": "valid XML",
+      "text_elements": "<g id=\"figure-geometry\">\n    <polygon points=\"60,210 340,210 200,50\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"2.5\" />\n    <text x=\"50\" y=\"230\" fill=\"#f8fafc\" font-size=\"14\" font-weight=\"bold\">A</text>\n    <text x=\"345\" y=\"230\" fill=\"#f8fafc\" font-size=\"14\" font-weight=\"bold\">B</text>\n    <text x=\"195\" y=\"40\" fill=\"#f8fafc\" font-size=\"14\" font-weight=\"bold\">C</text>\n  </g>"
+    }
+  ],
+  "advertised_dedup_command": {
+    "argv": [
+      "deduplicator.py",
+      "--check-duplicates"
+    ],
+    "returncode": 0,
+    "stdout": "Loaded 882 canonical questions into deduplication index.\nCandidate Test -> Is Duplicate: False | Best QID: NONE | Score: 0.000\n",
+    "stderr": ""
+  },
+  "real_index": {
+    "entries": 882,
+    "entries_with_nonempty_text": 0,
+    "entries_with_tokens": 0,
+    "unknown_ids": 654
+  }
+}
